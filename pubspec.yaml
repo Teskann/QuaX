@@ -1,4 +1,4 @@
-name: quacker
+name: quax
 description: A private and clean way to browse Twitter/X
 
 # The following line prevents the package from being accidentally published to
@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-version: 3.5.2+300200300
+version: 4.0.0+400000000
 
 environment:
   sdk: ">=2.18.0 <3.0.0"
@@ -36,7 +36,7 @@ dependencies:
   http: ^1.2.1
   dart_twitter_api: # this is a fork which is up to date
     git: 
-      url: https://github.com/TheHCJ/twitter_api.git
+      url: https://github.com/Teskann/twitter_api.git
 
   # UI & Media
   auto_direction: ^0.0.6

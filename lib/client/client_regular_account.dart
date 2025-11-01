@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
-import 'package:quacker/client/headers.dart';
+import 'package:quax/client/headers.dart';
 import 'dart:async';
-import 'package:quacker/database/repository.dart';
+import 'package:quax/database/repository.dart';
 
 class XRegularAccount extends ChangeNotifier {
   static final log = Logger('XRegularAccount');

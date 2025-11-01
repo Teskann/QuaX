@@ -6,11 +6,11 @@ import 'package:dynamic_color/dynamic_color.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:quacker/catcher/exceptions.dart';
+import 'package:quax/catcher/exceptions.dart';
 
-import 'package:quacker/client/client.dart';
-import 'package:quacker/constants.dart';
-import 'package:quacker/generated/l10n.dart';
+import 'package:quax/client/client.dart';
+import 'package:quax/constants.dart';
+import 'package:quax/generated/l10n.dart';
 
 void showSnackBar(BuildContext context, {required String icon, required String message, bool clearBefore = true}) {
   if (clearBefore) {

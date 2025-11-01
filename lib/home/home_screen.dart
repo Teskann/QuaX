@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
-import 'package:quacker/constants.dart';
-import 'package:quacker/generated/l10n.dart';
-import 'package:quacker/group/group_screen.dart';
-import 'package:quacker/home/_feed.dart';
-import 'package:quacker/home/_missing.dart';
-import 'package:quacker/home/_saved.dart';
-import 'package:quacker/home/home_model.dart';
-import 'package:quacker/search/search.dart';
-import 'package:quacker/subscriptions/subscriptions.dart';
-import 'package:quacker/trends/trends_screen.dart';
-import 'package:quacker/ui/errors.dart';
+import 'package:quax/constants.dart';
+import 'package:quax/generated/l10n.dart';
+import 'package:quax/group/group_screen.dart';
+import 'package:quax/home/_feed.dart';
+import 'package:quax/home/_missing.dart';
+import 'package:quax/home/_saved.dart';
+import 'package:quax/home/home_model.dart';
+import 'package:quax/search/search.dart';
+import 'package:quax/subscriptions/subscriptions.dart';
+import 'package:quax/trends/trends_screen.dart';
+import 'package:quax/ui/errors.dart';
 
 typedef NavigationTitleBuilder = String Function(BuildContext context);
 
@@ -31,7 +31,7 @@ final List<NavigationPage> defaultHomePages = [
   NavigationPage('feed', (c) => L10n.of(c).feed, const Icon(Icons.rss_feed), const Icon(Icons.rss_feed)),
   NavigationPage('subscriptions', (c) => L10n.of(c).subscriptions, const Icon(Icons.subscriptions_outlined),
       const Icon(Icons.subscriptions)),
-  NavigationPage('trending', (c) => L10n.of(c).trending, const Icon(Icons.trending_up), const Icon(Icons.trending_up)),
+  NavigationPage('trending', (c) => L10n.of(c).search, const Icon(Icons.search), const Icon(Icons.search)),
   NavigationPage(
       'saved', (c) => L10n.of(c).saved, const Icon(Icons.bookmark_border_outlined), const Icon(Icons.bookmark)),
 ];

@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter_cache/flutter_cache.dart' as cache;
-import 'package:quacker/utils/iterables.dart';
-import 'package:quacker/utils/misc.dart';
+import 'package:quax/utils/iterables.dart';
+import 'package:quax/utils/misc.dart';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
 
@@ -32,7 +32,7 @@ class TranslationAPI {
     var key = 'translation.supported_languages';
 
     return cacheRequest(key, () async {
-      var response = await http.get(Uri.https('libretranslate.de', '/languages'));
+      var response = await http.get(Uri.https('libretranslate.com', '/languages'));
       return await parseResponse(response, 'Unable to get supported languages');
     });
   }
@@ -51,7 +51,7 @@ class TranslationAPI {
     var key = 'translation.$sourceLanguage.$id';
 
     var res = await cacheRequest(key, () async {
-      var response = await http.post(Uri.https('libretranslate.de', '/translate'),
+      var response = await http.post(Uri.https('libretranslate.com', '/translate'),
           body: jsonEncode(formData), headers: {'Content-Type': 'application/json'});
 
       return await parseResponse(response, 'Unable to send translation request');

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_triple/flutter_triple.dart';
-import 'package:quacker/constants.dart';
-import 'package:quacker/database/entities.dart';
-import 'package:quacker/search/search.dart';
-import 'package:quacker/subscriptions/users_model.dart';
-import 'package:quacker/ui/errors.dart';
-import 'package:quacker/user.dart';
+import 'package:quax/constants.dart';
+import 'package:quax/database/entities.dart';
+import 'package:quax/search/search.dart';
+import 'package:quax/subscriptions/users_model.dart';
+import 'package:quax/ui/errors.dart';
+import 'package:quax/user.dart';
 import 'package:provider/provider.dart';
-import 'package:quacker/generated/l10n.dart';
+import 'package:quax/generated/l10n.dart';
 
 class SubscriptionUsers extends StatefulWidget {
   final ScrollController scrollController;

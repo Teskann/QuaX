@@ -18,8 +18,8 @@
 -DCMAKE_ANDROID_NDK=$NDK
 -DCMAKE_TOOLCHAIN_FILE=$NDK/build/cmake/android.toolchain.cmake
 -DCMAKE_MAKE_PROGRAM=$NINJA
--DCMAKE_LIBRARY_OUTPUT_DIRECTORY=C:/Users/harle/Desktop/Programming/Quacker/build/app/intermediates/cxx/Debug/$HASH/obj/$ABI
--DCMAKE_RUNTIME_OUTPUT_DIRECTORY=C:/Users/harle/Desktop/Programming/Quacker/build/app/intermediates/cxx/Debug/$HASH/obj/$ABI
+-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=C:/Users/harle/Desktop/Programming/QuaX/build/app/intermediates/cxx/Debug/$HASH/obj/$ABI
+-DCMAKE_RUNTIME_OUTPUT_DIRECTORY=C:/Users/harle/Desktop/Programming/QuaX/build/app/intermediates/cxx/Debug/$HASH/obj/$ABI
 -DCMAKE_BUILD_TYPE=Debug
 -B$PROJECT/app/.cxx/Debug/$HASH/$ABI
 -GNinja

@@ -4,15 +4,15 @@ import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 
-import 'package:quacker/client/client.dart';
-import 'package:quacker/constants.dart';
-import 'package:quacker/database/entities.dart';
-import 'package:quacker/generated/l10n.dart';
-import 'package:quacker/home/home_screen.dart';
-import 'package:quacker/profile/profile.dart';
-import 'package:quacker/saved/saved_tweet_model.dart';
-import 'package:quacker/tweet/tweet.dart';
-import 'package:quacker/ui/errors.dart';
+import 'package:quax/client/client.dart';
+import 'package:quax/constants.dart';
+import 'package:quax/database/entities.dart';
+import 'package:quax/generated/l10n.dart';
+import 'package:quax/home/home_screen.dart';
+import 'package:quax/profile/profile.dart';
+import 'package:quax/saved/saved_tweet_model.dart';
+import 'package:quax/tweet/tweet.dart';
+import 'package:quax/ui/errors.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
 

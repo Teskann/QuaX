@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_triple/flutter_triple.dart';
-import 'package:quacker/client/client.dart';
-import 'package:quacker/user.dart';
+import 'package:quax/client/client.dart';
+import 'package:quax/user.dart';
 
 class SearchTweetsModel extends Store<List<TweetWithCard>> {
   SearchTweetsModel() : super([]);

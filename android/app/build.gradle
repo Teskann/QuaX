@@ -40,8 +40,8 @@ if (keystoreFile != null && !keystoreFile.isEmpty()) {
 }
 
 android {
-    namespace 'com.thehcj.quacker'
-    compileSdkVersion 35
+    namespace 'com.teskann.quax'
+    compileSdkVersion 36
 
     dependenciesInfo {
         includeInApk = false
@@ -57,8 +57,8 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.thehcj.quacker"
-        minSdkVersion 23
+        applicationId "com.teskann.quax"
+        minSdkVersion flutter.minSdkVersion
         targetSdkVersion 35
         multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
@@ -98,9 +98,9 @@ android {
                 variant.outputs.all { output ->
                     def abiName = output.getFilter(OutputFile.ABI)
                     if (abiName == null) {
-                        outputFileName = "quacker-v${defaultConfig.versionName}.apk"
+                        outputFileName = "quax-v${defaultConfig.versionName}.apk"
                     } else {
-                        outputFileName = "quacker-v${defaultConfig.versionName}_${abiName}.apk"
+                        outputFileName = "quax-v${defaultConfig.versionName}_${abiName}.apk"
                     }
                 }
             }

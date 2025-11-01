@@ -5,13 +5,13 @@ import 'package:flutter_iconpicker/Models/configuration.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:flutter_triple/flutter_triple.dart';
-import 'package:quacker/constants.dart';
-import 'package:quacker/database/entities.dart';
-import 'package:quacker/generated/l10n.dart';
-import 'package:quacker/group/group_model.dart';
-import 'package:quacker/group/group_screen.dart';
-import 'package:quacker/subscriptions/users_model.dart';
-import 'package:quacker/user.dart';
+import 'package:quax/constants.dart';
+import 'package:quax/database/entities.dart';
+import 'package:quax/generated/l10n.dart';
+import 'package:quax/group/group_model.dart';
+import 'package:quax/group/group_screen.dart';
+import 'package:quax/subscriptions/users_model.dart';
+import 'package:quax/user.dart';
 import 'package:provider/provider.dart';
 
 Future openSubscriptionGroupDialog(BuildContext context, String? id, String name, String icon) {

@@ -1,10 +1,10 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
-import 'package:quacker/constants.dart';
-import 'package:quacker/generated/l10n.dart';
-import 'package:quacker/home/home_screen.dart';
-import 'package:quacker/utils/iterables.dart';
+import 'package:quax/constants.dart';
+import 'package:quax/generated/l10n.dart';
+import 'package:quax/home/home_screen.dart';
+import 'package:quax/utils/iterables.dart';
 import 'package:logging/logging.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pref/pref.dart';

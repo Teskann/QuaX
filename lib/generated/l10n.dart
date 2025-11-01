@@ -10,7 +10,7 @@ import 'intl/messages_all.dart';
 
 // ignore_for_file: non_constant_identifier_names, lines_longer_than_80_chars
 // ignore_for_file: join_return_with_assignment, prefer_final_in_for_each
-// ignore_for_file: avoid_redundant_argument_values
+// ignore_for_file: avoid_redundant_argument_values, avoid_escaping_inner_quotes
 
 class L10n {
   L10n();
@@ -18,28 +18,31 @@ class L10n {
   static L10n? _current;
 
   static L10n get current {
-    assert(_current != null, 'No instance of L10n was loaded. Try to initialize the L10n delegate before accessing L10n.current.');
+    assert(_current != null,
+        'No instance of L10n was loaded. Try to initialize the L10n delegate before accessing L10n.current.');
     return _current!;
   }
 
-  static const AppLocalizationDelegate delegate =
-    AppLocalizationDelegate();
+  static const AppLocalizationDelegate delegate = AppLocalizationDelegate();
 
   static Future<L10n> load(Locale locale) {
-    final name = (locale.countryCode?.isEmpty ?? false) ? locale.languageCode : locale.toString();
-    final localeName = Intl.canonicalizedLocale(name); 
+    final name = (locale.countryCode?.isEmpty ?? false)
+        ? locale.languageCode
+        : locale.toString();
+    final localeName = Intl.canonicalizedLocale(name);
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
       final instance = L10n();
       L10n._current = instance;
- 
+
       return instance;
     });
-  } 
+  }
 
   static L10n of(BuildContext context) {
     final instance = L10n.maybeOf(context);
-    assert(instance != null, 'No instance of L10n present in the widget tree. Did you add L10n.delegate in localizationsDelegates?');
+    assert(instance != null,
+        'No instance of L10n present in the widget tree. Did you add L10n.delegate in localizationsDelegates?');
     return instance!;
   }
 
@@ -147,11 +150,13 @@ class L10n {
     );
   }
 
-  /// `Something just went wrong in Quacker, and an error report has been generated. The report can be sent to the Quacker developers to help fix the problem.`
-  String get something_just_went_wrong_in_fritter_and_an_error_report_has_been_generated {
+  /// `Something just went wrong in QuaX, and an error report has been generated. The report can be sent to the QuaX developers to help fix the problem.`
+  String
+      get something_just_went_wrong_in_fritter_and_an_error_report_has_been_generated {
     return Intl.message(
-      'Something just went wrong in Quacker, and an error report has been generated. The report can be sent to the Quacker developers to help fix the problem.',
-      name: 'something_just_went_wrong_in_fritter_and_an_error_report_has_been_generated',
+      'Something just went wrong in QuaX, and an error report has been generated. The report can be sent to the QuaX developers to help fix the problem.',
+      name:
+          'something_just_went_wrong_in_fritter_and_an_error_report_has_been_generated',
       desc: '',
       args: [],
     );
@@ -167,10 +172,10 @@ class L10n {
     );
   }
 
-  /// `Your report will be sent to Quacker's GlitchTip project, and privacy details can be found at:`
+  /// `Your report will be sent to QuaX's GlitchTip project, and privacy details can be found at:`
   String get your_report_will_be_sent_to_quacker_glitchtip_project {
     return Intl.message(
-      'Your report will be sent to Quacker\'s GlitchTip project, and privacy details can be found at:',
+      'Your report will be sent to QuaX\'s GlitchTip project, and privacy details can be found at:',
       name: 'your_report_will_be_sent_to_quacker_glitchtip_project',
       desc: '',
       args: [],
@@ -567,10 +572,10 @@ class L10n {
     );
   }
 
-  /// `Thanks for helping Quacker! 💖`
+  /// `Thanks for helping QuaX! 💖`
   String get thanks_for_helping_fritter {
     return Intl.message(
-      'Thanks for helping Quacker! 💖',
+      'Thanks for helping QuaX! 💖',
       name: 'thanks_for_helping_fritter',
       desc: '',
       args: [],
@@ -828,7 +833,8 @@ class L10n {
   }
 
   /// `The file does not exist. Please ensure it is located at {filePath}`
-  String the_file_does_not_exist_please_ensure_it_is_located_at_file_path(Object filePath) {
+  String the_file_does_not_exist_please_ensure_it_is_located_at_file_path(
+      Object filePath) {
     return Intl.message(
       'The file does not exist. Please ensure it is located at $filePath',
       name: 'the_file_does_not_exist_please_ensure_it_is_located_at_file_path',
@@ -848,10 +854,12 @@ class L10n {
   }
 
   /// `Please make sure the data you wish to import is located there, then press the import button below.`
-  String get please_make_sure_the_data_you_wish_to_import_is_located_there_then_press_the_import_button_below {
+  String
+      get please_make_sure_the_data_you_wish_to_import_is_located_there_then_press_the_import_button_below {
     return Intl.message(
       'Please make sure the data you wish to import is located there, then press the import button below.',
-      name: 'please_make_sure_the_data_you_wish_to_import_is_located_there_then_press_the_import_button_below',
+      name:
+          'please_make_sure_the_data_you_wish_to_import_is_located_there_then_press_the_import_button_below',
       desc: '',
       args: [],
     );
@@ -957,10 +965,10 @@ class L10n {
     );
   }
 
-  /// `Help make Quacker even better`
+  /// `Help make QuaX even better`
   String get help_make_fritter_even_better {
     return Intl.message(
-      'Help make Quacker even better',
+      'Help make QuaX even better',
       name: 'help_make_fritter_even_better',
       desc: '',
       args: [],
@@ -997,10 +1005,10 @@ class L10n {
     );
   }
 
-  /// `Help support Quacker's future`
+  /// `Help support QuaX's future`
   String get help_support_fritters_future {
     return Intl.message(
-      'Help support Quacker\'s future',
+      'Help support QuaX\'s future',
       name: 'help_support_fritters_future',
       desc: '',
       args: [],
@@ -1027,20 +1035,20 @@ class L10n {
     );
   }
 
-  /// `All the great software used by Quacker`
+  /// `All the great software used by QuaX`
   String get all_the_great_software_used_by_fritter {
     return Intl.message(
-      'All the great software used by Quacker',
+      'All the great software used by QuaX',
       name: 'all_the_great_software_used_by_fritter',
       desc: '',
       args: [],
     );
   }
 
-  /// `Quacker`
+  /// `QuaX`
   String get fritter {
     return Intl.message(
-      'Quacker',
+      'QuaX',
       name: 'fritter',
       desc: '',
       args: [],
@@ -1118,10 +1126,12 @@ class L10n {
   }
 
   /// `Are you sure you want to delete the subscription group {name}?`
-  String are_you_sure_you_want_to_delete_the_subscription_group_name_of_group(Object name) {
+  String are_you_sure_you_want_to_delete_the_subscription_group_name_of_group(
+      Object name) {
     return Intl.message(
       'Are you sure you want to delete the subscription group $name?',
-      name: 'are_you_sure_you_want_to_delete_the_subscription_group_name_of_group',
+      name:
+          'are_you_sure_you_want_to_delete_the_subscription_group_name_of_group',
       desc: '',
       args: [name],
     );
@@ -1238,30 +1248,36 @@ class L10n {
   }
 
   /// `To import subscriptions from an existing X account, enter your username below.`
-  String get to_import_subscriptions_from_an_existing_twitter_account_enter_your_username_below {
+  String
+      get to_import_subscriptions_from_an_existing_twitter_account_enter_your_username_below {
     return Intl.message(
       'To import subscriptions from an existing X account, enter your username below.',
-      name: 'to_import_subscriptions_from_an_existing_twitter_account_enter_your_username_below',
+      name:
+          'to_import_subscriptions_from_an_existing_twitter_account_enter_your_username_below',
       desc: '',
       args: [],
     );
   }
 
-  /// `Please note that the method Quacker uses to import subscriptions is heavily rate-limited by X, so this may fail if you have a lot of followed accounts.`
-  String get please_note_that_the_method_fritter_uses_to_import_subscriptions_is_heavily_rate_limited_by_twitter_so_this_may_fail_if_you_have_a_lot_of_followed_accounts {
+  /// `Please note that the method QuaX uses to import subscriptions is heavily rate-limited by X, so this may fail if you have a lot of followed accounts.`
+  String
+      get please_note_that_the_method_fritter_uses_to_import_subscriptions_is_heavily_rate_limited_by_twitter_so_this_may_fail_if_you_have_a_lot_of_followed_accounts {
     return Intl.message(
-      'Please note that the method Quacker uses to import subscriptions is heavily rate-limited by X, so this may fail if you have a lot of followed accounts.',
-      name: 'please_note_that_the_method_fritter_uses_to_import_subscriptions_is_heavily_rate_limited_by_twitter_so_this_may_fail_if_you_have_a_lot_of_followed_accounts',
+      'Please note that the method QuaX uses to import subscriptions is heavily rate-limited by X, so this may fail if you have a lot of followed accounts.',
+      name:
+          'please_note_that_the_method_fritter_uses_to_import_subscriptions_is_heavily_rate_limited_by_twitter_so_this_may_fail_if_you_have_a_lot_of_followed_accounts',
       desc: '',
       args: [],
     );
   }
 
   /// `Selecting individual accounts to import, and assigning groups are both planned for the future already!`
-  String get selecting_individual_accounts_to_import_and_assigning_groups_are_both_planned_for_the_future_already {
+  String
+      get selecting_individual_accounts_to_import_and_assigning_groups_are_both_planned_for_the_future_already {
     return Intl.message(
       'Selecting individual accounts to import, and assigning groups are both planned for the future already!',
-      name: 'selecting_individual_accounts_to_import_and_assigning_groups_are_both_planned_for_the_future_already',
+      name:
+          'selecting_individual_accounts_to_import_and_assigning_groups_are_both_planned_for_the_future_already',
       desc: '',
       args: [],
     );
@@ -1388,7 +1404,8 @@ class L10n {
   }
 
   /// `Unable to load the trends for {widgetPlaceName}`
-  String unable_to_load_the_trends_for_widget_place_name(Object widgetPlaceName) {
+  String unable_to_load_the_trends_for_widget_place_name(
+      Object widgetPlaceName) {
     return Intl.message(
       'Unable to load the trends for $widgetPlaceName',
       name: 'unable_to_load_the_trends_for_widget_place_name',
@@ -1398,10 +1415,12 @@ class L10n {
   }
 
   /// `There were no trends returned. This is unexpected! Please report as a bug, if possible.`
-  String get there_were_no_trends_returned_this_is_unexpected_please_report_as_a_bug_if_possible {
+  String
+      get there_were_no_trends_returned_this_is_unexpected_please_report_as_a_bug_if_possible {
     return Intl.message(
       'There were no trends returned. This is unexpected! Please report as a bug, if possible.',
-      name: 'there_were_no_trends_returned_this_is_unexpected_please_report_as_a_bug_if_possible',
+      name:
+          'there_were_no_trends_returned_this_is_unexpected_please_report_as_a_bug_if_possible',
       desc: '',
       args: [],
     );
@@ -1510,10 +1529,13 @@ class L10n {
   }
 
   /// `Unable to save the media. X returned a status of {responseStatusCode}`
-  String unable_to_save_the_media_twitter_returned_a_status_of_response_statusCode(Object responseStatusCode) {
+  String
+      unable_to_save_the_media_twitter_returned_a_status_of_response_statusCode(
+          Object responseStatusCode) {
     return Intl.message(
       'Unable to save the media. X returned a status of $responseStatusCode',
-      name: 'unable_to_save_the_media_twitter_returned_a_status_of_response_statusCode',
+      name:
+          'unable_to_save_the_media_twitter_returned_a_status_of_response_statusCode',
       desc: '',
       args: [responseStatusCode],
     );
@@ -1529,10 +1551,10 @@ class L10n {
     );
   }
 
-  /// `Unable to download. This media may only be available as a stream, which Quacker cannot yet download.`
+  /// `Unable to download. This media may only be available as a stream, which QuaX cannot yet download.`
   String get download_media_no_url {
     return Intl.message(
-      'Unable to download. This media may only be available as a stream, which Quacker cannot yet download.',
+      'Unable to download. This media may only be available as a stream, which QuaX cannot yet download.',
       name: 'download_media_no_url',
       desc: '',
       args: [],
@@ -1600,7 +1622,8 @@ class L10n {
   }
 
   /// `{thisTweetUserName} reposted {timeAgo}`
-  String this_tweet_user_name_retweeted(Object thisTweetUserName, Object timeAgo) {
+  String this_tweet_user_name_retweeted(
+      Object thisTweetUserName, Object timeAgo) {
     return Intl.message(
       '$thisTweetUserName reposted $timeAgo',
       name: 'this_tweet_user_name_retweeted',
@@ -1749,10 +1772,10 @@ class L10n {
     );
   }
 
-  /// `X has invalidated our access token. Please try re-opening Quacker!`
+  /// `X has invalidated our access token. Please try re-opening QuaX!`
   String get bad_guest_token {
     return Intl.message(
-      'X has invalidated our access token. Please try re-opening Quacker!',
+      'X has invalidated our access token. Please try re-opening QuaX!',
       name: 'bad_guest_token',
       desc: '',
       args: [],
@@ -1840,7 +1863,8 @@ class L10n {
   }
 
   /// `Please check your Internet connection.\n\n{errorMessage}`
-  String please_check_your_internet_connection_error_message(Object errorMessage) {
+  String please_check_your_internet_connection_error_message(
+      Object errorMessage) {
     return Intl.message(
       'Please check your Internet connection.\n\n$errorMessage',
       name: 'please_check_your_internet_connection_error_message',
@@ -1890,10 +1914,12 @@ class L10n {
   }
 
   /// `No data was returned, which should never happen. Please report a bug, if possible!`
-  String get no_data_was_returned_which_should_never_happen_please_report_a_bug_if_possible {
+  String
+      get no_data_was_returned_which_should_never_happen_please_report_a_bug_if_possible {
     return Intl.message(
       'No data was returned, which should never happen. Please report a bug, if possible!',
-      name: 'no_data_was_returned_which_should_never_happen_please_report_a_bug_if_possible',
+      name:
+          'no_data_was_returned_which_should_never_happen_please_report_a_bug_if_possible',
       desc: '',
       args: [],
     );
@@ -1919,10 +1945,10 @@ class L10n {
     );
   }
 
-  /// `An update for Quacker is available! 🚀`
+  /// `An update for QuaX is available! 🚀`
   String get an_update_for_fritter_is_available {
     return Intl.message(
-      'An update for Quacker is available! 🚀',
+      'An update for QuaX is available! 🚀',
       name: 'an_update_for_fritter_is_available',
       desc: '',
       args: [],
@@ -1940,7 +1966,8 @@ class L10n {
   }
 
   /// `Update to {releaseVersion} through your F-Droid client`
-  String update_to_release_version_through_your_fdroid_client(Object releaseVersion) {
+  String update_to_release_version_through_your_fdroid_client(
+      Object releaseVersion) {
     return Intl.message(
       'Update to $releaseVersion through your F-Droid client',
       name: 'update_to_release_version_through_your_fdroid_client',
@@ -1949,10 +1976,10 @@ class L10n {
     );
   }
 
-  /// `Quacker blue`
+  /// `QuaX blue`
   String get fritter_blue {
     return Intl.message(
-      'Quacker blue',
+      'QuaX blue',
       name: 'fritter_blue',
       desc: '',
       args: [],
@@ -1969,10 +1996,10 @@ class L10n {
     );
   }
 
-  /// `Something broke in Quacker.`
+  /// `Something broke in QuaX.`
   String get something_broke_in_fritter {
     return Intl.message(
-      'Something broke in Quacker.',
+      'Something broke in QuaX.',
       name: 'something_broke_in_fritter',
       desc: '',
       args: [],
@@ -1999,10 +2026,10 @@ class L10n {
     );
   }
 
-  /// `Check for updates when Quacker starts`
+  /// `Check for updates when QuaX starts`
   String get should_check_for_updates_description {
     return Intl.message(
-      'Check for updates when Quacker starts',
+      'Check for updates when QuaX starts',
       name: 'should_check_for_updates_description',
       desc: '',
       args: [],
@@ -2259,10 +2286,10 @@ class L10n {
     );
   }
 
-  /// `Are you sure you want to close Quacker?`
+  /// `Are you sure you want to close QuaX?`
   String get confirm_close_fritter {
     return Intl.message(
-      'Are you sure you want to close Quacker?',
+      'Are you sure you want to close QuaX?',
       name: 'confirm_close_fritter',
       desc: '',
       args: [],

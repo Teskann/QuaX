@@ -3,15 +3,15 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:quacker/client/client.dart';
-import 'package:quacker/database/entities.dart';
-import 'package:quacker/database/repository.dart';
-import 'package:quacker/group/group_model.dart';
-import 'package:quacker/import_data_model.dart';
-import 'package:quacker/subscriptions/users_model.dart';
-import 'package:quacker/ui/errors.dart';
+import 'package:quax/client/client.dart';
+import 'package:quax/database/entities.dart';
+import 'package:quax/database/repository.dart';
+import 'package:quax/group/group_model.dart';
+import 'package:quax/import_data_model.dart';
+import 'package:quax/subscriptions/users_model.dart';
+import 'package:quax/ui/errors.dart';
 import 'package:provider/provider.dart';
-import 'package:quacker/generated/l10n.dart';
+import 'package:quax/generated/l10n.dart';
 
 class SubscriptionImportScreen extends StatefulWidget {
   const SubscriptionImportScreen({super.key});

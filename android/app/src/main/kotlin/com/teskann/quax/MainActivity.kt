@@ -1,4 +1,4 @@
-package com.thehcj.quacker
+package com.teskann.quax
 
 import io.flutter.embedding.android.FlutterActivity
 

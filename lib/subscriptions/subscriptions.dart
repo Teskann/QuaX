@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:quacker/generated/l10n.dart';
-import 'package:quacker/group/group_model.dart';
-import 'package:quacker/home/home_screen.dart';
-import 'package:quacker/subscriptions/_groups.dart';
-import 'package:quacker/subscriptions/_import.dart';
-import 'package:quacker/subscriptions/_list.dart';
-import 'package:quacker/subscriptions/users_model.dart';
+import 'package:quax/generated/l10n.dart';
+import 'package:quax/group/group_model.dart';
+import 'package:quax/home/home_screen.dart';
+import 'package:quax/subscriptions/_groups.dart';
+import 'package:quax/subscriptions/_import.dart';
+import 'package:quax/subscriptions/_list.dart';
+import 'package:quax/subscriptions/users_model.dart';
 import 'package:provider/provider.dart';
 
 class SubscriptionsScreen extends StatelessWidget {

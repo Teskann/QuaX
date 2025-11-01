@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:quacker/constants.dart';
-import 'package:quacker/generated/l10n.dart';
+import 'package:quax/constants.dart';
+import 'package:quax/generated/l10n.dart';
 import 'package:pref/pref.dart';
-import 'package:quacker/utils/iterables.dart';
+import 'package:quax/utils/iterables.dart';
 
 class SettingsThemeFragment extends StatelessWidget {
   const SettingsThemeFragment({super.key});

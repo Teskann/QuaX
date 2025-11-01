@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
-import 'package:quacker/client/client.dart';
-import 'package:quacker/constants.dart';
-import 'package:quacker/home/_for_you.dart';
-import 'package:quacker/generated/l10n.dart';
-import 'package:quacker/group/_settings.dart';
-import 'package:quacker/group/group_model.dart';
-import 'package:quacker/group/group_screen.dart';
+import 'package:quax/client/client.dart';
+import 'package:quax/constants.dart';
+import 'package:quax/home/_for_you.dart';
+import 'package:quax/generated/l10n.dart';
+import 'package:quax/group/_settings.dart';
+import 'package:quax/group/group_model.dart';
+import 'package:quax/group/group_screen.dart';
 
 class FeedScreen extends StatefulWidget {
   final ScrollController scrollController;

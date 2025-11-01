@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:quacker/client/client.dart';
-import 'package:quacker/constants.dart';
-import 'package:quacker/generated/l10n.dart';
-import 'package:quacker/profile/profile.dart';
-import 'package:quacker/tweet/conversation.dart';
-import 'package:quacker/ui/errors.dart';
+import 'package:quax/client/client.dart';
+import 'package:quax/constants.dart';
+import 'package:quax/generated/l10n.dart';
+import 'package:quax/profile/profile.dart';
+import 'package:quax/tweet/conversation.dart';
+import 'package:quax/ui/errors.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
@@ -127,7 +127,7 @@ class _StatusScreenState extends State<_StatusScreen> {
                     tweets: chain.tweets,
                     username: null,
                     isPinned: chain.isPinned,
-                    tweetOpened: widget.tweetOpened),
+                    tweetOpened: widget.tweetOpened ?? false),
               );
             },
             firstPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(

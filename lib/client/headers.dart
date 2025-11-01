@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:pref/pref.dart';
 import 'dart:math';
-import 'package:quacker/database/entities.dart';
-import 'package:quacker/constants.dart';
+import 'package:quax/database/entities.dart';
+import 'package:quax/constants.dart';
 
 import 'accounts.dart';
 

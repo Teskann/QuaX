@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
-import 'package:quacker/constants.dart';
+import 'package:quax/constants.dart';
 
 String? _guestToken;
 const int _expiresAt = -1;

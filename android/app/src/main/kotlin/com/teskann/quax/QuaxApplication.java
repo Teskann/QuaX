@@ -1,11 +1,11 @@
-package com.thehcj.quacker;
+package com.teskann.quax;
 
 import android.content.Context;
 import androidx.multidex.MultiDex;
 
 import io.flutter.app.FlutterApplication;
 
-public class QuackerApplication extends FlutterApplication {
+public class QuaxApplication extends FlutterApplication {
 
     @Override
     protected void attachBaseContext(Context base) {

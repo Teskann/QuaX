@@ -2,16 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_triple/flutter_triple.dart';
-import 'package:quacker/client/client.dart';
-import 'package:quacker/constants.dart';
-import 'package:quacker/database/entities.dart';
-import 'package:quacker/generated/l10n.dart';
-import 'package:quacker/profile/profile.dart';
-import 'package:quacker/search/search_model.dart';
-import 'package:quacker/tweet/_video.dart';
-import 'package:quacker/tweet/tweet.dart';
-import 'package:quacker/ui/errors.dart';
-import 'package:quacker/user.dart';
+import 'package:quax/client/client.dart';
+import 'package:quax/constants.dart';
+import 'package:quax/database/entities.dart';
+import 'package:quax/generated/l10n.dart';
+import 'package:quax/profile/profile.dart';
+import 'package:quax/search/search_model.dart';
+import 'package:quax/tweet/_video.dart';
+import 'package:quax/tweet/tweet.dart';
+import 'package:quax/ui/errors.dart';
+import 'package:quax/user.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
 

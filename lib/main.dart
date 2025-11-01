@@ -9,30 +9,30 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 
-import 'package:quacker/constants.dart';
-import 'package:quacker/database/repository.dart';
-import 'package:quacker/generated/l10n.dart';
-import 'package:quacker/group/group_model.dart';
-import 'package:quacker/group/group_screen.dart';
-import 'package:quacker/home/home_model.dart';
-import 'package:quacker/home/home_screen.dart';
-import 'package:quacker/import_data_model.dart';
-import 'package:quacker/profile/profile.dart';
-import 'package:quacker/saved/saved_tweet_model.dart';
-import 'package:quacker/search/search.dart';
-import 'package:quacker/search/search_model.dart';
-import 'package:quacker/settings/_home.dart';
-import 'package:quacker/settings/settings.dart';
-import 'package:quacker/settings/settings_export_screen.dart';
-import 'package:quacker/status.dart';
-import 'package:quacker/subscriptions/users_model.dart';
-import 'package:quacker/trends/trends_model.dart';
-import 'package:quacker/tweet/_video.dart';
-import 'package:quacker/ui/errors.dart';
+import 'package:quax/constants.dart';
+import 'package:quax/database/repository.dart';
+import 'package:quax/generated/l10n.dart';
+import 'package:quax/group/group_model.dart';
+import 'package:quax/group/group_screen.dart';
+import 'package:quax/home/home_model.dart';
+import 'package:quax/home/home_screen.dart';
+import 'package:quax/import_data_model.dart';
+import 'package:quax/profile/profile.dart';
+import 'package:quax/saved/saved_tweet_model.dart';
+import 'package:quax/search/search.dart';
+import 'package:quax/search/search_model.dart';
+import 'package:quax/settings/_home.dart';
+import 'package:quax/settings/settings.dart';
+import 'package:quax/settings/settings_export_screen.dart';
+import 'package:quax/status.dart';
+import 'package:quax/subscriptions/users_model.dart';
+import 'package:quax/trends/trends_model.dart';
+import 'package:quax/tweet/_video.dart';
+import 'package:quax/ui/errors.dart';
 import 'package:logging/logging.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
-import 'package:quacker/utils/urls.dart';
+import 'package:quax/utils/urls.dart';
 import 'package:secure_content/secure_content.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -47,7 +47,7 @@ Future checkForUpdates(context) async {
   client.userAgent =
       "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Mobile Safari/537.36";
 
-  final request = await client.getUrl(Uri.parse("https://api.github.com/repos/thehcj/quacker/releases/latest"));
+  final request = await client.getUrl(Uri.parse("https://api.github.com/repos/teskann/quax/releases/latest"));
   final response = await request.close();
 
   if (response.statusCode == 200) {
@@ -59,7 +59,7 @@ Future checkForUpdates(context) async {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: const Text('An update for Quacker is available! 🚀'),
+              title: const Text('An update for QuaX is available! 🚀'),
               content: Text('View version ${map["tag_name"]} on Github'),
               actions: [
                 TextButton(
@@ -167,9 +167,9 @@ Future<void> main() async {
     optionSubscriptionOrderByAscending: true,
     optionSubscriptionOrderByField: 'name',
     optionThemeMode: 'system',
-    optionThemeColor: 'orange',
-    optionThemeTrueBlack: false,
-    optionThemeTrueBlackTweetCards: false,
+    optionThemeColor: 'accent',
+    optionThemeTrueBlack: true,
+    optionThemeTrueBlackTweetCards: true,
     optionShowNavigationLabels: true,
     optionTweetsHideSensitive: true,
     optionUserTrendsLocations: jsonEncode({
@@ -385,7 +385,7 @@ class _FritterAppState extends State<FritterApp> {
                     ],
                     supportedLocales: L10n.delegate.supportedLocales,
                     locale: _locale,
-                    title: 'Quacker',
+                    title: 'QuaX',
                     theme: ThemeData(
                       colorScheme: _themeColor == 'accent'
                           ? lightDynamic

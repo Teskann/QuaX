@@ -4,12 +4,12 @@ import 'package:dart_twitter_api/twitter_api.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
-import 'package:quacker/client/client.dart';
-import 'package:quacker/constants.dart';
-import 'package:quacker/generated/l10n.dart';
-import 'package:quacker/tweet/_media.dart';
-import 'package:quacker/tweet/_video.dart';
-import 'package:quacker/utils/urls.dart';
+import 'package:quax/client/client.dart';
+import 'package:quax/constants.dart';
+import 'package:quax/generated/l10n.dart';
+import 'package:quax/tweet/_media.dart';
+import 'package:quax/tweet/_video.dart';
+import 'package:quax/utils/urls.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:pref/pref.dart';
@@ -369,7 +369,7 @@ class TweetCard extends StatelessWidget {
         var author = card['binding_values']['author']['user_value']['id_str'];
         var user = card['users'][author]['screen_name'];
 
-        // TODO: This opens the URL externally. Create a screen for it in Quacker
+        // TODO: This opens the URL externally. Create a screen for it in QuaX
         return _createCard(
             url,
             Column(
@@ -411,7 +411,7 @@ class TweetCard extends StatelessWidget {
         // TODO: Figure out what states we can receive
         //var state = card['binding_values']['broadcast_state']['string_value'];
 
-        // TODO: This opens the URL externally. Create a screen for it in Quacker
+        // TODO: This opens the URL externally. Create a screen for it in QuaX
         return _createCard(
             uri,
             Column(

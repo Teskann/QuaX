@@ -2,17 +2,17 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
-import 'package:quacker/client/client.dart';
-import 'package:quacker/constants.dart';
-import 'package:quacker/database/entities.dart';
-import 'package:quacker/database/repository.dart';
-import 'package:quacker/generated/l10n.dart';
-import 'package:quacker/group/group_screen.dart';
-import 'package:quacker/profile/profile.dart';
-import 'package:quacker/tweet/_video.dart';
-import 'package:quacker/tweet/conversation.dart';
-import 'package:quacker/ui/errors.dart';
-import 'package:quacker/utils/iterables.dart';
+import 'package:quax/client/client.dart';
+import 'package:quax/constants.dart';
+import 'package:quax/database/entities.dart';
+import 'package:quax/database/repository.dart';
+import 'package:quax/generated/l10n.dart';
+import 'package:quax/group/group_screen.dart';
+import 'package:quax/profile/profile.dart';
+import 'package:quax/tweet/_video.dart';
+import 'package:quax/tweet/conversation.dart';
+import 'package:quax/ui/errors.dart';
+import 'package:quax/utils/iterables.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
