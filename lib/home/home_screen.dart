@@ -31,7 +31,7 @@ final List<NavigationPage> defaultHomePages = [
   NavigationPage('feed', (c) => L10n.of(c).feed, const Icon(Icons.rss_feed), const Icon(Icons.rss_feed)),
   NavigationPage('subscriptions', (c) => L10n.of(c).subscriptions, const Icon(Icons.subscriptions_outlined),
       const Icon(Icons.subscriptions)),
-  NavigationPage('trending', (c) => L10n.of(c).trending, const Icon(Icons.trending_up), const Icon(Icons.trending_up)),
+  NavigationPage('trending', (c) => L10n.of(c).search, const Icon(Icons.search), const Icon(Icons.search)),
   NavigationPage(
       'saved', (c) => L10n.of(c).saved, const Icon(Icons.bookmark_border_outlined), const Icon(Icons.bookmark)),
 ];

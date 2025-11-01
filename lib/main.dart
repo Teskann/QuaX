@@ -167,9 +167,9 @@ Future<void> main() async {
     optionSubscriptionOrderByAscending: true,
     optionSubscriptionOrderByField: 'name',
     optionThemeMode: 'system',
-    optionThemeColor: 'orange',
-    optionThemeTrueBlack: false,
-    optionThemeTrueBlackTweetCards: false,
+    optionThemeColor: 'accent',
+    optionThemeTrueBlack: true,
+    optionThemeTrueBlackTweetCards: true,
     optionShowNavigationLabels: true,
     optionTweetsHideSensitive: true,
     optionUserTrendsLocations: jsonEncode({

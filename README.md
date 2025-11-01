@@ -1,22 +1,13 @@
 
 
-# 🚨 Notice: future for the app
-
-**I have taken note of TheHCJ’s decision to archive the main Quacker repository. Since I did not receive a response to my request to become a maintainer of Quacker, I will maintain the project here or on another repository. I will keep you updated via this Readme. In the meantime, you can download a more stable version of Quacker in the “releases” section.**
-
----
-
 <p align="center">
  <img src="assets/icon.png" width=96>
  <h1 align="center">QuaX</h1>
 </p>
 
-<p align="center">Privacy respecting, <a href="https://github.com/jonjomckay/fritter/releases/latest">fritter</a> fork with feeds</p>
+<p align="center">Privacy respecting, <a href="https://github.com/TheHCJ/Quacker/releases/latest">Quacker</a> fork</p>
 
 <p align="center">
- <a href="https://f-droid.org/en/packages/com.teskann.quax/">
-    <img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on Fdroid" width="256">
-  </a>
   <a href="https://github.com/teskann/quax/releases">
     <img src="assets/readme/get-it-on-github.png" alt="Get it on GitHub" width="256">
   </a>
@@ -63,8 +54,8 @@
 
 If you'd like to help make QuaX even better, here are a few ways you can contribute:
 
-- **Report a bug:** If you've found a bug in QuaX, open a [new issue](https://github.com/teskann/quax/issues/new/choose) (please check that someone else hasn't reported it first).
-- **Request a feature:** Feel like something is missing? [Open an issue](https://github.com/teskann/quax/issues/new/choose) detailing exactly what you're looking for.
+- **Report a bug:** If you've found a bug in QuaX, open a [new issue](https://github.com/teskann/quax/issues/new) (please check that someone else hasn't reported it first).
+- **Request a feature:** Feel like something is missing? [Open an issue](https://github.com/teskann/quax/issues/new) detailing exactly what you're looking for.
 - **Fix a bug:** To contribute to the codebase, check for issues labeled "good first issue". Otherwise, feel free to tackle any issue, fork the repository, push to a branch, and create a pull request.
 
 ---

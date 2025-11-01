@@ -54,30 +54,34 @@ class _TrendsListState extends State<TrendsList> {
 
         var numberFormat = NumberFormat.compact();
 
-        return ListView.builder(
-          controller: widget.scrollController,
-          physics: const LessSensitiveScrollPhysics(),
-          itemCount: trends.length,
-          itemBuilder: (context, index) {
-            var trend = trends[index];
+        return RefreshIndicator(
+            onRefresh: () async {
+              model.loadTrends();
+            },
+            child: ListView.builder(
+              controller: widget.scrollController,
+              physics: const LessSensitiveScrollPhysics(),
+              itemCount: trends.length,
+              itemBuilder: (context, index) {
+                var trend = trends[index];
 
-            return ListTile(
-                dense: true,
-                leading: Text('${++index}'),
-                title: Text(trend.name!),
-                subtitle: trend.tweetVolume == null
-                    ? null
-                    : Text(
-                        L10n.of(context).tweets_number(
-                          trend.tweetVolume!,
-                          numberFormat.format(trend.tweetVolume),
-                        ),
-                      ),
-                onTap: () => Navigator.pushNamed(context, routeSearch,
-                    arguments:
-                        SearchArguments(0, focusInputOnOpen: false, query: Uri.decodeQueryComponent(trend.query!))));
-          },
-        );
+                return ListTile(
+                    dense: true,
+                    leading: Text('${++index}'),
+                    title: Text(trend.name!),
+                    subtitle: trend.tweetVolume == null
+                        ? null
+                        : Text(
+                            L10n.of(context).tweets_number(
+                              trend.tweetVolume!,
+                              numberFormat.format(trend.tweetVolume),
+                            ),
+                          ),
+                    onTap: () => Navigator.pushNamed(context, routeSearch,
+                        arguments: SearchArguments(0,
+                            focusInputOnOpen: false, query: Uri.decodeQueryComponent(trend.query!))));
+              },
+            ));
       },
     );
   }
