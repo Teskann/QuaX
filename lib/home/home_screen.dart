@@ -28,7 +28,7 @@ class NavigationPage {
 }
 
 final List<NavigationPage> defaultHomePages = [
-  NavigationPage('feed', (c) => L10n.of(c).feed, const Icon(Icons.rss_feed), const Icon(Icons.rss_feed)),
+  NavigationPage('feed', (c) => L10n.of(c).home, const Icon(Icons.home), const Icon(Icons.home)),
   NavigationPage('subscriptions', (c) => L10n.of(c).subscriptions, const Icon(Icons.subscriptions_outlined),
       const Icon(Icons.subscriptions)),
   NavigationPage('trending', (c) => L10n.of(c).search, const Icon(Icons.search), const Icon(Icons.search)),
@@ -82,6 +82,8 @@ class _HomeScreenState extends State<_HomeScreen> {
     });
   }
 
+  final trendsFocusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return ScopedBuilder<HomeModel, List<HomePage>>.transition(
@@ -99,7 +101,7 @@ class _HomeScreenState extends State<_HomeScreen> {
           pages: _pages,
           prefs: widget.prefs,
           initialPage: _initialPage,
-          builder: (scrollControllers) {
+          builder: (scrollControllers, focusNodes) {
             return List.generate(_pages.length, (index) {
               final page = _pages[index];
               if (page.id.startsWith('group-')) {
@@ -123,6 +125,7 @@ class _HomeScreenState extends State<_HomeScreen> {
                 case 'trending':
                   return TrendsScreen(
                     scrollController: scrollControllers[index]!,
+                    focusNode: focusNodes[index]!,
                   );
                 case 'saved':
                   return SavedScreen(
@@ -143,7 +146,7 @@ class ScaffoldWithBottomNavigation extends StatefulWidget {
   final List<NavigationPage> pages;
   final BasePrefService prefs;
   final int initialPage;
-  final List<Widget> Function(Map<int, ScrollController> scrollControllers) builder; // changed here
+  final List<Widget> Function(Map<int, ScrollController> scrollControllers, Map<int, FocusNode> focusNodes) builder; // changed here
 
   const ScaffoldWithBottomNavigation(
       {super.key, required this.pages, required this.prefs, required this.initialPage, required this.builder});
@@ -156,6 +159,7 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
   late PageController _pageController;
   late int _currentPage;
   final Map<int, ScrollController> _scrollControllers = {};
+  final Map<int, FocusNode> _focusNodes = {};
 
   @override
   void initState() {
@@ -164,6 +168,7 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
     _pageController = PageController(initialPage: widget.initialPage);
     for (int i = 0; i < widget.pages.length; i++) {
       _scrollControllers[i] = ScrollController();
+      _focusNodes[i] = FocusNode();
     }
   }
 
@@ -214,7 +219,7 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
             _currentPage = page;
           });
         },
-        children: widget.builder(_scrollControllers),
+        children: widget.builder(_scrollControllers, _focusNodes),
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _currentPage,
@@ -230,7 +235,18 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
               ),
             )
             .toList(),
-        onDestinationSelected: (index) {
+        onDestinationSelected: (index) async {
+          if (index == _currentPage) {
+            if (widget.pages[index].id == "feed") {
+              final feedScreenController = _scrollControllers[_currentPage];
+              if (feedScreenController != null) {
+                await feedScreenController.animateTo(0, duration: const Duration(seconds: 1), curve: Curves.easeInOut);
+              }
+            }
+            if (widget.pages[index].id == "trending") {
+              _focusNodes[_currentPage]?.requestFocus();
+            }
+          }
           _pageController.jumpToPage(index);
         },
       ),

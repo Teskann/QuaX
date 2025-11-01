@@ -7,8 +7,9 @@ import 'package:quax/trends/_tabs.dart';
 
 class TrendsScreen extends StatefulWidget {
   final ScrollController scrollController;
+  final FocusNode focusNode;
 
-  const TrendsScreen({super.key, required this.scrollController});
+  const TrendsScreen({super.key, required this.scrollController, required this.focusNode});
 
   @override
   State<TrendsScreen> createState() => _TrendsScreenState();
@@ -18,12 +19,11 @@ class _TrendsScreenState extends State<TrendsScreen> with AutomaticKeepAliveClie
   @override
   bool get wantKeepAlive => true;
   final TextEditingController _queryController = TextEditingController();
-  final FocusNode _focusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    _focusNode.requestFocus();
+    widget.focusNode.requestFocus();
   }
 
   @override
@@ -37,7 +37,7 @@ class _TrendsScreenState extends State<TrendsScreen> with AutomaticKeepAliveClie
           padding: EdgeInsets.fromLTRB(8, 36, 8, 8),
           child: SearchBar(
             controller: _queryController,
-            focusNode: _focusNode,
+            focusNode: widget.focusNode,
             textInputAction: TextInputAction.search,
             leading: IconButton(icon: const Icon(Icons.search), onPressed: () => {}),
             onSubmitted: (query) {

@@ -65,12 +65,6 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
     _latestTweetsModel = SearchTweetsModel();
     _searchUsersModel = SearchUsersModel();
 
-    //_bothControllers = CombinedChangeNotifier(_tabController, _queryController);
-
-    if (widget.focusInputOnOpen) {
-      _focusNode.requestFocus();
-    }
-
     _queryController.text = widget.query ?? '';
 
     // TODO: Focussing makes the selection go to the start?!

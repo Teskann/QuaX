@@ -46,6 +46,17 @@ class _FeedScreenState extends State<FeedScreen>
     }
   }
 
+  void navigateToTop(BuildContext context) async
+  {
+    final bool disableAnimations = PrefService.of(context).get(optionDisableAnimations) == true;
+    if (disableAnimations == false) {
+      await widget.scrollController
+          .animateTo(0, duration: const Duration(seconds: 1), curve: Curves.easeInOut);
+    } else {
+      widget.scrollController.jumpTo(0);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -90,21 +101,12 @@ class _FeedScreenState extends State<FeedScreen>
                   IconButton(
                       icon: const Icon(Icons.arrow_upward),
                       onPressed: () async {
-                        if (disableAnimations == false) {
-                          await widget.scrollController
-                              .animateTo(0, duration: const Duration(seconds: 1), curve: Curves.easeInOut);
-                        } else {
-                          widget.scrollController.jumpTo(0);
-                        }
+                        navigateToTop(context);
                       }),
                   IconButton(
-                      icon: const Icon(Icons.refresh),
+                      icon: const Icon(Icons.settings),
                       onPressed: () async {
-                        if (_tab == 0) {
-                          await model.loadGroup();
-                        } else {
-                          _pagingController.refresh();
-                        }
+                        Navigator.pushNamed(context, routeSettings);
                       }),
                 ],
               ),

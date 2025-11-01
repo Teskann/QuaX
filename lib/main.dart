@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_portal/flutter_portal.dart';
+import 'package:quax/client/accounts.dart';
+import 'package:quax/client/login_webview.dart';
 
 import 'package:quax/constants.dart';
 import 'package:quax/database/repository.dart';
@@ -59,7 +61,7 @@ Future checkForUpdates(context) async {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: const Text('An update for QuaX is available! 🚀'),
+              title: Text(L10n.of(context).an_update_for_fritter_is_available),
               content: Text('View version ${map["tag_name"]} on Github'),
               actions: [
                 TextButton(
@@ -81,6 +83,40 @@ Future checkForUpdates(context) async {
         Logger.root.severe('Unable to check for updates');
       }
     }
+  }
+}
+
+Future checkForAccounts(context) async {
+  Logger.root.info('Checking for accounts');
+
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+  final accounts = await getAccounts();
+  if (accounts.isEmpty) {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("⚠️ ${L10n.of(context).not_logged_in}"),
+          content: Text(L10n.of(context).quax_doesnt_work_without_account_please_login),
+          actions: [
+            TextButton(
+              child: Text(L10n.of(context).close),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text(L10n.of(context).login),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.push(context, MaterialPageRoute(builder: (_) => const TwitterLoginWebview()));
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
 
@@ -242,6 +278,7 @@ class _FritterAppState extends State<FritterApp> {
   bool _trueBlack = false;
   bool _checkUpdates = false;
   bool _updateDialogShown = false;
+  bool _accountDialogShown = false;
   bool _isSecure = false;
   Locale? _locale;
 
@@ -330,9 +367,7 @@ class _FritterAppState extends State<FritterApp> {
         break;
     }
 
-    final systemOverlayStyle = SystemUiOverlayStyle.dark.copyWith(
-      systemNavigationBarColor: Colors.transparent
-    );
+    final systemOverlayStyle = SystemUiOverlayStyle.dark.copyWith(systemNavigationBarColor: Colors.transparent);
     SystemChrome.setSystemUIOverlayStyle(systemOverlayStyle);
 
     return DynamicColorBuilder(builder: (lightDynamic, darkDynamic) {
@@ -448,6 +483,13 @@ class _FritterAppState extends State<FritterApp> {
                         // Use navigatorKey's context for showDialog
                         WidgetsBinding.instance.addPostFrameCallback((_) {
                           checkForUpdates(_navigatorKey.currentContext!);
+                        });
+                      }
+
+                      if (!_accountDialogShown) {
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          _accountDialogShown = true;
+                          checkForAccounts(_navigatorKey.currentContext!);
                         });
                       }
 
