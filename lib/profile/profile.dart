@@ -288,6 +288,7 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
                             ),
                           ),
                         ],
+                        dividerColor: Theme.of(context).colorScheme.surfaceBright.withAlpha(150),
                       )),
                   flexibleSpace: FlexibleSpaceBar(
                     centerTitle: true,

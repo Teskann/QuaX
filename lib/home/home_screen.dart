@@ -28,10 +28,10 @@ class NavigationPage {
 }
 
 final List<NavigationPage> defaultHomePages = [
-  NavigationPage('feed', (c) => L10n.of(c).home, const Icon(Icons.home), const Icon(Icons.home)),
-  NavigationPage('subscriptions', (c) => L10n.of(c).subscriptions, const Icon(Icons.subscriptions_outlined),
-      const Icon(Icons.subscriptions)),
-  NavigationPage('trending', (c) => L10n.of(c).search, const Icon(Icons.search), const Icon(Icons.search)),
+  NavigationPage('feed', (c) => L10n.of(c).home, const Icon(Icons.home_outlined), const Icon(Icons.home)),
+  NavigationPage('subscriptions', (c) => L10n.of(c).subscriptions, const Icon(Icons.people_outlined),
+      const Icon(Icons.people)),
+  NavigationPage('trending', (c) => L10n.of(c).search, const Icon(Icons.search_outlined), const Icon(Icons.search)),
   NavigationPage(
       'saved', (c) => L10n.of(c).saved, const Icon(Icons.bookmark_border_outlined), const Icon(Icons.bookmark)),
 ];
@@ -161,6 +161,14 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
   final Map<int, ScrollController> _scrollControllers = {};
   final Map<int, FocusNode> _focusNodes = {};
 
+  void unfocusOtherPages(){
+    _focusNodes.forEach((index, focusNode) {
+      if(index != _currentPage) {
+        focusNode.unfocus();
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -226,14 +234,33 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
         labelBehavior: widget.prefs.get(optionShowNavigationLabels)
             ? NavigationDestinationLabelBehavior.alwaysShow
             : NavigationDestinationLabelBehavior.alwaysHide,
-        destinations: widget.pages
+        shadowColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
+        indicatorColor: Colors.transparent,
+        height: 64,
+        destinations: widget.pages.asMap().entries
             .map(
-              (e) => NavigationDestination(
-                icon: e.icon,
-                selectedIcon: e.selectedIcon,
-                label: e.titleBuilder(context),
-              ),
-            )
+              (e) {
+                final index = e.key;
+                final page = e.value;
+                final isSelected = _currentPage == index;
+                final scale = widget.prefs.get(optionShowNavigationLabels) ? 1.0 : (isSelected ? 1.2 : 1.2);
+                return NavigationDestination(
+                  icon: AnimatedScale(
+                    scale: scale,
+                    duration: const Duration(milliseconds: 0),
+                    curve: Curves.easeOut,
+                    child: page.icon,
+                  ),
+                  selectedIcon: AnimatedScale(
+                    scale: scale,
+                    duration: const Duration(milliseconds: 0),
+                    curve: Curves.easeOut,
+                    child: page.selectedIcon,
+                  ),
+                  label: page.titleBuilder(context),
+                );
+              })
             .toList(),
         onDestinationSelected: (index) async {
           if (index == _currentPage) {
@@ -244,9 +271,10 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
               }
             }
             if (widget.pages[index].id == "trending") {
-              _focusNodes[_currentPage]?.requestFocus();
+              _focusNodes[_currentPage]!.requestFocus();
             }
           }
+          unfocusOtherPages();
           _pageController.jumpToPage(index);
         },
       ),

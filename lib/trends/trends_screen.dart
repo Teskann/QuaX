@@ -21,12 +21,6 @@ class _TrendsScreenState extends State<TrendsScreen> with AutomaticKeepAliveClie
   final TextEditingController _queryController = TextEditingController();
 
   @override
-  void initState() {
-    super.initState();
-    widget.focusNode.requestFocus();
-  }
-
-  @override
   Widget build(BuildContext context) {
     super.build(context);
 

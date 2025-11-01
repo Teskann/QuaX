@@ -49,7 +49,7 @@ class _TweetConversationState extends State<TweetConversation> {
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 4),
-      decoration: const BoxDecoration(border: Border(left: BorderSide(color: Colors.white, width: 4))),
+      decoration: BoxDecoration(border: Border(left: BorderSide(color: Theme.of(context).colorScheme.secondary.withAlpha(127), width: 3))),
       child: Column(
         children: [
           ...tiles,

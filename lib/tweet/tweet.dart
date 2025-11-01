@@ -1,3 +1,4 @@
+import 'dart:io' show Platform;
 import 'package:auto_direction/auto_direction.dart';
 import 'package:dart_twitter_api/twitter_api.dart';
 import 'package:dynamic_color/dynamic_color.dart';
@@ -131,7 +132,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     return entities;
   }
 
-  Future<void> onClickTranslate() async {
+  Future<void> onClickTranslate(Locale locale) async {
     // If we've already translated this text before, use those results instead of translating again
     if (_translatedParts.isNotEmpty) {
       return setState(() {
@@ -144,25 +145,11 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
       _translationStatus = TranslationStatus.translating;
     });
 
-    try {
-      var systemLocale = getShortSystemLocale();
-
-      var isLanguageSupported = await isLanguageSupportedForTranslation(systemLocale);
-      if (!isLanguageSupported) {
-        return showTranslationError('Your system language ($systemLocale) is not supported for translation');
-      }
-    } catch (e) {
-      log.severe('Unable to list the supported languages');
-
-      return showTranslationError(
-          'Failed to get the list of supported languages. Please check your connection, or try again later!');
-    }
-
     var originalText = _originalParts.map((e) => e.toString()).toList();
 
-    var res = await TranslationAPI.translate(tweet.idStr!, originalText, tweet.lang ?? "");
+    var res = await TranslationAPI.translate(locale, tweet.idStr!, originalText, tweet.lang ?? "");
     if (res.success) {
-      var translatedParts = convertTextPartsToTweetEntities(List.from(res.body['translatedText']));
+      final List<TweetTextPart> translatedParts = convertTextPartsToTweetEntities(res.body['result']['text']);
 
       // We cache the translated parts in a property in case the user swaps back and forth
       return setState(() {
@@ -195,16 +182,13 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
         arguments: StatusScreenArguments(id: tweet.idStr!, username: tweet.user!.screenName!, tweetOpened: true));
   }
 
-  List<TweetTextPart> convertTextPartsToTweetEntities(List<String> parts) {
+  List<TweetTextPart> convertTextPartsToTweetEntities(String translatedText) {
     List<TweetTextPart> translatedParts = [];
-
-    for (var i = 0; i < parts.length; i++) {
-      var thing = _originalParts[i];
-      if (thing.plainText != null) {
-        translatedParts.add(TweetTextPart(null, parts[i]));
-      } else {
-        translatedParts.add(TweetTextPart(thing.entity, null));
-      }
+    var thing = _originalParts[0];
+    if (thing.plainText != null) {
+      translatedParts.add(TweetTextPart(null, translatedText));
+    } else {
+      translatedParts.add(TweetTextPart(thing.entity, null));
     }
 
     return translatedParts;
@@ -399,7 +383,8 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
       if (tweet.quotedStatusWithCard != null) {
         quotedTweet = Container(
           decoration: BoxDecoration(
-              border: Border.all(color: theme.colorScheme.surfaceBright), borderRadius: BorderRadius.circular(8)),
+              border: Border.all(color: theme.colorScheme.surfaceBright.withAlpha(180)),
+              borderRadius: BorderRadius.circular(8)),
           margin: const EdgeInsets.all(8),
           child: TweetTile(
             clickable: true,
@@ -436,11 +421,28 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
       );
     }
 
+    var localeStr = PrefService.of(context).get<String>(optionLocale);
+    final isSystemLocale = (localeStr ?? optionLocaleDefault) == optionLocaleDefault;
+    if (isSystemLocale) {
+      localeStr = Platform.localeName;
+    }
+
+    final splitLocale = localeStr!.split(RegExp(r'[-_]'));
+    late Locale locale;
+    if (splitLocale.length == 1) {
+      locale = Locale(splitLocale[0]);
+    } else {
+      locale = Locale(splitLocale[0], splitLocale[1]);
+    }
+
     Widget translateButton;
     switch (_translationStatus) {
       case TranslationStatus.original:
-        translateButton = _createFooterIconButton(Icons.translate,
-            Colors.blue.harmonizeWith(Theme.of(context).colorScheme.primary), null, () async => onClickTranslate());
+        translateButton = _createFooterIconButton(
+            Icons.translate,
+            Colors.blue.harmonizeWith(Theme.of(context).colorScheme.primary),
+            null,
+            () async => onClickTranslate(locale));
         break;
       case TranslationStatus.translating:
         translateButton = const Padding(
@@ -449,8 +451,11 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
         );
         break;
       case TranslationStatus.translationFailed:
-        translateButton = _createFooterIconButton(Icons.translate,
-            Colors.red.harmonizeWith(Theme.of(context).colorScheme.primary), null, () async => onClickTranslate());
+        translateButton = _createFooterIconButton(
+            Icons.translate,
+            Colors.red.harmonizeWith(Theme.of(context).colorScheme.primary),
+            null,
+            () async => onClickTranslate(locale));
         break;
       case TranslationStatus.translated:
         translateButton = _createFooterIconButton(Icons.translate,
@@ -676,7 +681,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
               Divider(
                 height: 0,
                 thickness: 1,
-                color: addSeparator ? theme.colorScheme.surfaceBright : Colors.transparent,
+                color: addSeparator ? theme.colorScheme.surfaceBright.withAlpha(150) : Colors.transparent,
               ),
             ]));
   }

@@ -74,6 +74,7 @@ class _TrendsTabBarState extends State<TrendsTabBar> with TickerProviderStateMix
           onTap: (index) async {
             await model.change(state.locations[index]);
           },
+          dividerColor: Theme.of(context).colorScheme.surfaceBright.withAlpha(150),
           tabs: _tabs,
         );
       },

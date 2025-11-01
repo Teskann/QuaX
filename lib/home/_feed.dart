@@ -46,17 +46,6 @@ class _FeedScreenState extends State<FeedScreen>
     }
   }
 
-  void navigateToTop(BuildContext context) async
-  {
-    final bool disableAnimations = PrefService.of(context).get(optionDisableAnimations) == true;
-    if (disableAnimations == false) {
-      await widget.scrollController
-          .animateTo(0, duration: const Duration(seconds: 1), curve: Curves.easeInOut);
-    } else {
-      widget.scrollController.jumpTo(0);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -77,6 +66,7 @@ class _FeedScreenState extends State<FeedScreen>
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               SliverAppBar(
+                backgroundColor: Theme.of(context).colorScheme.surface,
                 pinned: false,
                 snap: true,
                 floating: true,
@@ -99,9 +89,13 @@ class _FeedScreenState extends State<FeedScreen>
                   if (_tab == 0)
                     IconButton(icon: const Icon(Icons.more_vert), onPressed: () => showFeedSettings(context, model)),
                   IconButton(
-                      icon: const Icon(Icons.arrow_upward),
+                      icon: const Icon(Icons.refresh),
                       onPressed: () async {
-                        navigateToTop(context);
+                        if (_tab == 0) {
+                          await model.loadGroup();
+                        } else {
+                          _pagingController.refresh();
+                        }
                       }),
                   IconButton(
                       icon: const Icon(Icons.settings),

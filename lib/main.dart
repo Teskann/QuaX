@@ -206,7 +206,7 @@ Future<void> main() async {
     optionThemeColor: 'accent',
     optionThemeTrueBlack: true,
     optionThemeTrueBlackTweetCards: true,
-    optionShowNavigationLabels: true,
+    optionShowNavigationLabels: false,
     optionTweetsHideSensitive: true,
     optionUserTrendsLocations: jsonEncode({
       'active': {'name': 'Worldwide', 'woeid': 1},

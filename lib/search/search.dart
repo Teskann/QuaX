@@ -83,7 +83,6 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
           padding: EdgeInsets.fromLTRB(8, 36, 8, 8),
           child: SearchBar(
             controller: _queryController,
-            focusNode: _focusNode,
             textInputAction: TextInputAction.search,
             leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () => Navigator.pop(context)),
             trailing: [
@@ -106,6 +105,7 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
           ],
           labelColor: Theme.of(context).appBarTheme.foregroundColor,
           indicatorColor: Theme.of(context).appBarTheme.foregroundColor,
+          dividerColor: Theme.of(context).colorScheme.surfaceBright.withAlpha(150),
         ),
       ),
       body: Column(

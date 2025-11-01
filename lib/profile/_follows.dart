@@ -48,6 +48,7 @@ class _ProfileFollowsState extends State<ProfileFollows> with AutomaticKeepAlive
         widget.type,
         cursor: cursor,
         count: _pageSize,
+        id: widget.user.idStr
       );
 
       if (!mounted) {

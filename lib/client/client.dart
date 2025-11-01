@@ -223,10 +223,76 @@ class Twitter {
     return Profile(user, pins);
   }
 
-  static Future<Follows> getProfileFollows(String screenName, String type, {int? cursor, int? count = 200}) async {
+  static Future<PaginatedUsers> friendsList(String userId, int count) async {
+    final uri = Uri.https('x.com', '/i/api/graphql/FEcMGoVOUjm0aU9BJrrGZA/Following', {
+      "variables": jsonEncode(
+          {"userId": userId, "count": count, "includePromotedContent": false, "withGrokTranslatedBio": false}),
+      "features": jsonEncode({
+        "rweb_video_screen_enabled": false,
+        "payments_enabled": false,
+        "profile_label_improvements_pcf_label_in_post_enabled": true,
+        "responsive_web_profile_redirect_enabled": false,
+        "rweb_tipjar_consumption_enabled": true,
+        "verified_phone_label_enabled": false,
+        "creator_subscriptions_tweet_preview_api_enabled": true,
+        "responsive_web_graphql_timeline_navigation_enabled": true,
+        "responsive_web_graphql_skip_user_profile_image_extensions_enabled": false,
+        "premium_content_api_read_enabled": false,
+        "communities_web_enable_tweet_community_results_fetch": true,
+        "c9s_tweet_anatomy_moderator_badge_enabled": true,
+        "responsive_web_grok_analyze_button_fetch_trends_enabled": false,
+        "responsive_web_grok_analyze_post_followups_enabled": true,
+        "responsive_web_jetfuel_frame": true,
+        "responsive_web_grok_share_attachment_enabled": true,
+        "articles_preview_enabled": true,
+        "responsive_web_edit_tweet_api_enabled": true,
+        "graphql_is_translatable_rweb_tweet_is_translatable_enabled": true,
+        "view_counts_everywhere_api_enabled": true,
+        "longform_notetweets_consumption_enabled": true,
+        "responsive_web_twitter_article_tweet_consumption_enabled": true,
+        "tweet_awards_web_tipping_enabled": false,
+        "responsive_web_grok_show_grok_translated_post": false,
+        "responsive_web_grok_analysis_button_from_backend": true,
+        "creator_subscriptions_quote_tweet_preview_enabled": false,
+        "freedom_of_speech_not_reach_fetch_enabled": true,
+        "standardized_nudges_misinfo": true,
+        "tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled": true,
+        "longform_notetweets_rich_text_read_enabled": true,
+        "longform_notetweets_inline_media_enabled": true,
+        "responsive_web_grok_image_annotation_enabled": true,
+        "responsive_web_grok_imagine_annotation_enabled": true,
+        "responsive_web_grok_community_note_auto_translation_is_enabled": false,
+        "responsive_web_enhance_cards_enabled": false
+      })
+    });
+
+    return _twitterApi.client.get(uri).then((response) {
+      var users = PaginatedUsers()..users = [];
+      dynamic instructions =
+          jsonDecode(response.body)?["data"]?["user"]?["result"]?["timeline"]?["timeline"]?["instructions"];
+      for (final instruction in instructions) {
+        if (instruction["type"] != "TimelineAddEntries" || instruction["entries"] == null) continue;
+        for (final entry in instruction["entries"]) {
+          final userResult = entry["content"]?["itemContent"]?["user_results"]?["result"];
+          if (userResult == null) continue;
+          var user = UserWithExtra()
+            ..screenName = userResult["core"]?["screen_name"]
+            ..name = userResult["core"]?["name"]
+            ..profileImageUrlHttps = userResult["avatar"]?["image_url"]
+            ..verified = userResult["is_blue_verified"]
+            ..createdAt = convertTwitterDateTime(userResult["core"]?["created_at"])
+            ..idStr = userResult["rest_id"];
+          users.users!.add(user);
+        }
+      }
+      return users;
+    });
+  }
+
+  static Future<Follows> getProfileFollows(String screenName, String type,
+      {int? cursor, int? count = 200, String? id}) async {
     var response = type == 'following'
-        ? await _twitterApi.userService
-            .friendsList(screenName: screenName, cursor: cursor, count: count, skipStatus: true)
+        ? (await friendsList(id!, count!))
         : await _twitterApi.userService
             .followersList(screenName: screenName, cursor: cursor, count: count, skipStatus: true);
 
@@ -832,9 +898,10 @@ class Twitter {
   }
 
   static Future<List<UserWithExtra>> _getUsersPage(Iterable<String> ids) async {
-    var response = await _twitterApi.client.get(Uri.https('api.twitter.com', '/1.1/users/lookup.json', {
+    final uri = Uri.https('api.x.com', '/2/users', {
       'user_id': ids.join(','),
-    }));
+    });
+    var response = await _twitterApi.client.get(uri, headers: await TwitterHeaders.getHeaders(uri));
 
     var result = json.decode(response.body);
 
@@ -882,28 +949,6 @@ class Twitter {
 
     return {for (var e in tweets) e.idStr: e};
   }
-/*
-  static Map<String, TweetWithCard> _createTweets(
-      String entryPrefix, Map<String, dynamic> result, bool includeReplies) {
-    var globalTweets = result['globalObjects']['tweets'] as Map<String, dynamic>;
-    var globalUsers = result['globalObjects']['users'];
-
-    bool includeTweet(dynamic t) {
-      if (includeReplies) {
-        return true;
-      }
-
-      return t['in_reply_to_status_id'] == null || t['in_reply_to_user_id'] == null;
-    }
-
-    var tweets = globalTweets.values
-        .where(includeTweet)
-        .map((e) => TweetWithCard.fromCardJson(globalTweets, globalUsers, e))
-        .toList();
-
-    return {for (var e in tweets) e.idStr!: e};
-  }
-  */
 
   static Future<Map<String, dynamic>> getBroadcastDetails(String key) async {
     var response = await _twitterApi.client.get(Uri.https('twitter.com', '/i/api/1.1/live_video_stream/status/$key'));
@@ -1000,6 +1045,7 @@ class TweetWithCard extends Tweet {
     }
 
     if (result['quoted_status_result'] != null &&
+        result['quoted_status_result']['result'] != null &&
         result['quoted_status_result']['result']?['__typename'] != 'TweetWithVisibilityResults') {
       quotedStatus = TweetWithCard.fromGraphqlJson(result['quoted_status_result']['result']!);
     }
