@@ -99,7 +99,8 @@ class _TweetVideoState extends State<TweetVideo> {
     var streamUrl = urls.streamUrl;
     var downloadUrl = urls.downloadUrl;
 
-    _videoController = VideoPlayerController.networkUrl(Uri.parse(streamUrl));
+    _videoController = VideoPlayerController.networkUrl(Uri.parse(streamUrl),
+        videoPlayerOptions: VideoPlayerOptions(mixWithOthers: widget.disableControls));
 
     var model = context.read<VideoContextState>();
     var volume = model.isMuted ? 0.0 : _videoController!.value.volume;
@@ -171,7 +172,6 @@ class _TweetVideoState extends State<TweetVideo> {
         );
       },
     );
-
     _videoController!.addListener(() {
       // Change wake lock screen
       if (_chewieController!.isPlaying) {
@@ -219,9 +219,7 @@ class _TweetVideoState extends State<TweetVideo> {
           children: [
             AspectRatio(
               aspectRatio: widget.metadata.aspectRatio,
-              child: hasVideo
-                  ? Chewie(controller: _chewieController!)
-                  : const SizedBox.shrink(),
+              child: hasVideo ? Chewie(controller: _chewieController!) : const SizedBox.shrink(),
             ),
             if (hasError)
               Positioned(
@@ -238,7 +236,6 @@ class _TweetVideoState extends State<TweetVideo> {
       },
     );
   }
-
 
   @override
   void dispose() {
