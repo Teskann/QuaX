@@ -41,7 +41,7 @@ jobs:
         run: |
           echo "Updating pubspec.yaml to version: $VERSION"
           if grep -q '^version:' pubspec.yaml; then
-            sed -i "s/^version:.*/version: $VERSION+1/" pubspec.yaml
+            sed -i "s/^version:.*/version: $VERSION+400000111/" pubspec.yaml
           else
             echo "version: $VERSION" >> pubspec.yaml
           fi
