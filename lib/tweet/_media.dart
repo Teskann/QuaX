@@ -162,7 +162,6 @@ class _TweetMediaState extends State<TweetMedia> {
           aspectRatio: largestAspectRatio,
           child: PageView.builder(
             controller: _controller,
-            physics: const LessSensitiveScrollPhysics(),
             scrollDirection: Axis.horizontal,
             itemCount: widget.media.length,
             itemBuilder: (context, index) {
@@ -278,7 +277,6 @@ class _TweetMediaViewState extends State<TweetMediaView> {
       ),
       body: ExtendedImageGesturePageView.builder(
         scrollDirection: Axis.horizontal,
-        physics: const LessSensitiveScrollPhysics(),
         itemCount: widget.media.length,
         itemBuilder: (BuildContext context, int index) {
           var item = widget.media[index];

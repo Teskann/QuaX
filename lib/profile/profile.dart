@@ -599,7 +599,6 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
             ],
             child: TabBarView(
               controller: _tabController,
-              physics: const LessSensitiveScrollPhysics(),
               children: [
                 ProfileTweets(
                     user: user,
