@@ -37,13 +37,22 @@ jobs:
           VERSION="${{ github.event.inputs.major }}.${{ github.event.inputs.minor }}.${{ github.event.inputs.patch }}"
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
+      - name: Get current codeNumber from pubspec.yaml
+        id: get_codeNumber
+        run: |
+          current_codeNumber=$(grep -oP 'version: \d+\.\d+\.\d+\+\K\d+' pubspec.yaml || echo 0)
+          echo "Current codeNumber is: $current_codeNumber"
+          new_codeNumber=$((current_codeNumber + 1))
+          echo "New codeNumber is: $new_codeNumber"
+          echo "NEW_CODE_NUMBER=$new_codeNumber" >> $GITHUB_ENV
+
       - name: Update version in pubspec.yaml
         run: |
-          echo "Updating pubspec.yaml to version: $VERSION"
+          echo "Updating pubspec.yaml to version: $VERSION+${{ env.NEW_CODE_NUMBER }}"
           if grep -q '^version:' pubspec.yaml; then
-            sed -i "s/^version:.*/version: $VERSION+400000111/" pubspec.yaml
+            sed -i "s/^version:.*/version: $VERSION+${{ env.NEW_CODE_NUMBER }}/" pubspec.yaml
           else
-            echo "version: $VERSION" >> pubspec.yaml
+            echo "version: $VERSION+${{ env.NEW_CODE_NUMBER }}" >> pubspec.yaml
           fi
           grep '^version:' pubspec.yaml
 
