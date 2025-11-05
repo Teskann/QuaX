@@ -6,7 +6,6 @@ import 'package:quax/generated/l10n.dart';
 import 'package:quax/search/search.dart';
 import 'package:quax/trends/trends_model.dart';
 import 'package:quax/ui/errors.dart';
-import 'package:quax/ui/physics.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -60,7 +59,6 @@ class _TrendsListState extends State<TrendsList> {
             },
             child: ListView.builder(
               controller: widget.scrollController,
-              physics: const LessSensitiveScrollPhysics(),
               itemCount: trends.length,
               itemBuilder: (context, index) {
                 var trend = trends[index];

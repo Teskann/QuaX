@@ -12,7 +12,6 @@ import 'package:quax/profile/profile.dart';
 import 'package:quax/tweet/_photo.dart';
 import 'package:quax/tweet/_video.dart';
 import 'package:quax/ui/errors.dart';
-import 'package:quax/ui/physics.dart';
 import 'package:quax/utils/downloads.dart';
 import 'package:path/path.dart' as path;
 import 'package:pref/pref.dart';
