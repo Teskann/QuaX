@@ -889,7 +889,7 @@ class Twitter {
     void Function() increaseTweetCounter,
   ) {
     final timeline = result["data"]["user"]["result"]["timeline_v2"] ?? result["data"]["user"]["result"]["timeline"];
-    var instructions = List.from(timeline['timeline']['instructions']);
+    var instructions = List.from(timeline['timeline']?['instructions'] ?? []);
     var addEntriesInstructions = instructions.firstWhereOrNull((e) => e['type'] == 'TimelineAddEntries');
     if (addEntriesInstructions == null) {
       return TweetStatus(chains: [], cursorBottom: null, cursorTop: null);
