@@ -6,7 +6,6 @@ import 'package:quax/generated/l10n.dart';
 import 'package:quax/home/home_screen.dart';
 import 'package:quax/utils/iterables.dart';
 import 'package:logging/logging.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:pref/pref.dart';
 
 String getFlavor() {
@@ -264,27 +263,15 @@ class DownloadTypeSettingState extends State<DownloadTypeSetting> {
         if (widget.prefs.get(optionDownloadType) == optionDownloadTypeDirectory)
           PrefButton(
             onTap: () async {
-              var storagePermission = await Permission.storage.request();
-              if (storagePermission.isGranted) {
-                String? directoryPath = await FilePicker.platform.getDirectoryPath();
-                if (directoryPath == null) {
-                  return;
-                }
+              String? directoryPath = await FilePicker.platform.getDirectoryPath();
 
-                // TODO: Gross. Figure out how to re-render automatically when the preference changes
-                setState(() {
-                  widget.prefs.set(optionDownloadPath, directoryPath);
-                });
-              } else if (storagePermission.isPermanentlyDenied) {
-                await openAppSettings();
-              } else if (context.mounted) {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text(L10n.current.permission_not_granted),
-                    action: SnackBarAction(
-                      label: L10n.current.open_app_settings,
-                      onPressed: openAppSettings,
-                    )));
+              if (directoryPath == null) {
+                return;
               }
+              // TODO: Gross. Figure out how to re-render automatically when the preference changes
+              setState(() {
+                widget.prefs.set(optionDownloadPath, directoryPath);
+              });
             },
             title: Text(L10n.current.download_path),
             subtitle: Text(
