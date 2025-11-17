@@ -21,7 +21,6 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:dart_twitter_api/twitter_api.dart';
 import 'package:quax/tweet/_entities.dart';
-import 'package:quax/tweet/tweet.dart';
 
 class ProfileScreenArguments {
   final String? id;
@@ -236,7 +235,7 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
     return entities;
   }
 
-  static List<TweetEntity> _populateEntitiess(
+  static List<TweetEntity> _populateEntities(
       {required List<TweetEntity> entities, List<dynamic>? source, required Function getNewEntity}) {
     source = source ?? [];
 
