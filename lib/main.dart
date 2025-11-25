@@ -516,7 +516,7 @@ class _DefaultPageState extends State<DefaultPage> {
   void handleInitialLink(Uri link) {
     // Assume it's a username if there's only one segment (or two segments with the second empty, meaning the URI ends with /)
     if (link.pathSegments.length == 1 || (link.pathSegments.length == 2 && link.pathSegments.last.isEmpty)) {
-      Navigator.pushReplacementNamed(context, routeProfile,
+      Navigator.pushNamed(context, routeProfile,
           arguments: ProfileScreenArguments.fromScreenName(link.pathSegments.first));
       return;
     }
@@ -545,7 +545,7 @@ class _DefaultPageState extends State<DefaultPage> {
         var username = link.pathSegments[0];
         var statusId = link.pathSegments[2];
 
-        Navigator.pushReplacementNamed(context, routeStatus,
+        Navigator.pushNamed(context, routeStatus,
             arguments: StatusScreenArguments(
               id: statusId,
               username: username,
@@ -561,8 +561,7 @@ class _DefaultPageState extends State<DefaultPage> {
 
       // https://twitter.com/i/topics/tweet/1447290060123033601
       if (segment2 == 'topics' && segment3 == 'tweet') {
-        Navigator.pushReplacementNamed(context, routeStatus,
-            arguments: StatusScreenArguments(id: segment4, username: null));
+        Navigator.pushNamed(context, routeStatus, arguments: StatusScreenArguments(id: segment4, username: null));
         return;
       }
     }
