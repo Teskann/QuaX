@@ -172,6 +172,11 @@ class SettingsGeneralFragment extends StatelessWidget {
                 ),
               ]),
           PrefSwitch(
+            pref: optionUseAbsoluteTimestamp,
+            title: Text(L10n.of(context).use_absolute_timestamp),
+            subtitle: Text(L10n.of(context).use_absolute_timestamp_description),
+          ),
+          PrefSwitch(
             pref: optionMediaDefaultMute,
             title: Text(L10n.of(context).mute_videos),
             subtitle: Text(L10n.of(context).mute_video_description),

@@ -549,7 +549,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
                               ],
                               if (createdAt != null)
                                 DefaultTextStyle(
-                                    style: theme.textTheme.bodySmall!, child: Timestamp(timestamp: createdAt))
+                                    style: theme.textTheme.bodySmall!, child: Timestamp(timestamp: createdAt, absoluteTimestamp: prefs.get(optionUseAbsoluteTimestamp)))
                             ],
                           ),
                           // Profile picture

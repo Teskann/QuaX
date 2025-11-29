@@ -217,6 +217,7 @@ Future<void> main() async {
     optionThemeTrueBlackTweetCards: true,
     optionShowNavigationLabels: false,
     optionTweetsHideSensitive: true,
+    optionUseAbsoluteTimestamp: false,
     optionUserTrendsLocations: jsonEncode({
       'active': {'name': 'Worldwide', 'woeid': 1},
       'locations': [

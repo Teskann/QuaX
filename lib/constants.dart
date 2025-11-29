@@ -43,6 +43,7 @@ const optionThemeColor = 'theme.color';
 const optionThemeTrueBlack = 'theme.true_black';
 const optionThemeTrueBlackTweetCards = 'theme.true_black_tweet_cards';
 const optionShowNavigationLabels = 'theme.show_navigation_labels';
+const optionUseAbsoluteTimestamp = "option.absolute_timestamp";
 
 const themeColors = {
   'red': Colors.red,
