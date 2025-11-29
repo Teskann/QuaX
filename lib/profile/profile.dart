@@ -19,6 +19,8 @@ import 'package:measure_size/measure_size.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:dart_twitter_api/twitter_api.dart';
+import 'package:quax/tweet/_entities.dart';
 
 class ProfileScreenArguments {
   final String? id;
@@ -167,7 +169,7 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
     nestedScrollViewKey.currentState?.outerController.jumpTo(0);
   }
 
-  List<InlineSpan> _addLinksToText(BuildContext context, String content) {
+  TextSpan _parseMentionsAndHashtags(BuildContext context, String content) {
     List<InlineSpan> contentWidgets = [];
 
     // Split the string by any mentions or hashtags, and turn those into links
@@ -205,7 +207,66 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
       return text;
     });
 
-    return contentWidgets;
+    return TextSpan(children: [...contentWidgets]);
+  }
+
+  // The two following methods are copied from tweet/tweet.dart with minor changes
+  static List<TweetEntity> _getEntities(BuildContext context, UserEntityUrl urls) {
+    List<TweetEntity> entities = [];
+
+    entities = _populateEntities(
+        entities: entities,
+        source: urls.urls,
+        getNewEntity: (Url url) {
+          return TweetUrl(url, () async {
+            String? uri = url.expandedUrl;
+            if (uri == null ||
+                (uri.length > 33 && uri.substring(0, 33) == 'https://twitter.com/i/web/status/') ||
+                (uri.length > 27 && uri.substring(0, 27) == 'https://x.com/i/web/status/')) {
+              return;
+            }
+
+            await openUri(uri);
+          });
+        });
+
+    entities.sort((a, b) => a.getEntityStart().compareTo(b.getEntityStart()));
+
+    return entities;
+  }
+
+  static List<TweetEntity> _populateEntities(
+      {required List<TweetEntity> entities, List<dynamic>? source, required Function getNewEntity}) {
+    source = source ?? [];
+
+    for (dynamic newEntity in source) {
+      entities.add(getNewEntity(newEntity));
+    }
+
+    return entities;
+  }
+
+  // build the description with text, @mentions, #hastags and urls
+  List<InlineSpan> buildDescription(BuildContext context, String description, UserEntityUrl entities){
+    // Get entities (only urls, mentions/hashtags are unavailable so they still need to be parsed manually)
+    List<TweetEntity> asTweetEntity = _getEntities(context, entities);
+    List<InlineSpan> descParts = [];
+
+    int index = 0;
+    for (var entity in asTweetEntity) {
+      int start = entity.getEntityStart();
+      int end = entity.getEntityEnd();
+      // Add any text/mention/hashtag between the last entity's end and the start of this one
+      descParts.add(_parseMentionsAndHashtags(context, description.substring(index, start)));
+      // Then add the actual url entity
+      descParts.add(entity.getContent());
+      // Then set our index in the tweet text as the end of our entity
+      index = end;
+    }
+    // Then add any text between the last entity's end and the end of the description
+    descParts.add(_parseMentionsAndHashtags(context, description.substring(index)));
+
+    return descParts;
   }
 
   @override
@@ -358,14 +419,15 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
                                           child: Container(
                                               margin: const EdgeInsets.only(bottom: 8),
                                               child: RichText(
-                                                  maxLines: 3,
+                                                  maxLines: 5,
                                                   text: TextSpan(
                                                       style: TextStyle(
                                                           height: 1.4,
                                                           color: theme.brightness == Brightness.dark
                                                               ? Colors.white
                                                               : Colors.black),
-                                                      children: _addLinksToText(context, user.description!)))),
+                                                      children: buildDescription(context, user.description!, user.entities!.description!)
+                                                  ))),
                                         ),
                                       MeasureSize(
                                           onChange: (size) {
