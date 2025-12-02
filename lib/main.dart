@@ -583,12 +583,6 @@ class _DefaultPageState extends State<DefaultPage> {
 
     final appLinks = AppLinks();
 
-    appLinks.getInitialLink().then((link) {
-      if (link != null) {
-        handleInitialLink(link);
-      }
-    });
-
     // Attach a listener to the stream
     _sub = appLinks.uriLinkStream.listen((link) => handleInitialLink(link), onError: (err) {
       // TODO: Handle exception by warning the user their action did not succeed
