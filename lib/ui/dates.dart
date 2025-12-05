@@ -19,9 +19,9 @@ class Timestamp extends StatefulWidget {
 }
 
 class _TimestampState extends State<Timestamp> {
-  bool useRelativeTimestamp;
+  bool _useRelativeTimestamp;
 
-  _TimestampState({this.useRelativeTimestamp = true});
+  _TimestampState({useRelativeTimestamp = true}) : _useRelativeTimestamp = useRelativeTimestamp;
 
   String formattedTime = '';
 
@@ -31,10 +31,10 @@ class _TimestampState extends State<Timestamp> {
 
     var timestamp = widget.timestamp;
     if (timestamp != null) {
-      if (useRelativeTimestamp) {
+      if (_useRelativeTimestamp) {
         formattedTime = createRelativeDate(timestamp);
       } else {
-        formattedTime = absoluteDateFormat.format(timestamp);
+        formattedTime = absoluteDateFormat.format(timestamp.toLocal());
       }
     }
   }
@@ -50,13 +50,13 @@ class _TimestampState extends State<Timestamp> {
       child: Text(formattedTime),
       onTap: () {
         setState(() {
-          if (useRelativeTimestamp) {
+          if (_useRelativeTimestamp) {
             formattedTime = createRelativeDate(timestamp);
           } else {
-            formattedTime = absoluteDateFormat.format(timestamp);
+            formattedTime = absoluteDateFormat.format(timestamp.toLocal());
           }
 
-          useRelativeTimestamp = !useRelativeTimestamp;
+          _useRelativeTimestamp = !_useRelativeTimestamp;
         });
       },
     );
