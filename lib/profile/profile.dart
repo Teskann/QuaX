@@ -210,50 +210,14 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
     return TextSpan(children: [...contentWidgets]);
   }
 
-  // The two following methods are copied from tweet/tweet.dart with minor changes
-  static List<TweetEntity> _getEntities(BuildContext context, UserEntityUrl urls) {
-    List<TweetEntity> entities = [];
-
-    entities = _populateEntities(
-        entities: entities,
-        source: urls.urls,
-        getNewEntity: (Url url) {
-          return TweetUrl(url, () async {
-            String? uri = url.expandedUrl;
-            if (uri == null ||
-                (uri.length > 33 && uri.substring(0, 33) == 'https://twitter.com/i/web/status/') ||
-                (uri.length > 27 && uri.substring(0, 27) == 'https://x.com/i/web/status/')) {
-              return;
-            }
-
-            await openUri(uri);
-          });
-        });
-
-    entities.sort((a, b) => a.getEntityStart().compareTo(b.getEntityStart()));
-
-    return entities;
-  }
-
-  static List<TweetEntity> _populateEntities(
-      {required List<TweetEntity> entities, List<dynamic>? source, required Function getNewEntity}) {
-    source = source ?? [];
-
-    for (dynamic newEntity in source) {
-      entities.add(getNewEntity(newEntity));
-    }
-
-    return entities;
-  }
-
   // build the description with text, @mentions, #hastags and urls
-  List<InlineSpan> buildDescription(BuildContext context, String description, UserEntityUrl entities){
+  List<InlineSpan> buildDescription(BuildContext context, String description, UserEntityUrl rawEntities){
     // Get entities (only urls, mentions/hashtags are unavailable so they still need to be parsed manually)
-    List<TweetEntity> asTweetEntity = _getEntities(context, entities);
+    List<Entity> entities = Entity.parseEntities(context, rawEntities);
     List<InlineSpan> descParts = [];
 
     int index = 0;
-    for (var entity in asTweetEntity) {
+    for (var entity in entities) {
       int start = entity.getEntityStart();
       int end = entity.getEntityEnd();
       // Add any text/mention/hashtag between the last entity's end and the start of this one
@@ -418,9 +382,10 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
                                           },
                                           child: Container(
                                               margin: const EdgeInsets.only(bottom: 8),
-                                              child: RichText(
+                                              child: SelectableText.rich(
+                                                  minLines: 1,
                                                   maxLines: 5,
-                                                  text: TextSpan(
+                                                  TextSpan(
                                                       style: TextStyle(
                                                           height: 1.4,
                                                           color: theme.brightness == Brightness.dark
