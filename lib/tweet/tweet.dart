@@ -1,6 +1,5 @@
 import 'dart:io' show Platform;
 import 'package:auto_direction/auto_direction.dart';
-import 'package:dart_twitter_api/twitter_api.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:quax/client/client.dart';
@@ -9,17 +8,15 @@ import 'package:quax/generated/l10n.dart';
 import 'package:quax/import_data_model.dart';
 import 'package:quax/profile/profile.dart';
 import 'package:quax/saved/saved_tweet_model.dart';
-import 'package:quax/search/search.dart';
 import 'package:quax/status.dart';
 import 'package:quax/tweet/_card.dart';
-import 'package:quax/tweet/_entities.dart';
+import 'package:quax/utils/_entities.dart';
 import 'package:quax/tweet/_media.dart';
 import 'package:quax/ui/dates.dart';
 import 'package:quax/ui/errors.dart';
 import 'package:quax/user.dart';
 import 'package:quax/utils/iterables.dart';
 import 'package:quax/utils/translation.dart';
-import 'package:quax/utils/urls.dart';
 import 'package:html_unescape/html_unescape.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
@@ -74,61 +71,6 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     }
 
     return HtmlUnescape().convert(string);
-  }
-
-  static List<TweetEntity> _populateEntities(
-      {required List<TweetEntity> entities, List<dynamic>? source, required Function getNewEntity}) {
-    source = source ?? [];
-
-    for (dynamic newEntity in source) {
-      entities.add(getNewEntity(newEntity));
-    }
-
-    return entities;
-  }
-
-  static List<TweetEntity> _getEntities(BuildContext context, TweetWithCard tweet) {
-    List<TweetEntity> entities = [];
-
-    entities = _populateEntities(
-        entities: entities,
-        source: tweet.entities?.hashtags,
-        getNewEntity: (Hashtag hashtag) {
-          return TweetHashtag(
-              hashtag,
-              () => Navigator.pushNamed(context, routeSearch,
-                  arguments: SearchArguments(1, focusInputOnOpen: false, query: '#${hashtag.text}')));
-        });
-
-    entities = _populateEntities(
-        entities: entities,
-        source: tweet.entities?.userMentions,
-        getNewEntity: (UserMention mention) {
-          return TweetUserMention(mention, () {
-            Navigator.pushNamed(context, routeProfile,
-                arguments: ProfileScreenArguments(mention.idStr, mention.screenName));
-          });
-        });
-
-    entities = _populateEntities(
-        entities: entities,
-        source: tweet.entities?.urls,
-        getNewEntity: (Url url) {
-          return TweetUrl(url, () async {
-            String? uri = url.expandedUrl;
-            if (uri == null ||
-                (uri.length > 33 && uri.substring(0, 33) == 'https://twitter.com/i/web/status/') ||
-                (uri.length > 27 && uri.substring(0, 27) == 'https://x.com/i/web/status/')) {
-              return;
-            }
-
-            await openUri(uri);
-          });
-        });
-
-    entities.sort((a, b) => a.getEntityStart().compareTo(b.getEntityStart()));
-
-    return entities;
   }
 
   Future<void> onClickTranslate(Locale locale) async {
@@ -228,7 +170,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
 
     Iterable<int> runes = tweetText.getRange(displayTextRange[0], displayTextRange[1]);
 
-    List<TweetEntity> entities = _getEntities(context, actualTweet);
+    List<Entity> entities = Entity.parseEntities(context, actualTweet.entities);
     List<TweetTextPart> things = [];
 
     int index = 0;
