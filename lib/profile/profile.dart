@@ -20,7 +20,7 @@ import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:dart_twitter_api/twitter_api.dart';
-import 'package:quax/tweet/_entities.dart';
+import 'package:quax/utils//_entities.dart';
 
 class ProfileScreenArguments {
   final String? id;
