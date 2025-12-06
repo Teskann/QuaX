@@ -172,6 +172,11 @@ class SettingsGeneralFragment extends StatelessWidget {
                 ),
               ]),
           PrefSwitch(
+            pref: optionUseAbsoluteTimestamp,
+            title: Text(L10n.of(context).use_absolute_timestamp),
+            subtitle: Text(L10n.of(context).use_absolute_timestamp_description),
+          ),
+          PrefSwitch(
             pref: optionMediaDefaultMute,
             title: Text(L10n.of(context).mute_videos),
             subtitle: Text(L10n.of(context).mute_video_description),
@@ -223,6 +228,11 @@ class SettingsGeneralFragment extends StatelessWidget {
             title: Text(L10n.of(context).x_client_transaction_id_provider),
             subtitle: Text(L10n.of(context).x_client_transaction_id_provider_description),
             dialog: _createXClientTransactionIdDialog(context, prefs),
+          ),
+          PrefSwitch(
+            title: Text(L10n.of(context).disable_warnings_for_unrelated_posts_in_feed),
+            subtitle: Text(L10n.of(context).disable_warnings_for_unrelated_posts_in_feed_description),
+            pref: optionDisableWarningsForUnrelatedPostsInFeed,
           ),
         ]),
       ),

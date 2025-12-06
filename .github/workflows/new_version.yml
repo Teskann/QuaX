@@ -56,11 +56,15 @@ jobs:
           fi
           grep '^version:' pubspec.yaml
 
+      - name: Generate changelog
+        run: |
+          ./generate-release-notes.sh $VERSION
+
       - name: Commit and tag
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add pubspec.yaml
+          git add pubspec.yaml changelog.md
           git commit -m "Bumping to version $VERSION"
           git tag "v$VERSION"
           git push origin HEAD:master

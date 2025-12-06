@@ -911,12 +911,6 @@ class Twitter {
     //var debugTweets2 = json.encode(addEntries);
     var pinnedChains = createTweets(addPinnedEntries, true);
 
-    // Order all the conversations by newest first (assuming the ID is an incrementing key),
-    // and create a chain from them
-    chains.sort((a, b) {
-      return b.id.compareTo(a.id);
-    });
-
     //If we want to show pinned tweets, add them before the others that we already have
     if (pinnedTweets.isNotEmpty & showPinnedTweet) {
       chains.insertAll(0, pinnedChains);
@@ -961,12 +955,6 @@ class Twitter {
     // var debugTweets = json.encode(chains);
     //var debugTweets2 = json.encode(addEntries);
     var pinnedChains = createTweets(addPinnedEntries, true);
-
-    // Order all the conversations by newest first (assuming the ID is an incrementing key),
-    // and create a chain from them
-    chains.sort((a, b) {
-      return b.id.compareTo(a.id);
-    });
 
     //If we want to show pinned tweets, add them before the others that we already have
     if (pinnedTweets.isNotEmpty & showPinnedTweet) {
