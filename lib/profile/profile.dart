@@ -221,11 +221,11 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
       int start = entity.getEntityStart();
       int end = entity.getEntityEnd();
       // Add any text/mention/hashtag between the last entity's end and the start of this one
-      descParts.add(_parseMentionsAndHashtags(context, description.substring(index, start)));
+      descParts.add(_parseMentionsAndHashtags(context, description.substring(index, start + 1)));
       // Then add the actual url entity
       descParts.add(entity.getContent());
       // Then set our index in the tweet text as the end of our entity
-      index = end;
+      index = end + 1;
     }
     // Then add any text between the last entity's end and the end of the description
     descParts.add(_parseMentionsAndHashtags(context, description.substring(index)));
