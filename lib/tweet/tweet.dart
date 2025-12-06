@@ -10,7 +10,7 @@ import 'package:quax/profile/profile.dart';
 import 'package:quax/saved/saved_tweet_model.dart';
 import 'package:quax/status.dart';
 import 'package:quax/tweet/_card.dart';
-import 'package:quax/utils//_entities.dart';
+import 'package:quax/utils/_entities.dart';
 import 'package:quax/tweet/_media.dart';
 import 'package:quax/ui/dates.dart';
 import 'package:quax/ui/errors.dart';
