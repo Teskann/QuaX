@@ -2,27 +2,27 @@ import 'package:dart_twitter_api/twitter_api.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-abstract class TweetEntity {
+abstract class Entity {
   List<int>? indices;
-
-  TweetEntity(this.indices);
-
+  
+  Entity(this.indices);
+  
   InlineSpan getContent();
-
+  
   int getEntityStart() {
     return indices![0];
   }
-
+  
   int getEntityEnd() {
     return indices![1];
   }
 }
 
-class TweetHashtag extends TweetEntity {
+class HashtagEntity extends Entity {
   final Hashtag hashtag;
   final Function onTap;
 
-  TweetHashtag(this.hashtag, this.onTap) : super(hashtag.indices);
+  HashtagEntity(this.hashtag, this.onTap) : super(hashtag.indices);
 
   @override
   InlineSpan getContent() {
@@ -36,11 +36,11 @@ class TweetHashtag extends TweetEntity {
   }
 }
 
-class TweetUserMention extends TweetEntity {
+class UserMentionEntity extends Entity {
   final UserMention mention;
   final Function onTap;
 
-  TweetUserMention(this.mention, this.onTap) : super(mention.indices);
+  UserMentionEntity(this.mention, this.onTap) : super(mention.indices);
 
   @override
   InlineSpan getContent() {
@@ -54,11 +54,11 @@ class TweetUserMention extends TweetEntity {
   }
 }
 
-class TweetUrl extends TweetEntity {
+class UrlEntity extends Entity {
   final Url url;
   final Function onTap;
 
-  TweetUrl(this.url, this.onTap) : super(url.indices);
+  UrlEntity(this.url, this.onTap) : super(url.indices);
 
   @override
   InlineSpan getContent() {
@@ -69,5 +69,16 @@ class TweetUrl extends TweetEntity {
           ..onTap = () {
             onTap();
           });
+  }
+}
+
+class MediaEntity extends Entity {
+  final Media media;
+
+  MediaEntity(this.media) : super(media.indices);
+
+  @override
+  InlineSpan getContent() {
+    return TextSpan(text: "");
   }
 }

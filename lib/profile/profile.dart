@@ -1,6 +1,5 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:quax/constants.dart';
@@ -14,6 +13,7 @@ import 'package:quax/search/search.dart';
 import 'package:quax/ui/errors.dart';
 import 'package:quax/user.dart';
 import 'package:quax/utils/urls.dart';
+import 'package:quax/utils/rich_text.dart';
 import 'package:intl/intl.dart';
 import 'package:measure_size/measure_size.dart';
 import 'package:pref/pref.dart';
@@ -167,47 +167,6 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
     nestedScrollViewKey.currentState?.outerController.jumpTo(0);
   }
 
-  List<InlineSpan> _addLinksToText(BuildContext context, String content) {
-    List<InlineSpan> contentWidgets = [];
-
-    // Split the string by any mentions or hashtags, and turn those into links
-    content.splitMapJoin(RegExp(r'(#|(?<=\W|^)@)\w+'), onMatch: (match) {
-      var full = match.group(0);
-      var type = match.group(1);
-      if (type == null || full == null) {
-        return '';
-      }
-
-      var onTap = () async {};
-      if (type == '#') {
-        onTap = () async {
-          Navigator.pushNamed(context, routeSearch,
-              arguments: SearchArguments(1, focusInputOnOpen: false, query: full));
-        };
-      }
-
-      if (type == '@') {
-        onTap = () async {
-          Navigator.pushNamed(context, routeProfile,
-              arguments: ProfileScreenArguments.fromScreenName(full.substring(1)));
-        };
-      }
-
-      contentWidgets.add(TextSpan(
-          text: full,
-          style: TextStyle(color: Theme.of(context).colorScheme.secondary),
-          recognizer: TapGestureRecognizer()..onTap = onTap));
-
-      return type;
-    }, onNonMatch: (text) {
-      contentWidgets.add(TextSpan(text: text));
-
-      return text;
-    });
-
-    return contentWidgets;
-  }
-
   @override
   Widget build(BuildContext context) {
     // TODO: This shouldn't happen before the profile is loaded
@@ -241,6 +200,11 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
     var shareBaseUrlOption = prefs.get(optionShareBaseUrl);
     var shareBaseUrl =
         shareBaseUrlOption != null && shareBaseUrlOption.isNotEmpty ? shareBaseUrlOption : 'https://x.com';
+
+    List<RichTextPart> descParts = [];
+    if (user.description != null && user.description!.isNotEmpty) {
+      descParts = buildRichText(context, user.description!, user.entities!.description!);
+    }
 
     return Scaffold(
       body: Stack(children: [
@@ -357,15 +321,17 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
                                           },
                                           child: Container(
                                               margin: const EdgeInsets.only(bottom: 8),
-                                              child: RichText(
-                                                  maxLines: 3,
-                                                  text: TextSpan(
+                                              child: SelectableText.rich(
+                                                  minLines: 1,
+                                                  maxLines: 5,
+                                                  TextSpan(
                                                       style: TextStyle(
                                                           height: 1.4,
                                                           color: theme.brightness == Brightness.dark
                                                               ? Colors.white
                                                               : Colors.black),
-                                                      children: _addLinksToText(context, user.description!)))),
+                                                      children: displayRichText(descParts)
+                                                  ))),
                                         ),
                                       MeasureSize(
                                           onChange: (size) {

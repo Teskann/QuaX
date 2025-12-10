@@ -1,6 +1,5 @@
 import 'dart:io' show Platform;
 import 'package:auto_direction/auto_direction.dart';
-import 'package:dart_twitter_api/twitter_api.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:quax/client/client.dart';
@@ -9,19 +8,15 @@ import 'package:quax/generated/l10n.dart';
 import 'package:quax/import_data_model.dart';
 import 'package:quax/profile/profile.dart';
 import 'package:quax/saved/saved_tweet_model.dart';
-import 'package:quax/search/search.dart';
 import 'package:quax/status.dart';
 import 'package:quax/tweet/_ExpandableTweetText.dart';
 import 'package:quax/tweet/_card.dart';
-import 'package:quax/tweet/_entities.dart';
 import 'package:quax/tweet/_media.dart';
 import 'package:quax/ui/dates.dart';
 import 'package:quax/ui/errors.dart';
 import 'package:quax/user.dart';
-import 'package:quax/utils/iterables.dart';
+import 'package:quax/utils/rich_text.dart';
 import 'package:quax/utils/translation.dart';
-import 'package:quax/utils/urls.dart';
-import 'package:html_unescape/html_unescape.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:pref/pref.dart';
@@ -64,73 +59,9 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
 
   TranslationStatus _translationStatus = TranslationStatus.original;
 
-  List<TweetTextPart> _originalParts = [];
-  List<TweetTextPart> _displayParts = [];
-  List<TweetTextPart> _translatedParts = [];
-
-  static String? _convertRunesToText(Iterable<int> runes, int start, [int? end]) {
-    var string = runes.getRange(start, end).map((e) => String.fromCharCode(e)).join('');
-    if (string.isEmpty) {
-      return null;
-    }
-
-    return HtmlUnescape().convert(string);
-  }
-
-  static List<TweetEntity> _populateEntities(
-      {required List<TweetEntity> entities, List<dynamic>? source, required Function getNewEntity}) {
-    source = source ?? [];
-
-    for (dynamic newEntity in source) {
-      entities.add(getNewEntity(newEntity));
-    }
-
-    return entities;
-  }
-
-  static List<TweetEntity> _getEntities(BuildContext context, TweetWithCard tweet) {
-    List<TweetEntity> entities = [];
-
-    entities = _populateEntities(
-        entities: entities,
-        source: tweet.entities?.hashtags,
-        getNewEntity: (Hashtag hashtag) {
-          return TweetHashtag(
-              hashtag,
-              () => Navigator.pushNamed(context, routeSearch,
-                  arguments: SearchArguments(1, focusInputOnOpen: false, query: '#${hashtag.text}')));
-        });
-
-    entities = _populateEntities(
-        entities: entities,
-        source: tweet.entities?.userMentions,
-        getNewEntity: (UserMention mention) {
-          return TweetUserMention(mention, () {
-            Navigator.pushNamed(context, routeProfile,
-                arguments: ProfileScreenArguments(mention.idStr, mention.screenName));
-          });
-        });
-
-    entities = _populateEntities(
-        entities: entities,
-        source: tweet.entities?.urls,
-        getNewEntity: (Url url) {
-          return TweetUrl(url, () async {
-            String? uri = url.expandedUrl;
-            if (uri == null ||
-                (uri.length > 33 && uri.substring(0, 33) == 'https://twitter.com/i/web/status/') ||
-                (uri.length > 27 && uri.substring(0, 27) == 'https://x.com/i/web/status/')) {
-              return;
-            }
-
-            await openUri(uri);
-          });
-        });
-
-    entities.sort((a, b) => a.getEntityStart().compareTo(b.getEntityStart()));
-
-    return entities;
-  }
+  List<RichTextPart> _originalParts = [];
+  List<RichTextPart> _displayParts = [];
+  List<RichTextPart> _translatedParts = [];
 
   Future<void> onClickTranslate(Locale locale) async {
     // If we've already translated this text before, use those results instead of translating again
@@ -149,7 +80,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
 
     var res = await TranslationAPI.translate(locale, tweet.idStr!, originalText, tweet.lang ?? "");
     if (res.success) {
-      final List<TweetTextPart> translatedParts = convertTextPartsToTweetEntities(res.body['result']['text']);
+      final List<RichTextPart> translatedParts = convertTextPartsToTweetEntities(res.body['result']['text']);
 
       // We cache the translated parts in a property in case the user swaps back and forth
       return setState(() {
@@ -182,13 +113,13 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
         arguments: StatusScreenArguments(id: tweet.idStr!, username: tweet.user!.screenName!, tweetOpened: true));
   }
 
-  List<TweetTextPart> convertTextPartsToTweetEntities(String translatedText) {
-    List<TweetTextPart> translatedParts = [];
+  List<RichTextPart> convertTextPartsToTweetEntities(String translatedText) {
+    List<RichTextPart> translatedParts = [];
     var thing = _originalParts[0];
     if (thing.plainText != null) {
-      translatedParts.add(TweetTextPart(null, translatedText));
+      translatedParts.add(RichTextPart(null, translatedText));
     } else {
-      translatedParts.add(TweetTextPart(thing.entity, null));
+      translatedParts.add(RichTextPart(thing.entity, null));
     }
 
     return translatedParts;
@@ -211,54 +142,12 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     // This is some super long text that I think only Twitter Blue users can write
     var noteText = tweet.retweetedStatusWithCard?.noteText ?? tweet.noteText;
     // get the longest tweet
-    var tweetTextRaw = noteText ?? actualTweet.fullText ?? actualTweet.text!;
-    //remove all https from text
-    var tweetTextRawIndex = tweetTextRaw.indexOf("https");
-    //build text without https links
-    var tweetTextFinal = tweetTextRaw.substring(0, tweetTextRawIndex == -1 ? tweetTextRaw.length : tweetTextRawIndex);
-    // Generate all the tweet entities (mentions, hashtags, etc.) from the tweet text
-    Runes tweetText = Runes(tweetTextFinal);
-    // If we're not given a text display range, we just display the entire text
-    final List<int> displayTextRange = [0, tweetText.length];
+    var tweetTextFinal = noteText ?? actualTweet.fullText ?? actualTweet.text!;
 
-    Iterable<int> runes = tweetText.getRange(displayTextRange[0], displayTextRange[1]);
-
-    List<TweetEntity> entities = _getEntities(context, actualTweet);
-    List<TweetTextPart> things = [];
-
-    int index = 0;
-
-    for (var part in entities) {
-      // Generate new indices for the entity start and end, by subtracting the displayTextRange's start index, as we ignore text up until that point
-      int start = part.getEntityStart() - displayTextRange[0];
-      int end = part.getEntityEnd() - displayTextRange[0];
-
-      // Only add entities that are after the displayTextRange's start index
-      if (start < 0) {
-        continue;
-      }
-
-      // Add any text between the last entity's end and the start of this one
-      var textPart = _convertRunesToText(runes, index, start);
-      if (textPart != null) {
-        things.add(TweetTextPart(null, textPart));
-      }
-
-      // Then add the actual entity
-      things.add(TweetTextPart(part.getContent(), null));
-
-      // Then set our index in the tweet text as the end of our entity
-      index = end;
-    }
-
-    var textPart = _convertRunesToText(runes, index);
-    if (textPart != null) {
-      things.add(TweetTextPart(null, textPart));
-    }
-
+    List<RichTextPart> tweetParts = buildRichText(context, tweetTextFinal, actualTweet.entities);
     setState(() {
-      _displayParts = things;
-      _originalParts = things;
+      _displayParts = tweetParts;
+      _originalParts = tweetParts;
     });
   }
 
@@ -409,13 +298,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
           child: AutoDirection(
             text: tweetText,
             child: ExpandableTweetText(
-              textSpans: _displayParts.map((e) {
-                if (e.plainText != null) {
-                  return TextSpan(text: e.plainText);
-                } else {
-                  return e.entity!;
-                }
-              }).toList(),
+              textSpans: displayRichText(_displayParts),
               onTap: () => !widget.tweetOpened ? onClickOpenTweet(tweet) : null,
               maxLines: 8,
             ),
@@ -730,18 +613,6 @@ class _TweetTileLeading extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class TweetTextPart {
-  final InlineSpan? entity;
-  String? plainText;
-
-  TweetTextPart(this.entity, this.plainText);
-
-  @override
-  String toString() {
-    return plainText ?? '';
   }
 }
 
