@@ -17,6 +17,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:quax/utils/urls.dart';
 
 class SubscriptionGroupFeed extends StatefulWidget {
   final SubscriptionGroupGet group;
@@ -67,6 +68,54 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
 
   Future<String> createCursor(Database repository) async {
     return (await repository.insert(tableFeedGroupCursor, {}, nullColumnHack: 'id')).toString();
+  }
+
+  bool feedContainsUnrelatedTweets(TweetStatus tweets, List<Subscription> users) {
+    final screenNames = users.map((e) => e.screenName).toSet();
+    return tweets.chains.any(
+        (chain) => chain.tweets.any((tweet) => tweet.user != null && !screenNames.contains(tweet.user!.screenName)));
+  }
+
+  Future<void> showUnrelatedPostsInFeedWarning() async {
+    await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("⚠️ ${L10n.of(context).feed_issue_detected}"),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(L10n.of(context).feed_contains_unrelated_tweets),
+                SizedBox(height: Theme.of(context).textTheme.bodyMedium!.fontSize! * 2),
+                PrefCheckbox(
+                  title: Text(
+                    L10n.of(context).never_show_again,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  pref: optionDisableWarningsForUnrelatedPostsInFeed,
+                )
+              ],
+            ),
+            actions: [
+              TextButton(
+                child: Text(L10n.of(context).more_info),
+                onPressed: () async {
+                  await openUri("https://github.com/Teskann/QuaX/issues/26");
+                  if (context.mounted) {
+                    Navigator.of(context).pop();
+                  }
+                },
+              ),
+              TextButton(
+                child: Text(L10n.of(context).close),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
   }
 
   String _buildSearchQuery(List<Subscription> users) {
@@ -120,6 +169,7 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
 
       var repository = await Repository.writable();
       var nextCursor = await createCursor(repository);
+      bool shouldShowUnrelatedPostsInFeedWarning = false;
 
       for (var chunk in widget.chunks) {
         var hash = chunk.hash;
@@ -166,6 +216,7 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
           var query = _buildSearchQuery(chunk.users);
           TweetStatus result =
               await Twitter.searchTweets(query, widget.includeReplies, limit: 10, cursor: searchCursor);
+          shouldShowUnrelatedPostsInFeedWarning |= feedContainsUnrelatedTweets(result, chunk.users);
 
           if (result.chains.isNotEmpty) {
             tweets.addAll(result.chains);
@@ -199,6 +250,11 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
 
       if (!mounted) {
         return;
+      }
+
+      if (shouldShowUnrelatedPostsInFeedWarning &&
+          !PrefService.of(context).get(optionDisableWarningsForUnrelatedPostsInFeed)) {
+        await showUnrelatedPostsInFeedWarning();
       }
 
       if (result.isEmpty) {

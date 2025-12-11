@@ -191,6 +191,7 @@ Future<void> main() async {
   final prefService = await PrefServiceShared.init(prefix: 'pref_', defaults: {
     optionConfirmClose: true,
     optionDisableAnimations: false,
+    optionTextScaleFactor: 1.0,
     optionDisableScreenshots: false,
     optionDownloadPath: '',
     optionDownloadType: optionDownloadTypeAsk,
@@ -206,15 +207,18 @@ Future<void> main() async {
     optionNonConfirmationBiasMode: false,
     optionShouldCheckForUpdates: const String.fromEnvironment('app.flavor') == "fdroid" ? false : true,
     optionSubscriptionGroupsOrderByAscending: true,
+    optionDisableWarningsForUnrelatedPostsInFeed: false,
     optionSubscriptionGroupsOrderByField: 'name',
     optionSubscriptionOrderByAscending: true,
     optionSubscriptionOrderByField: 'name',
+    optionSubscriptionOrderCustom: '',
     optionThemeMode: 'system',
     optionThemeColor: 'accent',
     optionThemeTrueBlack: true,
     optionThemeTrueBlackTweetCards: true,
     optionShowNavigationLabels: false,
     optionTweetsHideSensitive: true,
+    optionUseAbsoluteTimestamp: false,
     optionUserTrendsLocations: jsonEncode({
       'active': {'name': 'Worldwide', 'woeid': 1},
       'locations': [
@@ -324,6 +328,7 @@ class _FritterAppState extends State<FritterApp> {
       _disableAnimations = prefService.get(optionDisableAnimations);
       _checkUpdates = prefService.get(optionShouldCheckForUpdates);
       _isSecure = prefService.get(optionDisableScreenshots);
+      _textScaleFactor = prefService.get(optionTextScaleFactor);
     });
 
     prefService.addKeyListener(optionShouldCheckForUpdates, () {
@@ -360,6 +365,12 @@ class _FritterAppState extends State<FritterApp> {
         _isSecure = prefService.get(optionDisableScreenshots);
       });
     });
+
+    prefService.addKeyListener(optionTextScaleFactor, () {
+      setState(() {
+        _textScaleFactor = prefService.get<double?>(optionTextScaleFactor) ?? 1.0;
+      });
+    });
   }
 
   @override
@@ -383,8 +394,13 @@ class _FritterAppState extends State<FritterApp> {
 
     final systemOverlayStyle = SystemUiOverlayStyle.dark.copyWith(systemNavigationBarColor: Colors.transparent);
     SystemChrome.setSystemUIOverlayStyle(systemOverlayStyle);
+    final systemScaleFactor = MediaQuery.textScalerOf(context).scale(1.0);
 
-    return DynamicColorBuilder(builder: (lightDynamic, darkDynamic) {
+    return MediaQuery(
+        data: MediaQuery.of(context).copyWith(
+          textScaler: TextScaler.linear(_textScaleFactor * systemScaleFactor),
+        ),
+        child: DynamicColorBuilder(builder: (lightDynamic, darkDynamic) {
           return Portal(
               child: SecureWidget(
                   isSecure: _isSecure,
@@ -483,7 +499,7 @@ class _FritterAppState extends State<FritterApp> {
                           return child ?? Container();
                         },
                       )));
-        });
+        }));
   }
 }
 
@@ -502,7 +518,7 @@ class _DefaultPageState extends State<DefaultPage> {
   void handleInitialLink(Uri link) {
     // Assume it's a username if there's only one segment (or two segments with the second empty, meaning the URI ends with /)
     if (link.pathSegments.length == 1 || (link.pathSegments.length == 2 && link.pathSegments.last.isEmpty)) {
-      Navigator.pushReplacementNamed(context, routeProfile,
+      Navigator.pushNamed(context, routeProfile,
           arguments: ProfileScreenArguments.fromScreenName(link.pathSegments.first));
       return;
     }
@@ -531,7 +547,7 @@ class _DefaultPageState extends State<DefaultPage> {
         var username = link.pathSegments[0];
         var statusId = link.pathSegments[2];
 
-        Navigator.pushReplacementNamed(context, routeStatus,
+        Navigator.pushNamed(context, routeStatus,
             arguments: StatusScreenArguments(
               id: statusId,
               username: username,
@@ -547,8 +563,7 @@ class _DefaultPageState extends State<DefaultPage> {
 
       // https://twitter.com/i/topics/tweet/1447290060123033601
       if (segment2 == 'topics' && segment3 == 'tweet') {
-        Navigator.pushReplacementNamed(context, routeStatus,
-            arguments: StatusScreenArguments(id: segment4, username: null));
+        Navigator.pushNamed(context, routeStatus, arguments: StatusScreenArguments(id: segment4, username: null));
         return;
       }
     }
@@ -568,12 +583,6 @@ class _DefaultPageState extends State<DefaultPage> {
     });
 
     final appLinks = AppLinks();
-
-    appLinks.getInitialLink().then((link) {
-      if (link != null) {
-        handleInitialLink(link);
-      }
-    });
 
     // Attach a listener to the stream
     _sub = appLinks.uriLinkStream.listen((link) => handleInitialLink(link), onError: (err) {

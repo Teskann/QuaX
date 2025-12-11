@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_triple/flutter_triple.dart';
+import 'package:pref/pref.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/database/entities.dart';
 import 'package:quax/search/search.dart';
@@ -11,6 +12,7 @@ import 'package:quax/generated/l10n.dart';
 
 class SubscriptionUsers extends StatefulWidget {
   final ScrollController scrollController;
+
   const SubscriptionUsers({super.key, required this.scrollController});
 
   @override
@@ -69,29 +71,49 @@ class SubscriptionUsersList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      controller: scrollController,
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      itemCount: subscriptions.length,
-      itemBuilder: (context, i) {
-        var user = subscriptions[i];
-        if (user is UserSubscription) {
-          return UserTile(user: user);
-        }
+    BasePrefService prefs = PrefService.of(context);
+    String subscriptionOrderCustom = prefs.get(optionSubscriptionOrderCustom);
+    List<Subscription> subLst = [];
+    if (subscriptionOrderCustom.isNotEmpty) {
+      subLst
+          .addAll(subscriptionOrderCustom.split(',').map((sn) => subscriptions.firstWhere((s) => s.screenName == sn)));
+    } else {
+      subLst.addAll(subscriptions);
+    }
+    return ReorderableListView.builder(
+        shrinkWrap: true,
+        scrollController: scrollController,
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        itemCount: subLst.length,
+        itemBuilder: (context, i) {
+          var user = subLst[i];
+          if (user is UserSubscription) {
+            return UserTile(key: Key(user.screenName), user: user);
+          }
 
-        return ListTile(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-          leading: const SizedBox(width: 48, child: Icon(Icons.saved_search)),
-          title: Text(user.name, maxLines: 1, overflow: TextOverflow.ellipsis),
-          subtitle: Text(L10n.current.search_term),
-          trailing: FollowButton(user: user),
-          onTap: () {
-            Navigator.pushNamed(context, routeSearch,
-                arguments: SearchArguments(0, focusInputOnOpen: false, query: user.id));
-          },
-        );
-      },
-    );
+          return ListTile(
+            key: Key(user.screenName),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+            leading: const SizedBox(width: 48, child: Icon(Icons.saved_search)),
+            title: Text(user.name, maxLines: 1, overflow: TextOverflow.ellipsis),
+            subtitle: Text(L10n.current.search_term),
+            trailing: FollowButton(user: user),
+            onTap: () {
+              Navigator.pushNamed(context, routeSearch,
+                  arguments: SearchArguments(0, focusInputOnOpen: false, query: user.id));
+            },
+          );
+        },
+        onReorder: (oldIndex, newIndex) async {
+          if (oldIndex < newIndex) {
+            Subscription s = subLst.removeAt(oldIndex);
+            subLst.insert(newIndex - 1, s);
+          } else {
+            Subscription s = subLst.removeAt(oldIndex);
+            subLst.insert(newIndex, s);
+          }
+          final lst = subLst.map((s) => s.screenName).join(',');
+          await PrefService.of(context).set(optionSubscriptionOrderCustom, lst);
+        });
   }
 }

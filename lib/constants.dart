@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 const optionDisableAnimations = 'accessibility.disable_animations';
+const optionTextScaleFactor = 'accessibility.text_scale_factor';
 
 const optionWizardCompleted = 'option.wizard_completed';
 
@@ -30,9 +31,12 @@ const optionShouldCheckForUpdates = 'should_check_for_updates';
 const optionConfirmClose = 'confirm_close';
 const optionShareBaseUrl = 'share_base_url';
 
+const optionDisableWarningsForUnrelatedPostsInFeed = 'disable_warnings_for_unrelated_posts_in_feed';
+
 const optionSubscriptionGroupsOrderByAscending = 'subscription_groups.order_by.ascending';
 const optionSubscriptionGroupsOrderByField = 'subscription_groups.order_by.field';
 const optionSubscriptionOrderByAscending = 'subscription.order_by.ascending';
+const optionSubscriptionOrderCustom = 'subscription.order_by.custom';
 const optionSubscriptionOrderByField = 'subscription.order_by.field';
 
 const optionThemeMode = 'theme.mode';
@@ -40,6 +44,7 @@ const optionThemeColor = 'theme.color';
 const optionThemeTrueBlack = 'theme.true_black';
 const optionThemeTrueBlackTweetCards = 'theme.true_black_tweet_cards';
 const optionShowNavigationLabels = 'theme.show_navigation_labels';
+const optionUseAbsoluteTimestamp = "option.absolute_timestamp";
 
 const themeColors = {
   'red': Colors.red,
@@ -61,7 +66,6 @@ const optionNonConfirmationBiasMode = 'other.improve_non_confirmation_bias';
 const String optionXClientTransactionIdProviderDefaultDomain = 'x-client-transaction-id-generator.xyz';
 
 const String optionXClientTransactionIdProvider = 'x_client_transaction_id_provider';
-
 
 final Map<String, String> userAgentHeader = {
   'user-agent':

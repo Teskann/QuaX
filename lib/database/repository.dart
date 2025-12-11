@@ -224,10 +224,18 @@ class Repository {
         SqlMigration(
             'CREATE TABLE IF NOT EXISTS $tableAccounts (id TEXT PRIMARY KEY, password TEXT, email TEXT, auth_header VARCHAR)'),
       ],
+      22: [
+        // Add screen_name column and remove password/email columns from accounts table
+        SqlMigration('ALTER TABLE $tableAccounts RENAME TO ${tableAccounts}_old'),
+        SqlMigration(
+            'CREATE TABLE $tableAccounts (id TEXT PRIMARY KEY, auth_header VARCHAR, screen_name VARCHAR DEFAULT NULL)'),
+        SqlMigration('INSERT INTO $tableAccounts (id, auth_header) SELECT id, auth_header FROM ${tableAccounts}_old'),
+        SqlMigration('DROP TABLE ${tableAccounts}_old'),
+      ],
     });
     await openDatabase(
       databaseName,
-      version: 21,
+      version: 22,
       onUpgrade: myMigrationPlan.call,
       onCreate: myMigrationPlan.call,
       onDowngrade: myMigrationPlan.call,

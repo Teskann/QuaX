@@ -11,6 +11,7 @@ import 'package:quax/profile/profile.dart';
 import 'package:quax/saved/saved_tweet_model.dart';
 import 'package:quax/search/search.dart';
 import 'package:quax/status.dart';
+import 'package:quax/tweet/_ExpandableTweetText.dart';
 import 'package:quax/tweet/_card.dart';
 import 'package:quax/tweet/_entities.dart';
 import 'package:quax/tweet/_media.dart';
@@ -218,13 +219,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     // Generate all the tweet entities (mentions, hashtags, etc.) from the tweet text
     Runes tweetText = Runes(tweetTextFinal);
     // If we're not given a text display range, we just display the entire text
-    List<int> displayTextRange;
-    //show full length of tweet when the tweet is opened
-    if (widget.tweetOpened) {
-      displayTextRange = [0, tweetText.length];
-    } else {
-      displayTextRange = actualTweet.displayTextRange ?? [0, tweetText.length];
-    }
+    final List<int> displayTextRange = [0, tweetText.length];
 
     Iterable<int> runes = tweetText.getRange(displayTextRange[0], displayTextRange[1]);
 
@@ -259,11 +254,6 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     var textPart = _convertRunesToText(runes, index);
     if (textPart != null) {
       things.add(TweetTextPart(null, textPart));
-    }
-
-    //if the text of tweet is longer than what is gonna be displayed, add text
-    if (tweetTextFinal.length - 2 > displayTextRange[1]) {
-      things.add(TweetTextPart(null, L10n.current.clickToShowMore));
     }
 
     setState(() {
@@ -346,7 +336,8 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     if (this.tweet.retweetedStatusWithCard != null) {
       retweetBanner = _TweetTileLeading(
         icon: Icons.repeat,
-        onTap: () => Navigator.pushNamed(context, routeProfile, arguments: ProfileScreenArguments.fromScreenName(this.tweet.user!.screenName!)),
+        onTap: () => Navigator.pushNamed(context, routeProfile,
+            arguments: ProfileScreenArguments.fromScreenName(this.tweet.user!.screenName!)),
         children: [
           TextSpan(
               text: L10n.of(context)
@@ -412,24 +403,23 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
 
     if (tweet.displayTextRange![1] != 0) {
       content = Container(
-        // Fill the width so both RTL and LTR text are displayed correctly
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-        child: AutoDirection(
+          // Fill the width so both RTL and LTR text are displayed correctly
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          child: AutoDirection(
             text: tweetText,
-            child: SelectableText.rich(
-              TextSpan(children: [
-                ..._displayParts.map((e) {
-                  if (e.plainText != null) {
-                    return TextSpan(text: e.plainText);
-                  } else {
-                    return e.entity!;
-                  }
-                })
-              ]),
+            child: ExpandableTweetText(
+              textSpans: _displayParts.map((e) {
+                if (e.plainText != null) {
+                  return TextSpan(text: e.plainText);
+                } else {
+                  return e.entity!;
+                }
+              }).toList(),
               onTap: () => !widget.tweetOpened ? onClickOpenTweet(tweet) : null,
-            )),
-      );
+              maxLines: 8,
+            ),
+          ));
     }
 
     var localeStr = PrefService.of(context).get<String>(optionLocale);
@@ -549,7 +539,9 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
                               ],
                               if (createdAt != null)
                                 DefaultTextStyle(
-                                    style: theme.textTheme.bodySmall!, child: Timestamp(timestamp: createdAt))
+                                    style: theme.textTheme.bodySmall!,
+                                    child: Timestamp(
+                                        timestamp: createdAt, absoluteTimestamp: prefs.get(optionUseAbsoluteTimestamp)))
                             ],
                           ),
                           // Profile picture

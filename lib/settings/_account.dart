@@ -43,12 +43,7 @@ class _SettingsAccountFragment extends State<SettingsAccountFragment> {
                         },
                         child: Card(
                             child: ListTile(
-                          title: Text(L10n.of(context).account),
-                          subtitle: Text(
-                            data[index].id.toString(),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                          title: Text(data[index].screenName ?? L10n.of(context).unknown_username),
                           leading: const Icon(Icons.account_circle),
                         )));
                   });

@@ -13,6 +13,14 @@ class SettingsAccessibilityFragment extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8),
         child: ListView(children: [
+          PrefSlider(
+            title: Text(L10n.of(context).text_scale_factor),
+            pref: optionTextScaleFactor,
+            subtitle: Text(L10n.of(context).text_scale_factor_description),
+            min: 1.0,
+            max: 1.5,
+            divisions: 10,
+          ),
           PrefSwitch(
             title: Text(L10n.of(context).disable_animations),
             pref: optionDisableAnimations,

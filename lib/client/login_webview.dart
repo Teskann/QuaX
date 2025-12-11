@@ -27,6 +27,11 @@ class _TwitterLoginWebviewState extends State<TwitterLoginWebview> {
       onUrlChange: (change) async {
         if (change.url == "https://x.com/home") {
           final cookies = await webviewCookieManager.getCookies("https://x.com/i/flow/login");
+          String screenName = (await webviewController.runJavaScriptReturningResult(
+                  "document.documentElement.outerHTML.match(/\"screen_name\":\"([^\"]+)\"/)?.[1] ?? '';"))
+              .toString();
+          screenName = screenName.replaceAll('"', '');
+          if (screenName == "") return;
 
           try {
             final expCt0 = RegExp(r'(ct0=(.+?));');
@@ -47,13 +52,14 @@ class _TwitterLoginWebviewState extends State<TwitterLoginWebview> {
                 "x-csrf-token": csrfToken,
               };
 
-              print(authHeader);
-
               final database = await Repository.writable();
-              database.insert(tableAccounts, Account(id: csrfToken, authHeader: json.encode(authHeader)).toMap());
+              database.insert(tableAccounts,
+                  Account(id: csrfToken, screenName: screenName, authHeader: json.encode(authHeader)).toMap());
               database.close();
             }
-            Navigator.pop(context);
+            if (context.mounted) {
+              Navigator.pop(context);
+            }
           } catch (e) {
             throw Exception(e);
           }
