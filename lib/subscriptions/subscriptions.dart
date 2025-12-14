@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quax/constants.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/group/group_model.dart';
 import 'package:quax/subscriptions/_groups.dart';
@@ -15,7 +16,16 @@ class SubscriptionsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(L10n.current.subscriptions)),
+      appBar: AppBar(
+        title: Text(L10n.current.subscriptions),
+        actions: [
+          IconButton(
+              icon: const Icon(Icons.settings),
+              onPressed: () async {
+                Navigator.pushNamed(context, routeSettings);
+              })
+        ],
+      ),
       body: Padding(
           padding: EdgeInsets.all(8.0),
           child: ListView(

@@ -156,6 +156,11 @@ class SubscriptionGroupScreen extends StatelessWidget {
                       onPressed: () async {
                         await model.loadGroup();
                       }),
+                  IconButton(
+                      icon: const Icon(Icons.settings),
+                      onPressed: () async {
+                        Navigator.pushNamed(context, routeSettings);
+                      }),
                   if (actions != null) ...actions!
                 ],
               )
