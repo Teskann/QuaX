@@ -1,15 +1,12 @@
-## QuaX 4.1.0 🐦
+## QuaX v4.2.0
 
-What's new in QuaX 4.1.0:
-  - Updated Japanese translation (#76) (by @ScratchBuild) <sup>[[view modified code]](https://github.com/teskann/quax/commit/43c769d16fdad197f1a29fbedb92a5a68362be91)</sup>
-  - Fixed #74 - Display absolute timestamp of tweets in local timezone (#77) (by @lebakassemmerl) <sup>[[view modified code]](https://github.com/teskann/quax/commit/22e0d70824fa6bed0c2cbe1cbf7e573345270dee)</sup>
-  - Usernames are now available in the "Accounts" page in settings, instead of account ID. You need to log in again to see your username. (by @teskann) <sup>[[view modified code]](https://github.com/teskann/quax/commit/74f16a2ae9c2110d78243dfe4eee88ec56a1d987)</sup>
-  - Better management of "Show more" for long posts (fixed #39) (by @teskann) <sup>[[view modified code]](https://github.com/teskann/quax/commit/de28bb9d9fb53414a8ba3e51c93ddd44f6454c45)</sup>
-  - Subscriptions are now reorderable (ported from Squawker) - Fixed #63 (by @teskann) <sup>[[view modified code]](https://github.com/teskann/quax/commit/d21c217e162cae828b67a81e4bc2fd283e25ad9b)</sup>
-  - Added a badge to install QuaX with Obtainium (by @teskann) <sup>[[view modified code]](https://github.com/teskann/quax/commit/1a824a8c048f96ef7ea0b53520ad31f7ffae3a4e)</sup>
-
-> [!TIP]
-> If you don't know your device's architecture, download [`quax-4.1.0.apk`](https://github.com/Teskann/QuaX/releases/download/4.1.0/quax-4.1.0.apk)
-
-
-Thank you all for your support ! ❤️
+What's new in QuaX v4.2.0:
+  - Fixed #20 - Re-implemented basic support for the media tab (#78) (by @lebakassemmerl) <sup>[[view modified code]](https://github.com/teskann/quax/commit/4b0f1b2d59fdfead00637b0aa6d9bc6d50ddc8f8)</sup>
+  - Removed dependencies from git repositories that don't exist (by @teskann) <sup>[[view modified code]](https://github.com/teskann/quax/commit/a43fd16bbd1f8c1b530c2d557e991a19353a2398)</sup>
+  - Fixed error when tweets are hidden due to local laws and age estimation (by @teskann) <sup>[[view modified code]](https://github.com/teskann/quax/commit/c407789c4ae7798e79fde4cc4eca7112310bae64)</sup>
+  - Simplified release notes (by @teskann) <sup>[[view modified code]](https://github.com/teskann/quax/commit/30924fd64faf0f87e9521e65d7525163197a7f4c)</sup>
+  - Updated vietnamese and fixed some typos (#79) (by @giua1nganvisaoanhchithayminhemtrongbongdem) <sup>[[view modified code]](https://github.com/teskann/quax/commit/c331fee9283cc2c1c5a3cfcb887ad168be08afd7)</sup>
+  - Made links in bio clickable (fixed #23) (#56) (by @AdNenio) <sup>[[view modified code]](https://github.com/teskann/quax/commit/dfe05d4b45f7ccfa84a74fd1483d5b926832bbce)</sup>
+  - Added settings button on groups, subscriptions and saved tabs (fixed #70) (by @teskann) <sup>[[view modified code]](https://github.com/teskann/quax/commit/facf9340f55f1e35d1ea6902906d63fe8b7b8479)</sup>
+  - Fixed issues when loading some tweets (by @teskann) <sup>[[view modified code]](https://github.com/teskann/quax/commit/79f375b8254290e81ad24e1e6344db9f48df605d)</sup>
+  - Upgraded Flutter to 3.38.5 (by @teskann) <sup>[[view modified code]](https://github.com/teskann/quax/commit/b4cf6711397c96b1fdd3b49bd06f8ac6d80c7383)</sup>
