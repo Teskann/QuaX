@@ -57,6 +57,14 @@ jobs:
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PATH: key.jks
 
+      - name: Generate release notes
+        run: |
+          cat changelog.md > release-notes.md
+          printf "\nAPK Certificate fingerprints:\n\`\`\`text\n" >> release-notes.md
+          cat certificate-fingerprints.txt >> release-notes.md
+          printf "\n\`\`\`\n" >> release-notes.md
+          
+
       - name: Create release
         id: upload-release-assets
         uses: softprops/action-gh-release@v1
@@ -64,7 +72,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           draft: true
           prerelease: false
-          body_path: changelog.md
+          body_path: release-notes.md
           files: |
             build/app/outputs/release/*.apk
 

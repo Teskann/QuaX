@@ -52,6 +52,10 @@
   <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width="32%"/>
 </p>
 
+## App verification
+
+To verify the APK, use [these signing certificate fingerprints](./certificate-fingerprints.txt).
+
 ## Contribute
 
 If you'd like to help make QuaX even better, here are a few ways you can contribute:
