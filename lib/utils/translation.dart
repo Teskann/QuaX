@@ -93,6 +93,7 @@ class TranslationAPI {
   static Future<TranslationAPIResult> parseResponse(http.Response response, String errorUnableTo) async {
     final utf8Response = utf8.decode(response.bodyBytes);
     final body = jsonDecode(utf8Response);
+    log.info("Translation result: $body");
     if (response.statusCode == 200) {
       return TranslationAPIResult(success: true, body: body);
     }

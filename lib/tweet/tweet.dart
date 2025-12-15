@@ -100,7 +100,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     });
   }
 
-  Future<void> onClickTranslate(Locale locale) async {
+  Future<void> onClickTranslate(BuildContext context, Locale locale) async {
     // If we've already translated this text before, use those results instead of translating again
     if (_translatedParts.isNotEmpty) {
       return setState(() {
@@ -114,10 +114,11 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     });
 
     var originalText = _originalParts.map((e) => e.toString()).toList();
-
     var res = await TranslationAPI.translate(locale, tweet.idStr!, originalText, tweet.lang ?? "");
     if (res.success) {
-      final List<RichTextPart> translatedParts = convertTextPartsToTweetEntities(res.body['result']['text']);
+      if (!context.mounted) return;
+      final List<RichTextPart> translatedParts =
+        buildRichText(context, res.body['result']['text'], res.body['result']['entities']);
 
       // We cache the translated parts in a property in case the user swaps back and forth
       return setState(() {
@@ -148,18 +149,6 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
   void onClickOpenTweet(TweetWithCard tweet) {
     Navigator.pushNamed(context, routeStatus,
         arguments: StatusScreenArguments(id: tweet.idStr!, username: tweet.user!.screenName!, tweetOpened: true));
-  }
-
-  List<RichTextPart> convertTextPartsToTweetEntities(String translatedText) {
-    List<RichTextPart> translatedParts = [];
-    var thing = _originalParts[0];
-    if (thing.plainText != null) {
-      translatedParts.add(RichTextPart(null, translatedText));
-    } else {
-      translatedParts.add(RichTextPart(thing.entity, null));
-    }
-
-    return translatedParts;
   }
 
   _createFooterIconButton(IconData icon, [Color? color, double? fill, Function()? onPressed]) {
@@ -334,7 +323,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     switch (_translationStatus) {
       case TranslationStatus.original:
         translateButton =
-            _createFooterIconButton(Icons.translate, buttonsColor(context), null, () async => onClickTranslate(locale));
+            _createFooterIconButton(Icons.translate, buttonsColor(context), null, () async => onClickTranslate(context, locale));
         break;
       case TranslationStatus.translating:
         translateButton = const Padding(
@@ -347,7 +336,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
             Icons.translate,
             Colors.red.harmonizeWith(Theme.of(context).colorScheme.primary),
             null,
-            () async => onClickTranslate(locale));
+            () async => onClickTranslate(context, locale));
         break;
       case TranslationStatus.translated:
         translateButton = _createFooterIconButton(

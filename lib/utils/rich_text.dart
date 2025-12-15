@@ -22,9 +22,6 @@ class RichTextPart {
 
   @override
   String toString() {
-    // useful when sending for translation for example
-    // TODO fix translations by giving a plaintext version of the entity, for now if there's an entity the
-    // whole translation is discarded
     return plainText ?? '';
   }
 }
@@ -137,6 +134,15 @@ String? _convertRunesToText(Iterable<int> runes, int start, [int? end]) {
 List<Entity> _parseEntities(BuildContext context, dynamic newEntities) {
   List<Entity> entities = [];
   if (newEntities == null) return entities;
+
+  if (newEntities is Map<String, dynamic>){
+    // try using newEntities as a raw json object (that's what we get from the translation API)
+    newEntities = Entities.fromJson(newEntities);
+  }
+
+  if (newEntities is! Entities && newEntities is! UserEntityUrl){
+      return entities;
+  }
 
   // in tweets all entities types can be present (Entities object)
   // but in profile description there can be only urls (UserEntityUrl object)
