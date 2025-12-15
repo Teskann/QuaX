@@ -94,7 +94,11 @@ class TranslationAPI {
     final utf8Response = utf8.decode(response.bodyBytes);
     final body = jsonDecode(utf8Response);
     log.info("Translation result: $body");
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 && body is Map<String, dynamic>) {
+      if (body.containsKey("error")){
+        var error = body['error'];
+        return TranslationAPIResult(success: false, body: body, errorMessage: error['message'] ?? error['code'] ?? '');
+      }
       return TranslationAPIResult(success: true, body: body);
     }
 
