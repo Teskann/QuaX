@@ -20,8 +20,6 @@ To verify the downloaded APK, use [these signing certificate fingerprints](./cer
 
 </div>
 
----
-
 ## Features
 
 > [!IMPORTANT]
