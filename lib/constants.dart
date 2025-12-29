@@ -33,6 +33,8 @@ const optionShareBaseUrl = 'share_base_url';
 
 const optionDisableWarningsForUnrelatedPostsInFeed = 'disable_warnings_for_unrelated_posts_in_feed';
 
+const alwaysShowFullTweetContents = 'always_show_full_tweet_contents';
+
 const optionSubscriptionGroupsOrderByAscending = 'subscription_groups.order_by.ascending';
 const optionSubscriptionGroupsOrderByField = 'subscription_groups.order_by.field';
 const optionSubscriptionOrderByAscending = 'subscription.order_by.ascending';

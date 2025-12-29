@@ -208,6 +208,7 @@ Future<void> main() async {
     optionShouldCheckForUpdates: const String.fromEnvironment('app.flavor') == "fdroid" ? false : true,
     optionSubscriptionGroupsOrderByAscending: true,
     optionDisableWarningsForUnrelatedPostsInFeed: false,
+    alwaysShowFullTweetContents: false,
     optionSubscriptionGroupsOrderByField: 'name',
     optionSubscriptionOrderByAscending: true,
     optionSubscriptionOrderByField: 'name',

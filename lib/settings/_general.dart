@@ -234,6 +234,11 @@ class SettingsGeneralFragment extends StatelessWidget {
             subtitle: Text(L10n.of(context).disable_warnings_for_unrelated_posts_in_feed_description),
             pref: optionDisableWarningsForUnrelatedPostsInFeed,
           ),
+          PrefSwitch(
+            title: Text(L10n.of(context).always_show_full_tweet_contents),
+            subtitle: Text(L10n.of(context).always_show_full_tweet_contents_description),
+            pref: alwaysShowFullTweetContents,
+          ),
         ]),
       ),
     );

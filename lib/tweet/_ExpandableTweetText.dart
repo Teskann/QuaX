@@ -4,7 +4,7 @@ import 'package:quax/generated/l10n.dart';
 class ExpandableTweetText extends StatefulWidget {
   final List<InlineSpan> textSpans;
   final VoidCallback? onTap;
-  final int maxLines;
+  final int? maxLines;
 
   const ExpandableTweetText({
     super.key,
@@ -23,6 +23,8 @@ class ExpandableTweetTextState extends State<ExpandableTweetText> {
   bool _textIsTruncated() {
     if (!mounted) return false;
 
+    if (widget.maxLines == null) return false;
+
     final painter = TextPainter(
       text: TextSpan(children: widget.textSpans),
       textDirection: TextDirection.ltr,
@@ -30,7 +32,7 @@ class ExpandableTweetTextState extends State<ExpandableTweetText> {
     );
 
     painter.layout(maxWidth: MediaQuery.of(context).size.width);
-    final res = painter.computeLineMetrics().length > widget.maxLines;
+    final res = painter.computeLineMetrics().length > widget.maxLines!;
     painter.dispose();
 
     return res;
