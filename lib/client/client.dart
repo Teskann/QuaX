@@ -1054,6 +1054,7 @@ class Twitter {
 
 class TweetWithCard extends Tweet {
   String? noteText;
+  Entities? noteEntities;
   Map<String, dynamic>? card;
   String? conversationIdStr;
   TweetWithCard? quotedStatusWithCard;
@@ -1251,12 +1252,9 @@ class TweetWithCard extends Tweet {
     tweet.place = null;
     tweet.possiblySensitiveAppealable = null;
 
+    // notes are a new kind of tweets that can be longer, compared to old ones now marked as "legacy" but still used
     tweet.noteText = noteText;
-    if (noteEntities != null) {
-      tweet.entities = tweet.entities == null ? noteEntities : copyEntities(noteEntities, tweet.entities!);
-      tweet.extendedEntities =
-          tweet.extendedEntities == null ? noteEntities : copyEntities(noteEntities, tweet.extendedEntities!);
-    }
+    tweet.noteEntities = noteEntities;
 
     return tweet;
   }

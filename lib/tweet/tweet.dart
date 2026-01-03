@@ -88,12 +88,13 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
   }
 
   void _initializeTweetParts() {
-    // This is some super long text that I think only Twitter Blue users can write
-    var noteText = tweet.retweetedStatusWithCard?.noteText ?? tweet.noteText;
-    // get the longest tweet
-    var tweetTextFinal = noteText ?? actualTweet().fullText ?? actualTweet().text!;
+    // Get the text to display from the actual tweet, i.e. the retweet if there is one, otherwise we end up with "RT @" crap in our text
+    var actualTweet = tweet.retweetedStatusWithCard ?? tweet;
+    // get the longest tweet between legacy (still used most of the time) and noteText (mostly ny premium users?)
+    var tweetTextFinal = actualTweet.noteText ?? actualTweet.fullText ?? actualTweet.text!;
+    var entitiesFinal = actualTweet.noteEntities ?? actualTweet.entities!;
 
-    List<RichTextPart> tweetParts = buildRichText(context, tweetTextFinal, actualTweet().entities);
+    List<RichTextPart> tweetParts = buildRichText(context, tweetTextFinal, entitiesFinal);
     setState(() {
       _displayParts = tweetParts;
       _originalParts = tweetParts;
@@ -571,11 +572,6 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
                 color: addSeparator ? theme.colorScheme.surfaceBright.withAlpha(150) : Colors.transparent,
               ),
             ]));
-  }
-
-  TweetWithCard actualTweet() {
-    // Get the text to display from the actual tweet, i.e. the retweet if there is one, otherwise we end up with "RT @" crap in our text
-    return tweet.retweetedStatusWithCard ?? tweet;
   }
 }
 
