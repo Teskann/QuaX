@@ -63,7 +63,7 @@ Prerequisites:
 
 - Python
 - Dart
-- Flutter ([get version here](https://github.com/Teskann/QuaX/blob/c2b8455ccd3d126a558f7a1282092a80a397d332/.github/workflows/release.yml#L32))
+- Flutter ([get version here](./pubspec.yaml))
 
 ```bash
 python -mvenv .venv
