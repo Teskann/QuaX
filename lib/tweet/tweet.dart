@@ -92,7 +92,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     var actualTweet = tweet.retweetedStatusWithCard ?? tweet;
     // get the longest tweet between legacy (still used most of the time) and noteText (mostly ny premium users?)
     var tweetTextFinal = actualTweet.noteText ?? actualTweet.fullText ?? actualTweet.text!;
-    var entitiesFinal = actualTweet.noteEntities ?? actualTweet.entities!;
+    var entitiesFinal = actualTweet.noteEntities ?? actualTweet.entities;
 
     List<RichTextPart> tweetParts = buildRichText(context, tweetTextFinal, entitiesFinal);
     setState(() {
@@ -195,7 +195,8 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     TweetWithCard tweet = this.tweet.retweetedStatusWithCard == null ? this.tweet : this.tweet.retweetedStatusWithCard!;
 
     // If the user is on a profile, all the shown tweets are from that profile, so it makes no sense to hide it
-    final isTweetOnSameProfile = currentUsername != null && currentUsername == tweet.user!.screenName;
+    final isTweetOnSameProfile =
+        currentUsername != null && tweet.user != null && currentUsername == tweet.user!.screenName;
     final hideAuthorInformation = !isTweetOnSameProfile && prefs.get(optionNonConfirmationBiasMode);
 
     var numberFormat = NumberFormat.compact();

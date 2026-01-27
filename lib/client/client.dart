@@ -1144,6 +1144,9 @@ class TweetWithCard extends Tweet {
         result['quoted_status_result']['result'] != null &&
         result['quoted_status_result']['result']?['__typename'] != 'TweetWithVisibilityResults') {
       quotedStatus = TweetWithCard.fromGraphqlJson(result['quoted_status_result']['result']!);
+    } else if (result['quoted_status_result'] != null) {
+      // sometimes the quoted tweet is unavailable; this way we have a placeholder showing there was a tweet here
+      quotedStatus = TweetWithCard.tombstone({});
     }
 
     var resCore = result['core']?['user_results']?['result'];
