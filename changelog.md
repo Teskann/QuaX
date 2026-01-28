@@ -1,4 +1,4 @@
-## QuaX v4.2.4
+## QuaX v4.2.5
 
-What's new in QuaX v4.2.4:
-  - Fixed #91 - Opening the x.com post/profile link with QuaX redirects to main menu <sup>[[view modified code]](https://github.com/teskann/quax/commit/5933535307cb35decca53ed251e9bc8fa53539b3)</sup>
+What's new in QuaX v4.2.5:
+  - Updated Vietnamese (#97) (by @chemchetchagio) <sup>[[view modified code]](https://github.com/teskann/quax/commit/3e4d2bbaa4aab54db9888c069fb6647594de8ab1)</sup>
