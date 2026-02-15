@@ -1,5 +1,4 @@
 import 'package:flutter_triple/flutter_triple.dart';
-import 'package:quax/client/client.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/database/entities.dart';
 import 'package:quax/database/repository.dart';
@@ -63,37 +62,6 @@ class SubscriptionsModel extends Store<List<Subscription>> {
         await prefs.set(optionSubscriptionOrderCustom, newLst.map((s) => s.screenName).join(','));
         return newLst;
       }
-    });
-  }
-
-  Future<void> refreshSubscriptionData() async {
-    log.info('Refreshing subscription data');
-
-    await execute(() async {
-      var database = await Repository.writable();
-
-      var ids = (await database.query(tableSubscription, columns: ['id'])).map((e) => e['id'] as String).toList();
-
-      var users = await Twitter.getUsers(ids);
-
-      var batch = database.batch();
-      for (var user in users) {
-        batch.update(
-            tableSubscription,
-            {
-              'screen_name': user.screenName,
-              'name': user.name,
-              'profile_image_url_https': user.profileImageUrlHttps,
-              'verified': (user.verified ?? false) ? 1 : 0
-            },
-            where: 'id = ?',
-            whereArgs: [user.idStr]);
-      }
-
-      await batch.commit();
-      await reloadSubscriptions();
-
-      return state;
     });
   }
 

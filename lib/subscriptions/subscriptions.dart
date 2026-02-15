@@ -105,13 +105,6 @@ class SubscriptionsScreen extends StatelessWidget {
                         MaterialPageRoute(builder: (_) => const SubscriptionImportScreen()),
                       ),
                     ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.refresh,
-                        color: Theme.of(context).iconTheme.color,
-                      ),
-                      onPressed: () => context.read<SubscriptionsModel>().refreshSubscriptionData(),
-                    ),
                     PopupMenuButton<String>(
                       icon: Icon(
                         Icons.sort,

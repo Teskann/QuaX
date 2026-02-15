@@ -113,7 +113,6 @@ Future<void> _importFromFile(BuildContext context, File file) async {
   await importModel.importData(dataToImport);
   await groupModel.reloadGroups();
   context.mounted ? await context.read<SubscriptionsModel>().reloadSubscriptions() : null;
-  context.mounted ? await context.read<SubscriptionsModel>().refreshSubscriptionData() : null;
 
   if (context.mounted) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(

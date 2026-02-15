@@ -15,7 +15,6 @@ import 'package:quax/utils/cache.dart';
 import 'package:quax/utils/iterables.dart';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
-import 'package:quiver/iterables.dart';
 
 const Duration _defaultTimeout = Duration(seconds: 30);
 
@@ -975,29 +974,6 @@ class Twitter {
     }
 
     return TweetStatus(chains: chains, cursorBottom: cursorBottom, cursorTop: cursorTop);
-  }
-
-  static Future<List<UserWithExtra>> getUsers(Iterable<String> ids) async {
-    // Split into groups of 100, as the API only supports that many at a time
-    List<Future<List<UserWithExtra>>> futures = [];
-
-    var groups = partition(ids, 100);
-    for (var group in groups) {
-      futures.add(_getUsersPage(group));
-    }
-
-    return (await Future.wait(futures)).expand((element) => element).toList();
-  }
-
-  static Future<List<UserWithExtra>> _getUsersPage(Iterable<String> ids) async {
-    final uri = Uri.https('api.x.com', '/2/users', {
-      'user_id': ids.join(','),
-    });
-    var response = await _twitterApi.client.get(uri, headers: await TwitterHeaders.getHeaders(uri));
-
-    var result = json.decode(response.body);
-
-    return List.from(result).map((e) => UserWithExtra.fromJson(e)).toList(growable: false);
   }
 
   static Map<String, TweetWithCard> _createTweetsGraphql(

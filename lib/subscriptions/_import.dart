@@ -77,7 +77,6 @@ class _SubscriptionImportScreenState extends State<SubscriptionImportScreen> {
 
       await groupModel.reloadGroups();
       await context.read<SubscriptionsModel>().reloadSubscriptions();
-      await context.read<SubscriptionsModel>().refreshSubscriptionData();
       _streamController?.close();
     } catch (e, stackTrace) {
       _streamController?.addError(e, stackTrace);
