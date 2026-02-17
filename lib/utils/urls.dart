@@ -1,6 +1,21 @@
 import 'package:quax/profile/profile.dart' show profileTabs;
 import 'package:url_launcher/url_launcher_string.dart';
 
+import 'package:flutter/services.dart';
+import 'package:android_intent_plus/android_intent.dart';
+
+const _channel = MethodChannel('browser_resolver');
+
+Future<void> openInDefaultBrowser(String url) async {
+  final packageName = await _channel.invokeMethod<String>('getDefaultBrowser');
+  final intent = AndroidIntent(
+    action: 'android.intent.action.VIEW',
+    data: url,
+    package: packageName,
+  );
+  await intent.launch();
+}
+
 Future<void> openUri(String uri) async {
   await launchUrlString(uri, mode: LaunchMode.externalApplication);
 }

@@ -545,8 +545,13 @@ class _DefaultPageState extends State<DefaultPage> {
                   onPressed:  () => openUri('https://github.com/teskann/quax/issues'),
                 ),
                 TextButton(
-                  child: Text(L10n.of(context).close),
-                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text(L10n.of(context).open_in_browser),
+                  onPressed: () {
+                    openInDefaultBrowser(link.toString());
+                    if(context.mounted) {
+                      Navigator.of(context).pop();
+                    }
+                  },
                 ),
               ],
             );
