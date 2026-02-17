@@ -366,9 +366,6 @@ class TweetCard extends StatelessWidget {
         var url = card['binding_values']['card_url']['string_value'];
         var image = card['binding_values']['event_thumbnail$imageKey']?['image_value'];
 
-        var author = card['binding_values']['author']['user_value']['id_str'];
-        var user = card['users'][author]['screen_name'];
-
         // TODO: This opens the URL externally. Create a screen for it in QuaX
         return _createCard(
             url,
@@ -380,7 +377,7 @@ class TweetCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
                   child: _createListTile(context, card['binding_values']['event_title']['string_value'],
-                      card['binding_values']['event_subtitle']?['string_value'], '@$user'),
+                      card['binding_values']['event_subtitle']?['string_value'], null),
                 ),
               ],
             ),
