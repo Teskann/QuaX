@@ -517,8 +517,8 @@ class _DefaultPageState extends State<DefaultPage> {
   StackTrace? _migrationStackTrace;
   StreamSubscription<Uri>? _sub;
 
-  void handleInitialLink(Uri link) {
-    final parsed = parseUri(link);
+  void handleInitialLink(Uri link) async {
+    final parsed = await parseUri(link);
     switch (parsed) {
       case ProfileUriInfo(screenName: final screenName, profileTabIndex: final tab):
         Navigator.pushNamed(context, routeProfile,
