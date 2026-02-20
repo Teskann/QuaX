@@ -62,24 +62,22 @@ class ExpandableTweetTextState extends State<ExpandableTweetText> {
                   ).createShader(bounds);
                 },
                 blendMode: BlendMode.dstIn,
-                child: GestureDetector(
+                child: SelectableText.rich(
+                  TextSpan(children: widget.textSpans),
+                  scrollPhysics: NeverScrollableScrollPhysics(),
+                  maxLines: widget.maxLines,
+                  style: DefaultTextStyle
+                      .of(context)
+                      .style,
                   onTap: widget.onTap,
-                  child: Text.rich(
-                    TextSpan(children: widget.textSpans),
-                    maxLines: widget.maxLines,
-                    overflow: TextOverflow.clip,
-                    style: DefaultTextStyle.of(context).style,
-                  ),
                 ),
               )
             else
-              GestureDetector(
+              SelectableText.rich(
+                TextSpan(children: widget.textSpans),
+                scrollPhysics: NeverScrollableScrollPhysics(),
+                maxLines: _isExpanded || !textIsTruncated ? null : widget.maxLines,
                 onTap: widget.onTap,
-                child: Text.rich(
-                  TextSpan(children: widget.textSpans),
-                  maxLines: _isExpanded || !textIsTruncated ? null : widget.maxLines,
-                  overflow: _isExpanded || !textIsTruncated ? TextOverflow.visible : TextOverflow.fade,
-                ),
               ),
             if (!_isExpanded && textIsTruncated)
               Align(
