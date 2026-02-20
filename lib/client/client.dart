@@ -216,8 +216,6 @@ class Twitter {
       }
     }
 
-    Logger.detached("").info(result);
-
     var user = UserWithExtra.fromJson(
         {...result['legacy'], 'id_str': result['rest_id'], 'ext_is_blue_verified': result['is_blue_verified']});
     var pins = List<String>.from(result['legacy']['pinned_tweet_ids_str']);
@@ -1116,10 +1114,13 @@ class TweetWithCard extends Tweet {
       retweetedStatus = TweetWithCard.fromGraphqlJson(result['legacy']['retweeted_status_result']['result']!);
     }
 
-    if (result['quoted_status_result'] != null &&
-        result['quoted_status_result']['result'] != null &&
-        result['quoted_status_result']['result']?['__typename'] != 'TweetWithVisibilityResults') {
-      quotedStatus = TweetWithCard.fromGraphqlJson(result['quoted_status_result']['result']!);
+    if (result['quoted_status_result'] != null && result['quoted_status_result']['result'] != null){
+      // tweets that limit who can reply (TweetWithVisibilityResults) are wrapped in another layer
+      var quotedTweetResult =
+        result['quoted_status_result']['result']?['__typename'] == 'TweetWithVisibilityResults'
+        ? result['quoted_status_result']['result']['tweet']
+        : result['quoted_status_result']['result'];
+      quotedStatus = TweetWithCard.fromGraphqlJson(quotedTweetResult);
     }
 
     var resCore = result['core']?['user_results']?['result'];
