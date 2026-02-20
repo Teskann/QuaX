@@ -1,3 +1,9 @@
+## QuaX v4.2.7
+
+What's new in QuaX v4.2.7:
+  - Fixed a bug leading to stack traces appearing in app and improved display of quoted tweets (PR #108) (by @AdNenio) <sup>[[view modified code]](https://github.com/teskann/quax/commit/ec527cdb026cd63df904ec1605fbb55b6a422d17)</sup>
+  - Enabled text selection within tweets (fixed #107) <sup>[[view modified code]](https://github.com/teskann/quax/commit/e9d549dd113ae53a963b3569710c8f8c5e1e1a34)</sup>
+
 ## QuaX v4.2.6
 
 What's new in QuaX v4.2.6:
