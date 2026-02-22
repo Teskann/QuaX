@@ -1,3 +1,8 @@
+## QuaX v4.2.8
+
+What's new in QuaX v4.2.8:
+  - Added the possibility to view and save user profile picture and banner (fixed #94) <sup>[[view modified code]](https://github.com/teskann/quax/commit/f4f5fcd58f2fdaaff19bde182436e44ba5b0293d)</sup>
+
 ## QuaX v4.2.7
 
 What's new in QuaX v4.2.7:
