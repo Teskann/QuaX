@@ -6,7 +6,7 @@ List<double> _doubleTapScales = <double>[1.0, 4.0];
 class TweetPhoto extends StatefulWidget {
   final String uri;
   final BoxFit fit;
-  final String size;
+  final String? size;
   final bool pullToClose;
   final bool inPageView;
 
@@ -33,7 +33,7 @@ class _TweetPhotoState extends State<TweetPhoto> with SingleTickerProviderStateM
     return ExtendedImageSlidePage(
       slideAxis: SlideAxis.vertical,
       child: ExtendedImage.network(
-        '${widget.uri}:${widget.size}',
+        widget.size != null ? '${widget.uri}:${widget.size}' : widget.uri,
         cache: true,
         width: 5000,
         height: 5000,

@@ -187,8 +187,9 @@ class TweetMediaView extends StatefulWidget {
   final int initialIndex;
   final List<Media> media;
   final String username;
+  final bool tweetMedia;  // True if the media comes from a tweet
 
-  const TweetMediaView({super.key, required this.initialIndex, required this.media, required this.username});
+  const TweetMediaView({super.key, required this.initialIndex, required this.media, required this.username, this.tweetMedia = true});
 
   @override
   State<TweetMediaView> createState() => _TweetMediaViewState();
@@ -204,12 +205,19 @@ class _TweetMediaViewState extends State<TweetMediaView> {
     _media = widget.media[widget.initialIndex];
   }
 
+  String originalMediaUrl() {
+    return (widget.tweetMedia ? '${_media.mediaUrlHttps}:orig' : _media.mediaUrlHttps) ?? "";
+  }
+
   @override
   Widget build(BuildContext context) {
+    String? size;
     var prefs = PrefService.of(context, listen: false);
-    var size = prefs.get(optionMediaSize);
-    if (size == 'disabled') {
-      size = 'medium';
+    if (widget.tweetMedia) {
+      var size = prefs.get(optionMediaSize);
+      if (size == 'disabled') {
+        size = 'medium';
+      }
     }
 
     return Scaffold(
@@ -223,7 +231,7 @@ class _TweetMediaViewState extends State<TweetMediaView> {
             onPressed: () async {
               var url = path.basename(_media.mediaUrlHttps!);
               var fileName = '${widget.username}-$url';
-              var uri = Uri.parse('${_media.mediaUrlHttps}:orig');
+              var uri = Uri.parse(originalMediaUrl());
 
               await downloadUriToPickedFile(
                 context,
@@ -236,6 +244,7 @@ class _TweetMediaViewState extends State<TweetMediaView> {
                   ));
                 },
                 onSuccess: () {
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar(reason: SnackBarClosedReason.hide);
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: Text(L10n.of(context).successfully_saved_the_media),
                   ));
@@ -249,7 +258,7 @@ class _TweetMediaViewState extends State<TweetMediaView> {
               return IconButton(onPressed: callback, icon: child);
             },
             onPressed: () async {
-              var uri = Uri.parse('${_media.mediaUrlHttps}:orig');
+              var uri = Uri.parse(originalMediaUrl());
 
               var fileBytes = await downloadFile(context, uri);
 
@@ -297,7 +306,7 @@ class _TweetMediaViewState extends State<TweetMediaView> {
 class _TweetMediaThing extends StatelessWidget {
   final Media item;
   final String username;
-  final String size;
+  final String? size;
   final bool pullToClose;
   final bool inPageView;
 

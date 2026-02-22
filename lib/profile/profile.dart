@@ -1,3 +1,4 @@
+import 'package:dart_twitter_api/api/media/data/media.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:quax/profile/_saved.dart';
 import 'package:quax/profile/_tweets.dart';
 import 'package:quax/profile/profile_model.dart';
 import 'package:quax/search/search.dart';
+import 'package:quax/tweet/_media.dart';
 import 'package:quax/ui/errors.dart';
 import 'package:quax/user.dart';
 import 'package:quax/utils/urls.dart';
@@ -195,6 +197,19 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
     nestedScrollViewKey.currentState?.outerController.jumpTo(0);
   }
 
+  Media createMediaFromUrl(String? url, double? height) {
+    Media media = Media();
+    if (url != null) {
+      ExtendedImage.network(url, fit: BoxFit.fitWidth, height: height);
+      media.url = url;
+      media.mediaUrlHttps = url;
+      media.displayUrl = url;
+      media.expandedUrl = url;
+      media.type = 'photo';
+    }
+    return media;
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: This shouldn't happen before the profile is loaded
@@ -217,7 +232,22 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
     var banner = user.profileBannerUrl;
     var bannerImage = banner == null
         ? Container(height: bannerHeight, color: Colors.white)
-        : ExtendedImage.network(banner, fit: BoxFit.fitWidth, height: bannerHeight);
+        : GestureDetector(
+      child: ExtendedImage.network(banner, fit: BoxFit.fitWidth, height: bannerHeight),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                TweetMediaView(
+                    initialIndex: 0,
+                    media: [createMediaFromUrl(user.profileBannerUrl, bannerHeight)],
+                    username: user.screenName ?? "Unknown",
+                    tweetMedia: false),
+          ),
+        );
+      },
+    );
 
     // The height of the app bar should be all the inner components, plus any margins
     var appBarHeight = profileStuffTop + avatarHeight + metadataHeight + 8 + descriptionHeight;
@@ -560,7 +590,22 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
                           child: CircleAvatar(
                             radius: 50,
                             backgroundColor: Colors.white,
-                            child: UserAvatar(uri: user.profileImageUrlHttps, size: 96),
+                            child: GestureDetector(
+                              child: UserAvatar(uri: user.profileImageUrlHttps, size: 96),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        TweetMediaView(
+                                            initialIndex: 0,
+                                            media: [createMediaFromUrl(user.profileImageUrlHttps?.replaceAll("_normal", "_400x400"), null)],
+                                            username: user.screenName ?? "Unknown",
+                                            tweetMedia: false),
+                                  ),
+                                );
+                              },
+                            ),
                           ),
                         )
                       ]),
