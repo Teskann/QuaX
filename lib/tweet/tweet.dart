@@ -1,7 +1,10 @@
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 import 'dart:io' show Platform;
 import 'package:auto_direction/auto_direction.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:quax/client/client.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/generated/l10n.dart';
@@ -70,6 +73,8 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
   List<RichTextPart> _translatedParts = [];
 
   bool _isInitialized = false;
+
+  final GlobalKey _globalKey = GlobalKey(); // needed for "share tweet as image"
 
   @override
   void initState() {
@@ -202,6 +207,21 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
             child: Text(text, style: const TextStyle(fontStyle: FontStyle.italic))),
       ),
     );
+  }
+
+  Future<Uint8List?> captureWidget() async {
+    if (_globalKey.currentContext == null) {
+      return null;
+    }
+    final RenderRepaintBoundary boundary = _globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+    final ui.Image image = await boundary.toImage(pixelRatio: 3.0);
+    final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    if (byteData == null) {
+      return null;
+    }
+    final Uint8List pngBytes = byteData.buffer.asUint8List();
+
+    return pngBytes;
   }
 
   @override
@@ -445,8 +465,8 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     }
 
     return Consumer<ImportDataModel>(
-        builder: (context, model, child) => Column(children: [
-              Card(
+        builder: (context, model, child) => RepaintBoundary(key: _globalKey, child: Column(children: [
+            Card(
                 color: theme.brightness == Brightness.dark &&
                         prefs.get(optionThemeTrueBlack) &&
                         prefs.get(optionThemeTrueBlackTweetCards)
@@ -634,6 +654,13 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
                                                       '$tweetText\n\n$shareBaseUrl/${tweet.user!.screenName}/status/${tweet.idStr}');
                                                   Navigator.pop(context);
                                                 }),
+                                                createSheetButton(L10n.of(context).share_tweet_as_image, Icons.share, () async {
+                                                  Uint8List? imgBytes = await captureWidget();
+                                                  if (imgBytes != null) {
+                                                    Share.shareXFiles([XFile.fromData(imgBytes, mimeType: 'image/png')]);
+                                                  }
+                                                  Navigator.pop(context);
+                                                }),
                                                 const Padding(
                                                   padding: EdgeInsets.symmetric(horizontal: 16),
                                                   child: Divider(
@@ -666,7 +693,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
                 thickness: 1,
                 color: addSeparator ? theme.colorScheme.surfaceBright.withAlpha(150) : Colors.transparent,
               ),
-            ]));
+            ])));
   }
 }
 
