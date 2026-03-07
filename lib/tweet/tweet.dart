@@ -613,48 +613,28 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
                                                 child: Column(
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
-                                                Consumer<SavedTweetModel>(builder: (context, model, child) {
-                                                  var isSaved = model.isSaved(tweet.idStr!);
-                                                  if (isSaved) {
-                                                    return createSheetButton(
-                                                      L10n.of(context).unsave,
-                                                      Icons.bookmark_border,
-                                                      () async {
-                                                        await model.deleteSavedTweet(tweet.idStr!);
-                                                        Navigator.pop(context);
-                                                      },
-                                                    );
-                                                  } else {
-                                                    return createSheetButton(
-                                                        L10n.of(context).save, Icons.bookmark_border, () async {
-                                                      await model.saveTweet(
-                                                          tweet.idStr!, tweet.user?.idStr, tweet.toJson());
-                                                      Navigator.pop(context);
-                                                    });
-                                                  }
-                                                }),
                                                 createSheetButton(
                                                   L10n.of(context).share_tweet_content,
-                                                  Icons.share,
-                                                  () async {
+                                                  Icons.text_snippet,
+                                                      () async {
                                                     Share.share(tweetText);
                                                     Navigator.pop(context);
                                                   },
                                                 ),
-                                                createSheetButton(L10n.of(context).share_tweet_link, Icons.share,
+                                                createSheetButton(L10n.of(context).share_tweet_link, Icons.link,
                                                     () async {
                                                   Share.share(
                                                       '$shareBaseUrl/${tweet.user!.screenName}/status/${tweet.idStr}');
                                                   Navigator.pop(context);
                                                 }),
                                                 createSheetButton(
-                                                    L10n.of(context).share_tweet_content_and_link, Icons.share,
-                                                    () async {
-                                                  Share.share(
-                                                      '$tweetText\n\n$shareBaseUrl/${tweet.user!.screenName}/status/${tweet.idStr}');
-                                                  Navigator.pop(context);
-                                                }),
-                                                createSheetButton(L10n.of(context).share_tweet_as_image, Icons.share, () async {
+                                                    L10n.of(context).share_tweet_content_and_link, Icons.add_link,
+                                                        () async {
+                                                      Share.share(
+                                                          '$tweetText\n\n$shareBaseUrl/${tweet.user!.screenName}/status/${tweet.idStr}');
+                                                      Navigator.pop(context);
+                                                    }),
+                                                createSheetButton(L10n.of(context).share_tweet_as_image, Icons.screenshot, () async {
                                                   Uint8List? imgBytes = await captureWidget();
                                                   if (imgBytes != null) {
                                                     Share.shareXFiles([XFile.fromData(imgBytes, mimeType: 'image/png')]);
