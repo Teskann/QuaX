@@ -1005,12 +1005,7 @@ class Twitter {
         return false;
       }
 
-      if (includeReplies) {
-        return true;
-      }
-
-      // TODO
-      return t['in_reply_to_status_id'] == null || t['in_reply_to_user_id'] == null;
+      return true;
     }
 
     var filteredTweets = allTweets.where(includeTweet);
@@ -1030,6 +1025,14 @@ class Twitter {
     } catch (exc) {
       rethrow;
     }
+
+    // include replies only if we should
+    tweets = tweets.where((tweet) {
+      if (!includeReplies && (tweet.inReplyToStatusIdStr != null || tweet.inReplyToUserIdStr != null)) {
+        return false;
+      }
+      return true;
+    }).toList();
 
     return {for (var e in tweets) e.idStr: e};
   }
