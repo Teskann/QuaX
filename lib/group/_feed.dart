@@ -215,7 +215,7 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
           // Perform our search for the next page of results for this chunk, and add those tweets to our collection
           var query = _buildSearchQuery(chunk.users);
           TweetStatus result =
-              await Twitter.searchTweets(query, widget.includeReplies, limit: 10, cursor: searchCursor);
+              await Twitter.searchTweets(query, widget.includeReplies, cursor: searchCursor);
           shouldShowUnrelatedPostsInFeedWarning |= feedContainsUnrelatedTweets(result, chunk.users);
 
           if (result.chains.isNotEmpty) {
