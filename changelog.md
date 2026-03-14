@@ -1,3 +1,8 @@
+## QuaX v4.4.1
+
+What's new in QuaX v4.4.1:
+  - Fixed #115 replies being included when they shouldn't (by @AdNenio) <sup>[[view modified code]](https://github.com/teskann/quax/commit/1570379868eb929e1c5c0bed7bc1b067add89410)</sup>
+
 ## QuaX v4.4.0
 
 What's new in QuaX v4.4.0:
