@@ -197,19 +197,6 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
     nestedScrollViewKey.currentState?.outerController.jumpTo(0);
   }
 
-  Media createMediaFromUrl(String? url, double? height) {
-    Media media = Media();
-    if (url != null) {
-      ExtendedImage.network(url, fit: BoxFit.fitWidth, height: height);
-      media.url = url;
-      media.mediaUrlHttps = url;
-      media.displayUrl = url;
-      media.expandedUrl = url;
-      media.type = 'photo';
-    }
-    return media;
-  }
-
   @override
   Widget build(BuildContext context) {
     // TODO: This shouldn't happen before the profile is loaded

@@ -27,16 +27,8 @@ class TweetVideoMetadata {
 
   TweetVideoMetadata(this.aspectRatio, this.imageUrl, this.streamUrlsBuilder);
 
-  factory TweetVideoMetadata.fromMedia(Media media) {
-    var aspectRatio = media.videoInfo?.aspectRatio == null
-        ? 1.0
-        : media.videoInfo!.aspectRatio![0] / media.videoInfo!.aspectRatio![1];
-
-    var variants = media.videoInfo?.variants ?? [];
+  static Future<TweetVideoUrls> Function() streamUrlsBuilderFromVariants(List<Variant> variants) {
     var streamUrl = variants[0].url!;
-    var imageUrl = media.mediaUrlHttps!;
-
-    // Find the MP4 video with the highest bitrate
     var downloadUrl = variants
         .where((e) => e.bitrate != null)
         .where((e) => e.url != null)
@@ -45,7 +37,18 @@ class TweetVideoMetadata {
         .map((e) => e.url)
         .firstWhereOrNull((e) => e != null);
 
-    return TweetVideoMetadata(aspectRatio, imageUrl, () async => TweetVideoUrls(streamUrl, downloadUrl));
+    return () async => TweetVideoUrls(streamUrl, downloadUrl);
+  }
+
+  factory TweetVideoMetadata.fromMedia(Media media) {
+    var aspectRatio = media.videoInfo?.aspectRatio == null
+        ? 1.0
+        : media.videoInfo!.aspectRatio![0] / media.videoInfo!.aspectRatio![1];
+
+    var variants = media.videoInfo?.variants ?? [];
+    var imageUrl = media.mediaUrlHttps!;
+
+    return TweetVideoMetadata(aspectRatio, imageUrl, streamUrlsBuilderFromVariants(variants));
   }
 }
 
