@@ -1,9 +1,9 @@
-## QuaX v4.5.0
+## QuaX v4.6.0
 
-What's new in QuaX v4.5.0:
-  - Upgraded Flutter and packages <sup>[[view modified code]](https://github.com/teskann/quax/commit/4e46170054a12a55d6496d74ca2701e859c1e99e)</sup>
-  - Added support for articles. Supported article content: text, images, videos, code blocks, quotes, links, mentions, titles, ordered lists, unordered lists, bold text, italic text, dividers. Translation is not supported in articles, so "Translate" button is removed on tweets that contain an article. The same way, "Share tweet content" options are not available for articles (text remains selectable). Articles are displayed as a preview when the tweet is not opened. Open the tweet to see the full content. Articles can be saved, but for complexity reasons, only the preview is saved for offline access, network is required to read the full content of a saved article. Please report any issue related to this new feature. It has been implemented by reverse-engineering x.com's APIs based on examples I had access to, some contents might not be parsed correctly. (#53) <sup>[[view modified code]](https://github.com/teskann/quax/commit/a2b47a7b9ede7fe150a0c4207535aea1fa970451)</sup>
-  - Updated Vietnamese translation (#124) (by @chemchetchagio) <sup>[[view modified code]](https://github.com/teskann/quax/commit/4f4d03f53bbdc1a34024bc7a7a0f34a9af9e2cf2)</sup>
+What's new in QuaX v4.6.0:
+  - [PRIVACY IMPROVEMENT] Removed dependency on external [x-client-transaction-id generator](https://github.com/Teskann/x-client-transaction-id-generator) to compute `x-client-transaction-id` HTTPS headers. Now, everything is computed locally, inside QuaX itself. Done porting [XClientTransaction](https://github.com/iSarabjitDhiman/XClientTransaction/) to Dart. <sup>[[view modified code]](https://github.com/teskann/quax/commit/95ed1684bbd35690ebb8aee1972fd2d9189b2ca7)</sup>
+  - Fixed #134 - "Oops! Something went wrong 🥲" when opening some profiles <sup>[[view modified code]](https://github.com/teskann/quax/commit/40a975ca06fafdfc52cbeff72140e9d418e2e7a2)</sup>
+  - Fixed #95 - Prevented fetching videos automatically before playing if autoplay is disabled <sup>[[view modified code]](https://github.com/teskann/quax/commit/f0d68cc21c985fa54b5bf152ff19d024d84a7c10)</sup>
 
 
 APK Certificate fingerprints:

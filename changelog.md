@@ -1,3 +1,10 @@
+## QuaX v4.6.0
+
+What's new in QuaX v4.6.0:
+  - [PRIVACY IMPROVEMENT] Removed dependency on external [x-client-transaction-id generator](https://github.com/Teskann/x-client-transaction-id-generator) to compute `x-client-transaction-id` HTTPS headers. Now, everything is computed locally, inside QuaX itself. Done porting [XClientTransaction](https://github.com/iSarabjitDhiman/XClientTransaction/) to Dart. <sup>[[view modified code]](https://github.com/teskann/quax/commit/95ed1684bbd35690ebb8aee1972fd2d9189b2ca7)</sup>
+  - Fixed #134 - "Oops! Something went wrong 🥲" when opening some profiles <sup>[[view modified code]](https://github.com/teskann/quax/commit/40a975ca06fafdfc52cbeff72140e9d418e2e7a2)</sup>
+  - Fixed #95 - Prevented fetching videos automatically before playing if autoplay is disabled <sup>[[view modified code]](https://github.com/teskann/quax/commit/f0d68cc21c985fa54b5bf152ff19d024d84a7c10)</sup>
+
 ## QuaX v4.5.0
 
 What's new in QuaX v4.5.0:
