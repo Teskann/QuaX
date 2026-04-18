@@ -65,10 +65,6 @@ const optionUserTrendsLocations = 'trends.locations';
 
 const optionNonConfirmationBiasMode = 'other.improve_non_confirmation_bias';
 
-// Default instance of https://github.com/Teskann/x-client-transaction-id-generator
-const String optionXClientTransactionIdProviderDefaultDomain = 'x-client-transaction-id-generator.xyz';
-
-const String optionXClientTransactionIdProvider = 'x_client_transaction_id_provider';
 
 final Map<String, String> userAgentHeader = {
   'user-agent':
