@@ -76,6 +76,7 @@ class _TweetVideoState extends State<TweetVideo> {
   VideoPlayerController? _videoController;
   ChewieController? _chewieController;
   bool? _autoPlay;
+  bool _userRequestedPlay = false;
   final GlobalKey<MaterialControlsState> _controllerKey = GlobalKey();
 
   Future<void> _restartVideo(bool prefLoop, prefAutoPlay, prefBackgroundPlayback, prefMixWithOthers) async {
@@ -122,7 +123,10 @@ class _TweetVideoState extends State<TweetVideo> {
     _chewieController = ChewieController(
       aspectRatio: widget.metadata.aspectRatio,
       autoInitialize: true,
-      autoPlay: widget.alwaysPlay,
+      autoPlay: widget.alwaysPlay || _userRequestedPlay,
+      placeholder: widget.metadata.imageUrl != null
+          ? Image.network(widget.metadata.imageUrl!, fit: BoxFit.cover)
+          : null,
       allowMuting: !widget.disableControls,
       showControls: !widget.disableControls,
       allowedScreenSleep: false,
@@ -198,6 +202,30 @@ class _TweetVideoState extends State<TweetVideo> {
     final prefAutoPlay = prefs.get(optionMediaDefaultAutoPlay);
     final prefBackgroundPlayback = prefs.get(optionMediaBackgroundPlayback);
     final prefMixWithOthers = prefs.get(optionMediaAllowBackgroundPlayOtherApps);
+    if (!prefAutoPlay && !widget.alwaysPlay && !_userRequestedPlay) {
+      return GestureDetector(
+        onTap: () => setState(() => _userRequestedPlay = true),
+        child: AspectRatio(
+          aspectRatio: widget.metadata.aspectRatio,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              if (widget.metadata.imageUrl != null)
+                Positioned.fill(child: Image.network(widget.metadata.imageUrl!, fit: BoxFit.cover)),
+              FritterCenterPlayButton(
+                backgroundColor: Colors.black54,
+                iconColor: Colors.white,
+                show: true,
+                isPlaying: false,
+                isFinished: false,
+                onPressed: () => setState(() => _userRequestedPlay = true),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
     return FutureBuilder(
       future: _chewieController == null ? _loadVideo(prefLoop, prefAutoPlay, prefBackgroundPlayback, prefMixWithOthers) : Future.value(),
       builder: (context, snapshot) {
@@ -206,7 +234,17 @@ class _TweetVideoState extends State<TweetVideo> {
         final hasVideo = _chewieController != null;
 
         if (isLoading && !hasVideo) {
-          return const Center(child: CircularProgressIndicator());
+          return AspectRatio(
+            aspectRatio: widget.metadata.aspectRatio,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                if (widget.metadata.imageUrl != null)
+                  Positioned.fill(child: Image.network(widget.metadata.imageUrl!, fit: BoxFit.cover)),
+                const CircularProgressIndicator(),
+              ],
+            ),
+          );
         }
 
         if (hasError && !hasVideo) {
@@ -234,7 +272,7 @@ class _TweetVideoState extends State<TweetVideo> {
               aspectRatio: widget.metadata.aspectRatio,
               child: hasVideo
                   ? VisibilityDetector(
-                      key: UniqueKey(),
+                      key: ObjectKey(_chewieController),
                       onVisibilityChanged: (info) {
                         if (mounted) {
                           if (!widget.alwaysPlay && info.visibleFraction <= 0.5 && !_chewieController!.isFullScreen) {

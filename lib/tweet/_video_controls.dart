@@ -85,7 +85,7 @@ class MaterialControlsState extends State<FritterMaterialControls> with SingleTi
           absorbing: notifier.hideStuff,
           child: Stack(
             children: [
-              if (_displayBufferingIndicator)
+              if (_displayBufferingIndicator || !_latestValue.isInitialized)
                 const Center(
                   child: CircularProgressIndicator(),
                 )
@@ -345,7 +345,9 @@ class MaterialControlsState extends State<FritterMaterialControls> with SingleTi
   }
 
   Widget _buildHitArea() {
-    final bool isFinished = _latestValue.position >= _latestValue.duration;
+    final bool isFinished = _latestValue.isInitialized &&
+        _latestValue.duration > Duration.zero &&
+        _latestValue.position >= _latestValue.duration;
     final bool showPlayButton = widget.showPlayButton && !_dragging && !notifier.hideStuff;
 
     return GestureDetector(
