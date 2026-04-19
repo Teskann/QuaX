@@ -62,13 +62,25 @@ def update_changelog(commits: list[Commit]) -> None:
 def generate_release_notes_content(commits: list[Commit]) -> str:
     release_notes_content = f"""{generate_changelog_content(commits)}
 
+---
+
+First download ? Click the button below to install it with Obtainium ! 👇
+
+[![Get it on Obtainium](https://github.com/teskann/quax/blob/master/assets/readme/get-it-on-obtainium.png)](https://apps.obtainium.imranr.dev/redirect.html?r=obtainium://add/https://github.com/Teskann/QuaX)
+
 APK Certificate fingerprints:
 ```text
 {Path("./certificate-fingerprints.txt").read_text()}
 ```
 
+---
+
 Missed an update ? See [full changelog](https://github.com/teskann/quax/blob/master/changelog.md) for more details.
-    """
+    
+🗨️ Got questions about QuaX ? Ask anything in the [Q&A](https://github.com/Teskann/QuaX/discussions/categories/q-a) section !
+
+👉 Read the [wiki](https://github.com/teskann/quax/blob/master/docs/QuaX.md) to learn more about the app and how it works.
+"""
     return release_notes_content
 
 

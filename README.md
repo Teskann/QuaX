@@ -3,10 +3,13 @@
 
 # QuaX
 
-[![GitHub release](https://img.shields.io/github/v/release/teskann/quax?style=flat&logo=github&color=2dba4e)](https://github.com/teskann/quax/releases)
-[![License: MIT](https://img.shields.io/github/license/teskann/quax?logo=opensourceinitiative&logoColor=FFFFFF&color=750014)](/LICENSE)
-[![Build Status](https://github.com/teskann/quax/workflows/ci/badge.svg)](https://github.com/teskann/quax/actions)
-![Minimum Android version](https://img.shields.io/badge/Android-7.0%2B-blue)
+[![GitHub release](https://img.shields.io/github/v/release/teskann/quax?style=for-the-badge&logo=github&color=2dba4e)](https://github.com/teskann/quax/releases)
+[![License: MIT](https://img.shields.io/github/license/teskann/quax?style=for-the-badge&logo=opensourceinitiative&logoColor=FFFFFF&color=750014)](/LICENSE)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/teskann/quax/ci.yml?style=for-the-badge&logo=github)](https://github.com/teskann/quax/actions)
+![Minimum Android version](https://img.shields.io/badge/Android-7.0+-3DDC84?style=for-the-badge&logo=android&logoColor=white)
+[![Downloads](https://img.shields.io/github/downloads/teskann/quax/total?style=for-the-badge&logo=github)](https://github.com/teskann/quax/releases)
+![Flutter version](https://img.shields.io/badge/Flutter-3.41.6-54C5F8?style=for-the-badge&logo=flutter&logoColor=white)
+![Target SDK](https://img.shields.io/badge/Target%20SDK-36-3DDC84?style=for-the-badge&logo=android&logoColor=white)
 
 **QuaX** is a free, open-source, privacy-focused client for X (formerly Twitter). It is forked
 from [Quacker](https://github.com/TheHCJ/Quacker)
@@ -18,20 +21,23 @@ to [Squawker](https://github.com/j-fbriere/squawker).
 
 To verify the downloaded APK, use [these signing certificate fingerprints](./certificate-fingerprints.txt).
 
+[Why isn't QuaX available on F-Droid?](./docs/QuaX.md#why-isnt-quax-available-on-f-droid)
+
 </div>
 
 ## Features
 
 > [!IMPORTANT]
-> An X account is needed to use QuaX. Subscriptions, saved posts and all other QuaX settings are
+> An X account is needed to use QuaX. Subscriptions, saved posts, and all other QuaX settings are
 > independent from the account you're logged into. Everything is local to the app.
 
-- ✅ Customizable feeds
 - ✅ Follow anybody
+- ✅ Group your subscriptions in feeds to organize your timeline
 - ✅ Trending topics from anywhere in the world
 - ✅ Search anything on X
 - ✅ Save posts offline
 - ✅ Download any media (image, gif, video)
+- ✅ Read X articles
 - ✅ Modern Material 3 design
 - ✅ No trackers
 
@@ -43,19 +49,12 @@ To verify the downloaded APK, use [these signing certificate fingerprints](./cer
   <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width="32%"/>
 </p>
 
-## Contribute
+## More information
 
-If you'd like to help make QuaX even better, here are a few ways you can contribute:
-
-- **Report a bug:** If you've found a bug in QuaX, open
-  a [new issue](https://github.com/teskann/quax/issues/new) (please check that someone else hasn't
-  reported it first).
-- **Request a feature:** Feel like something is
-  missing? [Open an issue](https://github.com/teskann/quax/issues/new) detailing exactly what you're
-  looking for.
-- **Fix a bug:** To contribute to the codebase, check for issues labeled "good first issue".
-  Otherwise, feel free to tackle any issue, fork the repository, push to a branch, and create a pull
-  request.
+- [FAQ](./docs/QuaX.md)
+- [LICENSE](./LICENSE)
+- [Contributing](./CONTRIBUTING.md)
+- [Changelog](./changelog.md)
 
 ## Build locally
 
