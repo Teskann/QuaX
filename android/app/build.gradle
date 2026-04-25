@@ -41,8 +41,8 @@ if (keystoreFile != null && !keystoreFile.isEmpty()) {
 
 android {
     namespace 'com.teskann.quax'
-    compileSdkVersion 36
-    ndkVersion = "28.2.13676358"
+    compileSdkVersion 37
+    ndkVersion = "29.0.14206865"
 
     dependenciesInfo {
         includeInApk = false
@@ -60,7 +60,7 @@ android {
     defaultConfig {
         applicationId "com.teskann.quax"
         minSdkVersion flutter.minSdkVersion
-        targetSdkVersion 36
+        targetSdkVersion 37
         multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
