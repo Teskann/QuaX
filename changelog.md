@@ -1,3 +1,12 @@
+## QuaX v4.6.1
+
+What's new in QuaX v4.6.1:
+  - Updated readme and documentation <sup>[[view modified code]](https://github.com/teskann/quax/commit/0fdef571759745e852aa54bd0b95a20080958379)</sup>
+  - Upgraded Android SDK to 37 (Android 17) and upgraded android NDK to 29.0.14206865. <sup>[[view modified code]](https://github.com/teskann/quax/commit/ae2b8855f7ef1e1508e90ed544ef6a86f2121216)</sup>
+  - Upgraded Flutter to 3.41.7, upgraded dependencies <sup>[[view modified code]](https://github.com/teskann/quax/commit/c5b264b34ac6177488ab5cd0421d990b05df895e)</sup>
+  - Fixed medias not appearing in the gallery after download <sup>[[view modified code]](https://github.com/teskann/quax/commit/fc471839cac5394fa56fbf18a35967ee1ade03bc)</sup>
+  - QuaX is now fully translated in the following languages: 🇸🇦 Arabic, 🇧🇾 Belarusian, 🇧🇾 Belarusian Latin, 🇪🇸 Catalan, 🇨🇿 Czech, 🇩🇪 German, 🇬🇧 English, Esperanto, 🇪🇸 Spanish, 🇪🇪 Estonian, 🇪🇸 Basque, 🇫🇷 French, 🇮🇳 Hindi, 🇮🇩 Indonesian, 🇮🇹 Italian, 🇯🇵 Japanese, 🇰🇷 Korean, 🇮🇳 Malayalam, 🇳🇴 Norwegian Bokmål, 🇳🇱 Dutch, 🇵🇱 Polish, 🇵🇹 Portuguese, 🇧🇷 Portuguese (Brazil), 🇷🇴 Romanian, 🇷🇺 Russian, 🇹🇷 Turkish, 🇺🇦 Ukrainian, 🇻🇳 Vietnamese, 🇨🇳 Chinese (Simplified), 🇹🇼 Chinese (Traditional). The missing translations have been generated with AI, feel free to fix them if they are inaccurate. <sup>[[view modified code]](https://github.com/teskann/quax/commit/a22b2975bf071ef553564adbb6e2eac0bab30480)</sup>
+
 ## QuaX v4.6.0
 
 What's new in QuaX v4.6.0:
