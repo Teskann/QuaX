@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 
 import 'package:quax/constants.dart';
@@ -41,6 +42,13 @@ Future<void> downloadUriToPickedFile(BuildContext context, Uri uri, String fileN
     // Finally, save to the user-defined directory
     var savedFile = p.join(downloadPath, sanitizedFilename);
     await File(savedFile).writeAsBytes(response);
+
+    // Notify Android's media scanner so the file appears in the gallery
+    const platform = MethodChannel('browser_resolver');
+    try {
+      await platform.invokeMethod('scanMediaFile', {'path': savedFile});
+    } catch (_) {}
+
     onSuccess();
   } catch (e) {
     showSnackBar(context, icon: '🙊', message: e.toString());

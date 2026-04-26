@@ -2,6 +2,7 @@ package com.teskann.quax
 
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.media.MediaScannerConnection
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -14,7 +15,16 @@ class MainActivity : FlutterActivity() {
 
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL)
             .setMethodCallHandler { call, result ->
-                if (call.method == "getDefaultBrowser") {
+                if (call.method == "scanMediaFile") {
+                    val path = call.argument<String>("path")
+                    if (path != null) {
+                        MediaScannerConnection.scanFile(context, arrayOf(path), null) { _, _ ->
+                            result.success(null)
+                        }
+                    } else {
+                        result.error("INVALID_ARGUMENT", "Path is null", null)
+                    }
+                } else if (call.method == "getDefaultBrowser") {
                     val intent = Intent(Intent.ACTION_VIEW).apply {
                         data = android.net.Uri.parse("https://")
                     }
