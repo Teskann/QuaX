@@ -9,16 +9,6 @@ import 'package:quax/utils/iterables.dart';
 import 'package:logging/logging.dart';
 import 'package:pref/pref.dart';
 
-String getFlavor() {
-  const flavor = String.fromEnvironment('app.flavor');
-
-  if (flavor == '') {
-    return 'fdroid';
-  }
-
-  return flavor;
-}
-
 class SettingLocale {
   final String code;
   final String name;

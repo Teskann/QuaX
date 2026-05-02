@@ -20,8 +20,6 @@ class SettingsAboutFragment extends StatelessWidget {
     if (Platform.isAndroid && context.mounted) {
       if (context.mounted) {
         metadata = {
-          'flavor':
-              const String.fromEnvironment('app.flavor') != '' ? const String.fromEnvironment('app.flavor') : 'fdroid',
           'locale': Localizations.localeOf(context).languageCode,
           'os': 'android',
         };
@@ -30,7 +28,6 @@ class SettingsAboutFragment extends StatelessWidget {
       if (context.mounted) {
         metadata = {
           'abis': [],
-          'flavor': String.fromEnvironment('app.flavor') != '' ? String.fromEnvironment('app.flavor') : 'fdroid',
           'locale': Localizations.localeOf(context).languageCode,
           'os': 'ios',
           'version': packageInfo.buildNumber,

@@ -29,7 +29,7 @@ jobs:
       - name: Install and set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version-file: pubspec.yaml
+          flutter-version-file: .fvmrc
 
       - name: Generate icons
         run: |
@@ -52,12 +52,12 @@ jobs:
           mkdir -pv build/app/outputs/release
 
           # Build our big boy APK, and move it into the release APKs folder
-          flutter build apk --dart-define=app.flavor=github --release --no-tree-shake-icons
+          flutter build apk --release --no-tree-shake-icons
           
           mv build/app/outputs/apk/release/*.apk build/app/outputs/release
 
           # Build our ABI-specific APKs and move them into the release APKs folder
-          flutter build apk --dart-define=app.flavor=github --release --no-tree-shake-icons --split-per-abi --target-platform=android-x64,android-arm,android-arm64
+          flutter build apk --release --no-tree-shake-icons --split-per-abi --target-platform=android-x64,android-arm,android-arm64
           
           mv build/app/outputs/apk/release/*.apk build/app/outputs/release
         env:

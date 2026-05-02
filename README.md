@@ -61,22 +61,30 @@ To verify the downloaded APK, use [these signing certificate fingerprints](./cer
 Prerequisites:
 
 - Python
-- Dart
-- Flutter ([get version here](./pubspec.yaml))
+- [FVM](https://fvm.app/) (Flutter Version Management)
+
+The Flutter SDK version is pinned in [`.fvmrc`](./.fvmrc) and provisioned by FVM, so every build uses the exact same toolchain.
 
 ```bash
-python -mvenv .venv
-source ./.venv/bin/activate
-pip install -r requirements.txt
-python generate_icons.py
-deactivate
+# Install the pinned Flutter SDK and activate it for this project
+fvm install
+fvm use
 
-flutter pub get
-dart run flutter_launcher_icons
-dart run dart_pubspec_licenses:generate
-dart run intl_utils:generate
-dart run flutter_iconpicker:generate_packs --packs material
-flutter build apk --debug
+# Generate launcher icon assets
+python -mvenv .venv
+bash -c '
+  source ./.venv/bin/activate
+  pip install -r requirements.txt
+  python generate_icons.py
+'
+
+# Run all build steps through fvm so the pinned SDK is used
+fvm flutter pub get
+fvm dart run flutter_launcher_icons
+fvm dart run dart_pubspec_licenses:generate
+fvm dart run intl_utils:generate
+fvm dart run flutter_iconpicker:generate_packs --packs material
+fvm flutter build apk --debug
 ```
 
 Of course, you can work with this app on Android Studio.

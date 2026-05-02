@@ -205,7 +205,7 @@ Future<void> main() async {
     optionMediaBackgroundPlayback: true,
     optionMediaAllowBackgroundPlayOtherApps: false,
     optionNonConfirmationBiasMode: false,
-    optionShouldCheckForUpdates: const String.fromEnvironment('app.flavor') == "fdroid" ? false : true,
+    optionShouldCheckForUpdates: true,
     optionSubscriptionGroupsOrderByAscending: true,
     optionDisableWarningsForUnrelatedPostsInFeed: false,
     alwaysShowFullTweetContents: false,
