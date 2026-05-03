@@ -7,6 +7,7 @@ import 'package:quax/constants.dart';
 import 'package:quax/database/entities.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/profile/_follows.dart';
+import 'package:quax/profile/_media_grid.dart';
 import 'package:quax/profile/_saved.dart';
 import 'package:quax/profile/_tweets.dart';
 import 'package:quax/profile/profile_model.dart';
@@ -620,7 +621,7 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
                     includeReplies: true,
                     pinnedTweets: widget.profile.pinnedTweets,
                     pref: prefs),
-                ProfileTweets(user: user, type: 'media', includeReplies: false, pinnedTweets: const [], pref: prefs),
+                ProfileMediaGrid(user: user, pref: prefs),
                 ProfileSaved(user: user),
               ],
             ),

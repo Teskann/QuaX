@@ -602,6 +602,7 @@ class FritterCenterPlayButton extends StatelessWidget {
     required this.isPlaying,
     required this.isFinished,
     this.onPressed,
+    this.size = 64.0,
   });
 
   final Color backgroundColor;
@@ -610,6 +611,7 @@ class FritterCenterPlayButton extends StatelessWidget {
   final bool isPlaying;
   final bool isFinished;
   final VoidCallback? onPressed;
+  final double size;
 
   @override
   Widget build(BuildContext context) {
@@ -619,25 +621,23 @@ class FritterCenterPlayButton extends StatelessWidget {
         child: AnimatedOpacity(
           opacity: show ? 1.0 : 0.0,
           duration: const Duration(milliseconds: 300),
-          // NOTE: GestureDetector added, so the padding around the button is tappable
           child: GestureDetector(
             onTap: onPressed,
             child: Container(
-              // NOTE: Added specific sizes here, otherwise it fills the container on Flutter >3.3.2
-              width: 64,
-              height: 64,
+              width: size,
+              height: size,
               decoration: BoxDecoration(
                 color: backgroundColor,
                 shape: BoxShape.circle,
               ),
               child: IconButton(
-                iconSize: 32,
+                iconSize: size/2,
                 icon: isFinished
                     ? Icon(Icons.replay, color: iconColor)
                     : AnimatedPlayPause(
-                        color: iconColor,
-                        playing: isPlaying,
-                      ),
+                  color: iconColor,
+                  playing: isPlaying,
+                ),
                 onPressed: onPressed,
               ),
             ),

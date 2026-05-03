@@ -38,6 +38,7 @@ class TweetTile extends StatefulWidget {
   final bool tweetOpened;
   final bool addSeparator;
   final bool isBirdwatchQuote;
+  final int initialMediaIndex;
 
   const TweetTile(
       {super.key,
@@ -49,7 +50,8 @@ class TweetTile extends StatefulWidget {
       this.tweetOpened = false,
       this.addSeparator = true,
       this.isQuotedTweet = false,
-      this.isBirdwatchQuote = false});
+      this.isBirdwatchQuote = false,
+      this.initialMediaIndex = 0});
 
   @override
   TweetTileState createState() => TweetTileState();
@@ -387,6 +389,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
         sensitive: tweet.possiblySensitive,
         media: tweet.extendedEntities!.media!,
         username: tweet.user!.screenName!,
+        initialMediaIndex: widget.initialMediaIndex,
       );
     }
 

@@ -126,15 +126,27 @@ class TweetMedia extends StatefulWidget {
   final bool? sensitive;
   final List<Media> media;
   final String username;
+  final int initialMediaIndex;
 
-  const TweetMedia({super.key, required this.sensitive, required this.media, required this.username});
+  const TweetMedia(
+      {super.key,
+      required this.sensitive,
+      required this.media,
+      required this.username,
+      this.initialMediaIndex = 0});
 
   @override
   State<TweetMedia> createState() => _TweetMediaState();
 }
 
 class _TweetMediaState extends State<TweetMedia> {
-  final PageController _controller = PageController();
+  late final PageController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = PageController(initialPage: widget.initialMediaIndex);
+  }
 
   @override
   Widget build(BuildContext context) {

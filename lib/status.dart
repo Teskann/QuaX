@@ -14,8 +14,10 @@ class StatusScreenArguments {
   final String id;
   final String? username;
   final bool tweetOpened;
+  final int initialMediaIndex;
 
-  StatusScreenArguments({required this.id, required this.username, this.tweetOpened = false});
+  StatusScreenArguments(
+      {required this.id, required this.username, this.tweetOpened = false, this.initialMediaIndex = 0});
 
   @override
   String toString() {
@@ -30,7 +32,11 @@ class StatusScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as StatusScreenArguments;
 
-    return _StatusScreen(username: args.username, id: args.id, tweetOpened: args.tweetOpened);
+    return _StatusScreen(
+        username: args.username,
+        id: args.id,
+        tweetOpened: args.tweetOpened,
+        initialMediaIndex: args.initialMediaIndex);
   }
 }
 
@@ -38,8 +44,10 @@ class _StatusScreen extends StatefulWidget {
   final String? username;
   final String id;
   final bool tweetOpened;
+  final int initialMediaIndex;
 
-  const _StatusScreen({required this.username, required this.id, required this.tweetOpened});
+  const _StatusScreen(
+      {required this.username, required this.id, required this.tweetOpened, this.initialMediaIndex = 0});
 
   @override
   _StatusScreenState createState() => _StatusScreenState();
@@ -139,7 +147,8 @@ class _StatusScreenState extends State<_StatusScreen> {
                     tweets: chain.tweets,
                     username: null,
                     isPinned: chain.isPinned,
-                    tweetOpened: widget.tweetOpened),
+                    tweetOpened: widget.tweetOpened,
+                    initialMediaIndex: chain.id == widget.id ? widget.initialMediaIndex : 0),
               );
             },
             firstPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(

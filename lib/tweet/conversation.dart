@@ -9,6 +9,7 @@ class TweetConversation extends StatefulWidget {
   final bool isPinned;
   final List<TweetWithCard> tweets;
   final bool tweetOpened;
+  final int initialMediaIndex;
 
   const TweetConversation(
       {super.key,
@@ -16,7 +17,8 @@ class TweetConversation extends StatefulWidget {
       required this.username,
       required this.isPinned,
       required this.tweets,
-      this.tweetOpened = false});
+      this.tweetOpened = false,
+      this.initialMediaIndex = 0});
 
   @override
   State<TweetConversation> createState() => _TweetConversationState();
@@ -31,7 +33,8 @@ class _TweetConversationState extends State<TweetConversation> {
           tweet: widget.tweets.first,
           currentUsername: widget.username,
           isPinned: widget.isPinned,
-          tweetOpened: widget.tweetOpened);
+          tweetOpened: widget.tweetOpened,
+          initialMediaIndex: widget.initialMediaIndex);
     }
 
     var tiles = [];
@@ -44,7 +47,8 @@ class _TweetConversationState extends State<TweetConversation> {
           tweet: tweets[i],
           currentUsername: widget.username,
           isPinned: widget.isPinned,
-          isThread: i == 0));
+          isThread: i == 0,
+          initialMediaIndex: tweets[i].idStr == widget.id ? widget.initialMediaIndex : 0));
     }
 
     return Container(
