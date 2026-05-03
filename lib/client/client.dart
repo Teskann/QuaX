@@ -1062,12 +1062,15 @@ class Twitter {
     final timeline = result["data"]["user"]["result"]["timeline_v2"] ?? result["data"]["user"]["result"]["timeline"];
     var instructions = List.from(timeline['timeline']?['instructions'] ?? []);
     var addEntriesInstructions = instructions.firstWhereOrNull((e) => e['type'] == 'TimelineAddEntries');
-    if (addEntriesInstructions == null) {
+    var addModEntriesInstructions = instructions.firstWhereOrNull((e) => e['type'] == 'TimelineAddToModule');
+    List addModEntries = List.from(addModEntriesInstructions?['moduleItems'] ?? []);
+
+    if (addEntriesInstructions == null && addModEntries.isEmpty) {
       return TweetStatus(chains: [], cursorBottom: null, cursorTop: null);
     }
 
     var addPinnedTweetsInstructions = instructions.firstWhereOrNull((e) => e['type'] == 'TimelinePinEntry');
-    var addEntries = List.from(addEntriesInstructions['entries']);
+    var addEntries = List.from(addEntriesInstructions?['entries'] ?? []);
     var repEntries = List.from(instructions.where((e) => e['type'] == 'TimelineReplaceEntry'));
     List addPinnedEntries = List<dynamic>.empty(growable: true);
     if (addPinnedTweetsInstructions != null) {
@@ -1081,6 +1084,21 @@ class Twitter {
     // var debugTweets = json.encode(chains);
     //var debugTweets2 = json.encode(addEntries);
     var pinnedChains = createTweets(addPinnedEntries, true);
+
+    for (final addModEntry in addModEntries) {
+      final entryId = addModEntry['entryId'] as String? ?? addModEntry['entry_id'] as String? ?? '';
+      if (entryId.startsWith('profile-grid-')) {
+        Map<String, dynamic>? result = addModEntry['item']?['content']?['tweetResult']?['result'];
+        result ??= addModEntry['item']?['itemContent']?['tweet_results']?['result'];
+        result ??= addModEntry['item']?['content']?['tweet_results']?['result'];
+        if (result != null) {
+          result = result['rest_id'] != null ? result : result['tweet'];
+          if (result != null) {
+            chains.add(TweetChain(id: result['rest_id'], tweets: [TweetWithCard.fromGraphqlJson(result)], isPinned: false));
+          }
+        }
+      }
+    }
 
     //If we want to show pinned tweets, add them before the others that we already have
     if (pinnedTweets.isNotEmpty & showPinnedTweet) {
