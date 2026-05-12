@@ -1,10 +1,11 @@
-## QuaX v4.7.0
+## QuaX v4.7.1
 
-What's new in QuaX v4.7.0:
-  - Cleaned repository, removed unused files <sup>[[view modified code]](https://github.com/teskann/quax/commit/52076e4cd19f3ee48cc6b8e8816fd735d26ac808)</sup>
-  - Prepare reproducible build for future F-Droid publication. QuaX now recommends using `fvm` instead of raw `flutter` to force a specific flutter version for the build. Removed flavor-based behavior that led to differences between GitHub builds and F-Droid builds. <sup>[[view modified code]](https://github.com/teskann/quax/commit/cf3732208ed933b8e84011bd70cc0158ecf0e337)</sup>
-  - Fixed #92 - Media tab stops loading new posts at one point - Inspired by @j-fbriere's fix on Squawker <sup>[[view modified code]](https://github.com/teskann/quax/commit/125f1a518fd99e8c83970c2d98b8979981186d7a)</sup>
-  - [UI Improvement] Brand new view for the "Media" tab on profiles ! Now, medias are displayed in a staggered grid. This fully completed #20. <br/> <img width="360" height="800" alt="image" src="https://github.com/user-attachments/assets/2fe7ba1f-2306-4369-a90c-f5fd3dd137e6" /> <sup>[[view modified code]](https://github.com/teskann/quax/commit/4a0f803b13f9a1e5d48b03e841729bd8ae2289ee)</sup>
+What's new in QuaX v4.7.1:
+  - Removed all unused strings from translation files. Translation files are now sorted by key and are fully covered. <sup>[[view modified code]](https://github.com/teskann/quax/commit/b4034a251ea55ae58eac8866d6056bb2fbb3b7db)</sup>
+  - Implemented #17 - Keep position in group feeds after actions <sup>[[view modified code]](https://github.com/teskann/quax/commit/d801551137d38cc1f3d1d6052ef7c798e38b6b04)</sup>
+  - Upgraded Flutter to 3.41.9, updated dependencies <sup>[[view modified code]](https://github.com/teskann/quax/commit/d4cf1bac40a976810bf0a8b27cc9d1842c024b06)</sup>
+  - Fixed posts not being shown on some profiles (Tweets / Tweets & Replies tabs) <sup>[[view modified code]](https://github.com/teskann/quax/commit/c9ec545020db0b07bc72f48950fa4ffcca157a8c)</sup>
+  - Added a search bar to the subscriptions list, making it easier to find a followed account when you have many of them <sup>[[view modified code]](https://github.com/teskann/quax/commit/c9d40f2e3d70654d122e824370a11f1f280020a1)</sup>
 
 
 ---
