@@ -7,6 +7,7 @@ import 'package:quax/constants.dart';
 import 'package:quax/database/entities.dart';
 import 'package:quax/database/repository.dart';
 import 'package:quax/generated/l10n.dart';
+import 'package:quax/group/feed_session_cache.dart';
 import 'package:quax/group/group_screen.dart';
 import 'package:quax/profile/profile.dart';
 import 'package:quax/tweet/_video.dart';
@@ -24,7 +25,12 @@ class SubscriptionGroupFeed extends StatefulWidget {
   final List<SubscriptionGroupFeedChunk> chunks;
   final bool includeReplies;
   final bool includeRetweets;
-  final ScrollController? scrollController;
+  // When non-null, the PagingController and scroll offset are stored in the
+  // app-scoped FeedSessionCache under this key, so pop+push of the same route
+  // restores tweets and scroll position. When null, state is local to this
+  // State and disposed normally — used by home-tab usages, which are kept
+  // alive by AutomaticKeepAliveClientMixin in the shell.
+  final String? cacheKey;
 
   const SubscriptionGroupFeed(
       {super.key,
@@ -32,28 +38,85 @@ class SubscriptionGroupFeed extends StatefulWidget {
       required this.chunks,
       required this.includeReplies,
       required this.includeRetweets,
-      this.scrollController});
+      this.cacheKey});
 
   @override
   State<SubscriptionGroupFeed> createState() => _SubscriptionGroupFeedState();
 }
 
 class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
-  late PagingController<String?, TweetChain> _pagingController;
+  late final PagingController<String?, TweetChain> _pagingController;
+  FeedSessionCache? _cache;
+  ScrollController? _innerScrollController;
+  bool _scrollRestoreScheduled = false;
+
+  bool get _usesCache => widget.cacheKey != null;
 
   @override
   void initState() {
     super.initState();
+    if (_usesCache) {
+      _cache = context.read<FeedSessionCache>();
+      _pagingController = _cache!.getOrCreateController(widget.cacheKey!);
+    } else {
+      _pagingController = PagingController(firstPageKey: null);
+    }
+    _pagingController.addPageRequestListener(_listTweets);
+  }
 
-    _pagingController = PagingController(firstPageKey: null);
-    _pagingController.addPageRequestListener((cursor) async {
-      await _listTweets(cursor);
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_usesCache) return;
+    // Inside NestedScrollView's body, PrimaryScrollController is the inner
+    // controller PagedListView attaches to, and the one we need for jumpTo().
+    _innerScrollController = PrimaryScrollController.maybeOf(context);
+    _maybeRestoreScrollOffset();
+  }
+
+  bool _onScrollNotification(ScrollNotification notification) {
+    if (_usesCache && notification is ScrollEndNotification) {
+      final metrics = notification.metrics;
+      if (metrics.hasPixels) {
+        _cache!.saveOffset(widget.cacheKey!, metrics.pixels);
+      }
+    }
+    return false;
+  }
+
+  void _maybeRestoreScrollOffset() {
+    if (_scrollRestoreScheduled) return;
+    _scrollRestoreScheduled = true;
+    final saved = _cache!.readOffset(widget.cacheKey!);
+    if (saved == null || saved <= 0) return;
+    _scheduleRestore(saved);
+  }
+
+  // The cached items render and lay out across the first few frames, so the
+  // ScrollPosition may not be attached yet on the very first post-frame.
+  // Keep scheduling post-frame callbacks until the scrollable reports stable
+  // dimensions, then jump. Terminates via `mounted` when the widget unmounts.
+  void _scheduleRestore(double offset) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final c = _innerScrollController;
+      if (c == null || !c.hasClients || !c.position.haveDimensions) {
+        _scheduleRestore(offset);
+        return;
+      }
+      c.jumpTo(offset.clamp(0.0, c.position.maxScrollExtent));
     });
   }
 
   @override
   void dispose() {
-    _pagingController.dispose();
+    if (_usesCache) {
+      // The cache owns the controller's lifecycle across pop/push; only
+      // detach our listener so the next mount can re-attach.
+      _pagingController.removePageRequestListener(_listTweets);
+    } else {
+      _pagingController.dispose();
+    }
     super.dispose();
   }
 
@@ -61,9 +124,19 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
   void didUpdateWidget(SubscriptionGroupFeed oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    if (oldWidget.includeReplies != widget.includeReplies || oldWidget.includeRetweets != widget.includeRetweets) {
+    if (oldWidget.includeReplies != widget.includeReplies ||
+        oldWidget.includeRetweets != widget.includeRetweets ||
+        !_chunksMatch(oldWidget.chunks, widget.chunks)) {
       _pagingController.refresh();
     }
+  }
+
+  bool _chunksMatch(List<SubscriptionGroupFeedChunk> a, List<SubscriptionGroupFeedChunk> b) {
+    if (a.length != b.length) return false;
+    for (var i = 0; i < a.length; i++) {
+      if (a[i].hash != b[i].hash) return false;
+    }
+    return true;
   }
 
   Future<String> createCursor(Database repository) async {
@@ -300,31 +373,36 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
             ChangeNotifierProvider<VideoContextState>(
                 create: (_) => VideoContextState(prefs.get(optionMediaDefaultMute))),
           ],
-          child: PagedListView<String?, TweetChain>(
-            padding: const EdgeInsets.only(top: 4),
-            scrollController: widget.scrollController,
-            pagingController: _pagingController,
-            addAutomaticKeepAlives: false,
-            builderDelegate: PagedChildBuilderDelegate(
-              itemBuilder: (context, conversation, index) {
-                return TweetConversation(
-                    id: conversation.id, username: null, tweets: conversation.tweets, isPinned: conversation.isPinned);
-              },
-              newPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(
-                error: _pagingController.error[0],
-                stackTrace: _pagingController.error[1],
-                prefix: L10n.of(context).unable_to_load_the_next_page_of_tweets,
-                onRetry: () => _listTweets(_pagingController.firstPageKey),
-              ),
-              firstPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(
-                error: _pagingController.error[0],
-                stackTrace: _pagingController.error[1],
-                prefix: L10n.of(context).unable_to_load_the_tweets_for_the_feed,
-                onRetry: () => _listTweets(_pagingController.nextPageKey),
-              ),
-              noItemsFoundIndicatorBuilder: (context) => Center(
-                child: Text(
-                  L10n.of(context).could_not_find_any_tweets_from_the_last_7_days,
+          child: NotificationListener<ScrollNotification>(
+            onNotification: _onScrollNotification,
+            child: PagedListView<String?, TweetChain>(
+              padding: const EdgeInsets.only(top: 4),
+              pagingController: _pagingController,
+              addAutomaticKeepAlives: false,
+              builderDelegate: PagedChildBuilderDelegate(
+                itemBuilder: (context, conversation, index) {
+                  return TweetConversation(
+                      id: conversation.id,
+                      username: null,
+                      tweets: conversation.tweets,
+                      isPinned: conversation.isPinned);
+                },
+                newPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(
+                  error: _pagingController.error[0],
+                  stackTrace: _pagingController.error[1],
+                  prefix: L10n.of(context).unable_to_load_the_next_page_of_tweets,
+                  onRetry: () => _listTweets(_pagingController.firstPageKey),
+                ),
+                firstPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(
+                  error: _pagingController.error[0],
+                  stackTrace: _pagingController.error[1],
+                  prefix: L10n.of(context).unable_to_load_the_tweets_for_the_feed,
+                  onRetry: () => _listTweets(_pagingController.nextPageKey),
+                ),
+                noItemsFoundIndicatorBuilder: (context) => Center(
+                  child: Text(
+                    L10n.of(context).could_not_find_any_tweets_from_the_last_7_days,
+                  ),
                 ),
               ),
             ),

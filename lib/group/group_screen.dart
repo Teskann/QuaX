@@ -1,13 +1,11 @@
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_triple/flutter_triple.dart';
-import 'package:pref/pref.dart';
-import 'package:quax/constants.dart';
 import 'package:quax/database/entities.dart';
 import 'package:quax/generated/l10n.dart';
-import 'package:quax/group/group_model.dart';
 import 'package:quax/group/_feed.dart';
-import 'package:quax/group/_settings.dart';
+import 'package:quax/group/_feed_shell.dart';
+import 'package:quax/group/group_model.dart';
 import 'package:quax/ui/errors.dart';
 import 'package:provider/provider.dart';
 import 'package:quax/utils/iterables.dart';
@@ -54,6 +52,10 @@ class _GroupScreenState extends State<GroupScreen> {
       scrollController: _scrollController,
       id: args.id,
       name: args.name,
+      // Pushed routes persist their feed state across pop/push via the cache.
+      // The cache key matches the groupId so re-pushing the same group restores
+      // the previous tweets and scroll offset.
+      cacheKey: args.id,
       actions: const [],
     );
   }
@@ -61,14 +63,15 @@ class _GroupScreenState extends State<GroupScreen> {
 
 class SubscriptionGroupScreenContent extends StatelessWidget {
   final String id;
+  final String? cacheKey;
 
-  const SubscriptionGroupScreenContent({super.key, required this.id});
+  const SubscriptionGroupScreenContent({super.key, required this.id, this.cacheKey});
 
   @override
   Widget build(BuildContext context) {
     return ScopedBuilder<GroupModel, SubscriptionGroupGet>.transition(
       store: context.read<GroupModel>(),
-      onLoading: (_) => const Center(child: Text('lad')),
+      onLoading: (_) => const Center(child: CircularProgressIndicator()),
       onError: (_, error) =>
           ScaffoldErrorWidget(error: error, stackTrace: null, prefix: L10n.current.unable_to_load_the_group),
       onState: (_, group) {
@@ -89,6 +92,7 @@ class SubscriptionGroupScreenContent extends StatelessWidget {
           chunks: chunks,
           includeReplies: group.includeReplies,
           includeRetweets: group.includeRetweets,
+          cacheKey: cacheKey,
         );
       },
     );
@@ -114,61 +118,30 @@ class SubscriptionGroupScreen extends StatelessWidget {
   final String id;
   final String name;
   final List<Widget>? actions;
+  // Forwarded to SubscriptionGroupFeed — see its docs. Null disables caching.
+  final String? cacheKey;
 
   const SubscriptionGroupScreen(
-      {super.key, required this.scrollController, required this.id, required this.name, this.actions});
+      {super.key,
+      required this.scrollController,
+      required this.id,
+      required this.name,
+      this.actions,
+      this.cacheKey});
 
   @override
   Widget build(BuildContext context) {
-    return Provider<GroupModel>(
-      create: (context) {
-        var model = GroupModel(id);
-        model.loadGroup();
-
-        return model;
-      },
-      builder: (context, child) {
-        var model = context.read<GroupModel>();
-
-        return NestedScrollView(
-          controller: scrollController,
-          floatHeaderSlivers: true,
-          headerSliverBuilder: (context, innerBoxIsScrolled) {
-            return [
-              SliverAppBar(
-                pinned: false,
-                snap: true,
-                floating: true,
-                title: Text(name),
-                actions: [
-                  IconButton(icon: const Icon(Icons.more_vert), onPressed: () => showFeedSettings(context, model)),
-                  IconButton(
-                      icon: const Icon(Icons.arrow_upward),
-                      onPressed: () async {
-                        await scrollController.animateTo(0,
-                            duration: PrefService.of(context).get(optionDisableAnimations) == true
-                                ? Duration.zero
-                                : const Duration(seconds: 1),
-                            curve: Curves.easeInOut);
-                      }),
-                  IconButton(
-                      icon: const Icon(Icons.refresh),
-                      onPressed: () async {
-                        await model.loadGroup();
-                      }),
-                  IconButton(
-                      icon: const Icon(Icons.settings),
-                      onPressed: () async {
-                        Navigator.pushNamed(context, routeSettings);
-                      }),
-                  if (actions != null) ...actions!
-                ],
-              )
-            ];
-          },
-          body: SubscriptionGroupScreenContent(id: id),
-        );
-      },
+    return GroupFeedShell(
+      scrollController: scrollController,
+      groupId: id,
+      titleBuilder: (context) => Text(name),
+      bodyBuilder: (context) => SubscriptionGroupScreenContent(id: id, cacheKey: cacheKey),
+      actionsBuilder: (context) => defaultGroupActions(
+        context,
+        model: context.read<GroupModel>(),
+        scrollToTopController: scrollController,
+        extra: actions ?? const [],
+      ),
     );
   }
 }

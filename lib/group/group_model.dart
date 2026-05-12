@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
@@ -19,8 +18,8 @@ IconData deserializeIconData(String iconData) {
     if (icon != null) {
       return icon.data;
     }
-  } catch (e, stackTrace) {
-    log('Unable to deserialize icon', error: e, stackTrace: stackTrace);
+  } catch (e) {
+    // Simply ignore this exception (failed to deserialize icon)
   }
 
   // Use this as a default;
@@ -104,8 +103,17 @@ class GroupsModel extends Store<List<SubscriptionGroup>> {
   static final log = Logger('GroupModel');
 
   final BasePrefService prefs;
+  final Map<String, VoidCallback> _onGroupsReloaded = {};
 
   GroupsModel(this.prefs) : super([]);
+
+  void addReloadListener(String key, VoidCallback callback) {
+    _onGroupsReloaded[key] = callback;
+  }
+
+  void removeReloadListener(String key) {
+    _onGroupsReloaded.remove(key);
+  }
 
   bool get orderGroupsAscending => prefs.get(optionSubscriptionGroupsOrderByAscending);
   String get orderGroupsBy => prefs.get(optionSubscriptionGroupsOrderByField);
@@ -136,6 +144,9 @@ class GroupsModel extends Store<List<SubscriptionGroup>> {
 
       return (await database.rawQuery(query)).map((e) => SubscriptionGroup.fromMap(e)).toList(growable: false);
     });
+    for (final callback in _onGroupsReloaded.values) {
+      callback();
+    }
   }
 
   Future<List<SubscriptionGroupMember>> listGroupMembers() async {

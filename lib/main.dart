@@ -14,6 +14,7 @@ import 'package:quax/client/login_webview.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/database/repository.dart';
 import 'package:quax/generated/l10n.dart';
+import 'package:quax/group/feed_session_cache.dart';
 import 'package:quax/group/group_model.dart';
 import 'package:quax/group/group_screen.dart';
 import 'package:quax/home/home_model.dart';
@@ -248,6 +249,15 @@ Future<void> main() async {
     var subscriptionsModel = SubscriptionsModel(prefService, groupsModel);
     await subscriptionsModel.reloadSubscriptions();
 
+    var feedSessionCache = FeedSessionCache();
+    // Registration order matters: invalidateAll must run before any
+    // GroupFeedShell reload listener, so by the time the shell remounts the
+    // body via KeyedSubtree, the inner feed reads fresh controllers from the
+    // cache. LinkedHashMap iterates in insertion order, and registering here
+    // (before any shell exists) guarantees we win.
+    groupsModel.addReloadListener('FeedSessionCache', feedSessionCache.invalidateAll);
+    subscriptionsModel.addReloadListener('FeedSessionCache', feedSessionCache.invalidateAll);
+
     var trendLocationModel = UserTrendLocationModel(prefService);
 
     runApp(PrefService(
@@ -255,6 +265,7 @@ Future<void> main() async {
         child: MultiProvider(
           providers: [
             Provider(create: (context) => groupsModel),
+            Provider(create: (context) => feedSessionCache),
             Provider(create: (context) => homeModel),
             ChangeNotifierProvider(create: (context) => importDataModel),
             Provider(create: (context) => subscriptionsModel),

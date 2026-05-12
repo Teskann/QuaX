@@ -14,9 +14,17 @@ class SubscriptionsModel extends Store<List<Subscription>> {
 
   final BasePrefService prefs;
   final GroupsModel groupModel;
-  Map<String, VoidCallback> onSubscriptionsReloaded = {};
+  final Map<String, VoidCallback> _onSubscriptionsReloaded = {};
 
   SubscriptionsModel(this.prefs, this.groupModel) : super([]);
+
+  void addReloadListener(String key, VoidCallback callback) {
+    _onSubscriptionsReloaded[key] = callback;
+  }
+
+  void removeReloadListener(String key) {
+    _onSubscriptionsReloaded.remove(key);
+  }
 
   Future<void> reloadSubscriptions() async {
     log.info('Listing subscriptions');
@@ -66,7 +74,7 @@ class SubscriptionsModel extends Store<List<Subscription>> {
         return newLst;
       }
     });
-    for(final callback in onSubscriptionsReloaded.values) {
+    for(final callback in _onSubscriptionsReloaded.values) {
       callback();
     }
   }

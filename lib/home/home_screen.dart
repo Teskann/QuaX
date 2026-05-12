@@ -264,13 +264,14 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
             .toList(),
         onDestinationSelected: (index) async {
           if (index == _currentPage) {
-            if (widget.pages[index].id == "feed") {
-              final feedScreenController = _scrollControllers[_currentPage];
-              if (feedScreenController != null) {
-                await feedScreenController.animateTo(0, duration: const Duration(seconds: 1), curve: Curves.easeInOut);
+            final tappedId = widget.pages[index].id;
+            if (tappedId == "feed" || tappedId.startsWith("group-")) {
+              final scrollController = _scrollControllers[_currentPage];
+              if (scrollController != null) {
+                await scrollController.animateTo(0, duration: const Duration(seconds: 1), curve: Curves.easeInOut);
               }
             }
-            if (widget.pages[index].id == "trending") {
+            if (tappedId == "trending") {
               _focusNodes[_currentPage]!.requestFocus();
             }
           }
