@@ -79,7 +79,7 @@ class _ProfileTweetsState extends State<ProfileTweets> with AutomaticKeepAliveCl
       }
 
       if (result.cursorBottom == _pagingController.nextPageKey) {
-        _pagingController.appendLastPage([]);
+        _pagingController.appendLastPage(result.chains);
       } else {
         _pagingController.appendPage(result.chains, result.cursorBottom);
       }

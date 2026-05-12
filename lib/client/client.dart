@@ -217,12 +217,10 @@ class Twitter {
       }
     }
 
-    var user = UserWithExtra.fromJson({
-      ...result['legacy'],
-      'id_str': result['rest_id'],
-      'ext_is_blue_verified': result['is_blue_verified'],
-    });
-    var pins = List<String>.from(result['legacy']['pinned_tweet_ids_str'] ?? []);
+    var user = UserWithExtra.fromNonLegacyJson(result);
+    var pins = List<String>.from(
+      (result['legacy']?['pinned_tweet_ids_str'] as List<dynamic>?) ?? const [],
+    );
 
     return Profile(user, pins);
   }
@@ -1106,11 +1104,13 @@ class Twitter {
     }
     //To prevent infinte loading of tweets while filtering via regex , we have to count added tweets.
     //(infinite loading originating in paged_silver_builder.dart at line 246)
-    if (chains.length < 5) increaseTweetCounter();
     //As soon as there is no tweet left that passes regex critera and we also reached maximum attemps
     //to find them, than stop loading more.
-    if (chains.length <= 5) {
-      cursorBottom = null;
+    if (chains.length < 5) {
+      increaseTweetCounter();
+      if (getTweetsCounter() > 5) {
+        cursorBottom = null;
+      }
     }
     return TweetStatus(chains: chains, cursorBottom: cursorBottom, cursorTop: cursorTop);
   }
@@ -1151,11 +1151,13 @@ class Twitter {
     }
     //To prevent infinte loading of tweets while filtering via regex , we have to count added tweets.
     //(infinite loading originating in paged_silver_builder.dart at line 246)
-    if (chains.length < 5) increaseTweetCounter();
     //As soon as there is no tweet left that passes regex critera and we also reached maximum attemps
     //to find them, than stop loading more.
-    if (chains.length <= 5) {
-      cursorBottom = null;
+    if (chains.length < 5) {
+      increaseTweetCounter();
+      if (getTweetsCounter() > 5) {
+        cursorBottom = null;
+      }
     }
 
     return TweetStatus(chains: chains, cursorBottom: cursorBottom, cursorTop: cursorTop);
