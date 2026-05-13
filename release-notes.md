@@ -1,11 +1,7 @@
-## QuaX v4.7.1
+## QuaX v4.8.0
 
-What's new in QuaX v4.7.1:
-  - Removed all unused strings from translation files. Translation files are now sorted by key and are fully covered. <sup>[[view modified code]](https://github.com/teskann/quax/commit/b4034a251ea55ae58eac8866d6056bb2fbb3b7db)</sup>
-  - Implemented #17 - Keep position in group feeds after actions <sup>[[view modified code]](https://github.com/teskann/quax/commit/d801551137d38cc1f3d1d6052ef7c798e38b6b04)</sup>
-  - Upgraded Flutter to 3.41.9, updated dependencies <sup>[[view modified code]](https://github.com/teskann/quax/commit/d4cf1bac40a976810bf0a8b27cc9d1842c024b06)</sup>
-  - Fixed posts not being shown on some profiles (Tweets / Tweets & Replies tabs) <sup>[[view modified code]](https://github.com/teskann/quax/commit/c9ec545020db0b07bc72f48950fa4ffcca157a8c)</sup>
-  - Added a search bar to the subscriptions list, making it easier to find a followed account when you have many of them <sup>[[view modified code]](https://github.com/teskann/quax/commit/c9d40f2e3d70654d122e824370a11f1f280020a1)</sup>
+What's new in QuaX v4.8.0:
+  - Search results in the *Top* and *Latest* tabs **now support infinite scroll**, instead of stopping after the first results (implemented #44) <sup>[[view modified code]](https://github.com/teskann/quax/commit/409570115425c4ed7b66577b16e6c0746f96b455)</sup>
 
 
 ---
