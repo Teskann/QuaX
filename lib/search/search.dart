@@ -2,14 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_triple/flutter_triple.dart';
-import 'package:quax/client/client.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/database/entities.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/profile/profile.dart';
 import 'package:quax/search/search_model.dart';
 import 'package:quax/tweet/_video.dart';
-import 'package:quax/tweet/tweet.dart';
+import 'package:quax/tweet/paginated_tweet_list.dart';
 import 'package:quax/ui/errors.dart';
 import 'package:quax/user.dart';
 import 'package:pref/pref.dart';
@@ -50,10 +49,13 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
   final TextEditingController _queryController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
 
-  late TabController _tabController;
-  late final SearchTweetsModel _topTweetsModel;
-  late final SearchTweetsModel _latestTweetsModel;
+  late final TabController _tabController;
+  late final SearchTweetsPagination _topTweets;
+  late final SearchTweetsPagination _latestTweets;
   late final SearchUsersModel _searchUsersModel;
+
+  Timer? _debounce;
+  String? _lastDispatchedQuery;
 
   @override
   void initState() {
@@ -61,13 +63,49 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
 
     _tabController = TabController(length: 3, vsync: this, initialIndex: widget.initialTab);
 
-    _topTweetsModel = SearchTweetsModel();
-    _latestTweetsModel = SearchTweetsModel();
+    final initialQuery = widget.query ?? '';
+    _topTweets = SearchTweetsPagination(product: 'Top', initialQuery: initialQuery);
+    _latestTweets = SearchTweetsPagination(product: 'Latest', initialQuery: initialQuery);
     _searchUsersModel = SearchUsersModel();
 
-    _queryController.text = widget.query ?? '';
+    _queryController.text = initialQuery;
+    _lastDispatchedQuery = initialQuery;
+    _queryController.addListener(_onQueryChanged);
 
     // TODO: Focussing makes the selection go to the start?!
+
+    // The tweet tabs' first-page requests are fired automatically by their
+    // PagedListViews using the initial query above; the user-search Store
+    // needs an explicit kick.
+    if (initialQuery.isNotEmpty) {
+      _searchUsersModel.searchUsers(initialQuery, context);
+    }
+  }
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    _queryController.dispose();
+    _focusNode.dispose();
+    _tabController.dispose();
+    _topTweets.dispose();
+    _latestTweets.dispose();
+    super.dispose();
+  }
+
+  void _onQueryChanged() {
+    if (_queryController.text == _lastDispatchedQuery) return;
+    _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 750), _dispatchQuery);
+  }
+
+  void _dispatchQuery() {
+    if (!mounted) return;
+    final query = _queryController.text;
+    _lastDispatchedQuery = query;
+    _topTweets.updateQuery(query);
+    _latestTweets.updateQuery(query);
+    _searchUsersModel.searchUsers(query, context);
   }
 
   @override
@@ -83,6 +121,7 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
           padding: EdgeInsets.fromLTRB(8, 36, 8, 8),
           child: SearchBar(
             controller: _queryController,
+            focusNode: _focusNode,
             textInputAction: TextInputAction.search,
             leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () => Navigator.pop(context)),
             trailing: [
@@ -93,136 +132,74 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
         bottom: TabBar(
           controller: _tabController,
           tabs: const [
-            Tab(
-              icon: Icon(Icons.trending_up),
-            ),
-            Tab(
-              icon: Icon(Icons.access_time_outlined),
-            ),
-            Tab(
-              icon: Icon(Icons.person_search),
-            ),
+            Tab(icon: Icon(Icons.trending_up)),
+            Tab(icon: Icon(Icons.access_time_outlined)),
+            Tab(icon: Icon(Icons.person_search)),
           ],
           labelColor: Theme.of(context).appBarTheme.foregroundColor,
           indicatorColor: Theme.of(context).appBarTheme.foregroundColor,
           dividerColor: Theme.of(context).colorScheme.surfaceBright.withAlpha(150),
         ),
       ),
-      body: Column(
-        children: [
-          MultiProvider(
-            providers: [
-              ChangeNotifierProvider<TweetContextState>(
-                  create: (_) => TweetContextState(prefs.get(optionTweetsHideSensitive))),
-              ChangeNotifierProvider<VideoContextState>(
-                  create: (_) => VideoContextState(prefs.get(optionMediaDefaultMute))),
-            ],
-            child: Expanded(
-                child: TabBarView(controller: _tabController, children: [
-              TweetSearchResultList<SearchTweetsModel, TweetWithCard>(
-                  queryController: _queryController,
-                  store: _topTweetsModel,
-                  searchFunction: (q) => _topTweetsModel.searchTweets(q, "Top"),
-                  itemBuilder: (context, item) {
-                    return TweetTile(tweet: item, clickable: true);
-                  }),
-              TweetSearchResultList<SearchTweetsModel, TweetWithCard>(
-                  queryController: _queryController,
-                  store: _latestTweetsModel,
-                  searchFunction: (q) => _latestTweetsModel.searchTweets(q, "Latest"),
-                  itemBuilder: (context, item) {
-                    return TweetTile(tweet: item, clickable: true);
-                  }),
-              TweetSearchResultList<SearchUsersModel, UserWithExtra>(
-                  queryController: _queryController,
-                  store: _searchUsersModel,
-                  searchFunction: (q) => _searchUsersModel.searchUsers(q, context),
-                  itemBuilder: (context, user) {
-                    return UserTile(user: UserSubscription.fromUser(user));
-                  }),
-            ])),
-          )
+      body: MultiProvider(
+        providers: [
+          ChangeNotifierProvider<TweetContextState>(
+              create: (_) => TweetContextState(prefs.get(optionTweetsHideSensitive))),
+          ChangeNotifierProvider<VideoContextState>(
+              create: (_) => VideoContextState(prefs.get(optionMediaDefaultMute))),
         ],
+        child: TabBarView(
+          controller: _tabController,
+          children: [
+            PaginatedTweetList(
+              pagingController: _topTweets.pagingController,
+              loadPage: _topTweets.loadPage,
+              username: null,
+              firstPageErrorPrefix: L10n.of(context).unable_to_load_the_search_results,
+              newPageErrorPrefix: L10n.of(context).unable_to_load_the_next_page_of_tweets,
+              emptyMessage: L10n.of(context).no_results,
+            ),
+            PaginatedTweetList(
+              pagingController: _latestTweets.pagingController,
+              loadPage: _latestTweets.loadPage,
+              username: null,
+              firstPageErrorPrefix: L10n.of(context).unable_to_load_the_search_results,
+              newPageErrorPrefix: L10n.of(context).unable_to_load_the_next_page_of_tweets,
+              emptyMessage: L10n.of(context).no_results,
+            ),
+            _UserSearchResultList(store: _searchUsersModel, onRetry: _dispatchQuery),
+          ],
+        ),
       ),
     );
   }
 }
 
-typedef ItemWidgetBuilder<T> = Widget Function(BuildContext context, T item);
+class _UserSearchResultList extends StatelessWidget {
+  final SearchUsersModel store;
+  final VoidCallback onRetry;
 
-class TweetSearchResultList<S extends Store<List<T>>, T> extends StatefulWidget {
-  final TextEditingController queryController;
-  final S store;
-  final Future<void> Function(String query) searchFunction;
-  final ItemWidgetBuilder<T> itemBuilder;
-
-  const TweetSearchResultList(
-      {super.key,
-      required this.queryController,
-      required this.store,
-      required this.searchFunction,
-      required this.itemBuilder});
-
-  @override
-  State<TweetSearchResultList<S, T>> createState() => _TweetSearchResultListState<S, T>();
-}
-
-class _TweetSearchResultListState<S extends Store<List<T>>, T> extends State<TweetSearchResultList<S, T>> {
-  Timer? _debounce;
-  String? _previousQuery = '';
-
-  @override
-  void initState() {
-    super.initState();
-
-    widget.queryController.addListener(() {
-      var query = widget.queryController.text;
-      if (query == _previousQuery) {
-        return;
-      }
-
-      // If the current query is different from the last render's query, search
-      if (_debounce?.isActive ?? false) {
-        _debounce?.cancel();
-      }
-
-      // Debounce the search, so we don't make a request per keystroke
-      _debounce = Timer(const Duration(milliseconds: 750), () async {
-        fetchResults();
-      });
-    });
-
-    fetchResults();
-  }
-
-  void fetchResults() {
-    if (mounted) {
-      var query = widget.queryController.text;
-      _previousQuery = query;
-      widget.searchFunction(query);
-    }
-  }
+  const _UserSearchResultList({required this.store, required this.onRetry});
 
   @override
   Widget build(BuildContext context) {
-    return ScopedBuilder<S, List<T>>.transition(
-      store: widget.store,
+    return ScopedBuilder<SearchUsersModel, List<UserWithExtra>>.transition(
+      store: store,
       onLoading: (_) => const Center(child: CircularProgressIndicator()),
       onError: (_, error) => FullPageErrorWidget(
         error: error,
         stackTrace: null,
         prefix: L10n.of(context).unable_to_load_the_search_results,
-        onRetry: () => fetchResults(),
+        onRetry: onRetry,
       ),
       onState: (_, items) {
         if (items.isEmpty) {
           return Center(child: Text(L10n.of(context).no_results));
         }
-
         return ListView.builder(
           itemCount: items.length,
           itemBuilder: (context, index) {
-            return widget.itemBuilder(context, items[index]);
+            return UserTile(user: UserSubscription.fromUser(items[index]));
           },
         );
       },

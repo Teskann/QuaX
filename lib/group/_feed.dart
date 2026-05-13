@@ -11,8 +11,7 @@ import 'package:quax/group/feed_session_cache.dart';
 import 'package:quax/group/group_screen.dart';
 import 'package:quax/profile/profile.dart';
 import 'package:quax/tweet/_video.dart';
-import 'package:quax/tweet/conversation.dart';
-import 'package:quax/ui/errors.dart';
+import 'package:quax/tweet/paginated_tweet_list.dart';
 import 'package:quax/utils/iterables.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:pref/pref.dart';
@@ -61,7 +60,6 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
     } else {
       _pagingController = PagingController(firstPageKey: null);
     }
-    _pagingController.addPageRequestListener(_listTweets);
   }
 
   @override
@@ -110,13 +108,11 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
 
   @override
   void dispose() {
-    if (_usesCache) {
-      // The cache owns the controller's lifecycle across pop/push; only
-      // detach our listener so the next mount can re-attach.
-      _pagingController.removePageRequestListener(_listTweets);
-    } else {
+    if (!_usesCache) {
       _pagingController.dispose();
     }
+    // When cached, the FeedSessionCache owns the controller's lifecycle across
+    // pop/push; PaginatedTweetList has already detached its own listener.
     super.dispose();
   }
 
@@ -236,115 +232,100 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
   /// Here, each page is actually a set of mappings, where the ID of each set is the hash of all the user IDs in that
   /// set. We store this along with the top and bottom pagination cursors, which we use to perform pagination for all
   /// sets at the same time, allowing us to create a feed made up of individual search queries.
-  Future _listTweets(String? cursorKey) async {
-    try {
-      List<Future<List<TweetChain>>> futures = [];
+  Future<TweetPageResult> _listTweets(String? cursorKey) async {
+    List<Future<List<TweetChain>>> futures = [];
 
-      var repository = await Repository.writable();
-      var nextCursor = await createCursor(repository);
-      bool shouldShowUnrelatedPostsInFeedWarning = false;
+    var repository = await Repository.writable();
+    var nextCursor = await createCursor(repository);
+    bool shouldShowUnrelatedPostsInFeedWarning = false;
 
-      for (var chunk in widget.chunks) {
-        var hash = chunk.hash;
+    for (var chunk in widget.chunks) {
+      var hash = chunk.hash;
 
-        futures.add(Future(() async {
-          var tweets = <TweetChain>[];
+      futures.add(Future(() async {
+        var tweets = <TweetChain>[];
 
-          String? searchCursor;
+        String? searchCursor;
 
-          if (cursorKey == null) {
-            // We're loading the initial content for the feed screen, so load all the chunks we already have
-            var storedChunks = await repository.query(tableFeedGroupChunk,
-                where: 'hash = ?', whereArgs: [hash], orderBy: 'created_at DESC');
+        if (cursorKey == null) {
+          // We're loading the initial content for the feed screen, so load all the chunks we already have
+          var storedChunks = await repository.query(tableFeedGroupChunk,
+              where: 'hash = ?', whereArgs: [hash], orderBy: 'created_at DESC');
 
-            // Make sure we load any existing stored tweets from the chunk
-            var storedChunksTweets = storedChunks
-                .map((e) => jsonDecode(e['response'] as String))
-                .map((e) => List.from(e))
-                .expand((e) => e.map((c) => TweetChain.fromJson(c)))
-                .toList();
+          // Make sure we load any existing stored tweets from the chunk
+          var storedChunksTweets = storedChunks
+              .map((e) => jsonDecode(e['response'] as String))
+              .map((e) => List.from(e))
+              .expand((e) => e.map((c) => TweetChain.fromJson(c)))
+              .toList();
 
-            tweets.addAll(storedChunksTweets);
+          tweets.addAll(storedChunksTweets);
 
-            // Use the latest chunk's top cursor to load any new tweets since the last time we checked
-            var latestChunk = storedChunks.firstOrNull;
-            if (latestChunk != null) {
-              searchCursor = latestChunk['cursor_top'] as String;
-            } else {
-              // Otherwise we need to perform a fresh load from scratch for this chunk
-              searchCursor = null;
-            }
+          // Use the latest chunk's top cursor to load any new tweets since the last time we checked
+          var latestChunk = storedChunks.firstOrNull;
+          if (latestChunk != null) {
+            searchCursor = latestChunk['cursor_top'] as String;
           } else {
-            // We're currently at the end of our current feed, so load the oldest chunk and use its cursor to load more
-            var storedChunks = await repository.query(tableFeedGroupChunk,
-                where: 'cursor_id = ? AND hash = ?', whereArgs: [int.parse(cursorKey), hash]);
-            if (storedChunks.isNotEmpty) {
-              searchCursor = storedChunks.first['cursor_bottom'] as String;
-            } else {
-              searchCursor = null;
-            }
+            // Otherwise we need to perform a fresh load from scratch for this chunk
+            searchCursor = null;
           }
-
-          // Perform our search for the next page of results for this chunk, and add those tweets to our collection
-          var query = _buildSearchQuery(chunk.users);
-          TweetStatus result =
-              await Twitter.searchTweets(query, widget.includeReplies, cursor: searchCursor);
-          shouldShowUnrelatedPostsInFeedWarning |= feedContainsUnrelatedTweets(result, chunk.users);
-
-          if (result.chains.isNotEmpty) {
-            tweets.addAll(result.chains);
-
-            // Make sure we insert the set of cursors for this latest chunk, ready for the next time we paginate
-            await repository.insert(tableFeedGroupChunk, {
-              'cursor_id': int.parse(nextCursor),
-              'hash': hash,
-              'cursor_top': result.cursorTop,
-              'cursor_bottom': result.cursorBottom,
-              'response': jsonEncode(result.chains.map((e) => e.toJson()).toList())
-            });
-          }
-
-          return tweets;
-        }));
-      }
-
-      // Wait for all our searches to complete, then build our list of tweet conversations
-      var result = (await Future.wait(futures));
-      var threads = result.expand((element) => element).sorted((a, b) {
-        var aCreatedAt = a.tweets[0].createdAt;
-        var bCreatedAt = b.tweets[0].createdAt;
-
-        if (aCreatedAt == null || bCreatedAt == null) {
-          return 0;
-        }
-
-        return bCreatedAt.compareTo(aCreatedAt);
-      }).toList();
-
-      if (!mounted) {
-        return;
-      }
-
-      if (shouldShowUnrelatedPostsInFeedWarning &&
-          !PrefService.of(context).get(optionDisableWarningsForUnrelatedPostsInFeed)) {
-        await showUnrelatedPostsInFeedWarning();
-      }
-
-      if (result.isEmpty) {
-        _pagingController.appendLastPage([]);
-      } else {
-        // If this page is the same as the last page we received before, assume it's the last page
-        if (nextCursor == _pagingController.nextPageKey) {
-          _pagingController.appendLastPage([]);
         } else {
-          _pagingController.appendPage(threads, nextCursor);
+          // We're currently at the end of our current feed, so load the oldest chunk and use its cursor to load more
+          var storedChunks = await repository.query(tableFeedGroupChunk,
+              where: 'cursor_id = ? AND hash = ?', whereArgs: [int.parse(cursorKey), hash]);
+          if (storedChunks.isNotEmpty) {
+            searchCursor = storedChunks.first['cursor_bottom'] as String;
+          } else {
+            searchCursor = null;
+          }
         }
-      }
-    } catch (e, stackTrace) {
-      if (mounted) {
-        _pagingController.error = [e, stackTrace];
-      }
+
+        // Perform our search for the next page of results for this chunk, and add those tweets to our collection
+        var query = _buildSearchQuery(chunk.users);
+        TweetStatus result =
+            await Twitter.searchTweets(query, widget.includeReplies, cursor: searchCursor);
+        shouldShowUnrelatedPostsInFeedWarning |= feedContainsUnrelatedTweets(result, chunk.users);
+
+        if (result.chains.isNotEmpty) {
+          tweets.addAll(result.chains);
+
+          // Make sure we insert the set of cursors for this latest chunk, ready for the next time we paginate
+          await repository.insert(tableFeedGroupChunk, {
+            'cursor_id': int.parse(nextCursor),
+            'hash': hash,
+            'cursor_top': result.cursorTop,
+            'cursor_bottom': result.cursorBottom,
+            'response': jsonEncode(result.chains.map((e) => e.toJson()).toList())
+          });
+        }
+
+        return tweets;
+      }));
     }
+
+    // Wait for all our searches to complete, then build our list of tweet conversations
+    var result = (await Future.wait(futures));
+    var threads = result.expand((element) => element).sorted((a, b) {
+      var aCreatedAt = a.tweets[0].createdAt;
+      var bCreatedAt = b.tweets[0].createdAt;
+
+      if (aCreatedAt == null || bCreatedAt == null) {
+        return 0;
+      }
+
+      return bCreatedAt.compareTo(aCreatedAt);
+    }).toList();
+
+    if (!mounted) {
+      return (chains: <TweetChain>[], nextCursor: null);
+    }
+
+    if (shouldShowUnrelatedPostsInFeedWarning &&
+        !PrefService.of(context).get(optionDisableWarningsForUnrelatedPostsInFeed)) {
+      await showUnrelatedPostsInFeedWarning();
+    }
+
+    return (chains: threads, nextCursor: nextCursor);
   }
 
   @override
@@ -360,52 +341,27 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
     var prefs = PrefService.of(context, listen: false);
 
     return Scaffold(
-      body: RefreshIndicator(
-        onRefresh: () async {
-          var repository = await Repository.writable();
-          await repository.delete(tableFeedGroupChunk);
-          _pagingController.refresh();
-        },
-        child: MultiProvider(
-          providers: [
-            ChangeNotifierProvider<TweetContextState>(
-                create: (_) => TweetContextState(prefs.get(optionTweetsHideSensitive))),
-            ChangeNotifierProvider<VideoContextState>(
-                create: (_) => VideoContextState(prefs.get(optionMediaDefaultMute))),
-          ],
-          child: NotificationListener<ScrollNotification>(
-            onNotification: _onScrollNotification,
-            child: PagedListView<String?, TweetChain>(
-              padding: const EdgeInsets.only(top: 4),
-              pagingController: _pagingController,
-              addAutomaticKeepAlives: false,
-              builderDelegate: PagedChildBuilderDelegate(
-                itemBuilder: (context, conversation, index) {
-                  return TweetConversation(
-                      id: conversation.id,
-                      username: null,
-                      tweets: conversation.tweets,
-                      isPinned: conversation.isPinned);
-                },
-                newPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(
-                  error: _pagingController.error[0],
-                  stackTrace: _pagingController.error[1],
-                  prefix: L10n.of(context).unable_to_load_the_next_page_of_tweets,
-                  onRetry: () => _listTweets(_pagingController.firstPageKey),
-                ),
-                firstPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(
-                  error: _pagingController.error[0],
-                  stackTrace: _pagingController.error[1],
-                  prefix: L10n.of(context).unable_to_load_the_tweets_for_the_feed,
-                  onRetry: () => _listTweets(_pagingController.nextPageKey),
-                ),
-                noItemsFoundIndicatorBuilder: (context) => Center(
-                  child: Text(
-                    L10n.of(context).could_not_find_any_tweets_from_the_last_7_days,
-                  ),
-                ),
-              ),
-            ),
+      body: MultiProvider(
+        providers: [
+          ChangeNotifierProvider<TweetContextState>(
+              create: (_) => TweetContextState(prefs.get(optionTweetsHideSensitive))),
+          ChangeNotifierProvider<VideoContextState>(
+              create: (_) => VideoContextState(prefs.get(optionMediaDefaultMute))),
+        ],
+        child: NotificationListener<ScrollNotification>(
+          onNotification: _onScrollNotification,
+          child: PaginatedTweetList(
+            pagingController: _pagingController,
+            loadPage: _listTweets,
+            username: null,
+            onRefresh: () async {
+              var repository = await Repository.writable();
+              await repository.delete(tableFeedGroupChunk);
+              _pagingController.refresh();
+            },
+            firstPageErrorPrefix: L10n.of(context).unable_to_load_the_tweets_for_the_feed,
+            newPageErrorPrefix: L10n.of(context).unable_to_load_the_next_page_of_tweets,
+            emptyMessage: L10n.of(context).could_not_find_any_tweets_from_the_last_7_days,
           ),
         ),
       ),

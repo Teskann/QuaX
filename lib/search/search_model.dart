@@ -1,24 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_triple/flutter_triple.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:quax/client/client.dart';
+import 'package:quax/tweet/paginated_tweet_list.dart';
 import 'package:quax/user.dart';
 
-class SearchTweetsModel extends Store<List<TweetWithCard>> {
-  SearchTweetsModel() : super([]);
+/// Holds the paging controller and loader for one tab of the tweet search
+/// (Top / Latest). The query string is mutable — [updateQuery] swaps it in and
+/// refreshes the controller so the next page request hits the new query.
+class SearchTweetsPagination {
+  final PagingController<String?, TweetChain> pagingController = PagingController(firstPageKey: null);
+  final String product;
+  String _query;
 
-  Future<void> searchTweets(String query, String product) async {
-    await execute(() async {
-      if (query.isEmpty) {
-        return [];
-      } else {
-        // TODO: Is this right?
-        return (await Twitter.searchTweets(query, true, product: product))
-            .chains
-            .map((e) => e.tweets)
-            .expand((element) => element)
-            .toList();
-      }
-    });
+  SearchTweetsPagination({required this.product, String initialQuery = ''}) : _query = initialQuery;
+
+  Future<TweetPageResult> loadPage(String? cursor) async {
+    if (_query.isEmpty) {
+      return (chains: <TweetChain>[], nextCursor: null);
+    }
+    final result = await Twitter.searchTweets(_query, true, product: product, cursor: cursor);
+    return (chains: result.chains, nextCursor: result.cursorBottom);
+  }
+
+  void updateQuery(String newQuery) {
+    if (newQuery == _query) return;
+    _query = newQuery;
+    pagingController.refresh();
+  }
+
+  void dispose() {
+    pagingController.dispose();
   }
 }
 
