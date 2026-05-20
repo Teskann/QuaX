@@ -1233,6 +1233,7 @@ class TweetWithCard extends Tweet {
   bool? isTombstone;
   TweetWithCard? birdwatchQuotedStatus; // Community notes
   Article? article;
+  int? viewCount;
 
   TweetWithCard();
 
@@ -1245,6 +1246,7 @@ class TweetWithCard extends Tweet {
     json['retweetedStatusWithCard'] = retweetedStatusWithCard?.toJson();
     json['isTombstone'] = isTombstone;
     json['article'] = article?.toJson();
+    json['viewCount'] = viewCount;
 
     return json;
   }
@@ -1293,6 +1295,7 @@ class TweetWithCard extends Tweet {
     tweetWithCard.retweetedStatusWithCard = e['retweetedStatusWithCard'] == null
         ? null
         : TweetWithCard.fromJson(e['retweetedStatusWithCard']);
+    tweetWithCard.viewCount = e['viewCount'];
     tweetWithCard.source = tweet.source;
     tweetWithCard.text = tweet.text;
     tweetWithCard.user = tweet.user;
@@ -1343,7 +1346,14 @@ class TweetWithCard extends Tweet {
       return TweetWithCard.tombstone(result['tombstone']!);
     }
 
-    var tweet = TweetWithCard.fromData(result['legacy'], noteText, noteEntities, user, retweetedStatus, quotedStatus);
+    var tweet = TweetWithCard.fromData(
+        result['legacy'],
+        noteText,
+        noteEntities,
+        user,
+        retweetedStatus,
+        quotedStatus,
+        int.tryParse(result['views']?['count']));
 
     if (tweet.card == null && result['card']?['legacy'] != null) {
       tweet.card = result['card']['legacy'];
@@ -1410,7 +1420,7 @@ class TweetWithCard extends Tweet {
       quotedStatus = TweetWithCard.fromCardJson(tweets, users, tweets[quoteId]);
     }
 
-    return TweetWithCard.fromData(e, null, null, user, retweetedStatus, quotedStatus);
+    return TweetWithCard.fromData(e, null, null, user, retweetedStatus, quotedStatus, null);
   }
 
   factory TweetWithCard.fromData(
@@ -1420,6 +1430,7 @@ class TweetWithCard extends Tweet {
     UserWithExtra? user,
     TweetWithCard? retweetedStatus,
     TweetWithCard? quotedStatus,
+    int? tweetViewCount,
   ) {
     TweetWithCard tweet = TweetWithCard();
     tweet.card = e['card'];
@@ -1429,6 +1440,7 @@ class TweetWithCard extends Tweet {
     tweet.extendedEntities = e['extended_entities'] == null ? null : Entities.fromJson(e['extended_entities']);
     tweet.favorited = e['favorited'] as bool?;
     tweet.favoriteCount = e['favorite_count'] as int?;
+    tweet.viewCount = tweetViewCount;
     tweet.fullText = e['full_text'] as String?;
     tweet.idStr = e['id_str'] as String?;
     tweet.inReplyToScreenName = e['in_reply_to_screen_name'] as String?;
