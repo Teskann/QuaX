@@ -96,7 +96,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    
+
     if (!_isInitialized) {
       _initializeTweetParts();
       _isInitialized = true;
@@ -231,6 +231,11 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
               if (tweet.favoriteCount != null)
                 _createFooterTextButton(Icons.favorite_border,
                     numberFormat.format(tweet.favoriteCount), buttonsColor(context)),
+              if (tweet.viewCount != null)
+                _createFooterTextButton(
+                    Icons.bar_chart,
+                    numberFormat.format(tweet.viewCount),
+                    buttonsColor(context)),
               const SizedBox(
                 width: 8.0,
               ),
