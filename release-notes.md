@@ -1,7 +1,7 @@
-## QuaX v4.8.1
+## QuaX v4.8.2
 
-What's new in QuaX v4.8.1:
-  - Display impressions count on posts (by @lebakassemmerl) <sup>[[view modified code]](https://github.com/teskann/quax/commit/75fd7f8ea288c5535a6147cb398e903859645ab7)</sup>
+What's new in QuaX v4.8.2:
+  - Fixed #144 - Can't load posts on 4.8.1 <sup>[[view modified code]](https://github.com/teskann/quax/commit/16c851d33a5ef92650650660e212849439f81897)</sup>
 
 
 ---

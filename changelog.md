@@ -1,3 +1,8 @@
+## QuaX v4.8.2
+
+What's new in QuaX v4.8.2:
+  - Fixed #144 - Can't load posts on 4.8.1 <sup>[[view modified code]](https://github.com/teskann/quax/commit/16c851d33a5ef92650650660e212849439f81897)</sup>
+
 ## QuaX v4.8.1
 
 What's new in QuaX v4.8.1:
