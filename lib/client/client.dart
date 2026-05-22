@@ -1353,7 +1353,7 @@ class TweetWithCard extends Tweet {
         user,
         retweetedStatus,
         quotedStatus,
-        int.tryParse(result['views']?['count']));
+        int.tryParse(result['views']?['count'] ?? ''));
 
     if (tweet.card == null && result['card']?['legacy'] != null) {
       tweet.card = result['card']['legacy'];
