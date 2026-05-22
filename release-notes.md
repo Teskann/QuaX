@@ -1,7 +1,7 @@
-## QuaX v4.8.0
+## QuaX v4.8.1
 
-What's new in QuaX v4.8.0:
-  - Search results in the *Top* and *Latest* tabs **now support infinite scroll**, instead of stopping after the first results (implemented #44) <sup>[[view modified code]](https://github.com/teskann/quax/commit/409570115425c4ed7b66577b16e6c0746f96b455)</sup>
+What's new in QuaX v4.8.1:
+  - Display impressions count on posts (by @lebakassemmerl) <sup>[[view modified code]](https://github.com/teskann/quax/commit/75fd7f8ea288c5535a6147cb398e903859645ab7)</sup>
 
 
 ---
