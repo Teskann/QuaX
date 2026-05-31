@@ -1,3 +1,12 @@
+## QuaX v4.9.0
+
+What's new in QuaX v4.9.0:
+  - Fixed #141 - Some tweets don't appear in feeds and search results <sup>[[view modified code]](https://github.com/teskann/quax/commit/327114fe16ae2cba50bb8e9eb64b65acd01fd148)</sup>
+  - Feeds now stay visible while they are being refreshed <sup>[[view modified code]](https://github.com/teskann/quax/commit/f41fcb7a9d70b433d4afc3acd681af13073a248b)</sup>
+  - Seamless tweet opening: show opened tweet instantly while loading replies <sup>[[view modified code]](https://github.com/teskann/quax/commit/b1e47d605a8987ff7f3667471cbdadad7a6d8e74)</sup>
+  - Fixed content being hidden behind the Android Navigation Bar when opening a tweet <sup>[[view modified code]](https://github.com/teskann/quax/commit/9e949cbff6d25705367c495f85652ed5e1ecf6f1)</sup>
+  - Added video support for seamless tweet opening <sup>[[view modified code]](https://github.com/teskann/quax/commit/5ad1efa4ec67c1d8195ad2e8bf6018ab7833dd49)</sup>
+
 ## QuaX v4.8.2
 
 What's new in QuaX v4.8.2:
