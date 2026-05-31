@@ -1,11 +1,16 @@
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_triple/flutter_triple.dart';
+import 'package:quax/client/client.dart';
 import 'package:quax/database/entities.dart';
+import 'package:quax/database/repository.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/group/_feed.dart';
 import 'package:quax/group/_feed_shell.dart';
+import 'package:quax/group/feed_cache.dart';
 import 'package:quax/group/group_model.dart';
+import 'package:quax/tweet/cached_tweet_list.dart';
+import 'package:quax/tweet/tweet_context_scope.dart';
 import 'package:quax/ui/errors.dart';
 import 'package:provider/provider.dart';
 import 'package:quax/utils/iterables.dart';
@@ -61,23 +66,58 @@ class _GroupScreenState extends State<GroupScreen> {
   }
 }
 
-class SubscriptionGroupScreenContent extends StatelessWidget {
+class SubscriptionGroupScreenContent extends StatefulWidget {
   final String id;
   final String? cacheKey;
 
   const SubscriptionGroupScreenContent({super.key, required this.id, this.cacheKey});
 
   @override
+  State<SubscriptionGroupScreenContent> createState() => _SubscriptionGroupScreenContentState();
+}
+
+class _SubscriptionGroupScreenContentState extends State<SubscriptionGroupScreenContent> {
+  // Cached tweets shown while the group's subscriptions load, so the feed
+  // reveals its content instead of a full-screen spinner on cold start.
+  List<TweetChain>? _preview;
+
+  @override
+  void initState() {
+    super.initState();
+    // Only the combined "All"/Following feed (id '-1') can preview every cached
+    // chunk up front; a specific group needs its own chunk hashes (unknown until
+    // loadGroup finishes) to avoid showing tweets from other groups.
+    if (widget.id == '-1') {
+      _loadPreview();
+    }
+  }
+
+  Future<void> _loadPreview() async {
+    var repository = await Repository.readOnly();
+    var chains = await readAllCachedChains(repository);
+    if (!mounted) return;
+    setState(() => _preview = chains);
+  }
+
+  Widget _loadingView() {
+    var preview = _preview;
+    if (preview != null && preview.isNotEmpty) {
+      return TweetContextScope(child: CachedTweetList(preview));
+    }
+    return const Center(child: CircularProgressIndicator());
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ScopedBuilder<GroupModel, SubscriptionGroupGet>.transition(
       store: context.read<GroupModel>(),
-      onLoading: (_) => const Center(child: CircularProgressIndicator()),
+      onLoading: (_) => _loadingView(),
       onError: (_, error) =>
           ScaffoldErrorWidget(error: error, stackTrace: null, prefix: L10n.current.unable_to_load_the_group),
       onState: (_, group) {
         // TODO: This is pretty gross. Figure out how to have a "no data" state
         if (group.id.isEmpty) {
-          return Container();
+          return _loadingView();
         }
         // Split the users into chunks, oldest first, to prevent thrashing of all groups when a new user is added
         final filteredUsers = group.id == '-1' ? group.subscriptions.where((elm) => elm.inFeed) : group.subscriptions;
@@ -92,7 +132,8 @@ class SubscriptionGroupScreenContent extends StatelessWidget {
           chunks: chunks,
           includeReplies: group.includeReplies,
           includeRetweets: group.includeRetweets,
-          cacheKey: cacheKey,
+          cacheKey: widget.cacheKey,
+          initialPreview: _preview,
         );
       },
     );

@@ -76,7 +76,7 @@ class _ForYouTweetsState extends State<ForYouTweets> with AutomaticKeepAliveClie
               pagingController: widget.pagingController,
               loadPage: _loadTweets,
               username: user.screenName,
-              onRefresh: () async => widget.pagingController.refresh(),
+              onRefresh: () async {},
               firstPageErrorPrefix: L10n.of(context).unable_to_load_the_tweets,
               newPageErrorPrefix: L10n.of(context).unable_to_load_the_next_page_of_tweets,
               emptyMessage: L10n.of(context).unable_to_load_the_tweets_for_the_feed,

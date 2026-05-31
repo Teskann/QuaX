@@ -53,13 +53,6 @@ class _FeedScreenState extends State<FeedScreen> {
           context,
           model: model,
           showMore: _tab == 0,
-          onRefresh: () async {
-            if (_tab == 0) {
-              await model.loadGroup();
-            } else {
-              _pagingController.refresh();
-            }
-          },
         );
       },
       bodyBuilder: (context) {

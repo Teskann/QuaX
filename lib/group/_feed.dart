@@ -7,11 +7,11 @@ import 'package:quax/constants.dart';
 import 'package:quax/database/entities.dart';
 import 'package:quax/database/repository.dart';
 import 'package:quax/generated/l10n.dart';
+import 'package:quax/group/feed_cache.dart';
 import 'package:quax/group/feed_session_cache.dart';
 import 'package:quax/group/group_screen.dart';
-import 'package:quax/profile/profile.dart';
-import 'package:quax/tweet/_video.dart';
 import 'package:quax/tweet/paginated_tweet_list.dart';
+import 'package:quax/tweet/tweet_context_scope.dart';
 import 'package:quax/utils/iterables.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:pref/pref.dart';
@@ -30,6 +30,10 @@ class SubscriptionGroupFeed extends StatefulWidget {
   // State and disposed normally — used by home-tab usages, which are kept
   // alive by AutomaticKeepAliveClientMixin in the shell.
   final String? cacheKey;
+  // Cached tweets to show immediately while the first page loads, seeded by the
+  // caller (e.g. the All/Following feed reuses the preview it already read while
+  // its subscriptions were loading). Refined to this feed's own chunks once read.
+  final List<TweetChain>? initialPreview;
 
   const SubscriptionGroupFeed(
       {super.key,
@@ -37,7 +41,8 @@ class SubscriptionGroupFeed extends StatefulWidget {
       required this.chunks,
       required this.includeReplies,
       required this.includeRetweets,
-      this.cacheKey});
+      this.cacheKey,
+      this.initialPreview});
 
   @override
   State<SubscriptionGroupFeed> createState() => _SubscriptionGroupFeedState();
@@ -48,6 +53,9 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
   FeedSessionCache? _cache;
   ScrollController? _innerScrollController;
   bool _scrollRestoreScheduled = false;
+  // Cached tweets shown while the first page loads, so opening the feed reveals
+  // its previously-loaded content instead of a full-screen spinner.
+  List<TweetChain>? _cachedPreview;
 
   bool get _usesCache => widget.cacheKey != null;
 
@@ -60,6 +68,19 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
     } else {
       _pagingController = PagingController(firstPageKey: null);
     }
+    // Cached (pop/push-restored) controllers already hold their tweets; only a
+    // fresh controller needs the preview while it loads the first page.
+    _cachedPreview = widget.initialPreview;
+    if (_pagingController.itemList == null) {
+      _loadPreview();
+    }
+  }
+
+  Future<void> _loadPreview() async {
+    var repository = await Repository.readOnly();
+    var cached = await readCachedChainsForHashes(repository, widget.chunks.map((e) => e.hash));
+    if (!mounted) return;
+    setState(() => _cachedPreview = cached);
   }
 
   @override
@@ -253,13 +274,7 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
               where: 'hash = ?', whereArgs: [hash], orderBy: 'created_at DESC');
 
           // Make sure we load any existing stored tweets from the chunk
-          var storedChunksTweets = storedChunks
-              .map((e) => jsonDecode(e['response'] as String))
-              .map((e) => List.from(e))
-              .expand((e) => e.map((c) => TweetChain.fromJson(c)))
-              .toList();
-
-          tweets.addAll(storedChunksTweets);
+          tweets.addAll(chainsFromStoredChunks(storedChunks));
 
           // Use the latest chunk's top cursor to load any new tweets since the last time we checked
           var latestChunk = storedChunks.firstOrNull;
@@ -305,16 +320,7 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
 
     // Wait for all our searches to complete, then build our list of tweet conversations
     var result = (await Future.wait(futures));
-    var threads = result.expand((element) => element).sorted((a, b) {
-      var aCreatedAt = a.tweets[0].createdAt;
-      var bCreatedAt = b.tweets[0].createdAt;
-
-      if (aCreatedAt == null || bCreatedAt == null) {
-        return 0;
-      }
-
-      return bCreatedAt.compareTo(aCreatedAt);
-    }).toList();
+    var threads = sortChainsNewestFirst(result.expand((element) => element).toList());
 
     if (!mounted) {
       return (chains: <TweetChain>[], nextCursor: null);
@@ -338,26 +344,18 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
       );
     }
 
-    var prefs = PrefService.of(context, listen: false);
-
     return Scaffold(
-      body: MultiProvider(
-        providers: [
-          ChangeNotifierProvider<TweetContextState>(
-              create: (_) => TweetContextState(prefs.get(optionTweetsHideSensitive))),
-          ChangeNotifierProvider<VideoContextState>(
-              create: (_) => VideoContextState(prefs.get(optionMediaDefaultMute))),
-        ],
+      body: TweetContextScope(
         child: NotificationListener<ScrollNotification>(
           onNotification: _onScrollNotification,
           child: PaginatedTweetList(
             pagingController: _pagingController,
             loadPage: _listTweets,
             username: null,
+            firstPagePreview: _cachedPreview,
             onRefresh: () async {
               var repository = await Repository.writable();
               await repository.delete(tableFeedGroupChunk);
-              _pagingController.refresh();
             },
             firstPageErrorPrefix: L10n.of(context).unable_to_load_the_tweets_for_the_feed,
             newPageErrorPrefix: L10n.of(context).unable_to_load_the_next_page_of_tweets,

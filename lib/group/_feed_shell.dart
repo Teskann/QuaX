@@ -3,6 +3,7 @@ import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/group/_settings.dart';
+import 'package:quax/group/feed_refresh_controller.dart';
 import 'package:quax/group/group_model.dart';
 import 'package:quax/subscriptions/users_model.dart';
 
@@ -28,6 +29,7 @@ class GroupFeedShell extends StatefulWidget {
 
 class _GroupFeedShellState extends State<GroupFeedShell> with AutomaticKeepAliveClientMixin<GroupFeedShell> {
   late final GroupModel _groupModel;
+  final FeedRefreshController _feedRefreshController = FeedRefreshController();
   int _refreshCounter = 0;
   // Cached refs captured in didChangeDependencies — accessing the InheritedWidget
   // tree via context.read in dispose() triggers a framework warning, since
@@ -86,24 +88,27 @@ class _GroupFeedShellState extends State<GroupFeedShell> with AutomaticKeepAlive
     return Provider<GroupModel>.value(
       value: _groupModel,
       builder: (context, child) {
-        return NestedScrollView(
-          controller: widget.scrollController,
-          floatHeaderSlivers: true,
-          headerSliverBuilder: (context, innerBoxIsScrolled) {
-            return [
-              SliverAppBar(
-                backgroundColor: Theme.of(context).colorScheme.surface,
-                pinned: false,
-                snap: true,
-                floating: true,
-                title: widget.titleBuilder(context),
-                actions: widget.actionsBuilder(context),
-              ),
-            ];
-          },
-          body: KeyedSubtree(
-            key: ValueKey(_refreshCounter),
-            child: widget.bodyBuilder(context),
+        return Provider<FeedRefreshController>.value(
+          value: _feedRefreshController,
+          child: NestedScrollView(
+            controller: widget.scrollController,
+            floatHeaderSlivers: true,
+            headerSliverBuilder: (context, innerBoxIsScrolled) {
+              return [
+                SliverAppBar(
+                  backgroundColor: Theme.of(context).colorScheme.surface,
+                  pinned: false,
+                  snap: true,
+                  floating: true,
+                  title: widget.titleBuilder(context),
+                  actions: widget.actionsBuilder(context),
+                ),
+              ];
+            },
+            body: KeyedSubtree(
+              key: ValueKey(_refreshCounter),
+              child: widget.bodyBuilder(context),
+            ),
           ),
         );
       },
@@ -137,7 +142,8 @@ List<Widget> defaultGroupActions(
           }),
     if (showRefresh)
       IconButton(
-          icon: const Icon(Icons.refresh), onPressed: onRefresh ?? () async => await model.loadGroup()),
+          icon: const Icon(Icons.refresh),
+          onPressed: onRefresh ?? () async => await context.read<FeedRefreshController>().refresh()),
     IconButton(
         icon: const Icon(Icons.settings), onPressed: () => Navigator.pushNamed(context, routeSettings)),
     ...extra,
