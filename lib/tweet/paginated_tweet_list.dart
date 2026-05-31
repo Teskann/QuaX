@@ -51,6 +51,7 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
   final GlobalKey<RefreshIndicatorState> _refreshKey = GlobalKey<RefreshIndicatorState>();
   FeedRefreshController? _refreshController;
   bool _firstLoadStarted = false;
+  bool _pendingInitialLoad = false;
 
   @override
   void initState() {
@@ -182,12 +183,34 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
     final controller = widget.pagingController;
     if (controller.itemList != null || controller.error != null) return;
     _firstLoadStarted = true;
-    _handlePageRequest(controller.firstPageKey);
+    if (widget.onRefresh == null) {
+      _handlePageRequest(controller.firstPageKey);
+      return;
+    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final refreshState = _refreshKey.currentState;
+      if (refreshState != null) {
+        _pendingInitialLoad = true;
+        refreshState.show();
+      } else {
+        _handlePageRequest(controller.firstPageKey);
+      }
+    });
+  }
+
+  Future<void> _onRefreshTriggered() async {
+    if (_pendingInitialLoad) {
+      _pendingInitialLoad = false;
+      await _handlePageRequest(widget.pagingController.firstPageKey);
+      return;
+    }
+    await _handleRefresh();
   }
 
   Widget _wrapWithRefresh(Widget child) {
     if (widget.onRefresh == null) return child;
-    return RefreshIndicator(key: _refreshKey, onRefresh: _handleRefresh, child: child);
+    return RefreshIndicator(key: _refreshKey, onRefresh: _onRefreshTriggered, child: child);
   }
 
   @override

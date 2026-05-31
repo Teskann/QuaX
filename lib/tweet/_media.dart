@@ -21,11 +21,19 @@ import 'package:uuid/uuid.dart';
 
 class _TweetMediaItem extends StatefulWidget {
   final int index;
+  final int mediaIndex;
   final int total;
   final Media media;
   final String username;
+  final String? tweetId;
 
-  const _TweetMediaItem({required this.index, required this.total, required this.media, required this.username});
+  const _TweetMediaItem(
+      {required this.index,
+      required this.mediaIndex,
+      required this.total,
+      required this.media,
+      required this.username,
+      this.tweetId});
 
   @override
   State<_TweetMediaItem> createState() => _TweetMediaItemState();
@@ -81,8 +89,14 @@ class _TweetMediaItemState extends State<_TweetMediaItem> {
     var item = widget.media;
 
     if (_showMedia) {
-      media =
-          _TweetMediaThing(item: item, username: widget.username, size: size, pullToClose: false, inPageView: false);
+      media = _TweetMediaThing(
+          item: item,
+          username: widget.username,
+          size: size,
+          pullToClose: false,
+          inPageView: false,
+          tweetId: widget.tweetId,
+          mediaIndex: widget.mediaIndex);
     } else {
       media = GestureDetector(
         child: Container(
@@ -127,13 +141,16 @@ class TweetMedia extends StatefulWidget {
   final List<Media> media;
   final String username;
   final int initialMediaIndex;
+  // Used (with the media index) to cache/reuse video controllers across screens.
+  final String? tweetId;
 
   const TweetMedia(
       {super.key,
       required this.sensitive,
       required this.media,
       required this.username,
-      this.initialMediaIndex = 0});
+      this.initialMediaIndex = 0,
+      this.tweetId});
 
   @override
   State<TweetMedia> createState() => _TweetMediaState();
@@ -182,10 +199,18 @@ class _TweetMediaState extends State<TweetMedia> {
                 onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            TweetMediaView(initialIndex: index, media: widget.media, username: widget.username))),
+                        builder: (context) => TweetMediaView(
+                            initialIndex: index,
+                            media: widget.media,
+                            username: widget.username,
+                            tweetId: widget.tweetId))),
                 child: _TweetMediaItem(
-                    media: item, index: index + 1, total: widget.media.length, username: widget.username),
+                    media: item,
+                    index: index + 1,
+                    mediaIndex: index,
+                    total: widget.media.length,
+                    username: widget.username,
+                    tweetId: widget.tweetId),
               );
             },
           ),
@@ -200,8 +225,15 @@ class TweetMediaView extends StatefulWidget {
   final List<Media> media;
   final String username;
   final bool tweetMedia;  // True if the media comes from a tweet
+  final String? tweetId;
 
-  const TweetMediaView({super.key, required this.initialIndex, required this.media, required this.username, this.tweetMedia = true});
+  const TweetMediaView(
+      {super.key,
+      required this.initialIndex,
+      required this.media,
+      required this.username,
+      this.tweetMedia = true,
+      this.tweetId});
 
   @override
   State<TweetMediaView> createState() => _TweetMediaViewState();
@@ -315,7 +347,13 @@ class _TweetMediaViewState extends State<TweetMediaView> {
           var item = widget.media[index];
 
           return _TweetMediaThing(
-              item: item, username: widget.username, size: size, pullToClose: true, inPageView: true);
+              item: item,
+              username: widget.username,
+              size: size,
+              pullToClose: true,
+              inPageView: true,
+              tweetId: widget.tweetId,
+              mediaIndex: index);
         },
         controller: ExtendedPageController(
           initialPage: widget.initialIndex,
@@ -334,13 +372,17 @@ class _TweetMediaThing extends StatelessWidget {
   final String? size;
   final bool pullToClose;
   final bool inPageView;
+  final String? tweetId;
+  final int mediaIndex;
 
   const _TweetMediaThing(
       {required this.item,
       required this.username,
       required this.size,
       required this.pullToClose,
-      required this.inPageView});
+      required this.inPageView,
+      this.tweetId,
+      this.mediaIndex = 0});
 
   @override
   Widget build(BuildContext context) {
@@ -351,9 +393,16 @@ class _TweetMediaThing extends StatelessWidget {
           loop: true,
           username: username,
           alwaysPlay: true,
-          disableControls: true);
+          disableControls: true,
+          tweetId: tweetId,
+          mediaIndex: mediaIndex);
     } else if (item.type == 'video') {
-      media = TweetVideo(metadata: TweetVideoMetadata.fromMedia(item), loop: false, username: username);
+      media = TweetVideo(
+          metadata: TweetVideoMetadata.fromMedia(item),
+          loop: false,
+          username: username,
+          tweetId: tweetId,
+          mediaIndex: mediaIndex);
     } else if (item.type == 'photo') {
       media = TweetPhoto(
           size: size, uri: item.mediaUrlHttps!, fit: BoxFit.contain, pullToClose: pullToClose, inPageView: inPageView);

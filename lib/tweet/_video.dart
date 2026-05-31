@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:chewie/chewie.dart';
 import 'package:dart_twitter_api/twitter_api.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,7 @@ import 'package:pref/pref.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/tweet/_video_controls.dart';
+import 'package:quax/tweet/video_controller_pool.dart';
 import 'package:quax/utils/downloads.dart';
 import 'package:quax/utils/iterables.dart';
 import 'package:path/path.dart' as path;
@@ -58,6 +61,8 @@ class TweetVideo extends StatefulWidget {
   final TweetVideoMetadata metadata;
   final bool alwaysPlay;
   final bool disableControls;
+  final String? tweetId;
+  final int mediaIndex;
 
   const TweetVideo({
     super.key,
@@ -66,6 +71,8 @@ class TweetVideo extends StatefulWidget {
     required this.metadata,
     this.alwaysPlay = false,
     this.disableControls = false,
+    this.tweetId,
+    this.mediaIndex = 0,
   });
 
   @override
@@ -73,54 +80,43 @@ class TweetVideo extends StatefulWidget {
 }
 
 class _TweetVideoState extends State<TweetVideo> {
-  VideoPlayerController? _videoController;
-  ChewieController? _chewieController;
+  VideoControllerPool? _pool;
+  PooledVideo? _pooled;
+  Future<PooledVideo>? _acquireFuture;
+  bool _ownsControllers = false;
+  bool _holdsPoolRef = false;
+
   bool? _autoPlay;
   bool _userRequestedPlay = false;
-  final GlobalKey<MaterialControlsState> _controllerKey = GlobalKey();
+  final Key _visibilityKey = UniqueKey();
+  Timer? _pauseTimer;
+  VoidCallback? _muteListener;
 
-  Future<void> _restartVideo(bool prefLoop, prefAutoPlay, prefBackgroundPlayback, prefMixWithOthers) async {
+  String? get _cacheKey => widget.tweetId == null ? null : '${widget.tweetId}:${widget.mediaIndex}';
+
+  @override
+  void initState() {
+    super.initState();
     try {
-      await _chewieController?.pause();
-    } catch (_) {}
-    _chewieController?.dispose();
-    await _videoController?.dispose();
-
-    setState(() {
-      _chewieController = null;
-      _videoController = null;
-    });
-
-    try {
-      await _loadVideo(prefLoop, prefAutoPlay, prefBackgroundPlayback, prefMixWithOthers);
-      if (mounted) {
-        setState(() {});
-      }
-    } catch (e) {
-      debugPrint('Failed to restart video: $e');
+      _pool = context.read<VideoControllerPool>();
+    } on ProviderNotFoundException {
+      _pool = null;
     }
   }
 
-  Future<void> _loadVideo(bool prefLoop, bool prefAutoPlay, bool prefBackgroundPlayback, bool prefMixWithOthers) async {
+  Future<PooledVideo> _createPooled(
+      bool prefLoop, bool prefAutoPlay, bool prefBackgroundPlayback, bool prefMixWithOthers, bool startMuted) async {
     var urls = await widget.metadata.streamUrlsBuilder();
-    var streamUrl = urls.streamUrl;
     var downloadUrl = urls.downloadUrl;
 
-    _videoController = VideoPlayerController.networkUrl(Uri.parse(streamUrl),
-        videoPlayerOptions:
-            VideoPlayerOptions(mixWithOthers: widget.disableControls || prefMixWithOthers, allowBackgroundPlayback: prefBackgroundPlayback));
+    var videoController = VideoPlayerController.networkUrl(Uri.parse(urls.streamUrl),
+        videoPlayerOptions: VideoPlayerOptions(
+            mixWithOthers: widget.disableControls || prefMixWithOthers, allowBackgroundPlayback: prefBackgroundPlayback));
 
-    var model = context.read<VideoContextState>();
-    var volume = model.isMuted ? 0.0 : _videoController!.value.volume;
-    _videoController!.setVolume(volume);
+    videoController.setVolume(startMuted ? 0.0 : videoController.value.volume);
 
-    _videoController!.addListener(() {
-      model.setIsMuted(_videoController!.value.volume);
-    });
-
-    _autoPlay = prefAutoPlay;
-
-    _chewieController = ChewieController(
+    late ChewieController chewieController;
+    chewieController = ChewieController(
       aspectRatio: widget.metadata.aspectRatio,
       autoInitialize: true,
       autoPlay: widget.alwaysPlay || _userRequestedPlay,
@@ -130,13 +126,13 @@ class _TweetVideoState extends State<TweetVideo> {
       allowMuting: !widget.disableControls,
       showControls: !widget.disableControls,
       allowedScreenSleep: false,
-      customControls: FritterMaterialControls(key: _controllerKey),
+      customControls: const FritterMaterialControls(),
       additionalOptions: (context) => [
         OptionItem(
-          onTap: (BuildContext _) async {
+          onTap: (BuildContext optionContext) async {
             var video = downloadUrl;
             if (video == null) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              ScaffoldMessenger.of(optionContext).showSnackBar(SnackBar(
                 content: Text(L10n.current.download_media_no_url),
               ));
               return;
@@ -146,18 +142,18 @@ class _TweetVideoState extends State<TweetVideo> {
             var fileName = '${widget.username}-${path.basename(videoUri.path)}';
 
             await downloadUriToPickedFile(
-              context,
+              optionContext,
               videoUri,
               fileName,
-              prefs: PrefService.of(context),
+              prefs: PrefService.of(optionContext),
               onStart: () {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text(L10n.of(context).downloading_media),
+                ScaffoldMessenger.of(optionContext).showSnackBar(SnackBar(
+                  content: Text(L10n.of(optionContext).downloading_media),
                 ));
               },
               onSuccess: () {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text(L10n.of(context).successfully_saved_the_media),
+                ScaffoldMessenger.of(optionContext).showSnackBar(SnackBar(
+                  content: Text(L10n.of(optionContext).successfully_saved_the_media),
                 ));
               },
             );
@@ -167,34 +163,111 @@ class _TweetVideoState extends State<TweetVideo> {
         )
       ],
       looping: widget.loop || prefLoop,
-      videoPlayerController: _videoController!,
-      errorBuilder: (context, errorMessage) {
-        return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(
-                Icons.error_outline,
-                color: Colors.white,
-                size: 42,
-              ),
-              Text(errorMessage)
-            ],
-          ),
-        );
-      },
+      videoPlayerController: videoController,
     );
-    _videoController!.addListener(() {
-      // Change wake lock screen
-      if (_chewieController!.isPlaying) {
+
+    videoController.addListener(() {
+      if (chewieController.isPlaying) {
         WakelockPlus.enable();
       } else {
         WakelockPlus.disable();
       }
     });
+
+    return PooledVideo(
+      videoController: videoController,
+      chewieController: chewieController,
+      downloadUrl: downloadUrl,
+    );
   }
 
-  @override
+  Future<PooledVideo> _acquire(
+      bool prefLoop, bool prefAutoPlay, bool prefBackgroundPlayback, bool prefMixWithOthers) async {
+    var startMuted = context.read<VideoContextState>().isMuted;
+    create() => _createPooled(prefLoop, prefAutoPlay, prefBackgroundPlayback, prefMixWithOthers, startMuted);
+
+    final key = _cacheKey;
+    final pool = _pool;
+    PooledVideo pooled;
+    if (key == null || pool == null) {
+      _ownsControllers = true;
+      pooled = await create();
+      if (!mounted) {
+        pooled.dispose();
+        return pooled;
+      }
+    } else {
+      pooled = await pool.acquire(key, create);
+      if (!mounted) {
+        pool.release(key);
+        return pooled;
+      }
+      _holdsPoolRef = true;
+    }
+
+    _pooled = pooled;
+    _attachMuteSync(pooled);
+    return pooled;
+  }
+
+  void _attachMuteSync(PooledVideo pooled) {
+    var model = context.read<VideoContextState>();
+    // Reflect the current screen's mute state onto the (possibly reused) video.
+    pooled.videoController.setVolume(model.isMuted ? 0.0 : pooled.videoController.value.volume);
+    listener() => model.setIsMuted(pooled.videoController.value.volume);
+    pooled.videoController.addListener(listener);
+    _muteListener = listener;
+  }
+
+  void _detachMuteSync() {
+    if (_muteListener != null) {
+      _pooled?.videoController.removeListener(_muteListener!);
+      _muteListener = null;
+    }
+  }
+
+  void _onVisibilityChanged(VisibilityInfo info, PooledVideo pooled) {
+    if (!mounted) return;
+    final key = _cacheKey;
+    if (info.visibleFraction >= 0.75) {
+      if (key != null) _pool?.markVisible(key, this);
+      _pauseTimer?.cancel();
+      _pauseTimer = null;
+      if (_autoPlay! && !pooled.chewieController.isPlaying) {
+        pooled.chewieController.play();
+      }
+    } else if (!widget.alwaysPlay && info.visibleFraction <= 0.5) {
+      if (key != null) _pool?.markHidden(key, this);
+      _pauseTimer ??= Timer(const Duration(milliseconds: 100), () {
+        _pauseTimer = null;
+        if (key != null && (_pool?.anyVisible(key) ?? false)) return;
+        if (mounted && !pooled.chewieController.isFullScreen) {
+          pooled.chewieController.pause();
+        }
+      });
+    }
+  }
+
+  Future<void> _restartVideo(bool prefLoop, prefAutoPlay, prefBackgroundPlayback, prefMixWithOthers) async {
+    _detachMuteSync();
+    final key = _cacheKey;
+    if (key != null && _pool != null) {
+      if (_holdsPoolRef) {
+        _pool!.release(key);
+        _holdsPoolRef = false;
+      }
+      _pool!.invalidate(key);
+    } else {
+      await _pooled?.videoController.pause();
+      _pooled?.dispose();
+    }
+
+    setState(() {
+      _pooled = null;
+      _acquireFuture = null;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final prefs = PrefService.of(context);
@@ -202,7 +275,11 @@ class _TweetVideoState extends State<TweetVideo> {
     final prefAutoPlay = prefs.get(optionMediaDefaultAutoPlay);
     final prefBackgroundPlayback = prefs.get(optionMediaBackgroundPlayback);
     final prefMixWithOthers = prefs.get(optionMediaAllowBackgroundPlayOtherApps);
-    if (!prefAutoPlay && !widget.alwaysPlay && !_userRequestedPlay) {
+
+    final key = _cacheKey;
+    final alreadyCached = key != null && (_pool?.contains(key) ?? false);
+
+    if (!prefAutoPlay && !widget.alwaysPlay && !_userRequestedPlay && !alreadyCached) {
       return GestureDetector(
         onTap: () => setState(() => _userRequestedPlay = true),
         child: AspectRatio(
@@ -226,12 +303,16 @@ class _TweetVideoState extends State<TweetVideo> {
       );
     }
 
+    _autoPlay = prefAutoPlay;
+    _acquireFuture ??= _acquire(prefLoop, prefAutoPlay, prefBackgroundPlayback, prefMixWithOthers);
+
     return FutureBuilder(
-      future: _chewieController == null ? _loadVideo(prefLoop, prefAutoPlay, prefBackgroundPlayback, prefMixWithOthers) : Future.value(),
+      future: _acquireFuture,
       builder: (context, snapshot) {
         final hasError = snapshot.hasError;
         final isLoading = snapshot.connectionState == ConnectionState.waiting;
-        final hasVideo = _chewieController != null;
+        final pooled = _pooled ?? (key != null ? _pool?.peek(key) : null);
+        final hasVideo = pooled != null;
 
         if (isLoading && !hasVideo) {
           return AspectRatio(
@@ -272,20 +353,10 @@ class _TweetVideoState extends State<TweetVideo> {
               aspectRatio: widget.metadata.aspectRatio,
               child: hasVideo
                   ? VisibilityDetector(
-                      key: ObjectKey(_chewieController),
-                      onVisibilityChanged: (info) {
-                        if (mounted) {
-                          if (!widget.alwaysPlay && info.visibleFraction <= 0.5 && !_chewieController!.isFullScreen) {
-                            _chewieController?.pause();
-                          }
-                          if (info.visibleFraction >= 0.75 && _autoPlay! && !_chewieController!.isPlaying) {
-                            _chewieController!.play();
-                            _controllerKey.currentState?.notifier.hideStuff = true;
-                          }
-                        }
-                      },
+                      key: _visibilityKey,
+                      onVisibilityChanged: (info) => _onVisibilityChanged(info, pooled),
                       child: Chewie(
-                        controller: _chewieController!,
+                        controller: pooled.chewieController,
                       ))
                   : const SizedBox.shrink(),
             ),
@@ -307,24 +378,38 @@ class _TweetVideoState extends State<TweetVideo> {
 
   @override
   void dispose() {
-    if (_chewieController?.isFullScreen ?? false) return;
-    if (mounted) {
-      _chewieController?.dispose();
-      _videoController?.dispose();
-      WakelockPlus.disable();
+    _pauseTimer?.cancel();
+    if (_pooled?.chewieController.isFullScreen ?? false) {
+      super.dispose();
+      return;
     }
+    _detachMuteSync();
+    final key = _cacheKey;
+    if (key != null) _pool?.markHidden(key, this);
+    if (_ownsControllers) {
+      _pooled?.dispose();
+    } else if (key != null && _holdsPoolRef) {
+      _pool?.release(key);
+      _holdsPoolRef = false;
+    }
+    WakelockPlus.disable();
     super.dispose();
   }
 }
 
 class VideoContextState extends ChangeNotifier {
-  bool isMuted;
+  static bool? _muted;
 
-  VideoContextState(this.isMuted);
+  VideoContextState(bool initialMuted) {
+    _muted ??= initialMuted;
+  }
+
+  bool get isMuted => _muted!;
 
   void setIsMuted(double volume) {
-    if (isMuted && volume > 0 || !isMuted && volume == 0) {
-      isMuted = !isMuted;
+    final muted = _muted!;
+    if (muted && volume > 0 || !muted && volume == 0) {
+      _muted = !muted;
     }
 
     notifyListeners();
