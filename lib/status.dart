@@ -165,16 +165,16 @@ class _StatusScreenState extends State<_StatusScreen> {
       appBar: AppBar(),
       body: ChangeNotifierProvider<TweetContextState>(
         create: (context) => TweetContextState(PrefService.of(context, listen: false).get(optionTweetsHideSensitive)),
-        child: _showingPreview ? _buildPreview() : _buildConversation(context),
+        child: _showingPreview ? _buildPreview(context) : _buildConversation(context),
       ),
     );
   }
 
-  Widget _buildPreview() {
+  Widget _buildPreview(BuildContext context) {
     _maybeStartFirstLoad();
     var tweet = widget.initialTweet!;
     return ListView(
-      padding: EdgeInsets.zero,
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
       children: [
         TweetConversation(
           id: tweet.idStr!,
@@ -194,7 +194,7 @@ class _StatusScreenState extends State<_StatusScreen> {
 
   Widget _buildConversation(BuildContext context) {
     return PagedListView<String?, TweetChain>(
-      padding: EdgeInsets.zero,
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
       pagingController: _pagingController,
       scrollController: _scrollController,
       addAutomaticKeepAlives: false,
