@@ -165,7 +165,8 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
 
   void onClickOpenTweet(TweetWithCard tweet) {
     Navigator.pushNamed(context, routeStatus,
-        arguments: StatusScreenArguments(id: tweet.idStr!, username: tweet.user!.screenName!, tweetOpened: true));
+        arguments: StatusScreenArguments(
+            id: tweet.idStr!, username: tweet.user!.screenName!, tweetOpened: true, initialTweet: tweet));
   }
 
   _createFooterIconButton(IconData icon, [Color? color, double? fill, Function()? onPressed]) {
