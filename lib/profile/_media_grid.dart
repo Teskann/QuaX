@@ -11,6 +11,7 @@ import 'package:quax/profile/profile.dart';
 import 'package:quax/status.dart';
 import 'package:quax/ui/errors.dart';
 import 'package:quax/user.dart';
+import 'package:quax/utils/paging.dart';
 
 class ProfileMediaGrid extends StatefulWidget {
   final UserWithExtra user;
@@ -23,7 +24,8 @@ class ProfileMediaGrid extends StatefulWidget {
 }
 
 class _ProfileMediaGridState extends State<ProfileMediaGrid> with AutomaticKeepAliveClientMixin<ProfileMediaGrid> {
-  late PagingController<String?, MediaGridItem> _pagingController;
+  late final CursorPagingController<String, MediaGridItem> _paging;
+  PagingController<int, MediaGridItem> get _pagingController => _paging.pagingController;
 
   static const int pageSize = 20;
   int loadTweetsCounter = 0;
@@ -34,13 +36,12 @@ class _ProfileMediaGridState extends State<ProfileMediaGrid> with AutomaticKeepA
   @override
   void initState() {
     super.initState();
-    _pagingController = PagingController(firstPageKey: null);
-    _pagingController.addPageRequestListener(_loadTweets);
+    _paging = CursorPagingController<String, MediaGridItem>(_fetchPage);
   }
 
   @override
   void dispose() {
-    _pagingController.dispose();
+    _paging.dispose();
     super.dispose();
   }
 
@@ -52,33 +53,27 @@ class _ProfileMediaGridState extends State<ProfileMediaGrid> with AutomaticKeepA
     return loadTweetsCounter;
   }
 
-  Future<void> _loadTweets(String? cursor) async {
-    try {
-      var result = await Twitter.getTweets(
-        widget.user.idStr!,
-        'media',
-        const [],
-        cursor: cursor,
-        count: pageSize,
-        includeReplies: false,
-        getTweetsCounter: getLoadTweetsCounter,
-        incrementTweetsCounter: incrementLoadTweetsCounter,
-      );
+  Future<CursorPage<String, MediaGridItem>> _fetchPage(String? cursor) async {
+    var result = await Twitter.getTweets(
+      widget.user.idStr!,
+      'media',
+      const [],
+      cursor: cursor,
+      count: pageSize,
+      includeReplies: false,
+      getTweetsCounter: getLoadTweetsCounter,
+      incrementTweetsCounter: incrementLoadTweetsCounter,
+    );
 
-      if (!mounted) {
-        return;
-      }
-
-      if (result.cursorBottom == _pagingController.nextPageKey) {
-        _pagingController.appendLastPage([]);
-      } else {
-        _pagingController.appendPage(mediaItemsFromChains(result.chains), result.cursorBottom);
-      }
-    } catch (e, stackTrace) {
-      if (mounted) {
-        _pagingController.error = [e, stackTrace];
-      }
+    // A stalled cursor (didn't advance) means the API is repeating the page, so
+    // drop it to avoid duplicate thumbnails — this is the one screen that
+    // discards on stall (matches v4's appendLastPage([])). A populated page with
+    // a null cursor is the normal last page: keep it and stop.
+    final next = result.cursorBottom;
+    if (next == cursor) {
+      return (items: const <MediaGridItem>[], nextCursor: null);
     }
+    return (items: mediaItemsFromChains(result.chains), nextCursor: next);
   }
 
   @override
@@ -98,34 +93,38 @@ class _ProfileMediaGridState extends State<ProfileMediaGrid> with AutomaticKeepA
 
       return RefreshIndicator(
         onRefresh: () async => _pagingController.refresh(),
-        child: PagedMasonryGridView<String?, MediaGridItem>.count(
-          pagingController: _pagingController,
-          padding: const EdgeInsets.all(2),
-          crossAxisCount: 3,
-          mainAxisSpacing: 2,
-          crossAxisSpacing: 2,
-          addAutomaticKeepAlives: false,
-          builderDelegate: PagedChildBuilderDelegate<MediaGridItem>(
-            itemBuilder: (context, item, index) => _MediaGridTile(item: item),
-            firstPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(
-              error: _pagingController.error[0],
-              stackTrace: _pagingController.error[1],
-              prefix: L10n.of(context).unable_to_load_the_tweets,
-              onRetry: () => _loadTweets(_pagingController.firstPageKey),
+        child: PagingListener<int, MediaGridItem>(
+          controller: _pagingController,
+          builder: (context, state, fetchNextPage) => PagedMasonryGridView<int, MediaGridItem>.count(
+            state: state,
+            fetchNextPage: fetchNextPage,
+            padding: const EdgeInsets.all(2),
+            crossAxisCount: 3,
+            mainAxisSpacing: 2,
+            crossAxisSpacing: 2,
+            addAutomaticKeepAlives: false,
+            builderDelegate: PagedChildBuilderDelegate<MediaGridItem>(
+              itemBuilder: (context, item, index) => _MediaGridTile(item: item),
+              firstPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(
+                error: pagingErrorOf(state)?.error,
+                stackTrace: pagingErrorOf(state)?.stackTrace,
+                prefix: L10n.of(context).unable_to_load_the_tweets,
+                onRetry: fetchNextPage,
+              ),
+              newPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(
+                error: pagingErrorOf(state)?.error,
+                stackTrace: pagingErrorOf(state)?.stackTrace,
+                prefix: L10n.of(context).unable_to_load_the_next_page_of_tweets,
+                onRetry: fetchNextPage,
+              ),
+              noItemsFoundIndicatorBuilder: (context) {
+                return Center(
+                  child: Text(
+                    L10n.of(context).could_not_find_any_tweets_by_this_user,
+                  ),
+                );
+              },
             ),
-            newPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(
-              error: _pagingController.error[0],
-              stackTrace: _pagingController.error[1],
-              prefix: L10n.of(context).unable_to_load_the_next_page_of_tweets,
-              onRetry: () => _loadTweets(_pagingController.nextPageKey),
-            ),
-            noItemsFoundIndicatorBuilder: (context) {
-              return Center(
-                child: Text(
-                  L10n.of(context).could_not_find_any_tweets_by_this_user,
-                ),
-              );
-            },
           ),
         ),
       );

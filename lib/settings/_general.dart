@@ -244,7 +244,7 @@ class DownloadTypeSettingState extends State<DownloadTypeSetting> {
         if (widget.prefs.get(optionDownloadType) == optionDownloadTypeDirectory)
           PrefButton(
             onTap: () async {
-              String? directoryPath = await FilePicker.platform.getDirectoryPath();
+              String? directoryPath = await FilePicker.getDirectoryPath();
 
               if (directoryPath == null) {
                 return;

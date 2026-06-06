@@ -6,20 +6,69 @@ import 'package:quax/group/feed_refresh_controller.dart';
 import 'package:quax/tweet/cached_tweet_list.dart';
 import 'package:quax/tweet/conversation.dart';
 import 'package:quax/ui/errors.dart';
+import 'package:quax/utils/paging.dart';
 
 typedef TweetPageResult = ({List<TweetChain> chains, String? nextCursor});
 typedef TweetPageLoader = Future<TweetPageResult> Function(String? cursor);
 
+/// Owns a [CursorPagingController] for cursor-paginated tweet chains, bridging
+/// it onto the app's `(chains, nextCursor)` loaders.
+///
+/// v5 bakes the fetch callback into the controller at construction, yet several
+/// feeds create the controller away from the loader (and cache it across widget
+/// remounts — see [FeedSessionCache]). So the loader lives in a rebindable field
+/// that [PaginatedTweetList] sets on mount.
+class TweetFeedController {
+  late final CursorPagingController<String, TweetChain> _paging;
+  TweetPageLoader? _loader;
+
+  TweetFeedController() {
+    _paging = CursorPagingController<String, TweetChain>(_fetch);
+  }
+
+  PagingController<int, TweetChain> get controller => _paging.pagingController;
+
+  set loader(TweetPageLoader loader) => _loader = loader;
+
+  bool get hasItems => _paging.items != null;
+
+  Future<CursorPage<String, TweetChain>> _fetch(String? cursor) async {
+    final result = await _loader!(cursor);
+    final next = result.nextCursor;
+    return (items: result.chains, nextCursor: _isLastPage(result.chains, next, cursor) ? null : next);
+  }
+
+  // Pagination ends on an empty page, a missing/blank cursor, or a cursor that
+  // didn't advance (which would otherwise loop forever).
+  bool _isLastPage(List<TweetChain> chains, String? next, String? cursor) =>
+      chains.isEmpty || next == null || next.isEmpty || next == cursor;
+
+  /// Reloads the first page and replaces the items in place, *without* resetting
+  /// to the first-page spinner the way [PagingController.refresh] does. Used by
+  /// pull-to-refresh so the existing tweets stay visible under the indicator.
+  Future<void> softRefresh() async {
+    try {
+      final result = await _loader!(null);
+      final next = result.nextCursor;
+      final isLast = _isLastPage(result.chains, next, null);
+      _paging.replaceFirstPage(result.chains, isLast ? null : next);
+    } catch (e, stackTrace) {
+      _paging.setError(e, stackTrace);
+    }
+  }
+
+  void dispose() => _paging.dispose();
+}
+
 /// Shared paginated tweet list used by the For-you feed, the group feed and
-/// the tweet search results. Owns the wiring between a [PagingController] and
-/// a [TweetPageLoader] callback, plus the standard `PagedListView` shell with
-/// error / empty widgets.
+/// the tweet search results. Drives a [TweetFeedController]'s v5 controller
+/// through the standard `PagedListView` shell with error / empty widgets.
 ///
 /// The controller's lifecycle (creation, disposal, cross-mount caching) stays
-/// at the call site — this widget only attaches and detaches its page-request
-/// listener.
+/// at the call site — this widget only binds the loader and, while a cached
+/// preview is shown, kicks off the first page itself.
 class PaginatedTweetList extends StatefulWidget {
-  final PagingController<String?, TweetChain> pagingController;
+  final TweetFeedController feed;
   final TweetPageLoader loadPage;
   final String? username;
   final Future<void> Function()? onRefresh;
@@ -33,7 +82,7 @@ class PaginatedTweetList extends StatefulWidget {
 
   const PaginatedTweetList({
     super.key,
-    required this.pagingController,
+    required this.feed,
     required this.loadPage,
     required this.username,
     required this.firstPageErrorPrefix,
@@ -53,14 +102,16 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
   bool _firstLoadStarted = false;
   bool _pendingInitialLoad = false;
 
+  PagingController<int, TweetChain> get _controller => widget.feed.controller;
+
   @override
   void initState() {
     super.initState();
-    widget.pagingController.addPageRequestListener(_handlePageRequest);
+    widget.feed.loader = widget.loadPage;
     // While we show the cached preview the PagedListView isn't mounted, so it
     // can't trigger the first page itself — we rebuild to swap it in once items
     // arrive, so listen for that.
-    widget.pagingController.addListener(_onControllerChanged);
+    _controller.addListener(_onControllerChanged);
   }
 
   @override
@@ -85,18 +136,18 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
   @override
   void didUpdateWidget(PaginatedTweetList oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (!identical(oldWidget.pagingController, widget.pagingController)) {
-      oldWidget.pagingController.removePageRequestListener(_handlePageRequest);
-      oldWidget.pagingController.removeListener(_onControllerChanged);
-      widget.pagingController.addPageRequestListener(_handlePageRequest);
-      widget.pagingController.addListener(_onControllerChanged);
+    widget.feed.loader = widget.loadPage;
+    if (!identical(oldWidget.feed, widget.feed)) {
+      oldWidget.feed.controller.removeListener(_onControllerChanged);
+      _controller.addListener(_onControllerChanged);
+      // A fresh feed may need its first page kicked off again from the preview.
+      _firstLoadStarted = false;
     }
   }
 
   @override
   void dispose() {
-    widget.pagingController.removePageRequestListener(_handlePageRequest);
-    widget.pagingController.removeListener(_onControllerChanged);
+    _controller.removeListener(_onControllerChanged);
     _refreshController?.unregister(_showRefresh);
     super.dispose();
   }
@@ -118,83 +169,45 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
         isPinned: chain.isPinned,
       );
 
-  Future<void> _handlePageRequest(String? cursor) async {
-    try {
-      final result = await widget.loadPage(cursor);
-      if (!mounted) return;
-      // Terminate pagination when the page is empty, when there's no next
-      // cursor, or when the API returned the same cursor twice (would
-      // otherwise loop forever).
-      final next = result.nextCursor;
-      if (result.chains.isEmpty ||
-          next == null ||
-          next.isEmpty ||
-          next == widget.pagingController.nextPageKey) {
-        widget.pagingController.appendLastPage(result.chains);
-      } else {
-        widget.pagingController.appendPage(result.chains, next);
-      }
-    } catch (e, stackTrace) {
-      if (mounted) {
-        widget.pagingController.error = [e, stackTrace];
-      }
-    }
-  }
-
   /// Soft refresh used by the pull-to-refresh gesture. Runs the caller's
-  /// [onRefresh] side effects, then reloads the first page *without* clearing
-  /// the current items. This keeps the existing tweets visible — and lets the
-  /// RefreshIndicator show its own small spinner on top — instead of nulling
-  /// the list and replacing it with a full-screen progress indicator the way
-  /// PagingController.refresh() does. Awaited so the spinner stays until done.
+  /// [onRefresh] side effects, then reloads the first page while keeping the
+  /// current tweets visible (the RefreshIndicator shows its own small spinner on
+  /// top). Awaited so the spinner stays until done.
   Future<void> _handleRefresh() async {
-    final controller = widget.pagingController;
     await widget.onRefresh?.call();
     if (!mounted) return;
-    try {
-      final result = await widget.loadPage(controller.firstPageKey);
-      if (!mounted) return;
-      final next = result.nextCursor;
-      final isLast = result.chains.isEmpty || next == null || next.isEmpty;
-      controller.value = PagingState<String?, TweetChain>(
-        nextPageKey: isLast ? null : next,
-        itemList: result.chains,
-        error: null,
-      );
-    } catch (e, stackTrace) {
-      if (mounted) {
-        controller.error = [e, stackTrace];
-      }
-    }
+    await widget.feed.softRefresh();
   }
 
   // True while we should display the cached preview: the first page hasn't
   // loaded yet, there's no error to surface, and we actually have cached tweets.
   bool get _showingPreview {
     final preview = widget.firstPagePreview;
-    final controller = widget.pagingController;
-    return preview != null && preview.isNotEmpty && controller.itemList == null && controller.error == null;
+    final state = _controller.value;
+    return preview != null && preview.isNotEmpty && state.items == null && state.error == null;
   }
 
   // The PagedListView normally kicks off the first page when it mounts. While
   // the preview replaces it, nothing does — so trigger the load ourselves once.
   void _maybeStartFirstLoad() {
     if (_firstLoadStarted) return;
-    final controller = widget.pagingController;
-    if (controller.itemList != null || controller.error != null) return;
+    final state = _controller.value;
+    if (state.items != null || state.error != null) return;
     _firstLoadStarted = true;
-    if (widget.onRefresh == null) {
-      _handlePageRequest(controller.firstPageKey);
-      return;
-    }
+    // Deferred: we're called from build() and fetchNextPage() mutates the
+    // controller synchronously, which would setState() mid-build via our listener.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
+      if (widget.onRefresh == null) {
+        _controller.fetchNextPage();
+        return;
+      }
       final refreshState = _refreshKey.currentState;
       if (refreshState != null) {
         _pendingInitialLoad = true;
         refreshState.show();
       } else {
-        _handlePageRequest(controller.firstPageKey);
+        _controller.fetchNextPage();
       }
     });
   }
@@ -202,7 +215,7 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
   Future<void> _onRefreshTriggered() async {
     if (_pendingInitialLoad) {
       _pendingInitialLoad = false;
-      await _handlePageRequest(widget.pagingController.firstPageKey);
+      await widget.feed.softRefresh();
       return;
     }
     await _handleRefresh();
@@ -220,26 +233,30 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
       return _wrapWithRefresh(CachedTweetList(widget.firstPagePreview!, username: widget.username));
     }
 
-    final list = PagedListView<String?, TweetChain>(
-      padding: const EdgeInsets.only(top: 4),
-      pagingController: widget.pagingController,
-      addAutomaticKeepAlives: false,
-      builderDelegate: PagedChildBuilderDelegate(
-        itemBuilder: (context, chain, index) => _buildChain(context, chain),
-        firstPageProgressIndicatorBuilder: (context) => const Center(child: CircularProgressIndicator()),
-        firstPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(
-          error: widget.pagingController.error[0],
-          stackTrace: widget.pagingController.error[1],
-          prefix: widget.firstPageErrorPrefix,
-          onRetry: () => _handlePageRequest(widget.pagingController.firstPageKey),
+    final list = PagingListener<int, TweetChain>(
+      controller: _controller,
+      builder: (context, state, fetchNextPage) => PagedListView<int, TweetChain>(
+        padding: const EdgeInsets.only(top: 4),
+        state: state,
+        fetchNextPage: fetchNextPage,
+        addAutomaticKeepAlives: false,
+        builderDelegate: PagedChildBuilderDelegate(
+          itemBuilder: (context, chain, index) => _buildChain(context, chain),
+          firstPageProgressIndicatorBuilder: (context) => const Center(child: CircularProgressIndicator()),
+          firstPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(
+            error: pagingErrorOf(state)?.error,
+            stackTrace: pagingErrorOf(state)?.stackTrace,
+            prefix: widget.firstPageErrorPrefix,
+            onRetry: fetchNextPage,
+          ),
+          newPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(
+            error: pagingErrorOf(state)?.error,
+            stackTrace: pagingErrorOf(state)?.stackTrace,
+            prefix: widget.newPageErrorPrefix,
+            onRetry: fetchNextPage,
+          ),
+          noItemsFoundIndicatorBuilder: (context) => Center(child: Text(widget.emptyMessage)),
         ),
-        newPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(
-          error: widget.pagingController.error[0],
-          stackTrace: widget.pagingController.error[1],
-          prefix: widget.newPageErrorPrefix,
-          onRetry: () => _handlePageRequest(widget.pagingController.nextPageKey),
-        ),
-        noItemsFoundIndicatorBuilder: (context) => Center(child: Text(widget.emptyMessage)),
       ),
     );
 

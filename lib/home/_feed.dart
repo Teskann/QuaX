@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
-import 'package:quax/client/client.dart';
 import 'package:quax/home/_for_you.dart';
+import 'package:quax/tweet/paginated_tweet_list.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/group/_feed_shell.dart';
 import 'package:quax/group/group_model.dart';
@@ -21,7 +20,7 @@ class FeedScreen extends StatefulWidget {
 }
 
 class _FeedScreenState extends State<FeedScreen> {
-  final PagingController<String?, TweetChain> _pagingController = PagingController(firstPageKey: null);
+  final TweetFeedController _feedController = TweetFeedController();
   int _tab = 0;
 
   @override
@@ -59,7 +58,7 @@ class _FeedScreenState extends State<FeedScreen> {
         if (_tab == 0) {
           return SubscriptionGroupScreenContent(id: widget.id);
         }
-        return ForYouTweets(_pagingController, type: 'profile', includeReplies: false, pref: prefs);
+        return ForYouTweets(_feedController, type: 'profile', includeReplies: false, pref: prefs);
       },
     );
   }

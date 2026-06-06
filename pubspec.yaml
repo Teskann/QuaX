@@ -19,11 +19,24 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 4.9.0+400001034
 
 environment:
-  sdk: "3.11.5"
-  flutter: 3.41.9
+  sdk: "3.12.1"
+  flutter: 3.44.1
 
 dependency_overrides:
-  intl: ^0.17.0
+  # auto_direction pins an old intl (^0.17/^0.18) that conflicts with
+  # dart_twitter_api's intl ^0.20.0. auto_direction only uses the stable
+  # Bidi.detectRtlDirectionality API, so forcing the modern intl is safe.
+  intl: ^0.20.2
+  # file_picker 12-beta / package_info_plus 10 / share_plus 13 need win32 ^6,
+  # but flutter_iconpicker (dcli <8) and arb_utils (dcli <=10) pull dcli 7.x /
+  # dart_console 4.x, whose Windows FFI code is written against the win32 ^5 API
+  # and fails to *compile* (even on Linux, since dcli uses runtime Platform
+  # checks, not conditional imports). Forcing dcli/dart_console to their win32-6
+  # majors lets the codegen CLIs build. These are dev-only codegen tools never
+  # imported by app code, and win32 is a no-op off Windows, so this is safe.
+  win32: ^6.2.0
+  dcli: ^9.0.0
+  dart_console: ^5.0.0
 
 dependencies:
   flutter:
@@ -43,14 +56,21 @@ dependencies:
   extended_image: ^10.0.0
   extended_nested_scroll_view: ^6.0.0
   flutter_staggered_grid_view: ^0.7.0
-  infinite_scroll_pagination: ^4.0.0
+  infinite_scroll_pagination: ^5.1.1
   flutter_cache: ^0.1.0
   flutter_material_color_picker: ^1.2.0
-  file_picker: ^10.3.6
+  # 12.0.0-beta moves to win32 ^6.2.0, letting package_info_plus 10 / share_plus
+  # 13 / wakelock_plus 1.6 / chewie 1.14 (all win32 ^6) resolve alongside it.
+  # Pinned to beta.2: the plugin's Android sources import kotlinx.coroutines but
+  # never declare it. beta.2's androidx deps (lifecycle-runtime 2.8.7, core-ktx
+  # 1.15.0) still put coroutines on the compile classpath; beta.3+ bumped those
+  # versions so coroutines drops off, and the Android build then fails with
+  # cascading "unresolved reference" errors. beta.2 keeps win32-6 Dart support.
+  file_picker: 12.0.0-beta.2
   flutter_file_dialog: ^3.0.1
   flutter_iconpicker: ^4.0.1
   flutter_portal: ^1.1.4
-  webview_flutter: 4.13.0
+  webview_flutter: 4.13.1
   webview_cookie_manager_plus: ^2.0.16
   video_player: ^2.4.9
 
@@ -70,14 +90,14 @@ dependencies:
   html_unescape: ^2.0.0
   logging: ^1.1.0
   measure_size: ^5.0.2
-  package_info_plus: ^9.0.0
+  package_info_plus: ^10.1.0
   path: ^1.8.2
   path_provider: ^2.0.11
   permission_handler: ^12.0.0+1
   quiver: ^3.1.0
   scroll_to_index: ^3.0.1
   secure_content: ^1.0.1
-  share_plus: ^12.0.1
+  share_plus: ^13.1.0
   sqflite: ^2.2.2
   sqflite_common: ^2.4.0+2
   sqflite_migration_plan: ^1.0.0
@@ -87,11 +107,11 @@ dependencies:
   android_intent_plus: ^6.0.0
   uuid: ^4.3.3
   visibility_detector: ^0.4.0+2
-  wakelock_plus: ^1.5.1
+  wakelock_plus: ^1.6.1
 
   # Miscellaneous
   async_button_builder: ^3.0.0+1
-  chewie: ^1.13.0
+  chewie: ^1.14.1
   ffcache: ^1.1.0
 
 dev_dependencies:
@@ -103,7 +123,7 @@ dev_dependencies:
   dart_pubspec_licenses: ^3.0.7
   intl_utils: ^2.8.1
   sqflite_common_ffi: ^2.2.0+1
-  arb_utils: ^0.11.0
+  arb_utils: ^0.11.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

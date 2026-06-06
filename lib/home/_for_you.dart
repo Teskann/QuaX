@@ -4,7 +4,6 @@ import 'package:quax/profile/profile.dart';
 import 'package:quax/tweet/paginated_tweet_list.dart';
 import 'package:quax/ui/errors.dart';
 import 'package:quax/user.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
@@ -13,12 +12,12 @@ import '../constants.dart';
 final UserWithExtra user = UserWithExtra.fromArguments(idStr: "1", possiblySensitive: false, screenName: "ForYou");
 
 class ForYouTweets extends StatefulWidget {
-  final PagingController<String?, TweetChain> pagingController;
+  final TweetFeedController feed;
   final String type;
   final bool includeReplies;
   final BasePrefService pref;
 
-  const ForYouTweets(this.pagingController,
+  const ForYouTweets(this.feed,
       {super.key, required this.type, required this.includeReplies, required this.pref});
 
   @override
@@ -73,7 +72,7 @@ class _ForYouTweetsState extends State<ForYouTweets> with AutomaticKeepAliveClie
             }
 
             return PaginatedTweetList(
-              pagingController: widget.pagingController,
+              feed: widget.feed,
               loadPage: _loadTweets,
               username: user.screenName,
               onRefresh: () async {},

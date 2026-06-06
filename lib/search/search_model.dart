@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_triple/flutter_triple.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:quax/client/client.dart';
 import 'package:quax/tweet/paginated_tweet_list.dart';
 import 'package:quax/user.dart';
@@ -9,7 +8,7 @@ import 'package:quax/user.dart';
 /// (Top / Latest). The query string is mutable — [updateQuery] swaps it in and
 /// refreshes the controller so the next page request hits the new query.
 class SearchTweetsPagination {
-  final PagingController<String?, TweetChain> pagingController = PagingController(firstPageKey: null);
+  final TweetFeedController feed = TweetFeedController();
   final String product;
   String _query;
 
@@ -26,11 +25,11 @@ class SearchTweetsPagination {
   void updateQuery(String newQuery) {
     if (newQuery == _query) return;
     _query = newQuery;
-    pagingController.refresh();
+    feed.controller.refresh();
   }
 
   void dispose() {
-    pagingController.dispose();
+    feed.dispose();
   }
 }
 

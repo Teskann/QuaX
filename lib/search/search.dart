@@ -152,7 +152,7 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
           controller: _tabController,
           children: [
             PaginatedTweetList(
-              pagingController: _topTweets.pagingController,
+              feed: _topTweets.feed,
               loadPage: _topTweets.loadPage,
               username: null,
               firstPageErrorPrefix: L10n.of(context).unable_to_load_the_search_results,
@@ -160,7 +160,7 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
               emptyMessage: L10n.of(context).no_results,
             ),
             PaginatedTweetList(
-              pagingController: _latestTweets.pagingController,
+              feed: _latestTweets.feed,
               loadPage: _latestTweets.loadPage,
               username: null,
               firstPageErrorPrefix: L10n.of(context).unable_to_load_the_search_results,

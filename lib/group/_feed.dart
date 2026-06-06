@@ -13,7 +13,6 @@ import 'package:quax/group/group_screen.dart';
 import 'package:quax/tweet/paginated_tweet_list.dart';
 import 'package:quax/tweet/tweet_context_scope.dart';
 import 'package:quax/utils/iterables.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -49,7 +48,7 @@ class SubscriptionGroupFeed extends StatefulWidget {
 }
 
 class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
-  late final PagingController<String?, TweetChain> _pagingController;
+  late final TweetFeedController _feedController;
   FeedSessionCache? _cache;
   ScrollController? _innerScrollController;
   bool _scrollRestoreScheduled = false;
@@ -64,14 +63,14 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
     super.initState();
     if (_usesCache) {
       _cache = context.read<FeedSessionCache>();
-      _pagingController = _cache!.getOrCreateController(widget.cacheKey!);
+      _feedController = _cache!.getOrCreateController(widget.cacheKey!);
     } else {
-      _pagingController = PagingController(firstPageKey: null);
+      _feedController = TweetFeedController();
     }
     // Cached (pop/push-restored) controllers already hold their tweets; only a
     // fresh controller needs the preview while it loads the first page.
     _cachedPreview = widget.initialPreview;
-    if (_pagingController.itemList == null) {
+    if (!_feedController.hasItems) {
       _loadPreview();
     }
   }
@@ -130,7 +129,7 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
   @override
   void dispose() {
     if (!_usesCache) {
-      _pagingController.dispose();
+      _feedController.dispose();
     }
     // When cached, the FeedSessionCache owns the controller's lifecycle across
     // pop/push; PaginatedTweetList has already detached its own listener.
@@ -144,7 +143,7 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
     if (oldWidget.includeReplies != widget.includeReplies ||
         oldWidget.includeRetweets != widget.includeRetweets ||
         !_chunksMatch(oldWidget.chunks, widget.chunks)) {
-      _pagingController.refresh();
+      _feedController.controller.refresh();
     }
   }
 
@@ -349,7 +348,7 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
         child: NotificationListener<ScrollNotification>(
           onNotification: _onScrollNotification,
           child: PaginatedTweetList(
-            pagingController: _pagingController,
+            feed: _feedController,
             loadPage: _listTweets,
             username: null,
             firstPagePreview: _cachedPreview,
