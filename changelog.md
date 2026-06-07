@@ -1,3 +1,8 @@
+## QuaX v4.9.1
+
+What's new in QuaX v4.9.1:
+  - Upgraded Flutter to 3.44.1 and updated dependencies. Migrated to infinite_scroll_pagination v5. This is a major change in terms of implementation. Please report any issue with infinite scroll you could face with this release. <sup>[[view modified code]](https://github.com/teskann/quax/commit/16ccde98d3a54beb3e1f01a5f588ca71c0cb6d5d)</sup>
+
 ## QuaX v4.9.0
 
 What's new in QuaX v4.9.0:
