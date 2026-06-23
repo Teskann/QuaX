@@ -35,7 +35,7 @@ class ClientTransaction {
     int randomNumber = additionalRandomNumber,
   }) async {
     final homePageResponse = await http.get(
-      Uri.https('x.com', '/'),
+      Uri.https('x.com', '/home'),
       headers: {
         'Accept-Language': 'en-US,en;q=0.9',
         'Cache-Control': 'no-cache',
