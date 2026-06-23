@@ -1,3 +1,8 @@
+## QuaX v4.9.2
+
+What's new in QuaX v4.9.2:
+  - Fixed on demand file issues regarding x-client-transaction-id (many thanks you @clintonalee for the solution) (#155) <sup>[[view modified code]](https://github.com/teskann/quax/commit/861f8048165444baf048544846f399020a687a9d)</sup>
+
 ## QuaX v4.9.1
 
 What's new in QuaX v4.9.1:
