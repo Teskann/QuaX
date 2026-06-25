@@ -16,6 +16,31 @@ class HttpException {
   }
 }
 
+/// Thrown when no account is usable (none added, or all currently flagged).
+/// Surfaced to the user with a dedicated, actionable error widget rather than
+/// reported to the crash catcher.
+class NoAccountAvailableException with SyntheticException implements Exception {
+  @override
+  String toString() => 'No account available';
+}
+
+/// Thrown when every usable account is rate-limited (429) on the requested
+/// endpoint. Surfaced to the user with a dedicated, actionable error widget
+/// rather than reported to the crash catcher.
+class RateLimitedException with SyntheticException implements Exception {
+  @override
+  String toString() => 'Rate limited';
+}
+
+/// Thrown when every account that was actually tried returned a 404, which on X
+/// usually means the accounts are no longer correctly authenticated. Surfaced
+/// with a dedicated, actionable error widget rather than reported to the crash
+/// catcher.
+class NoWorkingAccountException with SyntheticException implements Exception {
+  @override
+  String toString() => 'No working account';
+}
+
 class ManuallyReportedException {
   final Object? exception;
 

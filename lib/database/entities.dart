@@ -226,15 +226,28 @@ class Account with ToMappable {
   final String id;
   final dynamic authHeader;
   final String? screenName;
+  final DateTime? lastNotFoundAt;
+  final int consecutiveNotFound;
 
-  Account({required this.id, required this.authHeader, required this.screenName});
+  Account(
+      {required this.id,
+      required this.authHeader,
+      required this.screenName,
+      this.lastNotFoundAt,
+      this.consecutiveNotFound = 0});
+
+  static DateTime? _date(Object? value) => value == null ? null : DateTime.parse(value as String);
+
+  /// No flag set, so a successful response needs no database write (hot-path guard).
+  bool get isClean => consecutiveNotFound == 0 && lastNotFoundAt == null;
 
   factory Account.fromMap(Map<String, Object?> map) {
     return Account(
-      id: map['id'] as String,
-      authHeader: map['auth_header'],
-      screenName: map['screen_name'] as String?
-    );
+        id: map['id'] as String,
+        authHeader: map['auth_header'],
+        screenName: map['screen_name'] as String?,
+        lastNotFoundAt: _date(map['last_not_found_at']),
+        consecutiveNotFound: (map['consecutive_not_found'] as int?) ?? 0);
   }
 
   @override
@@ -246,6 +259,12 @@ class Account with ToMappable {
 
   @override
   Map<String, dynamic> toMap() {
-    return {'id': id, 'auth_header': authHeader, 'screen_name': screenName};
+    return {
+      'id': id,
+      'auth_header': authHeader,
+      'screen_name': screenName,
+      'last_not_found_at': lastNotFoundAt?.toIso8601String(),
+      'consecutive_not_found': consecutiveNotFound
+    };
   }
 }

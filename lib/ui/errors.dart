@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:quax/catcher/exceptions.dart';
 
 import 'package:quax/client/client.dart';
+import 'package:quax/client/login_webview.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/generated/l10n.dart';
 
@@ -165,6 +166,111 @@ class EmojiErrorWidget extends FritterErrorWidget {
   }
 }
 
+/// Shared layout for actionable error screens: emoji, title, details and a row
+/// of action buttons.
+class ActionableErrorWidget extends FritterErrorWidget {
+  final String emoji;
+  final String title;
+  final String details;
+  final List<Widget> actions;
+
+  const ActionableErrorWidget(
+      {super.key, required this.emoji, required this.title, required this.details, required this.actions});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.center,
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            margin: const EdgeInsets.only(bottom: 16),
+            child: Text(emoji, style: const TextStyle(fontSize: 36)),
+          ),
+          Text(title, textAlign: TextAlign.center, style: const TextStyle(fontSize: 18)),
+          Container(
+            margin: const EdgeInsets.only(top: 12),
+            child: Text(details, textAlign: TextAlign.center, style: TextStyle(color: Theme.of(context).hintColor)),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 12),
+            child: Wrap(alignment: WrapAlignment.center, spacing: 12, runSpacing: 12, children: actions),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Button that opens the X login flow to add another account.
+Widget addAccountButton(BuildContext context) => ElevatedButton.icon(
+      icon: const Icon(Icons.person_add),
+      label: Text(L10n.of(context).add_account),
+      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const TwitterLoginWebview())),
+    );
+
+class NoAccountErrorWidget extends FritterErrorWidget {
+  final Function? onRetry;
+
+  const NoAccountErrorWidget({super.key, this.onRetry});
+
+  @override
+  Widget build(BuildContext context) {
+    return ActionableErrorWidget(
+      emoji: '🔑',
+      title: L10n.of(context).no_account_available_title,
+      details: L10n.of(context).no_account_available_message,
+      actions: [
+        addAccountButton(context),
+        if (onRetry != null)
+          TextButton(child: Text(L10n.of(context).retry), onPressed: () => onRetry!()),
+      ],
+    );
+  }
+}
+
+class RateLimitErrorWidget extends FritterErrorWidget {
+  final Function? onRetry;
+
+  const RateLimitErrorWidget({super.key, this.onRetry});
+
+  @override
+  Widget build(BuildContext context) {
+    return ActionableErrorWidget(
+      emoji: '⏳',
+      title: L10n.of(context).rate_limited_title,
+      details: L10n.of(context).rate_limited_message,
+      actions: [
+        addAccountButton(context),
+        if (onRetry != null)
+          TextButton(child: Text(L10n.of(context).retry), onPressed: () => onRetry!()),
+      ],
+    );
+  }
+}
+
+class NoWorkingAccountErrorWidget extends FritterErrorWidget {
+  final Function? onRetry;
+
+  const NoWorkingAccountErrorWidget({super.key, this.onRetry});
+
+  @override
+  Widget build(BuildContext context) {
+    return ActionableErrorWidget(
+      emoji: '🤷',
+      title: L10n.of(context).no_working_account_title,
+      details: L10n.of(context).no_working_account_message,
+      actions: [
+        addAccountButton(context),
+        if (onRetry != null)
+          TextButton(child: Text(L10n.of(context).retry), onPressed: () => onRetry!()),
+      ],
+    );
+  }
+}
+
 class InlineErrorWidget extends FritterErrorWidget {
   final Object? error;
 
@@ -245,6 +351,18 @@ class FullPageErrorWidget extends FritterErrorWidget {
         errorMessage: L10n.of(context).please_check_your_internet_connection_error_message(error.message),
         onRetry: onRetry,
       );
+    }
+
+    if (error is NoAccountAvailableException) {
+      return NoAccountErrorWidget(onRetry: onRetry);
+    }
+
+    if (error is RateLimitedException) {
+      return RateLimitErrorWidget(onRetry: onRetry);
+    }
+
+    if (error is NoWorkingAccountException) {
+      return NoWorkingAccountErrorWidget(onRetry: onRetry);
     }
 
     if (error is TwitterError) {

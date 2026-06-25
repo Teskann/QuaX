@@ -10,13 +10,13 @@ class XRegularAccount extends ChangeNotifier {
 
   XRegularAccount() : super();
 
-  Future<http.Response?> fetch(Uri uri,
+  Future<http.Response> fetch(Uri uri,
       {Map<String, String>? headers,
       required Logger log,
       required Map<dynamic, dynamic> authHeader}) async {
     log.info('Fetching $uri');
 
-    final baseHeaders = await TwitterHeaders.getHeaders(uri);
+    final baseHeaders = await TwitterHeaders.getHeaders(uri, authHeader);
 
     var response = await http.get(uri, headers: {
       ...?headers,

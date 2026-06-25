@@ -77,6 +77,11 @@ final Map<String, String> userAgentHeader = {
 const String bearerToken =
     "Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA";
 
+// Account selection strategy: cooldowns and flagging thresholds.
+const Duration rateLimitFallback = Duration(minutes: 15);
+const Duration notFoundCooldown = Duration(hours: 6);
+const int notFoundThreshold = 3;
+
 const routeHome = '/';
 const routeGroup = '/group';
 const routeProfile = '/profile';

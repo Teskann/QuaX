@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter_cache/flutter_cache.dart' as cache;
+import 'package:quax/client/accounts.dart';
 import 'package:quax/client/headers.dart';
 import 'package:quax/utils/misc.dart';
 import 'package:http/http.dart' as http;
@@ -48,7 +49,7 @@ class TranslationAPI {
       Future<http.Response> getTranslation() async {
         final translationUri = Uri.https('api.x.com', '/2/grok/translation.json');
         return await http.post(translationUri, body: jsonEncode(formData), headers: {
-          ...await TwitterHeaders.getHeaders(translationUri),
+          ...await TwitterHeaders.getHeaders(translationUri, await pickAuthHeader()),
           'Content-Type': 'text/plain;charset=UTF-8',
           'Accept-Encoding': 'gzip, deflate, br, zstd'
         });
@@ -106,7 +107,7 @@ class TranslationAPI {
 
     switch (response.statusCode) {
       case 400:
-        RegExp languageNotSupported = RegExp(r"^\w+\ is\ not\ supported$");
+        RegExp languageNotSupported = RegExp(r"^\w+ is not supported$");
 
         var error = body['error'];
         if (languageNotSupported.hasMatch(error)) {

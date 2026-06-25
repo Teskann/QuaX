@@ -234,11 +234,17 @@ class Repository {
       ],
       23: [
         SqlMigration('ALTER TABLE $tableSubscription ADD COLUMN in_feed BOOLEAN DEFAULT 1'),
+      ],
+      24: [
+        // Account not-found health columns for the selection strategy (timestamp as ISO-8601 TEXT).
+        // Rate-limit (429) state is tracked in memory per endpoint, not persisted.
+        SqlMigration('ALTER TABLE $tableAccounts ADD COLUMN last_not_found_at TEXT DEFAULT NULL'),
+        SqlMigration('ALTER TABLE $tableAccounts ADD COLUMN consecutive_not_found INTEGER DEFAULT 0'),
       ]
     });
     await openDatabase(
       databaseName,
-      version: 23,
+      version: 24,
       onUpgrade: myMigrationPlan.call,
       onCreate: myMigrationPlan.call,
       onDowngrade: myMigrationPlan.call,

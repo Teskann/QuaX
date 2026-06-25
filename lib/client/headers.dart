@@ -1,11 +1,5 @@
-import 'dart:convert';
-import 'dart:math';
-
 import 'package:quax/client/x_client_transaction_id/client_transaction.dart';
-import 'package:quax/database/entities.dart';
 import 'package:quax/constants.dart';
-
-import 'accounts.dart';
 
 class TwitterHeaders {
   static final Map<String, String> _baseHeaders = {
@@ -34,23 +28,12 @@ class TwitterHeaders {
     return {'x-client-transaction-id': ct.generateTransactionId('GET', uri.path)};
   }
 
-  static Future<Map<String, String>> getHeaders(Uri? uri) async {
-    final authHeader = await getAuthHeader();
+  static Future<Map<String, String>> getHeaders(Uri? uri, Map<dynamic, dynamic>? authHeader) async {
     final xClientTransactionIdHeader = await getXClientTransactionIdHeader(uri);
     return {
       ..._baseHeaders,
-      ...?authHeader,
+      if (authHeader != null) ...Map<String, String>.from(authHeader),
       ...?xClientTransactionIdHeader
     };
-  }
-
-  static Future<Map<dynamic, dynamic>?> getAuthHeader() async {
-    final accounts = await getAccounts();
-    if(accounts.isEmpty) {
-      return null;
-    }
-    Account account = accounts[Random().nextInt(accounts.length)];
-    final authHeader = Map.castFrom<String, dynamic, String, String>(json.decode(account.authHeader));
-    return authHeader;
   }
 }

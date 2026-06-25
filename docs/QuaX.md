@@ -67,8 +67,27 @@ your real account,
 although [this is limited](https://github.com/Teskann/QuaX/issues/37).
 
 > [!TIP]
-> It's also possible to log into several accounts. In this case, an
-> account is selected randomly before sending any request to X.
+> It's also possible to log into several accounts. In this case, QuaX *prefers* a
+> healthy account for each request rather than a purely random one, and
+> automatically retries on another account when one fails. An account is
+> deprioritised (but still used as a fallback, so a request is always attempted)
+> when:
+> - it is **rate limited** (`429`) **for that specific endpoint** — X applies
+>   rate limits per endpoint, so an account limited on search can still load
+>   replies. Avoided until the reset time reported by X (or 15 minutes if X
+>   doesn't provide one). This is tracked in memory only.
+> - it returned `404` three times in a row (usually a sign it is no longer
+>   correctly authenticated) — avoided for 6 hours.
+>
+> QuaX only shows an error after actually attempting a request:
+> - if every account is rate limited on the requested endpoint, it shows a "rate
+>   limited" message inviting you to retry later or add an account;
+> - if every account it tried returned a 404 (usually a sign they are no longer
+>   correctly authenticated), it suggests signing in with another account;
+> - if you have no account at all, QuaX still tries an unauthenticated (guest)
+>   request first, and only invites you to add an account if that also fails.
+>
+> Retrying always sends a fresh request.
 
 ### x-client-transaction-id
 
@@ -123,7 +142,7 @@ to benefit from the most recent platform security improvements. You can check
 the required Flutter
 [here](https://github.com/Teskann/QuaX/blob/master/pubspec.yaml#L23) and the
 targeted SDK
-[here](https://github.com/Teskann/QuaX/blob/master/android/app/build.gradle#L63).
+[here](Danhttps://github.com/Teskann/QuaX/blob/master/android/app/build.gradle#L63).
 
 QuaX requires
 [very few Android permissions](https://github.com/search?q=repo%3ATeskann%2FQuaX%20android.permission&type=code)

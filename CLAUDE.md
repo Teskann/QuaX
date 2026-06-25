@@ -73,9 +73,20 @@ final text = result["data"]["text"] as String;
 
 `client.dart` wraps `dart_twitter_api` and adds caching via `FFCache`. `client_unauthenticated.dart` uses a hardcoded bearer token from `constants.dart`; `client_regular_account.dart` uses stored OAuth credentials.
 
+**Account selection strategy.** `_QuackerTwitterClient.fetch()` in `client.dart` does not pick a random account — it asks `AccountSelector` (`account_selector.dart`, a pure/testable policy) for a *healthy* account, then retries on another account on error. Two distinct health signals:
+- **Rate limit (`429`)** is **per-endpoint** (X rate-limits per endpoint, not per account). It is tracked **in memory** by `RateLimitTracker` (`rate_limit_tracker.dart`), keyed by `(accountId, uri.path)`, with the reset time from X's `x-rate-limit-reset` header (else `rateLimitFallback`). Not persisted — windows are short. The selector receives this via an injected `isRateLimited` predicate.
+- **Not-found (`404`)** is **per-account** and **persisted** (auth likely broken): flagged after `notFoundThreshold` consecutive 404s, for `notFoundCooldown`. Helpers `recordNotFound` / `recordAccountSuccess` live in `accounts.dart`; cooldown constants in `constants.dart`.
+
+`AccountSelector.pick()` prefers healthy accounts but **falls back to flagged ones**, so a real request is always attempted while any account exists — the flags only influence ordering, they never short-circuit. Errors therefore surface only from actual responses, each with a dedicated widget in `ui/errors.dart` (all built on the shared `ActionableErrorWidget`, offering add-account + retry):
+- every tried account was rate-limited on the endpoint → `RateLimitedException` (⏳);
+- every tried account returned 404 (likely broken auth) → `NoWorkingAccountException` (🤷);
+- there is no account at all → an unauthenticated (guest) request is attempted first; `NoAccountAvailableException` (🔑) is thrown only if that guest request also fails.
+
+Any other error response is surfaced as-is via `HttpException`. Retry simply re-runs `fetch()`, which always attempts a real request before surfacing any error.
+
 ### Database (`lib/database/`)
 
-`repository.dart` is the single access point for SQLite (via `sqflite`). Schema changes must go through `sqflite_migration_plan` migrations — never alter the schema outside of a migration. Key entities: `Subscription`, `SubscriptionGroup`, `SavedTweet`, `Account`.
+`repository.dart` is the single access point for SQLite (via `sqflite`). Schema changes must go through `sqflite_migration_plan` migrations — never alter the schema outside of a migration. Key entities: `Subscription`, `SubscriptionGroup`, `SavedTweet`, `Account` (carries account-health columns for the selection strategy: rate-limit / not-found timestamps stored as ISO-8601 TEXT, mapped to `DateTime?`).
 
 ### Navigation
 
