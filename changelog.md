@@ -1,3 +1,10 @@
+## QuaX v4.9.3
+
+What's new in QuaX v4.9.3:
+  - Upgraded Flutter to 3.44.4, upgraded dependencies and fixed Dart issues <sup>[[view modified code]](https://github.com/teskann/quax/commit/24d80713fd142338b5abd2fe6208214cc3c49de7)</sup>
+  - Added health-aware account selection to mitigate 404/429 errors. Replaced the random per-request account selection with a strategy that tracks each account's health and retries on another account when X returns an error. This addresses #147, #148, #149, #156 and #154 <sup>[[view modified code]](https://github.com/teskann/quax/commit/9debe26101269342edba3bb467984ffe6a7bfbae)</sup>
+  - Fixed #154 - `"type 'Null' is not a subtype of type 'Map<String, dynamic>'"` <sup>[[view modified code]](https://github.com/teskann/quax/commit/cde65d107637b4d5174d26ac546d8e5282f133bd)</sup>
+
 ## QuaX v4.9.2
 
 What's new in QuaX v4.9.2:
