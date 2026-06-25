@@ -1422,6 +1422,12 @@ class TweetWithCard extends Tweet {
       return TweetWithCard.tombstone(result['tombstone']!);
     }
 
+    // Some results (suspended/unavailable/visibility-restricted tweets) carry no
+    // `legacy` payload and no `tombstone`, so there is nothing to build from.
+    if (result['legacy'] == null) {
+      return TweetWithCard.tombstone(result);
+    }
+
     var tweet = TweetWithCard.fromData(
         result['legacy'],
         noteText,
