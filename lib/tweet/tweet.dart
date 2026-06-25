@@ -169,7 +169,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
             id: tweet.idStr!, username: tweet.user!.screenName!, tweetOpened: true, initialTweet: tweet));
   }
 
-  _createFooterIconButton(IconData icon, [Color? color, double? fill, Function()? onPressed]) {
+  IconButton _createFooterIconButton(IconData icon, [Color? color, double? fill, Function()? onPressed]) {
     return IconButton(
       icon: Icon(
         icon,
@@ -181,7 +181,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     );
   }
 
-  _createFooterTextButton(IconData icon, String label, [Color? color, Function()? onPressed]) {
+  TextButton _createFooterTextButton(IconData icon, String label, [Color? color, Function()? onPressed]) {
     return TextButton.icon(
       icon: Icon(icon, size: 20, color: color),
       onPressed: onPressed,

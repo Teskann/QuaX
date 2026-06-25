@@ -5,10 +5,10 @@ class HttpException {
 
   HttpException(this.response);
 
-  get statusCode => response.statusCode;
-  get reasonPhrase => response.reasonPhrase;
-  get body => response.body;
-  get uri => response.request?.url.toString();
+  int get statusCode => response.statusCode;
+  String? get reasonPhrase => response.reasonPhrase;
+  String get body => response.body;
+  String? get uri => response.request?.url.toString();
 
   @override
   String toString() {

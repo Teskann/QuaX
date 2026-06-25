@@ -20,14 +20,11 @@ class ClientTransaction {
   final int _randomNumber;
 
   ClientTransaction._({
-    required List<int> keyBytes,
-    required String animationKey,
-    required String randomKeyword,
-    required int randomNumber,
-  })  : _keyBytes = keyBytes,
-        _animationKey = animationKey,
-        _randomKeyword = randomKeyword,
-        _randomNumber = randomNumber;
+    required this._keyBytes,
+    required this._animationKey,
+    required this._randomKeyword,
+    required this._randomNumber,
+  });
 
   /// Fetches x.com and initializes the transaction ID generator.
   static Future<ClientTransaction> initialize({

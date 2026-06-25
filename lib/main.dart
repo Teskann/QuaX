@@ -135,7 +135,7 @@ class UnableToCheckForUpdatesException {
   }
 }
 
-setTimeagoLocales() {
+void setTimeagoLocales() {
   timeago.setLocaleMessages('ar', timeago.ArMessages());
   timeago.setLocaleMessages('az', timeago.AzMessages());
   timeago.setLocaleMessages('ca', timeago.CaMessages());

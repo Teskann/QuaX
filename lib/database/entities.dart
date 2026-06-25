@@ -174,7 +174,7 @@ class SubscriptionGroup with ToMappable {
 
   @override
   Map<String, dynamic> toMap() {
-    return {'id': id, 'name': name, 'icon': icon, 'color': color?.value, 'created_at': createdAt.toIso8601String()};
+    return {'id': id, 'name': name, 'icon': icon, 'color': color?.toARGB32(), 'created_at': createdAt.toIso8601String()};
   }
 }
 

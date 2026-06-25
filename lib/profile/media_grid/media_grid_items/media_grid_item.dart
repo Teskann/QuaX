@@ -1,7 +1,6 @@
 import 'package:dart_twitter_api/api/media/data/media.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:quax/client/client.dart';
 import 'package:quax/tweet/_video.dart';
 import 'package:quax/tweet/_video_controls.dart';

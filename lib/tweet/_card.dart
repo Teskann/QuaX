@@ -23,7 +23,7 @@ class TweetCard extends StatelessWidget {
 
   const TweetCard({super.key, required this.tweet, required this.card});
 
-  _createBaseCard(Widget child, BuildContext context) {
+  Container _createBaseCard(Widget child, BuildContext context) {
     return Container(
         margin: const EdgeInsets.symmetric(horizontal: 12),
         width: double.infinity,
@@ -34,14 +34,14 @@ class TweetCard extends StatelessWidget {
         ));
   }
 
-  _createCard(String? url, Widget child, BuildContext context) {
+  GestureDetector _createCard(String? url, Widget child, BuildContext context) {
     return GestureDetector(
       child: _createBaseCard(child, context),
       onTap: () => url == null ? null : openUri(url),
     );
   }
 
-  _createImage(String size, Map<String, dynamic>? image, BoxFit fit, {double? aspectRatio}) {
+  Widget _createImage(String size, Map<String, dynamic>? image, BoxFit fit, {double? aspectRatio}) {
     if (image == null) {
       return Container();
     }
@@ -64,7 +64,7 @@ class TweetCard extends StatelessWidget {
     );
   }
 
-  _createListTile(BuildContext context, String title, String? description, String? uri) {
+  Container _createListTile(BuildContext context, String title, String? description, String? uri) {
     return Container(
       padding: const EdgeInsets.only(left: 12, right: 12, bottom: 4),
       child: Column(
@@ -112,7 +112,7 @@ class TweetCard extends StatelessWidget {
     );
   }
 
-  _createVoteBar(BuildContext context, Map<String, dynamic> card, double total, int choiceIndex) {
+  Container _createVoteBar(BuildContext context, Map<String, dynamic> card, double total, int choiceIndex) {
     var choiceCount = double.parse(card['binding_values']['choice${choiceIndex}_count']['string_value']);
     var choicePercent = total == 0 ? 0 : (100 / total) * choiceCount;
 
@@ -149,7 +149,7 @@ class TweetCard extends StatelessWidget {
     );
   }
 
-  _createWebsiteCard(
+  dynamic _createWebsiteCard(
       BuildContext context, Map<String, dynamic> unifiedCard, String uri, String imageSize, Widget media) {
     return _createCard(
         uri,
@@ -168,7 +168,7 @@ class TweetCard extends StatelessWidget {
         context);
   }
 
-  _createUnifiedCard(BuildContext context, Map<String, dynamic> card, String imageKey, String imageSize) {
+  dynamic _createUnifiedCard(BuildContext context, Map<String, dynamic> card, String imageKey, String imageSize) {
     var unifiedCard = jsonDecode(card['binding_values']['unified_card']['string_value']) as Map<String, dynamic>;
 
     switch (unifiedCard['type']) {
@@ -197,7 +197,7 @@ class TweetCard extends StatelessWidget {
     }
   }
 
-  _createVoteCard(BuildContext context, Map<String, dynamic> card, int numberOfChoices) {
+  Container _createVoteCard(BuildContext context, Map<String, dynamic> card, int numberOfChoices) {
     var numberFormat = NumberFormat.decimalPattern();
 
     var total = List.generate(

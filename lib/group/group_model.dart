@@ -228,13 +228,13 @@ class GroupsModel extends Store<List<SubscriptionGroup>> {
       if (id == null) {
         id = const Uuid().v4();
 
-        await database.insert(tableSubscriptionGroup, {'id': id, 'name': name, 'color': color?.value, 'icon': icon});
+        await database.insert(tableSubscriptionGroup, {'id': id, 'name': name, 'color': color?.toARGB32(), 'icon': icon});
       } else {
         await database.update(
             tableSubscriptionGroup,
             {
               'name': name,
-              'color': color?.value,
+              'color': color?.toARGB32(),
               'icon': icon,
             },
             where: 'id = ?',

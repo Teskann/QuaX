@@ -23,7 +23,7 @@ class SettingLocale {
   }
 }
 
-languagePicker() {
+PrefDropdown<String> languagePicker() {
   return PrefDropdown(
       fullWidth: false,
       title: Text(L10n.current.language),

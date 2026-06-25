@@ -1,4 +1,3 @@
-import 'package:dart_twitter_api/api/media/data/media.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter/material.dart';
