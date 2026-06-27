@@ -680,7 +680,43 @@ class Twitter {
       return TweetStatus(chains: [], cursorBottom: null, cursorTop: null);
     }
 
+    if (product == "Media") {
+      return _createChainsFromGridModule(timeline);
+    }
+
     return createUnconversationedChainsGraphql(timeline, 'tweet', [], true, includeReplies);
+  }
+
+  static TweetStatus _createChainsFromGridModule(Map<String, dynamic> timeline) {
+    var instructions = List.from(timeline['timeline']?['instructions'] ?? []);
+    var addEntries = List.from(
+        instructions.firstWhereOrNull((e) => e['type'] == 'TimelineAddEntries')?['entries'] ?? []);
+    var addModItems = List.from(
+        instructions.firstWhereOrNull((e) => e['type'] == 'TimelineAddToModule')?['moduleItems'] ?? []);
+    var repEntries = List.from(instructions.where((e) => e['type'] == 'TimelineReplaceEntry'));
+
+    String? cursorBottom = getCursor(addEntries, repEntries, 'cursor-bottom', 'Bottom');
+    String? cursorTop = getCursor(addEntries, repEntries, 'cursor-top', 'Top');
+
+    var moduleItems = [
+      ...addEntries
+          .where((e) => e['content']?['entryType'] == 'TimelineTimelineModule')
+          .expand((e) => List.from(e['content']?['items'] ?? [])),
+      ...addModItems,
+    ];
+
+    List<TweetChain> chains = [];
+    for (var item in moduleItems) {
+      var result = item['item']?['itemContent']?['tweet_results']?['result'] ??
+          item['item']?['content']?['tweetResult']?['result'] ??
+          item['item']?['content']?['tweet_results']?['result'];
+      result = result?['rest_id'] != null ? result : result?['tweet'];
+      if (result?['rest_id'] == null) continue;
+      chains.add(TweetChain(
+          id: result['rest_id'], tweets: [TweetWithCard.fromGraphqlJson(result)], isPinned: false));
+    }
+
+    return TweetStatus(chains: chains, cursorBottom: cursorBottom, cursorTop: cursorTop);
   }
 
   static Future<List<UserWithExtra>> searchUsers(String query, {int limit = 25, String? cursor}) async {

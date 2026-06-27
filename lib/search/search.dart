@@ -6,6 +6,7 @@ import 'package:quax/constants.dart';
 import 'package:quax/database/entities.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/profile/profile.dart';
+import 'package:quax/search/search_media_grid.dart';
 import 'package:quax/search/search_model.dart';
 import 'package:quax/tweet/_video.dart';
 import 'package:quax/tweet/paginated_tweet_list.dart';
@@ -52,6 +53,7 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
   late final TabController _tabController;
   late final SearchTweetsPagination _topTweets;
   late final SearchTweetsPagination _latestTweets;
+  late final SearchMediaPagination _mediaResults;
   late final SearchUsersModel _searchUsersModel;
 
   Timer? _debounce;
@@ -61,11 +63,12 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
   void initState() {
     super.initState();
 
-    _tabController = TabController(length: 3, vsync: this, initialIndex: widget.initialTab);
+    _tabController = TabController(length: 4, vsync: this, initialIndex: widget.initialTab);
 
     final initialQuery = widget.query ?? '';
     _topTweets = SearchTweetsPagination(product: 'Top', initialQuery: initialQuery);
     _latestTweets = SearchTweetsPagination(product: 'Latest', initialQuery: initialQuery);
+    _mediaResults = SearchMediaPagination(initialQuery: initialQuery);
     _searchUsersModel = SearchUsersModel();
 
     _queryController.text = initialQuery;
@@ -90,6 +93,7 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
     _tabController.dispose();
     _topTweets.dispose();
     _latestTweets.dispose();
+    _mediaResults.dispose();
     super.dispose();
   }
 
@@ -105,6 +109,7 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
     _lastDispatchedQuery = query;
     _topTweets.updateQuery(query);
     _latestTweets.updateQuery(query);
+    _mediaResults.updateQuery(query);
     _searchUsersModel.searchUsers(query, context);
   }
 
@@ -134,6 +139,7 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
           tabs: const [
             Tab(icon: Icon(Icons.trending_up)),
             Tab(icon: Icon(Icons.access_time_outlined)),
+            Tab(icon: Icon(Icons.image)),
             Tab(icon: Icon(Icons.person_search)),
           ],
           labelColor: Theme.of(context).appBarTheme.foregroundColor,
@@ -167,6 +173,7 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
               newPageErrorPrefix: L10n.of(context).unable_to_load_the_next_page_of_tweets,
               emptyMessage: L10n.of(context).no_results,
             ),
+            SearchMediaGrid(model: _mediaResults),
             _UserSearchResultList(store: _searchUsersModel, onRetry: _dispatchQuery),
           ],
         ),

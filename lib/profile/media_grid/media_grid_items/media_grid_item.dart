@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:quax/client/client.dart';
 import 'package:quax/tweet/_video.dart';
 import 'package:quax/tweet/_video_controls.dart';
+import 'package:quax/utils/paging.dart';
 
 part 'gif_grid_item.dart';
 part 'video_grid_item.dart';
@@ -81,6 +82,14 @@ MediaGridItem? _itemFor(Media m, String tweetId, String username, int mediaIndex
     default:
       return null;
   }
+}
+
+CursorPage<String, MediaGridItem> mediaPageFromStatus(TweetStatus status, String? cursor) {
+  final next = status.cursorBottom;
+  if (next == cursor) {
+    return (items: const <MediaGridItem>[], nextCursor: null);
+  }
+  return (items: mediaItemsFromChains(status.chains), nextCursor: next);
 }
 
 List<MediaGridItem> mediaItemsFromChains(List<TweetChain> chains) {
