@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_portal/flutter_portal.dart';
+import 'package:media_kit/media_kit.dart';
 import 'package:quax/client/accounts.dart';
 import 'package:quax/client/login_webview.dart';
 
@@ -187,6 +188,8 @@ Future<void> main() async {
   }
 
   WidgetsFlutterBinding.ensureInitialized();
+
+  MediaKit.ensureInitialized();
 
   setTimeagoLocales();
 

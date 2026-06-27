@@ -1,26 +1,45 @@
 import 'dart:async';
+import 'dart:io';
 
-import 'package:chewie/chewie.dart';
 import 'package:dart_twitter_api/twitter_api.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:media_kit/media_kit.dart' as mk;
+import 'package:media_kit_video/media_kit_video.dart';
 import 'package:pref/pref.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/tweet/_video_controls.dart';
+import 'package:quax/tweet/video_audio_focus.dart';
 import 'package:quax/tweet/video_controller_pool.dart';
-import 'package:quax/utils/downloads.dart';
+import 'package:quax/tweet/video_quality.dart';
 import 'package:quax/utils/iterables.dart';
-import 'package:path/path.dart' as path;
 import 'package:provider/provider.dart';
-import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
-import 'package:wakelock_plus/wakelock_plus.dart';
+
+// Picks orientation from the video's shape so a portrait video isn't forced
+// into landscape like media_kit's `defaultEnterNativeFullscreen` does.
+Future<void> _enterFullscreen(double aspectRatio) async {
+  if (!Platform.isAndroid && !Platform.isIOS) {
+    return defaultEnterNativeFullscreen();
+  }
+  try {
+    final portrait = aspectRatio < 1.0;
+    await Future.wait([
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky, overlays: []),
+      SystemChrome.setPreferredOrientations(portrait
+          ? [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]
+          : [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]),
+    ]);
+  } catch (_) {}
+}
 
 class TweetVideoUrls {
   final String streamUrl;
   final String? downloadUrl;
+  final List<TweetVideoQuality> qualities;
 
-  TweetVideoUrls(this.streamUrl, this.downloadUrl);
+  TweetVideoUrls(this.streamUrl, this.downloadUrl, {this.qualities = const []});
 }
 
 class TweetVideoMetadata {
@@ -31,16 +50,35 @@ class TweetVideoMetadata {
   TweetVideoMetadata(this.aspectRatio, this.imageUrl, this.streamUrlsBuilder);
 
   static Future<TweetVideoUrls> Function() streamUrlsBuilderFromVariants(List<Variant> variants) {
-    var streamUrl = variants[0].url!;
-    var downloadUrl = variants
+    // Use progressive MP4, not X's HLS master playlist (variants[0]): libmpv
+    // plays the .m3u8 poorly (delayed start, bad seek, phantom subtitle tracks).
+    // Fall back to variants[0] only when no MP4 exists (e.g. live broadcasts).
+    var mp4Variants = variants
         .where((e) => e.bitrate != null)
         .where((e) => e.url != null)
         .where((e) => e.contentType == 'video/mp4')
         .sorted((a, b) => -(a.bitrate!.compareTo(b.bitrate!)))
-        .map((e) => e.url)
-        .firstWhereOrNull((e) => e != null);
+        .toList();
 
-    return () async => TweetVideoUrls(streamUrl, downloadUrl);
+    var qualities =
+        mp4Variants.map((e) => TweetVideoQuality(e.url!, _qualityLabel(e.url!, e.bitrate))).toList();
+
+    var mp4Url = qualities.isNotEmpty ? qualities.first.url : null;
+    var streamUrl = mp4Url ?? variants[0].url!;
+
+    return () async => TweetVideoUrls(streamUrl, mp4Url, qualities: qualities);
+  }
+
+  // Resolution tag from X's MP4 URL path (`.../1280x720/...`), else the bitrate.
+  static String _qualityLabel(String url, int? bitrate) {
+    var match = RegExp(r'/(\d+)x(\d+)/').firstMatch(url);
+    if (match != null) {
+      return '${match.group(2)}p';
+    }
+    if (bitrate != null) {
+      return '${(bitrate / 1000000).toStringAsFixed(1)} Mbps';
+    }
+    return '—';
   }
 
   factory TweetVideoMetadata.fromMedia(Media media) {
@@ -86,11 +124,22 @@ class _TweetVideoState extends State<TweetVideo> {
   bool _ownsControllers = false;
   bool _holdsPoolRef = false;
 
-  bool? _autoPlay;
+  bool _autoPlay = false;
   bool _userRequestedPlay = false;
+  bool _isFullscreen = false;
+  bool _playbackError = false;
+  bool _firstFrameRendered = false;
+  bool _posterGone = false;
+  bool _subtitlesEnabled = false;
+  bool _prefLoop = false;
+  bool _mixWithOthers = false;
+  int _autoRetries = 0;
   final Key _visibilityKey = UniqueKey();
+  double _lastVisibleFraction = 0.0;
   Timer? _pauseTimer;
-  VoidCallback? _muteListener;
+  StreamSubscription<double>? _muteSub;
+  StreamSubscription<String>? _errorSub;
+  StreamSubscription<bool>? _playingSub;
 
   String? get _cacheKey => widget.tweetId == null ? null : '${widget.tweetId}:${widget.mediaIndex}';
 
@@ -104,87 +153,54 @@ class _TweetVideoState extends State<TweetVideo> {
     }
   }
 
-  Future<PooledVideo> _createPooled(
-      bool prefLoop, bool prefAutoPlay, bool prefBackgroundPlayback, bool prefMixWithOthers, bool startMuted) async {
+  // Default variant from [optionMediaSize]; qualities are sorted highest-first.
+  static String _defaultQualityUrl(TweetVideoUrls urls, String mediaSize) {
+    final q = urls.qualities;
+    if (q.isEmpty) return urls.streamUrl;
+    final i = switch (mediaSize) {
+      'thumb' => q.length - 1,
+      'small' => (q.length * 3) ~/ 4,
+      'medium' => q.length ~/ 2,
+      _ => 0,
+    };
+    return q[i.clamp(0, q.length - 1)].url;
+  }
+
+  Future<PooledVideo> _createPooled(bool prefLoop, bool startMuted, String mediaSize) async {
     var urls = await widget.metadata.streamUrlsBuilder();
-    var downloadUrl = urls.downloadUrl;
+    var streamUrl = _defaultQualityUrl(urls, mediaSize);
 
-    var videoController = VideoPlayerController.networkUrl(Uri.parse(urls.streamUrl),
-        videoPlayerOptions: VideoPlayerOptions(
-            mixWithOthers: widget.disableControls || prefMixWithOthers, allowBackgroundPlayback: prefBackgroundPlayback));
+    var player = mk.Player();
+    var videoController = VideoController(player);
 
-    videoController.setVolume(startMuted ? 0.0 : videoController.value.volume);
+    var platform = player.platform;
+    if (platform is mk.NativePlayer) {
+      // AAudio sounds better than the default opensles and avoids the
+      // audiotrack JNI crash; falls back to opensles below Android 8.
+      await platform.setProperty('ao', 'aaudio,opensles');
+      // System MediaCodec decoders, with libmpv's software decoders as fallback.
+      await platform.setProperty('hwdec', 'mediacodec-copy');
+    }
 
-    late ChewieController chewieController;
-    chewieController = ChewieController(
-      aspectRatio: widget.metadata.aspectRatio,
-      autoInitialize: true,
-      autoPlay: widget.alwaysPlay || _userRequestedPlay,
-      placeholder: widget.metadata.imageUrl != null
-          ? Image.network(widget.metadata.imageUrl!, fit: BoxFit.cover)
-          : null,
-      allowMuting: !widget.disableControls,
-      showControls: !widget.disableControls,
-      allowedScreenSleep: false,
-      customControls: const FritterMaterialControls(),
-      additionalOptions: (context) => [
-        OptionItem(
-          onTap: (BuildContext optionContext) async {
-            var video = downloadUrl;
-            if (video == null) {
-              ScaffoldMessenger.of(optionContext).showSnackBar(SnackBar(
-                content: Text(L10n.current.download_media_no_url),
-              ));
-              return;
-            }
-
-            var videoUri = Uri.parse(video);
-            var fileName = '${widget.username}-${path.basename(videoUri.path)}';
-
-            await downloadUriToPickedFile(
-              optionContext,
-              videoUri,
-              fileName,
-              prefs: PrefService.of(optionContext),
-              onStart: () {
-                ScaffoldMessenger.of(optionContext).showSnackBar(SnackBar(
-                  content: Text(L10n.of(optionContext).downloading_media),
-                ));
-              },
-              onSuccess: () {
-                ScaffoldMessenger.of(optionContext).showSnackBar(SnackBar(
-                  content: Text(L10n.of(optionContext).successfully_saved_the_media),
-                ));
-              },
-            );
-          },
-          iconData: Icons.download,
-          title: L10n.of(context).download,
-        )
-      ],
-      looping: widget.loop || prefLoop,
-      videoPlayerController: videoController,
-    );
-
-    videoController.addListener(() {
-      if (chewieController.isPlaying) {
-        WakelockPlus.enable();
-      } else {
-        WakelockPlus.disable();
-      }
-    });
+    await player.setPlaylistMode(
+        (widget.loop || prefLoop) ? mk.PlaylistMode.loop : mk.PlaylistMode.none);
+    await player.setVolume(startMuted ? 0.0 : 100.0);
+    await player.open(mk.Media(streamUrl), play: widget.alwaysPlay || _userRequestedPlay);
 
     return PooledVideo(
+      player: player,
       videoController: videoController,
-      chewieController: chewieController,
-      downloadUrl: downloadUrl,
+      downloadUrl: urls.downloadUrl,
+      qualities: urls.qualities,
+      currentStreamUrl: streamUrl,
+      pausableByPolicy: !widget.disableControls,
     );
   }
 
-  Future<PooledVideo> _acquire(
-      bool prefLoop, bool prefAutoPlay, bool prefBackgroundPlayback, bool prefMixWithOthers) async {
+  Future<PooledVideo> _acquire(bool prefLoop) async {
     var startMuted = context.read<VideoContextState>().isMuted;
-    create() => _createPooled(prefLoop, prefAutoPlay, prefBackgroundPlayback, prefMixWithOthers, startMuted);
+    var mediaSize = PrefService.of(context, listen: false).get(optionMediaSize);
+    create() => _createPooled(prefLoop, startMuted, mediaSize);
 
     final key = _cacheKey;
     final pool = _pool;
@@ -193,7 +209,7 @@ class _TweetVideoState extends State<TweetVideo> {
       _ownsControllers = true;
       pooled = await create();
       if (!mounted) {
-        pooled.dispose();
+        await pooled.dispose();
         return pooled;
       }
     } else {
@@ -206,50 +222,86 @@ class _TweetVideoState extends State<TweetVideo> {
     }
 
     _pooled = pooled;
-    _attachMuteSync(pooled);
+    _attachListeners(pooled);
     return pooled;
   }
 
-  void _attachMuteSync(PooledVideo pooled) {
+  void _attachListeners(PooledVideo pooled) {
     var model = context.read<VideoContextState>();
-    // Reflect the current screen's mute state onto the (possibly reused) video.
-    pooled.videoController.setVolume(model.isMuted ? 0.0 : pooled.videoController.value.volume);
-    listener() => model.setIsMuted(pooled.videoController.value.volume);
-    pooled.videoController.addListener(listener);
-    _muteListener = listener;
+    pooled.player.setVolume(model.isMuted ? 0.0 : 100.0);
+    _muteSub = pooled.player.stream.volume.listen((volume) {
+      if (!mounted) return;
+      model.setIsMuted(volume);
+    });
+    _playingSub = pooled.player.stream.playing.listen((playing) {
+      if (!mounted) return;
+      if (widget.disableControls) return;
+      if (playing) {
+        _autoRetries = 0;
+        if (_playbackError) setState(() => _playbackError = false);
+        _pool?.pauseOthers(pooled);
+        VideoAudioFocus.instance.onStartedPlaying(pooled.player, mixWithOthers: _mixWithOthers);
+      } else {
+        VideoAudioFocus.instance.onStoppedPlaying(pooled.player);
+      }
+    });
+    _errorSub = pooled.player.stream.error.listen((_) {
+      if (!mounted) return;
+      // GIFs must keep looping — retry silently instead of showing an error.
+      if (widget.disableControls) {
+        if (_autoRetries < 3) {
+          _autoRetries++;
+          _restartVideo(_prefLoop);
+        }
+        return;
+      }
+      // Ignore transient mid-playback errors libmpv recovers from; only a video
+      // that never rendered a frame is a real failure.
+      if (!_firstFrameRendered) setState(() => _playbackError = true);
+    });
+
+    pooled.videoController.waitUntilFirstFrameRendered.then((_) {
+      if (mounted) setState(() => _firstFrameRendered = true);
+    });
   }
 
-  void _detachMuteSync() {
-    if (_muteListener != null) {
-      _pooled?.videoController.removeListener(_muteListener!);
-      _muteListener = null;
-    }
+  void _detachListeners() {
+    _muteSub?.cancel();
+    _muteSub = null;
+    _errorSub?.cancel();
+    _errorSub = null;
+    _playingSub?.cancel();
+    _playingSub = null;
   }
 
   void _onVisibilityChanged(VisibilityInfo info, PooledVideo pooled) {
     if (!mounted) return;
     final key = _cacheKey;
-    if (info.visibleFraction >= 0.75) {
+    final wasVisible = _lastVisibleFraction >= 0.5;
+    final isVisible = info.visibleFraction >= 0.5;
+    _lastVisibleFraction = info.visibleFraction;
+
+    if (isVisible) {
       if (key != null) _pool?.markVisible(key, this);
       _pauseTimer?.cancel();
       _pauseTimer = null;
-      if (_autoPlay! && !pooled.chewieController.isPlaying) {
-        pooled.chewieController.play();
+      if (_autoPlay && !wasVisible && !pooled.player.state.playing) {
+        pooled.player.play();
       }
-    } else if (!widget.alwaysPlay && info.visibleFraction <= 0.5) {
+    } else if (!widget.alwaysPlay && wasVisible) {
       if (key != null) _pool?.markHidden(key, this);
       _pauseTimer ??= Timer(const Duration(milliseconds: 100), () {
         _pauseTimer = null;
         if (key != null && (_pool?.anyVisible(key) ?? false)) return;
-        if (mounted && !pooled.chewieController.isFullScreen) {
-          pooled.chewieController.pause();
+        if (mounted && !_isFullscreen) {
+          pooled.player.pause();
         }
       });
     }
   }
 
-  Future<void> _restartVideo(bool prefLoop, prefAutoPlay, prefBackgroundPlayback, prefMixWithOthers) async {
-    _detachMuteSync();
+  Future<void> _restartVideo(bool prefLoop) async {
+    _detachListeners();
     final key = _cacheKey;
     if (key != null && _pool != null) {
       if (_holdsPoolRef) {
@@ -258,14 +310,92 @@ class _TweetVideoState extends State<TweetVideo> {
       }
       _pool!.invalidate(key);
     } else {
-      await _pooled?.videoController.pause();
-      _pooled?.dispose();
+      await _pooled?.player.pause();
+      await _pooled?.dispose();
     }
 
     setState(() {
       _pooled = null;
       _acquireFuture = null;
+      _playbackError = false;
+      _firstFrameRendered = false;
+      _posterGone = false;
     });
+  }
+
+  void _toggleSubtitles(PooledVideo pooled) {
+    final enable = !_subtitlesEnabled;
+    setState(() => _subtitlesEnabled = enable);
+    if (enable) {
+      final subs = pooled.player.state.tracks.subtitle;
+      final track = subs.firstWhere(
+        (t) => t.id != 'no' && t.id != 'auto',
+        orElse: () => mk.SubtitleTrack.auto(),
+      );
+      pooled.player.setSubtitleTrack(track);
+    } else {
+      pooled.player.setSubtitleTrack(mk.SubtitleTrack.no());
+    }
+  }
+
+  Widget _buildVideo(PooledVideo pooled, bool prefBackgroundPlayback) {
+    final accent = Theme.of(context).colorScheme.secondary;
+    final video = Video(
+      controller: pooled.videoController,
+      aspectRatio: widget.metadata.aspectRatio,
+      controls: widget.disableControls
+          ? null
+          : (state) => QuaxControls(
+                pooled: pooled,
+                username: widget.username,
+                allowMuting: true,
+                accentColor: accent,
+                subtitlesEnabled: _subtitlesEnabled,
+                onToggleSubtitles: () => _toggleSubtitles(pooled),
+              ),
+      wakelock: !widget.disableControls,
+      pauseUponEnteringBackgroundMode: !prefBackgroundPlayback,
+      subtitleViewConfiguration: SubtitleViewConfiguration(visible: _subtitlesEnabled),
+      onEnterFullscreen: () async {
+        _isFullscreen = true;
+        await _enterFullscreen(widget.metadata.aspectRatio);
+      },
+      onExitFullscreen: () async {
+        _isFullscreen = false;
+        await defaultExitNativeFullscreen();
+      },
+    );
+
+    if (_posterGone) {
+      return video;
+    }
+
+    // Poster + spinner over the always-painting video texture, fading out on the
+    // first frame so there's no black flash on the swap.
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        video,
+        IgnorePointer(
+          child: AnimatedOpacity(
+            opacity: _firstFrameRendered ? 0.0 : 1.0,
+            duration: const Duration(milliseconds: 200),
+            onEnd: () {
+              if (_firstFrameRendered && !_posterGone) setState(() => _posterGone = true);
+            },
+            child: Stack(
+              fit: StackFit.expand,
+              alignment: Alignment.center,
+              children: [
+                if (widget.metadata.imageUrl != null)
+                  Image.network(widget.metadata.imageUrl!, fit: BoxFit.cover),
+                if (!widget.disableControls) const Center(child: CircularProgressIndicator()),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
   @override
@@ -274,7 +404,8 @@ class _TweetVideoState extends State<TweetVideo> {
     final prefLoop = prefs.get(optionMediaDefaultLoop);
     final prefAutoPlay = prefs.get(optionMediaDefaultAutoPlay);
     final prefBackgroundPlayback = prefs.get(optionMediaBackgroundPlayback);
-    final prefMixWithOthers = prefs.get(optionMediaAllowBackgroundPlayOtherApps);
+    _prefLoop = prefLoop;
+    _mixWithOthers = prefs.get(optionMediaAllowBackgroundPlayOtherApps);
 
     final key = _cacheKey;
     final alreadyCached = key != null && (_pool?.contains(key) ?? false);
@@ -304,12 +435,12 @@ class _TweetVideoState extends State<TweetVideo> {
     }
 
     _autoPlay = prefAutoPlay;
-    _acquireFuture ??= _acquire(prefLoop, prefAutoPlay, prefBackgroundPlayback, prefMixWithOthers);
+    _acquireFuture ??= _acquire(prefLoop);
 
     return FutureBuilder(
       future: _acquireFuture,
       builder: (context, snapshot) {
-        final hasError = snapshot.hasError;
+        final hasError = snapshot.hasError || _playbackError;
         final isLoading = snapshot.connectionState == ConnectionState.waiting;
         final pooled = _pooled ?? (key != null ? _pool?.peek(key) : null);
         final hasVideo = pooled != null;
@@ -328,49 +459,35 @@ class _TweetVideoState extends State<TweetVideo> {
           );
         }
 
-        if (hasError && !hasVideo) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.error_outline, color: Colors.white, size: 48),
-                const SizedBox(height: 12),
-                const Text('Failed to load video'),
-                const SizedBox(height: 12),
-                ElevatedButton(
-                  onPressed: () => _restartVideo(prefLoop, prefAutoPlay, prefBackgroundPlayback, prefMixWithOthers),
-                  child: const Text('Restart Video Player'),
-                ),
-              ],
+        if (hasError && !_firstFrameRendered) {
+          return AspectRatio(
+            aspectRatio: widget.metadata.aspectRatio,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.error_outline, color: Colors.white, size: 48),
+                  const SizedBox(height: 12),
+                  Text(L10n.of(context).failed_to_load_video),
+                  const SizedBox(height: 12),
+                  ElevatedButton(
+                    onPressed: () => _restartVideo(prefLoop),
+                    child: Text(L10n.of(context).restart_video_player),
+                  ),
+                ],
+              ),
             ),
           );
         }
 
-        return Stack(
-          alignment: Alignment.center,
-          children: [
-            AspectRatio(
-              aspectRatio: widget.metadata.aspectRatio,
-              child: hasVideo
-                  ? VisibilityDetector(
-                      key: _visibilityKey,
-                      onVisibilityChanged: (info) => _onVisibilityChanged(info, pooled),
-                      child: Chewie(
-                        controller: pooled.chewieController,
-                      ))
-                  : const SizedBox.shrink(),
-            ),
-            if (hasError)
-              Positioned(
-                right: 8,
-                bottom: 8,
-                child: IconButton(
-                  icon: const Icon(Icons.refresh, color: Colors.white),
-                  onPressed: () => _restartVideo(prefLoop, prefAutoPlay, prefBackgroundPlayback, prefMixWithOthers),
-                  tooltip: 'Restart player',
-                ),
-              ),
-          ],
+        return AspectRatio(
+          aspectRatio: widget.metadata.aspectRatio,
+          child: hasVideo
+              ? VisibilityDetector(
+                  key: _visibilityKey,
+                  onVisibilityChanged: (info) => _onVisibilityChanged(info, pooled),
+                  child: _buildVideo(pooled, prefBackgroundPlayback))
+              : const SizedBox.shrink(),
         );
       },
     );
@@ -379,39 +496,55 @@ class _TweetVideoState extends State<TweetVideo> {
   @override
   void dispose() {
     _pauseTimer?.cancel();
-    if (_pooled?.chewieController.isFullScreen ?? false) {
-      super.dispose();
-      return;
-    }
-    _detachMuteSync();
+    _detachListeners();
     final key = _cacheKey;
     if (key != null) _pool?.markHidden(key, this);
-    if (_ownsControllers) {
-      _pooled?.dispose();
-    } else if (key != null && _holdsPoolRef) {
-      _pool?.release(key);
-      _holdsPoolRef = false;
+    // Keep the controller alive across the native fullscreen handoff; just don't
+    // dispose/release it here. Detaching listeners and releasing the pool ref,
+    // though, is always safe (the pool owns the player) and must happen even in
+    // fullscreen, or this widget leaks its subscriptions and pins the entry.
+    if (!_isFullscreen) {
+      if (_ownsControllers) {
+        _pooled?.dispose();
+      } else if (key != null && _holdsPoolRef) {
+        _pool?.release(key);
+        _holdsPoolRef = false;
+      }
     }
-    WakelockPlus.disable();
     super.dispose();
   }
 }
 
+/// Mute is an app-wide toggle: muting one video keeps the next one muted, on
+/// every screen. Tweet tiles each sit under their own [VideoContextState]
+/// provider, so a single shared [ValueNotifier] is the source of truth and every
+/// per-scope instance forwards its changes — that way all scopes stay in sync and
+/// rebuild together (a plain static field only notified the one scope that fired).
 class VideoContextState extends ChangeNotifier {
-  static bool? _muted;
+  static final ValueNotifier<bool> _muted = ValueNotifier(false);
+  static bool _initialised = false;
 
   VideoContextState(bool initialMuted) {
-    _muted ??= initialMuted;
+    // The pref is only the initial default; once set, mute is user-controlled.
+    if (!_initialised) {
+      _initialised = true;
+      _muted.value = initialMuted;
+    }
+    _muted.addListener(notifyListeners);
   }
 
-  bool get isMuted => _muted!;
+  @override
+  void dispose() {
+    _muted.removeListener(notifyListeners);
+    super.dispose();
+  }
+
+  bool get isMuted => _muted.value;
 
   void setIsMuted(double volume) {
-    final muted = _muted!;
+    final muted = _muted.value;
     if (muted && volume > 0 || !muted && volume == 0) {
-      _muted = !muted;
+      _muted.value = !muted;
     }
-
-    notifyListeners();
   }
 }

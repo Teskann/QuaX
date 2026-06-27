@@ -195,15 +195,21 @@ class _TweetMediaState extends State<TweetMedia> {
             itemBuilder: (context, index) {
               var item = widget.media[index];
 
+              // A video has its own tap controls and must never open the
+              // fullscreen media viewer. Photos and GIFs still open it.
+              final isVideo = item.type == 'video';
+
               return GestureDetector(
-                onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => TweetMediaView(
-                            initialIndex: index,
-                            media: widget.media,
-                            username: widget.username,
-                            tweetId: widget.tweetId))),
+                onTap: isVideo
+                    ? null
+                    : () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => TweetMediaView(
+                                initialIndex: index,
+                                media: widget.media,
+                                username: widget.username,
+                                tweetId: widget.tweetId))),
                 child: _TweetMediaItem(
                     media: item,
                     index: index + 1,

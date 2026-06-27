@@ -1,25 +1,36 @@
-import 'package:chewie/chewie.dart';
-import 'package:video_player/video_player.dart';
+import 'package:media_kit/media_kit.dart';
+import 'package:media_kit_video/media_kit_video.dart';
+import 'package:quax/tweet/video_quality.dart';
 
-/// One cached video player: the [VideoPlayerController] together with the
-/// [ChewieController] wrapping it, plus the resolved download URL. The pool owns
-/// this pair and is the only thing allowed to dispose it (on LRU eviction) —
-/// widgets attach/detach but never dispose.
+/// One cached video player: the libmpv [Player] together with the
+/// [VideoController] that renders it, plus the resolved download URL, the
+/// selectable [qualities] and the [currentStreamUrl] currently open. The pool
+/// owns this pair and is the only thing allowed to dispose it (on LRU eviction)
+/// — widgets attach/detach but never dispose. Disposing the [Player] also
+/// releases the [VideoController]'s native texture.
 class PooledVideo {
-  final VideoPlayerController videoController;
-  final ChewieController chewieController;
+  final Player player;
+  final VideoController videoController;
   final String? downloadUrl;
+  final List<TweetVideoQuality> qualities;
+
+  /// False for muted looping GIFs, which the single-audible-video policy leaves
+  /// playing.
+  final bool pausableByPolicy;
+
+  /// The MP4 variant currently open in [player]; updated on a quality switch.
+  String currentStreamUrl;
 
   PooledVideo({
+    required this.player,
     required this.videoController,
-    required this.chewieController,
     required this.downloadUrl,
+    required this.qualities,
+    required this.currentStreamUrl,
+    required this.pausableByPolicy,
   });
 
-  void dispose() {
-    chewieController.dispose();
-    videoController.dispose();
-  }
+  Future<void> dispose() => player.dispose();
 }
 
 class _Entry {
@@ -40,20 +51,20 @@ class _Entry {
   }
 }
 
-/// An LRU cache of video player controllers, keyed by `tweetId:mediaIndex`.
+/// An LRU cache of video players, keyed by `tweetId:mediaIndex`.
 ///
 /// Why this exists: navigating to a tweet (or scrolling back to it) used to build
-/// a brand-new controller and restart playback from zero. Keeping the controller
-/// alive lets the same video keep playing across screens and avoids re-fetching
-/// it. A single instance is provided app-wide.
+/// a brand-new player and restart playback from zero. Keeping the player alive
+/// lets the same video keep playing across screens and avoids re-fetching it. A
+/// single instance is provided app-wide.
 ///
 /// Lifetime contract:
 ///  - [acquire] returns the cached pair (creating it on a miss) and marks it in
-///    use; concurrent callers for the same key share one controller.
+///    use; concurrent callers for the same key share one player.
 ///  - [release] marks a widget as gone but does NOT dispose — the entry stays
 ///    cached for instant reuse.
 ///  - Only eviction disposes, and only entries with no live widget (refCount 0),
-///    so a controller on screen is never disposed from under its widget.
+///    so a player on screen is never disposed from under its widget.
 class VideoControllerPool {
   final int maxSize;
   final Map<String, _Entry> _entries = {};
@@ -74,6 +85,16 @@ class VideoControllerPool {
   }
 
   bool anyVisible(String key) => _visibleTokens[key]?.isNotEmpty ?? false;
+
+  /// Pause every other policy-pausable player so only [active] is audible.
+  void pauseOthers(PooledVideo active) {
+    for (final entry in _entries.values) {
+      final video = entry.value;
+      if (video == null || identical(video, active)) continue;
+      if (!video.pausableByPolicy) continue;
+      if (video.player.state.playing) video.player.pause();
+    }
+  }
 
   Future<PooledVideo> acquire(String key, Future<PooledVideo> Function() create) {
     var entry = _entries.remove(key) ?? _Entry(create());
