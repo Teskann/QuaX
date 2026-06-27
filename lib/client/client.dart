@@ -1323,6 +1323,8 @@ class TweetWithCard extends Tweet {
     json['isTombstone'] = isTombstone;
     json['article'] = article?.toJson();
     json['viewCount'] = viewCount;
+    json['noteText'] = noteText;
+    json['noteEntities'] = noteEntities?.toJson();
 
     return json;
   }
@@ -1381,6 +1383,8 @@ class TweetWithCard extends Tweet {
     tweetWithCard.possiblySensitive = tweet.possiblySensitive;
     tweetWithCard.possiblySensitiveAppealable = tweet.possiblySensitiveAppealable;
     tweetWithCard.article = e['article'] == null ? null : Article.fromJson(e['article']);
+    tweetWithCard.noteText = e['noteText'];
+    tweetWithCard.noteEntities = e['noteEntities'] == null ? null : Entities.fromJson(e['noteEntities']);
 
     return tweetWithCard;
   }
