@@ -1,4 +1,3 @@
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:quax/constants.dart';
@@ -93,6 +92,11 @@ class SettingsGeneralFragment extends StatelessWidget {
             subtitle: Text(L10n.of(context).option_confirm_close_description),
             pref: optionConfirmClose,
           ),
+          PrefSwitch(
+            title: Text(L10n.of(context).disable_screenshots),
+            subtitle: Text(L10n.of(context).disable_screenshots_hint),
+            pref: optionDisableScreenshots,
+          ),
           PrefDropdown(
               fullWidth: false,
               title: Text(L10n.of(context).default_tab),
@@ -105,98 +109,6 @@ class SettingsGeneralFragment extends StatelessWidget {
                   .toList()),
           PrefDropdown(
               fullWidth: false,
-              title: Text(L10n.of(context).media_size),
-              subtitle: Text(
-                L10n.of(context).save_bandwidth_using_smaller_images,
-              ),
-              pref: optionMediaSize,
-              items: [
-                DropdownMenuItem(
-                  value: 'disabled',
-                  child: Text(L10n.of(context).disabled),
-                ),
-                DropdownMenuItem(
-                  value: 'thumb',
-                  child: Text(L10n.of(context).thumbnail),
-                ),
-                DropdownMenuItem(
-                  value: 'small',
-                  child: Text(L10n.of(context).small),
-                ),
-                DropdownMenuItem(
-                  value: 'medium',
-                  child: Text(L10n.of(context).medium),
-                ),
-                DropdownMenuItem(
-                  value: 'large',
-                  child: Text(L10n.of(context).large),
-                ),
-              ]),
-          PrefSwitch(
-            pref: optionUseAbsoluteTimestamp,
-            title: Text(L10n.of(context).use_absolute_timestamp),
-            subtitle: Text(L10n.of(context).use_absolute_timestamp_description),
-          ),
-          PrefSwitch(
-            pref: optionMediaDefaultMute,
-            title: Text(L10n.of(context).mute_videos),
-            subtitle: Text(L10n.of(context).mute_video_description),
-          ),
-          PrefSwitch(
-            pref: optionMediaDefaultLoop,
-            title: Text(L10n.of(context).loop_videos),
-            subtitle: Text(L10n.of(context).loop_videos_description),
-          ),
-          PrefSwitch(
-            pref: optionMediaDefaultAutoPlay,
-            title: Text(L10n.of(context).autoplay_videos),
-            subtitle: Text(L10n.of(context).autoplay_videos_description),
-          ),
-          PrefSwitch(
-            pref: optionMediaBackgroundPlayback,
-            title: Text(L10n.of(context).allow_background_play),
-            subtitle: Text(L10n.of(context).allow_background_play_description),
-          ),
-          PrefSwitch(
-            pref: optionMediaAllowBackgroundPlayOtherApps,
-            title: Text(L10n.of(context).allow_background_play_other_apps),
-            subtitle: Text(L10n.of(context).allow_background_play_other_apps_description),
-          ),
-          PrefCheckbox(
-            title: Text(L10n.of(context).hide_sensitive_tweets),
-            subtitle: Text(L10n.of(context).whether_to_hide_tweets_marked_as_sensitive),
-            pref: optionTweetsHideSensitive,
-          ),
-          PrefDialogButton(
-            title: Text(L10n.of(context).share_base_url),
-            subtitle: Text(L10n.of(context).share_base_url_description),
-            dialog: _createShareBaseDialog(context, prefs),
-          ),
-          PrefSwitch(
-            title: Text(L10n.of(context).disable_screenshots),
-            subtitle: Text(L10n.of(context).disable_screenshots_hint),
-            pref: optionDisableScreenshots,
-          ),
-          DownloadTypeSetting(
-            prefs: prefs,
-          ),
-          PrefSwitch(
-            title: Text(L10n.of(context).activate_non_confirmation_bias_mode_label),
-            pref: optionNonConfirmationBiasMode,
-            subtitle: Text(L10n.of(context).activate_non_confirmation_bias_mode_description),
-          ),
-          PrefSwitch(
-            title: Text(L10n.of(context).disable_warnings_for_unrelated_posts_in_feed),
-            subtitle: Text(L10n.of(context).disable_warnings_for_unrelated_posts_in_feed_description),
-            pref: optionDisableWarningsForUnrelatedPostsInFeed,
-          ),
-          PrefSwitch(
-            title: Text(L10n.of(context).always_show_full_tweet_contents),
-            subtitle: Text(L10n.of(context).always_show_full_tweet_contents_description),
-            pref: alwaysShowFullTweetContents,
-          ),
-          PrefDropdown(
-              fullWidth: false,
               title: Text(L10n.of(context).default_profile_tab),
               subtitle: Text(
                 L10n.of(context).default_profile_tab_description,
@@ -205,62 +117,13 @@ class SettingsGeneralFragment extends StatelessWidget {
               items: profileTabs
                   .map((e) => DropdownMenuItem(value: e.id.name, child: Text(e.titleBuilder(context))))
                   .toList()),
+          PrefDialogButton(
+            title: Text(L10n.of(context).share_base_url),
+            subtitle: Text(L10n.of(context).share_base_url_description),
+            dialog: _createShareBaseDialog(context, prefs),
+          ),
         ]),
       ),
-    );
-  }
-}
-
-class DownloadTypeSetting extends StatefulWidget {
-  final BasePrefService prefs;
-
-  const DownloadTypeSetting({super.key, required this.prefs});
-
-  @override
-  DownloadTypeSettingState createState() => DownloadTypeSettingState();
-}
-
-class DownloadTypeSettingState extends State<DownloadTypeSetting> {
-  @override
-  Widget build(BuildContext context) {
-    var downloadPath = widget.prefs.get<String>(optionDownloadPath) ?? '';
-
-    return Column(
-      children: [
-        PrefDropdown(
-          onChange: (value) {
-            setState(() {});
-          },
-          fullWidth: false,
-          title: Text(L10n.current.download_handling),
-          subtitle: Text(L10n.current.download_handling_description),
-          pref: optionDownloadType,
-          items: [
-            DropdownMenuItem(value: optionDownloadTypeAsk, child: Text(L10n.current.download_handling_type_ask)),
-            DropdownMenuItem(
-                value: optionDownloadTypeDirectory, child: Text(L10n.current.download_handling_type_directory)),
-          ],
-        ),
-        if (widget.prefs.get(optionDownloadType) == optionDownloadTypeDirectory)
-          PrefButton(
-            onTap: () async {
-              String? directoryPath = await FilePicker.getDirectoryPath();
-
-              if (directoryPath == null) {
-                return;
-              }
-              // TODO: Gross. Figure out how to re-render automatically when the preference changes
-              setState(() {
-                widget.prefs.set(optionDownloadPath, directoryPath);
-              });
-            },
-            title: Text(L10n.current.download_path),
-            subtitle: Text(
-              downloadPath.isEmpty ? L10n.current.not_set : downloadPath,
-            ),
-            child: Text(L10n.current.choose),
-          )
-      ],
     );
   }
 }
