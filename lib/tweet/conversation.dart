@@ -37,10 +37,9 @@ class _TweetConversationState extends State<TweetConversation> {
           initialMediaIndex: widget.initialMediaIndex);
     }
 
-    var tiles = [];
+    var tiles = <Widget>[];
     var tweets = widget.tweets.sorted((a, b) => a.idStr!.compareTo(b.idStr!)).toList(growable: false);
 
-    // We need to do a simple for loop so we can mark the first item as the thread start
     for (var i = 0; i < tweets.length; i++) {
       tiles.add(TweetTile(
           clickable: true,
@@ -48,17 +47,30 @@ class _TweetConversationState extends State<TweetConversation> {
           currentUsername: widget.username,
           isPinned: widget.isPinned,
           isThread: i == 0,
+          threadConnectTop: i > 0,
+          threadConnectBottom: i < tweets.length - 1,
           initialMediaIndex: tweets[i].idStr == widget.id ? widget.initialMediaIndex : 0));
     }
 
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 4),
-      decoration: BoxDecoration(border: Border(left: BorderSide(color: Theme.of(context).colorScheme.secondary.withAlpha(127), width: 3))),
-      child: Column(
-        children: [
-          ...tiles,
-        ],
-      ),
+    // One rounded card for the whole thread, so its tweets read as a single surface. The trailing
+    // divider matches the one every standalone tweet draws below itself.
+    return Column(
+      children: [
+        Card(
+          clipBehavior: Clip.antiAlias,
+          color: tweetCardColor(context),
+          child: Column(
+            children: [
+              ...tiles,
+            ],
+          ),
+        ),
+        Divider(
+          height: 0,
+          thickness: 1,
+          color: Theme.of(context).colorScheme.surfaceBright.withAlpha(150),
+        ),
+      ],
     );
   }
 }

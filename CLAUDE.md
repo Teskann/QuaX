@@ -103,6 +103,7 @@ Strings live in `lib/l10n/*.arb` files. The `L10n` class in `lib/generated/l10n.
 - Avoid functions of more than 30 lines (except for some widget builders)
 - NEVER insert raw strings in the code if they are displayed on the UI, always use translated strings in arb files
 - Anytime when you are about to copy/paste code from somewhere, think about refactoring instead. Ask me first what to do in such cases.
+- Go easy on comments. Avoid comments that are obvious or redundant, or that simply describe the code you're about to write.
 
 ## Custom Skills
 

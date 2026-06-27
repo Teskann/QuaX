@@ -35,6 +35,11 @@ class TweetTile extends StatefulWidget {
   final bool isThread;
   final bool isQuotedTweet;
 
+  // Whether to draw a connector line above/below the avatar, linking this tile to the
+  // previous/next tweet of the same thread.
+  final bool threadConnectTop;
+  final bool threadConnectBottom;
+
   final bool tweetOpened;
   final bool addSeparator;
   final bool isBirdwatchQuote;
@@ -51,6 +56,8 @@ class TweetTile extends StatefulWidget {
       this.addSeparator = true,
       this.isQuotedTweet = false,
       this.isBirdwatchQuote = false,
+      this.threadConnectTop = false,
+      this.threadConnectBottom = false,
       this.initialMediaIndex = 0});
 
   @override
@@ -598,17 +605,127 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
       createdAt = tweet.createdAt;
     }
 
+    final avatar = hideAuthorInformation
+        ? const Icon(Icons.account_circle, size: 48)
+        : ClipRRect(
+            borderRadius: BorderRadius.circular(64),
+            child: UserAvatar(uri: tweet.user!.profileImageUrlHttps),
+          );
+
+    void onTapProfile() {
+      // If the tweet is by the currently-viewed profile, don't allow clicks as it doesn't make sense
+      if (currentUsername != null && tweet.user!.screenName!.endsWith(currentUsername!)) {
+        return;
+      }
+      Navigator.pushNamed(context, routeProfile,
+          arguments: ProfileScreenArguments(tweet.user!.idStr, tweet.user!.screenName, null));
+    }
+
+    final titleRow = Row(children: [
+      // Username
+      if (!hideAuthorInformation)
+        Flexible(
+          child: Row(
+            children: [
+              Flexible(
+                  child: Text(tweet.user!.name!,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontWeight: FontWeight.w500))),
+              if (tweet.user!.verified ?? false) const SizedBox(width: 4),
+              if (tweet.user!.verified ?? false)
+                Icon(Icons.verified, size: 18, color: Theme.of(context).colorScheme.primary)
+            ],
+          ),
+        ),
+    ]);
+
+    final subtitleRow = Row(
+      mainAxisAlignment: hideAuthorInformation ? MainAxisAlignment.end : MainAxisAlignment.spaceBetween,
+      children: [
+        // Twitter name
+        if (!hideAuthorInformation) ...[
+          Flexible(child: Text('@${tweet.user!.screenName!}', overflow: TextOverflow.ellipsis)),
+          const SizedBox(width: 4),
+        ],
+        if (createdAt != null)
+          DefaultTextStyle(
+              style: theme.textTheme.bodySmall!,
+              child:
+                  Timestamp(timestamp: createdAt, absoluteTimestamp: prefs.get(optionUseAbsoluteTimestamp)))
+      ],
+    );
+
+    final headerTile = ListTile(
+      onTap: onTapProfile,
+      title: titleRow,
+      subtitle: subtitleRow,
+      // Profile picture
+      leading: avatar,
+    );
+
+    final pinnedBadge = isPinned
+        ? _TweetTileLeading(icon: Icons.push_pin, children: [
+            TextSpan(text: L10n.of(context).pinned_tweet, style: theme.textTheme.bodySmall)
+          ])
+        : null;
+    final threadBadge = isThread
+        ? _TweetTileLeading(icon: Icons.forum, children: [
+            TextSpan(text: L10n.of(context).thread, style: theme.textTheme.bodySmall)
+          ])
+        : null;
+
+    final bodyChildren = <Widget>[
+      if (tweet.article == null) content,
+      media,
+      quotedTweet,
+      TweetCard(tweet: tweet, card: tweet.card),
+      birdwatchQuoted,
+      article,
+      footerBar,
+    ];
+
+    final isThreadTile = widget.threadConnectTop || widget.threadConnectBottom;
+
+    if (isThreadTile) {
+      return Consumer<ImportDataModel>(
+          builder: (context, model, child) => RepaintBoundary(
+              key: _globalKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  retweetBanner,
+                  if (!widget.threadConnectTop) replyToTile,
+                  ?pinnedBadge,
+                  ?threadBadge,
+                  _buildThreadBody(
+                      theme,
+                      avatar,
+                      InkWell(
+                        onTap: onTapProfile,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 16, right: 16, top: 12, bottom: 12),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              DefaultTextStyle.merge(style: theme.textTheme.bodyLarge, child: titleRow),
+                              DefaultTextStyle.merge(style: theme.textTheme.bodyMedium, child: subtitleRow),
+                            ],
+                          ),
+                        ),
+                      ),
+                      bodyChildren,
+                      indentBody: widget.threadConnectBottom,
+                      onTapProfile: onTapProfile),
+                ],
+              )));
+    }
+
     return Consumer<ImportDataModel>(
-        builder: (context, model, child) => RepaintBoundary(key: _globalKey, child: Column(children: [
-            Card(
-                color: theme.brightness == Brightness.dark &&
-                        prefs.get(optionThemeTrueBlack) &&
-                        prefs.get(optionThemeTrueBlackTweetCards)
-                    ? Colors.black
-                    : ThemeData(
-                        colorScheme:
-                            ColorScheme.fromSeed(seedColor: theme.colorScheme.primary, brightness: theme.brightness),
-                      ).cardColor,
+        builder: (context, model, child) => RepaintBoundary(
+            key: _globalKey,
+            child: Column(children: [
+              Card(
+                color: tweetCardColor(context),
                 child: Row(
                   children: [
                     retweetSidebar,
@@ -618,79 +735,10 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
                       children: [
                         retweetBanner,
                         replyToTile,
-                        if (isPinned)
-                          _TweetTileLeading(icon: Icons.push_pin, children: [
-                            TextSpan(
-                              text: L10n.of(context).pinned_tweet,
-                              style: theme.textTheme.bodySmall,
-                            )
-                          ]),
-                        if (isThread)
-                          _TweetTileLeading(icon: Icons.forum, children: [
-                            TextSpan(
-                              text: L10n.of(context).thread,
-                              style: theme.textTheme.bodySmall,
-                            )
-                          ]),
-                        ListTile(
-                          onTap: () {
-                            // If the tweet is by the currently-viewed profile, don't allow clicks as it doesn't make sense
-                            if (currentUsername != null && tweet.user!.screenName!.endsWith(currentUsername!)) {
-                              return;
-                            }
-
-                            Navigator.pushNamed(context, routeProfile,
-                                arguments: ProfileScreenArguments(tweet.user!.idStr, tweet.user!.screenName, null));
-                          },
-                          title: Row(children: [
-                            // Username
-                            if (!hideAuthorInformation)
-                              Flexible(
-                                child: Row(
-                                  children: [
-                                    Flexible(
-                                        child: Text(tweet.user!.name!,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: const TextStyle(fontWeight: FontWeight.w500))),
-                                    if (tweet.user!.verified ?? false) const SizedBox(width: 4),
-                                    if (tweet.user!.verified ?? false)
-                                      Icon(Icons.verified, size: 18, color: Theme.of(context).colorScheme.primary)
-                                  ],
-                                ),
-                              ),
-                          ]),
-
-                          subtitle: Row(
-                            mainAxisAlignment:
-                                hideAuthorInformation ? MainAxisAlignment.end : MainAxisAlignment.spaceBetween,
-                            children: [
-                              // Twitter name
-                              if (!hideAuthorInformation) ...[
-                                Flexible(child: Text('@${tweet.user!.screenName!}', overflow: TextOverflow.ellipsis)),
-                                const SizedBox(width: 4),
-                              ],
-                              if (createdAt != null)
-                                DefaultTextStyle(
-                                    style: theme.textTheme.bodySmall!,
-                                    child: Timestamp(
-                                        timestamp: createdAt, absoluteTimestamp: prefs.get(optionUseAbsoluteTimestamp)))
-                            ],
-                          ),
-                          // Profile picture
-                          leading: hideAuthorInformation
-                              ? const Icon(Icons.account_circle, size: 48)
-                              : ClipRRect(
-                                  borderRadius: BorderRadius.circular(64),
-                                  child: UserAvatar(uri: tweet.user!.profileImageUrlHttps),
-                                ),
-                        ),
-                        if(tweet.article == null) content,
-                        media,
-                        quotedTweet,
-                        TweetCard(tweet: tweet, card: tweet.card),
-                        birdwatchQuoted,
-                        article,
-                        footerBar,
+                        ?pinnedBadge,
+                        ?threadBadge,
+                        headerTile,
+                        ...bodyChildren,
                       ],
                     ))
                   ],
@@ -703,6 +751,71 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
               ),
             ])));
   }
+
+  Widget _buildThreadBody(ThemeData theme, Widget avatar, Widget header, List<Widget> bodyChildren,
+      {required bool indentBody, required VoidCallback onTapProfile}) {
+    const railLeft = 16.0;
+    const topGap = 10.0;
+    const avatarSize = 48.0;
+    const lineWidth = 2.0;
+    const lineX = railLeft + avatarSize / 2 - lineWidth / 2;
+    const avatarCenterY = topGap + avatarSize / 2;
+    const bodyIndent = railLeft + avatarSize;
+    final lineColor = theme.colorScheme.outlineVariant;
+    Widget lineSeg() => Container(width: lineWidth, color: lineColor);
+
+    return Stack(
+      children: [
+        if (widget.threadConnectTop)
+          Positioned(left: lineX, top: 0, height: avatarCenterY, child: lineSeg()),
+        if (widget.threadConnectBottom)
+          Positioned(left: lineX, top: avatarCenterY, bottom: 0, child: lineSeg()),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(width: railLeft),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const SizedBox(height: topGap),
+                    SizedBox(
+                      width: avatarSize,
+                      height: avatarSize,
+                      child: GestureDetector(
+                          behavior: HitTestBehavior.opaque, onTap: onTapProfile, child: avatar),
+                    ),
+                  ],
+                ),
+                Expanded(child: header),
+              ],
+            ),
+            if (indentBody)
+              Padding(
+                padding: const EdgeInsets.only(left: bodyIndent),
+                child: Column(crossAxisAlignment: CrossAxisAlignment.end, children: bodyChildren),
+              ),
+            if (!indentBody) ...bodyChildren,
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+Color? tweetCardColor(BuildContext context) {
+  final theme = Theme.of(context);
+  final prefs = PrefService.of(context, listen: false);
+  final trueBlack = theme.brightness == Brightness.dark &&
+      prefs.get(optionThemeTrueBlack) &&
+      prefs.get(optionThemeTrueBlackTweetCards);
+  return trueBlack
+      ? Colors.black
+      : ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: theme.colorScheme.primary, brightness: theme.brightness),
+        ).cardColor;
 }
 
 class TweetHasNoContentException {
