@@ -1,3 +1,12 @@
+## QuaX v4.10.0
+
+What's new in QuaX v4.10.0:
+  - 🎬 Fully reimplemented the **video player**. This should address most of video-related issues, especially the unability to replay videos. This should also fix video playback on some devices without system codecs (#140, #126) as now ffmpeg is embedded in the apk. This implements subtitles support, an option to select video quality, better stability for background playing and double tap to go forward/backward. Technically, it now depends on <sup>[[view modified code]](https://github.com/teskann/quax/commit/c8e33d90f3f588fdad06fb02db2316724b3ec0a6)</sup>
+  - Fixed an issue when some tweets are sometimes truncated <sup>[[view modified code]](https://github.com/teskann/quax/commit/649d0d2a9434fe2649f61ef9ca6d8ce4bd1e9985)</sup>
+  - 🧵 Redesigned how threads look. The thick-colored band on the left is gone. Tweets of a thread now sit in a single card, linked by a subtle connector line between profile pictures (like on X). Threads are much cleaner to read,   and two threads following each other in the timeline are no longer mistaken for one. <sup>[[view modified code]](https://github.com/teskann/quax/commit/3fc4b81eae1cdfb9bf1da3a887997e1ab9c00472)</sup>
+  - Added a **"Media"** tab to search <sup>[[view modified code]](https://github.com/teskann/quax/commit/4c3ade6b5a296cb3cb5612a6e67438e0f1825acf)</sup>
+  - ⚙️ Reorganized and classified settings more precisely <sup>[[view modified code]](https://github.com/teskann/quax/commit/0f30df264dde5c601cccd0cde2fa0f9bbde7d345)</sup>
+
 ## QuaX v4.9.3
 
 What's new in QuaX v4.9.3:
