@@ -183,7 +183,7 @@ class _TweetVideoState extends State<TweetVideo> {
     }
 
     await player.setPlaylistMode(
-        (widget.loop || prefLoop) ? mk.PlaylistMode.loop : mk.PlaylistMode.none);
+        (widget.loop || prefLoop) ? mk.PlaylistMode.single : mk.PlaylistMode.none);
     await player.setVolume(startMuted ? 0.0 : 100.0);
     await player.open(mk.Media(streamUrl), play: widget.alwaysPlay || _userRequestedPlay);
 
