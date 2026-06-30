@@ -161,6 +161,7 @@ class SubscriptionsScreen extends StatelessWidget {
             ),
           ),
           const SubscriptionUsers(),
+          SliverToBoxAdapter(child: SizedBox(height: MediaQuery.of(context).padding.bottom)),
         ],
       ),
     );

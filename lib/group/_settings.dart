@@ -8,7 +8,8 @@ void showFeedSettings(BuildContext context, GroupModel model) {
   showModalBottomSheet(
       context: context,
       builder: (context) {
-        return Column(
+        return SafeArea(
+            child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
@@ -57,6 +58,6 @@ void showFeedSettings(BuildContext context, GroupModel model) {
               },
             ),
           ],
-        );
+        ));
       });
 }

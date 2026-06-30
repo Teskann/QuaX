@@ -45,7 +45,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Scaffold(
       appBar: AppBar(title: Text(L10n.of(context).settings)),
       body: ListView(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0 + MediaQuery.of(context).padding.bottom),
         children: [
           ListTile(
             title: Text(L10n.of(context).general),

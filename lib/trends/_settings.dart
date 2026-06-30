@@ -31,9 +31,10 @@ class _TrendsSettingsState extends State<TrendsSettings> {
     var prefs = PrefService.of(context);
     var model = context.read<TrendLocationsModel>();
 
-    return Padding(
-      padding: EdgeInsets.all(8.0),
-      child: ScopedBuilder<TrendLocationsModel, List<TrendLocation>>.transition(
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.all(8.0),
+        child: ScopedBuilder<TrendLocationsModel, List<TrendLocation>>.transition(
         store: model,
         onError: (_, e) => FullPageErrorWidget(
           error: e,
@@ -83,6 +84,7 @@ class _TrendsSettingsState extends State<TrendsSettings> {
             ),
           );
         },
+      ),
       ),
     );
   }

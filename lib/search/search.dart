@@ -204,6 +204,7 @@ class _UserSearchResultList extends StatelessWidget {
           return Center(child: Text(L10n.of(context).no_results));
         }
         return ListView.builder(
+          padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
           itemCount: items.length,
           itemBuilder: (context, index) {
             return UserTile(user: UserSubscription.fromUser(items[index]));

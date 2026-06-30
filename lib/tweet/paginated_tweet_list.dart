@@ -236,7 +236,7 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
     final list = PagingListener<int, TweetChain>(
       controller: _controller,
       builder: (context, state, fetchNextPage) => PagedListView<int, TweetChain>(
-        padding: const EdgeInsets.only(top: 4),
+        padding: EdgeInsets.only(top: 4, bottom: MediaQuery.of(context).padding.bottom),
         state: state,
         fetchNextPage: fetchNextPage,
         addAutomaticKeepAlives: false,

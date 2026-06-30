@@ -61,7 +61,7 @@ class _ProfileFollowsState extends State<ProfileFollows> with AutomaticKeepAlive
         body: PagingListener<int, UserWithExtra>(
           controller: _pagingController,
           builder: (context, state, fetchNextPage) => PagedListView<int, UserWithExtra>(
-            padding: EdgeInsets.zero,
+            padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
             state: state,
             fetchNextPage: fetchNextPage,
             addAutomaticKeepAlives: false,
