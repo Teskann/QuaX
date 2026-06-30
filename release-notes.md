@@ -1,11 +1,12 @@
-## QuaX v4.10.0
+## QuaX v4.11.0
 
-What's new in QuaX v4.10.0:
-  - 🎬 Fully reimplemented the **video player**. This should address most of video-related issues, especially the unability to replay videos. This should also fix video playback on some devices without system codecs (#140, #126) as now ffmpeg is embedded in the apk. This implements subtitles support, an option to select video quality, better stability for background playing and double tap to go forward/backward. Technically, it now depends on <sup>[[view modified code]](https://github.com/teskann/quax/commit/c8e33d90f3f588fdad06fb02db2316724b3ec0a6)</sup>
-  - Fixed an issue when some tweets are sometimes truncated <sup>[[view modified code]](https://github.com/teskann/quax/commit/649d0d2a9434fe2649f61ef9ca6d8ce4bd1e9985)</sup>
-  - 🧵 Redesigned how threads look. The thick-colored band on the left is gone. Tweets of a thread now sit in a single card, linked by a subtle connector line between profile pictures (like on X). Threads are much cleaner to read,   and two threads following each other in the timeline are no longer mistaken for one. <sup>[[view modified code]](https://github.com/teskann/quax/commit/3fc4b81eae1cdfb9bf1da3a887997e1ab9c00472)</sup>
-  - Added a **"Media"** tab to search <sup>[[view modified code]](https://github.com/teskann/quax/commit/4c3ade6b5a296cb3cb5612a6e67438e0f1825acf)</sup>
-  - ⚙️ Reorganized and classified settings more precisely <sup>[[view modified code]](https://github.com/teskann/quax/commit/0f30df264dde5c601cccd0cde2fa0f9bbde7d345)</sup>
+What's new in QuaX v4.11.0:
+  - 👤 You can now **import more than 70 subscriptions** per account (fixed #153, #109, #37). ⚠️ Be careful that too many subscriptions might lead to rate limitations ! <sup>[[view modified code]](https://github.com/teskann/quax/commit/787906b3a6ea165b64d57c547d507a2e75034824)</sup>
+  - 📜 Infinite scroll is now supported for *Followers* / *Following* lists (fixed #150) <sup>[[view modified code]](https://github.com/teskann/quax/commit/71367f3caf1258aa9a43c08f9544f0713e75d4c1)</sup>
+  - ⚙️ Added an option to select the default tab for the home feed (*Following* / *For You*). Defaults to *Following* <sup>[[view modified code]](https://github.com/teskann/quax/commit/21404ad8e0d53bd7946b4dcd68bfbfea9ade1c5e)</sup>
+  - 📱 Fixed UI components being hidden behind the Android navigation bar (fixed #161) <sup>[[view modified code]](https://github.com/teskann/quax/commit/aa897da608633c1d2237e96407253792e44a4292)</sup>
+  - ⚙️ You can now customize the number of columns in the media grids (for both search & profile medias) ➡️ `Settings` > `Media` > `Media grid columns` (addressed #151) <sup>[[view modified code]](https://github.com/teskann/quax/commit/409dba6a35290f5c3983ed5377f75201ba6e2ea1)</sup>
+  - 🎬 Fixed an issue in GIFs that introduced a small lag before looping (regression from 4.10.0) <sup>[[view modified code]](https://github.com/teskann/quax/commit/abca5d833a5680a5de0fc8a545f52e7a9760d7c5)</sup>
 
 
 ---
