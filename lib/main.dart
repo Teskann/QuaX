@@ -19,6 +19,7 @@ import 'package:quax/group/feed_session_cache.dart';
 import 'package:quax/tweet/video_controller_pool.dart';
 import 'package:quax/group/group_model.dart';
 import 'package:quax/group/group_screen.dart';
+import 'package:quax/home/_feed.dart';
 import 'package:quax/home/home_model.dart';
 import 'package:quax/home/home_screen.dart';
 import 'package:quax/import_data_model.dart';
@@ -203,6 +204,7 @@ Future<void> main() async {
     optionHomePages: defaultHomePages.map((e) => e.id).toList(),
     optionLocale: optionLocaleDefault,
     optionHomeInitialTab: 'feed',
+    optionHomeDefaultFeedTab: feedTabs[0].id.name,
     optionMediaSize: 'medium',
     optionMediaDefaultMute: true,
     optionMediaDefaultLoop: false,

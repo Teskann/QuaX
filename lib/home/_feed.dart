@@ -1,12 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
+import 'package:quax/constants.dart';
 import 'package:quax/home/_for_you.dart';
 import 'package:quax/tweet/paginated_tweet_list.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/group/_feed_shell.dart';
 import 'package:quax/group/group_model.dart';
 import 'package:quax/group/group_screen.dart';
+
+typedef FeedTabTitleBuilder = String Function(BuildContext context);
+
+enum FeedTab { following, foryou }
+
+class FeedTabOption {
+  final FeedTab id;
+  final FeedTabTitleBuilder titleBuilder;
+
+  FeedTabOption(this.id, this.titleBuilder);
+}
+
+final List<FeedTabOption> feedTabs = [
+  FeedTabOption(FeedTab.following, (c) => L10n.of(c).following),
+  FeedTabOption(FeedTab.foryou, (c) => L10n.of(c).foryou),
+];
+
+FeedTab feedTabFromId(String? id) =>
+    FeedTab.values.firstWhere((e) => e.name == id, orElse: () => FeedTab.following);
 
 class FeedScreen extends StatefulWidget {
   final ScrollController scrollController;
@@ -21,27 +41,25 @@ class FeedScreen extends StatefulWidget {
 
 class _FeedScreenState extends State<FeedScreen> {
   final TweetFeedController _feedController = TweetFeedController();
-  int _tab = 0;
+  FeedTab? _tab;
 
   @override
   Widget build(BuildContext context) {
     final BasePrefService prefs = PrefService.of(context);
-    final l10n = L10n.of(context);
+    final tab = _tab ??= feedTabFromId(prefs.get<String>(optionHomeDefaultFeedTab));
 
     return GroupFeedShell(
       scrollController: widget.scrollController,
       groupId: widget.id,
-      titleBuilder: (context) => DropdownMenu(
-        initialSelection: 0,
+      titleBuilder: (context) => DropdownMenu<FeedTab>(
+        initialSelection: tab,
         inputDecorationTheme: const InputDecorationTheme(
           border: InputBorder.none,
           focusedBorder: InputBorder.none,
           enabledBorder: InputBorder.none,
         ),
-        dropdownMenuEntries: [
-          DropdownMenuEntry(value: 0, label: l10n.following),
-          DropdownMenuEntry(value: 1, label: l10n.foryou),
-        ],
+        dropdownMenuEntries:
+            feedTabs.map((e) => DropdownMenuEntry(value: e.id, label: e.titleBuilder(context))).toList(),
         onSelected: (value) {
           setState(() => _tab = value!);
         },
@@ -51,11 +69,11 @@ class _FeedScreenState extends State<FeedScreen> {
         return defaultGroupActions(
           context,
           model: model,
-          showMore: _tab == 0,
+          showMore: tab == FeedTab.following,
         );
       },
       bodyBuilder: (context) {
-        if (_tab == 0) {
+        if (tab == FeedTab.following) {
           return SubscriptionGroupScreenContent(id: widget.id);
         }
         return ForYouTweets(_feedController, type: 'profile', includeReplies: false, pref: prefs);

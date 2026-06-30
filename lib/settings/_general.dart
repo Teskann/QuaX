@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/generated/l10n.dart';
+import 'package:quax/home/_feed.dart';
 import 'package:quax/home/home_screen.dart';
 import 'package:quax/profile/profile.dart';
 import 'package:quax/utils/iterables.dart';
@@ -106,6 +107,16 @@ class SettingsGeneralFragment extends StatelessWidget {
               pref: optionHomeInitialTab,
               items: defaultHomePages
                   .map((e) => DropdownMenuItem(value: e.id, child: Text(e.titleBuilder(context))))
+                  .toList()),
+          PrefDropdown(
+              fullWidth: false,
+              title: Text(L10n.of(context).default_feed_tab),
+              subtitle: Text(
+                L10n.of(context).default_feed_tab_description,
+              ),
+              pref: optionHomeDefaultFeedTab,
+              items: feedTabs
+                  .map((e) => DropdownMenuItem(value: e.id.name, child: Text(e.titleBuilder(context))))
                   .toList()),
           PrefDropdown(
               fullWidth: false,

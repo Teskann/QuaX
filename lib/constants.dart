@@ -10,6 +10,7 @@ const optionHelloLastBuild = 'hello.last_build';
 
 const optionHomePages = 'home.pages';
 const optionHomeInitialTab = 'home.initial_tab';
+const optionHomeDefaultFeedTab = 'home.default_feed_tab';
 
 const optionMediaSize = 'media.size';
 const optionMediaDefaultMute = 'media.mute';
