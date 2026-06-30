@@ -11,9 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:quax/generated/l10n.dart';
 
 class SubscriptionUsers extends StatefulWidget {
-  final ScrollController scrollController;
-
-  const SubscriptionUsers({super.key, required this.scrollController});
+  const SubscriptionUsers({super.key});
 
   @override
   State<SubscriptionUsers> createState() => _SubscriptionUsersState();
@@ -30,25 +28,27 @@ class _SubscriptionUsersState extends State<SubscriptionUsers> {
 
   Widget _buildPlaceholder(BuildContext context, String message) {
     return Container(
-        alignment: Alignment.center,
-        margin: const EdgeInsets.symmetric(horizontal: 8),
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                child: const Text('¯\\_(ツ)_/¯', style: TextStyle(fontSize: 32)),
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                child: Text(message,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Theme.of(context).hintColor,
-                    )),
-              ),
-            ]));
+      alignment: Alignment.center,
+      margin: const EdgeInsets.symmetric(horizontal: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: const Text('¯\\_(ツ)_/¯', style: TextStyle(fontSize: 32)),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: Text(
+              message,
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Theme.of(context).hintColor),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildSearchBar(BuildContext context) {
@@ -78,17 +78,63 @@ class _SubscriptionUsersState extends State<SubscriptionUsers> {
     );
   }
 
-  Widget _buildFilteredList(BuildContext context, List<Subscription> state, String query) {
+  // Lazy, drag-to-reorder list shown when no search query is active.
+  Widget _buildReorderableSliver(
+    BuildContext context,
+    List<Subscription> state,
+  ) {
+    final prefs = PrefService.of(context);
+    final String orderCustom = prefs.get(optionSubscriptionOrderCustom);
+
+    final subLst = <Subscription>[];
+    if (orderCustom.isNotEmpty) {
+      subLst.addAll(
+        orderCustom
+            .split(',')
+            .map((sn) => state.firstWhere((s) => s.screenName == sn)),
+      );
+    } else {
+      subLst.addAll(state);
+    }
+
+    return SliverReorderableList(
+      itemCount: subLst.length,
+      itemBuilder: (context, i) => ReorderableDelayedDragStartListener(
+        key: ValueKey(subLst[i].screenName),
+        index: i,
+        child: buildSubscriptionTile(context, subLst[i]),
+      ),
+      onReorderItem: (oldIndex, newIndex) async {
+        final s = subLst.removeAt(oldIndex);
+        subLst.insert(newIndex, s);
+        final lst = subLst.map((s) => s.screenName).join(',');
+        await prefs.set(optionSubscriptionOrderCustom, lst);
+      },
+    );
+  }
+
+  // Lazy, filtered list shown while a search query is active.
+  Widget _buildFilteredSliver(
+    BuildContext context,
+    List<Subscription> state,
+    String query,
+  ) {
     final filtered = state
-        .where((s) => s.name.toLowerCase().contains(query) || s.screenName.toLowerCase().contains(query))
+        .where(
+          (s) =>
+              s.name.toLowerCase().contains(query) ||
+              s.screenName.toLowerCase().contains(query),
+        )
         .toList();
     if (filtered.isEmpty) {
-      return _buildPlaceholder(context, L10n.of(context).no_results);
+      return SliverToBoxAdapter(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 32),
+          child: _buildPlaceholder(context, L10n.of(context).no_results),
+        ),
+      );
     }
-    return ListView.builder(
-      shrinkWrap: true,
-      controller: widget.scrollController,
-      padding: const EdgeInsets.symmetric(vertical: 8),
+    return SliverList.builder(
       itemCount: filtered.length,
       itemBuilder: (context, i) => buildSubscriptionTile(context, filtered[i]),
     );
@@ -98,27 +144,40 @@ class _SubscriptionUsersState extends State<SubscriptionUsers> {
   Widget build(BuildContext context) {
     var model = context.read<SubscriptionsModel>();
 
-    return ScopedBuilder<SubscriptionsModel, List<Subscription>>.transition(
+    return ScopedBuilder<SubscriptionsModel, List<Subscription>>(
       store: model,
-      onLoading: (_) => const Center(child: CircularProgressIndicator()),
-      onError: (_, e) =>
-          FullPageErrorWidget(error: e, stackTrace: null, prefix: L10n.of(context).unable_to_refresh_the_subscriptions),
+      onLoading: (_) => const SliverFillRemaining(
+        hasScrollBody: false,
+        child: Center(child: CircularProgressIndicator()),
+      ),
+      onError: (_, e) => SliverFillRemaining(
+        hasScrollBody: false,
+        child: FullPageErrorWidget(
+          error: e,
+          stackTrace: null,
+          prefix: L10n.of(context).unable_to_refresh_the_subscriptions,
+        ),
+      ),
       onState: (_, state) {
         if (state.isEmpty) {
-          return _buildPlaceholder(context, L10n.of(context).no_subscriptions_try_searching_or_importing_some);
+          return SliverFillRemaining(
+            hasScrollBody: false,
+            child: _buildPlaceholder(
+              context,
+              L10n.of(context).no_subscriptions_try_searching_or_importing_some,
+            ),
+          );
         }
         final query = _searchController.text.toLowerCase();
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _buildSearchBar(context),
-            if (query.isEmpty)
-              SubscriptionUsersList(
-                subscriptions: state,
-                scrollController: widget.scrollController,
-              )
-            else
-              _buildFilteredList(context, state, query),
+        return SliverMainAxisGroup(
+          slivers: [
+            SliverToBoxAdapter(child: _buildSearchBar(context)),
+            SliverPadding(
+              padding: const EdgeInsets.fromLTRB(8, 0, 8, 16),
+              sliver: query.isEmpty
+                  ? _buildReorderableSliver(context, state)
+                  : _buildFilteredSliver(context, state, query),
+            ),
           ],
         );
       },
@@ -139,45 +198,11 @@ Widget buildSubscriptionTile(BuildContext context, Subscription user) {
     subtitle: Text(L10n.current.search_term),
     trailing: FollowButton(user: user),
     onTap: () {
-      Navigator.pushNamed(context, routeSearch,
-          arguments: SearchArguments(0, focusInputOnOpen: false, query: user.id));
+      Navigator.pushNamed(
+        context,
+        routeSearch,
+        arguments: SearchArguments(0, focusInputOnOpen: false, query: user.id),
+      );
     },
   );
-}
-
-class SubscriptionUsersList extends StatelessWidget {
-  final ScrollController scrollController;
-  final List<Subscription> subscriptions;
-
-  const SubscriptionUsersList({super.key, required this.subscriptions, required this.scrollController});
-
-  @override
-  Widget build(BuildContext context) {
-    BasePrefService prefs = PrefService.of(context);
-    String subscriptionOrderCustom = prefs.get(optionSubscriptionOrderCustom);
-    List<Subscription> subLst = [];
-    if (subscriptionOrderCustom.isNotEmpty) {
-      subLst
-          .addAll(subscriptionOrderCustom.split(',').map((sn) => subscriptions.firstWhere((s) => s.screenName == sn)));
-    } else {
-      subLst.addAll(subscriptions);
-    }
-    return ReorderableListView.builder(
-        shrinkWrap: true,
-        scrollController: scrollController,
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        itemCount: subLst.length,
-        itemBuilder: (context, i) => buildSubscriptionTile(context, subLst[i]),
-        onReorder: (oldIndex, newIndex) async {
-          if (oldIndex < newIndex) {
-            Subscription s = subLst.removeAt(oldIndex);
-            subLst.insert(newIndex - 1, s);
-          } else {
-            Subscription s = subLst.removeAt(oldIndex);
-            subLst.insert(newIndex, s);
-          }
-          final lst = subLst.map((s) => s.screenName).join(',');
-          await PrefService.of(context).set(optionSubscriptionOrderCustom, lst);
-        });
-  }
 }

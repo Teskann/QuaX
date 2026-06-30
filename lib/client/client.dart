@@ -297,11 +297,12 @@ class Twitter {
     return Profile(user, pins);
   }
 
-  static Future<PaginatedUsers> friendsList(String userId, int count) async {
+  static Future<PaginatedUsers> friendsList(String userId, int count, {String? cursor}) async {
     final uri = Uri.https('x.com', '/i/api/graphql/FEcMGoVOUjm0aU9BJrrGZA/Following', {
       "variables": jsonEncode({
         "userId": userId,
         "count": count,
+        "cursor": ?cursor,
         "includePromotedContent": false,
         "withGrokTranslatedBio": false,
       }),
@@ -351,7 +352,10 @@ class Twitter {
       )?["data"]?["user"]?["result"]?["timeline"]?["timeline"]?["instructions"];
       for (final instruction in instructions) {
         if (instruction["type"] != "TimelineAddEntries" || instruction["entries"] == null) continue;
-        for (final entry in instruction["entries"]) {
+        var entries = List.from(instruction["entries"]);
+        users.nextCursorStr = getCursor(entries, [], 'cursor-bottom', 'Bottom');
+        users.previousCursorStr = getCursor(entries, [], 'cursor-top', 'Top');
+        for (final entry in entries) {
           final userResult = entry["content"]?["itemContent"]?["user_results"]?["result"];
           if (userResult == null) continue;
           var user = UserWithExtra()
@@ -371,7 +375,7 @@ class Twitter {
   static Future<Follows> getProfileFollows(
     String screenName,
     String type, {
-    int? cursor,
+    String? cursor,
     int? count = 200,
     String? id,
   }) async {
@@ -379,17 +383,17 @@ class Twitter {
       id = (await getProfileByScreenName(screenName)).user.idStr;
     }
     var response = type == 'following'
-        ? (await friendsList(id!, count!))
+        ? (await friendsList(id!, count!, cursor: cursor))
         : await _twitterApi.userService.followersList(
             screenName: screenName,
-            cursor: cursor,
+            cursor: cursor == null ? null : int.tryParse(cursor),
             count: count,
             skipStatus: true,
           );
 
     return Follows(
-      cursorBottom: int.parse(response.nextCursorStr ?? '-1'),
-      cursorTop: int.parse(response.previousCursorStr ?? '-1'),
+      cursorBottom: response.nextCursorStr,
+      cursorTop: response.previousCursorStr,
       users: response.users?.map((e) => UserWithExtra.fromJson(e.toJson())).toList() ?? [],
     );
   }
@@ -1650,8 +1654,8 @@ class TweetChain {
 }
 
 class Follows {
-  final int? cursorBottom;
-  final int? cursorTop;
+  final String? cursorBottom;
+  final String? cursorTop;
   final List<UserWithExtra> users;
 
   Follows({required this.cursorBottom, required this.cursorTop, required this.users});

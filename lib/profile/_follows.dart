@@ -19,10 +19,11 @@ class ProfileFollows extends StatefulWidget {
 }
 
 class _ProfileFollowsState extends State<ProfileFollows> with AutomaticKeepAliveClientMixin<ProfileFollows> {
-  late final CursorPagingController<int, UserWithExtra> _paging;
+  late final CursorPagingController<String, UserWithExtra> _paging;
   PagingController<int, UserWithExtra> get _pagingController => _paging.pagingController;
 
   final int _pageSize = 200;
+  final Set<String> _seenIds = {};
 
   @override
   bool get wantKeepAlive => true;
@@ -30,7 +31,7 @@ class _ProfileFollowsState extends State<ProfileFollows> with AutomaticKeepAlive
   @override
   void initState() {
     super.initState();
-    _paging = CursorPagingController<int, UserWithExtra>(_fetchPage);
+    _paging = CursorPagingController<String, UserWithExtra>(_fetchPage);
   }
 
   @override
@@ -39,16 +40,14 @@ class _ProfileFollowsState extends State<ProfileFollows> with AutomaticKeepAlive
     super.dispose();
   }
 
-  Future<CursorPage<int, UserWithExtra>> _fetchPage(int? cursor) async {
+  Future<CursorPage<String, UserWithExtra>> _fetchPage(String? cursor) async {
     var result = await Twitter.getProfileFollows(widget.user.screenName!, widget.type,
         cursor: cursor, count: _pageSize, id: widget.user.idStr);
 
     final next = result.cursorBottom;
-    // Cursor didn't advance -> nothing new, drop the duplicate page.
-    if (next == cursor) return (items: const <UserWithExtra>[], nextCursor: null);
-    // cursorBottom 0 (or absent) marks the final page; keep its users.
-    if (next == null || next == 0) return (items: result.users, nextCursor: null);
-    return (items: result.users, nextCursor: next);
+    final fresh = result.users.where((u) => u.idStr != null && _seenIds.add(u.idStr!)).toList();
+    final end = next == null || next.isEmpty || next == '0' || next == cursor || fresh.isEmpty;
+    return (items: fresh, nextCursor: end ? null : next);
   }
 
   @override

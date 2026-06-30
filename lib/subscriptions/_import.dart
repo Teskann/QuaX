@@ -37,10 +37,10 @@ class _SubscriptionImportScreenState extends State<SubscriptionImportScreen> {
 
       _streamController?.add(0);
 
-      int? cursor;
+      String? cursor;
       int total = 0;
+      var seenIds = <String>{};
 
-      // TODO: Test this still works
       var importModel = context.read<ImportDataModel>();
       var groupModel = context.read<GroupsModel>();
 
@@ -53,28 +53,32 @@ class _SubscriptionImportScreenState extends State<SubscriptionImportScreen> {
           cursor: cursor,
         );
 
-        cursor = response.cursorBottom;
-        total = total + response.users.length;
+        var next = response.cursorBottom;
+        var fresh = response.users.where((e) => e.idStr != null && seenIds.add(e.idStr!)).toList();
 
-        await importModel.importData({
-          tableSubscription: [
-            ...response.users.map((e) => UserSubscription(
-                id: e.idStr!,
-                name: e.name!,
-                profileImageUrlHttps: e.profileImageUrlHttps,
-                screenName: e.screenName!,
-                verified: e.verified ?? false,
-                createdAt: createdAt,
-                inFeed: true
-            ))
-          ]
-        });
+        if (fresh.isNotEmpty) {
+          total = total + fresh.length;
+          await importModel.importData({
+            tableSubscription: [
+              ...fresh.map((e) => UserSubscription(
+                  id: e.idStr!,
+                  name: e.name!,
+                  profileImageUrlHttps: e.profileImageUrlHttps,
+                  screenName: e.screenName!,
+                  verified: e.verified ?? false,
+                  createdAt: createdAt,
+                  inFeed: true
+              ))
+            ]
+          });
 
-        _streamController?.add(total);
+          _streamController?.add(total);
+        }
 
-        if (cursor == 0 || cursor == -1) {
+        if (next == null || next.isEmpty || next == '0' || next == cursor || fresh.isEmpty) {
           break;
         }
+        cursor = next;
       }
 
       await groupModel.reloadGroups();
