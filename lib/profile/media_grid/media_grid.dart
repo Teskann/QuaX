@@ -35,6 +35,8 @@ class _MediaGridState extends State<MediaGrid> with AutomaticKeepAliveClientMixi
   Widget build(BuildContext context) {
     super.build(context);
 
+    var columns = PrefService.of(context).get<int>(optionMediaGridColumns) ?? 3;
+
     return RefreshIndicator(
       onRefresh: () async => widget.controller.refresh(),
       child: PagingListener<int, MediaGridItem>(
@@ -43,7 +45,7 @@ class _MediaGridState extends State<MediaGrid> with AutomaticKeepAliveClientMixi
           state: state,
           fetchNextPage: fetchNextPage,
           padding: const EdgeInsets.all(2),
-          crossAxisCount: 3,
+          crossAxisCount: columns,
           mainAxisSpacing: 2,
           crossAxisSpacing: 2,
           addAutomaticKeepAlives: false,

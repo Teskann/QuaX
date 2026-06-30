@@ -206,6 +206,7 @@ Future<void> main() async {
     optionHomeInitialTab: 'feed',
     optionHomeDefaultFeedTab: feedTabs[0].id.name,
     optionMediaSize: 'medium',
+    optionMediaGridColumns: 3,
     optionMediaDefaultMute: true,
     optionMediaDefaultLoop: false,
     optionMediaDefaultAutoPlay: false,

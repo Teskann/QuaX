@@ -45,6 +45,18 @@ class SettingsMediaFragment extends StatelessWidget {
                   child: Text(L10n.of(context).large),
                 ),
               ]),
+          PrefDropdown(
+              fullWidth: false,
+              title: Text(L10n.of(context).media_grid_columns),
+              subtitle: Text(L10n.of(context).media_grid_columns_description),
+              pref: optionMediaGridColumns,
+              items: [
+                for (var count in [1, 2, 3, 4, 5])
+                  DropdownMenuItem(
+                    value: count,
+                    child: Text('$count'),
+                  ),
+              ]),
           PrefSwitch(
             pref: optionMediaDefaultMute,
             title: Text(L10n.of(context).mute_videos),

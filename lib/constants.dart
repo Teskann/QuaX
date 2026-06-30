@@ -13,6 +13,7 @@ const optionHomeInitialTab = 'home.initial_tab';
 const optionHomeDefaultFeedTab = 'home.default_feed_tab';
 
 const optionMediaSize = 'media.size';
+const optionMediaGridColumns = 'media.grid_columns';
 const optionMediaDefaultMute = 'media.mute';
 const optionMediaDefaultLoop = 'media.loop';
 const optionMediaDefaultAutoPlay = 'media.auto_play';
