@@ -212,6 +212,7 @@ Future<void> main() async {
     optionMediaDefaultAutoPlay: false,
     optionMediaBackgroundPlayback: true,
     optionMediaAllowBackgroundPlayOtherApps: false,
+    optionMediaVideoPrefetchSeconds: 0,
     optionNonConfirmationBiasMode: false,
     optionShouldCheckForUpdates: true,
     optionSubscriptionGroupsOrderByAscending: true,

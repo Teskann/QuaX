@@ -19,6 +19,7 @@ const optionMediaDefaultLoop = 'media.loop';
 const optionMediaDefaultAutoPlay = 'media.auto_play';
 const optionMediaBackgroundPlayback = 'media.allow_background_play';
 const optionMediaAllowBackgroundPlayOtherApps = 'media.allow_background_play.other_apps';
+const optionMediaVideoPrefetchSeconds = 'media.video_prefetch_seconds';
 
 const optionDownloadType = 'download.type';
 const optionDownloadPath = 'download.path';

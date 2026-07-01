@@ -166,7 +166,7 @@ class _TweetVideoState extends State<TweetVideo> {
     return q[i.clamp(0, q.length - 1)].url;
   }
 
-  Future<PooledVideo> _createPooled(bool prefLoop, bool startMuted, String mediaSize) async {
+  Future<PooledVideo> _createPooled(bool prefLoop, bool startMuted, String mediaSize, int prefetchSeconds) async {
     var urls = await widget.metadata.streamUrlsBuilder();
     var streamUrl = _defaultQualityUrl(urls, mediaSize);
 
@@ -180,6 +180,10 @@ class _TweetVideoState extends State<TweetVideo> {
       await platform.setProperty('ao', 'aaudio,opensles');
       // System MediaCodec decoders, with libmpv's software decoders as fallback.
       await platform.setProperty('hwdec', 'mediacodec-copy');
+
+      if (prefetchSeconds > 0) {
+        await platform.setProperty('cache-secs', '$prefetchSeconds');
+      }
     }
 
     await player.setPlaylistMode(
@@ -199,8 +203,10 @@ class _TweetVideoState extends State<TweetVideo> {
 
   Future<PooledVideo> _acquire(bool prefLoop) async {
     var startMuted = context.read<VideoContextState>().isMuted;
-    var mediaSize = PrefService.of(context, listen: false).get(optionMediaSize);
-    create() => _createPooled(prefLoop, startMuted, mediaSize);
+    var prefs = PrefService.of(context, listen: false);
+    var mediaSize = prefs.get(optionMediaSize);
+    var prefetchSeconds = prefs.get<int>(optionMediaVideoPrefetchSeconds) ?? 0;
+    create() => _createPooled(prefLoop, startMuted, mediaSize, prefetchSeconds);
 
     final key = _cacheKey;
     final pool = _pool;

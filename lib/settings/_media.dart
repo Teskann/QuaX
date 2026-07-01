@@ -72,6 +72,22 @@ class SettingsMediaFragment extends StatelessWidget {
             title: Text(L10n.of(context).autoplay_videos),
             subtitle: Text(L10n.of(context).autoplay_videos_description),
           ),
+          PrefDropdown(
+              fullWidth: false,
+              title: Text(L10n.of(context).video_prefetch),
+              subtitle: Text(L10n.of(context).video_prefetch_description),
+              pref: optionMediaVideoPrefetchSeconds,
+              items: [
+                DropdownMenuItem(
+                  value: 0,
+                  child: Text(L10n.of(context).video_prefetch_unlimited),
+                ),
+                for (var seconds in [1, 5, 15, 30, 60])
+                  DropdownMenuItem(
+                    value: seconds,
+                    child: Text(L10n.of(context).video_prefetch_seconds(seconds)),
+                  ),
+              ]),
           PrefSwitch(
             pref: optionMediaBackgroundPlayback,
             title: Text(L10n.of(context).allow_background_play),

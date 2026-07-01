@@ -44,6 +44,19 @@ After adding a key to `intl_en.arb`, add a translation for the same key in **all
 ls lib/l10n/*.arb
 ```
 
+### 3.1. Correctly fill a locale
+
+For each translation, make an effort to produce a translation that not only is grammatically correct 
+but also sounds natural in the target language. For every translation, ask yourself "does this sound
+natural in this language ?". Do not try to match exactly the English syntax if it does not sound natural.
+
+Example, from English to French for a setting description:
+
+```txt
+English: How much of a video is loaded ahead of playback. A shorter duration saves data and memory but may cause more pauses to load on unstable connections.
+French: Détermine la durée maximale de vidéo chargée à l'avance. Une durée plus courte économise les données et la mémoire, mais peut provoquer davantage de coupures de chargement sur les connexions instables.
+```
+
 ### 4. Stop and ask when the string is ambiguous
 
 Before translating, **stop and ask the user** if any of the following is unclear:
