@@ -1,3 +1,13 @@
+## QuaX v4.12.0
+
+What's new in QuaX v4.12.0:
+  - 🔗 Added intent filters for fixupx.com URLs (#164) (by @uptivuptiz) <sup>[[view modified code]](https://github.com/teskann/quax/commit/8ccdcd2ee57708318127a9f832fd0f7c0077fa22)</sup>
+  - 📶🎬 You can now save data by customizing the video pre-fetching duration. ➡️ `Settings` > `Medias` > `Video prefetch duration` <sup>[[view modified code]](https://github.com/teskann/quax/commit/88057e0ed7bffc13828e329d21d3be10ccf6cbe9)</sup>
+  - 🎬 Improved video player stability and limited the number of GIFs that can be played simultaneously on a media grid to avoid lags and freezes <sup>[[view modified code]](https://github.com/teskann/quax/commit/5b2328ea83e4b61dc860d335471ad481f1f64f3c)</sup>
+  - 🔖📁 Introducing folders for saved posts ! Long press on the "save" button of a post to select a folder. <sup>[[view modified code]](https://github.com/teskann/quax/commit/6403a1ba157c892bd263e0f22abc610d45a62210)</sup>
+  - ❤️ You can now like posts ! Likes stay on your device. X cannot know what you like. You can find liked posts in the "Likes" folder of the *Saved* tab. (Fixed #143) <sup>[[view modified code]](https://github.com/teskann/quax/commit/8921f4024ff26804cdee9b4e3011a73135e6bb30)</sup>
+  - ⚙️ Split options to select the media quality for images and videos. Now they are independent <sup>[[view modified code]](https://github.com/teskann/quax/commit/4984b4e0a254b6839d0b8b0463faf5e8cccdffa5)</sup>
+
 ## QuaX v4.11.0
 
 What's new in QuaX v4.11.0:

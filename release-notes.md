@@ -1,12 +1,12 @@
-## QuaX v4.11.0
+## QuaX v4.12.0
 
-What's new in QuaX v4.11.0:
-  - 👤 You can now **import more than 70 subscriptions** per account (fixed #153, #109, #37). ⚠️ Be careful that too many subscriptions might lead to rate limitations ! <sup>[[view modified code]](https://github.com/teskann/quax/commit/787906b3a6ea165b64d57c547d507a2e75034824)</sup>
-  - 📜 Infinite scroll is now supported for *Followers* / *Following* lists (fixed #150) <sup>[[view modified code]](https://github.com/teskann/quax/commit/71367f3caf1258aa9a43c08f9544f0713e75d4c1)</sup>
-  - ⚙️ Added an option to select the default tab for the home feed (*Following* / *For You*). Defaults to *Following* <sup>[[view modified code]](https://github.com/teskann/quax/commit/21404ad8e0d53bd7946b4dcd68bfbfea9ade1c5e)</sup>
-  - 📱 Fixed UI components being hidden behind the Android navigation bar (fixed #161) <sup>[[view modified code]](https://github.com/teskann/quax/commit/aa897da608633c1d2237e96407253792e44a4292)</sup>
-  - ⚙️ You can now customize the number of columns in the media grids (for both search & profile medias) ➡️ `Settings` > `Media` > `Media grid columns` (addressed #151) <sup>[[view modified code]](https://github.com/teskann/quax/commit/409dba6a35290f5c3983ed5377f75201ba6e2ea1)</sup>
-  - 🎬 Fixed an issue in GIFs that introduced a small lag before looping (regression from 4.10.0) <sup>[[view modified code]](https://github.com/teskann/quax/commit/abca5d833a5680a5de0fc8a545f52e7a9760d7c5)</sup>
+What's new in QuaX v4.12.0:
+  - 🔗 Added intent filters for fixupx.com URLs (#164) (by @uptivuptiz) <sup>[[view modified code]](https://github.com/teskann/quax/commit/8ccdcd2ee57708318127a9f832fd0f7c0077fa22)</sup>
+  - 📶🎬 You can now save data by customizing the video pre-fetching duration. ➡️ `Settings` > `Medias` > `Video prefetch duration` <sup>[[view modified code]](https://github.com/teskann/quax/commit/88057e0ed7bffc13828e329d21d3be10ccf6cbe9)</sup>
+  - 🎬 Improved video player stability and limited the number of GIFs that can be played simultaneously on a media grid to avoid lags and freezes <sup>[[view modified code]](https://github.com/teskann/quax/commit/5b2328ea83e4b61dc860d335471ad481f1f64f3c)</sup>
+  - 🔖📁 Introducing folders for saved posts ! Long press on the "save" button of a post to select a folder. <sup>[[view modified code]](https://github.com/teskann/quax/commit/6403a1ba157c892bd263e0f22abc610d45a62210)</sup>
+  - ❤️ You can now like posts ! Likes stay on your device. X cannot know what you like. You can find liked posts in the "Likes" folder of the *Saved* tab. (Fixed #143) <sup>[[view modified code]](https://github.com/teskann/quax/commit/8921f4024ff26804cdee9b4e3011a73135e6bb30)</sup>
+  - ⚙️ Split options to select the media quality for images and videos. Now they are independent <sup>[[view modified code]](https://github.com/teskann/quax/commit/4984b4e0a254b6839d0b8b0463faf5e8cccdffa5)</sup>
 
 
 ---
