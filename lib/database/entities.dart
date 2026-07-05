@@ -13,16 +13,60 @@ class SavedTweet with ToMappable {
   final String id;
   final String? user;
   final String? content;
+  final String? folderId;
 
-  SavedTweet({required this.id, required this.user, required this.content});
+  SavedTweet({required this.id, required this.user, required this.content, this.folderId});
 
   factory SavedTweet.fromMap(Map<String, Object?> map) {
-    return SavedTweet(id: map['id'] as String, user: map['user_id'] as String?, content: map['content'] as String?);
+    return SavedTweet(
+        id: map['id'] as String,
+        user: map['user_id'] as String?,
+        content: map['content'] as String?,
+        folderId: map['folder_id'] as String?);
+  }
+
+  // `folderId` is nullable and null is meaningful ("unfiled"), so the sentinel lets
+  // callers distinguish "leave unchanged" from "clear the folder".
+  static const _unset = Object();
+
+  SavedTweet copyWith({String? id, String? user, String? content, Object? folderId = _unset}) {
+    return SavedTweet(
+        id: id ?? this.id,
+        user: user ?? this.user,
+        content: content ?? this.content,
+        folderId: identical(folderId, _unset) ? this.folderId : folderId as String?);
   }
 
   @override
   Map<String, dynamic> toMap() {
-    return {'id': id, 'content': content, 'user_id': user};
+    return {'id': id, 'content': content, 'user_id': user, 'folder_id': folderId};
+  }
+}
+
+class SavedTweetFolder with ToMappable {
+  final String id;
+  final String name;
+  final int position;
+  final DateTime createdAt;
+
+  SavedTweetFolder({required this.id, required this.name, this.position = 0, required this.createdAt});
+
+  factory SavedTweetFolder.fromMap(Map<String, Object?> map) {
+    return SavedTweetFolder(
+        id: map['id'] as String,
+        name: map['name'] as String,
+        position: (map['position'] as int?) ?? 0,
+        createdAt: DateTime.parse(map['created_at'] as String));
+  }
+
+  SavedTweetFolder copyWith({String? name, int? position}) {
+    return SavedTweetFolder(
+        id: id, name: name ?? this.name, position: position ?? this.position, createdAt: createdAt);
+  }
+
+  @override
+  Map<String, dynamic> toMap() {
+    return {'id': id, 'name': name, 'position': position, 'created_at': createdAt.toIso8601String()};
   }
 }
 

@@ -10,6 +10,7 @@ import 'package:quax/constants.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/import_data_model.dart';
 import 'package:quax/profile/profile.dart';
+import 'package:quax/saved/folder_picker.dart';
 import 'package:quax/saved/saved_tweet_model.dart';
 import 'package:quax/status.dart';
 import 'package:quax/tweet/_ExpandableTweetText.dart';
@@ -188,6 +189,17 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     );
   }
 
+  /// Shows a one-time hint teaching the long-press-to-file gesture after the first save.
+  void _maybeShowFolderHint(BuildContext context) {
+    var prefs = PrefService.of(context, listen: false);
+    if (prefs.get<bool>(optionSavedFolderHintShown) ?? false) {
+      return;
+    }
+
+    prefs.set(optionSavedFolderHintShown, true);
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).long_press_folder_hint)));
+  }
+
   TextButton _createFooterTextButton(IconData icon, String label, [Color? color, Function()? onPressed]) {
     return TextButton.icon(
       icon: Icon(icon, size: 20, color: color),
@@ -249,19 +261,29 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
               ),
               Consumer<SavedTweetModel>(builder: (context, model, child) {
                 var isSaved = model.isSaved(tweet.idStr!);
-                if (isSaved) {
-                  return _createFooterIconButton(
-                      Icons.bookmark, Theme.of(context).colorScheme.primary, 1, () async {
-                    await model.deleteSavedTweet(tweet.idStr!);
-                    setState(() {});
-                  });
-                } else {
-                  return _createFooterIconButton(Icons.bookmark_border, buttonsColor(context), 0,
-                      () async {
-                    await model.saveTweet(tweet.idStr!, tweet.user?.idStr, tweet.toJson());
-                    setState(() {});
-                  });
-                }
+                var button = isSaved
+                    ? _createFooterIconButton(Icons.bookmark, Theme.of(context).colorScheme.primary, 1, () async {
+                        await model.deleteSavedTweet(tweet.idStr!);
+                        setState(() {});
+                      })
+                    : _createFooterIconButton(Icons.bookmark_border, buttonsColor(context), 0, () async {
+                        await model.saveTweet(tweet.idStr!, tweet.user?.idStr, tweet.toJson());
+                        setState(() {});
+                        if (context.mounted) {
+                          _maybeShowFolderHint(context);
+                        }
+                      });
+
+                return GestureDetector(
+                  onLongPress: () async {
+                    await showSaveToFolderSheet(context,
+                        tweetId: tweet.idStr!, userId: tweet.user?.idStr, content: tweet.toJson());
+                    if (mounted) {
+                      setState(() {});
+                    }
+                  },
+                  child: button,
+                );
               }),
               _createFooterIconButton(
                 Icons.share,

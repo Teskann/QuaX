@@ -13,6 +13,7 @@ const String tableFeedGroupChunk = 'feed_group_chunk';
 const String tableFeedGroupCursor = 'feed_group_cursor';
 
 const String tableSavedTweet = 'saved_tweet';
+const String tableSavedTweetFolder = 'saved_tweet_folder';
 const String tableSearchSubscription = 'search_subscription';
 const String tableSearchSubscriptionGroupMember = 'search_subscription_group_member';
 const String tableSubscription = 'subscription';
@@ -240,11 +241,20 @@ class Repository {
         // Rate-limit (429) state is tracked in memory per endpoint, not persisted.
         SqlMigration('ALTER TABLE $tableAccounts ADD COLUMN last_not_found_at TEXT DEFAULT NULL'),
         SqlMigration('ALTER TABLE $tableAccounts ADD COLUMN consecutive_not_found INTEGER DEFAULT 0'),
+      ],
+      25: [
+        // Folders for saved posts: a folder table plus a nullable folder_id on saved tweets.
+        // A saved post belongs to at most one folder (NULL means "unfiled").
+        SqlMigration(
+            'CREATE TABLE IF NOT EXISTS $tableSavedTweetFolder (id VARCHAR PRIMARY KEY, name VARCHAR NOT NULL, position INTEGER DEFAULT 0, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)',
+            reverseSql: 'DROP TABLE $tableSavedTweetFolder'),
+        SqlMigration('ALTER TABLE $tableSavedTweet ADD COLUMN folder_id VARCHAR DEFAULT NULL',
+            reverseSql: 'ALTER TABLE $tableSavedTweet DROP COLUMN folder_id'),
       ]
     });
     await openDatabase(
       databaseName,
-      version: 24,
+      version: 25,
       onUpgrade: myMigrationPlan.call,
       onCreate: myMigrationPlan.call,
       onDowngrade: myMigrationPlan.call,

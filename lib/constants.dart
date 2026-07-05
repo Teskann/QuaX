@@ -64,6 +64,11 @@ const themeColors = {
 
 const optionTweetsHideSensitive = 'tweets.hide_sensitive';
 
+const optionSavedShowAllTab = 'saved.show_all_tab';
+const optionSavedShowUnfiledTab = 'saved.show_unfiled_tab';
+const optionSavedTabOrder = 'saved.tab_order';
+const optionSavedFolderHintShown = 'saved.folder_hint_shown';
+
 const optionUserTrendsLocations = 'trends.locations';
 
 const optionNonConfirmationBiasMode = 'other.improve_non_confirmation_bias';
@@ -89,6 +94,7 @@ const routeHome = '/';
 const routeGroup = '/group';
 const routeProfile = '/profile';
 const routeSearch = '/search';
+const routeSavedFolders = '/saved/folders';
 const routeSettings = '/settings';
 const routeSettingsExport = '/settings/export';
 const routeSettingsHome = '/settings/home';

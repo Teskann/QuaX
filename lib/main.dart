@@ -24,6 +24,8 @@ import 'package:quax/home/home_model.dart';
 import 'package:quax/home/home_screen.dart';
 import 'package:quax/import_data_model.dart';
 import 'package:quax/profile/profile.dart';
+import 'package:quax/saved/saved_folders_screen.dart';
+import 'package:quax/saved/saved_tweet_folder_model.dart';
 import 'package:quax/saved/saved_tweet_model.dart';
 import 'package:quax/search/search.dart';
 import 'package:quax/search/search_model.dart';
@@ -228,6 +230,10 @@ Future<void> main() async {
     optionThemeTrueBlackTweetCards: true,
     optionShowNavigationLabels: false,
     optionTweetsHideSensitive: true,
+    optionSavedShowAllTab: true,
+    optionSavedShowUnfiledTab: true,
+    optionSavedTabOrder: '',
+    optionSavedFolderHintShown: false,
     optionUseAbsoluteTimestamp: false,
     optionDefaultProfileTab: profileTabs[0].id.name,
     optionUserTrendsLocations: jsonEncode({
@@ -279,6 +285,7 @@ Future<void> main() async {
             ChangeNotifierProvider(create: (context) => importDataModel),
             Provider(create: (context) => subscriptionsModel),
             Provider(create: (context) => SavedTweetModel()),
+            Provider(create: (context) => SavedTweetFolderModel()),
             Provider(create: (context) => SearchUsersModel()),
             Provider(create: (context) => trendLocationModel),
             Provider(create: (context) => TrendLocationsModel()),
@@ -489,6 +496,7 @@ class _FritterAppState extends State<FritterApp> {
                           routeGroup: (context) => const GroupScreen(),
                           routeProfile: (context) => const ProfileScreen(),
                           routeSearch: (context) => const ResultsScreen(),
+                          routeSavedFolders: (context) => const SavedFoldersScreen(),
                           routeSettings: (context) => const SettingsScreen(),
                           routeSettingsExport: (context) => const SettingsExportScreen(),
                           routeSettingsHome: (context) => const SettingsHomeFragment(),
