@@ -6,6 +6,7 @@ import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:quax/client/accounts.dart';
 import 'package:quax/database/entities.dart';
 import 'package:quax/group/group_model.dart';
+import 'package:quax/saved/liked_tweet_model.dart';
 import 'package:quax/saved/saved_tweet_folder_model.dart';
 import 'package:quax/saved/saved_tweet_model.dart';
 import 'package:quax/settings/_data.dart';
@@ -29,6 +30,7 @@ class _SettingsExportScreenState extends State<SettingsExportScreen> {
   bool _exportSubscriptionGroupMembers = false;
   bool _exportTweets = false;
   bool _exportSavedFolders = false;
+  bool _exportLikedTweets = false;
   bool _exportAccounts = false;
 
   void toggleExportSubscriptionGroupMembersIfRequired() {
@@ -79,6 +81,12 @@ class _SettingsExportScreenState extends State<SettingsExportScreen> {
     });
   }
 
+  void toggleExportLikedTweets() {
+    setState(() {
+      _exportLikedTweets = !_exportLikedTweets;
+    });
+  }
+
   void toggleExportAccounts() {
     setState(() {
       _exportAccounts = !_exportAccounts;
@@ -92,6 +100,7 @@ class _SettingsExportScreenState extends State<SettingsExportScreen> {
         _exportSubscriptionGroupMembers ||
         _exportTweets ||
         _exportSavedFolders ||
+        _exportLikedTweets ||
         _exportAccounts);
   }
 
@@ -108,6 +117,7 @@ class _SettingsExportScreenState extends State<SettingsExportScreen> {
               onPressed: () async {
                 var groupModel = context.read<GroupsModel>();
                 var savedTweetFolderModel = context.read<SavedTweetFolderModel>();
+                var likedTweetModel = context.read<LikedTweetModel>();
                 await groupModel.reloadGroups();
 
                 var subscriptionsModel = context.read<SubscriptionsModel>();
@@ -117,6 +127,8 @@ class _SettingsExportScreenState extends State<SettingsExportScreen> {
                 await savedTweetModel.listSavedTweets();
 
                 await savedTweetFolderModel.listFolders();
+
+                await likedTweetModel.listLikedTweets();
 
                 List<Account>? accounts = _exportAccounts ? await getAccounts() : null;
 
@@ -136,6 +148,8 @@ class _SettingsExportScreenState extends State<SettingsExportScreen> {
 
                 var savedTweetFolders = _exportSavedFolders ? savedTweetFolderModel.state : null;
 
+                var likedTweets = _exportLikedTweets ? likedTweetModel.state : null;
+
                 var data = SettingsData(
                     settings: settings,
                     searchSubscriptions: subscriptions?.whereType<SearchSubscription>().toList(),
@@ -144,6 +158,7 @@ class _SettingsExportScreenState extends State<SettingsExportScreen> {
                     subscriptionGroupMembers: subscriptionGroupMembers,
                     tweets: tweets,
                     savedTweetFolders: savedTweetFolders,
+                    likedTweets: likedTweets,
                     accounts: accounts);
 
                 var exportData = jsonEncode(data.toJson());
@@ -199,6 +214,10 @@ class _SettingsExportScreenState extends State<SettingsExportScreen> {
                   value: _exportSavedFolders,
                   title: Text(L10n.of(context).export_saved_folders),
                   onChanged: (v) => toggleExportSavedFolders()),
+              CheckboxListTile(
+                  value: _exportLikedTweets,
+                  title: Text(L10n.of(context).export_liked_posts),
+                  onChanged: (v) => toggleExportLikedTweets()),
               CheckboxListTile(
                   value: _exportAccounts,
                   title: Text(L10n.of(context).export_accounts),

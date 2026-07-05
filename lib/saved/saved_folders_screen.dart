@@ -62,6 +62,9 @@ class _SavedFoldersScreenState extends State<SavedFoldersScreen> {
     if (token == savedTabUnfiled) {
       return _builtInRow(token, L10n.of(context).unfiled, optionSavedShowUnfiledTab, index);
     }
+    if (token == savedTabFavorites) {
+      return _builtInRow(token, L10n.of(context).favorites, optionSavedShowFavoritesTab, index);
+    }
 
     var folder = folders.firstWhere((f) => f.id == token);
     return ListTile(

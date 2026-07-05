@@ -9,6 +9,7 @@ import 'package:quax/database/repository.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/group/group_model.dart';
 import 'package:quax/import_data_model.dart';
+import 'package:quax/saved/liked_tweet_model.dart';
 import 'package:quax/saved/saved_tweet_folder_model.dart';
 import 'package:quax/subscriptions/users_model.dart';
 import 'package:logging/logging.dart';
@@ -23,6 +24,7 @@ class SettingsData {
   final List<SubscriptionGroupMember>? subscriptionGroupMembers;
   final List<SavedTweet>? tweets;
   final List<SavedTweetFolder>? savedTweetFolders;
+  final List<LikedTweet>? likedTweets;
   final List<Account>? accounts;
 
   SettingsData(
@@ -33,6 +35,7 @@ class SettingsData {
       required this.subscriptionGroupMembers,
       required this.tweets,
       required this.savedTweetFolders,
+      required this.likedTweets,
       required this.accounts});
 
   factory SettingsData.fromJson(Map<String, dynamic> json) {
@@ -54,6 +57,9 @@ class SettingsData {
         savedTweetFolders: json['savedTweetFolders'] != null
             ? List.from(json['savedTweetFolders']).map((e) => SavedTweetFolder.fromMap(e)).toList()
             : null,
+        likedTweets: json['likedTweets'] != null
+            ? List.from(json['likedTweets']).map((e) => LikedTweet.fromMap(e)).toList()
+            : null,
         accounts: json['accounts'] != null ? List.from(json['accounts']).map((e) => Account.fromMap(e)).toList() : null);
   }
 
@@ -66,6 +72,7 @@ class SettingsData {
       'subscriptionGroupMembers': subscriptionGroupMembers?.map((e) => e.toMap()).toList(),
       'tweets': tweets?.map((e) => e.toMap()).toList(),
       'savedTweetFolders': savedTweetFolders?.map((e) => e.toMap()).toList(),
+      'likedTweets': likedTweets?.map((e) => e.toMap()).toList(),
       'accounts': accounts?.map((e) => e.toMap()).toList()
     };
   }
@@ -117,6 +124,11 @@ Future<void> _importFromFile(BuildContext context, File file) async {
     dataToImport[tableSavedTweetFolder] = savedTweetFolders;
   }
 
+  var likedTweets = data.likedTweets;
+  if (likedTweets != null) {
+    dataToImport[tableLikedTweet] = likedTweets;
+  }
+
   var accounts = data.accounts;
   if(accounts != null) {
     dataToImport[tableAccounts] = accounts;
@@ -126,6 +138,7 @@ Future<void> _importFromFile(BuildContext context, File file) async {
   await groupModel.reloadGroups();
   context.mounted ? await context.read<SubscriptionsModel>().reloadSubscriptions() : null;
   context.mounted ? await context.read<SavedTweetFolderModel>().listFolders() : null;
+  context.mounted ? await context.read<LikedTweetModel>().listLikedTweets() : null;
 
   if (context.mounted) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(

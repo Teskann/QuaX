@@ -43,6 +43,24 @@ class SavedTweet with ToMappable {
   }
 }
 
+class LikedTweet with ToMappable {
+  final String id;
+  final String? user;
+  final String? content;
+
+  LikedTweet({required this.id, required this.user, required this.content});
+
+  factory LikedTweet.fromMap(Map<String, Object?> map) {
+    return LikedTweet(
+        id: map['id'] as String, user: map['user_id'] as String?, content: map['content'] as String?);
+  }
+
+  @override
+  Map<String, dynamic> toMap() {
+    return {'id': id, 'content': content, 'user_id': user};
+  }
+}
+
 class SavedTweetFolder with ToMappable {
   final String id;
   final String name;

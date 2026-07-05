@@ -24,6 +24,7 @@ import 'package:quax/home/home_model.dart';
 import 'package:quax/home/home_screen.dart';
 import 'package:quax/import_data_model.dart';
 import 'package:quax/profile/profile.dart';
+import 'package:quax/saved/liked_tweet_model.dart';
 import 'package:quax/saved/saved_folders_screen.dart';
 import 'package:quax/saved/saved_tweet_folder_model.dart';
 import 'package:quax/saved/saved_tweet_model.dart';
@@ -232,8 +233,10 @@ Future<void> main() async {
     optionTweetsHideSensitive: true,
     optionSavedShowAllTab: true,
     optionSavedShowUnfiledTab: true,
+    optionSavedShowFavoritesTab: true,
     optionSavedTabOrder: '',
     optionSavedFolderHintShown: false,
+    optionLikedFirstToastShown: false,
     optionUseAbsoluteTimestamp: false,
     optionDefaultProfileTab: profileTabs[0].id.name,
     optionUserTrendsLocations: jsonEncode({
@@ -286,6 +289,7 @@ Future<void> main() async {
             Provider(create: (context) => subscriptionsModel),
             Provider(create: (context) => SavedTweetModel()),
             Provider(create: (context) => SavedTweetFolderModel()),
+            Provider(create: (context) => LikedTweetModel()),
             Provider(create: (context) => SearchUsersModel()),
             Provider(create: (context) => trendLocationModel),
             Provider(create: (context) => TrendLocationsModel()),

@@ -11,6 +11,8 @@ import 'package:quax/generated/l10n.dart';
 import 'package:quax/import_data_model.dart';
 import 'package:quax/profile/profile.dart';
 import 'package:quax/saved/folder_picker.dart';
+import 'package:quax/saved/liked_tweet_model.dart';
+import 'package:quax/tweet/_like_button.dart';
 import 'package:quax/saved/saved_tweet_model.dart';
 import 'package:quax/status.dart';
 import 'package:quax/tweet/_ExpandableTweetText.dart';
@@ -27,6 +29,12 @@ import 'package:logging/logging.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+
+/// Footer buttons should feel flat: no ripple and no pressed/hover background.
+const footerButtonStyle = ButtonStyle(
+  overlayColor: WidgetStatePropertyAll(Colors.transparent),
+  splashFactory: NoSplash.splashFactory,
+);
 
 class TweetTile extends StatefulWidget {
   final bool clickable;
@@ -186,6 +194,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
       color: color ?? Theme.of(context).colorScheme.primary,
       iconSize: 20,
       onPressed: onPressed,
+      style: footerButtonStyle,
     );
   }
 
@@ -200,11 +209,26 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).long_press_folder_hint)));
   }
 
+  /// Shows a one-time notice, on the very first like, that likes never leave the device.
+  void _maybeShowLikeToast(BuildContext context) {
+    var prefs = PrefService.of(context, listen: false);
+    if (prefs.get<bool>(optionLikedFirstToastShown) ?? false) {
+      return;
+    }
+
+    prefs.set(optionLikedFirstToastShown, true);
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(L10n.of(context).likes_stay_on_device_notice),
+      duration: const Duration(seconds: 6),
+    ));
+  }
+
   TextButton _createFooterTextButton(IconData icon, String label, [Color? color, Function()? onPressed]) {
     return TextButton.icon(
       icon: Icon(icon, size: 20, color: color),
       onPressed: onPressed,
       label: Text(label, style: TextStyle(color: color, fontSize: 14)),
+      style: footerButtonStyle,
     );
   }
 
@@ -248,9 +272,30 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
                     Icons.repeat,
                     numberFormat.format((tweet.retweetCount! + tweet.quoteCount!)),
                     buttonsColor(context)),
-              if (tweet.favoriteCount != null)
-                _createFooterTextButton(Icons.favorite_border,
-                    numberFormat.format(tweet.favoriteCount), buttonsColor(context)),
+              Consumer<LikedTweetModel>(builder: (context, likedModel, child) {
+                var isLiked = likedModel.isLiked(tweet.idStr!);
+                var label = tweet.favoriteCount != null ? numberFormat.format(tweet.favoriteCount) : '';
+
+                return LikeButton(
+                  isLiked: isLiked,
+                  label: label,
+                  color: isLiked ? Theme.of(context).colorScheme.primary : buttonsColor(context),
+                  onPressed: () async {
+                    if (isLiked) {
+                      await likedModel.unlikeTweet(tweet.idStr!);
+                    } else {
+                      await likedModel.likeTweet(tweet.idStr!, tweet.user?.idStr, tweet.toJson());
+                    }
+                    if (!mounted) {
+                      return;
+                    }
+                    setState(() {});
+                    if (!isLiked) {
+                      _maybeShowLikeToast(this.context);
+                    }
+                  },
+                );
+              }),
               if (tweet.viewCount != null)
                 _createFooterTextButton(
                     Icons.bar_chart,

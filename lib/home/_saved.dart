@@ -11,6 +11,7 @@ import 'package:quax/database/entities.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/profile/profile.dart';
 import 'package:quax/saved/folder_picker.dart';
+import 'package:quax/saved/liked_tweet_model.dart';
 import 'package:quax/saved/saved_tab_order.dart';
 import 'package:quax/saved/saved_tweet_folder_model.dart';
 import 'package:quax/saved/saved_tweet_model.dart';
@@ -42,11 +43,17 @@ class _SavedScreenState extends State<SavedScreen> with AutomaticKeepAliveClient
 
     context.read<SavedTweetModel>().listSavedTweets();
     context.read<SavedTweetFolderModel>().listFolders();
+    context.read<LikedTweetModel>().listLikedTweets();
   }
 
-  // If the selected folder no longer exists (deleted elsewhere), fall back to "All".
-  void _reconcileFilter(List<SavedTweetFolder> folders) {
-    if (_filter == savedTabAll || _filter == savedTabUnfiled || folders.any((f) => f.id == _filter)) {
+  // If the selected tab is no longer reachable (folder deleted elsewhere, or its
+  // built-in tab was hidden in settings), fall back to "All".
+  void _reconcileFilter(List<SavedTweetFolder> folders, {required bool showUnfiled, required bool showFavorites}) {
+    var reachable = _filter == savedTabAll ||
+        (_filter == savedTabUnfiled && showUnfiled && folders.isNotEmpty) ||
+        (_filter == savedTabFavorites && showFavorites) ||
+        folders.any((f) => f.id == _filter);
+    if (reachable) {
       return;
     }
 
@@ -60,7 +67,11 @@ class _SavedScreenState extends State<SavedScreen> with AutomaticKeepAliveClient
   Future<void> _refresh() async {
     // Silent reload: keeps the current list on screen while the RefreshIndicator
     // spinner runs, and swaps in the fresh data only once it is ready.
-    await context.read<SavedTweetModel>().refreshSavedTweets();
+    if (_filter == savedTabFavorites) {
+      await context.read<LikedTweetModel>().refreshLikedTweets();
+    } else {
+      await context.read<SavedTweetModel>().refreshSavedTweets();
+    }
   }
 
   Widget _buildEmptyState() {
@@ -70,25 +81,24 @@ class _SavedScreenState extends State<SavedScreen> with AutomaticKeepAliveClient
         child: ConstrainedBox(
           constraints: BoxConstraints(minHeight: constraints.maxHeight),
           child: Center(
-            child: Text(_filter == savedTabAll
-                ? L10n.of(context).you_have_not_saved_any_tweets_yet
-                : L10n.of(context).folder_is_empty),
+            child: Text(switch (_filter) {
+              savedTabAll => L10n.of(context).you_have_not_saved_any_tweets_yet,
+              savedTabFavorites => L10n.of(context).no_liked_posts_yet,
+              _ => L10n.of(context).folder_is_empty,
+            }),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildList(List<SavedTweet> tweets) {
+  Widget _buildList({required int itemCount, required SavedTweetTile Function(int) tileAt}) {
     return ListView.builder(
       controller: widget.scrollController,
       physics: const AlwaysScrollableScrollPhysics(),
       padding: const EdgeInsets.only(top: 4),
-      itemCount: tweets.length,
-      itemBuilder: (context, index) {
-        var item = tweets[index];
-        return SavedTweetTile(id: item.id, content: item.content);
-      },
+      itemCount: itemCount,
+      itemBuilder: (context, index) => tileAt(index),
     );
   }
 
@@ -107,6 +117,7 @@ class _SavedScreenState extends State<SavedScreen> with AutomaticKeepAliveClient
     var prefs = PrefService.of(context, listen: false);
     var showAll = prefs.get<bool>(optionSavedShowAllTab) ?? true;
     var showUnfiled = prefs.get<bool>(optionSavedShowUnfiledTab) ?? true;
+    var showFavorites = prefs.get<bool>(optionSavedShowFavoritesTab) ?? true;
     var storedOrder = prefs.get<String>(optionSavedTabOrder);
 
     return ScopedBuilder<SavedTweetFolderModel, List<SavedTweetFolder>>(
@@ -114,9 +125,11 @@ class _SavedScreenState extends State<SavedScreen> with AutomaticKeepAliveClient
       onState: (context, folders) {
         // Reconcile before the empty check, otherwise deleting the last folder would
         // leave `_filter` stranded on a now-deleted id (the strip returns early).
-        _reconcileFilter(folders);
+        _reconcileFilter(folders, showUnfiled: showUnfiled, showFavorites: showFavorites);
 
-        if (folders.isEmpty) {
+        // With no folders, only show the strip when the Favorites tab is available to
+        // switch to — otherwise there is nothing to switch between (just "All").
+        if (folders.isEmpty && !showFavorites) {
           return const SizedBox.shrink();
         }
 
@@ -125,7 +138,12 @@ class _SavedScreenState extends State<SavedScreen> with AutomaticKeepAliveClient
           if (token == savedTabAll) {
             if (showAll) chips.add(_folderChip(label: L10n.of(context).all, value: savedTabAll));
           } else if (token == savedTabUnfiled) {
-            if (showUnfiled) chips.add(_folderChip(label: L10n.of(context).unfiled, value: savedTabUnfiled));
+            // "Unfiled" only makes sense with folders — otherwise it duplicates "All".
+            if (showUnfiled && folders.isNotEmpty) {
+              chips.add(_folderChip(label: L10n.of(context).unfiled, value: savedTabUnfiled));
+            }
+          } else if (token == savedTabFavorites) {
+            if (showFavorites) chips.add(_folderChip(label: L10n.of(context).favorites, value: savedTabFavorites));
           } else {
             var matches = folders.where((f) => f.id == token);
             if (matches.isNotEmpty) chips.add(_folderChip(label: matches.first.name, value: token));
@@ -233,6 +251,54 @@ class _SavedScreenState extends State<SavedScreen> with AutomaticKeepAliveClient
     );
   }
 
+  Widget _buildSavedBody(SavedTweetModel model) {
+    return ScopedBuilder<SavedTweetModel, List<SavedTweet>>.transition(
+      store: model,
+      onError: (_, e) => FullPageErrorWidget(
+        error: e,
+        stackTrace: null,
+        prefix: L10n.current.unable_to_load_the_tweets,
+        onRetry: () => model.listSavedTweets(),
+      ),
+      onLoading: (_) => const Center(child: CircularProgressIndicator()),
+      onState: (_, data) {
+        var filtered = _applyFilter(data);
+
+        return RefreshIndicator(
+          onRefresh: _refresh,
+          child: filtered.isEmpty
+              ? _buildEmptyState()
+              : _buildList(
+                  itemCount: filtered.length,
+                  tileAt: (i) => SavedTweetTile(id: filtered[i].id, content: filtered[i].content)),
+        );
+      },
+    );
+  }
+
+  Widget _buildFavoritesBody() {
+    var model = context.read<LikedTweetModel>();
+
+    return ScopedBuilder<LikedTweetModel, List<LikedTweet>>.transition(
+      store: model,
+      onError: (_, e) => FullPageErrorWidget(
+        error: e,
+        stackTrace: null,
+        prefix: L10n.current.unable_to_load_the_tweets,
+        onRetry: () => model.listLikedTweets(),
+      ),
+      onLoading: (_) => const Center(child: CircularProgressIndicator()),
+      onState: (_, data) => RefreshIndicator(
+        onRefresh: _refresh,
+        child: data.isEmpty
+            ? _buildEmptyState()
+            : _buildList(
+                itemCount: data.length,
+                tileAt: (i) => SavedTweetTile(id: data[i].id, content: data[i].content)),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -278,24 +344,7 @@ class _SavedScreenState extends State<SavedScreen> with AutomaticKeepAliveClient
           children: [
             _buildFolderStrip(),
             Expanded(
-              child: ScopedBuilder<SavedTweetModel, List<SavedTweet>>.transition(
-                store: model,
-                onError: (_, e) => FullPageErrorWidget(
-                  error: e,
-                  stackTrace: null,
-                  prefix: L10n.current.unable_to_load_the_tweets,
-                  onRetry: () => model.listSavedTweets(),
-                ),
-                onLoading: (_) => const Center(child: CircularProgressIndicator()),
-                onState: (_, data) {
-                  var filtered = _applyFilter(data);
-
-                  return RefreshIndicator(
-                    onRefresh: _refresh,
-                    child: filtered.isEmpty ? _buildEmptyState() : _buildList(filtered),
-                  );
-                },
-              ),
+              child: _filter == savedTabFavorites ? _buildFavoritesBody() : _buildSavedBody(model),
             ),
           ],
         ),

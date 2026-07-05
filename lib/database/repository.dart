@@ -14,6 +14,7 @@ const String tableFeedGroupCursor = 'feed_group_cursor';
 
 const String tableSavedTweet = 'saved_tweet';
 const String tableSavedTweetFolder = 'saved_tweet_folder';
+const String tableLikedTweet = 'liked_tweet';
 const String tableSearchSubscription = 'search_subscription';
 const String tableSearchSubscriptionGroupMember = 'search_subscription_group_member';
 const String tableSubscription = 'subscription';
@@ -250,11 +251,17 @@ class Repository {
             reverseSql: 'DROP TABLE $tableSavedTweetFolder'),
         SqlMigration('ALTER TABLE $tableSavedTweet ADD COLUMN folder_id VARCHAR DEFAULT NULL',
             reverseSql: 'ALTER TABLE $tableSavedTweet DROP COLUMN folder_id'),
+      ],
+      26: [
+        // Liked posts: a local-only table mirroring saved_tweet. A "like" never leaves the device.
+        SqlMigration(
+            'CREATE TABLE IF NOT EXISTS $tableLikedTweet (id VARCHAR PRIMARY KEY, content TEXT NOT NULL, user_id VARCHAR DEFAULT NULL, liked_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)',
+            reverseSql: 'DROP TABLE $tableLikedTweet'),
       ]
     });
     await openDatabase(
       databaseName,
-      version: 25,
+      version: 26,
       onUpgrade: myMigrationPlan.call,
       onCreate: myMigrationPlan.call,
       onDowngrade: myMigrationPlan.call,

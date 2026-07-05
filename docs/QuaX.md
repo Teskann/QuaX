@@ -11,6 +11,7 @@
 		* [Since v4.6.0](#since-v460)
 		* [Before v4.6.0](#before-v460)
 * [Subscriptions in QuaX](#subscriptions-in-quax)
+* [Likes & Saved Posts in QuaX](#likes--saved-posts-in-quax)
 * [Privacy & Security](#privacy--security)
 	* [Why isn't QuaX available on F-Droid?](#why-isnt-quax-available-on-f-droid)
 [](/mdtoc)
@@ -124,6 +125,27 @@ filter results on people you follow.
 
 Though X cannot know exactly who you follow in QuaX, it could deduce it from the
 requests that are made everytime you refresh your feed.
+
+## Likes & Saved Posts in QuaX
+
+Both **saved posts** and **likes** in QuaX are entirely local. They live only in
+the app's on-device database and are never sent to X.
+
+> [!IMPORTANT]
+> **Liking a post in QuaX is not the same as liking it on X.** Tapping the heart
+> does not send anything to X: it does not register a like on your X account, the
+> author receives no notification, and X has no way of knowing you liked it. It is
+> a private, on-device favourite.
+
+- Liked posts appear under the **Likes** filter of the *Saved* tab.
+- **Saved posts** work the same way and can be organised into **folders** you
+  create locally. The *Saved* tab lets you filter by folder, and you can reorder,
+  rename, hide or delete these tabs as you like.
+
+Because this data lives on the device, it stays private — but it is also tied to
+your QuaX installation. You can carry it between devices with the backup
+export/import feature, which covers your saved posts, folders and likes along
+with the rest of your settings.
 
 ## Privacy & Security
 
