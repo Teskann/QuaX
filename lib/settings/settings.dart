@@ -79,7 +79,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             title: Text(L10n.of(context).media),
             leading: Icon(Icons.perm_media),
             subtitle: Text(
-              "${L10n.of(context).media_size}, ${L10n.of(context).mute_videos}, ${L10n.of(context).allow_background_play}, ${L10n.of(context).download_handling}",
+              "${L10n.of(context).image_quality}, ${L10n.of(context).video_quality}, ${L10n.of(context).mute_videos}, ${L10n.of(context).download_handling}",
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(fontStyle: FontStyle.italic),

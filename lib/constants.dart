@@ -12,7 +12,10 @@ const optionHomePages = 'home.pages';
 const optionHomeInitialTab = 'home.initial_tab';
 const optionHomeDefaultFeedTab = 'home.default_feed_tab';
 
-const optionMediaSize = 'media.size';
+const optionImageQuality = 'media.size';
+const optionMediaVideoQuality = 'media.video_quality';
+const optionMediaDisableAutoload = 'media.disable_autoload';
+const optionMediaQualitySplitMigrated = 'media.quality_split_migrated';
 const optionMediaGridColumns = 'media.grid_columns';
 const optionMediaDefaultMute = 'media.mute';
 const optionMediaDefaultLoop = 'media.loop';

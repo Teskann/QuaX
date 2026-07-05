@@ -153,11 +153,11 @@ class _TweetVideoState extends State<TweetVideo> {
     }
   }
 
-  // Default variant from [optionMediaSize]; qualities are sorted highest-first.
-  static String _defaultQualityUrl(TweetVideoUrls urls, String mediaSize) {
+  // Default variant from [optionMediaVideoQuality]; qualities are sorted highest-first.
+  static String _defaultQualityUrl(TweetVideoUrls urls, String quality) {
     final q = urls.qualities;
     if (q.isEmpty) return urls.streamUrl;
-    final i = switch (mediaSize) {
+    final i = switch (quality) {
       'thumb' => q.length - 1,
       'small' => (q.length * 3) ~/ 4,
       'medium' => q.length ~/ 2,
@@ -166,9 +166,9 @@ class _TweetVideoState extends State<TweetVideo> {
     return q[i.clamp(0, q.length - 1)].url;
   }
 
-  Future<PooledVideo> _createPooled(bool prefLoop, bool startMuted, String mediaSize, int prefetchSeconds) async {
+  Future<PooledVideo> _createPooled(bool prefLoop, bool startMuted, String quality, int prefetchSeconds) async {
     var urls = await widget.metadata.streamUrlsBuilder();
-    var streamUrl = _defaultQualityUrl(urls, mediaSize);
+    var streamUrl = _defaultQualityUrl(urls, quality);
 
     var player = mk.Player();
     var videoController = VideoController(player);
@@ -204,9 +204,9 @@ class _TweetVideoState extends State<TweetVideo> {
   Future<PooledVideo> _acquire(bool prefLoop) async {
     var startMuted = context.read<VideoContextState>().isMuted;
     var prefs = PrefService.of(context, listen: false);
-    var mediaSize = prefs.get(optionMediaSize);
+    var quality = prefs.get(optionMediaVideoQuality);
     var prefetchSeconds = prefs.get<int>(optionMediaVideoPrefetchSeconds) ?? 0;
-    create() => _createPooled(prefLoop, startMuted, mediaSize, prefetchSeconds);
+    create() => _createPooled(prefLoop, startMuted, quality, prefetchSeconds);
 
     final key = _cacheKey;
     final pool = _pool;

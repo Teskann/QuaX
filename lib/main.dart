@@ -181,6 +181,24 @@ void setTimeagoLocales() {
   timeago.setLocaleMessages('zh', timeago.ZhMessages());
 }
 
+// One-time split of the former single "media size" pref into separate image and
+// video quality settings, plus a data-saver toggle for its old "disabled" value.
+Future<void> _migrateMediaQualityPrefs(BasePrefService prefs) async {
+  if (prefs.get<bool>(optionMediaQualitySplitMigrated) ?? false) {
+    return;
+  }
+
+  final previous = prefs.get<String>(optionImageQuality);
+  final disabled = previous == 'disabled';
+  // The old "disabled" value carried no real quality, so fall back to Maximum.
+  final quality = disabled ? 'large' : (previous ?? 'medium');
+
+  await prefs.set(optionMediaDisableAutoload, disabled);
+  await prefs.set(optionImageQuality, quality);
+  await prefs.set(optionMediaVideoQuality, quality);
+  await prefs.set(optionMediaQualitySplitMigrated, true);
+}
+
 Future<void> main() async {
   Logger.root.onRecord.listen((event) async {
     log(event.message, error: event.error, stackTrace: event.stackTrace);
@@ -208,7 +226,10 @@ Future<void> main() async {
     optionLocale: optionLocaleDefault,
     optionHomeInitialTab: 'feed',
     optionHomeDefaultFeedTab: feedTabs[0].id.name,
-    optionMediaSize: 'medium',
+    optionImageQuality: 'medium',
+    optionMediaVideoQuality: 'medium',
+    optionMediaDisableAutoload: false,
+    optionMediaQualitySplitMigrated: false,
     optionMediaGridColumns: 3,
     optionMediaDefaultMute: true,
     optionMediaDefaultLoop: false,
@@ -246,6 +267,8 @@ Future<void> main() async {
       ]
     }),
   });
+
+  await _migrateMediaQualityPrefs(prefService);
 
   try {
     // Run the migrations early, so models work. We also do this later on so we can display errors to the user

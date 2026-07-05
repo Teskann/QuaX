@@ -46,8 +46,8 @@ class _TweetMediaItemState extends State<_TweetMediaItem> {
   void initState() {
     super.initState();
 
-    var mediaSize = PrefService.of(context, listen: false).get(optionMediaSize);
-    if (mediaSize == 'disabled') {
+    var disableAutoload = PrefService.of(context, listen: false).get<bool>(optionMediaDisableAutoload) ?? false;
+    if (disableAutoload) {
       // If the image is cached already, show the media
       cachedImageExists(widget.media.mediaUrlHttps!).then((value) {
         if (mounted) {
@@ -79,10 +79,7 @@ class _TweetMediaItemState extends State<_TweetMediaItem> {
   @override
   Widget build(BuildContext context) {
     var prefs = PrefService.of(context, listen: false);
-    var size = prefs.get(optionMediaSize);
-    if (size == 'disabled') {
-      size = 'medium';
-    }
+    var size = prefs.get(optionImageQuality);
 
     Widget media;
 
@@ -277,7 +274,7 @@ class _TweetMediaViewState extends State<TweetMediaView> {
     String? size;
     var prefs = PrefService.of(context, listen: false);
     if (widget.tweetMedia) {
-      var size = prefs.get(optionMediaSize);
+      var size = prefs.get(optionImageQuality);
       if (size == 'disabled') {
         size = 'medium';
       }

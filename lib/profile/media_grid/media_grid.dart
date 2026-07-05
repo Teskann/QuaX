@@ -98,8 +98,8 @@ class _MediaGridTileState extends State<_MediaGridTile> {
   void initState() {
     super.initState();
 
-    var mediaSize = PrefService.of(context, listen: false).get(optionMediaSize);
-    if (mediaSize == 'disabled') {
+    var disableAutoload = PrefService.of(context, listen: false).get<bool>(optionMediaDisableAutoload) ?? false;
+    if (disableAutoload) {
       cachedImageExists(widget.item.thumbnailUrl).then((value) {
         if (mounted) {
           setState(() {

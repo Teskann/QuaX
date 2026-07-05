@@ -11,40 +11,35 @@ class SettingsMediaFragment extends StatelessWidget {
   Widget build(BuildContext context) {
     var prefs = PrefService.of(context);
 
+    List<DropdownMenuItem<String>> qualityItems() => [
+          DropdownMenuItem(value: 'thumb', child: Text(L10n.of(context).quality_low)),
+          DropdownMenuItem(value: 'small', child: Text(L10n.of(context).quality_medium)),
+          DropdownMenuItem(value: 'medium', child: Text(L10n.of(context).quality_high)),
+          DropdownMenuItem(value: 'large', child: Text(L10n.of(context).quality_maximum)),
+        ];
+
     return Scaffold(
       appBar: AppBar(title: Text(L10n.current.media)),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8),
         child: ListView(children: [
+          PrefSwitch(
+            pref: optionMediaDisableAutoload,
+            title: Text(L10n.of(context).load_media_manually),
+            subtitle: Text(L10n.of(context).load_media_manually_description),
+          ),
           PrefDropdown(
               fullWidth: false,
-              title: Text(L10n.of(context).media_size),
-              subtitle: Text(
-                L10n.of(context).save_bandwidth_using_smaller_images,
-              ),
-              pref: optionMediaSize,
-              items: [
-                DropdownMenuItem(
-                  value: 'disabled',
-                  child: Text(L10n.of(context).disabled),
-                ),
-                DropdownMenuItem(
-                  value: 'thumb',
-                  child: Text(L10n.of(context).thumbnail),
-                ),
-                DropdownMenuItem(
-                  value: 'small',
-                  child: Text(L10n.of(context).small),
-                ),
-                DropdownMenuItem(
-                  value: 'medium',
-                  child: Text(L10n.of(context).medium),
-                ),
-                DropdownMenuItem(
-                  value: 'large',
-                  child: Text(L10n.of(context).large),
-                ),
-              ]),
+              title: Text(L10n.of(context).image_quality),
+              subtitle: Text(L10n.of(context).save_bandwidth_using_smaller_images),
+              pref: optionImageQuality,
+              items: qualityItems()),
+          PrefDropdown(
+              fullWidth: false,
+              title: Text(L10n.of(context).video_quality),
+              subtitle: Text(L10n.of(context).video_quality_description),
+              pref: optionMediaVideoQuality,
+              items: qualityItems()),
           PrefDropdown(
               fullWidth: false,
               title: Text(L10n.of(context).media_grid_columns),

@@ -260,7 +260,7 @@ class TweetCard extends StatelessWidget {
     }
 
     var imageKey = '';
-    var imageSize = PrefService.of(context, listen: false).get(optionMediaSize);
+    var imageSize = PrefService.of(context, listen: false).get(optionImageQuality);
     if (imageSize == 'thumb') {
       imageKey = '_small';
     } else if (imageSize == 'medium') {
