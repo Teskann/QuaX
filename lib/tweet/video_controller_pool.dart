@@ -21,6 +21,8 @@ class PooledVideo {
   /// The MP4 variant currently open in [player]; updated on a quality switch.
   String currentStreamUrl;
 
+  bool _disposed = false;
+
   PooledVideo({
     required this.player,
     required this.videoController,
@@ -30,7 +32,23 @@ class PooledVideo {
     required this.pausableByPolicy,
   });
 
-  Future<void> dispose() => player.dispose();
+  Future<void> dispose() async {
+    // Two disposal paths can race on the same pair — an explicit restart and the
+    // widget's own teardown — and disposing a [Player] twice trips libmpv's
+    // "[Player] has been disposed" assertion. Guard so only the first wins.
+    if (_disposed) return;
+    _disposed = true;
+    // Disposing a still-active [Player] races an in-flight libmpv wakeup callback
+    // against the FFI callback being freed, aborting the process with
+    // "Callback invoked after it has been deleted". Unloading the media first —
+    // and giving the resulting mpv event burst a moment to drain — means the
+    // native callback is freed while mpv is idle, closing the race window.
+    try {
+      await player.stop();
+      await Future<void>.delayed(const Duration(milliseconds: 250));
+    } catch (_) {}
+    await player.dispose();
+  }
 }
 
 class _Entry {

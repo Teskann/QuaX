@@ -513,6 +513,12 @@ class _TweetVideoState extends State<TweetVideo> {
       if (_ownsControllers) {
         _pooled?.dispose();
       } else if (key != null && _holdsPoolRef) {
+        // A fast fling can dispose this widget before the debounced pause timer
+        // fires; releasing the pool ref alone leaves the player running off-screen.
+        // Pause it now, unless the same video is still on screen in another widget.
+        if (!widget.alwaysPlay && !(_pool?.anyVisible(key) ?? false)) {
+          _pooled?.player.pause();
+        }
         _pool?.release(key);
         _holdsPoolRef = false;
       }
