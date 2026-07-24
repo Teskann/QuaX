@@ -112,8 +112,6 @@ class _SubscriptionGroupEditDialogState extends State<SubscriptionGroupEditDialo
   late String icon;
   Color? color;
   Set<String> members = <String>{};
-  double breakpointScreenWidth1 = 200;
-  double breakpointScreenWidth2 = 400;
 
   @override
   void initState() {
@@ -171,68 +169,28 @@ class _SubscriptionGroupEditDialogState extends State<SubscriptionGroupEditDialo
       return const Center(child: CircularProgressIndicator());
     }
 
-    List<Widget> buttonsLst1 = [
-      TextButton(
-        onPressed: () {
-          setState(() {
-            if (members.isEmpty) {
-              members = subscriptionsModel.state.map((e) => e.id).toSet();
-            } else {
-              members.clear();
-            }
-          });
-        },
-        child: Text(L10n.of(context).toggle_all),
-      ),
-      TextButton(
-        onPressed: id == null ? null : () => openDeleteSubscriptionGroupDialog(id!, name!),
-        child: Text(L10n.of(context).delete),
-      ),
-    ];
-    List<Widget> buttonsLst2 = [
-      TextButton(
-        onPressed: () => Navigator.pop(context),
-        child: Text(L10n.of(context).cancel),
-      ),
-      Builder(builder: (context) {
-        onPressed() async {
-          if (_formKey.currentState!.validate()) {
-            await context.read<GroupsModel>().saveGroup(id, name!, icon, color, members);
-
-            Navigator.pop(context);
-          }
-        }
-
-        return TextButton(
-          onPressed: onPressed,
-          child: Text(L10n.of(context).ok),
-        );
-      }),
-    ];
-    double screenWidth = MediaQuery.of(context).size.width;
-
     return AlertDialog(
       actions: [
-        SizedBox(
-            width: screenWidth,
-            child: screenWidth >= breakpointScreenWidth2
-                ? Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    ...buttonsLst1,
-                    ...buttonsLst2,
-                  ])
-                : screenWidth >= breakpointScreenWidth1
-                    ? Column(mainAxisSize: MainAxisSize.min, children: [
-                        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                          ...buttonsLst1,
-                        ]),
-                        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                          ...buttonsLst2,
-                        ]),
-                      ])
-                    : Column(mainAxisSize: MainAxisSize.min, children: [
-                        ...buttonsLst1,
-                        ...buttonsLst2,
-                      ])),
+        TextButton(
+          onPressed: id == null ? null : () => openDeleteSubscriptionGroupDialog(id!, name!),
+          child: Text(L10n.of(context).delete),
+        ),
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text(L10n.of(context).cancel),
+        ),
+        TextButton(
+          onPressed: () async {
+            if (_formKey.currentState!.validate()) {
+              await context.read<GroupsModel>().saveGroup(id, name!, icon, color, members);
+
+              if (context.mounted) {
+                Navigator.pop(context);
+              }
+            }
+          },
+          child: Text(L10n.of(context).ok),
+        ),
       ],
       content: Form(
         key: _formKey,
@@ -322,6 +280,27 @@ class _SubscriptionGroupEditDialogState extends State<SubscriptionGroupEditDialo
                     },
                   )
                 ],
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton.icon(
+                  style: TextButton.styleFrom(
+                    foregroundColor: Theme.of(context).textTheme.bodySmall?.color,
+                    textStyle: Theme.of(context).textTheme.bodySmall,
+                    visualDensity: VisualDensity.compact,
+                  ),
+                  icon: const Icon(Icons.checklist, size: 18),
+                  label: Text(L10n.of(context).toggle_all),
+                  onPressed: () {
+                    setState(() {
+                      if (members.isEmpty) {
+                        members = subscriptionsModel.state.map((e) => e.id).toSet();
+                      } else {
+                        members.clear();
+                      }
+                    });
+                  },
+                ),
               ),
               Expanded(
                 child: ListView.builder(
