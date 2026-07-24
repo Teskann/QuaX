@@ -1,3 +1,4 @@
+import os
 import sys
 from pathlib import Path
 
@@ -59,12 +60,26 @@ def update_changelog(commits: list[Commit]) -> None:
     prepend_to_changelog_file(changelog_content)
 
 
+def get_custom_message_block() -> str:
+    # GitHub's workflow_dispatch string input is single-line, so allow the
+    # literal escapes \n and \t to be typed and expand them to real characters.
+    custom_message = (
+        os.getenv("CUSTOM_RELEASE_MESSAGE", "")
+        .replace("\\n", "\n")
+        .replace("\\t", "\t")
+        .strip()
+    )
+    if not custom_message:
+        return ""
+    return f"{custom_message}\n\n---\n\n"
+
+
 def generate_release_notes_content(commits: list[Commit]) -> str:
     release_notes_content = f"""{generate_changelog_content(commits)}
 
 ---
 
-First download ? Click the button below to install it with Obtainium ! 👇
+{get_custom_message_block()}First download ? Click the button below to install it with Obtainium ! 👇
 
 [![Get it on Obtainium](https://github.com/teskann/quax/blob/master/assets/readme/get-it-on-obtainium.png)](https://apps.obtainium.imranr.dev/redirect.html?r=obtainium://add/https://github.com/Teskann/QuaX)
 
@@ -77,7 +92,7 @@ APK Certificate fingerprints:
 
 Missed an update ? See [full changelog](https://github.com/teskann/quax/blob/master/changelog.md) for more details.
     
-🗨️ Got questions about QuaX ? Ask anything in the [Q&A](https://github.com/Teskann/QuaX/discussions/categories/q-a) section !
+[![Join us on Discord](https://github.com/teskann/quax/blob/master/assets/discord.png)](https://discord.gg/Z6gkBM2a)
 
 👉 Read the [wiki](https://github.com/teskann/quax/blob/master/docs/QuaX.md) to learn more about the app and how it works.
 """

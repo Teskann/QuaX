@@ -25,6 +25,6 @@ SHA256: 5E:39:1A:AA:89:9A:0B:21:A5:29:6A:4C:26:DB:50:12:7E:B8:40:63:6A:2A:35:18:
 
 Missed an update ? See [full changelog](https://github.com/teskann/quax/blob/master/changelog.md) for more details.
     
-🗨️ Got questions about QuaX ? Ask anything in the [Q&A](https://github.com/Teskann/QuaX/discussions/categories/q-a) section !
+[![Join us on Discord](https://github.com/teskann/quax/blob/master/assets/discord.png)](https://discord.gg/Z6gkBM2a)
 
 👉 Read the [wiki](https://github.com/teskann/quax/blob/master/docs/QuaX.md) to learn more about the app and how it works.

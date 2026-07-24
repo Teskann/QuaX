@@ -19,6 +19,8 @@ to [Squawker](https://github.com/j-fbriere/squawker).
 [![Get it on GitHub](assets/readme/get-it-on-github.png)](https://github.com/teskann/quax/releases)
 [![Get it on Obtainium](assets/readme/get-it-on-obtainium.png)](https://apps.obtainium.imranr.dev/redirect.html?r=obtainium://add/https://github.com/Teskann/QuaX)
 
+[![Join us on Discord](assets/discord.png)](https://discord.gg/Z6gkBM2a)
+
 To verify the downloaded APK, use [these signing certificate fingerprints](./certificate-fingerprints.txt).
 
 [Why isn't QuaX available on F-Droid?](./docs/QuaX.md#why-isnt-quax-available-on-f-droid)

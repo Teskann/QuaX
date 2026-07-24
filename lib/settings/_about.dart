@@ -96,6 +96,12 @@ class SettingsAboutFragment extends StatelessWidget {
         onTap: () => openUri(context, 'https://github.com/teskann/quax/issues'),
       ),
       PrefLabel(
+        leading: const Icon(Icons.forum),
+        title: Text(L10n.of(context).join_our_discord),
+        subtitle: Text(L10n.of(context).chat_with_the_community),
+        onTap: () => openUri(context, 'https://discord.gg/Z6gkBM2a'),
+      ),
+      PrefLabel(
         leading: const Icon(Icons.copyright),
         title: Text(L10n.of(context).licenses),
         subtitle: Text(L10n.of(context).all_the_great_software_used_by_fritter),
