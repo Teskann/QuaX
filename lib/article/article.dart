@@ -99,7 +99,7 @@ class ArticleWidget extends StatelessWidget {
     if (!url.startsWith('https://') && !url.startsWith('http://')) {
       url = 'https://$url';
     }
-    return _tapSpan(context, text: text, style: style, onTap: () => openUri(url));
+    return _tapSpan(context, text: text, style: style, onTap: () => openUri(context, url));
   }
 
   TextSpan _mentionSpan(

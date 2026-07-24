@@ -1,4 +1,7 @@
+import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
+import 'package:pref/pref.dart';
+import 'package:quax/constants.dart';
 import 'package:quax/profile/profile.dart' show profileTabs;
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -17,8 +20,12 @@ Future<void> openInDefaultBrowser(String url) async {
   await intent.launch();
 }
 
-Future<void> openUri(String uri) async {
-  await launchUrlString(uri, mode: LaunchMode.externalApplication);
+Future<void> openUri(BuildContext context, String uri) async {
+  final embedded = PrefService.of(context).get(optionOpenLinksInEmbeddedBrowser) == true;
+  await launchUrlString(
+    uri,
+    mode: embedded ? LaunchMode.inAppBrowserView : LaunchMode.externalApplication,
+  );
 }
 
 sealed class UriParseResult {}

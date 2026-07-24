@@ -94,6 +94,11 @@ class SettingsGeneralFragment extends StatelessWidget {
             pref: optionConfirmClose,
           ),
           PrefSwitch(
+            title: Text(L10n.of(context).option_open_links_in_embedded_browser_label),
+            subtitle: Text(L10n.of(context).option_open_links_in_embedded_browser_description),
+            pref: optionOpenLinksInEmbeddedBrowser,
+          ),
+          PrefSwitch(
             title: Text(L10n.of(context).disable_screenshots),
             subtitle: Text(L10n.of(context).disable_screenshots_hint),
             pref: optionDisableScreenshots,

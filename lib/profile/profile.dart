@@ -435,7 +435,7 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
                                                                                   color: Theme.of(context)
                                                                                       .colorScheme
                                                                                       .primary)),
-                                                                          onTap: () => openUri(expandedUrl),
+                                                                          onTap: () => openUri(context, expandedUrl),
                                                                         );
                                                                       }),
                                                                       const SizedBox(

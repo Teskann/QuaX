@@ -79,7 +79,7 @@ Future checkForUpdates(context) async {
                 TextButton(
                   child: Text(L10n.of(context).view_on_github),
                   onPressed: () async {
-                    await openUri(map['html_url']);
+                    await openUri(context, map['html_url']);
                     Navigator.of(context).pop();
                   },
                 ),
@@ -239,6 +239,7 @@ Future<void> main() async {
     optionMediaVideoPrefetchSeconds: 0,
     optionNonConfirmationBiasMode: false,
     optionShouldCheckForUpdates: true,
+    optionOpenLinksInEmbeddedBrowser: false,
     optionSubscriptionGroupsOrderByAscending: true,
     optionDisableWarningsForUnrelatedPostsInFeed: false,
     alwaysShowFullTweetContents: false,
@@ -596,7 +597,7 @@ class _DefaultPageState extends State<DefaultPage> {
               actions: [
                 TextButton(
                   child: Text(L10n.of(context).report),
-                  onPressed:  () => openUri('https://github.com/teskann/quax/issues'),
+                  onPressed:  () => openUri(context, 'https://github.com/teskann/quax/issues'),
                 ),
                 TextButton(
                   child: Text(L10n.of(context).open_in_browser),

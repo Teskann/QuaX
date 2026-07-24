@@ -190,7 +190,7 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
               TextButton(
                 child: Text(L10n.of(context).more_info),
                 onPressed: () async {
-                  await openUri("https://github.com/Teskann/QuaX/issues/26");
+                  await openUri(context, "https://github.com/Teskann/QuaX/issues/26");
                   if (context.mounted) {
                     Navigator.of(context).pop();
                   }

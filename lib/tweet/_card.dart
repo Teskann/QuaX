@@ -37,7 +37,7 @@ class TweetCard extends StatelessWidget {
   GestureDetector _createCard(String? url, Widget child, BuildContext context) {
     return GestureDetector(
       child: _createBaseCard(child, context),
-      onTap: () => url == null ? null : openUri(url),
+      onTap: () => url == null ? null : openUri(context, url),
     );
   }
 

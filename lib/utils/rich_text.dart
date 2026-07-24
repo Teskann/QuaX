@@ -178,7 +178,7 @@ List<Entity> _parseEntities(BuildContext context, dynamic newEntities) {
               uri.substring(0, 27) == 'https://x.com/i/web/status/')) {
         return;
       }
-      await openUri(uri);
+      await openUri(context, uri);
     }));
   }
 
