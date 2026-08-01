@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:quax/constants.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/utils/urls.dart';
 import 'package:pref/pref.dart';
@@ -99,7 +100,7 @@ class SettingsAboutFragment extends StatelessWidget {
         leading: const Icon(Icons.forum),
         title: Text(L10n.of(context).join_our_discord),
         subtitle: Text(L10n.of(context).chat_with_the_community),
-        onTap: () => openUri(context, 'https://discord.gg/Z6gkBM2a'),
+        onTap: () => openUri(context, discordInviteUrl),
       ),
       PrefLabel(
         leading: const Icon(Icons.copyright),

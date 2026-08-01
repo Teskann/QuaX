@@ -37,6 +37,7 @@ const optionShouldCheckForUpdates = 'should_check_for_updates';
 const optionConfirmClose = 'confirm_close';
 const optionOpenLinksInEmbeddedBrowser = 'open_links_in_embedded_browser';
 const optionShareBaseUrl = 'share_base_url';
+const optionDiscordPopupDismissed = 'discord_popup.dismissed';
 
 const optionDisableWarningsForUnrelatedPostsInFeed = 'disable_warnings_for_unrelated_posts_in_feed';
 
@@ -105,3 +106,5 @@ const routeSettings = '/settings';
 const routeSettingsExport = '/settings/export';
 const routeSettingsHome = '/settings/home';
 const routeStatus = '/status';
+
+const discordInviteUrl = 'https://discord.gg/K7UHuywPWD';

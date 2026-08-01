@@ -37,6 +37,7 @@ import 'package:quax/status.dart';
 import 'package:quax/subscriptions/users_model.dart';
 import 'package:quax/trends/trends_model.dart';
 import 'package:quax/tweet/_video.dart';
+import 'package:quax/ui/discord_popup.dart';
 import 'package:quax/ui/errors.dart';
 import 'package:logging/logging.dart';
 import 'package:pref/pref.dart';
@@ -237,6 +238,7 @@ Future<void> main() async {
     optionNonConfirmationBiasMode: false,
     optionShouldCheckForUpdates: true,
     optionOpenLinksInEmbeddedBrowser: false,
+    optionDiscordPopupDismissed: false,
     optionSubscriptionGroupsOrderByAscending: true,
     optionDisableWarningsForUnrelatedPostsInFeed: false,
     alwaysShowFullTweetContents: false,
@@ -343,6 +345,7 @@ class _FritterAppState extends State<FritterApp> {
   bool _checkUpdates = false;
   bool _updateDialogShown = false;
   bool _accountDialogShown = false;
+  bool _discordDialogShown = false;
   bool _isSecure = false;
   double _textScaleFactor = 1.0;
   Locale? _locale;
@@ -540,6 +543,13 @@ class _FritterAppState extends State<FritterApp> {
                             WidgetsBinding.instance.addPostFrameCallback((_) {
                               _accountDialogShown = true;
                               checkForAccounts(_navigatorKey.currentContext!);
+                            });
+                          }
+
+                          if (!_discordDialogShown) {
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              _discordDialogShown = true;
+                              checkForDiscord(_navigatorKey.currentContext!);
                             });
                           }
 

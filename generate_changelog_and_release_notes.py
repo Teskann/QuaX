@@ -92,7 +92,7 @@ APK Certificate fingerprints:
 
 Missed an update ? See [full changelog](https://github.com/teskann/quax/blob/master/changelog.md) for more details.
     
-[![Join us on Discord](https://github.com/teskann/quax/blob/master/assets/discord.png)](https://discord.gg/Z6gkBM2a)
+[![Join us on Discord](https://github.com/teskann/quax/blob/master/assets/discord.png)](https://discord.gg/K7UHuywPWD)
 
 👉 Read the [wiki](https://github.com/teskann/quax/blob/master/docs/QuaX.md) to learn more about the app and how it works.
 """
