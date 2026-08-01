@@ -3,7 +3,6 @@ import 'package:dart_twitter_api/twitter_api.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_triple/flutter_triple.dart';
-import 'package:logging/logging.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/database/entities.dart';
 import 'package:quax/generated/l10n.dart';
@@ -289,7 +288,6 @@ class UserWithExtra extends User {
   }
 
   factory UserWithExtra.fromJson(Map<String, dynamic> json) {
-    Logger("").info(json);
     var userWithExtra = UserWithExtra()
       ..idStr = json['id_str'] as String?
       ..name = json['name'] as String?

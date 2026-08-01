@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_portal/flutter_portal.dart';
-import 'package:media_kit/media_kit.dart';
 import 'package:quax/client/accounts.dart';
 import 'package:quax/client/login_webview.dart';
 
@@ -211,8 +210,6 @@ Future<void> main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
 
-  MediaKit.ensureInitialized();
-
   setTimeagoLocales();
 
   final prefService = await PrefServiceShared.init(prefix: 'pref_', defaults: {
@@ -307,7 +304,7 @@ Future<void> main() async {
           providers: [
             Provider(create: (context) => groupsModel),
             Provider(create: (context) => feedSessionCache),
-            Provider(create: (context) => VideoControllerPool(maxSize: 5)),
+            Provider(create: (context) => VideoControllerPool(maxSize: 2)),
             Provider(create: (context) => homeModel),
             ChangeNotifierProvider(create: (context) => importDataModel),
             Provider(create: (context) => subscriptionsModel),

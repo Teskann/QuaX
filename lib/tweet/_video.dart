@@ -1,38 +1,27 @@
 import 'dart:async';
-import 'dart:io';
 
+import 'package:better_player_plus/better_player_plus.dart';
 import 'package:dart_twitter_api/twitter_api.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:media_kit/media_kit.dart' as mk;
-import 'package:media_kit_video/media_kit_video.dart';
 import 'package:pref/pref.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/tweet/_video_controls.dart';
-import 'package:quax/tweet/video_audio_focus.dart';
 import 'package:quax/tweet/video_controller_pool.dart';
 import 'package:quax/tweet/video_quality.dart';
 import 'package:quax/utils/iterables.dart';
 import 'package:provider/provider.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
-// Picks orientation from the video's shape so a portrait video isn't forced
-// into landscape like media_kit's `defaultEnterNativeFullscreen` does.
-Future<void> _enterFullscreen(double aspectRatio) async {
-  if (!Platform.isAndroid && !Platform.isIOS) {
-    return defaultEnterNativeFullscreen();
-  }
-  try {
-    final portrait = aspectRatio < 1.0;
-    await Future.wait([
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky, overlays: []),
-      SystemChrome.setPreferredOrientations(portrait
-          ? [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]
-          : [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]),
-    ]);
-  } catch (_) {}
-}
+/// Disk cache so replaying a finished video, scrolling back to it, or a GIF
+/// looping reads from disk instead of re-downloading — the player keeps no
+/// back-buffer, so without this a seek to 0 re-fetches from the network.
+const _videoCacheConfiguration = BetterPlayerCacheConfiguration(
+  useCache: true,
+  maxCacheSize: 256 * 1024 * 1024,
+  maxCacheFileSize: 50 * 1024 * 1024,
+);
 
 class TweetVideoUrls {
   final String streamUrl;
@@ -50,9 +39,10 @@ class TweetVideoMetadata {
   TweetVideoMetadata(this.aspectRatio, this.imageUrl, this.streamUrlsBuilder);
 
   static Future<TweetVideoUrls> Function() streamUrlsBuilderFromVariants(List<Variant> variants) {
-    // Use progressive MP4, not X's HLS master playlist (variants[0]): libmpv
-    // plays the .m3u8 poorly (delayed start, bad seek, phantom subtitle tracks).
-    // Fall back to variants[0] only when no MP4 exists (e.g. live broadcasts).
+    // Use the progressive MP4 variants (highest bitrate first), not X's HLS
+    // master playlist (variants[0]): the MP4 list is what powers the in-player
+    // quality picker. Fall back to variants[0] only when no MP4 exists (e.g.
+    // live broadcasts), which the player handles over HLS natively.
     var mp4Variants = variants
         .where((e) => e.bitrate != null)
         .where((e) => e.url != null)
@@ -117,7 +107,7 @@ class TweetVideo extends StatefulWidget {
   State<StatefulWidget> createState() => _TweetVideoState();
 }
 
-class _TweetVideoState extends State<TweetVideo> {
+class _TweetVideoState extends State<TweetVideo> with WidgetsBindingObserver {
   VideoControllerPool? _pool;
   PooledVideo? _pooled;
   Future<PooledVideo>? _acquireFuture;
@@ -126,30 +116,34 @@ class _TweetVideoState extends State<TweetVideo> {
 
   bool _autoPlay = false;
   bool _userRequestedPlay = false;
-  bool _isFullscreen = false;
   bool _playbackError = false;
   bool _firstFrameRendered = false;
   bool _posterGone = false;
-  bool _subtitlesEnabled = false;
-  bool _prefLoop = false;
-  bool _mixWithOthers = false;
-  int _autoRetries = 0;
+  bool _prefBackground = true;
   final Key _visibilityKey = UniqueKey();
   double _lastVisibleFraction = 0.0;
   Timer? _pauseTimer;
-  StreamSubscription<double>? _muteSub;
-  StreamSubscription<String>? _errorSub;
-  StreamSubscription<bool>? _playingSub;
+  void Function(BetterPlayerEvent)? _onEvent;
 
   String? get _cacheKey => widget.tweetId == null ? null : '${widget.tweetId}:${widget.mediaIndex}';
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     try {
       _pool = context.read<VideoControllerPool>();
     } on ProviderNotFoundException {
       _pool = null;
+    }
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // With background playback off, pause when the app leaves the foreground.
+    if (_prefBackground) return;
+    if (state == AppLifecycleState.paused || state == AppLifecycleState.hidden) {
+      if (_pooled?.isPlaying ?? false) _pooled?.controller.pause();
     }
   }
 
@@ -166,47 +160,97 @@ class _TweetVideoState extends State<TweetVideo> {
     return q[i.clamp(0, q.length - 1)].url;
   }
 
-  Future<PooledVideo> _createPooled(bool prefLoop, bool startMuted, String quality, int prefetchSeconds) async {
-    var urls = await widget.metadata.streamUrlsBuilder();
-    var streamUrl = _defaultQualityUrl(urls, quality);
-
-    var player = mk.Player();
-    var videoController = VideoController(player);
-
-    var platform = player.platform;
-    if (platform is mk.NativePlayer) {
-      // AAudio sounds better than the default opensles and avoids the
-      // audiotrack JNI crash; falls back to opensles below Android 8.
-      await platform.setProperty('ao', 'aaudio,opensles');
-      // System MediaCodec decoders, with libmpv's software decoders as fallback.
-      await platform.setProperty('hwdec', 'mediacodec-copy');
-
-      if (prefetchSeconds > 0) {
-        await platform.setProperty('cache-secs', '$prefetchSeconds');
-      }
+  // Map the prefetch pref to the player's buffering. These are targets, not a
+  // hard cap (it loads in byte-sized chunks and honours an internal byte budget
+  // too), so the buffered amount is only approximate — min == max keeps it close.
+  static BetterPlayerBufferingConfiguration _bufferingFor(int prefetchSeconds) {
+    if (prefetchSeconds <= 0) {
+      // "Unlimited": buffer the whole clip. Large but bounded — enough to cover
+      // any realistic clip without leaving the buffer effectively unbounded.
+      return const BetterPlayerBufferingConfiguration(
+        minBufferMs: 50000,
+        maxBufferMs: 600000,
+        bufferForPlaybackMs: 2500,
+        bufferForPlaybackAfterRebufferMs: 5000,
+      );
     }
+    final ms = prefetchSeconds * 1000;
+    return BetterPlayerBufferingConfiguration(
+      minBufferMs: ms,
+      maxBufferMs: ms,
+      bufferForPlaybackMs: ms < 2500 ? ms : 2500,
+      bufferForPlaybackAfterRebufferMs: ms < 5000 ? ms : 5000,
+    );
+  }
 
-    await player.setPlaylistMode(
-        (widget.loop || prefLoop) ? mk.PlaylistMode.single : mk.PlaylistMode.none);
-    await player.setVolume(startMuted ? 0.0 : 100.0);
-    await player.open(mk.Media(streamUrl), play: widget.alwaysPlay || _userRequestedPlay);
+  Future<PooledVideo> _createPooled(bool prefLoop, bool startMuted, String quality,
+      int prefetchSeconds, bool mixWithOthers) async {
+    final urls = await widget.metadata.streamUrlsBuilder();
+    final streamUrl = _defaultQualityUrl(urls, quality);
+    final username = widget.username;
+    final qualities = urls.qualities;
+    final downloadUrl = urls.downloadUrl;
+
+    final controlsConfiguration = widget.disableControls
+        ? const BetterPlayerControlsConfiguration(showControls: false)
+        : BetterPlayerControlsConfiguration(
+            playerTheme: BetterPlayerTheme.custom,
+            customControlsBuilder: (controller, onControlsVisibilityChanged, config) => QuaxControls(
+              controller: controller,
+              username: username,
+              qualities: qualities,
+              downloadUrl: downloadUrl,
+            ),
+          );
+
+    final configuration = BetterPlayerConfiguration(
+      aspectRatio: widget.metadata.aspectRatio,
+      fit: BoxFit.contain,
+      autoPlay: widget.alwaysPlay || _userRequestedPlay,
+      looping: widget.loop || prefLoop,
+      // The pool owns the controller's lifetime, not the widget.
+      autoDispose: false,
+      // The app owns lifecycle: its own visibility detector drives play/pause and
+      // the single-audio policy. Letting the library also handle lifecycle makes
+      // the two fight (auto-resume that bypasses pauseOthers). Background-off is
+      // enforced by pausing on app background in didChangeAppLifecycleState.
+      handleLifecycle: false,
+      // GIFs may let the screen sleep; a real video keeps it awake while playing.
+      allowedScreenSleep: widget.disableControls,
+      autoDetectFullscreenDeviceOrientation: true,
+      autoDetectFullscreenAspectRatio: true,
+      controlsConfiguration: controlsConfiguration,
+      // The player's own error UI is suppressed; errors surface via events and
+      // the widget's own retry affordance.
+      errorBuilder: (context, error) => const SizedBox.shrink(),
+    );
+
+    final controller = BetterPlayerController(configuration);
+    final dataSource = BetterPlayerDataSource.network(
+      streamUrl,
+      cacheConfiguration: _videoCacheConfiguration,
+      bufferingConfiguration: _bufferingFor(prefetchSeconds),
+    );
+    await controller.setupDataSource(dataSource);
+    // Silent looping GIFs must never grab audio focus and pause other apps.
+    controller.setMixWithOthers(widget.disableControls || mixWithOthers);
+    await controller.setVolume(startMuted ? 0.0 : 1.0);
 
     return PooledVideo(
-      player: player,
-      videoController: videoController,
-      downloadUrl: urls.downloadUrl,
-      qualities: urls.qualities,
-      currentStreamUrl: streamUrl,
+      controller: controller,
+      downloadUrl: downloadUrl,
+      qualities: qualities,
       pausableByPolicy: !widget.disableControls,
     );
   }
 
   Future<PooledVideo> _acquire(bool prefLoop) async {
-    var startMuted = context.read<VideoContextState>().isMuted;
-    var prefs = PrefService.of(context, listen: false);
-    var quality = prefs.get(optionMediaVideoQuality);
-    var prefetchSeconds = prefs.get<int>(optionMediaVideoPrefetchSeconds) ?? 0;
-    create() => _createPooled(prefLoop, startMuted, quality, prefetchSeconds);
+    final prefs = PrefService.of(context, listen: false);
+    final startMuted = context.read<VideoContextState>().isMuted;
+    final quality = prefs.get(optionMediaVideoQuality);
+    final prefetchSeconds = prefs.get<int>(optionMediaVideoPrefetchSeconds) ?? 0;
+    final mixWithOthers = prefs.get<bool>(optionMediaAllowBackgroundPlayOtherApps) ?? false;
+    create() => _createPooled(prefLoop, startMuted, quality, prefetchSeconds, mixWithOthers);
 
     final key = _cacheKey;
     final pool = _pool;
@@ -233,51 +277,57 @@ class _TweetVideoState extends State<TweetVideo> {
   }
 
   void _attachListeners(PooledVideo pooled) {
-    var model = context.read<VideoContextState>();
-    pooled.player.setVolume(model.isMuted ? 0.0 : 100.0);
-    _muteSub = pooled.player.stream.volume.listen((volume) {
-      if (!mounted) return;
-      model.setIsMuted(volume);
-    });
-    _playingSub = pooled.player.stream.playing.listen((playing) {
-      if (!mounted) return;
-      if (widget.disableControls) return;
-      if (playing) {
-        _autoRetries = 0;
-        if (_playbackError) setState(() => _playbackError = false);
-        _pool?.pauseOthers(pooled);
-        VideoAudioFocus.instance.onStartedPlaying(pooled.player, mixWithOthers: _mixWithOthers);
-      } else {
-        VideoAudioFocus.instance.onStoppedPlaying(pooled.player);
-      }
-    });
-    _errorSub = pooled.player.stream.error.listen((_) {
-      if (!mounted) return;
-      // GIFs must keep looping — retry silently instead of showing an error.
-      if (widget.disableControls) {
-        if (_autoRetries < 3) {
-          _autoRetries++;
-          _restartVideo(_prefLoop);
-        }
-        return;
-      }
-      // Ignore transient mid-playback errors libmpv recovers from; only a video
-      // that never rendered a frame is a real failure.
-      if (!_firstFrameRendered) setState(() => _playbackError = true);
-    });
+    final controller = pooled.controller;
+    final model = context.read<VideoContextState>();
+    controller.setVolume(model.isMuted ? 0.0 : 1.0);
 
-    pooled.videoController.waitUntilFirstFrameRendered.then((_) {
-      if (mounted) setState(() => _firstFrameRendered = true);
-    });
+    // A reused pooled controller is already initialized — skip the poster fade.
+    if (controller.isVideoInitialized() ?? false) {
+      _firstFrameRendered = true;
+      _posterGone = true;
+    }
+
+    _onEvent = (event) {
+      if (!mounted) return;
+      switch (event.betterPlayerEventType) {
+        case BetterPlayerEventType.initialized:
+          if (!_firstFrameRendered) setState(() => _firstFrameRendered = true);
+          break;
+        case BetterPlayerEventType.play:
+          if (_playbackError) setState(() => _playbackError = false);
+          _pool?.pauseOthers(pooled);
+          if (!widget.disableControls) WakelockPlus.enable();
+          break;
+        case BetterPlayerEventType.pause:
+        case BetterPlayerEventType.finished:
+          if (!widget.disableControls) WakelockPlus.disable();
+          break;
+        case BetterPlayerEventType.setVolume:
+          final volume = event.parameters?['volume'] as double?;
+          if (volume != null) model.setIsMuted(volume);
+          break;
+        case BetterPlayerEventType.exception:
+          // Never recreate the player on error. Under hardware-decoder pressure
+          // (a grid of GIFs) a codec init fails with NO_MEMORY; recreating spawns
+          // another decoder and floods the heap with exceptions until the process
+          // OOM-crashes. A GIF that fails just shows its poster; a video shows the
+          // retry affordance. The player already retries recoverable errors itself.
+          if (!widget.disableControls && !_firstFrameRendered) {
+            setState(() => _playbackError = true);
+          }
+          break;
+        default:
+          break;
+      }
+    };
+    controller.addEventsListener(_onEvent!);
   }
 
   void _detachListeners() {
-    _muteSub?.cancel();
-    _muteSub = null;
-    _errorSub?.cancel();
-    _errorSub = null;
-    _playingSub?.cancel();
-    _playingSub = null;
+    if (_onEvent != null) {
+      _pooled?.controller.removeEventsListener(_onEvent!);
+      _onEvent = null;
+    }
   }
 
   void _onVisibilityChanged(VisibilityInfo info, PooledVideo pooled) {
@@ -291,22 +341,22 @@ class _TweetVideoState extends State<TweetVideo> {
       if (key != null) _pool?.markVisible(key, this);
       _pauseTimer?.cancel();
       _pauseTimer = null;
-      if (_autoPlay && !wasVisible && !pooled.player.state.playing) {
-        pooled.player.play();
+      if (_autoPlay && !wasVisible && !pooled.isPlaying) {
+        pooled.controller.play();
       }
     } else if (!widget.alwaysPlay && wasVisible) {
       if (key != null) _pool?.markHidden(key, this);
       _pauseTimer ??= Timer(const Duration(milliseconds: 100), () {
         _pauseTimer = null;
         if (key != null && (_pool?.anyVisible(key) ?? false)) return;
-        if (mounted && !_isFullscreen) {
-          pooled.player.pause();
+        if (mounted && !pooled.controller.isFullScreen) {
+          pooled.controller.pause();
         }
       });
     }
   }
 
-  Future<void> _restartVideo(bool prefLoop) async {
+  Future<void> _restartVideo() async {
     _detachListeners();
     final key = _cacheKey;
     if (key != null && _pool != null) {
@@ -316,7 +366,7 @@ class _TweetVideoState extends State<TweetVideo> {
       }
       _pool!.invalidate(key);
     } else {
-      await _pooled?.player.pause();
+      _pooled?.pause();
       await _pooled?.dispose();
     }
 
@@ -329,55 +379,15 @@ class _TweetVideoState extends State<TweetVideo> {
     });
   }
 
-  void _toggleSubtitles(PooledVideo pooled) {
-    final enable = !_subtitlesEnabled;
-    setState(() => _subtitlesEnabled = enable);
-    if (enable) {
-      final subs = pooled.player.state.tracks.subtitle;
-      final track = subs.firstWhere(
-        (t) => t.id != 'no' && t.id != 'auto',
-        orElse: () => mk.SubtitleTrack.auto(),
-      );
-      pooled.player.setSubtitleTrack(track);
-    } else {
-      pooled.player.setSubtitleTrack(mk.SubtitleTrack.no());
-    }
-  }
-
-  Widget _buildVideo(PooledVideo pooled, bool prefBackgroundPlayback) {
-    final accent = Theme.of(context).colorScheme.secondary;
-    final video = Video(
-      controller: pooled.videoController,
-      aspectRatio: widget.metadata.aspectRatio,
-      controls: widget.disableControls
-          ? null
-          : (state) => QuaxControls(
-                pooled: pooled,
-                username: widget.username,
-                allowMuting: true,
-                accentColor: accent,
-                subtitlesEnabled: _subtitlesEnabled,
-                onToggleSubtitles: () => _toggleSubtitles(pooled),
-              ),
-      wakelock: !widget.disableControls,
-      pauseUponEnteringBackgroundMode: !prefBackgroundPlayback,
-      subtitleViewConfiguration: SubtitleViewConfiguration(visible: _subtitlesEnabled),
-      onEnterFullscreen: () async {
-        _isFullscreen = true;
-        await _enterFullscreen(widget.metadata.aspectRatio);
-      },
-      onExitFullscreen: () async {
-        _isFullscreen = false;
-        await defaultExitNativeFullscreen();
-      },
-    );
+  Widget _buildVideo(PooledVideo pooled) {
+    final video = BetterPlayer(controller: pooled.controller);
 
     if (_posterGone) {
       return video;
     }
 
-    // Poster + spinner over the always-painting video texture, fading out on the
-    // first frame so there's no black flash on the swap.
+    // Poster + spinner over the video, fading out on the first frame so there's
+    // no flash on the swap.
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -396,6 +406,10 @@ class _TweetVideoState extends State<TweetVideo> {
                 if (widget.metadata.imageUrl != null)
                   Image.network(widget.metadata.imageUrl!, fit: BoxFit.cover),
                 if (!widget.disableControls) const Center(child: CircularProgressIndicator()),
+                // A GIF shown static (still buffering, or no decoder available)
+                // gets a "GIF" label; it fades out with the poster once it plays.
+                if (widget.disableControls)
+                  const Positioned(left: 6, bottom: 6, child: GifBadge()),
               ],
             ),
           ),
@@ -409,9 +423,7 @@ class _TweetVideoState extends State<TweetVideo> {
     final prefs = PrefService.of(context);
     final prefLoop = prefs.get(optionMediaDefaultLoop);
     final prefAutoPlay = prefs.get(optionMediaDefaultAutoPlay);
-    final prefBackgroundPlayback = prefs.get(optionMediaBackgroundPlayback);
-    _prefLoop = prefLoop;
-    _mixWithOthers = prefs.get(optionMediaAllowBackgroundPlayOtherApps);
+    _prefBackground = prefs.get<bool>(optionMediaBackgroundPlayback) ?? true;
 
     final key = _cacheKey;
     final alreadyCached = key != null && (_pool?.contains(key) ?? false);
@@ -468,19 +480,27 @@ class _TweetVideoState extends State<TweetVideo> {
         if (hasError && !_firstFrameRendered) {
           return AspectRatio(
             aspectRatio: widget.metadata.aspectRatio,
+            // FittedBox so the error block scales down instead of overflowing in
+            // short/narrow video areas (a wide clip in the feed, a grid cell...).
             child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(Icons.error_outline, color: Colors.white, size: 48),
-                  const SizedBox(height: 12),
-                  Text(L10n.of(context).failed_to_load_video),
-                  const SizedBox(height: 12),
-                  ElevatedButton(
-                    onPressed: () => _restartVideo(prefLoop),
-                    child: Text(L10n.of(context).restart_video_player),
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.error_outline, color: Colors.white, size: 48),
+                      const SizedBox(height: 12),
+                      Text(L10n.of(context).failed_to_load_video),
+                      const SizedBox(height: 12),
+                      ElevatedButton(
+                        onPressed: _restartVideo,
+                        child: Text(L10n.of(context).restart_video_player),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           );
@@ -492,7 +512,7 @@ class _TweetVideoState extends State<TweetVideo> {
               ? VisibilityDetector(
                   key: _visibilityKey,
                   onVisibilityChanged: (info) => _onVisibilityChanged(info, pooled),
-                  child: _buildVideo(pooled, prefBackgroundPlayback))
+                  child: _buildVideo(pooled))
               : const SizedBox.shrink(),
         );
       },
@@ -501,15 +521,18 @@ class _TweetVideoState extends State<TweetVideo> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _pauseTimer?.cancel();
     _detachListeners();
     final key = _cacheKey;
     if (key != null) _pool?.markHidden(key, this);
-    // Keep the controller alive across the native fullscreen handoff; just don't
+    if (!widget.disableControls) WakelockPlus.disable();
+    // Keep the controller alive across the fullscreen route; just don't
     // dispose/release it here. Detaching listeners and releasing the pool ref,
-    // though, is always safe (the pool owns the player) and must happen even in
-    // fullscreen, or this widget leaks its subscriptions and pins the entry.
-    if (!_isFullscreen) {
+    // though, is always safe (the pool owns the controller) and must happen even
+    // in fullscreen, or this widget leaks its subscriptions and pins the entry.
+    final fullscreen = _pooled?.controller.isFullScreen ?? false;
+    if (!fullscreen) {
       if (_ownsControllers) {
         _pooled?.dispose();
       } else if (key != null && _holdsPoolRef) {
@@ -517,7 +540,7 @@ class _TweetVideoState extends State<TweetVideo> {
         // fires; releasing the pool ref alone leaves the player running off-screen.
         // Pause it now, unless the same video is still on screen in another widget.
         if (!widget.alwaysPlay && !(_pool?.anyVisible(key) ?? false)) {
-          _pooled?.player.pause();
+          _pooled?.pause();
         }
         _pool?.release(key);
         _holdsPoolRef = false;

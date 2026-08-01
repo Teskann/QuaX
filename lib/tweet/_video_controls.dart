@@ -1,36 +1,33 @@
 import 'dart:async';
 
+import 'package:better_player_plus/better_player_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:media_kit/media_kit.dart';
-import 'package:media_kit_video/media_kit_video.dart';
 import 'package:path/path.dart' as path;
 import 'package:pref/pref.dart';
 import 'package:quax/generated/l10n.dart';
-import 'package:quax/tweet/video_controller_pool.dart';
 import 'package:quax/tweet/video_quality.dart';
 import 'package:quax/utils/downloads.dart';
 
-Player _playerOf(BuildContext context) =>
-    VideoStateInheritedWidget.of(context).state.widget.controller.player;
-
 const _kSeekSeconds = 10;
 
+/// The current playback value, or a zeroed one before the data source has
+/// initialized. Read fresh from the controller so it survives the underlying
+/// [videoPlayerController] being swapped on a quality change.
+VideoPlayerValue _valueOf(BetterPlayerController controller) =>
+    controller.videoPlayerController?.value ?? VideoPlayerValue(duration: Duration.zero);
+
 class QuaxControls extends StatefulWidget {
-  final PooledVideo pooled;
+  final BetterPlayerController controller;
   final String username;
-  final bool allowMuting;
-  final Color accentColor;
-  final bool subtitlesEnabled;
-  final VoidCallback onToggleSubtitles;
+  final List<TweetVideoQuality> qualities;
+  final String? downloadUrl;
 
   const QuaxControls({
     super.key,
-    required this.pooled,
+    required this.controller,
     required this.username,
-    required this.allowMuting,
-    required this.accentColor,
-    required this.subtitlesEnabled,
-    required this.onToggleSubtitles,
+    required this.qualities,
+    required this.downloadUrl,
   });
 
   @override
@@ -44,6 +41,8 @@ class _QuaxControlsState extends State<QuaxControls> {
   double _lastTapX = 0;
   int _seekFeedback = 0;
   Timer? _feedbackTimer;
+
+  BetterPlayerController get _controller => widget.controller;
 
   @override
   void initState() {
@@ -76,13 +75,14 @@ class _QuaxControlsState extends State<QuaxControls> {
 
   void _onDoubleTap() {
     final width = context.size?.width ?? 0;
-    final player = _playerOf(context);
+    final value = _valueOf(_controller);
     final back = _lastTapX < width / 2;
     final delta = Duration(seconds: back ? -_kSeekSeconds : _kSeekSeconds);
-    var target = player.state.position + delta;
+    var target = value.position + delta;
+    final duration = value.duration ?? Duration.zero;
     if (target < Duration.zero) target = Duration.zero;
-    if (target > player.state.duration) target = player.state.duration;
-    player.seek(target);
+    if (target > duration) target = duration;
+    _controller.seekTo(target);
 
     setState(() => _seekFeedback = back ? -_kSeekSeconds : _kSeekSeconds);
     _feedbackTimer?.cancel();
@@ -93,76 +93,72 @@ class _QuaxControlsState extends State<QuaxControls> {
 
   @override
   Widget build(BuildContext context) {
-    const theme = MaterialVideoControlsThemeData(
-      buttonBarButtonColor: Colors.white,
-    );
-
-    return MaterialVideoControlsTheme(
-      normal: theme,
-      fullscreen: theme,
-      child: Stack(
-        children: [
-          Positioned.fill(
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: _toggle,
-              onDoubleTapDown: (d) => _lastTapX = d.localPosition.dx,
-              onDoubleTap: _onDoubleTap,
-              child: AnimatedOpacity(
-                opacity: _visible ? 1.0 : 0.0,
-                duration: const Duration(milliseconds: 200),
-                child: Stack(
-                  children: [
-                    // IgnorePointer so the opaque scrim never swallows taps,
-                    // which would make the controls impossible to dismiss.
-                    const Positioned.fill(
-                      child: IgnorePointer(child: ColoredBox(color: Colors.black45)),
-                    ),
-                    Positioned.fill(
-                      child: IgnorePointer(
-                        ignoring: !_visible,
-                        child: Listener(
-                          onPointerDown: (_) {
-                            if (_visible) _scheduleHide();
-                          },
-                          child: _controls(),
-                        ),
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: _toggle,
+            onDoubleTapDown: (d) => _lastTapX = d.localPosition.dx,
+            onDoubleTap: _onDoubleTap,
+            child: AnimatedOpacity(
+              opacity: _visible ? 1.0 : 0.0,
+              duration: const Duration(milliseconds: 200),
+              child: Stack(
+                children: [
+                  // IgnorePointer so the opaque scrim never swallows taps,
+                  // which would make the controls impossible to dismiss.
+                  const Positioned.fill(
+                    child: IgnorePointer(child: ColoredBox(color: Colors.black45)),
+                  ),
+                  Positioned.fill(
+                    child: IgnorePointer(
+                      ignoring: !_visible,
+                      child: Listener(
+                        onPointerDown: (_) {
+                          if (_visible) _scheduleHide();
+                        },
+                        child: _controls(),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
-          if (_seekFeedback != 0)
-            Positioned.fill(
-              child: IgnorePointer(
-                child: Align(
-                  alignment: _seekFeedback < 0 ? Alignment.centerLeft : Alignment.centerRight,
-                  child: _seekFeedbackBadge(),
-                ),
+        ),
+        // Buffering spinner, shown even while the controls are hidden.
+        Positioned.fill(
+          child: IgnorePointer(child: _BufferingIndicator(controller: _controller)),
+        ),
+        if (_seekFeedback != 0)
+          Positioned.fill(
+            child: IgnorePointer(
+              child: Align(
+                alignment: _seekFeedback < 0 ? Alignment.centerLeft : Alignment.centerRight,
+                child: _seekFeedbackBadge(),
               ),
             ),
-        ],
-      ),
+          ),
+      ],
     );
   }
 
   Widget _controls() {
+    final accent = Theme.of(context).colorScheme.secondary;
     return Stack(
       children: [
-        const Center(child: _PlayPauseButton()),
+        Center(child: _PlayPauseButton(controller: _controller)),
         Positioned(
           left: 0,
           right: 0,
           bottom: 0,
           child: _BottomBar(
-            pooled: widget.pooled,
+            controller: _controller,
             username: widget.username,
-            allowMuting: widget.allowMuting,
-            accentColor: widget.accentColor,
-            subtitlesEnabled: widget.subtitlesEnabled,
-            onToggleSubtitles: widget.onToggleSubtitles,
+            qualities: widget.qualities,
+            downloadUrl: widget.downloadUrl,
+            accentColor: accent,
           ),
         ),
       ],
@@ -187,21 +183,70 @@ class _QuaxControlsState extends State<QuaxControls> {
   }
 }
 
+/// Rebuilds [builder] whenever the player emits an event, always reading the
+/// live [VideoPlayerValue] — so it keeps tracking after a quality switch swaps
+/// the underlying player.
+class _PlayerListenable extends StatefulWidget {
+  final BetterPlayerController controller;
+  final Widget Function(BuildContext, VideoPlayerValue) builder;
+
+  const _PlayerListenable({required this.controller, required this.builder});
+
+  @override
+  State<_PlayerListenable> createState() => _PlayerListenableState();
+}
+
+class _PlayerListenableState extends State<_PlayerListenable> {
+  late final void Function(BetterPlayerEvent) _listener;
+
+  @override
+  void initState() {
+    super.initState();
+    _listener = (_) {
+      if (mounted) setState(() {});
+    };
+    widget.controller.addEventsListener(_listener);
+  }
+
+  @override
+  void dispose() {
+    widget.controller.removeEventsListener(_listener);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => widget.builder(context, _valueOf(widget.controller));
+}
+
+class _BufferingIndicator extends StatelessWidget {
+  final BetterPlayerController controller;
+
+  const _BufferingIndicator({required this.controller});
+
+  @override
+  Widget build(BuildContext context) {
+    return _PlayerListenable(
+      controller: controller,
+      builder: (context, value) => value.isBuffering
+          ? const Center(child: CircularProgressIndicator())
+          : const SizedBox.shrink(),
+    );
+  }
+}
+
 class _BottomBar extends StatelessWidget {
-  final PooledVideo pooled;
+  final BetterPlayerController controller;
   final String username;
-  final bool allowMuting;
+  final List<TweetVideoQuality> qualities;
+  final String? downloadUrl;
   final Color accentColor;
-  final bool subtitlesEnabled;
-  final VoidCallback onToggleSubtitles;
 
   const _BottomBar({
-    required this.pooled,
+    required this.controller,
     required this.username,
-    required this.allowMuting,
+    required this.qualities,
+    required this.downloadUrl,
     required this.accentColor,
-    required this.subtitlesEnabled,
-    required this.onToggleSubtitles,
   });
 
   @override
@@ -213,16 +258,16 @@ class _BottomBar extends StatelessWidget {
           padding: const EdgeInsets.only(left: 14, right: 4),
           child: Row(
             children: [
-              const _PositionIndicator(),
+              _PositionIndicator(controller: controller),
               const Spacer(),
-              if (allowMuting) const _MuteButton(),
+              _MuteButton(controller: controller),
               _MoreButton(
-                pooled: pooled,
+                controller: controller,
                 username: username,
-                subtitlesEnabled: subtitlesEnabled,
-                onToggleSubtitles: onToggleSubtitles,
+                qualities: qualities,
+                downloadUrl: downloadUrl,
               ),
-              const MaterialFullscreenButton(),
+              _FullscreenButton(controller: controller),
             ],
           ),
         ),
@@ -230,7 +275,7 @@ class _BottomBar extends StatelessWidget {
           offset: const Offset(0, -8),
           child: Padding(
             padding: const EdgeInsets.only(left: 14, right: 16, bottom: 6),
-            child: _SeekBar(accentColor: accentColor),
+            child: _SeekBar(controller: controller, accentColor: accentColor),
           ),
         ),
       ],
@@ -239,60 +284,83 @@ class _BottomBar extends StatelessWidget {
 }
 
 class _PlayPauseButton extends StatefulWidget {
-  const _PlayPauseButton();
+  final BetterPlayerController controller;
+
+  const _PlayPauseButton({required this.controller});
 
   @override
   State<_PlayPauseButton> createState() => _PlayPauseButtonState();
 }
 
 class _PlayPauseButtonState extends State<_PlayPauseButton> {
-  final List<StreamSubscription> _subs = [];
+  late final void Function(BetterPlayerEvent) _listener;
   bool _playing = false;
   bool _completed = false;
+  bool _buffering = false;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_subs.isNotEmpty) return;
-    final player = _playerOf(context);
-    _playing = player.state.playing;
-    _completed = player.state.completed;
-    _subs.add(player.stream.playing.listen((v) {
-      if (mounted) setState(() => _playing = v);
-    }));
-    _subs.add(player.stream.completed.listen((v) {
-      if (mounted) setState(() => _completed = v);
-    }));
+  void initState() {
+    super.initState();
+    _playing = widget.controller.isPlaying() ?? false;
+    _buffering = widget.controller.isBuffering() ?? false;
+    _listener = (event) {
+      if (!mounted) return;
+      switch (event.betterPlayerEventType) {
+        case BetterPlayerEventType.play:
+          setState(() {
+            _playing = true;
+            _completed = false;
+          });
+          break;
+        case BetterPlayerEventType.pause:
+          setState(() => _playing = false);
+          break;
+        case BetterPlayerEventType.seekTo:
+          setState(() => _completed = false);
+          break;
+        case BetterPlayerEventType.finished:
+          setState(() {
+            _playing = false;
+            _completed = true;
+          });
+          break;
+        case BetterPlayerEventType.bufferingStart:
+          setState(() => _buffering = true);
+          break;
+        case BetterPlayerEventType.bufferingEnd:
+          setState(() => _buffering = false);
+          break;
+        case BetterPlayerEventType.progress:
+          setState(() => _playing = widget.controller.isPlaying() ?? _playing);
+          break;
+        default:
+          break;
+      }
+    };
+    widget.controller.addEventsListener(_listener);
   }
 
   @override
   void dispose() {
-    for (final s in _subs) {
-      s.cancel();
-    }
+    widget.controller.removeEventsListener(_listener);
     super.dispose();
   }
 
   void _onTap() {
-    final player = _playerOf(context);
-    final wasCompleted = _completed;
-    // Flip the icon immediately so the button feels instant; the streams
-    // confirm/correct it after libmpv's play/pause latency.
-    setState(() {
-      _completed = false;
-      _playing = wasCompleted ? true : !_playing;
-    });
-    if (wasCompleted) {
-      // libmpv leaves the position at EOF, so play() alone wouldn't replay.
-      player.seek(Duration.zero);
-      player.play();
+    if (_completed) {
+      widget.controller.seekTo(Duration.zero);
+      widget.controller.play();
+    } else if (widget.controller.isPlaying() ?? false) {
+      widget.controller.pause();
     } else {
-      player.playOrPause();
+      widget.controller.play();
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    // While buffering, yield the center to the spinner instead of overlapping it.
+    if (_buffering) return const SizedBox(width: 64, height: 64);
     return GestureDetector(
       onTap: _onTap,
       child: Container(
@@ -353,40 +421,10 @@ class _AnimatedPlayPauseState extends State<AnimatedPlayPause>
   }
 }
 
-class _PositionIndicator extends StatefulWidget {
-  const _PositionIndicator();
+class _PositionIndicator extends StatelessWidget {
+  final BetterPlayerController controller;
 
-  @override
-  State<_PositionIndicator> createState() => _PositionIndicatorState();
-}
-
-class _PositionIndicatorState extends State<_PositionIndicator> {
-  final List<StreamSubscription> _subs = [];
-  Duration _position = Duration.zero;
-  Duration _duration = Duration.zero;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_subs.isNotEmpty) return;
-    final player = _playerOf(context);
-    _position = player.state.position;
-    _duration = player.state.duration;
-    _subs.add(player.stream.position.listen((v) {
-      if (mounted) setState(() => _position = v);
-    }));
-    _subs.add(player.stream.duration.listen((v) {
-      if (mounted) setState(() => _duration = v);
-    }));
-  }
-
-  @override
-  void dispose() {
-    for (final s in _subs) {
-      s.cancel();
-    }
-    super.dispose();
-  }
+  const _PositionIndicator({required this.controller});
 
   static String _fmt(Duration d) {
     final h = d.inHours;
@@ -399,67 +437,103 @@ class _PositionIndicatorState extends State<_PositionIndicator> {
 
   @override
   Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        text: '${_fmt(_position)} ',
-        style: const TextStyle(fontSize: 14.0, color: Colors.white, fontWeight: FontWeight.bold),
-        children: [
-          TextSpan(
-            text: '/ ${_fmt(_duration)}',
-            style: TextStyle(
-              fontSize: 14.0,
-              color: Colors.white.withValues(alpha: 0.75),
-              fontWeight: FontWeight.normal,
-            ),
+    return _PlayerListenable(
+      controller: controller,
+      builder: (context, value) {
+        final duration = value.duration ?? Duration.zero;
+        return RichText(
+          text: TextSpan(
+            text: '${_fmt(value.position)} ',
+            style: const TextStyle(fontSize: 14.0, color: Colors.white, fontWeight: FontWeight.bold),
+            children: [
+              TextSpan(
+                text: '/ ${_fmt(duration)}',
+                style: TextStyle(
+                  fontSize: 14.0,
+                  color: Colors.white.withValues(alpha: 0.75),
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
 
-/// Custom because media_kit's [MaterialSeekBar] draws square-cornered bars.
+/// Custom because the library's default progress bar draws square-cornered bars.
 class _SeekBar extends StatefulWidget {
+  final BetterPlayerController controller;
   final Color accentColor;
 
-  const _SeekBar({required this.accentColor});
+  const _SeekBar({required this.controller, required this.accentColor});
 
   @override
   State<_SeekBar> createState() => _SeekBarState();
 }
 
-class _SeekBarState extends State<_SeekBar> {
-  final List<StreamSubscription> _subs = [];
-  Duration _position = Duration.zero;
+class _SeekBarState extends State<_SeekBar> with SingleTickerProviderStateMixin {
+  late final void Function(BetterPlayerEvent) _listener;
+  late final _ticker = createTicker(_onTick);
+
+  Duration _base = Duration.zero; // player position at the last sync
+  Duration _baseElapsed = Duration.zero; // ticker time at that sync
+  Duration _elapsed = Duration.zero; // latest ticker time
   Duration _duration = Duration.zero;
   Duration _buffer = Duration.zero;
+  double _rate = 1.0;
+  bool _playing = false;
+  bool _buffering = false;
   double? _dragFraction;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_subs.isNotEmpty) return;
-    final player = _playerOf(context);
-    _position = player.state.position;
-    _duration = player.state.duration;
-    _buffer = player.state.buffer;
-    _subs.add(player.stream.position.listen((v) {
-      if (mounted && _dragFraction == null) setState(() => _position = v);
-    }));
-    _subs.add(player.stream.duration.listen((v) {
-      if (mounted) setState(() => _duration = v);
-    }));
-    _subs.add(player.stream.buffer.listen((v) {
-      if (mounted) setState(() => _buffer = v);
-    }));
+  void initState() {
+    super.initState();
+    _sync();
+    _listener = (_) {
+      if (mounted) setState(_sync);
+    };
+    widget.controller.addEventsListener(_listener);
+    _ticker.start();
+  }
+
+  // The player only samples position ~every 300ms; interpolate between samples
+  // off the ticker so the played bar advances smoothly at ~60fps.
+  void _onTick(Duration elapsed) {
+    _elapsed = elapsed;
+    if (_playing && !_buffering && _dragFraction == null && mounted) {
+      setState(() {});
+    }
+  }
+
+  void _sync() {
+    final value = _valueOf(widget.controller);
+    _duration = value.duration ?? Duration.zero;
+    _buffer = value.buffered.isNotEmpty ? value.buffered.last.end : Duration.zero;
+    _rate = value.speed <= 0 ? 1.0 : value.speed;
+    _playing = value.isPlaying;
+    _buffering = value.isBuffering;
+    // Re-anchor interpolation to the real position (unless the user is dragging).
+    if (_dragFraction == null) {
+      _base = value.position;
+      _baseElapsed = _elapsed;
+    }
   }
 
   @override
   void dispose() {
-    for (final s in _subs) {
-      s.cancel();
-    }
+    _ticker.dispose();
+    widget.controller.removeEventsListener(_listener);
     super.dispose();
+  }
+
+  Duration get _livePosition {
+    if (!_playing || _buffering) return _base;
+    var p = _base + (_elapsed - _baseElapsed) * _rate;
+    if (p < Duration.zero) p = Duration.zero;
+    if (_duration > Duration.zero && p > _duration) p = _duration;
+    return p;
   }
 
   double _fraction(Duration d) {
@@ -467,12 +541,15 @@ class _SeekBarState extends State<_SeekBar> {
     return total == 0 ? 0.0 : (d.inMilliseconds / total).clamp(0.0, 1.0);
   }
 
-  double get _playedFraction => _dragFraction ?? _fraction(_position);
+  double get _playedFraction => _dragFraction ?? _fraction(_livePosition);
 
   void _commitSeek() {
     final f = _dragFraction;
     if (f != null) {
-      _playerOf(context).seek(_duration * f);
+      final target = _duration * f;
+      widget.controller.seekTo(target);
+      _base = target; // hold the bar at the seeked spot until the next sample
+      _baseElapsed = _elapsed;
     }
     setState(() => _dragFraction = null);
   }
@@ -545,63 +622,83 @@ class _SeekBarState extends State<_SeekBar> {
   }
 }
 
-class _MuteButton extends StatefulWidget {
-  const _MuteButton();
+class _MuteButton extends StatelessWidget {
+  final BetterPlayerController controller;
 
-  @override
-  State<_MuteButton> createState() => _MuteButtonState();
-}
-
-class _MuteButtonState extends State<_MuteButton> {
-  StreamSubscription<double>? _sub;
-  double _volume = 100.0;
-  double _lastNonZero = 100.0;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final player = _playerOf(context);
-    _volume = player.state.volume;
-    if (_volume > 0) _lastNonZero = _volume;
-    _sub ??= player.stream.volume.listen((v) {
-      if (!mounted) return;
-      setState(() {
-        _volume = v;
-        if (v > 0) _lastNonZero = v;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    _sub?.cancel();
-    super.dispose();
-  }
+  const _MuteButton({required this.controller});
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      iconSize: 24.0,
-      color: Colors.white,
-      icon: Icon(_volume > 0 ? Icons.volume_up : Icons.volume_off),
-      onPressed: () => _playerOf(context)
-          .setVolume(_volume > 0 ? 0.0 : (_lastNonZero > 0 ? _lastNonZero : 100.0)),
+    return _PlayerListenable(
+      controller: controller,
+      builder: (context, value) {
+        final muted = value.volume <= 0;
+        return IconButton(
+          iconSize: 24.0,
+          color: Colors.white,
+          icon: Icon(muted ? Icons.volume_off : Icons.volume_up),
+          onPressed: () => controller.setVolume(muted ? 1.0 : 0.0),
+        );
+      },
     );
   }
 }
 
-class _MoreButton extends StatelessWidget {
-  final PooledVideo pooled;
+class _FullscreenButton extends StatelessWidget {
+  final BetterPlayerController controller;
+
+  const _FullscreenButton({required this.controller});
+
+  @override
+  Widget build(BuildContext context) {
+    return _PlayerListenable(
+      controller: controller,
+      builder: (context, _) => IconButton(
+        iconSize: 24.0,
+        color: Colors.white,
+        icon: Icon(controller.isFullScreen ? Icons.fullscreen_exit : Icons.fullscreen),
+        onPressed: controller.toggleFullScreen,
+      ),
+    );
+  }
+}
+
+class _MoreButton extends StatefulWidget {
+  final BetterPlayerController controller;
   final String username;
-  final bool subtitlesEnabled;
-  final VoidCallback onToggleSubtitles;
+  final List<TweetVideoQuality> qualities;
+  final String? downloadUrl;
 
   const _MoreButton({
-    required this.pooled,
+    required this.controller,
     required this.username,
-    required this.subtitlesEnabled,
-    required this.onToggleSubtitles,
+    required this.qualities,
+    required this.downloadUrl,
   });
+
+  @override
+  State<_MoreButton> createState() => _MoreButtonState();
+}
+
+class _MoreButtonState extends State<_MoreButton> {
+  bool _subtitlesEnabled = false;
+
+  bool get _hasSubtitles => widget.controller.betterPlayerSubtitlesSourceList
+      .any((s) => s.type != BetterPlayerSubtitlesSourceType.none);
+
+  void _toggleSubtitles() {
+    final list = widget.controller.betterPlayerSubtitlesSourceList;
+    BetterPlayerSubtitlesSource? target;
+    for (final source in list) {
+      final isNone = source.type == BetterPlayerSubtitlesSourceType.none;
+      if (_subtitlesEnabled ? isNone : !isNone) {
+        target = source;
+        break;
+      }
+    }
+    if (target != null) widget.controller.setupSubtitleSource(target);
+    setState(() => _subtitlesEnabled = !_subtitlesEnabled);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -614,10 +711,6 @@ class _MoreButton extends StatelessWidget {
   }
 
   Future<void> _openMenu(BuildContext context) async {
-    final player = _playerOf(context);
-    // Only offer the subtitle toggle if the video carries a subtitle track.
-    final hasSubtitles =
-        player.state.tracks.subtitle.any((t) => t.id != 'no' && t.id != 'auto');
     await showModalBottomSheet<void>(
       context: context,
       useRootNavigator: true,
@@ -630,26 +723,26 @@ class _MoreButton extends StatelessWidget {
               title: Text(L10n.of(sheetContext).playback_speed),
               onTap: () {
                 Navigator.of(sheetContext).pop();
-                _openSpeedSheet(context, player);
+                _openSpeedSheet(context, widget.controller);
               },
             ),
-            if (pooled.qualities.length > 1)
+            if (widget.qualities.length > 1)
               ListTile(
                 leading: const Icon(Icons.high_quality),
                 title: Text(L10n.of(sheetContext).quality),
                 onTap: () {
                   Navigator.of(sheetContext).pop();
-                  _openQualitySheet(context, pooled);
+                  _openQualitySheet(context, widget.controller, widget.qualities);
                 },
               ),
-            if (hasSubtitles)
+            if (_hasSubtitles)
               ListTile(
-                leading: Icon(subtitlesEnabled ? Icons.closed_caption : Icons.closed_caption_off),
+                leading: Icon(_subtitlesEnabled ? Icons.closed_caption : Icons.closed_caption_off),
                 title: Text(L10n.of(sheetContext).subtitles),
-                trailing: subtitlesEnabled ? const Icon(Icons.check) : null,
+                trailing: _subtitlesEnabled ? const Icon(Icons.check) : null,
                 onTap: () {
                   Navigator.of(sheetContext).pop();
-                  onToggleSubtitles();
+                  _toggleSubtitles();
                 },
               ),
             ListTile(
@@ -657,7 +750,7 @@ class _MoreButton extends StatelessWidget {
               title: Text(L10n.of(sheetContext).download),
               onTap: () {
                 Navigator.of(sheetContext).pop();
-                downloadTweetVideo(context, username, pooled.downloadUrl);
+                downloadTweetVideo(context, widget.username, widget.downloadUrl);
               },
             ),
           ],
@@ -669,43 +762,38 @@ class _MoreButton extends StatelessWidget {
 
 const _kSpeeds = [0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0];
 
-Future<void> _openSpeedSheet(BuildContext context, Player player) async {
+Future<void> _openSpeedSheet(BuildContext context, BetterPlayerController controller) async {
+  final current = _valueOf(controller).speed;
   final chosen = await showModalBottomSheet<double>(
     context: context,
     isScrollControlled: true,
     useRootNavigator: true,
-    builder: (_) => _SpeedSheet(speeds: _kSpeeds, selected: player.state.rate),
+    builder: (_) => _SpeedSheet(speeds: _kSpeeds, selected: current),
   );
   if (chosen != null) {
-    await player.setRate(chosen);
+    await controller.setSpeed(chosen);
   }
 }
 
-Future<void> _openQualitySheet(BuildContext context, PooledVideo pooled) async {
+Future<void> _openQualitySheet(
+    BuildContext context, BetterPlayerController controller, List<TweetVideoQuality> qualities) async {
   final chosen = await showModalBottomSheet<TweetVideoQuality>(
     context: context,
     isScrollControlled: true,
     useRootNavigator: true,
     builder: (_) => _QualitySheet(
-      qualities: pooled.qualities,
-      selectedUrl: pooled.currentStreamUrl,
+      qualities: qualities,
+      selectedUrl: controller.betterPlayerDataSource?.url,
     ),
   );
-  if (chosen == null || chosen.url == pooled.currentStreamUrl) {
+  if (chosen == null || chosen.url == controller.betterPlayerDataSource?.url) {
     return;
   }
-
-  final player = pooled.player;
-  final wasPlaying = player.state.playing;
-  final volume = player.state.volume;
-  final rate = player.state.rate;
-
-  // The new variant restarts from 0: preserving position across the source swap
-  // proved unreliable on libmpv's Android network playback.
-  pooled.currentStreamUrl = chosen.url;
-  await player.open(Media(chosen.url), play: wasPlaying);
-  await player.setVolume(volume);
-  await player.setRate(rate);
+  // setResolution preserves position and play/pause state but re-inits the data
+  // source without re-applying volume, so a muted video would come back audible.
+  final volume = _valueOf(controller).volume;
+  await controller.setResolution(chosen.url);
+  await controller.setVolume(volume);
 }
 
 Future<void> downloadTweetVideo(BuildContext context, String username, String? downloadUrl) async {
@@ -763,7 +851,7 @@ class _SpeedSheet extends StatelessWidget {
 
 class _QualitySheet extends StatelessWidget {
   final List<TweetVideoQuality> qualities;
-  final String selectedUrl;
+  final String? selectedUrl;
 
   const _QualitySheet({required this.qualities, required this.selectedUrl});
 
@@ -780,6 +868,28 @@ class _QualitySheet extends StatelessWidget {
             onTap: () => Navigator.of(context).pop(quality),
           );
         }).toList(),
+      ),
+    );
+  }
+}
+
+/// A small "GIF" label, shown over a GIF that is displayed statically (not
+/// animating — e.g. a grid cell the playback gate didn't grant, or a GIF whose
+/// hardware decoder couldn't be allocated) so it's clear it's an animated GIF.
+class GifBadge extends StatelessWidget {
+  const GifBadge({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+      decoration: BoxDecoration(
+        color: Colors.black54,
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: const Text(
+        'GIF',
+        style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold, height: 1.0),
       ),
     );
   }

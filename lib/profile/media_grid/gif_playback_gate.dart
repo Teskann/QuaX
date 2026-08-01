@@ -3,13 +3,14 @@ import 'package:flutter/foundation.dart';
 /// Caps how many profile-grid GIFs decode at once.
 ///
 /// Each visible GIF tile reports its visible fraction; the [maxConcurrent]
-/// most-visible tiles are granted a live libmpv player and the rest fall back to
+/// most-visible tiles are granted a live video player and the rest fall back to
 /// a static thumbnail. Without this a whole grid of GIFs spins up a player each
-/// at once — exhausting the device's hardware decoders and lagging hard both on
-/// open and while scrolling.
+/// at once — exhausting the device's hardware decoders and its memory (each
+/// live player instance holds a ~35 MB decoder buffer pool) and lagging hard
+/// both on open and while scrolling.
 class GifPlaybackGate extends ChangeNotifier {
   final int maxConcurrent;
-  GifPlaybackGate({this.maxConcurrent = 5});
+  GifPlaybackGate({this.maxConcurrent = 2});
 
   final Map<Object, double> _fractions = {};
   Set<Object> _granted = <Object>{};

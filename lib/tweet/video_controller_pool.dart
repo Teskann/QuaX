@@ -1,16 +1,14 @@
-import 'package:media_kit/media_kit.dart';
-import 'package:media_kit_video/media_kit_video.dart';
+import 'package:better_player_plus/better_player_plus.dart';
 import 'package:quax/tweet/video_quality.dart';
 
-/// One cached video player: the libmpv [Player] together with the
-/// [VideoController] that renders it, plus the resolved download URL, the
-/// selectable [qualities] and the [currentStreamUrl] currently open. The pool
-/// owns this pair and is the only thing allowed to dispose it (on LRU eviction)
-/// — widgets attach/detach but never dispose. Disposing the [Player] also
-/// releases the [VideoController]'s native texture.
+/// One cached video player: a [BetterPlayerController] together with the
+/// resolved download URL and the selectable [qualities]. The pool owns this
+/// controller and is the only thing allowed to dispose it (on LRU eviction) —
+/// widgets attach/detach but never dispose. The
+/// controller is created with `autoDispose: false`, so the [BetterPlayer]
+/// widget's own teardown is a no-op and the player survives across screens.
 class PooledVideo {
-  final Player player;
-  final VideoController videoController;
+  final BetterPlayerController controller;
   final String? downloadUrl;
   final List<TweetVideoQuality> qualities;
 
@@ -18,36 +16,27 @@ class PooledVideo {
   /// playing.
   final bool pausableByPolicy;
 
-  /// The MP4 variant currently open in [player]; updated on a quality switch.
-  String currentStreamUrl;
-
   bool _disposed = false;
 
   PooledVideo({
-    required this.player,
-    required this.videoController,
+    required this.controller,
     required this.downloadUrl,
     required this.qualities,
-    required this.currentStreamUrl,
     required this.pausableByPolicy,
   });
 
+  bool get isPlaying => controller.isPlaying() ?? false;
+
+  void pause() {
+    if (isPlaying) controller.pause();
+  }
+
   Future<void> dispose() async {
-    // Two disposal paths can race on the same pair — an explicit restart and the
-    // widget's own teardown — and disposing a [Player] twice trips libmpv's
-    // "[Player] has been disposed" assertion. Guard so only the first wins.
     if (_disposed) return;
     _disposed = true;
-    // Disposing a still-active [Player] races an in-flight libmpv wakeup callback
-    // against the FFI callback being freed, aborting the process with
-    // "Callback invoked after it has been deleted". Unloading the media first —
-    // and giving the resulting mpv event burst a moment to drain — means the
-    // native callback is freed while mpv is idle, closing the race window.
-    try {
-      await player.stop();
-      await Future<void>.delayed(const Duration(milliseconds: 250));
-    } catch (_) {}
-    await player.dispose();
+    // `autoDispose: false` on the config means only a forced dispose actually
+    // releases the native player.
+    controller.dispose(forceDispose: true);
   }
 }
 
@@ -77,8 +66,8 @@ class _Entry {
 /// single instance is provided app-wide.
 ///
 /// Lifetime contract:
-///  - [acquire] returns the cached pair (creating it on a miss) and marks it in
-///    use; concurrent callers for the same key share one player.
+///  - [acquire] returns the cached controller (creating it on a miss) and marks
+///    it in use; concurrent callers for the same key share one player.
 ///  - [release] marks a widget as gone but does NOT dispose — the entry stays
 ///    cached for instant reuse.
 ///  - Only eviction disposes, and only entries with no live widget (refCount 0),
@@ -110,7 +99,7 @@ class VideoControllerPool {
       final video = entry.value;
       if (video == null || identical(video, active)) continue;
       if (!video.pausableByPolicy) continue;
-      if (video.player.state.playing) video.player.pause();
+      video.pause();
     }
   }
 
@@ -123,8 +112,16 @@ class VideoControllerPool {
   }
 
   void invalidate(String key) {
-    _entries.remove(key)?.disposeWhenReady();
+    final entry = _entries[key];
+    if (entry == null) return;
+    // Don't force-dispose a controller another widget still holds (the same video
+    // live in two places): only drop and dispose it once no widget references it.
+    // The caller releases its own ref before invalidating, so the common
+    // single-holder case still disposes here.
+    if (entry.refCount > 0) return;
+    _entries.remove(key);
     _visibleTokens.remove(key);
+    entry.disposeWhenReady();
   }
 
   void release(String key) {

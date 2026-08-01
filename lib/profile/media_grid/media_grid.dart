@@ -1,5 +1,6 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:pref/pref.dart';
 import 'package:quax/constants.dart';
@@ -7,6 +8,7 @@ import 'package:quax/generated/l10n.dart';
 import 'package:quax/profile/media_grid/gif_playback_gate.dart';
 import 'package:quax/profile/media_grid/media_grid_items/media_grid_item.dart';
 import 'package:quax/status.dart';
+import 'package:quax/tweet/_video_controls.dart';
 import 'package:quax/ui/errors.dart';
 import 'package:quax/utils/paging.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -194,7 +196,17 @@ class _GifGridCellState extends State<_GifGridCell> {
   }
 
   void _onGrantsChanged() {
-    if (mounted) setState(() {});
+    if (!mounted) return;
+    // The gate can notify from another cell's dispose(), i.e. while the tree is
+    // locked during the build/finalize phase — calling setState() then throws.
+    // Defer the rebuild to after the frame in that case.
+    if (SchedulerBinding.instance.schedulerPhase == SchedulerPhase.persistentCallbacks) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        if (mounted) setState(() {});
+      });
+    } else {
+      setState(() {});
+    }
   }
 
   @override
@@ -211,7 +223,13 @@ class _GifGridCellState extends State<_GifGridCell> {
       onVisibilityChanged: (info) => widget.gate.report(this, info.visibleFraction),
       child: widget.gate.isGranted(this)
           ? widget.item.toWidget(context)
-          : ExtendedImage.network(widget.item.thumbnailUrl, cache: true, fit: BoxFit.cover),
+          : Stack(
+              fit: StackFit.expand,
+              children: [
+                ExtendedImage.network(widget.item.thumbnailUrl, cache: true, fit: BoxFit.cover),
+                const Positioned(left: 6, bottom: 6, child: GifBadge()),
+              ],
+            ),
     );
   }
 }
