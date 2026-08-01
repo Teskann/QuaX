@@ -1,3 +1,9 @@
+## QuaX v4.13.0
+
+What's new in QuaX v4.13.0:
+  - Migrated the video player to `better_player_plus`. Previous implementation with `media_kit`, introduced in 4.10.0, lead to several regressions on the video player. It also produced memory corruption issues that often lead to the app crashing and lowered the app's security. You're welcome to provide feedback on Discord <sup>[[view modified code]](https://github.com/teskann/quax/commit/80c2c0dfebc3d4ea0e3020a61c4af04cc39855e0)</sup>
+  - Added an invitation to join the QuaX Discord at startup and updated the Discord link <sup>[[view modified code]](https://github.com/teskann/quax/commit/1ced56396ebe62f2ac33fd87fb7100090883cf58)</sup>
+
 ## QuaX v4.12.1
 
 What's new in QuaX v4.12.1:
