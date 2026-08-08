@@ -9,6 +9,7 @@ import 'package:quax/database/repository.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/group/feed_cache.dart';
 import 'package:quax/group/feed_session_cache.dart';
+import 'package:quax/group/group_model.dart';
 import 'package:quax/group/group_screen.dart';
 import 'package:quax/group/search_query.dart';
 import 'package:quax/tweet/paginated_tweet_list.dart';
@@ -314,8 +315,13 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
             username: null,
             firstPagePreview: _cachedPreview,
             onRefresh: () async {
+              final groupModel = context.read<GroupModel>();
               var repository = await Repository.writable();
               await repository.delete(tableFeedGroupChunk);
+              // Re-read the group membership, so an explicit refresh also picks
+              // up changes made through paths that don't notify the subscription
+              // and group reload listeners.
+              await groupModel.refreshGroup();
             },
             firstPageErrorPrefix: (l10n) => l10n.unable_to_load_the_tweets_for_the_feed,
             newPageErrorPrefix: (l10n) => l10n.unable_to_load_the_next_page_of_tweets,

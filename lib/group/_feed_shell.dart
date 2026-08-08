@@ -63,16 +63,20 @@ class _GroupFeedShellState extends State<GroupFeedShell> with AutomaticKeepAlive
     }
   }
 
-  // Triggered when subscriptions or group memberships change. Refresh the group
-  // state and bump the counter to remount the body — for pushed-route feeds
-  // this drops the stale (cached, just-invalidated) PagingController so the
-  // inner state re-fetches a fresh one from the cache.
+  // Triggered when subscriptions or group memberships change. The membership is
+  // always re-read, so every feed sees it — refreshGroup() updates the store in
+  // place, and the inner feed reloads only when its chunk hashes actually moved.
+  //
+  // Remounting the body is destructive (it drops the cached, just-invalidated
+  // PagingController), so it is limited to the feed the user is looking at;
+  // doing it to a feed behind a pushed route would wipe its tweets and scroll
+  // position while the user is away.
   void _onReload() {
     if (!mounted) return;
-    setState(() {
-      _groupModel.loadGroup();
-      _refreshCounter++;
-    });
+    _groupModel.refreshGroup();
+    if (ModalRoute.of(context)?.isCurrent ?? true) {
+      setState(() => _refreshCounter++);
+    }
   }
 
   @override
