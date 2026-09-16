@@ -69,13 +69,9 @@ class HomeModel extends Store<List<HomePage>> {
   }
 
   Future<void> movePage(int oldIndex, int newIndex) async {
-    if (newIndex > oldIndex) {
-      newIndex = newIndex - 1;
-    }
-
     final page = state.removeAt(oldIndex);
     state.insert(newIndex, page);
-    update(state);
+    update(state, force: true);
   }
 
   Future<void> save() async {

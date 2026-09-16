@@ -31,6 +31,7 @@ linter:
 analyzer:
   exclude:
     - "**/*.g.dart"
-    - "lib/generated/intl/messages_*.dart"
+    - "lib/generated/**"
+    - lib/oss_licenses.dart
     - build/**
     - android/**

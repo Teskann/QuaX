@@ -15,19 +15,19 @@ class Timestamp extends StatefulWidget {
   const Timestamp({super.key, required this.timestamp, this.absoluteTimestamp = false});
 
   @override
-  State<Timestamp> createState() => _TimestampState(useRelativeTimestamp: !absoluteTimestamp);
+  State<Timestamp> createState() => _TimestampState();
 }
 
 class _TimestampState extends State<Timestamp> {
-  bool _useRelativeTimestamp;
-
-  _TimestampState({useRelativeTimestamp = true}) : _useRelativeTimestamp = useRelativeTimestamp;
+  late bool _useRelativeTimestamp;
 
   String formattedTime = '';
 
   @override
   void initState() {
     super.initState();
+
+    _useRelativeTimestamp = !widget.absoluteTimestamp;
 
     var timestamp = widget.timestamp;
     if (timestamp != null) {

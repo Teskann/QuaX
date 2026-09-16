@@ -58,7 +58,7 @@ class SettingsHomeFragment extends StatelessWidget {
                   },
                 );
               },
-              onReorder: (oldIndex, newIndex) async {
+              onReorderItem: (oldIndex, newIndex) async {
                 await model.movePage(oldIndex, newIndex);
                 await model.save();
               },

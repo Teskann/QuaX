@@ -61,7 +61,9 @@ class _TrendsSettingsState extends State<TrendsSettings> {
                 selected: place.woeid == item.woeid,
                 onTap: () async {
                   await context.read<UserTrendLocationModel>().set(item);
-                  Navigator.pop(context);
+                  if (context.mounted) {
+                    Navigator.pop(context);
+                  }
                 });
           }
 

@@ -33,9 +33,9 @@ don't apply anymore.
 
 ## Verify
 
-Run the codegen from `CLAUDE.md`, then `flutter analyze` and `flutter build apk --debug`. Fix what
-the upgrade broke, nothing else. The workflow re-runs both as a gate and opens no pull request if
-either fails.
+Run the codegen from `CLAUDE.md`, then `flutter analyze` and `flutter build apk --debug`.
+Fix all issues until it succeeds. The tests must also pass. The workflow re-runs both as a gate and
+opens no pull request if either fails.
 
 Never touch the `version:` line, `changelog.md` or `release-notes.md`.
 

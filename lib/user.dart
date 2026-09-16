@@ -1,3 +1,4 @@
+// ignore: implementation_imports - convertTwitterDateTime is not exported by twitter_api.dart
 import 'package:dart_twitter_api/src/utils/date_utils.dart';
 import 'package:dart_twitter_api/twitter_api.dart';
 import 'package:extended_image/extended_image.dart';
@@ -302,7 +303,7 @@ class UserWithExtra extends User {
       'profile_banner_url': _text(json['banner']?['image_url']),
       'profile_image_url_https': avatar,
       'possibly_sensitive': json['possibly_sensitive'],
-      'default_profile_image': avatar == null ? null : avatar.contains('default_profile_images'),
+      'default_profile_image': avatar?.contains('default_profile_images'),
     };
     modern.removeWhere((_, value) => value == null);
     return modern;

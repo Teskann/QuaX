@@ -146,8 +146,10 @@ class _SubscriptionGroupEditDialogState extends State<SubscriptionGroupEditDialo
                 onPressed: () async {
                   await context.read<GroupsModel>().deleteGroup(id);
 
-                  Navigator.pop(context);
-                  Navigator.pop(context);
+                  if (context.mounted) {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  }
                 },
                 child: Text(L10n.of(context).yes),
               ),

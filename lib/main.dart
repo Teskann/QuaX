@@ -48,7 +48,7 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:app_links/app_links.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-Future checkForUpdates(context) async {
+Future<void> checkForUpdates(BuildContext context) async {
   Logger.root.info('Checking for updates');
 
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
@@ -64,6 +64,10 @@ Future checkForUpdates(context) async {
     final Map<dynamic, dynamic> map = json.decode(contentAsString);
     if (map["tag_name"] != null) {
       if (map["tag_name"] != 'v${packageInfo.version}') {
+        if (!context.mounted) {
+          return;
+        }
+
         await showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -79,7 +83,9 @@ Future checkForUpdates(context) async {
                   child: Text(L10n.of(context).view_on_github),
                   onPressed: () async {
                     await openUri(context, map['html_url']);
-                    Navigator.of(context).pop();
+                    if (context.mounted) {
+                      Navigator.of(context).pop();
+                    }
                   },
                 ),
               ],
@@ -93,11 +99,15 @@ Future checkForUpdates(context) async {
   }
 }
 
-Future checkForAccounts(context) async {
+Future<void> checkForAccounts(BuildContext context) async {
   Logger.root.info('Checking for accounts');
 
   final accounts = await getAccounts();
   if (accounts.isEmpty) {
+    if (!context.mounted) {
+      return;
+    }
+
     await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -579,6 +589,9 @@ class _DefaultPageState extends State<DefaultPage> {
 
   void handleInitialLink(Uri link) async {
     final parsed = await parseUri(link);
+    if (!mounted) {
+      return;
+    }
     switch (parsed) {
       case ProfileUriInfo(screenName: final screenName, profileTabIndex: final tab):
         Navigator.pushNamed(context, routeProfile,
@@ -589,6 +602,8 @@ class _DefaultPageState extends State<DefaultPage> {
             arguments: StatusScreenArguments(
               id: id,
               username: screenName,
+              initialMediaIndex: photoNumber == null || photoNumber < 1 ? 0 : photoNumber - 1,
+              openMediaFullScreen: direct || photoNumber != null,
             ));
         return;
       case UnknownResult():

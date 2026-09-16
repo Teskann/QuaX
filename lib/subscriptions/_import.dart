@@ -43,6 +43,7 @@ class _SubscriptionImportScreenState extends State<SubscriptionImportScreen> {
 
       var importModel = context.read<ImportDataModel>();
       var groupModel = context.read<GroupsModel>();
+      var subscriptionsModel = context.read<SubscriptionsModel>();
 
       var createdAt = DateTime.now();
 
@@ -82,7 +83,7 @@ class _SubscriptionImportScreenState extends State<SubscriptionImportScreen> {
       }
 
       await groupModel.reloadGroups();
-      await context.read<SubscriptionsModel>().reloadSubscriptions();
+      await subscriptionsModel.reloadSubscriptions();
       _streamController?.close();
     } catch (e, stackTrace) {
       _streamController?.addError(e, stackTrace);

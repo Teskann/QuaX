@@ -31,5 +31,8 @@ jobs:
           dart run intl_utils:generate
           dart run flutter_iconpicker:generate_packs --packs material
 
+      - name: Analyze the sources
+        run: flutter analyze
+
       - name: Run the tests
         run: flutter test --reporter github

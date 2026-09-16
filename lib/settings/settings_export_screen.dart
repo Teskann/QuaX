@@ -118,12 +118,14 @@ class _SettingsExportScreenState extends State<SettingsExportScreen> {
                 var groupModel = context.read<GroupsModel>();
                 var savedTweetFolderModel = context.read<SavedTweetFolderModel>();
                 var likedTweetModel = context.read<LikedTweetModel>();
+                var subscriptionsModel = context.read<SubscriptionsModel>();
+                var savedTweetModel = context.read<SavedTweetModel>();
+                var prefs = PrefService.of(context);
+
                 await groupModel.reloadGroups();
 
-                var subscriptionsModel = context.read<SubscriptionsModel>();
                 await subscriptionsModel.reloadSubscriptions();
 
-                var savedTweetModel = context.read<SavedTweetModel>();
                 await savedTweetModel.listSavedTweets();
 
                 await savedTweetFolderModel.listFolders();
@@ -131,8 +133,6 @@ class _SettingsExportScreenState extends State<SettingsExportScreen> {
                 await likedTweetModel.listLikedTweets();
 
                 List<Account>? accounts = _exportAccounts ? await getAccounts() : null;
-
-                var prefs = PrefService.of(context);
 
                 // TODO: Check exporting
                 var settings = _exportSettings ? prefs.toMap() : null;
@@ -170,7 +170,7 @@ class _SettingsExportScreenState extends State<SettingsExportScreen> {
                 var path = await FlutterFileDialog.saveFile(
                     params:
                         SaveFileDialogParams(fileName: fileName, data: Uint8List.fromList(utf8.encode(exportData))));
-                if (path != null) {
+                if (path != null && context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(

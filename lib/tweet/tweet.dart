@@ -15,7 +15,7 @@ import 'package:quax/saved/liked_tweet_model.dart';
 import 'package:quax/tweet/_like_button.dart';
 import 'package:quax/saved/saved_tweet_model.dart';
 import 'package:quax/status.dart';
-import 'package:quax/tweet/_ExpandableTweetText.dart';
+import 'package:quax/tweet/_expandable_tweet_text.dart';
 import 'package:quax/tweet/_card.dart';
 import 'package:quax/tweet/_media.dart';
 import 'package:quax/article/article.dart';
@@ -353,30 +353,34 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
                                 L10n.of(context).share_tweet_content,
                                 Icons.text_snippet,
                                       () async {
-                                    Share.share(tweetText);
+                                    SharePlus.instance.share(ShareParams(text: tweetText));
                                     Navigator.pop(context);
                                   },
                               ),
                             createSheetButton(isArticle ? L10n.of(context).share_article_link : L10n.of(context).share_tweet_link, Icons.link,
                                 () async {
-                              Share.share(
-                                  '$shareBaseUrl/${tweet.user!.screenName}/status/${tweet.idStr}');
+                              SharePlus.instance.share(
+                                  ShareParams(text: '$shareBaseUrl/${tweet.user!.screenName}/status/${tweet.idStr}'));
                               Navigator.pop(context);
                             }),
                             if (!isArticle)
                               createSheetButton(
                                   L10n.of(context).share_tweet_content_and_link, Icons.add_link,
                                       () async {
-                                        Share.share(
-                                            '$tweetText\n\n$shareBaseUrl/${tweet.user!.screenName}/status/${tweet.idStr}');
+                                        SharePlus.instance.share(ShareParams(
+                                            text:
+                                                '$tweetText\n\n$shareBaseUrl/${tweet.user!.screenName}/status/${tweet.idStr}'));
                                         Navigator.pop(context);
                                       }),
                             createSheetButton(isArticle ? L10n.of(context).share_article_as_image : L10n.of(context).share_tweet_as_image, Icons.screenshot, () async {
                               Uint8List? imgBytes = await captureWidget();
                               if (imgBytes != null) {
-                                Share.shareXFiles([XFile.fromData(imgBytes, mimeType: 'image/png')]);
+                                SharePlus.instance.share(
+                                    ShareParams(files: [XFile.fromData(imgBytes, mimeType: 'image/png')]));
                               }
-                              Navigator.pop(context);
+                              if (context.mounted) {
+                                Navigator.pop(context);
+                              }
                             }),
                             const Padding(
                               padding: EdgeInsets.symmetric(horizontal: 16),
@@ -655,15 +659,13 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
 
     final footerBar = _buildFooterBar(tweet, tweetText, shareBaseUrl, locale, numberFormat, isArticle: tweet.article != null);
 
-    var article = Container();
+    Widget article = Container();
     if (tweet.article != null) {
-      article = Container(
-        child: ArticleWidget(
-          article: tweet.article!,
-          expand: widget.tweetOpened,
-          onTap: () => onClickOpenTweet(tweet),
-          bottomBar: widget.tweetOpened ? footerBar : null,
-        )
+      article = ArticleWidget(
+        article: tweet.article!,
+        expand: widget.tweetOpened,
+        onTap: () => onClickOpenTweet(tweet),
+        bottomBar: widget.tweetOpened ? footerBar : null,
       );
     }
 

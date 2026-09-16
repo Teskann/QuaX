@@ -51,7 +51,9 @@ Future<void> downloadUriToPickedFile(BuildContext context, Uri uri, String fileN
 
     onSuccess();
   } catch (e) {
-    showSnackBar(context, icon: '🙊', message: e.toString());
+    if (context.mounted) {
+      showSnackBar(context, icon: '🙊', message: e.toString());
+    }
   }
 }
 
