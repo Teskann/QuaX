@@ -1,0 +1,177 @@
+name: Claude review fix
+
+on:
+  pull_request_review:
+    types: [submitted]
+
+permissions: {}
+
+concurrency:
+  group: claude-review-fix-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  fix:
+    name: Apply the review to the pull request
+    if: |
+      github.event.review.state == 'changes_requested' &&
+      github.event.pull_request.user.login == 'github-actions[bot]' &&
+      contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.review.author_association)
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    # Read-only token: whatever Claude runs, nothing in this job can push or dispatch. The push
+    # job below gets the write token and never runs Claude.
+    permissions:
+      contents: read
+      pull-requests: read
+
+    steps:
+      # The reviewed commit itself, not the branch tip: the amend must land on what was reviewed.
+      - name: Clone the reviewed commit
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Install and set up Flutter
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
+        with:
+          flutter-version-file: .fvmrc
+          cache: true
+
+      - name: Collect the review
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Through the environment, never inlined into the script: ${{ }} interpolation of a
+          # review body is a shell injection.
+          REVIEW_BODY: ${{ github.event.review.body }}
+          REVIEW_ID: ${{ github.event.review.id }}
+          REVIEW_AUTHOR: ${{ github.event.review.user.login }}
+          PR: ${{ github.event.pull_request.number }}
+          REVIEW_FILE: ${{ runner.temp }}/review.md
+        run: |
+          set -euo pipefail
+
+          {
+            echo "# Review"
+            echo
+            printf '%s\n' "$REVIEW_BODY"
+            echo
+            echo "# Inline comments"
+            echo
+            gh api --paginate "repos/$GITHUB_REPOSITORY/pulls/$PR/comments?per_page=100" \
+              | jq -r --argjson id "$REVIEW_ID" --arg author "$REVIEW_AUTHOR" '
+                  .[]
+                  | select(.pull_request_review_id == $id and .user.login == $author)
+                  | "## \(.path):\(.line // .original_line) — comment \(.id)\n\n```\n\(.diff_hunk)\n```\n\n\(.body)\n"
+                '
+          } > "$REVIEW_FILE"
+
+          cat "$REVIEW_FILE"
+
+      - name: Apply the review
+        uses: anthropics/claude-code-action@7b0b255830a1fab6e602658672acad11c12d841d # v1.0.226
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          claude_args: |
+            --allowedTools "Bash,Read,Edit,Write,Glob,Grep"
+            --disallowedTools "Bash(git commit:*),Bash(git push:*),Bash(git rebase:*),Bash(git reset:*)"
+            --max-turns 80
+          prompt: |
+            A reviewer requested changes on this pull request. Their review is in
+            ${{ runner.temp }}/review.md: the body first, then every inline comment, each headed
+            by its file, its line and the comment id needed to reply to it.
+
+            Address each remark by editing the working tree. Leave the repository dirty: the
+            workflow commits and pushes, you must not run git commit, git push or anything that
+            rewrites history. Simply make sure tests pass and that `flutter analyze` passes.
+            The generated sources are gitignored, so run the codegen from CLAUDE.md first.
+
+            Then answer every remark. Write the answers, and nothing else, to
+            ${{ runner.temp }}/replies.json:
+
+              {"replies": [{"id": <comment id>, "body": "..."}], "comment": "..."}
+
+            Make answers concise, the way you would answer a text message. "comment" is
+            optional, for the review body itself when it raises something no inline comment
+            covers. The workflow posts the answers once the fix is pushed.
+
+      # From master like in the push job: a pull request branched before the action existed has
+      # no copy of it.
+      - name: Hand the changes over
+        uses: Teskann/QuaX/.github/actions/changes-to-artifact@master
+        with:
+          name: review-fix-${{ github.event.review.id }}
+          files: ${{ runner.temp }}/replies.json
+
+  push:
+    name: Amend the commit and force push
+    needs: fix
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+
+    steps:
+      - name: Clone the reviewed commit
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      # Taken from master rather than from the checkout: this job holds the write token, so it
+      # must run nothing the pull request branch could have changed.
+      - name: Take the changes over
+        id: changes
+        uses: Teskann/QuaX/.github/actions/changes-from-artifact@master
+        with:
+          name: review-fix-${{ github.event.review.id }}
+
+      - name: Amend the commit and force push
+        if: steps.changes.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: ${{ github.event.pull_request.head.ref }}
+          REVIEWED_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+
+          git commit --amend --no-edit
+
+          # --force-with-lease against the reviewed sha: the push is refused if anything landed
+          # on the branch while the job was running.
+          git push --force-with-lease="refs/heads/$BRANCH:$REVIEWED_SHA" \
+            origin "HEAD:refs/heads/$BRANCH"
+
+          # A push made with GITHUB_TOKEN triggers no workflow, so ci.yml will not see this
+          # commit. workflow_dispatch is the documented exception to that rule, which is enough
+          # to get the checks to run on the amended branch without a personal access token.
+          gh workflow run test.yml --ref "$BRANCH"
+
+      # After the push, so that a refused push posts no "Fixed".
+      - name: Post the replies
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+          REPLIES: ${{ steps.changes.outputs.dir }}/replies.json
+        run: |
+          set -euo pipefail
+
+          if [ ! -s "$REPLIES" ]; then
+            echo "No reply to post."
+            exit 0
+          fi
+
+          jq -c '.replies[]?' "$REPLIES" | while read -r reply; do
+            id=$(jq -r .id <<< "$reply")
+            [[ "$id" =~ ^[0-9]+$ ]] || { echo "Bad comment id: $id"; exit 1; }
+            gh api "repos/$GITHUB_REPOSITORY/pulls/$PR/comments/$id/replies" \
+              -f body="$(jq -r .body <<< "$reply")"
+          done
+
+          comment=$(jq -r '.comment // empty' "$REPLIES")
+          [ -z "$comment" ] || gh pr comment "$PR" --body "$comment"

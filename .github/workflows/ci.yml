@@ -17,18 +17,18 @@ jobs:
     if: ${{ success() && !contains(github.event.head_commit.message, 'ci skip') }}
     steps:
       - name: Clone the repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
         with:
           fetch-depth: 0
 
       - name: Install and set up Java
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
         with:
           distribution: 'zulu'
           java-version: '25.x'
 
       - name: Install and set up Flutter
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
         with:
           flutter-version-file: .fvmrc
           cache: true
@@ -40,7 +40,7 @@ jobs:
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
 
       - name: Cache build directory
-        uses: actions/cache@v5
+        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
         with:
           path: build
           key: ${{ runner.os }}-build-${{ hashFiles('**/build') }}
@@ -93,28 +93,28 @@ jobs:
 
       - name: Archive big APK
         if: github.event_name != 'pull_request'
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
           name: apk
           path: build/app/outputs/release/app-release.apk
 
       - name: Archive arm APK
         if: github.event_name != 'pull_request'
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
           name: apk-arm
           path: build/app/outputs/release/app-armeabi-v7a-release.apk
 
       - name: Archive arm64 APK
         if: github.event_name != 'pull_request'
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
           name: apk-arm64
           path: build/app/outputs/release/app-arm64-v8a-release.apk
 
       - name: Archive x86_64 APK
         if: github.event_name != 'pull_request'
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
           name: apk-x86_64
           path: build/app/outputs/release/app-x86_64-release.apk

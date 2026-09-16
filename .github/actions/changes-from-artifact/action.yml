@@ -1,0 +1,48 @@
+name: Changes from artifact
+description: >
+  Downloads an artifact made by changes-to-artifact, applies its patch to the checkout and
+  stages it, and sets github-actions[bot] as the commit author. Nothing is committed.
+
+inputs:
+  name:
+    description: Name of the artifact
+    required: true
+
+outputs:
+  changed:
+    description: '"true" when the patch was not empty, "false" otherwise'
+    value: ${{ steps.apply.outputs.changed }}
+  dir:
+    description: Directory the artifact was extracted to, where the extra files are
+    value: ${{ steps.apply.outputs.dir }}
+
+runs:
+  using: composite
+  steps:
+    - name: Download the patch
+      uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+      with:
+        name: ${{ inputs.name }}
+        path: ${{ runner.temp }}/changes
+
+    - name: Apply the patch
+      id: apply
+      shell: bash
+      env:
+        DIR: ${{ runner.temp }}/changes
+      run: |
+        set -euo pipefail
+
+        echo "dir=$DIR" >> "$GITHUB_OUTPUT"
+
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+
+        if [ ! -s "$DIR/changes.patch" ]; then
+          echo "The patch is empty."
+          echo "changed=false" >> "$GITHUB_OUTPUT"
+          exit 0
+        fi
+
+        git apply --index "$DIR/changes.patch"
+        echo "changed=true" >> "$GITHUB_OUTPUT"

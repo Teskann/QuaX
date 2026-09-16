@@ -1,0 +1,41 @@
+name: Changes to artifact
+description: >
+  Stages every change in the working tree, new files included, and uploads the resulting patch
+  as an artifact along with any extra file listed in `files`. changes-from-artifact is the
+  counterpart, for a job that holds the write token.
+
+inputs:
+  name:
+    description: Name of the artifact
+    required: true
+  files:
+    description: >
+      Extra files to upload next to the patch, one path per line. They must live under the
+      runner's temp directory, so that the patch stays at the root of the artifact.
+    required: false
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    # -A so a file Claude adds, a new Dart source for instance, makes it into the patch.
+    - name: Turn the working tree into a patch
+      shell: bash
+      run: |
+        set -euo pipefail
+
+        git add -A
+        echo "Changed:"
+        git diff --cached --stat
+        git diff --cached --binary > "$RUNNER_TEMP/changes.patch"
+
+    - name: Upload the patch
+      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+      with:
+        name: ${{ inputs.name }}
+        path: |
+          ${{ runner.temp }}/changes.patch
+          ${{ inputs.files }}
+        if-no-files-found: error
+        overwrite: true
+        retention-days: 1
