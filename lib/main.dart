@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:flutter_localizations/flutter_localizations.dart' as flutter_l10n;
 import 'package:flutter/services.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 import 'package:quax/client/accounts.dart';
@@ -472,6 +473,8 @@ class _FritterAppState extends State<FritterApp> {
                   localizationsDelegates: const [
                     L10n.delegate,
                     ...GlobalMaterialLocalizations.delegates,
+                    flutter_l10n.GlobalMaterialLocalizations.delegate,
+                    flutter_l10n.GlobalCupertinoLocalizations.delegate,
                   ],
                   supportedLocales: L10n.delegate.supportedLocales,
                   locale: _locale,
@@ -565,9 +568,12 @@ class _FritterAppState extends State<FritterApp> {
                           prefix: L10n.of(context).something_broke_in_fritter,
                         );
 
-                    return SecureContentScope(
-                      enabled: _isSecure,
-                      child: child ?? Container(),
+                    // ignore: deprecated_member_use
+                    return MaterialUiCompatibilityBridge(
+                      child: SecureContentScope(
+                        enabled: _isSecure,
+                        child: child ?? Container(),
+                      ),
                     );
                   },
                 ));

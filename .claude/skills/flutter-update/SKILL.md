@@ -29,7 +29,10 @@ check whether it still describes reality, and take the entry out when it does no
 catches the resolution conflicts and the verification build catches the rest, so put back only what
 actually breaks. Every override is a liability, so aim to leave fewer behind than you found. Say in
 the summary which ones you dropped and which you kept, with the reason. Remove comments if they
-don't apply anymore.
+don't apply anymore. Also check changelogs of dependencies and check which one migrated to
+`material_ui` package instead of `flutter/material`. Once there is no legacy material widgets,
+remove the `MaterialUiCompatibilityBridge`.
+Also remove workarounds in the code if they have been fixed by the dependency upgrade.
 
 ## Verify
 
