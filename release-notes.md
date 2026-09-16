@@ -1,7 +1,10 @@
-## QuaX v4.13.2
+## QuaX v4.13.3
 
-What's new in QuaX v4.13.2:
-  - Fixed display of some deleted tweets that lead to errors <sup>[[view modified code]](https://github.com/teskann/quax/commit/486111982963c25b027ed45f8e8da39dc4cf98c9)</sup>
+What's new in QuaX v4.13.3:
+  - Fixed dart issues and some minor bugs <sup>[[view modified code]](https://github.com/teskann/quax/commit/271ffcab4850e67e9964d877e0774279d5428d45)</sup>
+  - Fixed #187 - Adding new account to group will throw error <sup>[[view modified code]](https://github.com/teskann/quax/commit/8294c05d95b02ff321c8daef21ed0ebcdbfec6a5)</sup>
+  - QuaX now opens links in its own task (fixed #184) <sup>[[view modified code]](https://github.com/teskann/quax/commit/353316cf0419b08bdcfce8abf32e89a7f13c4f18)</sup>
+  - Improved CI automation and safety <sup>[[view modified code]](https://github.com/teskann/quax/commit/28f4e04aefc1e198b3eaa25a2b90d1321984a92b)</sup>
 
 
 ---
