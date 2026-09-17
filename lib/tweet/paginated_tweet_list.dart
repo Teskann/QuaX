@@ -21,6 +21,10 @@ typedef TweetPageLoader = Future<TweetPageResult> Function(String? cursor);
 class TweetFeedController {
   late final CursorPagingController<String, TweetChain> _paging;
   TweetPageLoader? _loader;
+  // Ids of the chains already handed to the list, so a chain returned by two
+  // overlapping cursor pages is rendered once. Reset whenever the feed reloads
+  // its first page.
+  final Set<String> _seenChainIds = {};
 
   TweetFeedController() {
     _paging = CursorPagingController<String, TweetChain>(_fetch);
@@ -32,7 +36,17 @@ class TweetFeedController {
 
   bool get hasItems => _paging.items != null;
 
+  /// The chains in [chains] not already shown on an earlier page of this feed.
+  /// Loaders whose pages can overlap call this instead of de-duplicating
+  /// themselves, since only the controller outlives a widget remount.
+  List<TweetChain> retainUnseen(List<TweetChain> chains) =>
+      chains.where((chain) => _seenChainIds.add(chain.id)).toList();
+
   Future<CursorPage<String, TweetChain>> _fetch(String? cursor) async {
+    if (cursor == null) {
+      _seenChainIds.clear();
+    }
+
     final result = await _loader!(cursor);
     final next = result.nextCursor;
     return (items: result.chains, nextCursor: _isLastPage(result.chains, next, cursor) ? null : next);
@@ -47,6 +61,8 @@ class TweetFeedController {
   /// to the first-page spinner the way [PagingController.refresh] does. Used by
   /// pull-to-refresh so the existing tweets stay visible under the indicator.
   Future<void> softRefresh() async {
+    // Bypasses _fetch, so it has to reset the de-duplication itself.
+    _seenChainIds.clear();
     try {
       final result = await _loader!(null);
       final next = result.nextCursor;

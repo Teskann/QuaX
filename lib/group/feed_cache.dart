@@ -10,10 +10,13 @@ import 'package:sqflite/sqflite.dart';
 /// chains identically.
 
 List<TweetChain> chainsFromStoredChunks(List<Map<String, Object?>> storedChunks) {
+  var seen = <String>{};
+
   return storedChunks
       .map((e) => jsonDecode(e['response'] as String))
       .map((e) => List.from(e))
       .expand((e) => e.map((c) => TweetChain.fromJson(c)))
+      .where((c) => seen.add(c.id))
       .toList();
 }
 
@@ -41,12 +44,10 @@ Future<List<TweetChain>> readCachedChainsForHashes(Database repository, Iterable
   return sortChainsNewestFirst(chains);
 }
 
-/// Every cached tweet across all chunks, newest first and de-duplicated. Used to
-/// preview the combined "All"/Following feed while its subscription list loads,
-/// before the per-chunk hashes are known.
+/// Every cached tweet across all chunks, newest first. Used to preview the
+/// combined "All"/Following feed while its subscription list loads, before the
+/// per-chunk hashes are known.
 Future<List<TweetChain>> readAllCachedChains(Database repository) async {
   var storedChunks = await repository.query(tableFeedGroupChunk, orderBy: 'created_at DESC');
-  var seen = <String>{};
-  var chains = chainsFromStoredChunks(storedChunks).where((c) => seen.add(c.id)).toList();
-  return sortChainsNewestFirst(chains);
+  return sortChainsNewestFirst(chainsFromStoredChunks(storedChunks));
 }
