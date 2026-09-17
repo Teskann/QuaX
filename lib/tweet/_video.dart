@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:better_player_plus/better_player_plus.dart';
+import 'package:better_player_plus/better_player_plus.dart' hide VisibilityDetector, VisibilityInfo;
 import 'package:dart_twitter_api/twitter_api.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:pref/pref.dart';

@@ -19,25 +19,20 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 4.13.3+400001045
 
 environment:
-  sdk: "3.13.2"
-  flutter: 3.47.2
+  sdk: "3.13.3"
+  flutter: 3.47.4
 
 dependency_overrides:
   # auto_direction pins an old intl (^0.17/^0.18) that conflicts with
   # dart_twitter_api's intl ^0.20.0. auto_direction only uses the stable
   # Bidi.detectRtlDirectionality API, so forcing the modern intl is safe.
   intl: ^0.20.2
-  # file_picker 12 (via windows_file_picker) / package_info_plus 10 / share_plus
-  # 13 need win32 ^6, but flutter_iconpicker (dcli <8) and arb_utils (dcli <=10)
-  # pull dcli 7.x / dart_console 4.x, whose Windows FFI code is written against
-  # the win32 ^5 API and fails to *compile* (even on Linux, since dcli uses
-  # runtime Platform checks, not conditional imports). Forcing dcli/dart_console
-  # to their win32-6 majors lets the codegen CLIs build. These are dev-only
-  # codegen tools never imported by app code, and win32 is a no-op off Windows,
-  # so this is safe.
-  win32: ^6.2.0
-  dcli: ^9.0.0
-  dart_console: ^5.0.0
+  # flutter_iconpicker (dev-only codegen) pins dcli <8.0.0, which conflicts
+  # with file_picker's win32 ^6.3.0 requirement (dcli <9.0.0 pulls win32
+  # ^5.0.0). Forcing a modern dcli resolves that; win32/dart_console no
+  # longer need overriding themselves since dcli now pulls compatible
+  # versions of both on its own.
+  dcli: ^10.0.0
 
 dependencies:
   flutter:
@@ -54,6 +49,11 @@ dependencies:
   html: ^0.15.4
 
   # UI & Media
+  # Stuck on 0.0.6: it predates Dart 3.0 and only declares the default
+  # "sdk: <3.0.0" upper bound, which pub treats as auto-widened to any 3.x
+  # SDK for packages published before Dart 3 shipped. 0.0.7 was published
+  # after Dart 3 shipped, so its explicit "sdk: <3.13.0" bound is enforced
+  # literally and excludes our pinned 3.13.3 SDK.
   auto_direction: ^0.0.6
   extended_image: ^10.0.0
   extended_nested_scroll_view: ^6.0.0
@@ -61,7 +61,7 @@ dependencies:
   infinite_scroll_pagination: ^5.1.1
   flutter_cache: ^0.1.0
   flutter_material_color_picker: ^1.2.0
-  file_picker: ^12.2.0
+  file_picker: ^13.1.0
   flutter_file_dialog: ^3.0.1
   flutter_iconpicker: ^4.0.1
   flutter_portal: ^1.1.4
@@ -74,14 +74,7 @@ dependencies:
   dynamic_color: ^2.1.0
 
   # State Management & Data
-  # material_ui migration merged upstream but not yet released on pub.dev
-  # (latest there is 2.8.0, from 2024-01-04). Pin the merge commit until 2.9.0
-  # ships, then switch back to a hosted constraint.
-  pref:
-    git:
-      url: https://github.com/DavBfr/flutter_pref.git
-      ref: 7fa597165e0e20d3a5379869846b98f6222ac9ff
-      path: pref
+  pref: ^3.0.0
   provider: ^6.0.4
   flutter_triple: ^3.0.0
   multi_select_flutter: ^4.1.3
@@ -122,7 +115,7 @@ dev_dependencies:
 
   flutter_launcher_icons: ^0.14.4
   flutter_lints:
-  dart_pubspec_licenses: ^3.0.7
+  dart_pubspec_licenses: ^3.2.0
   intl_utils: ^2.8.1
   arb_utils: ^0.11.1
   collection: ^1.19.1
