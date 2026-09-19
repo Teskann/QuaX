@@ -1,10 +1,7 @@
-## QuaX v4.13.3
+## QuaX v4.13.4
 
-What's new in QuaX v4.13.3:
-  - Fixed dart issues and some minor bugs <sup>[[view modified code]](https://github.com/teskann/quax/commit/271ffcab4850e67e9964d877e0774279d5428d45)</sup>
-  - Fixed #187 - Adding new account to group will throw error <sup>[[view modified code]](https://github.com/teskann/quax/commit/8294c05d95b02ff321c8daef21ed0ebcdbfec6a5)</sup>
-  - QuaX now opens links in its own task (fixed #184) <sup>[[view modified code]](https://github.com/teskann/quax/commit/353316cf0419b08bdcfce8abf32e89a7f13c4f18)</sup>
-  - Improved CI automation and safety <sup>[[view modified code]](https://github.com/teskann/quax/commit/28f4e04aefc1e198b3eaa25a2b90d1321984a92b)</sup>
+What's new in QuaX v4.13.4:
+  - Upgraded Flutter to 3.47.4 and refreshed the dependencies (by @github-actions[bot]) <sup>[[view modified code]](https://github.com/teskann/quax/commit/ff8bb2a0e89bf8e8f956ffd96beff94297a14e9d)</sup>
 
 
 ---

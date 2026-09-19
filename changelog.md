@@ -1,3 +1,8 @@
+## QuaX v4.13.4
+
+What's new in QuaX v4.13.4:
+  - Upgraded Flutter to 3.47.4 and refreshed the dependencies (by @github-actions[bot]) <sup>[[view modified code]](https://github.com/teskann/quax/commit/ff8bb2a0e89bf8e8f956ffd96beff94297a14e9d)</sup>
+
 ## QuaX v4.13.3
 
 What's new in QuaX v4.13.3:
