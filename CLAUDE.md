@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Build & Development Commands
 
-Use `fvm flutter` instead of raw `flutter` to enforce the pinned SDK version (3.47.2).
+Use `fvm flutter` instead of raw `flutter` to enforce the pinned SDK version (3.47.5).
 
 ```bash
 # Install the pinned Flutter SDK and activate it for this project
