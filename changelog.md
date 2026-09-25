@@ -1,3 +1,10 @@
+## QuaX v4.14.0
+
+What's new in QuaX v4.14.0:
+  - Upgraded Flutter to 3.47.5 and refreshed the dependencies (by @github-actions[bot]) <sup>[[view modified code]](https://github.com/teskann/quax/commit/8db43304983ae3e59b34c273102dc34691cc20ce)</sup>
+  - Improved errors display in the app. Now you can report bugs in one click <sup>[[view modified code]](https://github.com/teskann/quax/commit/525fb68435b89ea6e8c54c7b06ec2d0243c45e9a)</sup>
+  - **Fixed on demand file index issues, caused by a change in X servers (fixed #155)** <sup>[[view modified code]](https://github.com/teskann/quax/commit/d913af18c03da30bbd5181f3c847c497cc4d3e40)</sup>
+
 ## QuaX v4.13.4
 
 What's new in QuaX v4.13.4:
