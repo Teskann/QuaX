@@ -317,8 +317,8 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
               var repository = await Repository.writable();
               await repository.delete(tableFeedGroupChunk);
             },
-            firstPageErrorPrefix: L10n.of(context).unable_to_load_the_tweets_for_the_feed,
-            newPageErrorPrefix: L10n.of(context).unable_to_load_the_next_page_of_tweets,
+            firstPageErrorPrefix: (l10n) => l10n.unable_to_load_the_tweets_for_the_feed,
+            newPageErrorPrefix: (l10n) => l10n.unable_to_load_the_next_page_of_tweets,
             emptyMessage: L10n.of(context).could_not_find_any_tweets_from_the_last_7_days,
           ),
         ),

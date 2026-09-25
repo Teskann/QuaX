@@ -76,8 +76,9 @@ class _ProfileMediaGridState extends State<ProfileMediaGrid> {
 
       return MediaGrid(
         controller: _paging.pagingController,
-        firstPageErrorPrefix: L10n.of(context).unable_to_load_the_tweets,
-        newPageErrorPrefix: L10n.of(context).unable_to_load_the_next_page_of_tweets,
+        firstPageErrorPrefix: (l10n) => l10n.unable_to_load_the_tweets,
+        newPageErrorPrefix: (l10n) => l10n.unable_to_load_the_next_page_of_tweets,
+        errorScreenName: widget.user.screenName,
         emptyMessage: L10n.of(context).could_not_find_any_tweets_by_this_user,
       );
     });

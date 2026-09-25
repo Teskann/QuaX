@@ -109,13 +109,15 @@ class _ProfileTweetsState extends State<ProfileTweets> with AutomaticKeepAliveCl
               firstPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(
                 error: pagingErrorOf(state)?.error,
                 stackTrace: pagingErrorOf(state)?.stackTrace,
-                prefix: L10n.of(context).unable_to_load_the_tweets,
+                prefix: (l10n) => l10n.unable_to_load_the_tweets,
+                screenName: widget.user.screenName,
                 onRetry: fetchNextPage,
               ),
-              newPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(
+              newPageErrorIndicatorBuilder: (context) => ErrorCard(
                 error: pagingErrorOf(state)?.error,
                 stackTrace: pagingErrorOf(state)?.stackTrace,
-                prefix: L10n.of(context).unable_to_load_the_next_page_of_tweets,
+                prefix: (l10n) => l10n.unable_to_load_the_next_page_of_tweets,
+                screenName: widget.user.screenName,
                 onRetry: fetchNextPage,
               ),
               noItemsFoundIndicatorBuilder: (context) {

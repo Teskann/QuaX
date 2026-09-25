@@ -84,7 +84,8 @@ class _ProfileScreen extends StatelessWidget {
         onError: (_, error) => FullPageErrorWidget(
           error: error,
           stackTrace: null,
-          prefix: L10n.of(context).unable_to_load_the_profile,
+          prefix: (l10n) => l10n.unable_to_load_the_profile,
+          screenName: screenName,
           onRetry: () {
             if (id != null) {
               return context.read<ProfileModel>().loadProfileById(id!);

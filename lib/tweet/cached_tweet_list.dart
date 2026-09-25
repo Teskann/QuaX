@@ -9,15 +9,21 @@ class CachedTweetList extends StatelessWidget {
   final List<TweetChain> chains;
   final String? username;
 
-  const CachedTweetList(this.chains, {super.key, this.username});
+  /// Shown above the tweets, such as the error of the load meant to replace them
+  final Widget? header;
+
+  const CachedTweetList(this.chains, {super.key, this.username, this.header});
 
   @override
   Widget build(BuildContext context) {
+    final header = this.header;
+    final offset = header == null ? 0 : 1;
     return ListView.builder(
       padding: const EdgeInsets.only(top: 4),
-      itemCount: chains.length,
+      itemCount: chains.length + offset,
       itemBuilder: (context, index) {
-        var chain = chains[index];
+        if (header != null && index == 0) return header;
+        var chain = chains[index - offset];
         return TweetConversation(id: chain.id, tweets: chain.tweets, username: username, isPinned: chain.isPinned);
       },
     );

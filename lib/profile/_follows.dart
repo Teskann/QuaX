@@ -70,13 +70,13 @@ class _ProfileFollowsState extends State<ProfileFollows> with AutomaticKeepAlive
               firstPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(
                 error: pagingErrorOf(state)?.error,
                 stackTrace: pagingErrorOf(state)?.stackTrace,
-                prefix: L10n.of(context).unable_to_load_the_list_of_follows,
+                prefix: (l10n) => l10n.unable_to_load_the_list_of_follows,
                 onRetry: fetchNextPage,
               ),
-              newPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(
+              newPageErrorIndicatorBuilder: (context) => ErrorCard(
                 error: pagingErrorOf(state)?.error,
                 stackTrace: pagingErrorOf(state)?.stackTrace,
-                prefix: L10n.of(context).unable_to_load_the_next_page_of_follows,
+                prefix: (l10n) => l10n.unable_to_load_the_next_page_of_follows,
                 onRetry: fetchNextPage,
               ),
               noItemsFoundIndicatorBuilder: (context) {

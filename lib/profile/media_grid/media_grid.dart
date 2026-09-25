@@ -15,9 +15,11 @@ import 'package:visibility_detector/visibility_detector.dart';
 
 class MediaGrid extends StatefulWidget {
   final PagingController<int, MediaGridItem> controller;
-  final String firstPageErrorPrefix;
-  final String newPageErrorPrefix;
+  final ErrorPrefix firstPageErrorPrefix;
+  final ErrorPrefix newPageErrorPrefix;
   final String emptyMessage;
+
+  final String? errorScreenName;
 
   const MediaGrid({
     super.key,
@@ -25,6 +27,7 @@ class MediaGrid extends StatefulWidget {
     required this.firstPageErrorPrefix,
     required this.newPageErrorPrefix,
     required this.emptyMessage,
+    this.errorScreenName,
   });
 
   @override
@@ -67,12 +70,14 @@ class _MediaGridState extends State<MediaGrid> with AutomaticKeepAliveClientMixi
               error: pagingErrorOf(state)?.error,
               stackTrace: pagingErrorOf(state)?.stackTrace,
               prefix: widget.firstPageErrorPrefix,
+              screenName: widget.errorScreenName,
               onRetry: fetchNextPage,
             ),
-            newPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(
+            newPageErrorIndicatorBuilder: (context) => ErrorCard(
               error: pagingErrorOf(state)?.error,
               stackTrace: pagingErrorOf(state)?.stackTrace,
               prefix: widget.newPageErrorPrefix,
+              screenName: widget.errorScreenName,
               onRetry: fetchNextPage,
             ),
             noItemsFoundIndicatorBuilder: (context) => Center(child: Text(widget.emptyMessage)),

@@ -251,13 +251,13 @@ class _StatusScreenState extends State<_StatusScreen> {
           firstPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(
             error: pagingErrorOf(state)?.error,
             stackTrace: pagingErrorOf(state)?.stackTrace,
-            prefix: L10n.of(context).unable_to_load_the_tweet,
+            prefix: (l10n) => l10n.unable_to_load_the_tweet,
             onRetry: fetchNextPage,
           ),
-          newPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(
+          newPageErrorIndicatorBuilder: (context) => ErrorCard(
             error: pagingErrorOf(state)?.error,
             stackTrace: pagingErrorOf(state)?.stackTrace,
-            prefix: L10n.of(context).unable_to_load_the_next_page_of_replies,
+            prefix: (l10n) => l10n.unable_to_load_the_next_page_of_replies,
             onRetry: fetchNextPage,
           ),
           noItemsFoundIndicatorBuilder: (context) {

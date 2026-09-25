@@ -77,12 +77,12 @@ final text = result["data"]["text"] as String;
 - **Rate limit (`429`)** is **per-endpoint** (X rate-limits per endpoint, not per account). It is tracked **in memory** by `RateLimitTracker` (`rate_limit_tracker.dart`), keyed by `(accountId, uri.path)`, with the reset time from X's `x-rate-limit-reset` header (else `rateLimitFallback`). Not persisted — windows are short. The selector receives this via an injected `isRateLimited` predicate.
 - **Not-found (`404`)** is **per-account** and **persisted** (auth likely broken): flagged after `notFoundThreshold` consecutive 404s, for `notFoundCooldown`. Helpers `recordNotFound` / `recordAccountSuccess` live in `accounts.dart`; cooldown constants in `constants.dart`.
 
-`AccountSelector.pick()` prefers healthy accounts but **falls back to flagged ones**, so a real request is always attempted while any account exists — the flags only influence ordering, they never short-circuit. Errors therefore surface only from actual responses, each with a dedicated widget in `ui/errors.dart` (all built on the shared `ActionableErrorWidget`, offering add-account + retry):
-- every tried account was rate-limited on the endpoint → `RateLimitedException` (⏳);
-- every tried account returned 404 (likely broken auth) → `NoWorkingAccountException` (🤷);
-- there is no account at all → an unauthenticated (guest) request is attempted first; `NoAccountAvailableException` (🔑) is thrown only if that guest request also fails.
+`AccountSelector.pick()` prefers healthy accounts but **falls back to flagged ones**, so a real request is always attempted while any account exists — the flags only influence ordering, they never short-circuit. Errors therefore surface only from actual responses, all through the single `ErrorCard` in `ui/errors.dart` (wrapped by `FullPageErrorWidget` when it takes the page), which gives each of these its own title and an add-account + retry action:
+- every tried account was rate-limited on the endpoint → `RateLimitedException`;
+- every tried account returned 404 (likely broken auth) → `NoWorkingAccountException`;
+- there is no account at all → an unauthenticated (guest) request is attempted first; `NoAccountAvailableException` is thrown only if that guest request also fails.
 
-Any other error response is surfaced as-is via `HttpException`. Retry simply re-runs `fetch()`, which always attempts a real request before surfacing any error.
+Any other error response is surfaced as-is via `HttpException`, and the card then offers to report it as a prefilled GitHub issue. Retry simply re-runs `fetch()`, which always attempts a real request before surfacing any error.
 
 ### Database (`lib/database/`)
 

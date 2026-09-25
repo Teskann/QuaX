@@ -141,7 +141,7 @@ class _SubscriptionImportScreenState extends State<SubscriptionImportScreen> {
                       return FullPageErrorWidget(
                         error: snapshot.error,
                         stackTrace: snapshot.stackTrace,
-                        prefix: L10n.of(context).unable_to_import,
+                        prefix: (l10n) => l10n.unable_to_import,
                       );
                     }
 

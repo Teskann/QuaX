@@ -565,7 +565,7 @@ class _FritterAppState extends State<FritterApp> {
                     ErrorWidget.builder = (FlutterErrorDetails details) => FullPageErrorWidget(
                           error: details.exception,
                           stackTrace: details.stack,
-                          prefix: L10n.of(context).something_broke_in_fritter,
+                          prefix: (l10n) => l10n.something_broke_in_fritter,
                         );
 
                     // ignore: deprecated_member_use
@@ -623,7 +623,7 @@ class _DefaultPageState extends State<DefaultPage> {
               actions: [
                 TextButton(
                   child: Text(L10n.of(context).report),
-                  onPressed:  () => openUri(context, 'https://github.com/teskann/quax/issues'),
+                  onPressed:  () => openUri(context, issuesUrl),
                 ),
                 TextButton(
                   child: Text(L10n.of(context).open_in_browser),
@@ -670,7 +670,7 @@ class _DefaultPageState extends State<DefaultPage> {
       return ScaffoldErrorWidget(
           error: _migrationError,
           stackTrace: _migrationStackTrace,
-          prefix: L10n.of(context).unable_to_run_the_database_migrations);
+          prefix: (l10n) => l10n.unable_to_run_the_database_migrations);
     }
 
     return PopScope(

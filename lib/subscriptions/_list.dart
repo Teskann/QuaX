@@ -155,7 +155,7 @@ class _SubscriptionUsersState extends State<SubscriptionUsers> {
         child: FullPageErrorWidget(
           error: e,
           stackTrace: null,
-          prefix: L10n.of(context).unable_to_refresh_the_subscriptions,
+          prefix: (l10n) => l10n.unable_to_refresh_the_subscriptions,
         ),
       ),
       onState: (_, state) {

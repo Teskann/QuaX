@@ -31,7 +31,7 @@ class _TrendsListState extends State<TrendsList> {
           return FullPageErrorWidget(
             error: e,
             stackTrace: null,
-            prefix: L10n.of(context).unable_to_load_the_trends_for_widget_place_name(""),
+            prefix: (l10n) => l10n.unable_to_load_the_trends_for_widget_place_name(""),
             // triple.state.name!,
             onRetry: () => model.loadTrends(),
           );

@@ -39,7 +39,7 @@ class _TrendsSettingsState extends State<TrendsSettings> {
         onError: (_, e) => FullPageErrorWidget(
           error: e,
           stackTrace: null,
-          prefix: L10n.of(context).unable_to_find_the_available_trend_locations,
+          prefix: (l10n) => l10n.unable_to_find_the_available_trend_locations,
           onRetry: () => model.loadLocations(),
         ),
         onLoading: (_) => const Center(child: CircularProgressIndicator()),

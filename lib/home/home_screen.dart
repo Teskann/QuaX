@@ -89,7 +89,7 @@ class _HomeScreenState extends State<_HomeScreen> {
     return ScopedBuilder<HomeModel, List<HomePage>>.transition(
       store: widget.model,
       onError: (_, e) => ScaffoldErrorWidget(
-        prefix: L10n.current.unable_to_load_home_pages,
+        prefix: (l10n) => l10n.unable_to_load_home_pages,
         error: e,
         stackTrace: null,
         onRetry: () async => await widget.model.resetPages(),

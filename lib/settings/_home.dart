@@ -27,7 +27,7 @@ class SettingsHomeFragment extends StatelessWidget {
         child: ScopedBuilder<HomeModel, List<HomePage>>.transition(
           store: model,
           onError: (_, e) => ScaffoldErrorWidget(
-            prefix: L10n.current.unable_to_load_home_pages,
+            prefix: (l10n) => l10n.unable_to_load_home_pages,
             error: e,
             stackTrace: null,
             onRetry: () async => await model.resetPages(),

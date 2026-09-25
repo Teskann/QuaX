@@ -108,3 +108,4 @@ const routeSettingsHome = '/settings/home';
 const routeStatus = '/status';
 
 const discordInviteUrl = 'https://discord.gg/K7UHuywPWD';
+const issuesUrl = 'https://github.com/teskann/quax/issues';

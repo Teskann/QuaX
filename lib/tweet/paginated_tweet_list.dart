@@ -22,6 +22,10 @@ class TweetFeedController {
   late final CursorPagingController<String, TweetChain> _paging;
   TweetPageLoader? _loader;
 
+  /// Error of the last soft refresh when it failed while tweets were shown, kept apart from the paging error so that
+  /// it is displayed above the tweets and does not block the next pages
+  final ValueNotifier<PagingError?> refreshError = ValueNotifier(null);
+
   TweetFeedController() {
     _paging = CursorPagingController<String, TweetChain>(_fetch);
   }
@@ -52,12 +56,20 @@ class TweetFeedController {
       final next = result.nextCursor;
       final isLast = _isLastPage(result.chains, next, null);
       _paging.replaceFirstPage(result.chains, isLast ? null : next);
+      refreshError.value = null;
     } catch (e, stackTrace) {
-      _paging.setError(e, stackTrace);
+      if (hasItems) {
+        refreshError.value = PagingError(e, stackTrace);
+      } else {
+        _paging.setError(e, stackTrace);
+      }
     }
   }
 
-  void dispose() => _paging.dispose();
+  void dispose() {
+    _paging.dispose();
+    refreshError.dispose();
+  }
 }
 
 /// Shared paginated tweet list used by the For-you feed, the group feed and
@@ -72,8 +84,8 @@ class PaginatedTweetList extends StatefulWidget {
   final TweetPageLoader loadPage;
   final String? username;
   final Future<void> Function()? onRefresh;
-  final String firstPageErrorPrefix;
-  final String newPageErrorPrefix;
+  final ErrorPrefix firstPageErrorPrefix;
+  final ErrorPrefix newPageErrorPrefix;
   final String emptyMessage;
   // Cached tweets shown in place of the first-page spinner while the initial
   // load is in flight, so a feed reveals its cached content instead of a
@@ -112,6 +124,7 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
     // can't trigger the first page itself — we rebuild to swap it in once items
     // arrive, so listen for that.
     _controller.addListener(_onControllerChanged);
+    widget.feed.refreshError.addListener(_onControllerChanged);
   }
 
   @override
@@ -139,7 +152,9 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
     widget.feed.loader = widget.loadPage;
     if (!identical(oldWidget.feed, widget.feed)) {
       oldWidget.feed.controller.removeListener(_onControllerChanged);
+      oldWidget.feed.refreshError.removeListener(_onControllerChanged);
       _controller.addListener(_onControllerChanged);
+      widget.feed.refreshError.addListener(_onControllerChanged);
       // A fresh feed may need its first page kicked off again from the preview.
       _firstLoadStarted = false;
     }
@@ -148,6 +163,7 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
   @override
   void dispose() {
     _controller.removeListener(_onControllerChanged);
+    widget.feed.refreshError.removeListener(_onControllerChanged);
     _refreshController?.unregister(_showRefresh);
     super.dispose();
   }
@@ -180,11 +196,11 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
   }
 
   // True while we should display the cached preview: the first page hasn't
-  // loaded yet, there's no error to surface, and we actually have cached tweets.
+  // loaded yet, and we actually have cached tweets. A first page error is shown
+  // above them rather than in their place.
   bool get _showingPreview {
     final preview = widget.firstPagePreview;
-    final state = _controller.value;
-    return preview != null && preview.isNotEmpty && state.items == null && state.error == null;
+    return preview != null && preview.isNotEmpty && _controller.value.items == null;
   }
 
   // The PagedListView normally kicks off the first page when it mounts. While
@@ -212,6 +228,22 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
     });
   }
 
+  // Runs the first load again, without the side effects of a pull-to-refresh
+  void _retryFirstLoad() {
+    final refreshState = _refreshKey.currentState;
+    if (refreshState == null) {
+      _controller.fetchNextPage();
+      return;
+    }
+    _pendingInitialLoad = true;
+    refreshState.show();
+  }
+
+  Widget? _errorAbove(PagingError? error, VoidCallback onRetry) => error == null
+      ? null
+      : ErrorCard(
+          error: error.error, stackTrace: error.stackTrace, prefix: widget.firstPageErrorPrefix, onRetry: onRetry);
+
   Future<void> _onRefreshTriggered() async {
     if (_pendingInitialLoad) {
       _pendingInitialLoad = false;
@@ -230,13 +262,26 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
   Widget build(BuildContext context) {
     if (_showingPreview) {
       _maybeStartFirstLoad();
-      return _wrapWithRefresh(CachedTweetList(widget.firstPagePreview!, username: widget.username));
+      return _wrapWithRefresh(CachedTweetList(widget.firstPagePreview!,
+          username: widget.username, header: _errorAbove(pagingErrorOf(_controller.value), _retryFirstLoad)));
     }
 
     final list = PagingListener<int, TweetChain>(
       controller: _controller,
-      builder: (context, state, fetchNextPage) => PagedListView<int, TweetChain>(
-        padding: EdgeInsets.only(top: 4, bottom: MediaQuery.of(context).padding.bottom),
+      builder: (context, state, fetchNextPage) => CustomScrollView(slivers: [
+        SliverToBoxAdapter(child: _errorAbove(widget.feed.refreshError.value, _showRefresh)),
+        SliverPadding(
+          padding: EdgeInsets.only(top: 4, bottom: MediaQuery.of(context).padding.bottom),
+          sliver: _pagedList(state, fetchNextPage),
+        ),
+      ]),
+    );
+
+    return _wrapWithRefresh(list);
+  }
+
+  Widget _pagedList(PagingState<int, TweetChain> state, NextPageCallback fetchNextPage) =>
+      PagedSliverList<int, TweetChain>(
         state: state,
         fetchNextPage: fetchNextPage,
         addAutomaticKeepAlives: false,
@@ -249,7 +294,7 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
             prefix: widget.firstPageErrorPrefix,
             onRetry: fetchNextPage,
           ),
-          newPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(
+          newPageErrorIndicatorBuilder: (context) => ErrorCard(
             error: pagingErrorOf(state)?.error,
             stackTrace: pagingErrorOf(state)?.stackTrace,
             prefix: widget.newPageErrorPrefix,
@@ -257,9 +302,5 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
           ),
           noItemsFoundIndicatorBuilder: (context) => Center(child: Text(widget.emptyMessage)),
         ),
-      ),
-    );
-
-    return _wrapWithRefresh(list);
-  }
+      );
 }
