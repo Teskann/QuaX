@@ -52,3 +52,22 @@ the directory always matches `links.json` — skipped when a page failed to load
                 --user-data-dir=$PWD/tool/record/.chrome-profile
   fvm dart run tool/record/capture.dart --attach
   ```
+
+## x-client-transaction-id
+
+When X changes how it signs requests, every call fails before reaching the API
+(e.g. `Couldn't find the sign module`). To check the port against x.com:
+
+```bash
+fvm dart run tool/record/transaction_id.dart
+fvm flutter test test/client/x_client_transaction_id/
+```
+
+The script downloads the page and the sign module with the app's own code, so
+if it fails, the app fails the same way: fix `client_transaction.dart` first.
+Then X's own sign module computes a few ids in a headless Chrome, and the
+page, the module and those ids land in `test/fixtures/XClientTransactionId/`.
+No login is needed. If the test then fails, X changed the algorithm itself.
+
+A real browser matters: the key comes from a CSS animation read back with
+`getComputedStyle`, and a bare JS engine formats the numbers differently.
