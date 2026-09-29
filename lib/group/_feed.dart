@@ -11,7 +11,6 @@ import 'package:quax/database/repository.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/group/feed_cache.dart';
 import 'package:quax/group/feed_session_cache.dart';
-import 'package:quax/group/group_model.dart';
 import 'package:quax/group/group_screen.dart';
 import 'package:quax/group/search_query.dart';
 import 'package:quax/group/unrelated_tweets.dart';
@@ -149,10 +148,7 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
     if (oldWidget.includeReplies != widget.includeReplies ||
         oldWidget.includeRetweets != widget.includeRetweets ||
         !_chunksMatch(oldWidget.chunks, widget.chunks)) {
-      // Why: PagingController.refresh() empties the controller, which drops the
-      // scroll offset and strands the feed on its cached preview — nothing
-      // re-fetches, because PaginatedTweetList only restarts the first load when
-      // the controller itself changes. softRefresh() reloads in place instead.
+      // Why: refresh() empties the controller, so nothing re-fetches.
       _feedController.softRefresh();
     }
   }
@@ -293,12 +289,7 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
             loadPage: _listTweets,
             username: null,
             firstPagePreview: _cachedPreview,
-            onRefresh: () async {
-              // Re-read the group membership, so an explicit refresh also picks
-              // up changes made through paths that don't notify the subscription
-              // and group reload listeners.
-              await context.read<GroupModel>().refreshGroup();
-            },
+            onRefresh: () async {},
             firstPageErrorPrefix: (l10n) => l10n.unable_to_load_the_tweets_for_the_feed,
             newPageErrorPrefix: (l10n) => l10n.unable_to_load_the_next_page_of_tweets,
             emptyMessage: L10n.of(context).could_not_find_any_tweets_from_the_last_7_days,
