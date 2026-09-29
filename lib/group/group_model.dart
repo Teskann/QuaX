@@ -11,6 +11,7 @@ import 'package:pref/pref.dart';
 import 'package:uuid/uuid.dart';
 
 var defaultGroupIcon = '{"pack":"custom","key":"rss_feed"}';
+final _log = Logger('GroupModel');
 
 IconData deserializeIconData(String iconData) {
   try {
@@ -27,8 +28,6 @@ IconData deserializeIconData(String iconData) {
 }
 
 class GroupModel extends Store<SubscriptionGroupGet> {
-  static final log = Logger('GroupModel');
-
   final String id;
 
   GroupModel(this.id)
@@ -91,7 +90,7 @@ class GroupModel extends Store<SubscriptionGroupGet> {
     try {
       update(await _fetchGroup());
     } catch (e, stackTrace) {
-      log.warning('Failed to refresh group $id', e, stackTrace);
+      _log.warning('Failed to refresh group $id', e, stackTrace);
     }
   }
 
@@ -115,8 +114,6 @@ class GroupModel extends Store<SubscriptionGroupGet> {
 }
 
 class GroupsModel extends Store<List<SubscriptionGroup>> {
-  static final log = Logger('GroupModel');
-
   final BasePrefService prefs;
   final Map<String, VoidCallback> _onGroupsReloaded = {};
 
@@ -134,7 +131,7 @@ class GroupsModel extends Store<List<SubscriptionGroup>> {
   String get orderGroupsBy => prefs.get(optionSubscriptionGroupsOrderByField);
 
   Future<void> deleteGroup(String id) async {
-    log.info('Deleting the group $id');
+    _log.info('Deleting the group $id');
 
     await execute(() async {
       var database = await Repository.writable();
@@ -147,7 +144,7 @@ class GroupsModel extends Store<List<SubscriptionGroup>> {
   }
 
   Future reloadGroups() async {
-    log.info('Listing subscriptions groups');
+    _log.info('Listing subscriptions groups');
 
     await execute(() async {
       var database = await Repository.readOnly();
