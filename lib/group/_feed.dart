@@ -145,7 +145,11 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
     if (oldWidget.includeReplies != widget.includeReplies ||
         oldWidget.includeRetweets != widget.includeRetweets ||
         !_chunksMatch(oldWidget.chunks, widget.chunks)) {
-      _feedController.controller.refresh();
+      // Why: PagingController.refresh() empties the controller, which drops the
+      // scroll offset and strands the feed on its cached preview — nothing
+      // re-fetches, because PaginatedTweetList only restarts the first load when
+      // the controller itself changes. softRefresh() reloads in place instead.
+      _feedController.softRefresh();
     }
   }
 
