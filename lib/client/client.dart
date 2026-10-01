@@ -891,7 +891,7 @@ class Twitter {
     List<String> pinnedTweets,
     bool mapToThreads,
   ) {
-    var instructions = List.from(result['timeline']['instructions']);
+    var instructions = List.from(result['timeline']?['instructions'] ?? []);
     if (instructions.isEmpty || !instructions.any((e) => e['type'] == 'TimelineAddEntries')) {
       return TweetStatus(chains: [], cursorBottom: null, cursorTop: null);
     }
@@ -1029,7 +1029,7 @@ class Twitter {
     int Function() getTweetsCounter,
     void Function() increaseTweetCounter,
   ) {
-    var instructions = List.from(result["data"]["home"]["home_timeline_urt"]['instructions']);
+    var instructions = List.from(result["data"]?["home"]?["home_timeline_urt"]?['instructions'] ?? []);
     var addEntriesInstructions = instructions.firstWhereOrNull((e) => e['type'] == 'TimelineAddEntries');
     if (addEntriesInstructions == null) {
       return TweetStatus(chains: [], cursorBottom: null, cursorTop: null);
