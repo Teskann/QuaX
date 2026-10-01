@@ -144,7 +144,8 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
     if (oldWidget.includeReplies != widget.includeReplies ||
         oldWidget.includeRetweets != widget.includeRetweets ||
         !_chunksMatch(oldWidget.chunks, widget.chunks)) {
-      _feedController.controller.refresh();
+      // Why: refresh() empties the controller, so nothing re-fetches.
+      _feedController.softRefresh();
     }
   }
 

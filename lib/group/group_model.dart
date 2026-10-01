@@ -11,6 +11,7 @@ import 'package:pref/pref.dart';
 import 'package:uuid/uuid.dart';
 
 var defaultGroupIcon = '{"pack":"custom","key":"rss_feed"}';
+final _log = Logger('GroupModel');
 
 IconData deserializeIconData(String iconData) {
   try {
@@ -39,45 +40,58 @@ class GroupModel extends Store<SubscriptionGroupGet> {
             includeReplies: false));
 
   Future<void> loadGroup() async {
-    await execute(() async {
-      var database = await Repository.readOnly();
+    await execute(() async => _fetchGroup());
+  }
 
-      var group = (await database.query(tableSubscriptionGroup, where: 'id = ?', whereArgs: [id])).first;
+  Future<SubscriptionGroupGet> _fetchGroup() async {
+    var database = await Repository.readOnly();
 
-      if (id == '-1') {
-        var subscriptions =
-            (await database.query(tableSubscription)).map((e) => UserSubscription.fromMap(e)).toList(growable: false);
+    var group = (await database.query(tableSubscriptionGroup, where: 'id = ?', whereArgs: [id])).first;
 
-        return SubscriptionGroupGet(
-            id: '-1',
-            name: 'All',
-            icon: group['icon'] as String,
-            subscriptions: subscriptions,
-            includeReplies: group['include_replies'] == 1,
-            includeRetweets: group['include_retweets'] == 1);
-      }
+    if (id == '-1') {
+      var subscriptions =
+          (await database.query(tableSubscription)).map((e) => UserSubscription.fromMap(e)).toList(growable: false);
 
-      var searchSubscriptions = (await database.rawQuery(
-              'SELECT s.* FROM $tableSearchSubscription s LEFT JOIN $tableSubscriptionGroupMember sgm ON sgm.profile_id = s.id WHERE sgm.group_id = ?',
-              [id]))
-          .map((e) => SearchSubscription.fromMap(e))
-          .toList(growable: false);
-
-      var userSubscriptions = (await database.rawQuery(
-              'SELECT s.* FROM $tableSubscription s LEFT JOIN $tableSubscriptionGroupMember sgm ON sgm.profile_id = s.id WHERE sgm.group_id = ?',
-              [id]))
-          .map((e) => UserSubscription.fromMap(e))
-          .toList(growable: false);
-
-      // TODO: Factory
       return SubscriptionGroupGet(
-          id: group['id'] as String,
-          name: group['name'] as String,
+          id: '-1',
+          name: 'All',
           icon: group['icon'] as String,
-          subscriptions: [...userSubscriptions, ...searchSubscriptions],
+          subscriptions: subscriptions,
           includeReplies: group['include_replies'] == 1,
           includeRetweets: group['include_retweets'] == 1);
-    });
+    }
+
+    var searchSubscriptions = (await database.rawQuery(
+            'SELECT s.* FROM $tableSearchSubscription s LEFT JOIN $tableSubscriptionGroupMember sgm ON sgm.profile_id = s.id WHERE sgm.group_id = ?',
+            [id]))
+        .map((e) => SearchSubscription.fromMap(e))
+        .toList(growable: false);
+
+    var userSubscriptions = (await database.rawQuery(
+            'SELECT s.* FROM $tableSubscription s LEFT JOIN $tableSubscriptionGroupMember sgm ON sgm.profile_id = s.id WHERE sgm.group_id = ?',
+            [id]))
+        .map((e) => UserSubscription.fromMap(e))
+        .toList(growable: false);
+
+    // TODO: Factory
+    return SubscriptionGroupGet(
+        id: group['id'] as String,
+        name: group['name'] as String,
+        icon: group['icon'] as String,
+        subscriptions: [...userSubscriptions, ...searchSubscriptions],
+        includeReplies: group['include_replies'] == 1,
+        includeRetweets: group['include_retweets'] == 1);
+  }
+
+  // Reloads the group's subscription list without flipping the store into the
+  // loading state, so the feed body isn't replaced by a loading view. Used by
+  // the manual refresh path to pick up membership changes.
+  Future<void> refreshGroup() async {
+    try {
+      update(await _fetchGroup());
+    } catch (e, stackTrace) {
+      _log.warning('Failed to refresh group $id', e, stackTrace);
+    }
   }
 
   Future<void> toggleSubscriptionGroupIncludeReplies(bool value) async {
@@ -100,8 +114,6 @@ class GroupModel extends Store<SubscriptionGroupGet> {
 }
 
 class GroupsModel extends Store<List<SubscriptionGroup>> {
-  static final log = Logger('GroupModel');
-
   final BasePrefService prefs;
   final Map<String, VoidCallback> _onGroupsReloaded = {};
 
@@ -119,7 +131,7 @@ class GroupsModel extends Store<List<SubscriptionGroup>> {
   String get orderGroupsBy => prefs.get(optionSubscriptionGroupsOrderByField);
 
   Future<void> deleteGroup(String id) async {
-    log.info('Deleting the group $id');
+    _log.info('Deleting the group $id');
 
     await execute(() async {
       var database = await Repository.writable();
@@ -132,7 +144,7 @@ class GroupsModel extends Store<List<SubscriptionGroup>> {
   }
 
   Future reloadGroups() async {
-    log.info('Listing subscriptions groups');
+    _log.info('Listing subscriptions groups');
 
     await execute(() async {
       var database = await Repository.readOnly();
