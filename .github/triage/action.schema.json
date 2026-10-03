@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Teskann/QuaX/master/.github/triage/action.schema.json",
+  "title": "quax-bot triage action",
+  "description": "Changes quax-bot asks the Apply quax-bot triage workflow to make on the issue it comments on. The JSON goes in an HTML comment, invisible on GitHub, at the end of a quax-bot comment: `<!-- quax-triage {...} -->`. A comment holds at most one such block, and the block applies to the issue it is posted on, never to a pull request. Any validation error rejects the whole block.",
+  "type": "object",
+  "additionalProperties": false,
+  "minProperties": 1,
+  "properties": {
+    "new_labels": {
+      "description": "Labels to create in the repository before adding them. A name that already exists is left as is. A new label must also be listed in add_labels to land on the issue.",
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "description", "color"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9 -]{0,29}$"
+          },
+          "description": {
+            "type": "string",
+            "pattern": "^[^<>]{1,100}$"
+          },
+          "color": {
+            "description": "Hex color without the leading #.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{6}$"
+          }
+        }
+      }
+    },
+    "add_labels": {
+      "description": "Labels to add to the issue. Each one must already exist in the repository or be declared in new_labels.",
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 5,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9 -]{0,29}$"
+      }
+    },
+    "remove_needs_info": {
+      "description": "Removes the `needs info` label once the author gave what was asked.",
+      "const": true
+    },
+    "close": {
+      "description": "Closes the issue with this reason.",
+      "enum": ["completed", "not_planned"]
+    }
+  }
+}

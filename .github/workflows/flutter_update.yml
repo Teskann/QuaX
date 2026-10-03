@@ -137,14 +137,18 @@ jobs:
 
       - name: Write the pull request text
         env:
-          SUMMARY: /tmp/flutter-update-pr.md
+          SUMMARY: flutter-update-pr.md
           PR_TEXT: ${{ runner.temp }}/pr
+          VERSION: ${{ needs.check.outputs.version }}
         run: |
           set -euo pipefail
 
           if [ ! -s "$SUMMARY" ]; then
-            echo "$SUMMARY is missing or empty: the update did not complete."
-            exit 1
+            echo "::warning::$SUMMARY is missing or empty: falling back to a generic pull request text."
+            {
+              echo "Upgraded Flutter to $VERSION and refreshed the dependencies"
+              echo "Claude did not write a summary of this update: review the diff by hand."
+            } > "$SUMMARY"
           fi
 
           mkdir -p "$PR_TEXT"

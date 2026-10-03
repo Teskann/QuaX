@@ -81,7 +81,7 @@ def generate_release_notes_content(commits: list[Commit]) -> str:
 
 {get_custom_message_block()}First download ? Click the button below to install it with Obtainium ! 👇
 
-[![Get it on Obtainium](https://github.com/teskann/quax/blob/master/assets/readme/get-it-on-obtainium.png)](https://apps.obtainium.imranr.dev/redirect.html?r=obtainium://add/https://github.com/Teskann/QuaX)
+[![Get it on Obtainium](https://github.com/teskann/quax/blob/master/assets/readme/get-it-on-obtainium.png)](https://apps.obtainium.imranr.dev/redirect?r=obtainium://add/https://github.com/Teskann/QuaX)
 
 APK Certificate fingerprints:
 ```text
