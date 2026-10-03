@@ -112,6 +112,14 @@ PostUriInfo? _parseAsPostLink(List<String> parts) {
   return null;
 }
 
+/// Reads a post link without resolving it, so not for t.co links
+PostUriInfo? parsePostLink(Uri link) => _parseAsPostLink(link.pathSegments);
+
+/// Wayback Machine list of the captures of a post. Most predate x.com, and the trailing star also matches the
+/// variants with a query
+Uri waybackSearchUri(String screenName, String id) =>
+    Uri.parse('https://web.archive.org/web/*/twitter.com/$screenName/status/$id*');
+
 Future<String?> _resolveShortUrl(Uri shortUrl) async {
   final request = http.Request('GET', shortUrl)
     ..followRedirects = false;

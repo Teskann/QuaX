@@ -257,11 +257,21 @@ class Repository {
         SqlMigration(
             'CREATE TABLE IF NOT EXISTS $tableLikedTweet (id VARCHAR PRIMARY KEY, content TEXT NOT NULL, user_id VARCHAR DEFAULT NULL, liked_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)',
             reverseSql: 'DROP TABLE $tableLikedTweet'),
-      ]
+      ],
+      27: [
+        // Drop the account not-found health columns: only 429s count, and they are tracked in memory.
+        // Rebuilt rather than DROP COLUMN, which older SQLite versions on Android don't support.
+        SqlMigration('ALTER TABLE $tableAccounts RENAME TO ${tableAccounts}_old'),
+        SqlMigration(
+            'CREATE TABLE $tableAccounts (id TEXT PRIMARY KEY, auth_header VARCHAR, screen_name VARCHAR DEFAULT NULL)'),
+        SqlMigration(
+            'INSERT INTO $tableAccounts (id, auth_header, screen_name) SELECT id, auth_header, screen_name FROM ${tableAccounts}_old'),
+        SqlMigration('DROP TABLE ${tableAccounts}_old'),
+      ],
     });
     await openDatabase(
       databaseName,
-      version: 26,
+      version: 27,
       onUpgrade: myMigrationPlan.call,
       onCreate: myMigrationPlan.call,
       onDowngrade: myMigrationPlan.call,

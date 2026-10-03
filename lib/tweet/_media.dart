@@ -11,6 +11,7 @@ import 'package:quax/generated/l10n.dart';
 import 'package:quax/profile/profile.dart';
 import 'package:quax/tweet/_photo.dart';
 import 'package:quax/tweet/_video.dart';
+import 'package:quax/tweet/_video_controls.dart';
 import 'package:quax/ui/errors.dart';
 import 'package:quax/utils/downloads.dart';
 import 'package:path/path.dart' as path;
@@ -289,6 +290,14 @@ class _TweetMediaViewState extends State<TweetMediaView> {
               return IconButton(onPressed: callback, icon: child);
             },
             onPressed: () async {
+              if (_media.type == 'animated_gif') {
+                var urls = await TweetVideoMetadata.fromMedia(_media).streamUrlsBuilder();
+                if (context.mounted) {
+                  await downloadTweetVideo(context, widget.username, urls.downloadUrl);
+                }
+                return;
+              }
+
               var url = path.basename(_media.mediaUrlHttps!);
               var fileName = '${widget.username}-$url';
               var uri = Uri.parse(originalMediaUrl());

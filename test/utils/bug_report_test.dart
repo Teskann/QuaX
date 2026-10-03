@@ -46,7 +46,7 @@ void main() {
     ).queryParameters['body'];
     expect(
       body,
-      startsWith('### Unable to load the profile\n\nVersion: 4.13.4\nProfile: @jack\n\n```'),
+      startsWith('### Unable to load the profile\n\nVersion: 4.13.4\nProfile: https://x.com/jack\n\n```'),
       reason: 'Profile errors often depend on the profile, so we need it to reproduce them',
     );
   });

@@ -6,7 +6,8 @@ import 'dart:io';
 import 'package:puppeteer/puppeteer.dart';
 import 'package:quax/client/x_client_transaction_id/client_transaction.dart';
 
-final _outDir = Directory('test/fixtures/XClientTransactionId');
+/// Written by this script, not by capture.dart, which must leave it alone.
+final transactionIdFixtures = Directory('test/fixtures/XClientTransactionId');
 
 const _requests = [
   ('GET', '/i/api/graphql/lSMmQoIyV1rw8qoyU9pQ5g/SearchTimeline'),
@@ -38,17 +39,17 @@ Future<void> main() async {
   print('Signing ${_requests.length} requests in Chrome…');
   final ids = await _signInChrome(homePageHtml, signFileText, nowMs);
 
-  _outDir.createSync(recursive: true);
-  File('${_outDir.path}/home.html').writeAsStringSync(homePageHtml);
-  File('${_outDir.path}/sign.js').writeAsStringSync(signFileText);
-  File('${_outDir.path}/expected.json').writeAsStringSync(const JsonEncoder.withIndent('  ').convert({
+  transactionIdFixtures.createSync(recursive: true);
+  File('${transactionIdFixtures.path}/home.html').writeAsStringSync(homePageHtml);
+  File('${transactionIdFixtures.path}/sign.js').writeAsStringSync(signFileText);
+  File('${transactionIdFixtures.path}/expected.json').writeAsStringSync(const JsonEncoder.withIndent('  ').convert({
     'nowMs': nowMs,
     'cases': [
       for (final ((method, path), id) in _requests.indexed.map((e) => (e.$2, ids[e.$1])))
         {'method': method, 'path': path, 'transactionId': id},
     ],
   }));
-  print('Written to ${_outDir.path}. Now run:\n  fvm flutter test test/client/x_client_transaction_id/');
+  print('Written to ${transactionIdFixtures.path}. Now run:\n  fvm flutter test test/client/x_client_transaction_id/');
 }
 
 Future<List<String>> _signInChrome(String html, String signModule, int nowMs) async {

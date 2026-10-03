@@ -187,6 +187,37 @@
   "@feed_contains_unrelated_tweets": {},
   "feed_issue_detected": "Feed issue detected",
   "@feed_issue_detected": {},
+  "feed_rate_limited_message": "You probably have too many subscriptions. Try again later or add an account to increase your quota. Subscriptions loaded: {loaded}/{total}",
+  "@feed_rate_limited_message": {
+    "description": "Details of the rate-limit error shown above a feed or group that could only partly load. {loaded} is the number of subscriptions whose posts could be loaded, {total} the number of subscriptions in the feed",
+    "placeholders": {
+      "loaded": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "feed_rate_limited_title": "The whole feed could not be loaded",
+  "@feed_rate_limited_title": {
+    "description": "Title of the error shown above a feed or group that could only partly load because of X rate limits"
+  },
+  "feed_rate_limited_until_message": "You probably have too many subscriptions. Try again at {time} or add an account to increase your quota. Subscriptions loaded: {loaded}/{total}",
+  "@feed_rate_limited_until_message": {
+    "description": "Same as feed_rate_limited_message, when X told when the quota comes back. {time} is a time of day",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "loaded": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
   "filters": "Filters",
   "@filters": {},
   "finish": "Finish",
@@ -231,12 +262,33 @@
   "@import": {},
   "import_backup": "Import backup",
   "@import_backup": {},
+  "import_count_subscriptions": "{count, plural, one{Import {count} subscription} other{Import {count} subscriptions}}",
+  "@import_count_subscriptions": {
+    "description": "Button of that dialog importing {count} subscriptions",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "import_data_from_another_device": "Import data from another device",
   "@import_data_from_another_device": {},
   "import_subscriptions": "Import subscriptions",
   "@import_subscriptions": {},
   "import_subscriptions_text": "Subscriptions are local to QuaX. They are independent from subscriptions on your real X account. Logging-in does not affect QuaX subscriptions.\n\nDo you want to import subscriptions from @{screenName} in QuaX ?",
   "@import_subscriptions_text": {},
+  "import_too_many_subscriptions_warning": "You are about to import {count} subscriptions. Following more than {limit} subscriptions exposes you to rate limits from X.",
+  "@import_too_many_subscriptions_warning": {
+    "description": "Body of the dialog shown before importing more subscriptions than the feeds can load without hitting X rate limits. {count} is the number of subscriptions to import, {limit} the recommended maximum, both always above 255",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
   "imported_snapshot_data_users_so_far": "{snapshotData} users imported so far",
   "@imported_snapshot_data_users_so_far": {},
   "include_replies": "Include replies",
@@ -315,10 +367,14 @@
   "@no_results_for": {},
   "no_subscriptions_try_searching_or_importing_some": "No subscriptions. Try searching or importing some!",
   "@no_subscriptions_try_searching_or_importing_some": {},
-  "no_working_account_message": "It looks like none of your accounts are working right now. Sign in with another account or try again later.",
-  "@no_working_account_message": {},
-  "no_working_account_title": "Your accounts aren't working",
-  "@no_working_account_title": {},
+  "not_found_message": "𝕏 sometimes answers this way even in normal use. Try again in a moment.",
+  "@not_found_message": {
+    "description": "Details of that error, above a single Retry button"
+  },
+  "not_found_title": "Error 404",
+  "@not_found_title": {
+    "description": "Title of the error shown when X answers 404, which happens now and then in normal use. The code 404 is widely known, keep it"
+  },
   "not_logged_in": "You are not logged in",
   "@not_logged_in": {},
   "not_set": "Not set",
@@ -379,10 +435,19 @@
   "@quality_medium": {},
   "quax_doesnt_work_without_account_please_login": "QuaX doesn't work without an X account, please login to continue using the app.\n\nX doesn't allow accessing their APIs without an account.",
   "@quax_doesnt_work_without_account_please_login": {},
-  "rate_limited_message": "You've made too many requests in too short a time. Try again later or add another account to keep using QuaX.",
+  "rate_limited_message": "You've made too many requests in too short a time. Try again later or add an account to increase your quota.",
   "@rate_limited_message": {},
   "rate_limited_title": "Rate limited by 𝕏",
   "@rate_limited_title": {},
+  "rate_limited_until_title": "Rate limited by 𝕏 until {time}",
+  "@rate_limited_until_title": {
+    "description": "Title of the rate-limit error. {time} is the time of day when the quota comes back",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "released_under_the_mit_license": "Released under the MIT License",
   "@released_under_the_mit_license": {},
   "rename": "Rename",
@@ -415,6 +480,8 @@
   "@search": {},
   "search_term": "Search term",
   "@search_term": {},
+  "search_web_archive": "Search Web Archive",
+  "@search_web_archive": {},
   "select": "Select",
   "@select": {},
   "send": "Send",
@@ -453,6 +520,14 @@
   "@sorry_the_replied_tweet_could_not_be_found": {},
   "subscribe": "Subscribe",
   "@subscribe": {},
+  "subscribers_only_post": "Post reserved for subscribers of @{screenName}",
+  "@subscribers_only_post": {
+    "description": "Under the preview of a post reserved to the subscribers of its author, whose handle is screenName"
+  },
+  "subscribers_only_post_of_author": "Post reserved for the author's subscribers",
+  "@subscribers_only_post_of_author": {
+    "description": "On a post X hides entirely as reserved to subscribers, without telling who wrote it"
+  },
   "subscriptions": "Subscriptions",
   "@subscriptions": {},
   "subtitles": "Subtitles",
@@ -479,8 +554,6 @@
   "@this_group_contains_no_subscriptions": {},
   "this_took_too_long_to_load_please_check_your_network_connection": "This took too long to load. Please check your network connection!",
   "@this_took_too_long_to_load_please_check_your_network_connection": {},
-  "this_tweet_is_unavailable": "This post is unavailable. It was probably deleted.",
-  "@this_tweet_is_unavailable": {},
   "this_tweet_user_name_retweeted": "{thisTweetUserName} reposted {timeAgo}",
   "@this_tweet_user_name_retweeted": {},
   "this_user_does_not_follow_anyone": "This user does not follow anyone!",
@@ -505,6 +578,10 @@
   "@true_black": {},
   "true_black_tweet_cards": "True black tweet cards?",
   "@true_black_tweet_cards": {},
+  "tweet_unavailable": "Post unavailable",
+  "@tweet_unavailable": {},
+  "tweet_unavailable_no_reason": "It was probably deleted, or comes from a private or suspended account.",
+  "@tweet_unavailable_no_reason": {},
   "tweets": "Posts",
   "@tweets": {},
   "tweets_and_replies": "Posts & Replies",

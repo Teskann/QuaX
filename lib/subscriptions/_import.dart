@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 
+import 'package:quax/client/accounts.dart';
 import 'package:quax/client/client.dart';
+import 'package:quax/constants.dart';
 import 'package:quax/database/entities.dart';
 import 'package:quax/database/repository.dart';
 import 'package:quax/group/group_model.dart';
@@ -14,7 +17,9 @@ import 'package:provider/provider.dart';
 import 'package:quax/generated/l10n.dart';
 
 class SubscriptionImportScreen extends StatefulWidget {
-  const SubscriptionImportScreen({super.key});
+  final String? screenName;
+
+  const SubscriptionImportScreen({super.key, this.screenName});
 
   @override
   State<SubscriptionImportScreen> createState() => _SubscriptionImportScreenState();
@@ -23,6 +28,12 @@ class SubscriptionImportScreen extends StatefulWidget {
 class _SubscriptionImportScreenState extends State<SubscriptionImportScreen> {
   String? _screenName;
   StreamController<int>? _streamController;
+
+  @override
+  void initState() {
+    super.initState();
+    _screenName = widget.screenName;
+  }
 
   Future importSubscriptions() async {
     setState(() {
@@ -35,15 +46,21 @@ class _SubscriptionImportScreenState extends State<SubscriptionImportScreen> {
         return;
       }
 
+      var importModel = context.read<ImportDataModel>();
+      var groupModel = context.read<GroupsModel>();
+      var subscriptionsModel = context.read<SubscriptionsModel>();
+
+      var maxCount = await _chooseHowMany(screenName);
+      if (maxCount == null) {
+        if (mounted) setState(() => _streamController = null);
+        return;
+      }
+
       _streamController?.add(0);
 
       String? cursor;
       int total = 0;
       var seenIds = <String>{};
-
-      var importModel = context.read<ImportDataModel>();
-      var groupModel = context.read<GroupsModel>();
-      var subscriptionsModel = context.read<SubscriptionsModel>();
 
       var createdAt = DateTime.now();
 
@@ -55,7 +72,8 @@ class _SubscriptionImportScreenState extends State<SubscriptionImportScreen> {
         );
 
         var next = response.cursorBottom;
-        var fresh = response.users.where((e) => e.idStr != null && seenIds.add(e.idStr!)).toList();
+        var fresh =
+            response.users.where((e) => e.idStr != null && seenIds.add(e.idStr!)).take(maxCount - total).toList();
 
         if (fresh.isNotEmpty) {
           total = total + fresh.length;
@@ -76,7 +94,7 @@ class _SubscriptionImportScreenState extends State<SubscriptionImportScreen> {
           _streamController?.add(total);
         }
 
-        if (next == null || next.isEmpty || next == '0' || next == cursor || fresh.isEmpty) {
+        if (next == null || next.isEmpty || next == '0' || next == cursor || fresh.isEmpty || total >= maxCount) {
           break;
         }
         cursor = next;
@@ -88,6 +106,31 @@ class _SubscriptionImportScreenState extends State<SubscriptionImportScreen> {
     } catch (e, stackTrace) {
       _streamController?.addError(e, stackTrace);
     }
+  }
+
+  /// How many subscriptions to import: all of them, unless there are more than X lets the feeds load and the user
+  /// chooses fewer. Null when the user cancels.
+  Future<int?> _chooseHowMany(String screenName) async {
+    var count = (await Twitter.getProfileByScreenName(screenName)).user.friendsCount;
+    var limit = maxSubscriptionsPerAccount * max<int>(1, (await getAccounts()).length);
+    if (count == null || count <= limit || !mounted) {
+      return count ?? 1 << 31; // unknown count: import everything
+    }
+    return showDialog<int>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(L10n.of(context).import_subscriptions),
+        content: Text(L10n.of(context).import_too_many_subscriptions_warning(count.toString(), limit.toString())),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.pop(context, count),
+              child: Text(L10n.of(context).import_count_subscriptions(count))),
+          FilledButton(
+              onPressed: () => Navigator.pop(context, limit),
+              child: Text(L10n.of(context).import_count_subscriptions(limit))),
+        ],
+      ),
+    );
   }
 
   @override
@@ -116,6 +159,7 @@ class _SubscriptionImportScreenState extends State<SubscriptionImportScreen> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 16),
                 child: TextFormField(
+                  initialValue: widget.screenName,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
                     hintText: L10n.of(context).enter_your_twitter_username,

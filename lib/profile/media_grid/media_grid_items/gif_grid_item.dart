@@ -19,6 +19,8 @@ class GifGridItem extends MediaGridItem {
         alwaysPlay: true,
         disableControls: true,
         username: username,
+        tweetId: tweetId,
+        mediaIndex: mediaIndex,
       ),
     );
   }

@@ -122,17 +122,16 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        flexibleSpace: Padding(
-          padding: EdgeInsets.fromLTRB(8, 36, 8, 8),
-          child: SearchBar(
-            controller: _queryController,
-            focusNode: _focusNode,
-            textInputAction: TextInputAction.search,
-            leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () => Navigator.pop(context)),
-            trailing: [
-              FollowButton(user: SearchSubscription(id: _queryController.text, createdAt: DateTime.now())),
-            ],
-          ),
+        toolbarHeight: kToolbarHeight + 16,
+        titleSpacing: 8,
+        title: SearchBar(
+          controller: _queryController,
+          focusNode: _focusNode,
+          textInputAction: TextInputAction.search,
+          leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () => Navigator.pop(context)),
+          trailing: [
+            FollowButton(user: SearchSubscription(id: _queryController.text, createdAt: DateTime.now())),
+          ],
         ),
         bottom: TabBar(
           controller: _tabController,

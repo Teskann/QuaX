@@ -3,7 +3,7 @@
  "sourceUrl": "https://x.com/search?q=quax&f=user",
  "operation": "SearchTimeline",
  "host": "x.com",
- "queryId": "hyPfJYJ_XAtDYoslQc-Rgg",
+ "queryId": "uGB-gNd5HE4TkpO70OcFNw",
  "features": {
   "rweb_video_screen_enabled": false,
   "rweb_cashtags_enabled": true,
@@ -20,6 +20,7 @@
   "responsive_web_grok_analyze_post_followups_enabled": true,
   "rweb_cashtags_composer_attachment_enabled": true,
   "responsive_web_jetfuel_frame": true,
+  "rweb_sports_post_context_enabled": true,
   "responsive_web_grok_share_attachment_enabled": true,
   "responsive_web_grok_annotations_enabled": true,
   "articles_preview_enabled": true,
@@ -39,6 +40,7 @@
   "tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled": true,
   "longform_notetweets_rich_text_read_enabled": true,
   "longform_notetweets_inline_media_enabled": false,
+  "responsive_web_nested_quote_preview_enabled": true,
   "responsive_web_grok_image_annotation_enabled": true,
   "responsive_web_grok_imagine_annotation_enabled": true,
   "responsive_web_grok_community_note_auto_translation_is_enabled": true,
@@ -58,7 +60,7 @@
   "x-rate-limit-limit": "50",
   "content-type": "application/json",
   "x-rate-limit-remaining": "47",
-  "x-rate-limit-reset": "1788551471"
+  "x-rate-limit-reset": "1790865516"
  },
  "body": {
   "data": {
@@ -87,7 +89,105 @@
              "result": {
               "__typename": "User",
               "action_counts": {
-               "favorites_count": 127733
+               "favorites_count": 1150
+              },
+              "affiliates_highlighted_label": {},
+              "avatar": {
+               "image_url": "https://pbs.twimg.com/profile_images/1600251540056465426/oK8-8770_normal.png"
+              },
+              "banner": {
+               "image_url": ""
+              },
+              "core": {
+               "created_at": "Tue Dec 06 22:11:12 +0000 2022",
+               "name": "Jayden Quax",
+               "screen_name": "JaydenQuax"
+              },
+              "follow_request_sent": false,
+              "grok_translated_bio_with_availability": {
+               "is_available": false
+              },
+              "has_graduated_access": true,
+              "id": "VXNlcjoxNjAwMjUxNDA3MzA2NzQzODM3",
+              "is_blue_verified": false,
+              "location": {
+               "location": ""
+              },
+              "media_permissions": {
+               "can_media_tag": true
+              },
+              "notifications_settings": {
+               "notifications_enabled": false
+              },
+              "parody_commentary_fan_label": "None",
+              "pinned_items": {},
+              "possibly_sensitive": false,
+              "privacy": {
+               "protected": false
+              },
+              "profile_bio": {
+               "description": "",
+               "entities": {
+                "description": {}
+               }
+              },
+              "profile_image_shape": "Circle",
+              "profile_metadata": {
+               "profile_interstitial_type": ""
+              },
+              "profile_translation": {
+               "translator_type": "none"
+              },
+              "relationship_counts": {
+               "followers": 3533,
+               "following": 84
+              },
+              "relationship_perspectives": {
+               "blocked_by": false,
+               "blocking": false,
+               "followed_by": false,
+               "following": false,
+               "live_following": false,
+               "muting": false
+              },
+              "rest_id": "1600251407306743837",
+              "super_follow_eligible": false,
+              "super_followed_by": false,
+              "super_following": false,
+              "tweet_counts": {
+               "media_tweets": 1,
+               "tweets": 32
+              },
+              "verification": {
+               "verified": false
+              },
+              "website": {
+               "url": ""
+              }
+             }
+            }
+           }
+          },
+          "entryId": "user-1600251407306743837",
+          "sortIndex": "2105664947798147072"
+         },
+         {
+          "content": {
+           "__typename": "TimelineTimelineItem",
+           "clientEventInfo": {
+            "component": "result",
+            "element": "user"
+           },
+           "entryType": "TimelineTimelineItem",
+           "itemContent": {
+            "__typename": "TimelineUser",
+            "itemType": "TimelineUser",
+            "userDisplayType": "User",
+            "user_results": {
+             "result": {
+              "__typename": "User",
+              "action_counts": {
+               "favorites_count": 128351
               },
               "affiliates_highlighted_label": {},
               "avatar": {
@@ -100,9 +200,6 @@
                "created_at": "Tue Oct 20 01:14:42 +0000 2009",
                "name": "Quaxly ✨🇵🇸🏳️‍⚧️🔺✨",
                "screen_name": "JorgeArchie"
-              },
-              "dm_permissions": {
-               "can_dm": true
               },
               "follow_request_sent": false,
               "grok_translated_bio_with_availability": {
@@ -158,8 +255,8 @@
                "translator_type": "none"
               },
               "relationship_counts": {
-               "followers": 2186,
-               "following": 689
+               "followers": 2206,
+               "following": 701
               },
               "relationship_perspectives": {
                "blocked_by": false,
@@ -174,8 +271,8 @@
               "super_followed_by": false,
               "super_following": false,
               "tweet_counts": {
-               "media_tweets": 3036,
-               "tweets": 43696
+               "media_tweets": 3040,
+               "tweets": 43856
               },
               "verification": {
                "verified": false
@@ -188,7 +285,7 @@
            }
           },
           "entryId": "user-83736721",
-          "sortIndex": "2095959138092711936"
+          "sortIndex": "2105664947798147062"
          },
          {
           "content": {
@@ -206,7 +303,7 @@
              "result": {
               "__typename": "User",
               "action_counts": {
-               "favorites_count": 11515
+               "favorites_count": 11548
               },
               "affiliates_highlighted_label": {},
               "avatar": {
@@ -219,9 +316,6 @@
                "created_at": "Sun Dec 11 10:18:57 +0000 2022",
                "name": "ねる",
                "screen_name": "quaxa_"
-              },
-              "dm_permissions": {
-               "can_dm": false
               },
               "follow_request_sent": false,
               "grok_translated_bio_with_availability": {
@@ -250,12 +344,11 @@
                "protected": true
               },
               "profile_bio": {
-               "description": "朝食食べて、超ショックな雑多",
+               "description": "",
                "entities": {
                 "description": {}
                }
               },
-              "profile_description_language": "ja",
               "profile_image_shape": "Circle",
               "profile_metadata": {
                "profile_interstitial_type": ""
@@ -264,8 +357,8 @@
                "translator_type": "none"
               },
               "relationship_counts": {
-               "followers": 2106,
-               "following": 179
+               "followers": 2093,
+               "following": 178
               },
               "relationship_perspectives": {
                "blocked_by": false,
@@ -280,8 +373,8 @@
               "super_followed_by": false,
               "super_following": false,
               "tweet_counts": {
-               "media_tweets": 33,
-               "tweets": 7195
+               "media_tweets": 34,
+               "tweets": 7203
               },
               "verification": {
                "verified": false
@@ -294,7 +387,7 @@
            }
           },
           "entryId": "user-1601884192085725184",
-          "sortIndex": "2095959138092711926"
+          "sortIndex": "2105664947798147052"
          },
          {
           "content": {
@@ -312,7 +405,7 @@
              "result": {
               "__typename": "User",
               "action_counts": {
-               "favorites_count": 18007
+               "favorites_count": 18341
               },
               "affiliates_highlighted_label": {},
               "avatar": {
@@ -325,9 +418,6 @@
                "created_at": "Mon Jun 20 19:15:14 +0000 2022",
                "name": "Quax Kubuś",
                "screen_name": "Kubl_Mgmt"
-              },
-              "dm_permissions": {
-               "can_dm": true
               },
               "follow_request_sent": false,
               "grok_translated_bio_with_availability": {
@@ -387,8 +477,8 @@
                "translator_type": "none"
               },
               "relationship_counts": {
-               "followers": 2018,
-               "following": 626
+               "followers": 2034,
+               "following": 642
               },
               "relationship_perspectives": {
                "blocked_by": false,
@@ -403,8 +493,8 @@
               "super_followed_by": false,
               "super_following": false,
               "tweet_counts": {
-               "media_tweets": 548,
-               "tweets": 12730
+               "media_tweets": 564,
+               "tweets": 12883
               },
               "verification": {
                "verified": false
@@ -417,7 +507,7 @@
            }
           },
           "entryId": "user-1538963670633525253",
-          "sortIndex": "2095959138092711916"
+          "sortIndex": "2105664947798147042"
          },
          {
           "content": {
@@ -435,7 +525,7 @@
              "result": {
               "__typename": "User",
               "action_counts": {
-               "favorites_count": 11911
+               "favorites_count": 11909
               },
               "affiliates_highlighted_label": {},
               "avatar": {
@@ -448,9 +538,6 @@
                "created_at": "Mon Jan 05 05:29:33 +0000 2015",
                "name": "Quax",
                "screen_name": "NewQuax"
-              },
-              "dm_permissions": {
-               "can_dm": false
               },
               "follow_request_sent": false,
               "grok_translated_bio_with_availability": {
@@ -489,8 +576,8 @@
                "translator_type": "none"
               },
               "relationship_counts": {
-               "followers": 1640,
-               "following": 818
+               "followers": 1635,
+               "following": 815
               },
               "relationship_perspectives": {
                "blocked_by": false,
@@ -519,7 +606,7 @@
            }
           },
           "entryId": "user-2961555857",
-          "sortIndex": "2095959138092711906"
+          "sortIndex": "2105664947798147032"
          },
          {
           "content": {
@@ -537,7 +624,7 @@
              "result": {
               "__typename": "User",
               "action_counts": {
-               "favorites_count": 1142
+               "favorites_count": 1159
               },
               "affiliates_highlighted_label": {},
               "avatar": {
@@ -550,9 +637,6 @@
                "created_at": "Sat Sep 24 07:33:23 +0000 2011",
                "name": "Qua Lew",
                "screen_name": "quaxlew"
-              },
-              "dm_permissions": {
-               "can_dm": true
               },
               "follow_request_sent": false,
               "grok_translated_bio_with_availability": {
@@ -591,8 +675,8 @@
                "translator_type": "none"
               },
               "relationship_counts": {
-               "followers": 1517,
-               "following": 1658
+               "followers": 1518,
+               "following": 1657
               },
               "relationship_perspectives": {
                "blocked_by": false,
@@ -621,7 +705,7 @@
            }
           },
           "entryId": "user-379032937",
-          "sortIndex": "2095959138092711896"
+          "sortIndex": "2105664947798147022"
          },
          {
           "content": {
@@ -639,7 +723,134 @@
              "result": {
               "__typename": "User",
               "action_counts": {
-               "favorites_count": 3328
+               "favorites_count": 9951
+              },
+              "affiliates_highlighted_label": {},
+              "avatar": {
+               "image_url": "https://pbs.twimg.com/profile_images/2066833505229717504/jQ-SSdxt_normal.png"
+              },
+              "banner": {
+               "image_url": "https://pbs.twimg.com/profile_banners/1821701295155376136/1787950150"
+              },
+              "core": {
+               "created_at": "Fri Aug 09 00:13:34 +0000 2024",
+               "name": "Quax Michał",
+               "screen_name": "MichxshMNG"
+              },
+              "follow_request_sent": false,
+              "grok_translated_bio_with_availability": {
+               "is_available": false
+              },
+              "has_graduated_access": true,
+              "id": "VXNlcjoxODIxNzAxMjk1MTU1Mzc2MTM2",
+              "is_blue_verified": true,
+              "location": {
+               "location": "Poznań, Poland"
+              },
+              "media_permissions": {
+               "can_media_tag": true
+              },
+              "notifications_settings": {
+               "notifications_enabled": false
+              },
+              "parody_commentary_fan_label": "None",
+              "pinned_items": {
+               "tweet_ids_str": [
+                "2070162640832262198"
+               ]
+              },
+              "possibly_sensitive": false,
+              "privacy": {
+               "protected": false
+              },
+              "professional": {
+               "category": [
+                {
+                 "icon_name": "IconBriefcaseStroke",
+                 "id": 521,
+                 "name": "Service de gestion"
+                }
+               ],
+               "professional_type": "Creator",
+               "rest_id": "1835704084277469338"
+              },
+              "profile_bio": {
+               "description": "🇵🇱 ~ 15 ~ @TeamQuax ~ Agent @kaktusfnbr1 @krixx_fn @FishyYummy @kura_marek36234 @nneeonn_ & more ~ Manager @REC_2027 ~ contact: michxshmng@gmail.com",
+               "entities": {
+                "description": {},
+                "url": {
+                 "urls": [
+                  {
+                   "display_url": "konect.gg/Michxsh",
+                   "expanded_url": "https://konect.gg/Michxsh",
+                   "indices": [
+                    0,
+                    23
+                   ],
+                   "url": "https://t.co/ITF53GRVv3"
+                  }
+                 ]
+                }
+               }
+              },
+              "profile_description_language": "en",
+              "profile_image_shape": "Circle",
+              "profile_metadata": {
+               "profile_interstitial_type": ""
+              },
+              "profile_translation": {
+               "translator_type": "none"
+              },
+              "relationship_counts": {
+               "followers": 1308,
+               "following": 177
+              },
+              "relationship_perspectives": {
+               "blocked_by": false,
+               "blocking": false,
+               "followed_by": false,
+               "following": false,
+               "live_following": false,
+               "muting": false
+              },
+              "rest_id": "1821701295155376136",
+              "super_follow_eligible": false,
+              "super_followed_by": false,
+              "super_following": false,
+              "tweet_counts": {
+               "media_tweets": 268,
+               "tweets": 7769
+              },
+              "verification": {
+               "verified": false
+              },
+              "website": {
+               "url": "https://t.co/ITF53GRVv3"
+              }
+             }
+            }
+           }
+          },
+          "entryId": "user-1821701295155376136",
+          "sortIndex": "2105664947798147012"
+         },
+         {
+          "content": {
+           "__typename": "TimelineTimelineItem",
+           "clientEventInfo": {
+            "component": "result",
+            "element": "user"
+           },
+           "entryType": "TimelineTimelineItem",
+           "itemContent": {
+            "__typename": "TimelineUser",
+            "itemType": "TimelineUser",
+            "userDisplayType": "User",
+            "user_results": {
+             "result": {
+              "__typename": "User",
+              "action_counts": {
+               "favorites_count": 3323
               },
               "affiliates_highlighted_label": {},
               "avatar": {
@@ -652,9 +863,6 @@
                "created_at": "Tue Jul 12 15:35:17 +0000 2011",
                "name": "Quaxlo ¯\\_(ツ)_/¯",
                "screen_name": "Quaxlo"
-              },
-              "dm_permissions": {
-               "can_dm": true
               },
               "follow_request_sent": false,
               "grok_translated_bio_with_availability": {
@@ -687,7 +895,7 @@
                 {
                  "icon_name": "IconBriefcaseStroke",
                  "id": 934,
-                 "name": "Social Media Influencer"
+                 "name": "Influenceur/influenceuse sur les médias sociaux"
                 }
                ],
                "professional_type": "Creator",
@@ -732,8 +940,8 @@
                "translator_type": "none"
               },
               "relationship_counts": {
-               "followers": 1268,
-               "following": 670
+               "followers": 1264,
+               "following": 667
               },
               "relationship_perspectives": {
                "blocked_by": false,
@@ -749,7 +957,7 @@
               "super_following": false,
               "tweet_counts": {
                "media_tweets": 825,
-               "tweets": 138053
+               "tweets": 138044
               },
               "verification": {
                "verified": false
@@ -762,261 +970,7 @@
            }
           },
           "entryId": "user-334096607",
-          "sortIndex": "2095959138092711886"
-         },
-         {
-          "content": {
-           "__typename": "TimelineTimelineItem",
-           "clientEventInfo": {
-            "component": "result",
-            "element": "user"
-           },
-           "entryType": "TimelineTimelineItem",
-           "itemContent": {
-            "__typename": "TimelineUser",
-            "itemType": "TimelineUser",
-            "userDisplayType": "User",
-            "user_results": {
-             "result": {
-              "__typename": "User",
-              "action_counts": {
-               "favorites_count": 9525
-              },
-              "affiliates_highlighted_label": {},
-              "avatar": {
-               "image_url": "https://pbs.twimg.com/profile_images/2066833505229717504/jQ-SSdxt_normal.png"
-              },
-              "banner": {
-               "image_url": "https://pbs.twimg.com/profile_banners/1821701295155376136/1787950150"
-              },
-              "core": {
-               "created_at": "Fri Aug 09 00:13:34 +0000 2024",
-               "name": "Quax Michał",
-               "screen_name": "MichxshMNG"
-              },
-              "dm_permissions": {
-               "can_dm": true
-              },
-              "follow_request_sent": false,
-              "grok_translated_bio_with_availability": {
-               "is_available": false
-              },
-              "has_graduated_access": true,
-              "id": "VXNlcjoxODIxNzAxMjk1MTU1Mzc2MTM2",
-              "is_blue_verified": true,
-              "location": {
-               "location": "Poznań, Poland"
-              },
-              "media_permissions": {
-               "can_media_tag": true
-              },
-              "notifications_settings": {
-               "notifications_enabled": false
-              },
-              "parody_commentary_fan_label": "None",
-              "pinned_items": {
-               "tweet_ids_str": [
-                "2070162640832262198"
-               ]
-              },
-              "possibly_sensitive": false,
-              "privacy": {
-               "protected": false
-              },
-              "professional": {
-               "category": [
-                {
-                 "icon_name": "IconBriefcaseStroke",
-                 "id": 521,
-                 "name": "Management Service"
-                }
-               ],
-               "professional_type": "Creator",
-               "rest_id": "1835704084277469338"
-              },
-              "profile_bio": {
-               "description": "@TeamQuax ~ Agent @kaktusfnbr1 @krixx_fn @FishyYummy @kura_marek36234 @nneeonn_ & more ~ contact: michxshmng@gmail.com",
-               "entities": {
-                "description": {},
-                "url": {
-                 "urls": [
-                  {
-                   "display_url": "konect.gg/Michxsh",
-                   "expanded_url": "https://konect.gg/Michxsh",
-                   "indices": [
-                    0,
-                    23
-                   ],
-                   "url": "https://t.co/ITF53GRVv3"
-                  }
-                 ]
-                }
-               }
-              },
-              "profile_description_language": "en",
-              "profile_image_shape": "Circle",
-              "profile_metadata": {
-               "profile_interstitial_type": ""
-              },
-              "profile_translation": {
-               "translator_type": "none"
-              },
-              "relationship_counts": {
-               "followers": 1239,
-               "following": 108
-              },
-              "relationship_perspectives": {
-               "blocked_by": false,
-               "blocking": false,
-               "followed_by": false,
-               "following": false,
-               "live_following": false,
-               "muting": false
-              },
-              "rest_id": "1821701295155376136",
-              "super_follow_eligible": false,
-              "super_followed_by": false,
-              "super_following": false,
-              "tweet_counts": {
-               "media_tweets": 264,
-               "tweets": 7556
-              },
-              "verification": {
-               "verified": false
-              },
-              "website": {
-               "url": "https://t.co/ITF53GRVv3"
-              }
-             }
-            }
-           }
-          },
-          "entryId": "user-1821701295155376136",
-          "sortIndex": "2095959138092711876"
-         },
-         {
-          "content": {
-           "__typename": "TimelineTimelineItem",
-           "clientEventInfo": {
-            "component": "result",
-            "element": "user"
-           },
-           "entryType": "TimelineTimelineItem",
-           "itemContent": {
-            "__typename": "TimelineUser",
-            "itemType": "TimelineUser",
-            "userDisplayType": "User",
-            "user_results": {
-             "result": {
-              "__typename": "User",
-              "action_counts": {
-               "favorites_count": 3525
-              },
-              "affiliates_highlighted_label": {},
-              "avatar": {
-               "image_url": "https://pbs.twimg.com/profile_images/1503847390972940288/QOZ9Dj4v_normal.jpg"
-              },
-              "banner": {
-               "image_url": "https://pbs.twimg.com/profile_banners/1503846332292911110/1654091789"
-              },
-              "core": {
-               "created_at": "Tue Mar 15 21:32:27 +0000 2022",
-               "name": "Quaxly Propaganda (Ceo of QUASS)",
-               "screen_name": "QuaxlyQuass"
-              },
-              "dm_permissions": {
-               "can_dm": false
-              },
-              "follow_request_sent": false,
-              "grok_translated_bio_with_availability": {
-               "is_available": false
-              },
-              "has_graduated_access": true,
-              "id": "VXNlcjoxNTAzODQ2MzMyMjkyOTExMTEw",
-              "is_blue_verified": false,
-              "location": {
-               "location": "Italia"
-              },
-              "media_permissions": {
-               "can_media_tag": true
-              },
-              "notifications_settings": {
-               "notifications_enabled": false
-              },
-              "parody_commentary_fan_label": "None",
-              "pinned_items": {
-               "tweet_ids_str": [
-                "1608522118844616704"
-               ]
-              },
-              "possibly_sensitive": false,
-              "privacy": {
-               "protected": false
-              },
-              "professional": {
-               "category": [],
-               "professional_type": "Creator",
-               "rest_id": "1503861470068715530"
-              },
-              "profile_bio": {
-               "description": "🦆💙All the QUAXLY fans are welcomed!💙🦆 |\nSee ya in #PokémonWindsWaves | \nAdd me to your Switch friends: SW-3535-4421-3137",
-               "entities": {
-                "description": {},
-                "url": {
-                 "urls": [
-                  {
-                   "display_url": "discord.gg/KwEzcXdS5w",
-                   "expanded_url": "https://discord.gg/KwEzcXdS5w",
-                   "indices": [
-                    0,
-                    23
-                   ],
-                   "url": "https://t.co/wkvj1j6mzM"
-                  }
-                 ]
-                }
-               }
-              },
-              "profile_description_language": "en",
-              "profile_image_shape": "Circle",
-              "profile_metadata": {
-               "profile_interstitial_type": ""
-              },
-              "profile_translation": {
-               "translator_type": "none"
-              },
-              "relationship_counts": {
-               "followers": 1156,
-               "following": 1069
-              },
-              "relationship_perspectives": {
-               "blocked_by": false,
-               "blocking": false,
-               "followed_by": false,
-               "following": false,
-               "live_following": false,
-               "muting": false
-              },
-              "rest_id": "1503846332292911110",
-              "super_follow_eligible": false,
-              "super_followed_by": false,
-              "super_following": false,
-              "tweet_counts": {
-               "media_tweets": 587,
-               "tweets": 2092
-              },
-              "verification": {
-               "verified": false
-              },
-              "website": {
-               "url": "https://t.co/wkvj1j6mzM"
-              }
-             }
-            }
-           }
-          },
-          "entryId": "user-1503846332292911110",
-          "sortIndex": "2095959138092711866"
+          "sortIndex": "2105664947798147002"
          },
          {
           "content": {
@@ -1025,7 +979,7 @@
             "component": "result",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAACCgABAAAAAAAAAQAKAAJDPsXsRUjN8gsAAwAAAARxdWF4CgAFRl9I73wW9YYIAAYAAAAACgAHU0I23RtzU6cAAAAAAA=="
+              "controllerData": "DAACDAAFDAABDAACCgABAAAAAAAAAQAKAAI36iWiut5c2AsAAwAAAARxdWF4CgAFRl9I73wW9YYIAAYAAAAACgAH3wsCfuVq9u0AAAAAAA=="
              }
             },
             "element": "user"
@@ -1052,9 +1006,6 @@
                "created_at": "Sun Dec 14 10:50:48 +0000 2008",
                "name": "Anni",
                "screen_name": "Quax"
-              },
-              "dm_permissions": {
-               "can_dm": false
               },
               "follow_request_sent": false,
               "grok_translated_bio_with_availability": {
@@ -1123,7 +1074,7 @@
            }
           },
           "entryId": "user-18114776",
-          "sortIndex": "2095959138092711856"
+          "sortIndex": "2105664947798146992"
          },
          {
           "content": {
@@ -1141,7 +1092,128 @@
              "result": {
               "__typename": "User",
               "action_counts": {
-               "favorites_count": 27224
+               "favorites_count": 3558
+              },
+              "affiliates_highlighted_label": {},
+              "avatar": {
+               "image_url": "https://pbs.twimg.com/profile_images/1503847390972940288/QOZ9Dj4v_normal.jpg"
+              },
+              "banner": {
+               "image_url": "https://pbs.twimg.com/profile_banners/1503846332292911110/1654091789"
+              },
+              "core": {
+               "created_at": "Tue Mar 15 21:32:27 +0000 2022",
+               "name": "Quaxly Propaganda (Ceo of QUASS)",
+               "screen_name": "QuaxlyQuass"
+              },
+              "follow_request_sent": false,
+              "grok_translated_bio_with_availability": {
+               "is_available": false
+              },
+              "has_graduated_access": true,
+              "id": "VXNlcjoxNTAzODQ2MzMyMjkyOTExMTEw",
+              "is_blue_verified": false,
+              "location": {
+               "location": "Italia"
+              },
+              "media_permissions": {
+               "can_media_tag": true
+              },
+              "notifications_settings": {
+               "notifications_enabled": false
+              },
+              "parody_commentary_fan_label": "None",
+              "pinned_items": {
+               "tweet_ids_str": [
+                "1608522118844616704"
+               ]
+              },
+              "possibly_sensitive": false,
+              "privacy": {
+               "protected": false
+              },
+              "professional": {
+               "category": [],
+               "professional_type": "Creator",
+               "rest_id": "1503861470068715530"
+              },
+              "profile_bio": {
+               "description": "🦆💙All the QUAXLY fans are welcomed!💙🦆 |\nSee ya in #PokémonWindsWaves | \nAdd me to your Switch friends: SW-3535-4421-3137",
+               "entities": {
+                "description": {},
+                "url": {
+                 "urls": [
+                  {
+                   "display_url": "discord.gg/KwEzcXdS5w",
+                   "expanded_url": "https://discord.gg/KwEzcXdS5w",
+                   "indices": [
+                    0,
+                    23
+                   ],
+                   "url": "https://t.co/wkvj1j6mzM"
+                  }
+                 ]
+                }
+               }
+              },
+              "profile_description_language": "en",
+              "profile_image_shape": "Circle",
+              "profile_metadata": {
+               "profile_interstitial_type": ""
+              },
+              "profile_translation": {
+               "translator_type": "none"
+              },
+              "relationship_counts": {
+               "followers": 1150,
+               "following": 1074
+              },
+              "relationship_perspectives": {
+               "blocked_by": false,
+               "blocking": false,
+               "followed_by": false,
+               "following": false,
+               "live_following": false,
+               "muting": false
+              },
+              "rest_id": "1503846332292911110",
+              "super_follow_eligible": false,
+              "super_followed_by": false,
+              "super_following": false,
+              "tweet_counts": {
+               "media_tweets": 588,
+               "tweets": 2102
+              },
+              "verification": {
+               "verified": false
+              },
+              "website": {
+               "url": "https://t.co/wkvj1j6mzM"
+              }
+             }
+            }
+           }
+          },
+          "entryId": "user-1503846332292911110",
+          "sortIndex": "2105664947798146982"
+         },
+         {
+          "content": {
+           "__typename": "TimelineTimelineItem",
+           "clientEventInfo": {
+            "component": "result",
+            "element": "user"
+           },
+           "entryType": "TimelineTimelineItem",
+           "itemContent": {
+            "__typename": "TimelineUser",
+            "itemType": "TimelineUser",
+            "userDisplayType": "User",
+            "user_results": {
+             "result": {
+              "__typename": "User",
+              "action_counts": {
+               "favorites_count": 27501
               },
               "affiliates_highlighted_label": {},
               "avatar": {
@@ -1155,23 +1227,9 @@
                "name": "カノン",
                "screen_name": "quaxocat611"
               },
-              "dm_permissions": {
-               "can_dm": true
-              },
               "follow_request_sent": false,
               "grok_translated_bio_with_availability": {
-               "data": {
-                "destination_language": "en",
-                "entities": {
-                 "hashtags": [],
-                 "symbols": [],
-                 "urls": [],
-                 "user_mentions": []
-                },
-                "source_language": "ja",
-                "translation": "My Everyday Musings with Partner WL"
-               },
-               "is_available": true
+               "is_available": false
               },
               "has_graduated_access": true,
               "id": "VXNlcjoyODU2Mzg3Nzk0",
@@ -1206,8 +1264,8 @@
                "translator_type": "none"
               },
               "relationship_counts": {
-               "followers": 1072,
-               "following": 877
+               "followers": 1073,
+               "following": 882
               },
               "relationship_perspectives": {
                "blocked_by": false,
@@ -1222,8 +1280,8 @@
               "super_followed_by": false,
               "super_following": false,
               "tweet_counts": {
-               "media_tweets": 7996,
-               "tweets": 45148
+               "media_tweets": 8128,
+               "tweets": 45483
               },
               "verification": {
                "verified": false
@@ -1236,7 +1294,7 @@
            }
           },
           "entryId": "user-2856387794",
-          "sortIndex": "2095959138092711846"
+          "sortIndex": "2105664947798146972"
          },
          {
           "content": {
@@ -1254,7 +1312,7 @@
              "result": {
               "__typename": "User",
               "action_counts": {
-               "favorites_count": 313274
+               "favorites_count": 314950
               },
               "affiliates_highlighted_label": {},
               "avatar": {
@@ -1267,9 +1325,6 @@
                "created_at": "Mon Sep 25 20:26:40 +0000 2017",
                "name": "Quaxo’s Pet",
                "screen_name": "jethrosdaddy"
-              },
-              "dm_permissions": {
-               "can_dm": false
               },
               "follow_request_sent": false,
               "grok_translated_bio_with_availability": {
@@ -1312,8 +1367,8 @@
                "translator_type": "none"
               },
               "relationship_counts": {
-               "followers": 1011,
-               "following": 2159
+               "followers": 1014,
+               "following": 2175
               },
               "relationship_perspectives": {
                "blocked_by": false,
@@ -1328,8 +1383,8 @@
               "super_followed_by": false,
               "super_following": false,
               "tweet_counts": {
-               "media_tweets": 1264,
-               "tweets": 10867
+               "media_tweets": 1267,
+               "tweets": 10901
               },
               "verification": {
                "verified": false
@@ -1342,7 +1397,7 @@
            }
           },
           "entryId": "user-912413063512576000",
-          "sortIndex": "2095959138092711836"
+          "sortIndex": "2105664947798146962"
          },
          {
           "content": {
@@ -1360,11 +1415,11 @@
              "result": {
               "__typename": "User",
               "action_counts": {
-               "favorites_count": 155974
+               "favorites_count": 157142
               },
               "affiliates_highlighted_label": {},
               "avatar": {
-               "image_url": "https://pbs.twimg.com/profile_images/2006392269859926016/FmV8VfGq_normal.jpg"
+               "image_url": "https://pbs.twimg.com/profile_images/2096497198770925571/hbrwqELy_normal.jpg"
               },
               "banner": {
                "image_url": "https://pbs.twimg.com/profile_banners/1263343614052179968/1704733094"
@@ -1373,9 +1428,6 @@
                "created_at": "Thu May 21 05:39:39 +0000 2020",
                "name": "Quax",
                "screen_name": "Mario29918336"
-              },
-              "dm_permissions": {
-               "can_dm": true
               },
               "follow_request_sent": false,
               "grok_translated_bio_with_availability": {
@@ -1415,7 +1467,7 @@
               },
               "relationship_counts": {
                "followers": 1010,
-               "following": 1435
+               "following": 1431
               },
               "relationship_perspectives": {
                "blocked_by": false,
@@ -1431,7 +1483,7 @@
               "super_following": false,
               "tweet_counts": {
                "media_tweets": 16,
-               "tweets": 4822
+               "tweets": 4831
               },
               "verification": {
                "verified": false
@@ -1444,7 +1496,7 @@
            }
           },
           "entryId": "user-1263343614052179968",
-          "sortIndex": "2095959138092711826"
+          "sortIndex": "2105664947798146952"
          },
          {
           "content": {
@@ -1462,7 +1514,7 @@
              "result": {
               "__typename": "User",
               "action_counts": {
-               "favorites_count": 11902
+               "favorites_count": 11898
               },
               "affiliates_highlighted_label": {},
               "avatar": {
@@ -1475,9 +1527,6 @@
                "created_at": "Fri Jul 08 02:43:01 +0000 2011",
                "name": "qua.",
                "screen_name": "quaXron"
-              },
-              "dm_permissions": {
-               "can_dm": true
               },
               "follow_request_sent": false,
               "grok_translated_bio_with_availability": {
@@ -1520,8 +1569,8 @@
                "translator_type": "none"
               },
               "relationship_counts": {
-               "followers": 992,
-               "following": 887
+               "followers": 994,
+               "following": 881
               },
               "relationship_perspectives": {
                "blocked_by": false,
@@ -1537,7 +1586,7 @@
               "super_following": false,
               "tweet_counts": {
                "media_tweets": 414,
-               "tweets": 21490
+               "tweets": 21482
               },
               "verification": {
                "verified": false
@@ -1550,7 +1599,7 @@
            }
           },
           "entryId": "user-331380142",
-          "sortIndex": "2095959138092711816"
+          "sortIndex": "2105664947798146942"
          },
          {
           "content": {
@@ -1581,9 +1630,6 @@
                "created_at": "Mon Jun 24 10:18:21 +0000 2013",
                "name": "Quax",
                "screen_name": "wtfquaxx"
-              },
-              "dm_permissions": {
-               "can_dm": true
               },
               "follow_request_sent": false,
               "grok_translated_bio_with_availability": {
@@ -1626,7 +1672,7 @@
                "translator_type": "none"
               },
               "relationship_counts": {
-               "followers": 987,
+               "followers": 988,
                "following": 22
               },
               "relationship_perspectives": {
@@ -1656,7 +1702,7 @@
            }
           },
           "entryId": "user-1542994801",
-          "sortIndex": "2095959138092711806"
+          "sortIndex": "2105664947798146932"
          },
          {
           "content": {
@@ -1674,7 +1720,7 @@
              "result": {
               "__typename": "User",
               "action_counts": {
-               "favorites_count": 14372
+               "favorites_count": 14363
               },
               "affiliates_highlighted_label": {},
               "avatar": {
@@ -1687,9 +1733,6 @@
                "created_at": "Tue Aug 11 22:11:27 +0000 2020",
                "name": "quaxo 🐏",
                "screen_name": "Quaxo14"
-              },
-              "dm_permissions": {
-               "can_dm": false
               },
               "follow_request_sent": false,
               "grok_translated_bio_with_availability": {
@@ -1731,7 +1774,7 @@
                "translator_type": "none"
               },
               "relationship_counts": {
-               "followers": 924,
+               "followers": 923,
                "following": 290
               },
               "relationship_perspectives": {
@@ -1761,7 +1804,7 @@
            }
           },
           "entryId": "user-1293309017062858752",
-          "sortIndex": "2095959138092711796"
+          "sortIndex": "2105664947798146922"
          },
          {
           "content": {
@@ -1793,9 +1836,6 @@
                "name": "Quaxar",
                "screen_name": "Quaxar"
               },
-              "dm_permissions": {
-               "can_dm": false
-              },
               "follow_request_sent": false,
               "grok_translated_bio_with_availability": {
                "is_available": false
@@ -1823,7 +1863,7 @@
                 {
                  "icon_name": "IconBriefcaseStroke",
                  "id": 478,
-                 "name": "Advertising & Marketing Agency"
+                 "name": "Agence de publicité et de marketing"
                 }
                ],
                "professional_type": "Business",
@@ -1873,8 +1913,8 @@
               "super_followed_by": false,
               "super_following": false,
               "tweet_counts": {
-               "media_tweets": 916,
-               "tweets": 8830
+               "media_tweets": 922,
+               "tweets": 8836
               },
               "verification": {
                "verified": false
@@ -1887,7 +1927,7 @@
            }
           },
           "entryId": "user-15905501",
-          "sortIndex": "2095959138092711786"
+          "sortIndex": "2105664947798146912"
          },
          {
           "content": {
@@ -1905,18 +1945,18 @@
              "result": {
               "__typename": "User",
               "action_counts": {
-               "favorites_count": 22200
+               "favorites_count": 22176
               },
               "affiliates_highlighted_label": {
                "label": {
                 "badge": {
                  "url": "https://pbs.twimg.com/semantic_core_img/1428827730364096519/4ZXpTBhS?format=png&name=orig"
                 },
-                "description": "Automated",
+                "description": "Automatisé",
                 "longDescription": {
                  "entities": [
                   {
-                   "fromIndex": 13,
+                   "fromIndex": 15,
                    "ref": {
                     "mention_results": {
                      "result": {
@@ -1930,10 +1970,10 @@
                     "screen_name": "JeauxLong",
                     "type": "TimelineRichTextMention"
                    },
-                   "toIndex": 23
+                   "toIndex": 25
                   }
                  ],
-                 "text": "Automated by @JeauxLong"
+                 "text": "Automatisé par @JeauxLong"
                 },
                 "userLabelType": "AutomatedLabel"
                }
@@ -1948,9 +1988,6 @@
                "created_at": "Sun Jun 21 05:52:51 +0000 2009",
                "name": "Quaxuke IS UnBreakAble スカーレット",
                "screen_name": "PHiLLy2C"
-              },
-              "dm_permissions": {
-               "can_dm": true
               },
               "follow_request_sent": false,
               "grok_translated_bio_with_availability": {
@@ -1979,7 +2016,7 @@
                 {
                  "icon_name": "IconBriefcaseStroke",
                  "id": 934,
-                 "name": "Social Media Influencer"
+                 "name": "Influenceur/influenceuse sur les médias sociaux"
                 }
                ],
                "professional_type": "Creator",
@@ -2014,7 +2051,7 @@
               },
               "relationship_counts": {
                "followers": 852,
-               "following": 372
+               "following": 370
               },
               "relationship_perspectives": {
                "blocked_by": false,
@@ -2030,7 +2067,7 @@
               "super_following": false,
               "tweet_counts": {
                "media_tweets": 611,
-               "tweets": 17210
+               "tweets": 17209
               },
               "verification": {
                "verified": false
@@ -2043,7 +2080,7 @@
            }
           },
           "entryId": "user-49247092",
-          "sortIndex": "2095959138092711776"
+          "sortIndex": "2105664947798146902"
          },
          {
           "content": {
@@ -2074,9 +2111,6 @@
                "created_at": "Mon Oct 24 01:17:29 +0000 2011",
                "name": "🏌",
                "screen_name": "Quax2_"
-              },
-              "dm_permissions": {
-               "can_dm": false
               },
               "follow_request_sent": false,
               "grok_translated_bio_with_availability": {
@@ -2119,8 +2153,8 @@
                "translator_type": "none"
               },
               "relationship_counts": {
-               "followers": 839,
-               "following": 680
+               "followers": 838,
+               "following": 679
               },
               "relationship_perspectives": {
                "blocked_by": false,
@@ -2136,7 +2170,7 @@
               "super_following": false,
               "tweet_counts": {
                "media_tweets": 57,
-               "tweets": 19509
+               "tweets": 19507
               },
               "verification": {
                "verified": false
@@ -2149,7 +2183,7 @@
            }
           },
           "entryId": "user-396959033",
-          "sortIndex": "2095959138092711766"
+          "sortIndex": "2105664947798146892"
          },
          {
           "content": {
@@ -2167,18 +2201,18 @@
              "result": {
               "__typename": "User",
               "action_counts": {
-               "favorites_count": 146446
+               "favorites_count": 148872
               },
               "affiliates_highlighted_label": {
                "label": {
                 "badge": {
                  "url": "https://pbs.twimg.com/semantic_core_img/1428827730364096519/4ZXpTBhS?format=png&name=orig"
                 },
-                "description": "Automated",
+                "description": "Automatisé",
                 "longDescription": {
                  "entities": [
                   {
-                   "fromIndex": 13,
+                   "fromIndex": 15,
                    "ref": {
                     "mention_results": {
                      "result": {
@@ -2192,10 +2226,10 @@
                     "screen_name": "luvariace_",
                     "type": "TimelineRichTextMention"
                    },
-                   "toIndex": 24
+                   "toIndex": 26
                   }
                  ],
-                 "text": "Automated by @luvariace_"
+                 "text": "Automatisé par @luvariace_"
                 },
                 "userLabelType": "AutomatedLabel"
                }
@@ -2208,11 +2242,8 @@
               },
               "core": {
                "created_at": "Sun Nov 19 07:19:23 +0000 2023",
-               "name": "🍓🚦kai/mattheo🌷🌟",
+               "name": "🍓🚦kai ༼ theo🌷🌟",
                "screen_name": "quaxkai"
-              },
-              "dm_permissions": {
-               "can_dm": true
               },
               "follow_request_sent": false,
               "grok_translated_bio_with_availability": {
@@ -2222,7 +2253,7 @@
               "id": "VXNlcjoxNzI2MTM4MDI5MDM4MDAyMTc5",
               "is_blue_verified": false,
               "location": {
-               "location": "he/it/they/star/xe"
+               "location": "any but she , he / star pref"
               },
               "media_permissions": {
                "can_media_tag": false
@@ -2273,7 +2304,7 @@
                "translator_type": "none"
               },
               "relationship_counts": {
-               "followers": 781,
+               "followers": 772,
                "following": 1606
               },
               "relationship_perspectives": {
@@ -2289,8 +2320,8 @@
               "super_followed_by": false,
               "super_following": false,
               "tweet_counts": {
-               "media_tweets": 3142,
-               "tweets": 51168
+               "media_tweets": 3197,
+               "tweets": 51932
               },
               "verification": {
                "verified": false
@@ -2303,137 +2334,7 @@
            }
           },
           "entryId": "user-1726138029038002179",
-          "sortIndex": "2095959138092711756"
-         },
-         {
-          "content": {
-           "__typename": "TimelineTimelineItem",
-           "clientEventInfo": {
-            "component": "result",
-            "element": "user"
-           },
-           "entryType": "TimelineTimelineItem",
-           "itemContent": {
-            "__typename": "TimelineUser",
-            "itemType": "TimelineUser",
-            "userDisplayType": "User",
-            "user_results": {
-             "result": {
-              "__typename": "User",
-              "action_counts": {
-               "favorites_count": 9950
-              },
-              "affiliates_highlighted_label": {},
-              "avatar": {
-               "image_url": "https://pbs.twimg.com/profile_images/1606303006265593857/0TEJw2Xb_normal.jpg"
-              },
-              "banner": {
-               "image_url": "https://pbs.twimg.com/profile_banners/1606300951316377600/1672594669"
-              },
-              "core": {
-               "created_at": "Fri Dec 23 14:49:37 +0000 2022",
-               "name": "Quax Cracker art trade n comms OPEN",
-               "screen_name": "Quax_da_cracker"
-              },
-              "dm_permissions": {
-               "can_dm": false
-              },
-              "follow_request_sent": false,
-              "grok_translated_bio_with_availability": {
-               "is_available": false
-              },
-              "has_graduated_access": false,
-              "id": "VXNlcjoxNjA2MzAwOTUxMzE2Mzc3NjAw",
-              "is_blue_verified": false,
-              "location": {
-               "location": ""
-              },
-              "media_permissions": {
-               "can_media_tag": true
-              },
-              "notifications_settings": {
-               "notifications_enabled": false
-              },
-              "parody_commentary_fan_label": "None",
-              "pinned_items": {
-               "tweet_ids_str": [
-                "1756340875427524787"
-               ]
-              },
-              "possibly_sensitive": false,
-              "privacy": {
-               "protected": false
-              },
-              "professional": {
-               "category": [
-                {
-                 "icon_name": "IconBriefcaseStroke",
-                 "id": 1017,
-                 "name": "Artist"
-                }
-               ],
-               "professional_type": "Creator",
-               "rest_id": "1606306840509583362"
-              },
-              "profile_bio": {
-               "description": "16yo artist, starving and ded🎨 She/her◇ ENG/中文（简体繁体）◇ Procreate◇Ipad | Apple Pencil ✏️",
-               "entities": {
-                "description": {},
-                "url": {
-                 "urls": [
-                  {
-                   "display_url": "quax-the-cracker.carrd.co",
-                   "expanded_url": "http://quax-the-cracker.carrd.co",
-                   "indices": [
-                    0,
-                    23
-                   ],
-                   "url": "https://t.co/y8ymgAgqav"
-                  }
-                 ]
-                }
-               }
-              },
-              "profile_description_language": "en",
-              "profile_image_shape": "Circle",
-              "profile_metadata": {
-               "profile_interstitial_type": ""
-              },
-              "profile_translation": {
-               "translator_type": "none"
-              },
-              "relationship_counts": {
-               "followers": 763,
-               "following": 280
-              },
-              "relationship_perspectives": {
-               "blocked_by": false,
-               "blocking": false,
-               "followed_by": false,
-               "following": false,
-               "live_following": false,
-               "muting": false
-              },
-              "rest_id": "1606300951316377600",
-              "super_follow_eligible": false,
-              "super_followed_by": false,
-              "super_following": false,
-              "tweet_counts": {
-               "media_tweets": 192,
-               "tweets": 2365
-              },
-              "verification": {
-               "verified": false
-              },
-              "website": {
-               "url": "https://t.co/y8ymgAgqav"
-              }
-             }
-            }
-           }
-          },
-          "entryId": "user-1606300951316377600",
-          "sortIndex": "2095959138092711746"
+          "sortIndex": "2105664947798146882"
          },
          {
           "content": {
@@ -2442,18 +2343,18 @@
            "entryType": "TimelineTimelineCursor",
            "value": "DAAJAAA"
           },
-          "entryId": "cursor-top-2095959138092711937",
-          "sortIndex": "2095959138092711937"
+          "entryId": "cursor-top-2105664947798147073",
+          "sortIndex": "2105664947798147073"
          },
          {
           "content": {
            "__typename": "TimelineTimelineCursor",
            "cursorType": "Bottom",
            "entryType": "TimelineTimelineCursor",
-           "value": "DAAFCgABHRZXuzG__z8LAAIAAADwRW1QQzZ3QUFBZlEvZ0dKTjB2R3AvQUFBQUJRV093a3ZnSlZRQUJIeXdiTGkxMkFBQUFBQUFLcEJCTklBQUFBQXNJWEJrUUFBQUFCYitEdHhHVWY3clJpYThBZ0FBQUFBRThCMXJnQUFBQUFYcVIwNUZrcTZOR1dWc0FBUmlFeFMwTmFnQUJWYmYwMytWN0FGRi9SNVpGWWFZQU1BQUFBQUJQMjRrUUFBQUFBQkZHallBQUFBQUJhWGxXa0FBQUFBQXU5emRBeXBpdGpiRjlBQUFBQUFBQlBwNk44VTNyeEZnUmZRQmdBQUFBQUE4ckxkCAADAAAAAgAA"
+           "value": "DAAFCgABHTjTHR1__z8LAAIAAADwRW1QQzZ3QUFBZlEvZ0dKTjB2R3AvQUFBQUJRV093a3ZnSlZRQUJIeXdiTGkxMkFBQUFBQUFLcEJCTklBQUFBQXNJWEJrUUFBQUFCYitEdHhHVWY3clJpYThBZ0FBQUFBRThCMXJnQUFBQUFYcVIwNUVZaE1VdERXb0FBVlczOU4vbGV3QlJZMVBDMHIxbUFkRi9SNVpGWWFZQU1BQUFBQUJQMjRrUUFBQUFBQkZHallBQUFBQUJhWGxXa0FBQUFBQXU5emRBeXBpdGpiRjlBQUFBQUFBQlBwNk44VTNyeEZnUmZRQmdBQUFBQUE4ckxkCAADAAAAAgAA"
           },
-          "entryId": "cursor-bottom-2095959138092711745",
-          "sortIndex": "2095959138092711745"
+          "entryId": "cursor-bottom-2105664947798146881",
+          "sortIndex": "2105664947798146881"
          }
         ],
         "type": "TimelineAddEntries"

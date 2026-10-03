@@ -1,0 +1,314 @@
+{
+ "scenario": "Profile whose posts tab mixes subscriber-only previews (TweetPreviewDisplay) into its threads",
+ "sourceUrl": "https://x.com/Osemka8",
+ "operation": "SidebarUserRecommendations",
+ "host": "x.com",
+ "queryId": "XFGj2pdlasiM3FndUe1PrQ",
+ "features": {
+  "profile_label_improvements_pcf_label_in_post_enabled": true,
+  "responsive_web_profile_redirect_enabled": true,
+  "rweb_tipjar_consumption_enabled": false,
+  "verified_phone_label_enabled": false,
+  "responsive_web_graphql_timeline_navigation_enabled": true
+ },
+ "fieldToggles": null,
+ "variables": {
+  "profileUserId": "3864149734"
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "500",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "485",
+  "x-rate-limit-reset": "1790865375"
+ },
+ "body": {
+  "data": {
+   "sidebar_user_recommendations": [
+    {
+     "token": "CgABHB1lY/tm0yQIAAIAAAACCAAEAAAAiAA=",
+     "user_results": {
+      "result": {
+       "__typename": "User",
+       "action_counts": {
+        "favorites_count": 5627
+       },
+       "affiliates_highlighted_label": {
+        "label": {
+         "badge": {
+          "url": "https://pbs.twimg.com/profile_images/2048040010419765248/5Bs4eHOw_bigger.jpg"
+         },
+         "description": "TRADEFUNDED",
+         "url": {
+          "url": "https://twitter.com/Trade_Funded",
+          "urlType": "DeepLink"
+         },
+         "userLabelDisplayType": "Badge",
+         "userLabelType": "BusinessLabel"
+        }
+       },
+       "avatar": {
+        "image_url": "https://pbs.twimg.com/profile_images/1705631467722735616/EXVFc5Cv_normal.png"
+       },
+       "banner": {
+        "image_url": "https://pbs.twimg.com/profile_banners/948616429795815424/1782213785"
+       },
+       "core": {
+        "created_at": "Wed Jan 03 18:05:56 +0000 2018",
+        "name": "Sumo",
+        "screen_name": "TraderSumo1"
+       },
+       "follow_request_sent": false,
+       "has_graduated_access": true,
+       "id": "VXNlcjo5NDg2MTY0Mjk3OTU4MTU0MjQ=",
+       "is_blue_verified": true,
+       "location": {
+        "location": "tradefunded.com"
+       },
+       "media_permissions": {
+        "can_media_tag": false
+       },
+       "notifications_settings": {
+        "notifications_enabled": false
+       },
+       "parody_commentary_fan_label": "None",
+       "pinned_items": {
+        "tweet_ids_str": [
+         "2079952495334375860"
+        ]
+       },
+       "possibly_sensitive": false,
+       "privacy": {
+        "protected": false
+       },
+       "professional": {
+        "category": [],
+        "professional_type": "Business",
+        "rest_id": "1493382153182265344"
+       },
+       "profile_bio": {
+        "description": "CEO & Co Founder of TRADEFUNDED | @Trade_Funded |\nFutures trader 15+ years | combat SIGINT |\nI built @Polytrendsalgo → the algo that replaces manual charting.",
+        "entities": {
+         "description": {},
+         "url": {
+          "urls": [
+           {
+            "display_url": "polytrends.io",
+            "expanded_url": "http://polytrends.io",
+            "indices": [
+             0,
+             23
+            ],
+            "url": "https://t.co/ooGVxcL4uJ"
+           }
+          ]
+         }
+        }
+       },
+       "profile_description_language": "en",
+       "profile_image_shape": "Circle",
+       "profile_metadata": {
+        "profile_interstitial_type": ""
+       },
+       "profile_translation": {
+        "translator_type": "none"
+       },
+       "relationship_counts": {
+        "followers": 17073,
+        "following": 225
+       },
+       "relationship_perspectives": {
+        "blocked_by": false,
+        "blocking": false,
+        "followed_by": false,
+        "following": false,
+        "live_following": false,
+        "muting": false
+       },
+       "rest_id": "948616429795815424",
+       "super_follow_eligible": false,
+       "super_followed_by": false,
+       "super_following": false,
+       "tweet_counts": {
+        "media_tweets": 2334,
+        "tweets": 8834
+       },
+       "verification": {
+        "verified": false
+       },
+       "website": {
+        "url": "https://t.co/ooGVxcL4uJ"
+       }
+      }
+     }
+    },
+    {
+     "token": "CgABHB1lY/tm0yQIAAIAAAACCAAEAAAAhwA=",
+     "user_results": {
+      "result": {
+       "__typename": "User",
+       "action_counts": {
+        "favorites_count": 717
+       },
+       "affiliates_highlighted_label": {},
+       "avatar": {
+        "image_url": "https://pbs.twimg.com/profile_images/1597761757610741760/RdGBtbGF_normal.jpg"
+       },
+       "banner": {
+        "image_url": ""
+       },
+       "core": {
+        "created_at": "Sun Aug 21 07:49:47 +0000 2011",
+        "name": "Bob",
+        "screen_name": "MisanthropeBob"
+       },
+       "follow_request_sent": false,
+       "has_graduated_access": true,
+       "id": "VXNlcjozNTkyNDcwMTY=",
+       "is_blue_verified": false,
+       "location": {
+        "location": "Nowhere"
+       },
+       "media_permissions": {
+        "can_media_tag": false
+       },
+       "notifications_settings": {
+        "notifications_enabled": false
+       },
+       "parody_commentary_fan_label": "None",
+       "pinned_items": {},
+       "possibly_sensitive": false,
+       "privacy": {
+        "protected": false
+       },
+       "profile_bio": {
+        "description": "....",
+        "entities": {
+         "description": {}
+        }
+       },
+       "profile_image_shape": "Circle",
+       "profile_metadata": {
+        "profile_interstitial_type": ""
+       },
+       "profile_translation": {
+        "translator_type": "none"
+       },
+       "relationship_counts": {
+        "followers": 40,
+        "following": 97
+       },
+       "relationship_perspectives": {
+        "blocked_by": false,
+        "blocking": false,
+        "followed_by": false,
+        "following": false,
+        "live_following": false,
+        "muting": false
+       },
+       "rest_id": "359247016",
+       "super_follow_eligible": false,
+       "super_followed_by": false,
+       "super_following": false,
+       "tweet_counts": {
+        "media_tweets": 21,
+        "tweets": 423
+       },
+       "verification": {
+        "verified": false
+       },
+       "website": {
+        "url": ""
+       }
+      }
+     }
+    },
+    {
+     "token": "CgABHB1lY/tm0yQIAAIAAAACCAAEAAAAiAA=",
+     "user_results": {
+      "result": {
+       "__typename": "User",
+       "action_counts": {
+        "favorites_count": 2540
+       },
+       "affiliates_highlighted_label": {},
+       "avatar": {
+        "image_url": "https://pbs.twimg.com/profile_images/1865292898784133120/mmazxXio_normal.jpg"
+       },
+       "banner": {
+        "image_url": "https://pbs.twimg.com/profile_banners/453904080/1778057841"
+       },
+       "core": {
+        "created_at": "Tue Jan 03 12:09:53 +0000 2012",
+        "name": "AshKhr Crypto",
+        "screen_name": "AshKhr_Crypto"
+       },
+       "follow_request_sent": false,
+       "has_graduated_access": true,
+       "id": "VXNlcjo0NTM5MDQwODA=",
+       "is_blue_verified": false,
+       "location": {
+        "location": "San Angel, Mexico"
+       },
+       "media_permissions": {
+        "can_media_tag": true
+       },
+       "notifications_settings": {
+        "notifications_enabled": false
+       },
+       "parody_commentary_fan_label": "None",
+       "pinned_items": {
+        "tweet_ids_str": [
+         "1930714526707851302"
+        ]
+       },
+       "possibly_sensitive": false,
+       "privacy": {
+        "protected": false
+       },
+       "profile_bio": {
+        "description": "Crypto TA/FA Analyst / Solana Gem Finder | \n\nFind and Ape Quality Shitcoins for 100x",
+        "entities": {
+         "description": {}
+        }
+       },
+       "profile_image_shape": "Circle",
+       "profile_metadata": {
+        "profile_interstitial_type": ""
+       },
+       "profile_translation": {
+        "translator_type": "none"
+       },
+       "relationship_counts": {
+        "followers": 9019,
+        "following": 578
+       },
+       "relationship_perspectives": {
+        "blocked_by": false,
+        "blocking": false,
+        "followed_by": false,
+        "following": false,
+        "live_following": false,
+        "muting": false
+       },
+       "rest_id": "453904080",
+       "super_follow_eligible": false,
+       "super_followed_by": false,
+       "super_following": false,
+       "tweet_counts": {
+        "media_tweets": 1418,
+        "tweets": 18974
+       },
+       "verification": {
+        "verified": false
+       },
+       "website": {
+        "url": ""
+       }
+      }
+     }
+    }
+   ]
+  }
+ }
+}

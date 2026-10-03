@@ -2,6 +2,7 @@
 class TweetVideoQuality {
   final String url;
   final String label;
+  final int? bitrate;
 
-  const TweetVideoQuality(this.url, this.label);
+  const TweetVideoQuality(this.url, this.label, {this.bitrate});
 }

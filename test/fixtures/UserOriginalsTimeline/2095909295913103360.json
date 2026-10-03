@@ -3,7 +3,7 @@
  "sourceUrl": "https://x.com/quax_tests",
  "operation": "UserOriginalsTimeline",
  "host": "x.com",
- "queryId": "F3G579cN5xm0xa_j76q08Q",
+ "queryId": "qtvmQffnepvr0oPe4A8MqQ",
  "features": {
   "rweb_video_screen_enabled": false,
   "rweb_cashtags_enabled": true,
@@ -20,6 +20,7 @@
   "responsive_web_grok_analyze_post_followups_enabled": true,
   "rweb_cashtags_composer_attachment_enabled": true,
   "responsive_web_jetfuel_frame": true,
+  "rweb_sports_post_context_enabled": true,
   "responsive_web_grok_share_attachment_enabled": true,
   "responsive_web_grok_annotations_enabled": true,
   "articles_preview_enabled": true,
@@ -39,12 +40,14 @@
   "tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled": true,
   "longform_notetweets_rich_text_read_enabled": true,
   "longform_notetweets_inline_media_enabled": false,
+  "responsive_web_nested_quote_preview_enabled": true,
   "responsive_web_grok_image_annotation_enabled": true,
   "responsive_web_grok_imagine_annotation_enabled": true,
   "responsive_web_grok_community_note_auto_translation_is_enabled": true,
   "responsive_web_enhance_cards_enabled": false
  },
  "fieldToggles": {
+  "withPayments": false,
   "withArticlePlainText": false
  },
  "variables": {
@@ -56,10 +59,10 @@
  },
  "status": 200,
  "headers": {
-  "x-rate-limit-limit": "50",
+  "x-rate-limit-limit": "250",
   "content-type": "application/json",
-  "x-rate-limit-remaining": "49",
-  "x-rate-limit-reset": "1788551339"
+  "x-rate-limit-remaining": "249",
+  "x-rate-limit-reset": "1790865377"
  },
  "body": {
   "data": {
@@ -129,11 +132,8 @@
                     "name": "QuaX Tests",
                     "screen_name": "quax_tests"
                    },
-                   "dm_permissions": {
-                    "can_dm": false
-                   },
                    "follow_request_sent": false,
-                   "has_graduated_access": false,
+                   "has_graduated_access": true,
                    "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                    "is_blue_verified": false,
                    "location": {
@@ -281,7 +281,7 @@
                 "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                 "unmention_data": {},
                 "views": {
-                 "count": "10",
+                 "count": "37",
                  "state": "EnabledWithCount"
                 }
                }
@@ -290,7 +290,7 @@
             }
            },
            "entryId": "tweet-2095951850990133591",
-           "sortIndex": "2095958575217115136"
+           "sortIndex": "2105664354186690560"
           },
           {
            "content": {
@@ -327,11 +327,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -1253,7 +1250,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "18",
+                "count": "38",
                 "state": "EnabledWithCount"
                }
               }
@@ -1261,7 +1258,7 @@
             }
            },
            "entryId": "tweet-2095922394959421815",
-           "sortIndex": "2095958575217115135"
+           "sortIndex": "2105664354186690559"
           },
           {
            "content": {
@@ -1298,11 +1295,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -1437,7 +1431,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "10",
+                "count": "14",
                 "state": "EnabledWithCount"
                }
               }
@@ -1445,7 +1439,7 @@
             }
            },
            "entryId": "tweet-2095922103644028999",
-           "sortIndex": "2095958575217115134"
+           "sortIndex": "2105664354186690558"
           },
           {
            "content": {
@@ -1482,11 +1476,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -1632,7 +1623,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "8",
+                "count": "13",
                 "state": "EnabledWithCount"
                }
               }
@@ -1640,7 +1631,7 @@
             }
            },
            "entryId": "tweet-2095921998094331981",
-           "sortIndex": "2095958575217115133"
+           "sortIndex": "2105664354186690557"
           },
           {
            "content": {
@@ -1677,11 +1668,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -1824,10 +1812,9 @@
                 "eligibility": "IneligibleNotVerified"
                },
                "rest_id": "2095921800731345271",
-               "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "6",
+                "count": "11",
                 "state": "EnabledWithCount"
                }
               }
@@ -1835,7 +1822,7 @@
             }
            },
            "entryId": "tweet-2095921800731345271",
-           "sortIndex": "2095958575217115132"
+           "sortIndex": "2105664354186690556"
           },
           {
            "content": {
@@ -1846,7 +1833,7 @@
               "timelinesDetails": {
                "controllerData": "DAACDAACDAABCgABAAAAAAAAAAgAAAAA",
                "injectionType": "WhoToFollow",
-               "sourceData": "DAABCgABg3aQo+0LI50KAAIAAAAAAAAAAAAIAAIAAAB1CAADAAAAAgwABQwAAgwAAgwAAQoAAQAAAAAAAAAIAAAAAAA="
+               "sourceData": "DAABCgABuNW6xW62iRIKAAIAAAAAAAAAAAAIAAIAAAB1CAADAAAAAgwABQwAAgwAAgwAAQoAAQAAAAAAAAAIAAAAAAA="
               }
              }
             },
@@ -1867,7 +1854,7 @@
             },
             "items": [
              {
-              "entryId": "who-to-follow-2095958575217115141-user-2333988375",
+              "entryId": "who-to-follow-2105664354186690565-user-2333988375",
               "item": {
                "clientEventInfo": {
                 "component": "suggest_who_to_follow",
@@ -1875,7 +1862,7 @@
                  "timelinesDetails": {
                   "controllerData": "DAACDAACDAABCgABAAAAAAAAAAgAAAAA",
                   "injectionType": "WhoToFollow",
-                  "sourceData": "DAABCgABg3aQo+0LI50KAAIAAAAAAAAAAAAIAAIAAAB1CAADAAAAAgwABQwAAgwAAgwAAQoAAQAAAAAAAAAIAAAAAAA="
+                  "sourceData": "DAABCgABuNW6xW62iRIKAAIAAAAAAAAAAAAIAAIAAAB1CAADAAAAAgwABQwAAgwAAgwAAQoAAQAAAAAAAAAIAAAAAAA="
                  }
                 },
                 "element": "user"
@@ -1888,7 +1875,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 12543
+                   "favorites_count": 12561
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -1901,9 +1888,6 @@
                    "created_at": "Sun Feb 09 16:16:44 +0000 2014",
                    "name": "Instant Foot ⚽️",
                    "screen_name": "lnstantFoot"
-                  },
-                  "dm_permissions": {
-                   "can_dm": true
                   },
                   "follow_request_sent": false,
                   "has_graduated_access": true,
@@ -1962,8 +1946,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 2451132,
-                   "following": 13911
+                   "followers": 2454527,
+                   "following": 13907
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -1978,8 +1962,8 @@
                   "super_followed_by": false,
                   "super_following": false,
                   "tweet_counts": {
-                   "media_tweets": 175522,
-                   "tweets": 255023
+                   "media_tweets": 177408,
+                   "tweets": 257168
                   },
                   "verification": {
                    "verified": false
@@ -1993,7 +1977,7 @@
               }
              },
              {
-              "entryId": "who-to-follow-2095958575217115141-user-1230762202807689217",
+              "entryId": "who-to-follow-2105664354186690565-user-1178334459109806081",
               "item": {
                "clientEventInfo": {
                 "component": "suggest_who_to_follow",
@@ -2001,7 +1985,7 @@
                  "timelinesDetails": {
                   "controllerData": "DAACDAACDAABCgABAAAAAAAAAAgAAAAA",
                   "injectionType": "WhoToFollow",
-                  "sourceData": "DAABCgABg3aQo+0LI50KAAIAAAAAAAAAAAAIAAIAAAB1CAADAAAAAgwABQwAAgwAAgwAAQoAAQAAAAAAAAAIAAAAAAA="
+                  "sourceData": "DAABCgABuNW6xW62iRIKAAIAAAAAAAAAAAAIAAIAAAB1CAADAAAAAgwABQwAAgwAAgwAAQoAAQAAAAAAAAAIAAAAAAA="
                  }
                 },
                 "element": "user"
@@ -2014,7 +1998,131 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 5453
+                   "favorites_count": 476
+                  },
+                  "affiliates_highlighted_label": {},
+                  "avatar": {
+                   "image_url": "https://pbs.twimg.com/profile_images/1671314479362068482/EFivh8wM_normal.jpg"
+                  },
+                  "banner": {
+                   "image_url": "https://pbs.twimg.com/profile_banners/1178334459109806081/1729956180"
+                  },
+                  "core": {
+                   "created_at": "Sun Sep 29 15:43:55 +0000 2019",
+                   "name": "FSF",
+                   "screen_name": "Fsfofficielle"
+                  },
+                  "follow_request_sent": false,
+                  "has_graduated_access": true,
+                  "id": "VXNlcjoxMTc4MzM0NDU5MTA5ODA2MDgx",
+                  "is_blue_verified": false,
+                  "location": {
+                   "location": "Senegal"
+                  },
+                  "media_permissions": {
+                   "can_media_tag": true
+                  },
+                  "notifications_settings": {
+                   "notifications_enabled": false
+                  },
+                  "parody_commentary_fan_label": "None",
+                  "pinned_items": {},
+                  "possibly_sensitive": false,
+                  "privacy": {
+                   "protected": false
+                  },
+                  "professional": {
+                   "category": [
+                    {
+                     "icon_name": "IconBriefcaseStroke",
+                     "id": 1000,
+                     "name": "Sports Association"
+                    }
+                   ],
+                   "professional_type": "Business",
+                   "rest_id": "1478895159161114628"
+                  },
+                  "profile_bio": {
+                   "description": "compte officiel de la FSF - Fédération Sénégalaise de Football | #MankoWutiNdamli | @GaindeYi",
+                   "entities": {
+                    "description": {},
+                    "url": {
+                     "urls": [
+                      {
+                       "display_url": "fsfoot.sn",
+                       "expanded_url": "http://www.fsfoot.sn",
+                       "indices": [
+                        0,
+                        23
+                       ],
+                       "url": "https://t.co/PKs3zWX3NY"
+                      }
+                     ]
+                    }
+                   }
+                  },
+                  "profile_description_language": "fr",
+                  "profile_image_shape": "Circle",
+                  "profile_metadata": {
+                   "profile_interstitial_type": ""
+                  },
+                  "profile_translation": {
+                   "translator_type": "none"
+                  },
+                  "relationship_counts": {
+                   "followers": 685000,
+                   "following": 44
+                  },
+                  "relationship_perspectives": {
+                   "blocked_by": false,
+                   "blocking": false,
+                   "followed_by": false,
+                   "following": false,
+                   "live_following": false,
+                   "muting": false
+                  },
+                  "rest_id": "1178334459109806081",
+                  "super_follow_eligible": false,
+                  "super_followed_by": false,
+                  "super_following": false,
+                  "tweet_counts": {
+                   "media_tweets": 2572,
+                   "tweets": 3800
+                  },
+                  "verification": {
+                   "verified": false
+                  },
+                  "website": {
+                   "url": "https://t.co/PKs3zWX3NY"
+                  }
+                 }
+                }
+               }
+              }
+             },
+             {
+              "entryId": "who-to-follow-2105664354186690565-user-1230762202807689217",
+              "item": {
+               "clientEventInfo": {
+                "component": "suggest_who_to_follow",
+                "details": {
+                 "timelinesDetails": {
+                  "controllerData": "DAACDAACDAABCgABAAAAAAAAAAgAAAAA",
+                  "injectionType": "WhoToFollow",
+                  "sourceData": "DAABCgABuNW6xW62iRIKAAIAAAAAAAAAAAAIAAIAAAB1CAADAAAAAgwABQwAAgwAAgwAAQoAAQAAAAAAAAAIAAAAAAA="
+                 }
+                },
+                "element": "user"
+               },
+               "itemContent": {
+                "__typename": "TimelineUser",
+                "itemType": "TimelineUser",
+                "userDisplayType": "User",
+                "user_results": {
+                 "result": {
+                  "__typename": "User",
+                  "action_counts": {
+                   "favorites_count": 5456
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -2027,9 +2135,6 @@
                    "created_at": "Fri Feb 21 07:54:11 +0000 2020",
                    "name": "Barça Home 🇫🇷",
                    "screen_name": "Actu_Barcelona"
-                  },
-                  "dm_permissions": {
-                   "can_dm": true
                   },
                   "follow_request_sent": false,
                   "has_graduated_access": true,
@@ -2092,7 +2197,7 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 393551,
+                   "followers": 393648,
                    "following": 1625
                   },
                   "relationship_perspectives": {
@@ -2108,8 +2213,8 @@
                   "super_followed_by": false,
                   "super_following": false,
                   "tweet_counts": {
-                   "media_tweets": 10605,
-                   "tweets": 19656
+                   "media_tweets": 10636,
+                   "tweets": 19692
                   },
                   "verification": {
                    "verified": false
@@ -2121,142 +2226,11 @@
                 }
                }
               }
-             },
-             {
-              "entryId": "who-to-follow-2095958575217115141-user-229178711",
-              "item": {
-               "clientEventInfo": {
-                "component": "suggest_who_to_follow",
-                "details": {
-                 "timelinesDetails": {
-                  "controllerData": "DAACDAACDAABCgABAAAAAAAAAAgAAAAA",
-                  "injectionType": "WhoToFollow",
-                  "sourceData": "DAABCgABg3aQo+0LI50KAAIAAAAAAAAAAAAIAAIAAAB1CAADAAAAAgwABQwAAgwAAgwAAQoAAQAAAAAAAAAIAAAAAAA="
-                 }
-                },
-                "element": "user"
-               },
-               "itemContent": {
-                "__typename": "TimelineUser",
-                "itemType": "TimelineUser",
-                "userDisplayType": "User",
-                "user_results": {
-                 "result": {
-                  "__typename": "User",
-                  "action_counts": {
-                   "favorites_count": 3635
-                  },
-                  "affiliates_highlighted_label": {},
-                  "avatar": {
-                   "image_url": "https://pbs.twimg.com/profile_images/1729550864300257280/wGXtsHNE_normal.jpg"
-                  },
-                  "banner": {
-                   "image_url": "https://pbs.twimg.com/profile_banners/229178711/1787320031"
-                  },
-                  "core": {
-                   "created_at": "Tue Dec 21 18:48:13 +0000 2010",
-                   "name": "Foot Mercato",
-                   "screen_name": "footmercato"
-                  },
-                  "dm_permissions": {
-                   "can_dm": true
-                  },
-                  "follow_request_sent": false,
-                  "has_graduated_access": true,
-                  "id": "VXNlcjoyMjkxNzg3MTE=",
-                  "is_blue_verified": true,
-                  "location": {
-                   "location": "Paris"
-                  },
-                  "media_permissions": {
-                   "can_media_tag": true
-                  },
-                  "notifications_settings": {
-                   "notifications_enabled": false
-                  },
-                  "parody_commentary_fan_label": "None",
-                  "pinned_items": {
-                   "tweet_ids_str": [
-                    "2095901038767116360"
-                   ]
-                  },
-                  "possibly_sensitive": false,
-                  "privacy": {
-                   "protected": false
-                  },
-                  "professional": {
-                   "category": [
-                    {
-                     "icon_name": "IconBriefcaseStroke",
-                     "id": 579,
-                     "name": "Media & News"
-                    }
-                   ],
-                   "professional_type": "Business",
-                   "rest_id": "1461080882350112776"
-                  },
-                  "profile_bio": {
-                   "description": "⚽️ Média leader sur l’actualité du #football en France 🇫🇷",
-                   "entities": {
-                    "description": {},
-                    "url": {
-                     "urls": [
-                      {
-                       "display_url": "bit.ly/m/footmercato",
-                       "expanded_url": "https://bit.ly/m/footmercato",
-                       "indices": [
-                        0,
-                        23
-                       ],
-                       "url": "https://t.co/AnteEgt5PU"
-                      }
-                     ]
-                    }
-                   }
-                  },
-                  "profile_description_language": "fr",
-                  "profile_image_shape": "Circle",
-                  "profile_metadata": {
-                   "profile_interstitial_type": ""
-                  },
-                  "profile_translation": {
-                   "translator_type": "none"
-                  },
-                  "relationship_counts": {
-                   "followers": 4731942,
-                   "following": 473
-                  },
-                  "relationship_perspectives": {
-                   "blocked_by": false,
-                   "blocking": false,
-                   "followed_by": false,
-                   "following": false,
-                   "live_following": false,
-                   "muting": false
-                  },
-                  "rest_id": "229178711",
-                  "super_follow_eligible": false,
-                  "super_followed_by": false,
-                  "super_following": false,
-                  "tweet_counts": {
-                   "media_tweets": 60223,
-                   "tweets": 284806
-                  },
-                  "verification": {
-                   "verified": false
-                  },
-                  "website": {
-                   "url": "https://t.co/AnteEgt5PU"
-                  }
-                 }
-                }
-               }
-              }
              }
             ]
            },
-           "entryId": "who-to-follow-2095958575217115141",
-           "sortIndex": "2095958575217115131"
+           "entryId": "who-to-follow-2105664354186690565",
+           "sortIndex": "2105664354186690555"
           },
           {
            "content": {
@@ -2293,11 +2267,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -2443,7 +2414,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "6",
+                "count": "11",
                 "state": "EnabledWithCount"
                }
               }
@@ -2451,7 +2422,7 @@
             }
            },
            "entryId": "tweet-2095921599056658635",
-           "sortIndex": "2095958575217115130"
+           "sortIndex": "2105664354186690554"
           },
           {
            "content": {
@@ -2476,7 +2447,7 @@
                    "value": {
                     "image_value": {
                      "height": 144,
-                     "url": "https://pbs.twimg.com/card_img/2094021520922161153/bObQYDY6?format=png&name=144x144_2",
+                     "url": "https://pbs.twimg.com/card_img/2104532685490106368/EN_MCWKw?format=png&name=144x144_2",
                      "width": 144
                     },
                     "type": "IMAGE"
@@ -2501,7 +2472,7 @@
                    "value": {
                     "image_value": {
                      "height": 420,
-                     "url": "https://pbs.twimg.com/card_img/2094021520922161153/bObQYDY6?format=png&name=420x420_2",
+                     "url": "https://pbs.twimg.com/card_img/2104532685490106368/EN_MCWKw?format=png&name=420x420_2",
                      "width": 420
                     },
                     "type": "IMAGE"
@@ -2512,7 +2483,7 @@
                    "value": {
                     "image_value": {
                      "height": 461,
-                     "url": "https://pbs.twimg.com/card_img/2094021520922161153/bObQYDY6?format=png&name=orig",
+                     "url": "https://pbs.twimg.com/card_img/2104532685490106368/EN_MCWKw?format=png&name=orig",
                      "width": 937
                     },
                     "type": "IMAGE"
@@ -2534,7 +2505,7 @@
                    "value": {
                     "image_value": {
                      "height": 100,
-                     "url": "https://pbs.twimg.com/card_img/2094021520922161153/bObQYDY6?format=png&name=100x100_2",
+                     "url": "https://pbs.twimg.com/card_img/2104532685490106368/EN_MCWKw?format=png&name=100x100_2",
                      "width": 100
                     },
                     "type": "IMAGE"
@@ -2545,7 +2516,7 @@
                    "value": {
                     "image_value": {
                      "height": 461,
-                     "url": "https://pbs.twimg.com/card_img/2094021520922161153/bObQYDY6?format=png&name=2048x2048_2_exp",
+                     "url": "https://pbs.twimg.com/card_img/2104532685490106368/EN_MCWKw?format=png&name=2048x2048_2_exp",
                      "width": 937
                     },
                     "type": "IMAGE"
@@ -2635,7 +2606,7 @@
                    "result": {
                     "__typename": "User",
                     "action_counts": {
-                     "favorites_count": 3224
+                     "favorites_count": 3222
                     },
                     "affiliates_highlighted_label": {},
                     "avatar": {
@@ -2648,9 +2619,6 @@
                      "created_at": "Fri Nov 25 01:07:12 +0000 2011",
                      "name": "Flutter",
                      "screen_name": "FlutterDev"
-                    },
-                    "dm_permissions": {
-                     "can_dm": false
                     },
                     "follow_request_sent": false,
                     "has_graduated_access": true,
@@ -2668,7 +2636,7 @@
                     "parody_commentary_fan_label": "None",
                     "pinned_items": {
                      "tweet_ids_str": [
-                      "2087628861068472718"
+                      "2101012855101218956"
                      ]
                     },
                     "possibly_sensitive": false,
@@ -2703,7 +2671,7 @@
                      "translator_type": "none"
                     },
                     "relationship_counts": {
-                     "followers": 277839,
+                     "followers": 278078,
                      "following": 60
                     },
                     "relationship_perspectives": {
@@ -2719,8 +2687,8 @@
                     "super_followed_by": false,
                     "super_following": false,
                     "tweet_counts": {
-                     "media_tweets": 1956,
-                     "tweets": 3878
+                     "media_tweets": 1973,
+                     "tweets": 3906
                     },
                     "verification": {
                      "verified": false,
@@ -2755,11 +2723,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -2918,7 +2883,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "6",
+                "count": "11",
                 "state": "EnabledWithCount"
                }
               }
@@ -2926,7 +2891,7 @@
             }
            },
            "entryId": "tweet-2095921351106146703",
-           "sortIndex": "2095958575217115129"
+           "sortIndex": "2105664354186690553"
           },
           {
            "content": {
@@ -2963,11 +2928,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -3813,7 +3775,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "7",
+                "count": "12",
                 "state": "EnabledWithCount"
                }
               }
@@ -3821,7 +3783,7 @@
             }
            },
            "entryId": "tweet-2095920289687150903",
-           "sortIndex": "2095958575217115128"
+           "sortIndex": "2105664354186690552"
           },
           {
            "content": {
@@ -3858,11 +3820,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -4642,7 +4601,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "17",
+                "count": "36",
                 "state": "EnabledWithCount"
                }
               }
@@ -4650,7 +4609,7 @@
             }
            },
            "entryId": "tweet-2095920215234138129",
-           "sortIndex": "2095958575217115127"
+           "sortIndex": "2105664354186690551"
           },
           {
            "content": {
@@ -4687,11 +4646,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -5307,7 +5263,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "7",
+                "count": "12",
                 "state": "EnabledWithCount"
                }
               }
@@ -5315,7 +5271,7 @@
             }
            },
            "entryId": "tweet-2095920135890506153",
-           "sortIndex": "2095958575217115126"
+           "sortIndex": "2105664354186690550"
           },
           {
            "content": {
@@ -5352,11 +5308,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -5818,7 +5771,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "9",
+                "count": "18",
                 "state": "EnabledWithCount"
                }
               }
@@ -5826,7 +5779,7 @@
             }
            },
            "entryId": "tweet-2095920085445619715",
-           "sortIndex": "2095958575217115125"
+           "sortIndex": "2105664354186690549"
           },
           {
            "content": {
@@ -5863,11 +5816,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -6165,7 +6115,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "10",
+                "count": "19",
                 "state": "EnabledWithCount"
                }
               }
@@ -6173,7 +6123,7 @@
             }
            },
            "entryId": "tweet-2095920036523172091",
-           "sortIndex": "2095958575217115124"
+           "sortIndex": "2105664354186690548"
           },
           {
            "content": {
@@ -6210,11 +6160,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -6502,7 +6449,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "10",
+                "count": "19",
                 "state": "EnabledWithCount"
                }
               }
@@ -6510,7 +6457,7 @@
             }
            },
            "entryId": "tweet-2095919982970282273",
-           "sortIndex": "2095958575217115123"
+           "sortIndex": "2105664354186690547"
           },
           {
            "content": {
@@ -6547,11 +6494,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -6849,7 +6793,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "8",
+                "count": "13",
                 "state": "EnabledWithCount"
                }
               }
@@ -6857,7 +6801,7 @@
             }
            },
            "entryId": "tweet-2095919923553775839",
-           "sortIndex": "2095958575217115122"
+           "sortIndex": "2105664354186690546"
           },
           {
            "content": {
@@ -6894,11 +6838,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -7196,7 +7137,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "8",
+                "count": "17",
                 "state": "EnabledWithCount"
                }
               }
@@ -7204,7 +7145,7 @@
             }
            },
            "entryId": "tweet-2095919166830084474",
-           "sortIndex": "2095958575217115121"
+           "sortIndex": "2105664354186690545"
           },
           {
            "content": {
@@ -7241,11 +7182,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -8147,7 +8085,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "7",
+                "count": "12",
                 "state": "EnabledWithCount"
                }
               }
@@ -8155,7 +8093,7 @@
             }
            },
            "entryId": "tweet-2095919075536826410",
-           "sortIndex": "2095958575217115120"
+           "sortIndex": "2105664354186690544"
           },
           {
            "content": {
@@ -8192,11 +8130,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -8906,7 +8841,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "7",
+                "count": "12",
                 "state": "EnabledWithCount"
                }
               }
@@ -8914,7 +8849,7 @@
             }
            },
            "entryId": "tweet-2095919007438139510",
-           "sortIndex": "2095958575217115119"
+           "sortIndex": "2105664354186690543"
           },
           {
            "content": {
@@ -8951,11 +8886,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -9473,7 +9405,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "7",
+                "count": "13",
                 "state": "EnabledWithCount"
                }
               }
@@ -9481,7 +9413,7 @@
             }
            },
            "entryId": "tweet-2095918939641356306",
-           "sortIndex": "2095958575217115118"
+           "sortIndex": "2105664354186690542"
           },
           {
            "content": {
@@ -9518,11 +9450,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -9848,7 +9777,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "7",
+                "count": "27",
                 "state": "EnabledWithCount"
                }
               }
@@ -9856,7 +9785,7 @@
             }
            },
            "entryId": "tweet-2095918861925163239",
-           "sortIndex": "2095958575217115117"
+           "sortIndex": "2105664354186690541"
           },
           {
            "content": {
@@ -9893,11 +9822,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -10223,7 +10149,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "8",
+                "count": "27",
                 "state": "EnabledWithCount"
                }
               }
@@ -10231,27 +10157,27 @@
             }
            },
            "entryId": "tweet-2095918809576091964",
-           "sortIndex": "2095958575217115116"
+           "sortIndex": "2105664354186690540"
           },
           {
            "content": {
             "__typename": "TimelineTimelineCursor",
             "cursorType": "Top",
             "entryType": "TimelineTimelineCursor",
-            "value": "DAAHCgABHRZXOCPAJxELAAIAAAATMjA5NTk1MTg1MDk5MDEzMzU5MQgAAwAAAAEAAA"
+            "value": "DAAHCgABHTjSkueAJxELAAIAAAATMjA5NTk1MTg1MDk5MDEzMzU5MQgAAwAAAAEAAA"
            },
-           "entryId": "cursor-top-2095958575217115137",
-           "sortIndex": "2095958575217115137"
+           "entryId": "cursor-top-2105664354186690561",
+           "sortIndex": "2105664354186690561"
           },
           {
            "content": {
             "__typename": "TimelineTimelineCursor",
             "cursorType": "Bottom",
             "entryType": "TimelineTimelineCursor",
-            "value": "DAAHCgABHRZXOCO__-kLAAIAAAATMjA5NTkxODgwOTU3NjA5MTk2MwgAAwAAAAIAAA"
+            "value": "DAAHCgABHTjSkud__-kLAAIAAAATMjA5NTkxODgwOTU3NjA5MTk2MwgAAwAAAAIAAA"
            },
-           "entryId": "cursor-bottom-2095958575217115115",
-           "sortIndex": "2095958575217115115"
+           "entryId": "cursor-bottom-2105664354186690539",
+           "sortIndex": "2105664354186690539"
           }
          ],
          "type": "TimelineAddEntries"

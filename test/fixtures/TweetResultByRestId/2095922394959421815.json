@@ -3,7 +3,7 @@
  "sourceUrl": "https://x.com/quax_tests/status/2095922394959421815",
  "operation": "TweetResultByRestId",
  "host": "x.com",
- "queryId": "GZsN2Pc4knAoit6pXa4HSA",
+ "queryId": "LbQZrAWyKPvExi8di3-EoA",
  "features": {
   "creator_subscriptions_tweet_preview_api_enabled": true,
   "premium_content_api_read_enabled": false,
@@ -13,6 +13,7 @@
   "responsive_web_grok_analyze_post_followups_enabled": true,
   "rweb_cashtags_composer_attachment_enabled": true,
   "responsive_web_jetfuel_frame": true,
+  "rweb_sports_post_context_enabled": true,
   "responsive_web_grok_share_attachment_enabled": true,
   "responsive_web_grok_annotations_enabled": true,
   "articles_preview_enabled": true,
@@ -37,6 +38,7 @@
   "responsive_web_profile_redirect_enabled": true,
   "rweb_tipjar_consumption_enabled": false,
   "verified_phone_label_enabled": false,
+  "responsive_web_nested_quote_preview_enabled": true,
   "responsive_web_grok_image_annotation_enabled": true,
   "responsive_web_grok_imagine_annotation_enabled": true,
   "responsive_web_grok_community_note_auto_translation_is_enabled": true,
@@ -46,7 +48,8 @@
   "withArticleRichContentState": true,
   "withArticlePlainText": false,
   "withArticleSummaryText": true,
-  "withArticleVoiceOver": true
+  "withArticleVoiceOver": true,
+  "withPayments": false
  },
  "variables": {
   "tweetId": "2095922394959421815",
@@ -59,8 +62,8 @@
  "headers": {
   "x-rate-limit-limit": "500",
   "content-type": "application/json",
-  "x-rate-limit-remaining": "494",
-  "x-rate-limit-reset": "1788551366"
+  "x-rate-limit-remaining": "493",
+  "x-rate-limit-reset": "1790865406"
  },
  "body": {
   "data": {
@@ -87,11 +90,8 @@
          "name": "QuaX Tests",
          "screen_name": "quax_tests"
         },
-        "dm_permissions": {
-         "can_dm": false
-        },
         "follow_request_sent": false,
-        "has_graduated_access": false,
+        "has_graduated_access": true,
         "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
         "is_blue_verified": false,
         "location": {
@@ -1011,7 +1011,7 @@
      "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
      "unmention_data": {},
      "views": {
-      "count": "19",
+      "count": "39",
       "state": "EnabledWithCount"
      }
     }

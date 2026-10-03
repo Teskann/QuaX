@@ -1,10 +1,10 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:quax/client/client.dart';
 import 'package:quax/constants.dart';
-import 'package:quax/generated/l10n.dart';
 import 'package:quax/profile/profile.dart';
 import 'package:quax/tweet/_media.dart';
 import 'package:quax/tweet/conversation.dart';
+import 'package:quax/tweet/unavailable_tweet.dart';
 import 'package:quax/ui/errors.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:pref/pref.dart';
@@ -239,13 +239,15 @@ class _StatusScreenState extends State<_StatusScreen> {
               controller: _scrollController,
               index: index,
               highlightColor: Theme.of(context).colorScheme.primary,
-              child: TweetConversation(
-                  id: chain.id,
-                  tweets: chain.tweets,
-                  username: null,
-                  isPinned: chain.isPinned,
-                  tweetOpened: widget.tweetOpened,
-                  initialMediaIndex: chain.id == widget.id ? widget.initialMediaIndex : 0),
+              child: chain.id == widget.id && (chain.tweets.single.isTombstone ?? false)
+                  ? _buildUnavailable(chain.tweets.single.text)
+                  : TweetConversation(
+                      id: chain.id,
+                      tweets: chain.tweets,
+                      username: null,
+                      isPinned: chain.isPinned,
+                      tweetOpened: widget.tweetOpened,
+                      initialMediaIndex: chain.id == widget.id ? widget.initialMediaIndex : 0),
             );
           },
           firstPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(
@@ -260,15 +262,13 @@ class _StatusScreenState extends State<_StatusScreen> {
             prefix: (l10n) => l10n.unable_to_load_the_next_page_of_replies,
             onRetry: fetchNextPage,
           ),
-          noItemsFoundIndicatorBuilder: (context) {
-            return Center(
-              child: Text(
-                L10n.of(context).could_not_find_any_tweets_by_this_user,
-              ),
-            );
-          },
+          noItemsFoundIndicatorBuilder: (context) => _buildUnavailable(null),
         ),
       ),
     );
   }
+
+  /// The opened post, which X does not show. Its author is known when it was opened from a link or a quote
+  Widget _buildUnavailable(String? reason) =>
+      UnavailableTweetCard(reason: reason, screenName: widget.username, id: widget.id);
 }

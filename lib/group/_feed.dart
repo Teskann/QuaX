@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:material_ui/material_ui.dart';
 
+import 'package:quax/catcher/exceptions.dart';
 import 'package:quax/client/client.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/database/entities.dart';
@@ -14,6 +15,7 @@ import 'package:quax/group/search_query.dart';
 import 'package:quax/tweet/paginated_tweet_list.dart';
 import 'package:quax/tweet/tweet_context_scope.dart';
 import 'package:quax/utils/iterables.dart';
+import 'package:quax/utils/paging.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -219,6 +221,8 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
     var repository = await Repository.writable();
     var nextCursor = await createCursor(repository);
     bool shouldShowUnrelatedPostsInFeedWarning = false;
+    var errors = <PagingError>[];
+    var failedSubscriptions = 0;
 
     for (var chunk in widget.chunks) {
       var hash = chunk.hash;
@@ -229,21 +233,10 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
         String? searchCursor;
 
         if (cursorKey == null) {
-          // We're loading the initial content for the feed screen, so load all the chunks we already have
+          // First page: keep the stored tweets of the chunk, shown if X can't be reached, and load it from scratch
           var storedChunks = await repository.query(tableFeedGroupChunk,
               where: 'hash = ?', whereArgs: [hash], orderBy: 'created_at DESC');
-
-          // Make sure we load any existing stored tweets from the chunk
           tweets.addAll(chainsFromStoredChunks(storedChunks));
-
-          // Use the latest chunk's top cursor to load any new tweets since the last time we checked
-          var latestChunk = storedChunks.firstOrNull;
-          if (latestChunk != null) {
-            searchCursor = latestChunk['cursor_top'] as String;
-          } else {
-            // Otherwise we need to perform a fresh load from scratch for this chunk
-            searchCursor = null;
-          }
         } else {
           // We're currently at the end of our current feed, so load the oldest chunk and use its cursor to load more
           var storedChunks = await repository.query(tableFeedGroupChunk,
@@ -258,8 +251,21 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
         // Perform our search for the next page of results for this chunk, and add those tweets to our collection
         var query = buildFeedSearchQuery(chunk.users,
             includeReplies: widget.includeReplies, includeRetweets: widget.includeRetweets);
-        TweetStatus result = await Twitter.searchTweets(query, cursor: searchCursor);
+        TweetStatus result;
+        try {
+          result = await Twitter.searchTweets(query, cursor: searchCursor);
+        } catch (e, stackTrace) {
+          errors.add(PagingError(e, stackTrace));
+          failedSubscriptions += chunk.users.length;
+          return tweets;
+        }
         shouldShowUnrelatedPostsInFeedWarning |= feedContainsUnrelatedTweets(result, chunk.users);
+
+        if (cursorKey == null) {
+          // X answered, so its fresh page replaces what was stored for this chunk
+          await repository.delete(tableFeedGroupChunk, where: 'hash = ?', whereArgs: [hash]);
+          tweets.clear();
+        }
 
         if (result.chains.isNotEmpty) {
           tweets.addAll(result.chains);
@@ -280,6 +286,10 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
 
     // Wait for all our searches to complete, then build our list of tweet conversations
     var result = (await Future.wait(futures));
+    if (errors.isNotEmpty && errors.length == widget.chunks.length) {
+      Error.throwWithStackTrace(errors.first.error, errors.first.stackTrace);
+    }
+    _feedController.partialError.value = _partialError(errors, failedSubscriptions);
     var threads = sortChainsNewestFirst(result.expand((element) => element).toList());
 
     if (!mounted) {
@@ -292,6 +302,17 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
     }
 
     return (chains: threads, nextCursor: nextCursor);
+  }
+
+  /// The error to show above the tweets for the chunks that failed. A rate limit tells how much of the feed could load
+  PagingError? _partialError(List<PagingError> errors, int failedSubscriptions) {
+    var rateLimit = errors.map((e) => e.error).whereType<RateLimitedException>().firstOrNull;
+    if (rateLimit == null) {
+      return errors.firstOrNull;
+    }
+    var total = widget.chunks.fold(0, (sum, chunk) => sum + chunk.users.length);
+    var feedError = FeedRateLimitedException(rateLimit.availableAt, loaded: total - failedSubscriptions, total: total);
+    return PagingError(feedError, StackTrace.current);
   }
 
   @override
@@ -313,10 +334,7 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
             loadPage: _listTweets,
             username: null,
             firstPagePreview: _cachedPreview,
-            onRefresh: () async {
-              var repository = await Repository.writable();
-              await repository.delete(tableFeedGroupChunk);
-            },
+            onRefresh: () async {},
             firstPageErrorPrefix: (l10n) => l10n.unable_to_load_the_tweets_for_the_feed,
             newPageErrorPrefix: (l10n) => l10n.unable_to_load_the_next_page_of_tweets,
             emptyMessage: L10n.of(context).could_not_find_any_tweets_from_the_last_7_days,

@@ -120,11 +120,8 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
 
   bool _showBackToTopButton = false;
 
-  double descriptionHeight = defaultHeight;
-  double metadataHeight = defaultHeight;
-
-  bool descriptionResized = false;
-  bool metadataResized = false;
+  double headerHeight = defaultHeight;
+  bool headerResized = false;
 
   NumberFormat numberFormat = NumberFormat.compact();
 
@@ -140,13 +137,6 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
 
       nestedScrollViewState.innerController.addListener(_listen);
     });
-
-
-    var description = widget.profile.user.description;
-    if (description == null || description.isEmpty) {
-      descriptionHeight = 0;
-      descriptionResized = true;
-    }
   }
 
   @override
@@ -192,6 +182,13 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
     }
   }
 
+  void _onHeaderResized(Size size) {
+    setState(() {
+      headerHeight = size.height;
+      headerResized = true;
+    });
+  }
+
   void _scrollToTop() {
     // We scroll the outer controller (the whole nested scroll view and children) to the top
     // TODO: No animation due to Flutter crashing on huge lists (https://github.com/flutter/flutter/issues/52207) (#607)
@@ -210,10 +207,11 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
     var mediaQuery = MediaQuery.of(context);
     var deviceSize = mediaQuery.size;
     var bannerHeight = deviceSize.width * (500 / 1500);
-    var avatarHeight = 80;
 
-    var profileImageTop = bannerHeight + 16 - 36 - mediaQuery.padding.top;
-    var profileStuffTop = bannerHeight + 36;
+    // The flexible space starts behind the status bar, so these offsets must not depend on its height
+    var profileImageTop = bannerHeight - 44;
+    var profileActionsTop = bannerHeight + 8;
+    var profileStuffTop = bannerHeight + 48;
 
     var theme = Theme.of(context);
 
@@ -221,7 +219,7 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
     var bannerImage = banner == null
         ? Container(height: bannerHeight, color: Colors.white)
         : GestureDetector(
-      child: ExtendedImage.network(banner, fit: BoxFit.fitWidth, height: bannerHeight),
+      child: ExtendedImage.network(banner, fit: BoxFit.cover, width: deviceSize.width, height: bannerHeight),
       onTap: () {
         Navigator.push(
           context,
@@ -237,8 +235,8 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
       },
     );
 
-    // The height of the app bar should be all the inner components, plus any margins
-    var appBarHeight = profileStuffTop + avatarHeight + metadataHeight + 8 + descriptionHeight;
+    // The expanded app bar must hold the header and the tab bar; SliverAppBar adds the status bar height itself
+    var appBarHeight = profileStuffTop + 16 + headerHeight + kToolbarHeight - mediaQuery.padding.top;
 
     var metadataTextStyle = const TextStyle(fontSize: 12.5);
     var prefs = PrefService.of(context, listen: false);
@@ -312,7 +310,8 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
                               Flexible(
                                 child: Container(
                                   margin: EdgeInsets.fromLTRB(16, profileStuffTop, 16, 0),
-                                  child: Column(
+                                  child: MeasureSize(onChange: _onHeaderResized, child: Column(
+                                    mainAxisSize: MainAxisSize.min,
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Row(
@@ -341,14 +340,7 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
                                                     : Colors.black54)),
                                       ),
                                       if (user.description != null && user.description!.isNotEmpty)
-                                        MeasureSize(
-                                          onChange: (size) {
-                                            setState(() {
-                                              descriptionHeight = size.height;
-                                              descriptionResized = true;
-                                            });
-                                          },
-                                          child: Container(
+                                        Container(
                                               margin: const EdgeInsets.only(bottom: 8),
                                               child: SelectableText.rich(
                                                   minLines: 1,
@@ -361,15 +353,7 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
                                                               : Colors.black),
                                                       children: displayRichText(descParts)
                                                   ))),
-                                        ),
-                                      MeasureSize(
-                                          onChange: (size) {
-                                            setState(() {
-                                              metadataHeight = size.height;
-                                              metadataResized = true;
-                                            });
-                                          },
-                                          child: Padding(
+                                      Padding(
                                             padding: const EdgeInsets.only(bottom: 8.0),
                                             child: Column(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -540,9 +524,9 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
                                                             ],
                                                           )))
                                                 ]),
-                                          )),
+                                          ),
                                     ],
-                                  ),
+                                  )),
                                 ),
                               ),
                             ],
@@ -550,7 +534,7 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
                         ),
                         Container(
                           alignment: Alignment.topRight,
-                          margin: EdgeInsets.fromLTRB(128, profileImageTop + 64, 16, 16),
+                          margin: EdgeInsets.fromLTRB(128, profileActionsTop, 16, 16),
                           child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                             FollowButton(
                               user: UserSubscription.fromUser(user),
@@ -633,7 +617,7 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
         // TODO: This flickers
         AnimatedSwitcher(
           duration: const Duration(milliseconds: 150),
-          child: descriptionResized == true && metadataResized == true
+          child: headerResized
               ? Container(key: const Key('loaded'))
               : Container(
                   key: const Key('waiting'),

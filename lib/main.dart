@@ -16,6 +16,7 @@ import 'package:quax/database/repository.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/group/feed_session_cache.dart';
 import 'package:quax/tweet/video_controller_pool.dart';
+import 'package:quax/tweet/video_player_budget.dart';
 import 'package:quax/group/group_model.dart';
 import 'package:quax/group/group_screen.dart';
 import 'package:quax/home/_feed.dart';
@@ -310,13 +311,15 @@ Future<void> main() async {
 
     var trendLocationModel = UserTrendLocationModel(prefService);
 
+    var videoPlayerBudget = await loadVideoPlayerBudget();
+
     runApp(PrefService(
         service: prefService,
         child: MultiProvider(
           providers: [
             Provider(create: (context) => groupsModel),
             Provider(create: (context) => feedSessionCache),
-            Provider(create: (context) => VideoControllerPool(maxSize: 2)),
+            Provider(create: (context) => VideoControllerPool(maxSize: videoPlayerBudget)),
             Provider(create: (context) => homeModel),
             ChangeNotifierProvider(create: (context) => importDataModel),
             Provider(create: (context) => subscriptionsModel),
@@ -486,14 +489,7 @@ class _FritterAppState extends State<FritterApp> {
                             seedColor: themeColors[_themeColor]!
                                 .harmonizeWith(lightDynamic?.primary ?? Colors.transparent),
                             brightness: Brightness.light),
-                    pageTransitionsTheme: _disableAnimations == true
-                        ? PageTransitionsTheme(
-                            builders: {
-                              TargetPlatform.android: NoAnimationPageTransitionsBuilder(),
-                              TargetPlatform.iOS: NoAnimationPageTransitionsBuilder(),
-                            },
-                          )
-                        : null,
+                    pageTransitionsTheme: _disableAnimations == true ? _noAnimationPageTransitionsTheme : null,
                     useMaterial3: true,
                   ),
                   darkTheme: ThemeData(
@@ -515,14 +511,7 @@ class _FritterAppState extends State<FritterApp> {
                         (_trueBlack == true ? NavigationBarThemeData(backgroundColor: Colors.black) : null),
                     scaffoldBackgroundColor: (_trueBlack == true ? Colors.black : null),
                     appBarTheme: (_trueBlack == true ? AppBarThemeData(backgroundColor: Colors.black) : null),
-                    pageTransitionsTheme: _disableAnimations == true
-                        ? PageTransitionsTheme(
-                            builders: {
-                              TargetPlatform.android: NoAnimationPageTransitionsBuilder(),
-                              TargetPlatform.iOS: NoAnimationPageTransitionsBuilder(),
-                            },
-                          )
-                        : null,
+                    pageTransitionsTheme: _disableAnimations == true ? _noAnimationPageTransitionsTheme : null,
                     useMaterial3: true,
                   ),
                   themeMode: themeMode,
@@ -715,7 +704,15 @@ class _DefaultPageState extends State<DefaultPage> {
   }
 }
 
+const _noAnimationPageTransitionsTheme = PageTransitionsTheme(
+  builders: {
+    TargetPlatform.android: NoAnimationPageTransitionsBuilder(),
+  },
+);
+
 class NoAnimationPageTransitionsBuilder extends PageTransitionsBuilder {
+  const NoAnimationPageTransitionsBuilder();
+
   @override
   Widget buildTransitions<T>(
     PageRoute<T> route,

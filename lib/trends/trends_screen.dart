@@ -27,25 +27,24 @@ class _TrendsScreenState extends State<TrendsScreen> with AutomaticKeepAliveClie
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        flexibleSpace: Padding(
-          padding: EdgeInsets.fromLTRB(8, 36, 8, 8),
-          child: SearchBar(
-            controller: _queryController,
-            focusNode: widget.focusNode,
-            textInputAction: TextInputAction.search,
-            leading: IconButton(icon: const Icon(Icons.search), onPressed: () => {}),
-            onSubmitted: (query) {
-              Navigator.pushNamed(
-                context,
-                routeSearch,
-                arguments: SearchArguments(
-                  0,
-                  focusInputOnOpen: false,
-                  query: query,
-                ),
-              );
-            },
-          ),
+        toolbarHeight: kToolbarHeight + 16,
+        titleSpacing: 8,
+        title: SearchBar(
+          controller: _queryController,
+          focusNode: widget.focusNode,
+          textInputAction: TextInputAction.search,
+          leading: IconButton(icon: const Icon(Icons.search), onPressed: () => {}),
+          onSubmitted: (query) {
+            Navigator.pushNamed(
+              context,
+              routeSearch,
+              arguments: SearchArguments(
+                0,
+                focusInputOnOpen: false,
+                query: query,
+              ),
+            );
+          },
         ),
         bottom: TrendsTabBar(),
       ),

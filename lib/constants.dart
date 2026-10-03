@@ -92,10 +92,13 @@ final Map<String, String> userAgentHeader = {
 const String bearerToken =
     "Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA";
 
-// Account selection strategy: cooldowns and flagging thresholds.
+// Rate-limit window assumed when a 429 comes without the x-rate-limit-reset header.
 const Duration rateLimitFallback = Duration(minutes: 15);
-const Duration notFoundCooldown = Duration(hours: 6);
-const int notFoundThreshold = 3;
+
+const int maxSearchesPer15min = 50;  // X limit, read from response headers
+const int subscriptionsPerSearch = 16;
+// Assume feed is refreshed every 5 min in a normal usage
+const int maxSubscriptionsPerAccount = (maxSearchesPer15min - 2) ~/ 3 * subscriptionsPerSearch;
 
 const routeHome = '/';
 const routeGroup = '/group';
