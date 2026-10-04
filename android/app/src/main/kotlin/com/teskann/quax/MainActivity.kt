@@ -6,12 +6,33 @@ import android.content.pm.PackageManager
 import android.media.MediaCodecList
 import android.media.MediaScannerConnection
 import android.os.Build
+import android.os.Bundle
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 
 class MainActivity : FlutterActivity() {
     private val CHANNEL = "browser_resolver"
+    private val sharedLinkRegex = Regex(
+        "https?://(?:[\\w-]+\\.)*(?:x\\.com|twitter\\.com|t\\.co|fxtwitter\\.com|vxtwitter\\.com|fixupx\\.com)(?:[/?#]\\S*)?"
+    )
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        intent = sharedLinkAsViewIntent(intent)
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(sharedLinkAsViewIntent(intent))
+    }
+
+    private fun sharedLinkAsViewIntent(intent: Intent): Intent {
+        if (intent.action != Intent.ACTION_SEND) return intent
+        val link = intent.getStringExtra(Intent.EXTRA_TEXT)
+            ?.let { sharedLinkRegex.find(it)?.value }
+            ?: return intent
+        return Intent(Intent.ACTION_VIEW, android.net.Uri.parse(link))
+    }
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
