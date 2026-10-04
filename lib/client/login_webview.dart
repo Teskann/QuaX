@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/services.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/database/entities.dart';
@@ -21,6 +22,8 @@ class TwitterLoginWebview extends StatefulWidget {
 }
 
 class _TwitterLoginWebviewState extends State<TwitterLoginWebview> {
+  static const _channel = MethodChannel('browser_resolver');
+
   final _webviewCookieManager = WebviewCookieManager();
   final _webviewController = WebViewController();
 
@@ -60,14 +63,13 @@ class _TwitterLoginWebviewState extends State<TwitterLoginWebview> {
     _webviewController.setUserAgent(userAgentHeader.toString());
     _webviewController.setNavigationDelegate(
       NavigationDelegate(
+        // Lets "Sign in with Google" open its popup, which webview_flutter does not support
+        onPageStarted: (_) => _channel.invokeMethod<void>('enableWebViewPopups'),
         onUrlChange: (change) async {
           if (change.url == "https://x.com/home" && !_loggingIn) {
             _loggingIn = true;
             final cookies = await _webviewCookieManager.getCookies("https://x.com/i/flow/login");
-            String screenName = (await _webviewController.runJavaScriptReturningResult(
-              "document.documentElement.outerHTML.match(/\"screen_name\":\"([^\"]+)\"/)?.[1] ?? '';",
-            )).toString();
-            screenName = screenName.replaceAll('"', '');
+            final screenName = await _readScreenName();
             if (screenName == "") {
               _loggingIn = false;
               return;
@@ -132,11 +134,26 @@ class _TwitterLoginWebviewState extends State<TwitterLoginWebview> {
     );
   }
 
+  /// X's home page fills in the screen name after the URL changed, and no other URL change follows, so wait for it.
+  Future<String> _readScreenName() async {
+    for (var attempt = 0; attempt < 20; attempt++) {
+      final result = await _webviewController.runJavaScriptReturningResult(
+        "document.documentElement.outerHTML.match(/\"screen_name\":\"([^\"]+)\"/)?.[1] ?? '';",
+      );
+      final screenName = result.toString().replaceAll('"', '');
+      if (screenName != "") {
+        return screenName;
+      }
+      await Future.delayed(const Duration(milliseconds: 500));
+    }
+    return "";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(toolbarHeight: 50),
-      body: WebViewWidget(controller: _webviewController),
+      body: SafeArea(top: false, child: WebViewWidget(controller: _webviewController)),
     );
   }
 }

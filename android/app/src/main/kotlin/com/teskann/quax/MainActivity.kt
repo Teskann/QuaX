@@ -40,6 +40,9 @@ class MainActivity : FlutterActivity() {
                     } else {
                         result.success(null)
                     }
+                } else if (call.method == "enableWebViewPopups") {
+                    WebViewPopups.install(this)
+                    result.success(null)
                 } else if (call.method == "getVideoHardware") {
                     val activityManager = getSystemService(ACTIVITY_SERVICE) as ActivityManager
                     result.success(mapOf(
