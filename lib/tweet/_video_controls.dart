@@ -750,7 +750,12 @@ class _MoreButtonState extends State<_MoreButton> {
               title: Text(L10n.of(sheetContext).download),
               onTap: () {
                 Navigator.of(sheetContext).pop();
-                downloadTweetVideo(context, widget.username, widget.downloadUrl);
+                downloadTweetVideo(
+                  context,
+                  widget.username,
+                  downloadUrlFor(
+                      widget.controller.betterPlayerDataSource?.url, widget.qualities, widget.downloadUrl),
+                );
               },
             ),
           ],
