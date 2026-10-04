@@ -1,22 +1,26 @@
-## QuaX v4.15.0
+## QuaX v4.16.0
 
-What's new in QuaX v4.15.0:
-  - Fixed minor issues in the error reporting widget <sup>[[view modified code]](https://github.com/teskann/quax/commit/19412aaff4fbecf9bc72f7ee9efb1e74a5dd7937)</sup>
-  - Someone deleted their tweet ? You can now open deleted tweets in one click on web.archive.org <sup>[[view modified code]](https://github.com/teskann/quax/commit/119b76f1beffdcdaa6947c777081b21596e1f452)</sup>
-  - Fixed parsing issues when opening tweets reserved for subscribers (fixed #188), improved test coverage <sup>[[view modified code]](https://github.com/teskann/quax/commit/a49059357d734399fac253f1bc1be181a763fac6)</sup>
-  - Bug reports now include links to profiles, not simply the username <sup>[[view modified code]](https://github.com/teskann/quax/commit/ab15bb64e7bf1b3865c772728f0bc2d544630f09)</sup>
-  - Better management of rate limitations <sup>[[view modified code]](https://github.com/teskann/quax/commit/6dca79698b5a9e7d4c779c06920cf2cbf38dd83c)</sup>
-  - Fixed some UI issues (including #183) and redesigned poll results <sup>[[view modified code]](https://github.com/teskann/quax/commit/0cee4489bccfcc781ad2e7c52121331df8a77841)</sup>
-  - Fixed #106, login issues when animations are disabled <sup>[[view modified code]](https://github.com/teskann/quax/commit/a99badcbf582627ec12b9737aa1fe7e6952c32b6)</sup>
-  - GIFs are now downloaded as a MP4 video instead of a JPEG (on X, GIFs are videos) (fixed #182) <sup>[[view modified code]](https://github.com/teskann/quax/commit/3cb280753d294675b239ac359b158f5167b7cbe3)</sup>
-  - Fixed crashes when too many videos are opened with a better memory management system <sup>[[view modified code]](https://github.com/teskann/quax/commit/325eebc6a642958bca8a0fbdf4bc50d2094be031)</sup>
+What's new in QuaX v4.16.0:
+  - Fixed "Get it on Obtainium" button link <sup>[[view modified code]](https://github.com/teskann/quax/commit/d267d7fbfaa4e8aeb8db3489ec0e87231888d35d)</sup>
+  - Improved CI automation <sup>[[view modified code]](https://github.com/teskann/quax/commit/5ac39a458a62bec3b1b66298b41bf6ddd9f3fe7e)</sup>
+  - Setup an automated workflow for bug triage and support <sup>[[view modified code]](https://github.com/teskann/quax/commit/4b203dd88e835f2b5592da2812b3919b379bca80)</sup>
+  - Added an onboarding wizard for new users <sup>[[view modified code]](https://github.com/teskann/quax/commit/e3961afefced320f8b24a38798391b17d353acfc)</sup>
+  - Refactored Github Actions <sup>[[view modified code]](https://github.com/teskann/quax/commit/cc213b12cd185fce5a5add3724fa78344d954b26)</sup>
+  - Fixed login with Google and other login issues <sup>[[view modified code]](https://github.com/teskann/quax/commit/ece7270a7170263df8a42fe5ef4ce8a5321825dd)</sup>
+  - Upgraded Flutter to 3.47.6 and refreshed the dependencies (by @github-actions[bot]) <sup>[[view modified code]](https://github.com/teskann/quax/commit/153e90da9442c0e85dd61a14a46973fd67df3c0e)</sup>
+  - Added support for image carousel websites and grok share (#186) (by @AdNenio) <sup>[[view modified code]](https://github.com/teskann/quax/commit/49e9d8fa16cfe420057e7c05543fdad7aa072964)</sup>
+  - Increased the default text size a bit (for fresh installs) <sup>[[view modified code]](https://github.com/teskann/quax/commit/df62b1c1d8ff4b00ede0f8ccaf300d57c4d7b6fa)</sup>
+  - Introduced @quax-bot to manage issues <sup>[[view modified code]](https://github.com/teskann/quax/commit/f0a82b3d64fab690b7cd54ab0fad37a13f56efe4)</sup>
+  - Made QuaX use the latest X APIs (fixed #204). As a consequence, the *Media* tab is now split into videos / photos. <sup>[[view modified code]](https://github.com/teskann/quax/commit/b6248b967fbdb73e3a5045ca9abd4a46854ffc4d)</sup>
+  - QuaX now appears in the Android share menu (fixed #84) <sup>[[view modified code]](https://github.com/teskann/quax/commit/a3d26506621d097b6664cac618e66e3c169cef52)</sup>
+  - Downloading a video now saves the quality you are watching (fixed #135) <sup>[[view modified code]](https://github.com/teskann/quax/commit/0ed96cf419a459b750dd713603cc5e1d3c37a03d)</sup>
 
 
 ---
 
 First download ? Click the button below to install it with Obtainium ! 👇
 
-[![Get it on Obtainium](https://github.com/teskann/quax/blob/master/assets/readme/get-it-on-obtainium.png)](https://apps.obtainium.imranr.dev/redirect.html?r=obtainium://add/https://github.com/Teskann/QuaX)
+[![Get it on Obtainium](https://github.com/teskann/quax/blob/master/assets/readme/get-it-on-obtainium.png)](https://apps.obtainium.imranr.dev/redirect?r=obtainium://add/https://github.com/Teskann/QuaX)
 
 APK Certificate fingerprints:
 ```text
