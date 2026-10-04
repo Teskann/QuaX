@@ -196,7 +196,7 @@ Future<void> main() async {
   final prefService = await PrefServiceShared.init(prefix: 'pref_', defaults: {
     optionConfirmClose: true,
     optionDisableAnimations: false,
-    optionTextScaleFactor: 1.0,
+    optionTextScaleFactor: 1.1,
     optionDisableScreenshots: false,
     optionDownloadPath: '',
     optionDownloadType: optionDownloadTypeAsk,
