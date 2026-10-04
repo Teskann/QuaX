@@ -6,7 +6,6 @@ const path = require('path')
 const { validate } = require('./validate.js')
 
 const BLOCK = /<!-- quax-triage\s*([\s\S]*?)\s*-->/g
-const NEEDS_INFO = 'needs info'
 
 const schema = JSON.parse(fs.readFileSync(path.join(__dirname, 'action.schema.json'), 'utf8'))
 
@@ -34,9 +33,9 @@ function checkLabelsExist(action, existing) {
   if (unknown.length > 0) throw new Error(`Unknown labels: ${unknown.join(', ')}`)
 }
 
-async function removeNeedsInfo(github, issue) {
+async function removeLabel(github, issue, name) {
   try {
-    await github.rest.issues.removeLabel({ ...issue, name: NEEDS_INFO })
+    await github.rest.issues.removeLabel({ ...issue, name })
   } catch (error) {
     if (error.status !== 404) throw error
   }
@@ -46,7 +45,7 @@ async function applyAction(github, repo, issue, action, existing) {
   const missing = (action.new_labels ?? []).filter((label) => !existing.has(label.name))
   for (const label of missing) await github.rest.issues.createLabel({ ...repo, ...label })
   if (action.add_labels) await github.rest.issues.addLabels({ ...issue, labels: action.add_labels })
-  if (action.remove_needs_info) await removeNeedsInfo(github, issue)
+  for (const name of action.remove_labels ?? []) await removeLabel(github, issue, name)
   if (action.close) {
     await github.rest.issues.update({ ...issue, state: 'closed', state_reason: action.close })
   }

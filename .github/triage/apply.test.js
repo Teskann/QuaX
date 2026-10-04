@@ -75,9 +75,19 @@ test('Should not recreate a new label that already exists', async () => {
   )
 })
 
-test('Should ignore a missing needs info label', async () => {
+test('Should remove every listed label', async () => {
+  const { github, calls } = fakeGithub()
+  await run(github, commentWith('{"remove_labels": ["needs info", "bug"]}'))
+  assert.deepEqual(
+    calls.map((c) => c.args.name),
+    ['needs info', 'bug'],
+    'Each label should be removed from the issue',
+  )
+})
+
+test('Should ignore a label the issue does not carry', async () => {
   const { github, calls } = fakeGithub(['bug'])
-  await run(github, commentWith('{"remove_needs_info": true}'))
+  await run(github, commentWith('{"remove_labels": ["needs info"]}'))
   assert.deepEqual(
     names(calls),
     ['removeLabel'],
@@ -90,7 +100,8 @@ const rejected = [
   ['an unknown field', '{"add_labels": ["bug"], "issue": 7}', /\$\.issue is not allowed/],
   ['an inherited field name', '{"constructor": 1}', /\$\.constructor is not allowed/],
   ['an invalid close reason', '{"close": "spam"}', /must be one of/],
-  ['removing another label', '{"remove_needs_info": "bug"}', /must be true/],
+  ['a removal that is not a list', '{"remove_labels": "bug"}', /must be a array/],
+  ['a removal shell payload', '{"remove_labels": ["$(curl x)"]}', /must match/],
   ['an empty block', '{}', /properties/],
   ['a label that closes the comment early', '{"add_labels": ["bug -->"]}', /JSON/],
   ['a shell payload', '{"add_labels": ["$(curl x)"]}', /must match/],

@@ -44,9 +44,16 @@
         "pattern": "^[A-Za-z0-9][A-Za-z0-9 -]{0,29}$"
       }
     },
-    "remove_needs_info": {
-      "description": "Removes the `needs info` label once the author gave what was asked.",
-      "const": true
+    "remove_labels": {
+      "description": "Labels to remove from the issue, e.g. `needs info` once the author gave what was asked. A label the issue does not carry is ignored.",
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 5,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9 -]{0,29}$"
+      }
     },
     "close": {
       "description": "Closes the issue with this reason.",
