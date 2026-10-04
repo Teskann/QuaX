@@ -72,6 +72,15 @@ class UrlEntity extends Entity {
   }
 }
 
+class HiddenUrlEntity extends Entity {
+  HiddenUrlEntity(Url url) : super(url.indices);
+
+  @override
+  InlineSpan getContent() {
+    return const TextSpan(text: "");
+  }
+}
+
 class MediaEntity extends Entity {
   final Media media;
 

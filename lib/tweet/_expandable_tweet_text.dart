@@ -43,7 +43,11 @@ class ExpandableTweetTextState extends State<ExpandableTweetText> {
     return LayoutBuilder(
       builder: (context, constraints) {
         final textIsTruncated = _textIsTruncated(constraints.maxWidth);
-        return Column(
+        return AnimatedSize(
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.easeInOut,
+          alignment: Alignment.topCenter,
+          child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (!_isExpanded && textIsTruncated)
@@ -102,6 +106,7 @@ class ExpandableTweetTextState extends State<ExpandableTweetText> {
                 ),
               ),
           ],
+        ),
         );
       },
     );

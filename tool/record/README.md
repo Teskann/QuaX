@@ -34,6 +34,18 @@ A profile URL triggers `UserByScreenName` and the profile timeline at once. The
 profile views have their own URLs: `/`, `/all`, `/with_replies`, `/reposts`,
 `/media`, plus `/highlights` and `?sort=popular`.
 
+## Capturing one link only
+
+To record a new scenario without touching the other fixtures, add it to
+`links.json` and pass a part of its URL:
+
+```bash
+fvm dart run tool/record/capture.dart --only 2082854732020760880
+```
+
+Only the links containing that text are opened, and nothing is pruned.
+Fixtures written by an earlier run are left as they are.
+
 ## What gets saved
 
 Every GraphQL response, no filter: `queryId`, `features`, `variables`, status,

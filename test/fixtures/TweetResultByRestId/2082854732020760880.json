@@ -1,0 +1,259 @@
+{
+ "scenario": "Unified card of type image_carousel_website: swipeable images with a title and a destination",
+ "sourceUrl": "https://x.com/UEFA/status/2082854732020760880",
+ "operation": "TweetResultByRestId",
+ "host": "x.com",
+ "queryId": "LbQZrAWyKPvExi8di3-EoA",
+ "features": {
+  "creator_subscriptions_tweet_preview_api_enabled": true,
+  "premium_content_api_read_enabled": false,
+  "communities_web_enable_tweet_community_results_fetch": true,
+  "c9s_tweet_anatomy_moderator_badge_enabled": true,
+  "responsive_web_grok_analyze_button_fetch_trends_enabled": false,
+  "responsive_web_grok_analyze_post_followups_enabled": true,
+  "rweb_cashtags_composer_attachment_enabled": true,
+  "responsive_web_jetfuel_frame": true,
+  "rweb_sports_post_context_enabled": true,
+  "responsive_web_grok_share_attachment_enabled": true,
+  "responsive_web_grok_annotations_enabled": true,
+  "articles_preview_enabled": true,
+  "responsive_web_edit_tweet_api_enabled": true,
+  "rweb_conversational_replies_downvote_enabled": false,
+  "graphql_is_translatable_rweb_tweet_is_translatable_enabled": true,
+  "view_counts_everywhere_api_enabled": true,
+  "longform_notetweets_consumption_enabled": true,
+  "responsive_web_twitter_article_tweet_consumption_enabled": true,
+  "content_disclosure_indicator_enabled": true,
+  "content_disclosure_ai_generated_indicator_enabled": true,
+  "responsive_web_grok_show_grok_translated_post": true,
+  "responsive_web_grok_analysis_button_from_backend": true,
+  "post_ctas_fetch_enabled": false,
+  "rweb_cashtags_enabled": true,
+  "freedom_of_speech_not_reach_fetch_enabled": true,
+  "standardized_nudges_misinfo": true,
+  "tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled": true,
+  "longform_notetweets_rich_text_read_enabled": true,
+  "longform_notetweets_inline_media_enabled": false,
+  "profile_label_improvements_pcf_label_in_post_enabled": true,
+  "responsive_web_profile_redirect_enabled": true,
+  "rweb_tipjar_consumption_enabled": false,
+  "verified_phone_label_enabled": false,
+  "responsive_web_nested_quote_preview_enabled": true,
+  "responsive_web_grok_image_annotation_enabled": true,
+  "responsive_web_grok_imagine_annotation_enabled": true,
+  "responsive_web_grok_community_note_auto_translation_is_enabled": true,
+  "responsive_web_graphql_timeline_navigation_enabled": true
+ },
+ "fieldToggles": {
+  "withArticleRichContentState": true,
+  "withArticlePlainText": false,
+  "withArticleSummaryText": true,
+  "withArticleVoiceOver": true,
+  "withPayments": false
+ },
+ "variables": {
+  "tweetId": "2082854732020760880",
+  "includePromotedContent": true,
+  "withBirdwatchNotes": true,
+  "withVoice": true,
+  "withCommunity": true
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "500",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "498",
+  "x-rate-limit-reset": "1791106795"
+ },
+ "body": {
+  "data": {
+   "tweetResult": {
+    "result": {
+     "__typename": "Tweet",
+     "card": {
+      "legacy": {
+       "binding_values": [
+        {
+         "key": "unified_card",
+         "value": {
+          "string_value": "{\"type\":\"image_carousel_website\",\"component_objects\":{\"details_1\":{\"type\":\"details\",\"data\":{\"title\":{\"content\":\"\\uD83D\\uDD17  Tap to read\",\"is_rtl\":false},\"subtitle\":{\"content\":\"uefa.com\",\"is_rtl\":false},\"destination\":\"browser_1\"}},\"swipeable_media_1\":{\"type\":\"swipeable_media\",\"data\":{\"media_list\":[{\"id\":\"3_2082854064501489664\",\"destination\":\"browser_1\"},{\"id\":\"3_2082853967843762176\",\"destination\":\"browser_1\"},{\"id\":\"3_2082854218306600960\",\"destination\":\"browser_1\"},{\"id\":\"3_2082854269649039360\",\"destination\":\"browser_1\"}]}}},\"destination_objects\":{\"browser_1\":{\"type\":\"browser\",\"data\":{\"url_data\":{\"url\":\"https://www.uefa.com/news-media/news/02a7-213a92896eb0-54dfbf454e3b-1000--statement-on-behalf-of-uefa-and-its-55-national-associations/\",\"vanity\":\"uefa.com\"}}}},\"components\":[\"swipeable_media_1\",\"details_1\"],\"media_entities\":{\"3_2082854064501489664\":{\"id\":2082854064501489664,\"id_str\":\"2082854064501489664\",\"indices\":[0,0],\"media_url\":\"\",\"media_url_https\":\"https://pbs.twimg.com/media/HOfIvHmXAAAHq_8.jpg\",\"url\":\"\",\"display_url\":\"\",\"expanded_url\":\"\",\"type\":\"photo\",\"original_info\":{\"width\":1080,\"height\":1350,\"focus_rects\":[{\"x\":0,\"y\":69,\"h\":605,\"w\":1080},{\"x\":0,\"y\":0,\"h\":1080,\"w\":1080},{\"x\":0,\"y\":0,\"h\":1231,\"w\":1080},{\"x\":203,\"y\":0,\"h\":1350,\"w\":675},{\"x\":0,\"y\":0,\"h\":1350,\"w\":1080}]},\"sizes\":{\"small\":{\"w\":544,\"h\":680,\"resize\":\"fit\"},\"medium\":{\"w\":960,\"h\":1200,\"resize\":\"fit\"},\"thumb\":{\"w\":150,\"h\":150,\"resize\":\"crop\"},\"large\":{\"w\":1080,\"h\":1350,\"resize\":\"fit\"}},\"source_user_id\":2326857668,\"source_user_id_str\":\"2326857668\",\"media_key\":\"3_2082854064501489664\",\"ext\":{\"mediaColor\":{\"r\":{\"ok\":{\"palette\":[{\"rgb\":{\"red\":2,\"green\":28,\"blue\":91},\"percentage\":87.51},{\"rgb\":{\"red\":95,\"green\":111,\"blue\":149},\"percentage\":12.02},{\"rgb\":{\"red\":179,\"green\":186,\"blue\":207},\"percentage\":0.47}]}},\"ttl\":-1}}},\"3_2082854269649039360\":{\"id\":2082854269649039360,\"id_str\":\"2082854269649039360\",\"indices\":[0,0],\"media_url\":\"\",\"media_url_https\":\"https://pbs.twimg.com/media/HOfI7D1WMAAHc_I.jpg\",\"url\":\"\",\"display_url\":\"\",\"expanded_url\":\"\",\"type\":\"photo\",\"original_info\":{\"width\":1080,\"height\":1350,\"focus_rects\":[{\"x\":0,\"y\":676,\"h\":605,\"w\":1080},{\"x\":0,\"y\":270,\"h\":1080,\"w\":1080},{\"x\":0,\"y\":119,\"h\":1231,\"w\":1080},{\"x\":203,\"y\":0,\"h\":1350,\"w\":675},{\"x\":0,\"y\":0,\"h\":1350,\"w\":1080}]},\"sizes\":{\"small\":{\"w\":544,\"h\":680,\"resize\":\"fit\"},\"thumb\":{\"w\":150,\"h\":150,\"resize\":\"crop\"},\"medium\":{\"w\":960,\"h\":1200,\"resize\":\"fit\"},\"large\":{\"w\":1080,\"h\":1350,\"resize\":\"fit\"}},\"source_user_id\":2326857668,\"source_user_id_str\":\"2326857668\",\"media_key\":\"3_2082854269649039360\",\"ext\":{\"mediaColor\":{\"r\":{\"ok\":{\"palette\":[{\"rgb\":{\"red\":2,\"green\":28,\"blue\":91},\"percentage\":90.4},{\"rgb\":{\"red\":89,\"green\":106,\"blue\":146},\"percentage\":9.6}]}},\"ttl\":-1}}},\"3_2082854218306600960\":{\"id\":2082854218306600960,\"id_str\":\"2082854218306600960\",\"indices\":[0,0],\"media_url\":\"\",\"media_url_https\":\"https://pbs.twimg.com/media/HOfI4EkWwAAyQJW.jpg\",\"url\":\"\",\"display_url\":\"\",\"expanded_url\":\"\",\"type\":\"photo\",\"original_info\":{\"width\":1080,\"height\":1350,\"focus_rects\":[{\"x\":0,\"y\":541,\"h\":605,\"w\":1080},{\"x\":0,\"y\":270,\"h\":1080,\"w\":1080},{\"x\":0,\"y\":119,\"h\":1231,\"w\":1080},{\"x\":203,\"y\":0,\"h\":1350,\"w\":675},{\"x\":0,\"y\":0,\"h\":1350,\"w\":1080}]},\"sizes\":{\"medium\":{\"w\":960,\"h\":1200,\"resize\":\"fit\"},\"small\":{\"w\":544,\"h\":680,\"resize\":\"fit\"},\"thumb\":{\"w\":150,\"h\":150,\"resize\":\"crop\"},\"large\":{\"w\":1080,\"h\":1350,\"resize\":\"fit\"}},\"source_user_id\":2326857668,\"source_user_id_str\":\"2326857668\",\"media_key\":\"3_2082854218306600960\",\"ext\":{\"mediaColor\":{\"r\":{\"ok\":{\"palette\":[{\"rgb\":{\"red\":3,\"green\":29,\"blue\":92},\"percentage\":88.18},{\"rgb\":{\"red\":89,\"green\":106,\"blue\":147},\"percentage\":11.82}]}},\"ttl\":-1}}},\"3_2082853967843762176\":{\"id\":2082853967843762176,\"id_str\":\"2082853967843762176\",\"indices\":[0,0],\"media_url\":\"\",\"media_url_https\":\"https://pbs.twimg.com/media/HOfIpfhXIAAgE5C.jpg\",\"url\":\"\",\"display_url\":\"\",\"expanded_url\":\"\",\"type\":\"photo\",\"original_info\":{\"width\":1080,\"height\":1350,\"focus_rects\":[{\"x\":0,\"y\":136,\"h\":605,\"w\":1080},{\"x\":0,\"y\":0,\"h\":1080,\"w\":1080},{\"x\":0,\"y\":0,\"h\":1231,\"w\":1080},{\"x\":203,\"y\":0,\"h\":1350,\"w\":675},{\"x\":0,\"y\":0,\"h\":1350,\"w\":1080}]},\"sizes\":{\"small\":{\"w\":544,\"h\":680,\"resize\":\"fit\"},\"thumb\":{\"w\":150,\"h\":150,\"resize\":\"crop\"},\"large\":{\"w\":1080,\"h\":1350,\"resize\":\"fit\"},\"medium\":{\"w\":960,\"h\":1200,\"resize\":\"fit\"}},\"source_user_id\":2326857668,\"source_user_id_str\":\"2326857668\",\"media_key\":\"3_2082853967843762176\",\"ext\":{\"mediaColor\":{\"r\":{\"ok\":{\"palette\":[{\"rgb\":{\"red\":2,\"green\":28,\"blue\":90},\"percentage\":90.48},{\"rgb\":{\"red\":90,\"green\":107,\"blue\":148},\"percentage\":9.52}]}},\"ttl\":-1}}}}}",
+          "type": "STRING"
+         }
+        },
+        {
+         "key": "card_url",
+         "value": {
+          "scribe_key": "card_url",
+          "string_value": "https://twitter.com",
+          "type": "STRING"
+         }
+        }
+       ],
+       "card_platform": {
+        "platform": {
+         "audience": {
+          "name": "production"
+         },
+         "device": {
+          "name": "Swift",
+          "version": "12"
+         }
+        }
+       },
+       "name": "unified_card",
+       "url": "card://2082854527430967296",
+       "user_refs_results": []
+      },
+      "rest_id": "card://2082854527430967296"
+     },
+     "cashtag_attachments": [],
+     "core": {
+      "user_results": {
+       "result": {
+        "__typename": "User",
+        "action_counts": {
+         "favorites_count": 7079
+        },
+        "affiliates_highlighted_label": {},
+        "avatar": {
+         "image_url": "https://pbs.twimg.com/profile_images/1410487413470904323/KBNIk4JC_normal.jpg"
+        },
+        "banner": {
+         "image_url": "https://pbs.twimg.com/profile_banners/2326857668/1765456738"
+        },
+        "core": {
+         "created_at": "Tue Feb 04 10:09:08 +0000 2014",
+         "name": "UEFA",
+         "screen_name": "UEFA"
+        },
+        "follow_request_sent": false,
+        "has_graduated_access": true,
+        "id": "VXNlcjoyMzI2ODU3NjY4",
+        "is_blue_verified": true,
+        "location": {
+         "location": "Nyon, Switzerland"
+        },
+        "media_permissions": {
+         "can_media_tag": true
+        },
+        "notifications_settings": {
+         "notifications_enabled": false
+        },
+        "parody_commentary_fan_label": "None",
+        "pinned_items": {},
+        "possibly_sensitive": false,
+        "privacy": {
+         "protected": false
+        },
+        "professional": {
+         "category": [],
+         "professional_type": "Creator",
+         "rest_id": "1470339444356091904"
+        },
+        "profile_bio": {
+         "description": "⚽ The home of European football on X.",
+         "entities": {
+          "description": {},
+          "url": {
+           "urls": [
+            {
+             "display_url": "uefa.com",
+             "expanded_url": "https://www.uefa.com/",
+             "indices": [
+              0,
+              23
+             ],
+             "url": "https://t.co/EAPmui2HiO"
+            }
+           ]
+          }
+         }
+        },
+        "profile_description_language": "en",
+        "profile_image_shape": "Square",
+        "profile_metadata": {
+         "profile_interstitial_type": ""
+        },
+        "profile_translation": {
+         "translator_type": "none"
+        },
+        "relationship_counts": {
+         "followers": 2497535,
+         "following": 1046
+        },
+        "relationship_perspectives": {
+         "blocked_by": false,
+         "blocking": false,
+         "followed_by": false,
+         "following": false,
+         "live_following": false,
+         "muting": false
+        },
+        "rest_id": "2326857668",
+        "super_follow_eligible": false,
+        "super_followed_by": false,
+        "super_following": false,
+        "tweet_counts": {
+         "media_tweets": 5470,
+         "tweets": 17115
+        },
+        "verification": {
+         "verified": false,
+         "verified_type": "Business"
+        },
+        "website": {
+         "url": "https://t.co/EAPmui2HiO"
+        }
+       }
+      }
+     },
+     "edit_control": {
+      "edit_tweet_ids": [
+       "2082854732020760880"
+      ],
+      "editable_until_msecs": "1785429840000",
+      "edits_remaining": "5",
+      "is_edit_eligible": true
+     },
+     "grok_analysis_button": true,
+     "grok_annotations": {
+      "is_image_editable_by_grok": false
+     },
+     "grok_translated_post_with_availability": {
+      "is_available": false
+     },
+     "has_birdwatch_notes": true,
+     "is_translatable": false,
+     "legacy": {
+      "bookmark_count": 17864,
+      "bookmarked": false,
+      "conversation_id_str": "2082854732020760880",
+      "created_at": "Thu Jul 30 15:44:00 +0000 2026",
+      "display_text_range": [
+       0,
+       60
+      ],
+      "entities": {},
+      "favorite_count": 400403,
+      "favorited": false,
+      "full_text": "Statement on behalf of UEFA and its 55 National Associations",
+      "id_str": "2082854732020760880",
+      "is_quote_status": false,
+      "lang": "en",
+      "quote_count": 11673,
+      "reply_count": 8184,
+      "retweet_count": 73890,
+      "retweeted": false,
+      "user_id_str": "2326857668"
+     },
+     "rest_id": "2082854732020760880",
+     "unmention_data": {},
+     "views": {
+      "count": "44477278",
+      "state": "EnabledWithCount"
+     }
+    }
+   }
+  }
+ }
+}

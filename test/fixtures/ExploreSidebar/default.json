@@ -1,6 +1,6 @@
 {
- "scenario": "Full profile: avatar, banner, bio with two links and a mention that has no entity",
- "sourceUrl": "https://x.com/quax_tests",
+ "scenario": "Reply whose card X only references as card://2035746613776322560, which the website draws as nothing and QuaX as an unsupported card",
+ "sourceUrl": "https://x.com/grok/status/2098526748400927166",
  "operation": "ExploreSidebar",
  "host": "x.com",
  "queryId": "a_EaOYRmowjytmooCbPRtA",
@@ -53,7 +53,7 @@
   "x-rate-limit-limit": "500",
   "content-type": "application/json",
   "x-rate-limit-remaining": "498",
-  "x-rate-limit-reset": "1790865375"
+  "x-rate-limit-reset": "1791134085"
  },
  "body": {
   "data": {
@@ -91,185 +91,13 @@
           },
           "items": [
            {
-            "entryId": "trend-2105664352819347456-trend-118959",
+            "entryId": "trend-2106791404544983040-trend-Marteen",
             "item": {
              "clientEventInfo": {
               "component": "unified_events",
               "details": {
                "timelinesDetails": {
-                "controllerData": "DAACDAAQDAABCgABZ2P3EjplZ1gKAAIAAAGg99dNjQAAAAA="
-               }
-              },
-              "element": "promoted_trend"
-             },
-             "feedbackInfo": {
-              "clientEventInfo": {
-               "action": "click",
-               "component": "trends",
-               "element": "feedback"
-              },
-              "feedbackKeys": [
-               "-1336659320",
-               "1628041751",
-               "15718569",
-               "-619311538",
-               "-1457103155",
-               "2103484841",
-               "-926942163"
-              ],
-              "feedbackMetadata": "DwABCwAAAAEAAAAPQ291cnLDqGdlcyBTUzI3CAAGAAAAAgA="
-             },
-             "itemContent": {
-              "__typename": "TimelineTrend",
-              "description": "Courrèges Spring Summer 2027 ",
-              "itemType": "TimelineTrend",
-              "name": "Courrèges SS27",
-              "promoted_metadata": {
-               "advertiser_results": {
-                "result": {
-                 "__typename": "User",
-                 "action_counts": {
-                  "favorites_count": 325
-                 },
-                 "affiliates_highlighted_label": {},
-                 "avatar": {
-                  "image_url": "https://pbs.twimg.com/profile_images/1303816449140690944/e0qgwJQD_normal.jpg"
-                 },
-                 "banner": {
-                  "image_url": "https://pbs.twimg.com/profile_banners/1336209698/1769783433"
-                 },
-                 "core": {
-                  "created_at": "Mon Apr 08 09:45:42 +0000 2013",
-                  "name": "courrèges",
-                  "screen_name": "CourregesParis"
-                 },
-                 "follow_request_sent": false,
-                 "has_graduated_access": true,
-                 "id": "VXNlcjoxMzM2MjA5Njk4",
-                 "is_blue_verified": false,
-                 "location": {
-                  "location": "Paris, Ile-de-France"
-                 },
-                 "media_permissions": {
-                  "can_media_tag": true
-                 },
-                 "notifications_settings": {
-                  "notifications_enabled": false
-                 },
-                 "parody_commentary_fan_label": "None",
-                 "pinned_items": {
-                  "tweet_ids_str": [
-                   "381717169702449152"
-                  ]
-                 },
-                 "possibly_sensitive": false,
-                 "privacy": {
-                  "protected": false
-                 },
-                 "profile_bio": {
-                  "description": "40, rue François 1er Paris VIII",
-                  "entities": {
-                   "description": {},
-                   "url": {
-                    "urls": [
-                     {
-                      "display_url": "courreges.com",
-                      "expanded_url": "https://www.courreges.com",
-                      "indices": [
-                       0,
-                       23
-                      ],
-                      "url": "https://t.co/B9HLXrNsmo"
-                     }
-                    ]
-                   }
-                  }
-                 },
-                 "profile_description_language": "fr",
-                 "profile_image_shape": "Square",
-                 "profile_metadata": {
-                  "profile_interstitial_type": ""
-                 },
-                 "profile_translation": {
-                  "translator_type": "none"
-                 },
-                 "relationship_counts": {
-                  "followers": 5538,
-                  "following": 0
-                 },
-                 "relationship_perspectives": {
-                  "blocked_by": false,
-                  "blocking": false,
-                  "followed_by": false,
-                  "following": false,
-                  "live_following": false,
-                  "muting": false
-                 },
-                 "rest_id": "1336209698",
-                 "super_follow_eligible": false,
-                 "super_followed_by": false,
-                 "super_following": false,
-                 "tweet_counts": {
-                  "media_tweets": 667,
-                  "tweets": 721
-                 },
-                 "verification": {
-                  "verified": false,
-                  "verified_type": "Business"
-                 },
-                 "website": {
-                  "url": "https://t.co/B9HLXrNsmo"
-                 }
-                }
-               },
-               "disclosureType": "NoDisclosure",
-               "impressionId": "8929334517760419074",
-               "impressionString": "8929334517760419074",
-               "promotedTrend": {
-                "rest_id": "118959"
-               },
-               "promotedTrendDescription": "Courrèges Spring Summer 2027 ",
-               "promotedTrendName": "Courrèges SS27",
-               "promotedTrendQueryTerm": "Courrèges SS27"
-              },
-              "trend_metadata": {
-               "meta_description": "Promoted by courrèges",
-               "url": {
-                "url": "twitter://search/?query=Courr%C3%A8ges+SS27&src=promoted_trend_click&pc=true&vertical=trends",
-                "urlType": "DeepLink",
-                "urtEndpointOptions": {
-                 "requestParams": [
-                  {
-                   "key": "cd",
-                   "value": "HBgPQ291cnLDqGdlcyBTUzI3AAA="
-                  }
-                 ]
-                }
-               }
-              },
-              "trend_url": {
-               "url": "twitter://search/?query=Courr%C3%A8ges+SS27&src=promoted_trend_click&pc=true&vertical=trends",
-               "urlType": "DeepLink",
-               "urtEndpointOptions": {
-                "requestParams": [
-                 {
-                  "key": "cd",
-                  "value": "HBgPQ291cnLDqGdlcyBTUzI3AAA="
-                 }
-                ]
-               }
-              }
-             }
-            }
-           },
-           {
-            "entryId": "trend-2105664352819347456-trend-#blocage",
-            "item": {
-             "clientEventInfo": {
-              "component": "unified_events",
-              "details": {
-               "timelinesDetails": {
-                "controllerData": "DAACDAAQDAABCgABZ2P3EjplZ1gKAAIAAAGg99dOGAAAAAA="
+                "controllerData": "DAACDAAQDAABCgAB6SHyqZIK6DEKAAIAAAGhB9t+zwAAAAA="
                }
               },
               "element": "trend"
@@ -288,35 +116,35 @@
                "-1457103155",
                "2103484841"
               ],
-              "feedbackMetadata": "DwABCwAAAAEAAAAII2Jsb2NhZ2UKAAPzv8fcySiXfwYABAABCAAGAAAAAgA="
+              "feedbackMetadata": "DwABCwAAAAEAAAAHTWFydGVlbgoAA/O/x9zJKJd/BgAEAAEIAAYAAAACAA=="
              },
              "itemContent": {
               "__typename": "TimelineTrend",
               "itemType": "TimelineTrend",
-              "name": "#blocage",
+              "name": "Marteen",
               "trend_metadata": {
                "domain_context": "Trending in France",
                "url": {
-                "url": "twitter://search/?query=%23blocage&src=trend_click&pc=true&vertical=trends",
+                "url": "twitter://search/?query=Marteen&src=trend_click&pc=true&vertical=trends",
                 "urlType": "DeepLink",
                 "urtEndpointOptions": {
                  "requestParams": [
                   {
                    "key": "cd",
-                   "value": "HBgII2Jsb2NhZ2UAAA=="
+                   "value": "HBgHTWFydGVlbgAA"
                   }
                  ]
                 }
                }
               },
               "trend_url": {
-               "url": "twitter://search/?query=%23blocage&src=trend_click&pc=true&vertical=trends",
+               "url": "twitter://search/?query=Marteen&src=trend_click&pc=true&vertical=trends",
                "urlType": "DeepLink",
                "urtEndpointOptions": {
                 "requestParams": [
                  {
                   "key": "cd",
-                  "value": "HBgII2Jsb2NhZ2UAAA=="
+                  "value": "HBgHTWFydGVlbgAA"
                  }
                 ]
                }
@@ -325,13 +153,13 @@
             }
            },
            {
-            "entryId": "trend-2105664352819347456-trend-Tel-Aviv",
+            "entryId": "trend-2106791404544983040-trend-#BahrainGP",
             "item": {
              "clientEventInfo": {
               "component": "unified_events",
               "details": {
                "timelinesDetails": {
-                "controllerData": "DAACDAAQDAABCgABZ2P3EjplZ1gKAAIAAAGg99dOGAAAAAA="
+                "controllerData": "DAACDAAQDAABCgAB6SHyqZIK6DEKAAIAAAGhB9t+zwAAAAA="
                }
               },
               "element": "trend"
@@ -350,35 +178,35 @@
                "-1457103155",
                "2103484841"
               ],
-              "feedbackMetadata": "DwABCwAAAAEAAAAIVGVsLUF2aXYKAAPzv8fcySiXfwYABAACCAAGAAAAAgA="
+              "feedbackMetadata": "DwABCwAAAAEAAAAKI0JhaHJhaW5HUAoAA/O/x9zJKJd/BgAEAAIIAAYAAAACAA=="
              },
              "itemContent": {
               "__typename": "TimelineTrend",
               "itemType": "TimelineTrend",
-              "name": "Tel-Aviv",
+              "name": "#BahrainGP",
               "trend_metadata": {
                "domain_context": "Trending in France",
                "url": {
-                "url": "twitter://search/?query=Tel-Aviv&src=trend_click&pc=true&vertical=trends",
+                "url": "twitter://search/?query=%23BahrainGP&src=trend_click&pc=true&vertical=trends",
                 "urlType": "DeepLink",
                 "urtEndpointOptions": {
                  "requestParams": [
                   {
                    "key": "cd",
-                   "value": "HBgIVGVsLUF2aXYAAA=="
+                   "value": "HBgKI0JhaHJhaW5HUAAA"
                   }
                  ]
                 }
                }
               },
               "trend_url": {
-               "url": "twitter://search/?query=Tel-Aviv&src=trend_click&pc=true&vertical=trends",
+               "url": "twitter://search/?query=%23BahrainGP&src=trend_click&pc=true&vertical=trends",
                "urlType": "DeepLink",
                "urtEndpointOptions": {
                 "requestParams": [
                  {
                   "key": "cd",
-                  "value": "HBgIVGVsLUF2aXYAAA=="
+                  "value": "HBgKI0JhaHJhaW5HUAAA"
                  }
                 ]
                }
@@ -387,13 +215,13 @@
             }
            },
            {
-            "entryId": "trend-2105664352819347456-trend-Eusebio",
+            "entryId": "trend-2106791404544983040-trend-$AGL",
             "item": {
              "clientEventInfo": {
               "component": "unified_events",
               "details": {
                "timelinesDetails": {
-                "controllerData": "DAACDAAQDAABCgABZ2P3EjplZ1gKAAIAAAGg99dOGAAAAAA="
+                "controllerData": "DAACDAAQDAABCgAB6SHyqZIK6DEKAAIAAAGhB9t+zwAAAAA="
                }
               },
               "element": "trend"
@@ -412,35 +240,97 @@
                "-1457103155",
                "2103484841"
               ],
-              "feedbackMetadata": "DwABCwAAAAEAAAAHRXVzZWJpbwoAA/O/x9zJKJd/BgAEAAMIAAYAAAACAA=="
+              "feedbackMetadata": "DwABCwAAAAEAAAAEJEFHTAoAA/O/x9zJKJd/BgAEAAMIAAYAAAACAA=="
              },
              "itemContent": {
               "__typename": "TimelineTrend",
               "itemType": "TimelineTrend",
-              "name": "Eusebio",
+              "name": "$AGL",
               "trend_metadata": {
-               "domain_context": "Sports · Trending",
+               "domain_context": "Business & finance · Trending",
                "url": {
-                "url": "twitter://search/?query=Eusebio&src=trend_click&pc=true&vertical=trends",
+                "url": "twitter://search/?query=%24AGL&src=trend_click&pc=true&vertical=trends",
                 "urlType": "DeepLink",
                 "urtEndpointOptions": {
                  "requestParams": [
                   {
                    "key": "cd",
-                   "value": "HBgHRXVzZWJpbwAA"
+                   "value": "HBgEJEFHTAAA"
                   }
                  ]
                 }
                }
               },
               "trend_url": {
-               "url": "twitter://search/?query=Eusebio&src=trend_click&pc=true&vertical=trends",
+               "url": "twitter://search/?query=%24AGL&src=trend_click&pc=true&vertical=trends",
                "urlType": "DeepLink",
                "urtEndpointOptions": {
                 "requestParams": [
                  {
                   "key": "cd",
-                  "value": "HBgHRXVzZWJpbwAA"
+                  "value": "HBgEJEFHTAAA"
+                 }
+                ]
+               }
+              }
+             }
+            }
+           },
+           {
+            "entryId": "trend-2106791404544983040-trend-#LGBTQIABuildingCommunity",
+            "item": {
+             "clientEventInfo": {
+              "component": "unified_events",
+              "details": {
+               "timelinesDetails": {
+                "controllerData": "DAACDAAQDAABCgAB6SHyqZIK6DEKAAIAAAGhB9t+zwAAAAA="
+               }
+              },
+              "element": "trend"
+             },
+             "feedbackInfo": {
+              "clientEventInfo": {
+               "action": "click",
+               "component": "trends",
+               "element": "feedback"
+              },
+              "feedbackKeys": [
+               "-1336659320",
+               "1628041751",
+               "15718569",
+               "-619311538",
+               "-1457103155",
+               "2103484841"
+              ],
+              "feedbackMetadata": "DwABCwAAAAEAAAAZI0xHQlRRSUFCdWlsZGluZ0NvbW11bml0eQoAA/O/x9zJKJd/BgAEAAQIAAYAAAACAA=="
+             },
+             "itemContent": {
+              "__typename": "TimelineTrend",
+              "itemType": "TimelineTrend",
+              "name": "#LGBTQIABuildingCommunity",
+              "trend_metadata": {
+               "domain_context": "Only on X · Trending",
+               "url": {
+                "url": "twitter://search/?query=%23LGBTQIABuildingCommunity&src=trend_click&pc=true&vertical=trends",
+                "urlType": "DeepLink",
+                "urtEndpointOptions": {
+                 "requestParams": [
+                  {
+                   "key": "cd",
+                   "value": "HBgZI0xHQlRRSUFCdWlsZGluZ0NvbW11bml0eQAA"
+                  }
+                 ]
+                }
+               }
+              },
+              "trend_url": {
+               "url": "twitter://search/?query=%23LGBTQIABuildingCommunity&src=trend_click&pc=true&vertical=trends",
+               "urlType": "DeepLink",
+               "urtEndpointOptions": {
+                "requestParams": [
+                 {
+                  "key": "cd",
+                  "value": "HBgZI0xHQlRRSUFCdWlsZGluZ0NvbW11bml0eQAA"
                  }
                 ]
                }
@@ -450,8 +340,8 @@
            }
           ]
          },
-         "entryId": "trend-2105664352819347456",
-         "sortIndex": "2105664352819347456"
+         "entryId": "trend-2106791404544983040",
+         "sortIndex": "2106791404544983040"
         },
         {
          "content": {
@@ -460,8 +350,8 @@
           "entryType": "TimelineTimelineCursor",
           "value": "DAAJAAA"
          },
-         "entryId": "cursor-top-2105664352819347457",
-         "sortIndex": "2105664352819347457"
+         "entryId": "cursor-top-2106791404544983041",
+         "sortIndex": "2106791404544983041"
         }
        ],
        "type": "TimelineAddEntries"
@@ -533,20 +423,6 @@
          "feedbackUrl": "/2/guide/insert_feedback/trend_abusive_or_harmful_feedback_key.json",
          "hasUndoAction": false,
          "prompt": "This trend is harmful or spammy"
-        }
-       },
-       {
-        "key": "-926942163",
-        "value": {
-         "clientEventInfo": {
-          "action": "click",
-          "element": "promoted_trend_feedback"
-         },
-         "confirmation": "Thanks. Refresh this page to update these trends.",
-         "confirmationDisplayType": "BottomSheet",
-         "feedbackType": "Dismiss",
-         "hasUndoAction": false,
-         "prompt": "Don't want to see this ad"
         }
        }
       ]

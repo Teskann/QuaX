@@ -1,0 +1,329 @@
+{
+ "scenario": "Unified card without type holding a grok_share component: conversation preview with grok:render tags",
+ "sourceUrl": "https://x.com/elonmusk/status/2098507671083036843",
+ "operation": "TweetResultByRestId",
+ "host": "x.com",
+ "queryId": "LbQZrAWyKPvExi8di3-EoA",
+ "features": {
+  "creator_subscriptions_tweet_preview_api_enabled": true,
+  "premium_content_api_read_enabled": false,
+  "communities_web_enable_tweet_community_results_fetch": true,
+  "c9s_tweet_anatomy_moderator_badge_enabled": true,
+  "responsive_web_grok_analyze_button_fetch_trends_enabled": false,
+  "responsive_web_grok_analyze_post_followups_enabled": true,
+  "rweb_cashtags_composer_attachment_enabled": true,
+  "responsive_web_jetfuel_frame": true,
+  "rweb_sports_post_context_enabled": true,
+  "responsive_web_grok_share_attachment_enabled": true,
+  "responsive_web_grok_annotations_enabled": true,
+  "articles_preview_enabled": true,
+  "responsive_web_edit_tweet_api_enabled": true,
+  "rweb_conversational_replies_downvote_enabled": false,
+  "graphql_is_translatable_rweb_tweet_is_translatable_enabled": true,
+  "view_counts_everywhere_api_enabled": true,
+  "longform_notetweets_consumption_enabled": true,
+  "responsive_web_twitter_article_tweet_consumption_enabled": true,
+  "content_disclosure_indicator_enabled": true,
+  "content_disclosure_ai_generated_indicator_enabled": true,
+  "responsive_web_grok_show_grok_translated_post": true,
+  "responsive_web_grok_analysis_button_from_backend": true,
+  "post_ctas_fetch_enabled": false,
+  "rweb_cashtags_enabled": true,
+  "freedom_of_speech_not_reach_fetch_enabled": true,
+  "standardized_nudges_misinfo": true,
+  "tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled": true,
+  "longform_notetweets_rich_text_read_enabled": true,
+  "longform_notetweets_inline_media_enabled": false,
+  "profile_label_improvements_pcf_label_in_post_enabled": true,
+  "responsive_web_profile_redirect_enabled": true,
+  "rweb_tipjar_consumption_enabled": false,
+  "verified_phone_label_enabled": false,
+  "responsive_web_nested_quote_preview_enabled": true,
+  "responsive_web_grok_image_annotation_enabled": true,
+  "responsive_web_grok_imagine_annotation_enabled": true,
+  "responsive_web_grok_community_note_auto_translation_is_enabled": true,
+  "responsive_web_graphql_timeline_navigation_enabled": true
+ },
+ "fieldToggles": {
+  "withArticleRichContentState": true,
+  "withArticlePlainText": false,
+  "withArticleSummaryText": true,
+  "withArticleVoiceOver": true,
+  "withPayments": false
+ },
+ "variables": {
+  "tweetId": "2098507671083036843",
+  "includePromotedContent": true,
+  "withBirdwatchNotes": true,
+  "withVoice": true,
+  "withCommunity": true
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "500",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "499",
+  "x-rate-limit-reset": "1791132141"
+ },
+ "body": {
+  "data": {
+   "tweetResult": {
+    "result": {
+     "__typename": "Tweet",
+     "card": {
+      "legacy": {
+       "binding_values": [
+        {
+         "key": "unified_card",
+         "value": {
+          "string_value": "{\"component_objects\":{\"details_1\":{\"type\":\"grok_share\",\"data\":{\"profile_user\":{\"id_str\":\"0\",\"name\":\"\",\"verified\":false,\"is_blue_verified\":false},\"grok_user\":{\"id_str\":\"1720665183188922368\",\"profile_image_url_https\":\"https:\\/\\/pbs.twimg.com\\/profile_images\\/2057885623374290944\\/lmj0pawP.jpg\",\"name\":\"Grok\",\"screen_name\":\"grok\",\"highlighted_label\":{\"description\":\"SpaceXAI\",\"badge\":{\"url\":\"https:\\/\\/pbs.twimg.com\\/profile_images\\/2074224934159876096\\/aelorWHq_bigger.jpg\"},\"url\":{\"urlType\":\"DeepLink\",\"url\":\"https:\\/\\/twitter.com\\/SpaceXAI\"},\"userLabelType\":\"BusinessLabel\",\"userLabelDisplayType\":\"Badge\"},\"verified\":false,\"is_blue_verified\":true,\"verified_type\":\"Business\"},\"id\":\"96b0a07447744eb79d03cbcaaf76e19f\",\"conversation_preview\":[{\"message\":\"Is this real?\",\"sender\":\"USER\",\"grokMode\":\"NORMAL\",\"mediaUrls\":[]},{\"message\":\"Yes, the video is real footage from the live broadcast of the 25th anniversary 9\\/11 memorial ceremony at Ground Zero on September 11, 2026.\\u003cgrok:render card_id=\\\"9fb1b7\\\" card_type=\\\"citation_card\\\" type=\\\"render_inline_citation\\\"\\u003e\\u003cargument name=\\\"citation_id\\\"\\u003e13\\u003c\\/argument\\u003e\\u003c\\/grok:render\\u003e\\nMayor Zohran Mamdani and Rep. Alexandria Ocasio-Cortez were present and captured smiling and appearing to laugh or chat during the reading of victims\\u2019 names. The clip circulating on X (including the original post) intercuts that moment with shots of grieving family members.\\u003cgrok:render card_id=\\\"28f947\\\" card_type=\\\"citation_card\\\" type=\\\"render_inline_citation\\\"\\u003e\\u003cargument name=\\\"citation_id\\\"\\u003e17\\u003c\\/argument\\u003e\\u003c\\/grok:render\\u003e\\nAn eyewitness standing nearby, Michael Ragusa (a former Giuliani security official and critic of both politicians), said the camera caught AOC greeting Mamdani and that other politicians from both parties were also talking and laughing in the same area. There is no evidence they were reacting to a specific name being read. Neither AOC nor Mamdani issued a public statement addressing the clip specifically. The event itself, their attendance, and the raw footage are not disputed.\",\"sender\":\"AGENT\",\"grokMode\":\"NORMAL\",\"mediaUrls\":[],\"deepsearchHeaders\":[{\"header\":\"Thinking about your request\",\"steps\":[{\"finalMessage\":\"Yes\",\"toolUsageCardResults\":[{\"toolUsageCardId\":\"680006c7-dac0-4272-96c0-5cc358035bd4\",\"message\":\"\\u003cxai:tool_usage_card\\u003e\\n  \\u003cxai:tool_usage_card_id\\u003e680006c7-dac0-4272-96c0-5cc358035bd4\\u003c\\/xai:tool_usage_card_id\\u003e\\n  \\u003cxai:tool_name\\u003eweb_search\\u003c\\/xai:tool_name\\u003e\\n  \\u003cxai:tool_args\\u003e\\u003c![CDATA[\\u007b\\\"query\\\":\\\"AOC Mamdani 9\\/11 memorial laughing response OR statement OR context\\\",\\\"num_results\\\":\\\"10\\\"\\u007d]]\\u003e\\u003c\\/xai:tool_args\\u003e\\n\\u003c\\/xai:tool_usage_card\\u003e\"},{\"toolUsageCardId\":\"680006c7-dac0-4272-96c0-5cc358035bd4\",\"webResults\":[{\"url\":\"https:\\/\\/nypost.com\\/2026\\/09\\/11\\/us-news\\/zohran-mamdani-aoc-spotted-laughing-at-9-11-ceremony-while-victims-families-weep-during-reading-of-names\\/\",\"title\":\"Zohran Mamdani, AOC spotted laughing at 9\\/11 ceremony while victims' families weep during reading of names\",\"snippet\":\"Metro\\n# AOC spotted laughing next to Mamdani\\u00a0at 9\\/11 ceremony \\u2014 as victims\\u2019 families weep during\\u2026\"},{\"url\":\"https:\\/\\/www.theblaze.com\\/news\\/aoc-mamdani-laughing-911-terrorism\",\"title\":\"AOC and Mamdani seen laughing and smiling as 9\\/11 families weep at Ground Zero | Blaze Media\",\"snippet\":\"Blaze Media\\nAndrew Lichtenstein\\/Corbis\\/Getty Images\\npolitics\\n# AOC and Mamdani seen laughing and\\u2026\"},{\"url\":\"https:\\/\\/news.meaww.com\\/mamdani-aoc-apparently-caught-giggling-as-mourners-weep-during-9-11-name-reading-ceremony\",\"title\":\"Mamdani, AOC apparently caught giggling as mourners weep during 9\\/11 name reading ceremony\",\"snippet\":\"# Mamdani, AOC apparently caught giggling as mourners weep during 9\\/11 name reading ceremony\\nThe\\u2026\"},{\"url\":\"https:\\/\\/redstate.com\\/kyle-becker\\/2026\\/09\\/11\\/mamdani-and-aoc-spotted-laughing-on-911-what-happened-will-make-you-sick-n2206795\",\"title\":\"Mamdani and AOC Spotted Laughing on 9\\/11 \\u2014 What Happened Will Make You Sick \\u2013 RedState\",\"snippet\":\"# Mamdani and AOC Spotted Laughing on 9\\/11 \\u2014 What Happened Will Make You Sick\\nSep 11, 2026 12:27 PM\\u2026\"},{\"url\":\"https:\\/\\/www.mediaite.com\\/media\\/news\\/its-not-true-ex-giuliani-aide-demolishes-claim-mamdani-and-aoc-laughed-during-9-11-memorial\\/\",\"title\":\"AOC, Mamdani Laughing During 9\\/11 Ceremony Claim Shot Down\",\"snippet\":\"# \\u2018It\\u2019s Not True\\u2019: Ex-Giuliani Aide Demolishes Claim Mamdani And AOC Laughed During 9\\/11 Memorial\\u2026\"},{\"url\":\"https:\\/\\/www.the-express.com\\/news\\/us-news\\/215794\\/aoc-mayor-mamdani-laughing-9-11-memorial\",\"title\":\"AOC and Mamdani filmed laughing as 9\\/11 victims' names read out at memorial - US News - News - Daily Express US\",\"snippet\":\"Skip to main content\\n# AOC and Mamdani filmed laughing as 9\\/11 victims' names read out at memorial\\u2026\"},{\"url\":\"https:\\/\\/www.breitbart.com\\/politics\\/2026\\/09\\/11\\/watch-mamdani-aoc-appear-yuk-it-up-at-ground-zero-while-9-11-victims-names-are-read\\/\",\"title\":\"WATCH: Mamdani, AOC Appear to Yuk It Up at Ground Zero While 9\\/11 Victims' Names Are Read\",\"snippet\":\"Politics is downstream from culture Andrew Breitbart\\n# WATCH: Mamdani, AOC Appear to Yuk It Up at\\u2026\"},{\"url\":\"https:\\/\\/heartlandernews.com\\/watch-mamdani-aoc-seen-laughing-during-reading-of-names-at-9-11-memorial\\/\",\"title\":\"WATCH: Mamdani, AOC seen laughing during reading of names at 9\\/11 memorial - Heartlander News\",\"snippet\":\"Culture\\nPosted September 11, 2026\\n# WATCH: Mamdani, AOC seen laughing during reading of names at\\u2026\"},{\"url\":\"https:\\/\\/trendingpoliticsnews.com\\/new-aoc-mamdani-caught-laughing-while-9-11-victims-names-are-read-out-at-ground-zero-jrupp\\/\",\"title\":\"NEW: AOC, Mamdani Caught Laughing While 9\\/11 Victims' Names Are Read Out At Ground Zero\",\"snippet\":\"Connect with us\\n### Politics\\n# NEW: AOC, Mamdani Caught Laughing While 9\\/11 Victims\\u2019 Names Are Read\\u2026\"},{\"url\":\"https:\\/\\/thepostmillennial.com\\/mamdani-aoc-seen-giggling-at-ground-zero-as-9-11-victims-names-are-read\",\"title\":\"Mamdani, AOC LAUGH at Ground Zero while 9\\/11 victims\\u2019 names are read | The Post Millennial | thepostmillennial.com\",\"snippet\":\"---\\n- American News\\n- Source:\\nThe Post Millennial\\n- 09\\/11\\/2026\\n# Mamdani, AOC LAUGH at Ground Zero\\u2026\"}]},{\"toolUsageCardId\":\"8eaa3946-8a0d-4a0b-9ef4-5bc7241b9e6f\",\"message\":\"\\u003cxai:tool_usage_card\\u003e\\n  \\u003cxai:tool_usage_card_id\\u003e8eaa3946-8a0d-4a0b-9ef4-5bc7241b9e6f\\u003c\\/xai:tool_usage_card_id\\u003e\\n  \\u003cxai:tool_name\\u003eweb_search\\u003c\\/xai:tool_name\\u003e\\n  \\u003cxai:tool_args\\u003e\\u003c![CDATA[\\u007b\\\"query\\\":\\\"Zohran Mamdani 9\\/11 memorial 2026 video laughing\\\",\\\"num_results\\\":\\\"8\\\"\\u007d]]\\u003e\\u003c\\/xai:tool_args\\u003e\\n\\u003c\\/xai:tool_usage_card\\u003e\"},{\"toolUsageCardId\":\"8eaa3946-8a0d-4a0b-9ef4-5bc7241b9e6f\",\"webResults\":[{\"url\":\"https:\\/\\/nypost.com\\/2026\\/09\\/11\\/us-news\\/zohran-mamdani-aoc-spotted-laughing-at-9-11-ceremony-while-victims-families-weep-during-reading-of-names\\/\",\"title\":\"Zohran Mamdani, AOC spotted laughing at 9\\/11 ceremony while victims' families weep during reading of names\",\"snippet\":\"Metro\\n# AOC spotted laughing next to Mamdani\\u00a0at 9\\/11 ceremony \\u2014 as victims\\u2019 families weep during\\u2026\"},{\"url\":\"https:\\/\\/heartlandernews.com\\/watch-mamdani-aoc-seen-laughing-during-reading-of-names-at-9-11-memorial\\/\",\"title\":\"WATCH: Mamdani, AOC seen laughing during reading of names at 9\\/11 memorial - Heartlander News\",\"snippet\":\"Culture\\nPosted September 11, 2026\\n# WATCH: Mamdani, AOC seen laughing during reading of names at\\u2026\"},{\"url\":\"https:\\/\\/newsbusters.org\\/blogs\\/cnsnews\\/craig-bannister\\/2026\\/09\\/11\\/video-mamdani-aoc-laughing-and-smiling-names-911-victims\",\"title\":\"Mamdani and AOC Criticized for Laughing, Smiling During 9\\/11 Victims Ceremony\",\"snippet\":\"# Video of Mamdani, AOC Laughing and Smiling as Names of 9\\/11 Victims Are Read Goes Viral\\nCraig\\u2026\"},{\"url\":\"https:\\/\\/www.westernstandard.news\\/watch\\/watch-new-york-mayor-mamdani-aoc-seen-laughing-at-911-memorial-service\\/76891\",\"title\":\"WATCH: New York Mayor Mamdani, AOC seen laughing at 9\\/11 memorial service\",\"snippet\":\"Watch\\n# WATCH: New York Mayor Mamdani, AOC seen laughing at 9\\/11 memorial service\\nAOC and Mamdani\\u2026\"},{\"url\":\"https:\\/\\/www.the-express.com\\/news\\/us-news\\/215794\\/aoc-mayor-mamdani-laughing-9-11-memorial\",\"title\":\"AOC and Mamdani filmed laughing as 9\\/11 victims' names read out at memorial - US News - News - Daily Express US\",\"snippet\":\"Skip to main content\\n# AOC and Mamdani filmed laughing as 9\\/11 victims' names read out at memorial\\u2026\"},{\"url\":\"https:\\/\\/www.youtube.com\\/watch?v=HyFcBiOy280\",\"title\":\"Mamdani and AOC Spotted Laughing at 9\\/11 Ceremony While Families Cry\",\"snippet\":\"Title: Mamdani and AOC Spotted Laughing at 9\\/11 Ceremony While Families Cry\\nPlatform: YouTube\\u2026\"},{\"url\":\"https:\\/\\/redstate.com\\/kyle-becker\\/2026\\/09\\/11\\/mamdani-and-aoc-spotted-laughing-on-911-what-happened-will-make-you-sick-n2206795\",\"title\":\"Mamdani and AOC Spotted Laughing on 9\\/11 \\u2014 What Happened Will Make You Sick \\u2013 RedState\",\"snippet\":\"# Mamdani and AOC Spotted Laughing on 9\\/11 \\u2014 What Happened Will Make You Sick\\nSep 11, 2026 12:27 PM\\u2026\"},{\"url\":\"https:\\/\\/www.westernjournal.com\\/watch-mamdani-aoc-seen-smiling-laughing-names-9-11-victims-read\\/\",\"title\":\"Watch: Mamdani and AOC Seen Smiling and Laughing as Names of 9\\/11 Victims Are Read\",\"snippet\":\"News\\n# Watch: Mamdani and AOC Seen Smiling and Laughing as Names of 9\\/11 Victims Are Read\\nBy Jack\\u2026\"}]},{\"toolUsageCardId\":\"3fd2bfde-d838-4dfc-b4e1-9a14adcb49c0\",\"message\":\"\\u003cxai:tool_usage_card\\u003e\\n  \\u003cxai:tool_usage_card_id\\u003e3fd2bfde-d838-4dfc-b4e1-9a14adcb49c0\\u003c\\/xai:tool_usage_card_id\\u003e\\n  \\u003cxai:tool_name\\u003ex_keyword_search\\u003c\\/xai:tool_name\\u003e\\n  \\u003cxai:tool_args\\u003e\\u003c![CDATA[\\u007b\\\"query\\\":\\\"from:AOC OR from:ZohranKMamdani 9\\/11 OR memorial\\\",\\\"limit\\\":\\\"5\\\",\\\"mode\\\":\\\"Latest\\\"\\u007d]]\\u003e\\u003c\\/xai:tool_args\\u003e\\n\\u003c\\/xai:tool_usage_card\\u003e\"},{\"toolUsageCardId\":\"3fd2bfde-d838-4dfc-b4e1-9a14adcb49c0\",\"xPostIds\":[\"1966111973911019787\",\"1927041368024559734\",\"1921640785314820361\",\"1833911486088933840\",\"1799075539128553723\"]}],\"toolUsageCard\":\"\\u003cxai:tool_usage_card\\u003e\\n  \\u003cxai:tool_usage_card_id\\u003e680006c7-dac0-4272-96c0-5cc358035bd4\\u003c\\/xai:tool_usage_card_id\\u003e\\n  \\u003cxai:tool_name\\u003eweb_search\\u003c\\/xai:tool_name\\u003e\\n  \\u003cxai:tool_args\\u003e\\u003c![CDATA[\\u007b\\\"query\\\":\\\"AOC Mamdani 9\\/11 memorial laughing response OR statement OR context\\\",\\\"num_results\\\":\\\"10\\\"\\u007d]]\\u003e\\u003c\\/xai:tool_args\\u003e\\n\\u003c\\/xai:tool_usage_card\\u003e\\u003cxai:tool_usage_card\\u003e\\n  \\u003cxai:tool_usage_card_id\\u003e8eaa3946-8a0d-4a0b-9ef4-5bc7241b9e6f\\u003c\\/xai:tool_usage_card_id\\u003e\\n  \\u003cxai:tool_name\\u003eweb_search\\u003c\\/xai:tool_name\\u003e\\n  \\u003cxai:tool_args\\u003e\\u003c![CDATA[\\u007b\\\"query\\\":\\\"Zohran Mamdani 9\\/11 memorial 2026 video laughing\\\",\\\"num_results\\\":\\\"8\\\"\\u007d]]\\u003e\\u003c\\/xai:tool_args\\u003e\\n\\u003c\\/xai:tool_usage_card\\u003e\\u003cxai:tool_usage_card\\u003e\\n  \\u003cxai:tool_usage_card_id\\u003e3fd2bfde-d838-4dfc-b4e1-9a14adcb49c0\\u003c\\/xai:tool_usage_card_id\\u003e\\n  \\u003cxai:tool_name\\u003ex_keyword_search\\u003c\\/xai:tool_name\\u003e\\n  \\u003cxai:tool_args\\u003e\\u003c![CDATA[\\u007b\\\"query\\\":\\\"from:AOC OR from:ZohranKMamdani 9\\/11 OR memorial\\\",\\\"limit\\\":\\\"5\\\",\\\"mode\\\":\\\"Latest\\\"\\u007d]]\\u003e\\u003c\\/xai:tool_args\\u003e\\n\\u003c\\/xai:tool_usage_card\\u003e\"}]},{\"header\":\"Verifying the authenticity of the viral post\",\"steps\":[{}]},{\"header\":\"Verifying the authenticity of the viral post\",\"steps\":[]},{\"header\":\"Analyzing the context of the viral clip\",\"steps\":[]}]}],\"destination\":\"destination_1\",\"allowed_actions\":[],\"metadata\":{\"text\":\"Answer by Grok, expand to see full conversation\"}}}},\"destination_objects\":{\"destination_1\":{\"type\":\"browser\",\"data\":{\"url_data\":{\"url\":\"https:\\/\\/x.com\\/i\\/grok\\/share\\/96b0a07447744eb79d03cbcaaf76e19f\",\"vanity\":\"Grok\"}}}},\"components\":[\"details_1\"]}",
+          "type": "STRING"
+         }
+        },
+        {
+         "key": "card_url",
+         "value": {
+          "scribe_key": "card_url",
+          "string_value": "https://t.co/CH5rknAUC4",
+          "type": "STRING"
+         }
+        }
+       ],
+       "card_platform": {
+        "platform": {
+         "audience": {
+          "name": "production"
+         },
+         "device": {
+          "name": "Swift",
+          "version": "12"
+         }
+        }
+       },
+       "name": "unified_card",
+       "url": "https://t.co/CH5rknAUC4",
+       "user_refs_results": []
+      },
+      "rest_id": "https://t.co/CH5rknAUC4"
+     },
+     "cashtag_attachments": [],
+     "core": {
+      "user_results": {
+       "result": {
+        "__typename": "User",
+        "action_counts": {
+         "favorites_count": 250705
+        },
+        "affiliates_highlighted_label": {
+         "label": {
+          "badge": {
+           "url": "https://pbs.twimg.com/profile_images/1955359038532653056/OSHY3ewP_bigger.jpg"
+          },
+          "description": "X",
+          "url": {
+           "url": "https://twitter.com/X",
+           "urlType": "DeepLink"
+          },
+          "userLabelDisplayType": "Badge",
+          "userLabelType": "BusinessLabel"
+         }
+        },
+        "avatar": {
+         "image_url": "https://pbs.twimg.com/profile_images/2103567689515954176/aR-Kjpp4_normal.jpg"
+        },
+        "banner": {
+         "image_url": "https://pbs.twimg.com/profile_banners/44196397/1774145451"
+        },
+        "core": {
+         "created_at": "Tue Jun 02 20:12:29 +0000 2009",
+         "name": "Elon Musk",
+         "screen_name": "elonmusk"
+        },
+        "follow_request_sent": false,
+        "has_graduated_access": true,
+        "id": "VXNlcjo0NDE5NjM5Nw==",
+        "is_blue_verified": true,
+        "location": {
+         "location": ""
+        },
+        "media_permissions": {
+         "can_media_tag": false
+        },
+        "notifications_settings": {
+         "notifications_enabled": false
+        },
+        "parody_commentary_fan_label": "None",
+        "pinned_items": {
+         "tweet_ids_str": [
+          "2106665276758491194"
+         ]
+        },
+        "possibly_sensitive": false,
+        "privacy": {
+         "protected": false
+        },
+        "professional": {
+         "category": [],
+         "professional_type": "Creator",
+         "rest_id": "1679729435447275522"
+        },
+        "profile_bio": {
+         "description": "https://t.co/ZdBx5WABYx",
+         "entities": {
+          "description": {
+           "urls": [
+            {
+             "display_url": "Terafab.AI",
+             "expanded_url": "http://Terafab.AI",
+             "indices": [
+              0,
+              23
+             ],
+             "url": "https://t.co/ZdBx5WABYx"
+            }
+           ]
+          }
+         }
+        },
+        "profile_image_shape": "Circle",
+        "profile_metadata": {
+         "profile_interstitial_type": ""
+        },
+        "profile_translation": {
+         "translator_type": "none"
+        },
+        "relationship_counts": {
+         "followers": 241754118,
+         "following": 1415
+        },
+        "relationship_perspectives": {
+         "blocked_by": false,
+         "blocking": false,
+         "followed_by": false,
+         "following": false,
+         "live_following": false,
+         "muting": false
+        },
+        "rest_id": "44196397",
+        "super_follow_eligible": true,
+        "super_followed_by": false,
+        "super_following": false,
+        "tweet_counts": {
+         "media_tweets": 4729,
+         "tweets": 109472
+        },
+        "verification": {
+         "verified": false
+        },
+        "website": {
+         "url": ""
+        }
+       }
+      }
+     },
+     "edit_control": {
+      "edit_tweet_ids": [
+       "2098507671083036843"
+      ],
+      "editable_until_msecs": "1789161791000",
+      "edits_remaining": "5",
+      "is_edit_eligible": false
+     },
+     "grok_analysis_button": false,
+     "grok_annotations": {},
+     "grok_share_attachment": {
+      "items": [
+       {
+        "media_urls": [],
+        "message": "Is this real?"
+       },
+       {
+        "deepsearch_headers": [
+         {
+          "steps": [
+           {}
+          ]
+         },
+         {
+          "steps": [
+           {}
+          ]
+         },
+         {
+          "steps": []
+         },
+         {
+          "steps": []
+         }
+        ],
+        "media_urls": [],
+        "message": "Yes, the video is real footage from the live broadcast of the 25th anniversary 9/11 memorial ceremony at Ground Zero on September 11, 2026.\n\nMayor Zohran Mamdani and Rep. Alexandria Ocasio-Cortez were present and captured smiling and appearing to laugh or chat during the reading of victims’ names. The clip circulating on X (including the original post) intercuts that moment with shots of grieving family members.\n\nAn eyewitness standing nearby, Michael Ragusa (a former Giuliani security official and critic of both politicians), said the camera caught AOC greeting Mamdani and that other politicians from both parties were also talking and laughing in the same area. There is no evidence they were reacting to a specific name being read. Neither AOC nor Mamdani issued a public statement addressing the clip specifically. The event itself, their attendance, and the raw footage are not disputed."
+       }
+      ]
+     },
+     "grok_translated_post_with_availability": {
+      "is_available": false
+     },
+     "has_birdwatch_notes": false,
+     "is_translatable": false,
+     "legacy": {
+      "bookmark_count": 212,
+      "bookmarked": false,
+      "conversation_id_str": "2098431955243061341",
+      "created_at": "Fri Sep 11 20:23:11 +0000 2026",
+      "display_text_range": [
+       14,
+       48
+      ],
+      "entities": {
+       "urls": [
+        {
+         "display_url": "x.com/i/grok/share/9…",
+         "expanded_url": "https://x.com/i/grok/share/96b0a07447744eb79d03cbcaaf76e19f",
+         "indices": [
+          25,
+          48
+         ],
+         "url": "https://t.co/CH5rknAUC4"
+        }
+       ],
+       "user_mentions": [
+        {
+         "id_str": "896466491587080194",
+         "indices": [
+          0,
+          13
+         ],
+         "name": "Greg Price",
+         "screen_name": "greg_price11"
+        }
+       ]
+      },
+      "favorite_count": 14082,
+      "favorited": false,
+      "full_text": "@greg_price11 Troubling \nhttps://t.co/CH5rknAUC4",
+      "id_str": "2098507671083036843",
+      "in_reply_to_screen_name": "greg_price11",
+      "in_reply_to_status_id_str": "2098431955243061341",
+      "in_reply_to_user_id_str": "896466491587080194",
+      "is_quote_status": false,
+      "lang": "en",
+      "possibly_sensitive": false,
+      "possibly_sensitive_editable": true,
+      "quote_count": 50,
+      "reply_count": 764,
+      "retweet_count": 1143,
+      "retweeted": false,
+      "user_id_str": "44196397"
+     },
+     "rest_id": "2098507671083036843",
+     "unmention_data": {},
+     "views": {
+      "count": "398045",
+      "state": "EnabledWithCount"
+     }
+    }
+   }
+  }
+ }
+}

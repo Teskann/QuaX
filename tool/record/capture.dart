@@ -7,6 +7,9 @@
 //
 //   fvm dart run tool/record/capture.dart            starts Chrome and drives it
 //   fvm dart run tool/record/capture.dart --attach    uses a Chrome already open
+//   fvm dart run tool/record/capture.dart --only 2082854732020760880
+//                                                     captures only the links containing the text,
+//                                                     and prunes nothing
 //
 // Chrome is started as a plain process — not through puppeteer's launcher — and
 // then driven over the debugging port. That matters: puppeteer's launcher adds
@@ -92,9 +95,10 @@ Future<void> main(List<String> args) async {
     print('No ${_linksFile.path}.');
     exit(1);
   }
-  final scenarios = _readScenarios(_readLinks());
+  final only = _optionValue(args, '--only');
+  final scenarios = _readScenarios(_readLinks()).where((s) => only == null || s.url.contains(only)).toList();
   if (scenarios.isEmpty) {
-    print('No scenarios in ${_linksFile.path}.');
+    print(only == null ? 'No scenarios in ${_linksFile.path}.' : 'No link of ${_linksFile.path} contains "$only".');
     exit(1);
   }
 
@@ -115,12 +119,17 @@ Future<void> main(List<String> args) async {
   chrome?.kill();
 
   print('\n$written fixtures under ${_outDir.path}');
-  _prune();
+  if (only == null) _prune();
   final names = _seen.keys.toList()..sort();
   print('\n${names.length} distinct operations recorded:');
   for (final name in names) {
     print('  ${name.padRight(30)} ${_seen[name]} response(s)');
   }
+}
+
+String? _optionValue(List<String> args, String name) {
+  final index = args.indexOf(name);
+  return index >= 0 && index + 1 < args.length ? args[index + 1] : null;
 }
 
 /// A profile directory can exist and be logged out, and every capture made in

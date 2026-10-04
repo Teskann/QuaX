@@ -37,13 +37,15 @@ List<InlineSpan> displayRichText(List<RichTextPart> richText) {
 }
 
 // Generate all the tweet entities (mentions, hashtags, etc.) from the tweet text
-List<RichTextPart> buildRichText(BuildContext context, String rawText, Object? rawEntities) {
+// [hideCardUrls] drops the links to what a card already shows, such as a Grok conversation
+List<RichTextPart> buildRichText(BuildContext context, String rawText, Object? rawEntities,
+    {bool hideCardUrls = false}) {
   Runes runes = Runes(rawText);
   Iterable<int> runesAsIterable = runes.getRange(0, runes.length);
 
   List<Entity> entities = [];
   if (rawEntities != null) {
-    entities = _parseEntities(context, rawEntities);
+    entities = _parseEntities(context, rawEntities, hideCardUrls: hideCardUrls);
   }
   List<RichTextPart> richTextParts = [];
 
@@ -131,7 +133,9 @@ String? _convertRunesToText(Iterable<int> runes, int start, [int? end]) {
   return HtmlUnescape().convert(string);
 }
 
-List<Entity> _parseEntities(BuildContext context, dynamic newEntities) {
+final _grokShareUrl = RegExp(r'^https?://(x|twitter)\.com/i/grok/share/');
+
+List<Entity> _parseEntities(BuildContext context, dynamic newEntities, {bool hideCardUrls = false}) {
   List<Entity> entities = [];
   if (newEntities == null) return entities;
 
@@ -169,6 +173,10 @@ List<Entity> _parseEntities(BuildContext context, dynamic newEntities) {
   }
 
   for (Url url in newEntities.urls ?? []) {
+    if (hideCardUrls && _grokShareUrl.hasMatch(url.expandedUrl ?? '')) {
+      entities.add(HiddenUrlEntity(url));
+      continue;
+    }
     entities.add(UrlEntity(url, () async {
       String? uri = url.expandedUrl;
       if (uri == null ||

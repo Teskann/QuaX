@@ -1,14 +1,17 @@
 import 'dart:io';
 
-import 'package:flutter/widgets.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:quax/client/client.dart';
 import 'package:quax/status.dart';
+import 'package:quax/tweet/_card_frame.dart';
+import 'package:quax/tweet/_media.dart';
 import 'package:quax/tweet/_photo.dart';
 import 'package:quax/tweet/_video.dart';
 import 'package:quax/tweet/_video_controls.dart';
 import 'package:quax/tweet/conversation.dart';
 import 'package:quax/tweet/unavailable_tweet.dart';
+import 'package:quax/user.dart';
 
 import '../fixtures.dart';
 import '../ui/fake_images.dart';
@@ -273,6 +276,33 @@ void main() {
       final gif = tester.widget<TweetVideo>(find.descendant(of: tweetTile(id), matching: find.byType(TweetVideo)));
       expect(gif.alwaysPlay && gif.loop && gif.disableControls, isTrue,
           reason: 'A GIF should loop by itself with no controls, unlike a video');
+    });
+  });
+
+  group('Unified cards', () {
+    testWidgets('Should show a Grok share as a conversation, without repeating its link in the text', (tester) async {
+      const id = '2098507671083036843';
+      await openPost(tester, id);
+
+      expect(visibleText(id), '@greg_price11 Troubling',
+          reason: 'The link to the conversation is the card itself, so it should not stay in the text');
+      expect(find.text('Is this real?'), findsOneWidget, reason: 'The question of the conversation should be shown');
+      expect(find.textContaining('Yes, the video is real footage'), findsOneWidget,
+          reason: 'The answer of Grok should be shown');
+      expect(find.textContaining('<grok:render'), findsNothing, reason: 'The markup inside the answer should be removed');
+      expect(find.byType(UserAvatar), findsWidgets, reason: 'The picture of Grok comes with the card');
+    });
+
+    testWidgets('Should show an image carousel card with all its images', (tester) async {
+      const id = '2082854732020760880';
+      await openPost(tester, id);
+
+      expect(mediaOf(id).length, 4, reason: 'The four images of the carousel should be swiped through');
+      expect(find.text('uefa.com'), findsOneWidget, reason: 'The card should show the site it leads to');
+      final media = find.descendant(of: tweetTile(id), matching: find.byType(TweetMedia));
+      final card = find.descendant(of: find.descendant(of: tweetTile(id), matching: find.byType(CardFrame)), matching: find.byType(InkWell));
+      expect(tester.getSize(media).width, tester.getSize(card).width,
+          reason: 'The images should fill the width of the card, inside its outline');
     });
   });
 

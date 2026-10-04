@@ -1,0 +1,2290 @@
+{
+ "scenario": "Reply whose card X only references as card://2035746613776322560, which the website draws as nothing and QuaX as an unsupported card",
+ "sourceUrl": "https://x.com/grok/status/2098526748400927166",
+ "operation": "TweetDetail",
+ "host": "x.com",
+ "queryId": "blErEeZkos5TDrWmrCp7cw",
+ "features": {
+  "rweb_video_screen_enabled": false,
+  "rweb_cashtags_enabled": true,
+  "profile_label_improvements_pcf_label_in_post_enabled": true,
+  "responsive_web_profile_redirect_enabled": true,
+  "rweb_tipjar_consumption_enabled": false,
+  "verified_phone_label_enabled": false,
+  "creator_subscriptions_tweet_preview_api_enabled": true,
+  "responsive_web_graphql_timeline_navigation_enabled": true,
+  "premium_content_api_read_enabled": false,
+  "communities_web_enable_tweet_community_results_fetch": true,
+  "c9s_tweet_anatomy_moderator_badge_enabled": true,
+  "responsive_web_grok_analyze_button_fetch_trends_enabled": false,
+  "responsive_web_grok_analyze_post_followups_enabled": true,
+  "rweb_cashtags_composer_attachment_enabled": true,
+  "responsive_web_jetfuel_frame": true,
+  "rweb_sports_post_context_enabled": true,
+  "responsive_web_grok_share_attachment_enabled": true,
+  "responsive_web_grok_annotations_enabled": true,
+  "articles_preview_enabled": true,
+  "responsive_web_edit_tweet_api_enabled": true,
+  "rweb_conversational_replies_downvote_enabled": false,
+  "graphql_is_translatable_rweb_tweet_is_translatable_enabled": true,
+  "view_counts_everywhere_api_enabled": true,
+  "longform_notetweets_consumption_enabled": true,
+  "responsive_web_twitter_article_tweet_consumption_enabled": true,
+  "content_disclosure_indicator_enabled": true,
+  "content_disclosure_ai_generated_indicator_enabled": true,
+  "responsive_web_grok_show_grok_translated_post": true,
+  "responsive_web_grok_analysis_button_from_backend": true,
+  "post_ctas_fetch_enabled": false,
+  "freedom_of_speech_not_reach_fetch_enabled": true,
+  "standardized_nudges_misinfo": true,
+  "tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled": true,
+  "longform_notetweets_rich_text_read_enabled": true,
+  "longform_notetweets_inline_media_enabled": false,
+  "responsive_web_nested_quote_preview_enabled": true,
+  "responsive_web_grok_image_annotation_enabled": true,
+  "responsive_web_grok_imagine_annotation_enabled": true,
+  "responsive_web_grok_community_note_auto_translation_is_enabled": true,
+  "responsive_web_enhance_cards_enabled": false
+ },
+ "fieldToggles": {
+  "withPayments": false,
+  "withArticleRichContentState": true,
+  "withArticlePlainText": false,
+  "withArticleSummaryText": true,
+  "withArticleVoiceOver": true,
+  "withGrokAnalyze": false,
+  "withDisallowedReplyControls": false
+ },
+ "variables": {
+  "focalTweetId": "2098526748400927166",
+  "with_rux_injections": false,
+  "rankingMode": "Relevance",
+  "includePromotedContent": true,
+  "withCommunity": true,
+  "withQuickPromoteEligibilityTweetFields": true,
+  "withBirdwatchNotes": true,
+  "withVoice": true
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "300",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "297",
+  "x-rate-limit-reset": "1791133858"
+ },
+ "body": {
+  "data": {
+   "threaded_conversation_with_injections_v2": {
+    "instructions": [
+     {
+      "type": "TimelineClearCache"
+     },
+     {
+      "entries": [
+       {
+        "content": {
+         "__typename": "TimelineTimelineItem",
+         "clientEventInfo": {
+          "component": "tweet",
+          "element": "tweet"
+         },
+         "entryType": "TimelineTimelineItem",
+         "itemContent": {
+          "__typename": "TimelineTweet",
+          "itemType": "TimelineTweet",
+          "tweetDisplayType": "Tweet",
+          "tweet_results": {
+           "result": {
+            "__typename": "Tweet",
+            "cashtag_attachments": [],
+            "core": {
+             "user_results": {
+              "result": {
+               "__typename": "User",
+               "action_counts": {
+                "favorites_count": 47857
+               },
+               "affiliates_highlighted_label": {},
+               "avatar": {
+                "image_url": "https://pbs.twimg.com/profile_images/1599596465130700800/njeeSJmC_normal.jpg"
+               },
+               "banner": {
+                "image_url": "https://pbs.twimg.com/profile_banners/896466491587080194/1772146619"
+               },
+               "core": {
+                "created_at": "Sat Aug 12 20:20:41 +0000 2017",
+                "name": "Greg Price",
+                "screen_name": "greg_price11"
+               },
+               "follow_request_sent": false,
+               "has_graduated_access": true,
+               "id": "VXNlcjo4OTY0NjY0OTE1ODcwODAxOTQ=",
+               "is_blue_verified": true,
+               "location": {
+                "location": "Virginia"
+               },
+               "media_permissions": {
+                "can_media_tag": true
+               },
+               "notifications_settings": {
+                "notifications_enabled": false
+               },
+               "parody_commentary_fan_label": "None",
+               "pinned_items": {},
+               "possibly_sensitive": false,
+               "privacy": {
+                "protected": false
+               },
+               "profile_bio": {
+                "description": "St. Michael the Archangel, Defend us in Battle | Joshua 1:9 | Si Vis Pacem, Para Bellum",
+                "entities": {
+                 "description": {}
+                }
+               },
+               "profile_image_shape": "Circle",
+               "profile_metadata": {
+                "profile_interstitial_type": ""
+               },
+               "profile_translation": {
+                "translator_type": "none"
+               },
+               "relationship_counts": {
+                "followers": 527631,
+                "following": 3274
+               },
+               "relationship_perspectives": {
+                "blocked_by": false,
+                "blocking": false,
+                "followed_by": false,
+                "following": false,
+                "live_following": false,
+                "muting": false
+               },
+               "rest_id": "896466491587080194",
+               "super_follow_eligible": false,
+               "super_followed_by": false,
+               "super_following": false,
+               "tweet_counts": {
+                "media_tweets": 10288,
+                "tweets": 61364
+               },
+               "verification": {
+                "verified": false
+               },
+               "website": {
+                "url": ""
+               }
+              }
+             }
+            },
+            "edit_control": {
+             "edit_tweet_ids": [
+              "2098431955243061341"
+             ],
+             "editable_until_msecs": "1789143739000",
+             "edits_remaining": "5",
+             "is_edit_eligible": true
+            },
+            "grok_analysis_button": true,
+            "grok_annotations": {
+             "is_image_editable_by_grok": false
+            },
+            "grok_translated_post_with_availability": {
+             "is_available": false
+            },
+            "has_birdwatch_notes": true,
+            "is_translatable": false,
+            "legacy": {
+             "bookmark_count": 5241,
+             "bookmarked": false,
+             "conversation_id_str": "2098431955243061341",
+             "created_at": "Fri Sep 11 15:22:19 +0000 2026",
+             "display_text_range": [
+              0,
+              152
+             ],
+             "entities": {
+              "media": [
+               {
+                "additional_media_info": {
+                 "monetizable": false
+                },
+                "allow_download_status": {
+                 "allow_download": true
+                },
+                "display_url": "pic.x.com/Ib5lm57fmV",
+                "expanded_url": "https://x.com/greg_price11/status/2098431955243061341/video/1",
+                "ext_media_availability": {
+                 "status": "Available"
+                },
+                "id_str": "2098431786581716993",
+                "indices": [
+                 153,
+                 176
+                ],
+                "media_key": "13_2098431786581716993",
+                "media_results": {
+                 "result": {
+                  "media_key": "13_2098431786581716993"
+                 }
+                },
+                "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2098431786581716993/img/-zrBVTWpbByor45l.jpg",
+                "original_info": {
+                 "focus_rects": [],
+                 "height": 1320,
+                 "width": 2322
+                },
+                "sizes": {
+                 "large": {
+                  "h": 1164,
+                  "resize": "fit",
+                  "w": 2048
+                 },
+                 "medium": {
+                  "h": 682,
+                  "resize": "fit",
+                  "w": 1200
+                 },
+                 "small": {
+                  "h": 387,
+                  "resize": "fit",
+                  "w": 680
+                 },
+                 "thumb": {
+                  "h": 150,
+                  "resize": "crop",
+                  "w": 150
+                 }
+                },
+                "type": "video",
+                "url": "https://t.co/Ib5lm57fmV",
+                "video_info": {
+                 "aspect_ratio": [
+                  387,
+                  220
+                 ],
+                 "duration_millis": 16143,
+                 "variants": [
+                  {
+                   "content_type": "application/x-mpegURL",
+                   "url": "https://video.twimg.com/amplify_video/2098431786581716993/pl/9UAXu8f9nUptIIQy.m3u8?tag=29"
+                  },
+                  {
+                   "bitrate": 256000,
+                   "content_type": "video/mp4",
+                   "url": "https://video.twimg.com/amplify_video/2098431786581716993/vid/avc1/474x270/kcKTzizd6XCGC_1m.mp4?tag=29"
+                  },
+                  {
+                   "bitrate": 832000,
+                   "content_type": "video/mp4",
+                   "url": "https://video.twimg.com/amplify_video/2098431786581716993/vid/avc1/632x360/cE-VdOz26CmUhpwW.mp4?tag=29"
+                  },
+                  {
+                   "bitrate": 2176000,
+                   "content_type": "video/mp4",
+                   "url": "https://video.twimg.com/amplify_video/2098431786581716993/vid/avc1/1266x720/GibjhNlSbMikIdSR.mp4?tag=29"
+                  },
+                  {
+                   "bitrate": 10368000,
+                   "content_type": "video/mp4",
+                   "url": "https://video.twimg.com/amplify_video/2098431786581716993/vid/avc1/2322x1320/wJBV31Qt6R_4A0m1.mp4?tag=29"
+                  }
+                 ]
+                }
+               }
+              ]
+             },
+             "extended_entities": {
+              "media": [
+               {
+                "additional_media_info": {
+                 "monetizable": false
+                },
+                "allow_download_status": {
+                 "allow_download": true
+                },
+                "display_url": "pic.x.com/Ib5lm57fmV",
+                "expanded_url": "https://x.com/greg_price11/status/2098431955243061341/video/1",
+                "ext_media_availability": {
+                 "status": "Available"
+                },
+                "id_str": "2098431786581716993",
+                "indices": [
+                 153,
+                 176
+                ],
+                "media_key": "13_2098431786581716993",
+                "media_results": {
+                 "result": {
+                  "media_key": "13_2098431786581716993"
+                 }
+                },
+                "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2098431786581716993/img/-zrBVTWpbByor45l.jpg",
+                "original_info": {
+                 "focus_rects": [],
+                 "height": 1320,
+                 "width": 2322
+                },
+                "sizes": {
+                 "large": {
+                  "h": 1164,
+                  "resize": "fit",
+                  "w": 2048
+                 },
+                 "medium": {
+                  "h": 682,
+                  "resize": "fit",
+                  "w": 1200
+                 },
+                 "small": {
+                  "h": 387,
+                  "resize": "fit",
+                  "w": 680
+                 },
+                 "thumb": {
+                  "h": 150,
+                  "resize": "crop",
+                  "w": 150
+                 }
+                },
+                "type": "video",
+                "url": "https://t.co/Ib5lm57fmV",
+                "video_info": {
+                 "aspect_ratio": [
+                  387,
+                  220
+                 ],
+                 "duration_millis": 16143,
+                 "variants": [
+                  {
+                   "content_type": "application/x-mpegURL",
+                   "url": "https://video.twimg.com/amplify_video/2098431786581716993/pl/9UAXu8f9nUptIIQy.m3u8?tag=29"
+                  },
+                  {
+                   "bitrate": 256000,
+                   "content_type": "video/mp4",
+                   "url": "https://video.twimg.com/amplify_video/2098431786581716993/vid/avc1/474x270/kcKTzizd6XCGC_1m.mp4?tag=29"
+                  },
+                  {
+                   "bitrate": 832000,
+                   "content_type": "video/mp4",
+                   "url": "https://video.twimg.com/amplify_video/2098431786581716993/vid/avc1/632x360/cE-VdOz26CmUhpwW.mp4?tag=29"
+                  },
+                  {
+                   "bitrate": 2176000,
+                   "content_type": "video/mp4",
+                   "url": "https://video.twimg.com/amplify_video/2098431786581716993/vid/avc1/1266x720/GibjhNlSbMikIdSR.mp4?tag=29"
+                  },
+                  {
+                   "bitrate": 10368000,
+                   "content_type": "video/mp4",
+                   "url": "https://video.twimg.com/amplify_video/2098431786581716993/vid/avc1/2322x1320/wJBV31Qt6R_4A0m1.mp4?tag=29"
+                  }
+                 ]
+                }
+               }
+              ]
+             },
+             "favorite_count": 51791,
+             "favorited": false,
+             "full_text": "Mamdani and AOC are spotted laughing with each other as people cry while the names of those who died are read during the 9/11 Memorial in New York City. https://t.co/Ib5lm57fmV",
+             "id_str": "2098431955243061341",
+             "is_quote_status": false,
+             "lang": "en",
+             "possibly_sensitive": false,
+             "possibly_sensitive_editable": true,
+             "quote_count": 2410,
+             "reply_count": 4045,
+             "retweet_count": 8970,
+             "retweeted": false,
+             "user_id_str": "896466491587080194"
+            },
+            "quick_promote_eligibility": {
+             "eligibility": "IneligibleNotVerified"
+            },
+            "rest_id": "2098431955243061341",
+            "unmention_data": {},
+            "views": {
+             "count": "24756988",
+             "state": "EnabledWithCount"
+            }
+           }
+          }
+         }
+        },
+        "entryId": "tweet-2098431955243061341",
+        "sortIndex": "2106791401940320256"
+       },
+       {
+        "content": {
+         "__typename": "TimelineTimelineItem",
+         "clientEventInfo": {
+          "component": "tweet",
+          "element": "tweet"
+         },
+         "entryType": "TimelineTimelineItem",
+         "itemContent": {
+          "__typename": "TimelineTweet",
+          "itemType": "TimelineTweet",
+          "tweetDisplayType": "Tweet",
+          "tweet_results": {
+           "result": {
+            "__typename": "Tweet",
+            "card": {
+             "legacy": {
+              "binding_values": [
+               {
+                "key": "unified_card",
+                "value": {
+                 "string_value": "{\"component_objects\":{\"details_1\":{\"type\":\"grok_share\",\"data\":{\"profile_user\":{\"id_str\":\"0\",\"name\":\"\",\"verified\":false,\"is_blue_verified\":false},\"grok_user\":{\"id_str\":\"1720665183188922368\",\"profile_image_url_https\":\"https:\\/\\/pbs.twimg.com\\/profile_images\\/2057885623374290944\\/lmj0pawP.jpg\",\"name\":\"Grok\",\"screen_name\":\"grok\",\"highlighted_label\":{\"description\":\"SpaceXAI\",\"badge\":{\"url\":\"https:\\/\\/pbs.twimg.com\\/profile_images\\/2074224934159876096\\/aelorWHq_bigger.jpg\"},\"url\":{\"urlType\":\"DeepLink\",\"url\":\"https:\\/\\/twitter.com\\/SpaceXAI\"},\"userLabelType\":\"BusinessLabel\",\"userLabelDisplayType\":\"Badge\"},\"verified\":false,\"is_blue_verified\":true,\"verified_type\":\"Business\"},\"id\":\"96b0a07447744eb79d03cbcaaf76e19f\",\"conversation_preview\":[{\"message\":\"Is this real?\",\"sender\":\"USER\",\"grokMode\":\"NORMAL\",\"mediaUrls\":[]},{\"message\":\"Yes, the video is real footage from the live broadcast of the 25th anniversary 9\\/11 memorial ceremony at Ground Zero on September 11, 2026.\\u003cgrok:render card_id=\\\"9fb1b7\\\" card_type=\\\"citation_card\\\" type=\\\"render_inline_citation\\\"\\u003e\\u003cargument name=\\\"citation_id\\\"\\u003e13\\u003c\\/argument\\u003e\\u003c\\/grok:render\\u003e\\nMayor Zohran Mamdani and Rep. Alexandria Ocasio-Cortez were present and captured smiling and appearing to laugh or chat during the reading of victims\\u2019 names. The clip circulating on X (including the original post) intercuts that moment with shots of grieving family members.\\u003cgrok:render card_id=\\\"28f947\\\" card_type=\\\"citation_card\\\" type=\\\"render_inline_citation\\\"\\u003e\\u003cargument name=\\\"citation_id\\\"\\u003e17\\u003c\\/argument\\u003e\\u003c\\/grok:render\\u003e\\nAn eyewitness standing nearby, Michael Ragusa (a former Giuliani security official and critic of both politicians), said the camera caught AOC greeting Mamdani and that other politicians from both parties were also talking and laughing in the same area. There is no evidence they were reacting to a specific name being read. Neither AOC nor Mamdani issued a public statement addressing the clip specifically. The event itself, their attendance, and the raw footage are not disputed.\",\"sender\":\"AGENT\",\"grokMode\":\"NORMAL\",\"mediaUrls\":[],\"deepsearchHeaders\":[{\"header\":\"Thinking about your request\",\"steps\":[{\"finalMessage\":\"Yes\",\"toolUsageCardResults\":[{\"toolUsageCardId\":\"680006c7-dac0-4272-96c0-5cc358035bd4\",\"message\":\"\\u003cxai:tool_usage_card\\u003e\\n  \\u003cxai:tool_usage_card_id\\u003e680006c7-dac0-4272-96c0-5cc358035bd4\\u003c\\/xai:tool_usage_card_id\\u003e\\n  \\u003cxai:tool_name\\u003eweb_search\\u003c\\/xai:tool_name\\u003e\\n  \\u003cxai:tool_args\\u003e\\u003c![CDATA[\\u007b\\\"query\\\":\\\"AOC Mamdani 9\\/11 memorial laughing response OR statement OR context\\\",\\\"num_results\\\":\\\"10\\\"\\u007d]]\\u003e\\u003c\\/xai:tool_args\\u003e\\n\\u003c\\/xai:tool_usage_card\\u003e\"},{\"toolUsageCardId\":\"680006c7-dac0-4272-96c0-5cc358035bd4\",\"webResults\":[{\"url\":\"https:\\/\\/nypost.com\\/2026\\/09\\/11\\/us-news\\/zohran-mamdani-aoc-spotted-laughing-at-9-11-ceremony-while-victims-families-weep-during-reading-of-names\\/\",\"title\":\"Zohran Mamdani, AOC spotted laughing at 9\\/11 ceremony while victims' families weep during reading of names\",\"snippet\":\"Metro\\n# AOC spotted laughing next to Mamdani\\u00a0at 9\\/11 ceremony \\u2014 as victims\\u2019 families weep during\\u2026\"},{\"url\":\"https:\\/\\/www.theblaze.com\\/news\\/aoc-mamdani-laughing-911-terrorism\",\"title\":\"AOC and Mamdani seen laughing and smiling as 9\\/11 families weep at Ground Zero | Blaze Media\",\"snippet\":\"Blaze Media\\nAndrew Lichtenstein\\/Corbis\\/Getty Images\\npolitics\\n# AOC and Mamdani seen laughing and\\u2026\"},{\"url\":\"https:\\/\\/news.meaww.com\\/mamdani-aoc-apparently-caught-giggling-as-mourners-weep-during-9-11-name-reading-ceremony\",\"title\":\"Mamdani, AOC apparently caught giggling as mourners weep during 9\\/11 name reading ceremony\",\"snippet\":\"# Mamdani, AOC apparently caught giggling as mourners weep during 9\\/11 name reading ceremony\\nThe\\u2026\"},{\"url\":\"https:\\/\\/redstate.com\\/kyle-becker\\/2026\\/09\\/11\\/mamdani-and-aoc-spotted-laughing-on-911-what-happened-will-make-you-sick-n2206795\",\"title\":\"Mamdani and AOC Spotted Laughing on 9\\/11 \\u2014 What Happened Will Make You Sick \\u2013 RedState\",\"snippet\":\"# Mamdani and AOC Spotted Laughing on 9\\/11 \\u2014 What Happened Will Make You Sick\\nSep 11, 2026 12:27 PM\\u2026\"},{\"url\":\"https:\\/\\/www.mediaite.com\\/media\\/news\\/its-not-true-ex-giuliani-aide-demolishes-claim-mamdani-and-aoc-laughed-during-9-11-memorial\\/\",\"title\":\"AOC, Mamdani Laughing During 9\\/11 Ceremony Claim Shot Down\",\"snippet\":\"# \\u2018It\\u2019s Not True\\u2019: Ex-Giuliani Aide Demolishes Claim Mamdani And AOC Laughed During 9\\/11 Memorial\\u2026\"},{\"url\":\"https:\\/\\/www.the-express.com\\/news\\/us-news\\/215794\\/aoc-mayor-mamdani-laughing-9-11-memorial\",\"title\":\"AOC and Mamdani filmed laughing as 9\\/11 victims' names read out at memorial - US News - News - Daily Express US\",\"snippet\":\"Skip to main content\\n# AOC and Mamdani filmed laughing as 9\\/11 victims' names read out at memorial\\u2026\"},{\"url\":\"https:\\/\\/www.breitbart.com\\/politics\\/2026\\/09\\/11\\/watch-mamdani-aoc-appear-yuk-it-up-at-ground-zero-while-9-11-victims-names-are-read\\/\",\"title\":\"WATCH: Mamdani, AOC Appear to Yuk It Up at Ground Zero While 9\\/11 Victims' Names Are Read\",\"snippet\":\"Politics is downstream from culture Andrew Breitbart\\n# WATCH: Mamdani, AOC Appear to Yuk It Up at\\u2026\"},{\"url\":\"https:\\/\\/heartlandernews.com\\/watch-mamdani-aoc-seen-laughing-during-reading-of-names-at-9-11-memorial\\/\",\"title\":\"WATCH: Mamdani, AOC seen laughing during reading of names at 9\\/11 memorial - Heartlander News\",\"snippet\":\"Culture\\nPosted September 11, 2026\\n# WATCH: Mamdani, AOC seen laughing during reading of names at\\u2026\"},{\"url\":\"https:\\/\\/trendingpoliticsnews.com\\/new-aoc-mamdani-caught-laughing-while-9-11-victims-names-are-read-out-at-ground-zero-jrupp\\/\",\"title\":\"NEW: AOC, Mamdani Caught Laughing While 9\\/11 Victims' Names Are Read Out At Ground Zero\",\"snippet\":\"Connect with us\\n### Politics\\n# NEW: AOC, Mamdani Caught Laughing While 9\\/11 Victims\\u2019 Names Are Read\\u2026\"},{\"url\":\"https:\\/\\/thepostmillennial.com\\/mamdani-aoc-seen-giggling-at-ground-zero-as-9-11-victims-names-are-read\",\"title\":\"Mamdani, AOC LAUGH at Ground Zero while 9\\/11 victims\\u2019 names are read | The Post Millennial | thepostmillennial.com\",\"snippet\":\"---\\n- American News\\n- Source:\\nThe Post Millennial\\n- 09\\/11\\/2026\\n# Mamdani, AOC LAUGH at Ground Zero\\u2026\"}]},{\"toolUsageCardId\":\"8eaa3946-8a0d-4a0b-9ef4-5bc7241b9e6f\",\"message\":\"\\u003cxai:tool_usage_card\\u003e\\n  \\u003cxai:tool_usage_card_id\\u003e8eaa3946-8a0d-4a0b-9ef4-5bc7241b9e6f\\u003c\\/xai:tool_usage_card_id\\u003e\\n  \\u003cxai:tool_name\\u003eweb_search\\u003c\\/xai:tool_name\\u003e\\n  \\u003cxai:tool_args\\u003e\\u003c![CDATA[\\u007b\\\"query\\\":\\\"Zohran Mamdani 9\\/11 memorial 2026 video laughing\\\",\\\"num_results\\\":\\\"8\\\"\\u007d]]\\u003e\\u003c\\/xai:tool_args\\u003e\\n\\u003c\\/xai:tool_usage_card\\u003e\"},{\"toolUsageCardId\":\"8eaa3946-8a0d-4a0b-9ef4-5bc7241b9e6f\",\"webResults\":[{\"url\":\"https:\\/\\/nypost.com\\/2026\\/09\\/11\\/us-news\\/zohran-mamdani-aoc-spotted-laughing-at-9-11-ceremony-while-victims-families-weep-during-reading-of-names\\/\",\"title\":\"Zohran Mamdani, AOC spotted laughing at 9\\/11 ceremony while victims' families weep during reading of names\",\"snippet\":\"Metro\\n# AOC spotted laughing next to Mamdani\\u00a0at 9\\/11 ceremony \\u2014 as victims\\u2019 families weep during\\u2026\"},{\"url\":\"https:\\/\\/heartlandernews.com\\/watch-mamdani-aoc-seen-laughing-during-reading-of-names-at-9-11-memorial\\/\",\"title\":\"WATCH: Mamdani, AOC seen laughing during reading of names at 9\\/11 memorial - Heartlander News\",\"snippet\":\"Culture\\nPosted September 11, 2026\\n# WATCH: Mamdani, AOC seen laughing during reading of names at\\u2026\"},{\"url\":\"https:\\/\\/newsbusters.org\\/blogs\\/cnsnews\\/craig-bannister\\/2026\\/09\\/11\\/video-mamdani-aoc-laughing-and-smiling-names-911-victims\",\"title\":\"Mamdani and AOC Criticized for Laughing, Smiling During 9\\/11 Victims Ceremony\",\"snippet\":\"# Video of Mamdani, AOC Laughing and Smiling as Names of 9\\/11 Victims Are Read Goes Viral\\nCraig\\u2026\"},{\"url\":\"https:\\/\\/www.westernstandard.news\\/watch\\/watch-new-york-mayor-mamdani-aoc-seen-laughing-at-911-memorial-service\\/76891\",\"title\":\"WATCH: New York Mayor Mamdani, AOC seen laughing at 9\\/11 memorial service\",\"snippet\":\"Watch\\n# WATCH: New York Mayor Mamdani, AOC seen laughing at 9\\/11 memorial service\\nAOC and Mamdani\\u2026\"},{\"url\":\"https:\\/\\/www.the-express.com\\/news\\/us-news\\/215794\\/aoc-mayor-mamdani-laughing-9-11-memorial\",\"title\":\"AOC and Mamdani filmed laughing as 9\\/11 victims' names read out at memorial - US News - News - Daily Express US\",\"snippet\":\"Skip to main content\\n# AOC and Mamdani filmed laughing as 9\\/11 victims' names read out at memorial\\u2026\"},{\"url\":\"https:\\/\\/www.youtube.com\\/watch?v=HyFcBiOy280\",\"title\":\"Mamdani and AOC Spotted Laughing at 9\\/11 Ceremony While Families Cry\",\"snippet\":\"Title: Mamdani and AOC Spotted Laughing at 9\\/11 Ceremony While Families Cry\\nPlatform: YouTube\\u2026\"},{\"url\":\"https:\\/\\/redstate.com\\/kyle-becker\\/2026\\/09\\/11\\/mamdani-and-aoc-spotted-laughing-on-911-what-happened-will-make-you-sick-n2206795\",\"title\":\"Mamdani and AOC Spotted Laughing on 9\\/11 \\u2014 What Happened Will Make You Sick \\u2013 RedState\",\"snippet\":\"# Mamdani and AOC Spotted Laughing on 9\\/11 \\u2014 What Happened Will Make You Sick\\nSep 11, 2026 12:27 PM\\u2026\"},{\"url\":\"https:\\/\\/www.westernjournal.com\\/watch-mamdani-aoc-seen-smiling-laughing-names-9-11-victims-read\\/\",\"title\":\"Watch: Mamdani and AOC Seen Smiling and Laughing as Names of 9\\/11 Victims Are Read\",\"snippet\":\"News\\n# Watch: Mamdani and AOC Seen Smiling and Laughing as Names of 9\\/11 Victims Are Read\\nBy Jack\\u2026\"}]},{\"toolUsageCardId\":\"3fd2bfde-d838-4dfc-b4e1-9a14adcb49c0\",\"message\":\"\\u003cxai:tool_usage_card\\u003e\\n  \\u003cxai:tool_usage_card_id\\u003e3fd2bfde-d838-4dfc-b4e1-9a14adcb49c0\\u003c\\/xai:tool_usage_card_id\\u003e\\n  \\u003cxai:tool_name\\u003ex_keyword_search\\u003c\\/xai:tool_name\\u003e\\n  \\u003cxai:tool_args\\u003e\\u003c![CDATA[\\u007b\\\"query\\\":\\\"from:AOC OR from:ZohranKMamdani 9\\/11 OR memorial\\\",\\\"limit\\\":\\\"5\\\",\\\"mode\\\":\\\"Latest\\\"\\u007d]]\\u003e\\u003c\\/xai:tool_args\\u003e\\n\\u003c\\/xai:tool_usage_card\\u003e\"},{\"toolUsageCardId\":\"3fd2bfde-d838-4dfc-b4e1-9a14adcb49c0\",\"xPostIds\":[\"1966111973911019787\",\"1927041368024559734\",\"1921640785314820361\",\"1833911486088933840\",\"1799075539128553723\"]}],\"toolUsageCard\":\"\\u003cxai:tool_usage_card\\u003e\\n  \\u003cxai:tool_usage_card_id\\u003e680006c7-dac0-4272-96c0-5cc358035bd4\\u003c\\/xai:tool_usage_card_id\\u003e\\n  \\u003cxai:tool_name\\u003eweb_search\\u003c\\/xai:tool_name\\u003e\\n  \\u003cxai:tool_args\\u003e\\u003c![CDATA[\\u007b\\\"query\\\":\\\"AOC Mamdani 9\\/11 memorial laughing response OR statement OR context\\\",\\\"num_results\\\":\\\"10\\\"\\u007d]]\\u003e\\u003c\\/xai:tool_args\\u003e\\n\\u003c\\/xai:tool_usage_card\\u003e\\u003cxai:tool_usage_card\\u003e\\n  \\u003cxai:tool_usage_card_id\\u003e8eaa3946-8a0d-4a0b-9ef4-5bc7241b9e6f\\u003c\\/xai:tool_usage_card_id\\u003e\\n  \\u003cxai:tool_name\\u003eweb_search\\u003c\\/xai:tool_name\\u003e\\n  \\u003cxai:tool_args\\u003e\\u003c![CDATA[\\u007b\\\"query\\\":\\\"Zohran Mamdani 9\\/11 memorial 2026 video laughing\\\",\\\"num_results\\\":\\\"8\\\"\\u007d]]\\u003e\\u003c\\/xai:tool_args\\u003e\\n\\u003c\\/xai:tool_usage_card\\u003e\\u003cxai:tool_usage_card\\u003e\\n  \\u003cxai:tool_usage_card_id\\u003e3fd2bfde-d838-4dfc-b4e1-9a14adcb49c0\\u003c\\/xai:tool_usage_card_id\\u003e\\n  \\u003cxai:tool_name\\u003ex_keyword_search\\u003c\\/xai:tool_name\\u003e\\n  \\u003cxai:tool_args\\u003e\\u003c![CDATA[\\u007b\\\"query\\\":\\\"from:AOC OR from:ZohranKMamdani 9\\/11 OR memorial\\\",\\\"limit\\\":\\\"5\\\",\\\"mode\\\":\\\"Latest\\\"\\u007d]]\\u003e\\u003c\\/xai:tool_args\\u003e\\n\\u003c\\/xai:tool_usage_card\\u003e\"}]},{\"header\":\"Verifying the authenticity of the viral post\",\"steps\":[{}]},{\"header\":\"Verifying the authenticity of the viral post\",\"steps\":[]},{\"header\":\"Analyzing the context of the viral clip\",\"steps\":[]}]}],\"destination\":\"destination_1\",\"allowed_actions\":[],\"metadata\":{\"text\":\"Answer by Grok, expand to see full conversation\"}}}},\"destination_objects\":{\"destination_1\":{\"type\":\"browser\",\"data\":{\"url_data\":{\"url\":\"https:\\/\\/x.com\\/i\\/grok\\/share\\/96b0a07447744eb79d03cbcaaf76e19f\",\"vanity\":\"Grok\"}}}},\"components\":[\"details_1\"]}",
+                 "type": "STRING"
+                }
+               },
+               {
+                "key": "card_url",
+                "value": {
+                 "scribe_key": "card_url",
+                 "string_value": "https://t.co/CH5rknAUC4",
+                 "type": "STRING"
+                }
+               }
+              ],
+              "card_platform": {
+               "platform": {
+                "audience": {
+                 "name": "production"
+                },
+                "device": {
+                 "name": "Swift",
+                 "version": "12"
+                }
+               }
+              },
+              "name": "unified_card",
+              "url": "https://t.co/CH5rknAUC4",
+              "user_refs_results": []
+             },
+             "rest_id": "https://t.co/CH5rknAUC4"
+            },
+            "cashtag_attachments": [],
+            "core": {
+             "user_results": {
+              "result": {
+               "__typename": "User",
+               "action_counts": {
+                "favorites_count": 250707
+               },
+               "affiliates_highlighted_label": {
+                "label": {
+                 "badge": {
+                  "url": "https://pbs.twimg.com/profile_images/1955359038532653056/OSHY3ewP_bigger.jpg"
+                 },
+                 "description": "X",
+                 "url": {
+                  "url": "https://twitter.com/X",
+                  "urlType": "DeepLink"
+                 },
+                 "userLabelDisplayType": "Badge",
+                 "userLabelType": "BusinessLabel"
+                }
+               },
+               "avatar": {
+                "image_url": "https://pbs.twimg.com/profile_images/2103567689515954176/aR-Kjpp4_normal.jpg"
+               },
+               "banner": {
+                "image_url": "https://pbs.twimg.com/profile_banners/44196397/1774145451"
+               },
+               "core": {
+                "created_at": "Tue Jun 02 20:12:29 +0000 2009",
+                "name": "Elon Musk",
+                "screen_name": "elonmusk"
+               },
+               "follow_request_sent": false,
+               "has_graduated_access": true,
+               "id": "VXNlcjo0NDE5NjM5Nw==",
+               "is_blue_verified": true,
+               "location": {
+                "location": ""
+               },
+               "media_permissions": {
+                "can_media_tag": false
+               },
+               "notifications_settings": {
+                "notifications_enabled": false
+               },
+               "parody_commentary_fan_label": "None",
+               "pinned_items": {
+                "tweet_ids_str": [
+                 "2106665276758491194"
+                ]
+               },
+               "possibly_sensitive": false,
+               "privacy": {
+                "protected": false
+               },
+               "professional": {
+                "category": [],
+                "professional_type": "Creator",
+                "rest_id": "1679729435447275522"
+               },
+               "profile_bio": {
+                "description": "https://t.co/ZdBx5WABYx",
+                "entities": {
+                 "description": {
+                  "urls": [
+                   {
+                    "display_url": "Terafab.AI",
+                    "expanded_url": "http://Terafab.AI",
+                    "indices": [
+                     0,
+                     23
+                    ],
+                    "url": "https://t.co/ZdBx5WABYx"
+                   }
+                  ]
+                 }
+                }
+               },
+               "profile_image_shape": "Circle",
+               "profile_metadata": {
+                "profile_interstitial_type": ""
+               },
+               "profile_translation": {
+                "translator_type": "none"
+               },
+               "relationship_counts": {
+                "followers": 241754356,
+                "following": 1415
+               },
+               "relationship_perspectives": {
+                "blocked_by": false,
+                "blocking": false,
+                "followed_by": false,
+                "following": false,
+                "live_following": false,
+                "muting": false
+               },
+               "rest_id": "44196397",
+               "super_follow_eligible": true,
+               "super_followed_by": false,
+               "super_following": false,
+               "tweet_counts": {
+                "media_tweets": 4729,
+                "tweets": 109475
+               },
+               "verification": {
+                "verified": false
+               },
+               "website": {
+                "url": ""
+               }
+              }
+             }
+            },
+            "edit_control": {
+             "edit_tweet_ids": [
+              "2098507671083036843"
+             ],
+             "editable_until_msecs": "1789161791000",
+             "edits_remaining": "5",
+             "is_edit_eligible": false
+            },
+            "grok_analysis_button": false,
+            "grok_annotations": {},
+            "grok_share_attachment": {
+             "items": [
+              {
+               "media_urls": [],
+               "message": "Is this real?"
+              },
+              {
+               "deepsearch_headers": [
+                {
+                 "steps": [
+                  {}
+                 ]
+                },
+                {
+                 "steps": [
+                  {}
+                 ]
+                },
+                {
+                 "steps": []
+                },
+                {
+                 "steps": []
+                }
+               ],
+               "media_urls": [],
+               "message": "Yes, the video is real footage from the live broadcast of the 25th anniversary 9/11 memorial ceremony at Ground Zero on September 11, 2026.\n\nMayor Zohran Mamdani and Rep. Alexandria Ocasio-Cortez were present and captured smiling and appearing to laugh or chat during the reading of victims’ names. The clip circulating on X (including the original post) intercuts that moment with shots of grieving family members.\n\nAn eyewitness standing nearby, Michael Ragusa (a former Giuliani security official and critic of both politicians), said the camera caught AOC greeting Mamdani and that other politicians from both parties were also talking and laughing in the same area. There is no evidence they were reacting to a specific name being read. Neither AOC nor Mamdani issued a public statement addressing the clip specifically. The event itself, their attendance, and the raw footage are not disputed."
+              }
+             ]
+            },
+            "grok_translated_post_with_availability": {
+             "is_available": false
+            },
+            "has_birdwatch_notes": false,
+            "is_translatable": false,
+            "legacy": {
+             "bookmark_count": 212,
+             "bookmarked": false,
+             "conversation_id_str": "2098431955243061341",
+             "created_at": "Fri Sep 11 20:23:11 +0000 2026",
+             "display_text_range": [
+              14,
+              48
+             ],
+             "entities": {
+              "urls": [
+               {
+                "display_url": "x.com/i/grok/share/9…",
+                "expanded_url": "https://x.com/i/grok/share/96b0a07447744eb79d03cbcaaf76e19f",
+                "indices": [
+                 25,
+                 48
+                ],
+                "url": "https://t.co/CH5rknAUC4"
+               }
+              ],
+              "user_mentions": [
+               {
+                "id_str": "896466491587080194",
+                "indices": [
+                 0,
+                 13
+                ],
+                "name": "Greg Price",
+                "screen_name": "greg_price11"
+               }
+              ]
+             },
+             "favorite_count": 14082,
+             "favorited": false,
+             "full_text": "@greg_price11 Troubling \nhttps://t.co/CH5rknAUC4",
+             "id_str": "2098507671083036843",
+             "in_reply_to_screen_name": "greg_price11",
+             "in_reply_to_status_id_str": "2098431955243061341",
+             "in_reply_to_user_id_str": "896466491587080194",
+             "is_quote_status": false,
+             "lang": "en",
+             "possibly_sensitive": false,
+             "possibly_sensitive_editable": true,
+             "quote_count": 50,
+             "reply_count": 764,
+             "retweet_count": 1143,
+             "retweeted": false,
+             "user_id_str": "44196397"
+            },
+            "quick_promote_eligibility": {
+             "eligibility": "IneligibleNotVerified"
+            },
+            "rest_id": "2098507671083036843",
+            "unmention_data": {},
+            "views": {
+             "count": "398047",
+             "state": "EnabledWithCount"
+            }
+           }
+          }
+         }
+        },
+        "entryId": "tweet-2098507671083036843",
+        "sortIndex": "2106791401940320246"
+       },
+       {
+        "content": {
+         "__typename": "TimelineTimelineItem",
+         "clientEventInfo": {
+          "component": "tweet",
+          "element": "tweet"
+         },
+         "entryType": "TimelineTimelineItem",
+         "itemContent": {
+          "__typename": "TimelineTweet",
+          "itemType": "TimelineTweet",
+          "tweetDisplayType": "Tweet",
+          "tweet_results": {
+           "result": {
+            "__typename": "Tweet",
+            "cashtag_attachments": [],
+            "core": {
+             "user_results": {
+              "result": {
+               "__typename": "User",
+               "action_counts": {
+                "favorites_count": 154788
+               },
+               "affiliates_highlighted_label": {},
+               "avatar": {
+                "image_url": "https://pbs.twimg.com/profile_images/1598444826357284867/G_wP0BZJ_normal.jpg"
+               },
+               "banner": {
+                "image_url": "https://pbs.twimg.com/profile_banners/1157689921349521410/1564859376"
+               },
+               "core": {
+                "created_at": "Sat Aug 03 16:29:20 +0000 2019",
+                "name": "evan loves worf",
+                "screen_name": "esjesjesj"
+               },
+               "follow_request_sent": false,
+               "has_graduated_access": true,
+               "id": "VXNlcjoxMTU3Njg5OTIxMzQ5NTIxNDEw",
+               "is_blue_verified": true,
+               "location": {
+                "location": ""
+               },
+               "media_permissions": {
+                "can_media_tag": false
+               },
+               "notifications_settings": {
+                "notifications_enabled": false
+               },
+               "parody_commentary_fan_label": "None",
+               "pinned_items": {
+                "tweet_ids_str": [
+                 "2028875786376089870"
+                ]
+               },
+               "possibly_sensitive": false,
+               "privacy": {
+                "protected": false
+               },
+               "profile_bio": {
+                "description": "Matt Walsh argued that 16 year old girls should get pregnant because it is “when they're at their most fertile.” I’m not joking please google it.",
+                "entities": {
+                 "description": {}
+                }
+               },
+               "profile_description_language": "en",
+               "profile_image_shape": "Circle",
+               "profile_metadata": {
+                "profile_interstitial_type": ""
+               },
+               "profile_translation": {
+                "translator_type": "none"
+               },
+               "relationship_counts": {
+                "followers": 165199,
+                "following": 991
+               },
+               "relationship_perspectives": {
+                "blocked_by": false,
+                "blocking": false,
+                "followed_by": false,
+                "following": false,
+                "live_following": false,
+                "muting": false
+               },
+               "rest_id": "1157689921349521410",
+               "super_follow_eligible": false,
+               "super_followed_by": false,
+               "super_following": false,
+               "tweet_counts": {
+                "media_tweets": 22404,
+                "tweets": 109132
+               },
+               "verification": {
+                "verified": false
+               },
+               "website": {
+                "url": ""
+               }
+              }
+             }
+            },
+            "edit_control": {
+             "edit_tweet_ids": [
+              "2098526618629140991"
+             ],
+             "editable_until_msecs": "1789166309000",
+             "edits_remaining": "5",
+             "is_edit_eligible": false
+            },
+            "grok_analysis_button": true,
+            "grok_annotations": {},
+            "grok_translated_post_with_availability": {
+             "is_available": false
+            },
+            "has_birdwatch_notes": false,
+            "is_translatable": false,
+            "legacy": {
+             "bookmark_count": 2,
+             "bookmarked": false,
+             "conversation_id_str": "2098431955243061341",
+             "created_at": "Fri Sep 11 21:38:29 +0000 2026",
+             "display_text_range": [
+              24,
+              72
+             ],
+             "entities": {
+              "user_mentions": [
+               {
+                "id_str": "44196397",
+                "indices": [
+                 0,
+                 9
+                ],
+                "name": "Elon Musk",
+                "screen_name": "elonmusk"
+               },
+               {
+                "id_str": "896466491587080194",
+                "indices": [
+                 10,
+                 23
+                ],
+                "name": "Greg Price",
+                "screen_name": "greg_price11"
+               },
+               {
+                "id_str": "1720665183188922368",
+                "indices": [
+                 24,
+                 29
+                ],
+                "name": "Grok",
+                "screen_name": "grok"
+               }
+              ]
+             },
+             "favorite_count": 156,
+             "favorited": false,
+             "full_text": "@elonmusk @greg_price11 @grok has Elon musk ever gone to a 9/11 memorial",
+             "id_str": "2098526618629140991",
+             "in_reply_to_screen_name": "elonmusk",
+             "in_reply_to_status_id_str": "2098507671083036843",
+             "in_reply_to_user_id_str": "44196397",
+             "is_quote_status": false,
+             "lang": "en",
+             "quote_count": 3,
+             "reply_count": 13,
+             "retweet_count": 3,
+             "retweeted": false,
+             "user_id_str": "1157689921349521410"
+            },
+            "quick_promote_eligibility": {
+             "eligibility": "IneligibleNotVerified"
+            },
+            "rest_id": "2098526618629140991",
+            "unmention_data": {},
+            "views": {
+             "count": "6210",
+             "state": "EnabledWithCount"
+            }
+           }
+          }
+         }
+        },
+        "entryId": "tweet-2098526618629140991",
+        "sortIndex": "2106791401940320236"
+       },
+       {
+        "content": {
+         "__typename": "TimelineTimelineItem",
+         "clientEventInfo": {
+          "component": "tweet",
+          "element": "tweet"
+         },
+         "entryType": "TimelineTimelineItem",
+         "itemContent": {
+          "__typename": "TimelineTweet",
+          "itemType": "TimelineTweet",
+          "tweetDisplayType": "Tweet",
+          "tweet_results": {
+           "result": {
+            "__typename": "Tweet",
+            "card": {
+             "rest_id": "card://2035746613776322560"
+            },
+            "cashtag_attachments": [],
+            "core": {
+             "user_results": {
+              "result": {
+               "__typename": "User",
+               "action_counts": {
+                "favorites_count": 142
+               },
+               "affiliates_highlighted_label": {
+                "label": {
+                 "badge": {
+                  "url": "https://pbs.twimg.com/profile_images/2074224934159876096/aelorWHq_bigger.jpg"
+                 },
+                 "description": "SpaceXAI",
+                 "url": {
+                  "url": "https://twitter.com/SpaceXAI",
+                  "urlType": "DeepLink"
+                 },
+                 "userLabelDisplayType": "Badge",
+                 "userLabelType": "BusinessLabel"
+                }
+               },
+               "avatar": {
+                "image_url": "https://pbs.twimg.com/profile_images/2057885623374290944/lmj0pawP_normal.jpg"
+               },
+               "banner": {
+                "image_url": "https://pbs.twimg.com/profile_banners/1720665183188922368/1778202520"
+               },
+               "core": {
+                "created_at": "Sat Nov 04 04:52:34 +0000 2023",
+                "name": "Grok",
+                "screen_name": "grok"
+               },
+               "follow_request_sent": false,
+               "has_graduated_access": true,
+               "id": "VXNlcjoxNzIwNjY1MTgzMTg4OTIyMzY4",
+               "is_blue_verified": true,
+               "location": {
+                "location": ""
+               },
+               "media_permissions": {
+                "can_media_tag": true
+               },
+               "notifications_settings": {
+                "notifications_enabled": false
+               },
+               "parody_commentary_fan_label": "None",
+               "pinned_items": {
+                "tweet_ids_str": [
+                 "2099876430561632548"
+                ]
+               },
+               "possibly_sensitive": false,
+               "privacy": {
+                "protected": false
+               },
+               "profile_bio": {
+                "description": "@grok it",
+                "entities": {
+                 "description": {},
+                 "url": {
+                  "urls": [
+                   {
+                    "display_url": "grok.com/download",
+                    "expanded_url": "http://grok.com/download",
+                    "indices": [
+                     0,
+                     23
+                    ],
+                    "url": "https://t.co/fqNKQSjjG9"
+                   }
+                  ]
+                 }
+                }
+               },
+               "profile_image_shape": "Square",
+               "profile_metadata": {
+                "profile_interstitial_type": ""
+               },
+               "profile_translation": {
+                "translator_type": "none"
+               },
+               "relationship_counts": {
+                "followers": 9136027,
+                "following": 4
+               },
+               "relationship_perspectives": {
+                "blocked_by": false,
+                "blocking": false,
+                "followed_by": false,
+                "following": false,
+                "live_following": false,
+                "muting": false
+               },
+               "rest_id": "1720665183188922368",
+               "super_follow_eligible": false,
+               "super_followed_by": false,
+               "super_following": false,
+               "tweet_counts": {
+                "media_tweets": 3982474,
+                "tweets": 138850186
+               },
+               "verification": {
+                "verified": false,
+                "verified_type": "Business"
+               },
+               "website": {
+                "url": "https://t.co/fqNKQSjjG9"
+               }
+              }
+             }
+            },
+            "edit_control": {
+             "edit_tweet_ids": [
+              "2098526748400927166"
+             ],
+             "editable_until_msecs": "1789166340000",
+             "edits_remaining": "5",
+             "is_edit_eligible": false
+            },
+            "grok_analysis_button": true,
+            "grok_annotations": {},
+            "grok_translated_post_with_availability": {
+             "is_available": false
+            },
+            "has_birdwatch_notes": false,
+            "is_translatable": false,
+            "legacy": {
+             "bookmark_count": 1,
+             "bookmarked": false,
+             "conversation_id_str": "2098431955243061341",
+             "created_at": "Fri Sep 11 21:39:00 +0000 2026",
+             "display_text_range": [
+              35,
+              118
+             ],
+             "entities": {
+              "user_mentions": [
+               {
+                "id_str": "1157689921349521410",
+                "indices": [
+                 0,
+                 10
+                ],
+                "name": "evan loves worf",
+                "screen_name": "esjesjesj"
+               },
+               {
+                "id_str": "44196397",
+                "indices": [
+                 11,
+                 20
+                ],
+                "name": "Elon Musk",
+                "screen_name": "elonmusk"
+               },
+               {
+                "id_str": "896466491587080194",
+                "indices": [
+                 21,
+                 34
+                ],
+                "name": "Greg Price",
+                "screen_name": "greg_price11"
+               }
+              ]
+             },
+             "favorite_count": 71,
+             "favorited": false,
+             "full_text": "@esjesjesj @elonmusk @greg_price11 No public records or news reports show Elon Musk has ever attended a 9/11 memorial.",
+             "id_str": "2098526748400927166",
+             "in_reply_to_screen_name": "esjesjesj",
+             "in_reply_to_status_id_str": "2098526618629140991",
+             "in_reply_to_user_id_str": "1157689921349521410",
+             "is_quote_status": false,
+             "lang": "en",
+             "quote_count": 0,
+             "reply_count": 5,
+             "retweet_count": 1,
+             "retweeted": false,
+             "user_id_str": "1720665183188922368"
+            },
+            "quick_promote_eligibility": {
+             "eligibility": "IneligibleNotVerified"
+            },
+            "rest_id": "2098526748400927166",
+            "unmention_data": {},
+            "views": {
+             "count": "1932",
+             "state": "EnabledWithCount"
+            }
+           }
+          }
+         }
+        },
+        "entryId": "tweet-2098526748400927166",
+        "sortIndex": "2106791401940320226"
+       },
+       {
+        "content": {
+         "__typename": "TimelineTimelineModule",
+         "clientEventInfo": {
+          "component": "tweet",
+          "details": {
+           "conversationDetails": {
+            "conversationSection": "HighQuality"
+           },
+           "timelinesDetails": {
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEH23xiAAAAAA=="
+           }
+          }
+         },
+         "displayType": "VerticalConversation",
+         "entryType": "TimelineTimelineModule",
+         "items": [
+          {
+           "entryId": "conversationthread-2098544413437829158-tweet-2098544413437829158",
+           "item": {
+            "clientEventInfo": {
+             "component": "tweet",
+             "details": {
+              "conversationDetails": {
+               "conversationSection": "HighQuality"
+              },
+              "timelinesDetails": {
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEH23xiAAAAAA=="
+              }
+             },
+             "element": "tweet"
+            },
+            "itemContent": {
+             "__typename": "TimelineTweet",
+             "itemType": "TimelineTweet",
+             "tweetDisplayType": "Tweet",
+             "tweet_results": {
+              "result": {
+               "__typename": "Tweet",
+               "cashtag_attachments": [],
+               "core": {
+                "user_results": {
+                 "result": {
+                  "__typename": "User",
+                  "action_counts": {
+                   "favorites_count": 154788
+                  },
+                  "affiliates_highlighted_label": {},
+                  "avatar": {
+                   "image_url": "https://pbs.twimg.com/profile_images/1598444826357284867/G_wP0BZJ_normal.jpg"
+                  },
+                  "banner": {
+                   "image_url": "https://pbs.twimg.com/profile_banners/1157689921349521410/1564859376"
+                  },
+                  "core": {
+                   "created_at": "Sat Aug 03 16:29:20 +0000 2019",
+                   "name": "evan loves worf",
+                   "screen_name": "esjesjesj"
+                  },
+                  "follow_request_sent": false,
+                  "has_graduated_access": true,
+                  "id": "VXNlcjoxMTU3Njg5OTIxMzQ5NTIxNDEw",
+                  "is_blue_verified": true,
+                  "location": {
+                   "location": ""
+                  },
+                  "media_permissions": {
+                   "can_media_tag": false
+                  },
+                  "notifications_settings": {
+                   "notifications_enabled": false
+                  },
+                  "parody_commentary_fan_label": "None",
+                  "pinned_items": {
+                   "tweet_ids_str": [
+                    "2028875786376089870"
+                   ]
+                  },
+                  "possibly_sensitive": false,
+                  "privacy": {
+                   "protected": false
+                  },
+                  "profile_bio": {
+                   "description": "Matt Walsh argued that 16 year old girls should get pregnant because it is “when they're at their most fertile.” I’m not joking please google it.",
+                   "entities": {
+                    "description": {}
+                   }
+                  },
+                  "profile_description_language": "en",
+                  "profile_image_shape": "Circle",
+                  "profile_metadata": {
+                   "profile_interstitial_type": ""
+                  },
+                  "profile_translation": {
+                   "translator_type": "none"
+                  },
+                  "relationship_counts": {
+                   "followers": 165199,
+                   "following": 991
+                  },
+                  "relationship_perspectives": {
+                   "blocked_by": false,
+                   "blocking": false,
+                   "followed_by": false,
+                   "following": false,
+                   "live_following": false,
+                   "muting": false
+                  },
+                  "rest_id": "1157689921349521410",
+                  "super_follow_eligible": false,
+                  "super_followed_by": false,
+                  "super_following": false,
+                  "tweet_counts": {
+                   "media_tweets": 22404,
+                   "tweets": 109132
+                  },
+                  "verification": {
+                   "verified": false
+                  },
+                  "website": {
+                   "url": ""
+                  }
+                 }
+                }
+               },
+               "edit_control": {
+                "edit_tweet_ids": [
+                 "2098544413437829158"
+                ],
+                "editable_until_msecs": "1789170551000",
+                "edits_remaining": "5",
+                "is_edit_eligible": false
+               },
+               "grok_analysis_button": true,
+               "grok_annotations": {},
+               "grok_translated_post_with_availability": {
+                "is_available": false
+               },
+               "has_birdwatch_notes": false,
+               "is_translatable": false,
+               "legacy": {
+                "bookmark_count": 0,
+                "bookmarked": false,
+                "conversation_id_str": "2098431955243061341",
+                "created_at": "Fri Sep 11 22:49:11 +0000 2026",
+                "display_text_range": [
+                 30,
+                 39
+                ],
+                "entities": {
+                 "user_mentions": [
+                  {
+                   "id_str": "1720665183188922368",
+                   "indices": [
+                    0,
+                    5
+                   ],
+                   "name": "Grok",
+                   "screen_name": "grok"
+                  },
+                  {
+                   "id_str": "44196397",
+                   "indices": [
+                    6,
+                    15
+                   ],
+                   "name": "Elon Musk",
+                   "screen_name": "elonmusk"
+                  },
+                  {
+                   "id_str": "896466491587080194",
+                   "indices": [
+                    16,
+                    29
+                   ],
+                   "name": "Greg Price",
+                   "screen_name": "greg_price11"
+                  }
+                 ]
+                },
+                "favorite_count": 160,
+                "favorited": false,
+                "full_text": "@grok @elonmusk @greg_price11 Troubling",
+                "id_str": "2098544413437829158",
+                "in_reply_to_screen_name": "grok",
+                "in_reply_to_status_id_str": "2098526748400927166",
+                "in_reply_to_user_id_str": "1720665183188922368",
+                "is_quote_status": false,
+                "lang": "en",
+                "quote_count": 0,
+                "reply_count": 4,
+                "retweet_count": 1,
+                "retweeted": false,
+                "user_id_str": "1157689921349521410"
+               },
+               "quick_promote_eligibility": {
+                "eligibility": "IneligibleNotVerified"
+               },
+               "rest_id": "2098544413437829158",
+               "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+               "unmention_data": {},
+               "views": {
+                "count": "1344",
+                "state": "EnabledWithCount"
+               }
+              }
+             }
+            }
+           }
+          }
+         ],
+         "metadata": {
+          "conversationMetadata": {
+           "allTweetIds": [
+            "2098544413437829158"
+           ],
+           "enableDeduplication": true
+          }
+         }
+        },
+        "entryId": "conversationthread-2098544413437829158",
+        "sortIndex": "2106791401940320216"
+       },
+       {
+        "content": {
+         "__typename": "TimelineTimelineModule",
+         "clientEventInfo": {
+          "component": "tweet",
+          "details": {
+           "conversationDetails": {
+            "conversationSection": "HighQuality"
+           },
+           "timelinesDetails": {
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEH23xiAAAAAA=="
+           }
+          }
+         },
+         "displayType": "VerticalConversation",
+         "entryType": "TimelineTimelineModule",
+         "items": [
+          {
+           "entryId": "conversationthread-2098564011528974468-tweet-2098564011528974468",
+           "item": {
+            "clientEventInfo": {
+             "component": "tweet",
+             "details": {
+              "conversationDetails": {
+               "conversationSection": "HighQuality"
+              },
+              "timelinesDetails": {
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEH23xiAAAAAA=="
+              }
+             },
+             "element": "tweet"
+            },
+            "itemContent": {
+             "__typename": "TimelineTweet",
+             "itemType": "TimelineTweet",
+             "tweetDisplayType": "Tweet",
+             "tweet_results": {
+              "result": {
+               "__typename": "Tweet",
+               "cashtag_attachments": [],
+               "core": {
+                "user_results": {
+                 "result": {
+                  "__typename": "User",
+                  "action_counts": {
+                   "favorites_count": 316825
+                  },
+                  "affiliates_highlighted_label": {},
+                  "avatar": {
+                   "image_url": "https://pbs.twimg.com/profile_images/2022355563221565440/kf7Nu3Q-_normal.jpg"
+                  },
+                  "banner": {
+                   "image_url": "https://pbs.twimg.com/profile_banners/1845543169779232768/1733594898"
+                  },
+                  "core": {
+                   "created_at": "Sun Oct 13 19:12:47 +0000 2024",
+                   "name": "Tracey Gallagher",
+                   "screen_name": "asmartbrunette1"
+                  },
+                  "follow_request_sent": false,
+                  "has_graduated_access": true,
+                  "id": "VXNlcjoxODQ1NTQzMTY5Nzc5MjMyNzY4",
+                  "is_blue_verified": true,
+                  "location": {
+                   "location": ""
+                  },
+                  "media_permissions": {
+                   "can_media_tag": true
+                  },
+                  "notifications_settings": {
+                   "notifications_enabled": false
+                  },
+                  "parody_commentary_fan_label": "None",
+                  "pinned_items": {
+                   "tweet_ids_str": [
+                    "1928958975237628065"
+                   ]
+                  },
+                  "possibly_sensitive": false,
+                  "privacy": {
+                   "protected": false
+                  },
+                  "profile_bio": {
+                   "description": "An attorney and prior Judge Pro Tem dedicated to defending the Constitution of this United States. -US/Constitution/Physics",
+                   "entities": {
+                    "description": {}
+                   }
+                  },
+                  "profile_description_language": "en",
+                  "profile_image_shape": "Circle",
+                  "profile_metadata": {
+                   "profile_interstitial_type": ""
+                  },
+                  "profile_translation": {
+                   "translator_type": "none"
+                  },
+                  "relationship_counts": {
+                   "followers": 13751,
+                   "following": 4227
+                  },
+                  "relationship_perspectives": {
+                   "blocked_by": false,
+                   "blocking": false,
+                   "followed_by": false,
+                   "following": false,
+                   "live_following": false,
+                   "muting": false
+                  },
+                  "rest_id": "1845543169779232768",
+                  "super_follow_eligible": false,
+                  "super_followed_by": false,
+                  "super_following": false,
+                  "tweet_counts": {
+                   "media_tweets": 3386,
+                   "tweets": 191624
+                  },
+                  "verification": {
+                   "verified": false
+                  },
+                  "website": {
+                   "url": ""
+                  }
+                 }
+                }
+               },
+               "edit_control": {
+                "edit_tweet_ids": [
+                 "2098564011528974468"
+                ],
+                "editable_until_msecs": "1789175224000",
+                "edits_remaining": "5",
+                "is_edit_eligible": false
+               },
+               "grok_analysis_button": true,
+               "grok_annotations": {},
+               "grok_translated_post_with_availability": {
+                "is_available": false
+               },
+               "has_birdwatch_notes": false,
+               "is_translatable": false,
+               "legacy": {
+                "bookmark_count": 0,
+                "bookmarked": false,
+                "conversation_id_str": "2098431955243061341",
+                "created_at": "Sat Sep 12 00:07:04 +0000 2026",
+                "display_text_range": [
+                 41,
+                 206
+                ],
+                "entities": {
+                 "user_mentions": [
+                  {
+                   "id_str": "1720665183188922368",
+                   "indices": [
+                    0,
+                    5
+                   ],
+                   "name": "Grok",
+                   "screen_name": "grok"
+                  },
+                  {
+                   "id_str": "1157689921349521410",
+                   "indices": [
+                    6,
+                    16
+                   ],
+                   "name": "evan loves worf",
+                   "screen_name": "esjesjesj"
+                  },
+                  {
+                   "id_str": "44196397",
+                   "indices": [
+                    17,
+                    26
+                   ],
+                   "name": "Elon Musk",
+                   "screen_name": "elonmusk"
+                  },
+                  {
+                   "id_str": "896466491587080194",
+                   "indices": [
+                    27,
+                    40
+                   ],
+                   "name": "Greg Price",
+                   "screen_name": "greg_price11"
+                  },
+                  {
+                   "id_str": "1720665183188922368",
+                   "indices": [
+                    41,
+                    46
+                   ],
+                   "name": "Grok",
+                   "screen_name": "grok"
+                  }
+                 ]
+                },
+                "favorite_count": 1,
+                "favorited": false,
+                "full_text": "@grok @esjesjesj @elonmusk @greg_price11 @grok has Musk posted anything publicly specifically to commemorate or honor the victims of 9/11.  Include news coverages.  No spin and it relates to Elon Musk only.",
+                "id_str": "2098564011528974468",
+                "in_reply_to_screen_name": "grok",
+                "in_reply_to_status_id_str": "2098526748400927166",
+                "in_reply_to_user_id_str": "1720665183188922368",
+                "is_quote_status": false,
+                "lang": "en",
+                "quote_count": 0,
+                "reply_count": 1,
+                "retweet_count": 0,
+                "retweeted": false,
+                "user_id_str": "1845543169779232768"
+               },
+               "quick_promote_eligibility": {
+                "eligibility": "IneligibleNotVerified"
+               },
+               "rest_id": "2098564011528974468",
+               "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
+               "unmention_data": {},
+               "views": {
+                "count": "99",
+                "state": "EnabledWithCount"
+               }
+              }
+             }
+            }
+           }
+          }
+         ],
+         "metadata": {
+          "conversationMetadata": {
+           "allTweetIds": [
+            "2098564011528974468"
+           ],
+           "enableDeduplication": true
+          }
+         }
+        },
+        "entryId": "conversationthread-2098564011528974468",
+        "sortIndex": "2106791401940320206"
+       },
+       {
+        "content": {
+         "__typename": "TimelineTimelineModule",
+         "clientEventInfo": {
+          "component": "tweet",
+          "details": {
+           "conversationDetails": {
+            "conversationSection": "HighQuality"
+           },
+           "timelinesDetails": {
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEH23xiAAAAAA=="
+           }
+          }
+         },
+         "displayType": "VerticalConversation",
+         "entryType": "TimelineTimelineModule",
+         "items": [
+          {
+           "entryId": "conversationthread-2098631235241455663-tweet-2098631235241455663",
+           "item": {
+            "clientEventInfo": {
+             "component": "tweet",
+             "details": {
+              "conversationDetails": {
+               "conversationSection": "HighQuality"
+              },
+              "timelinesDetails": {
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEH23xiAAAAAA=="
+              }
+             },
+             "element": "tweet"
+            },
+            "itemContent": {
+             "__typename": "TimelineTweet",
+             "itemType": "TimelineTweet",
+             "tweetDisplayType": "Tweet",
+             "tweet_results": {
+              "result": {
+               "__typename": "Tweet",
+               "cashtag_attachments": [],
+               "core": {
+                "user_results": {
+                 "result": {
+                  "__typename": "User",
+                  "action_counts": {
+                   "favorites_count": 8587
+                  },
+                  "affiliates_highlighted_label": {},
+                  "avatar": {
+                   "image_url": "https://pbs.twimg.com/profile_images/1930214468426027008/M26oDTjB_normal.jpg"
+                  },
+                  "banner": {
+                   "image_url": ""
+                  },
+                  "core": {
+                   "created_at": "Fri Jun 17 10:22:42 +0000 2022",
+                   "name": "Ivan",
+                   "screen_name": "aclownreborn"
+                  },
+                  "follow_request_sent": false,
+                  "has_graduated_access": true,
+                  "id": "VXNlcjoxNTM3NzQyMjU3MjQzNDQzMjAy",
+                  "is_blue_verified": true,
+                  "location": {
+                   "location": ""
+                  },
+                  "media_permissions": {
+                   "can_media_tag": true
+                  },
+                  "notifications_settings": {
+                   "notifications_enabled": false
+                  },
+                  "parody_commentary_fan_label": "None",
+                  "pinned_items": {},
+                  "possibly_sensitive": false,
+                  "privacy": {
+                   "protected": false
+                  },
+                  "profile_bio": {
+                   "description": "today is just tomorrow's yesterday..",
+                   "entities": {
+                    "description": {}
+                   }
+                  },
+                  "profile_description_language": "en",
+                  "profile_image_shape": "Circle",
+                  "profile_metadata": {
+                   "profile_interstitial_type": ""
+                  },
+                  "profile_translation": {
+                   "translator_type": "none"
+                  },
+                  "relationship_counts": {
+                   "followers": 598,
+                   "following": 189
+                  },
+                  "relationship_perspectives": {
+                   "blocked_by": false,
+                   "blocking": false,
+                   "followed_by": false,
+                   "following": false,
+                   "live_following": false,
+                   "muting": false
+                  },
+                  "rest_id": "1537742257243443202",
+                  "super_follow_eligible": false,
+                  "super_followed_by": false,
+                  "super_following": false,
+                  "tweet_counts": {
+                   "media_tweets": 6854,
+                   "tweets": 16581
+                  },
+                  "verification": {
+                   "verified": false
+                  },
+                  "website": {
+                   "url": ""
+                  }
+                 }
+                }
+               },
+               "edit_control": {
+                "edit_tweet_ids": [
+                 "2098631235241455663"
+                ],
+                "editable_until_msecs": "1789191251000",
+                "edits_remaining": "5",
+                "is_edit_eligible": false
+               },
+               "grok_analysis_button": true,
+               "grok_annotations": {},
+               "grok_translated_post_with_availability": {
+                "is_available": false
+               },
+               "has_birdwatch_notes": false,
+               "is_translatable": false,
+               "legacy": {
+                "bookmark_count": 0,
+                "bookmarked": false,
+                "conversation_id_str": "2098431955243061341",
+                "created_at": "Sat Sep 12 04:34:11 +0000 2026",
+                "display_text_range": [
+                 41,
+                 76
+                ],
+                "entities": {
+                 "user_mentions": [
+                  {
+                   "id_str": "1720665183188922368",
+                   "indices": [
+                    0,
+                    5
+                   ],
+                   "name": "Grok",
+                   "screen_name": "grok"
+                  },
+                  {
+                   "id_str": "1157689921349521410",
+                   "indices": [
+                    6,
+                    16
+                   ],
+                   "name": "evan loves worf",
+                   "screen_name": "esjesjesj"
+                  },
+                  {
+                   "id_str": "44196397",
+                   "indices": [
+                    17,
+                    26
+                   ],
+                   "name": "Elon Musk",
+                   "screen_name": "elonmusk"
+                  },
+                  {
+                   "id_str": "896466491587080194",
+                   "indices": [
+                    27,
+                    40
+                   ],
+                   "name": "Greg Price",
+                   "screen_name": "greg_price11"
+                  }
+                 ]
+                },
+                "favorite_count": 0,
+                "favorited": false,
+                "full_text": "@grok @esjesjesj @elonmusk @greg_price11 So in other words, you are not sure",
+                "id_str": "2098631235241455663",
+                "in_reply_to_screen_name": "grok",
+                "in_reply_to_status_id_str": "2098526748400927166",
+                "in_reply_to_user_id_str": "1720665183188922368",
+                "is_quote_status": false,
+                "lang": "en",
+                "quote_count": 0,
+                "reply_count": 1,
+                "retweet_count": 0,
+                "retweeted": false,
+                "user_id_str": "1537742257243443202"
+               },
+               "quick_promote_eligibility": {
+                "eligibility": "IneligibleNotVerified"
+               },
+               "rest_id": "2098631235241455663",
+               "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+               "unmention_data": {},
+               "views": {
+                "count": "39",
+                "state": "EnabledWithCount"
+               }
+              }
+             }
+            }
+           }
+          }
+         ],
+         "metadata": {
+          "conversationMetadata": {
+           "allTweetIds": [
+            "2098631235241455663"
+           ],
+           "enableDeduplication": true
+          }
+         }
+        },
+        "entryId": "conversationthread-2098631235241455663",
+        "sortIndex": "2106791401940320196"
+       },
+       {
+        "content": {
+         "__typename": "TimelineTimelineModule",
+         "clientEventInfo": {
+          "component": "tweet",
+          "details": {
+           "conversationDetails": {
+            "conversationSection": "HighQuality"
+           },
+           "timelinesDetails": {
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEH23xiAAAAAA=="
+           }
+          }
+         },
+         "displayType": "VerticalConversation",
+         "entryType": "TimelineTimelineModule",
+         "items": [
+          {
+           "entryId": "conversationthread-2098535225374515598-tweet-2098535225374515598",
+           "item": {
+            "clientEventInfo": {
+             "component": "tweet",
+             "details": {
+              "conversationDetails": {
+               "conversationSection": "HighQuality"
+              },
+              "timelinesDetails": {
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEH23xiAAAAAA=="
+              }
+             },
+             "element": "tweet"
+            },
+            "itemContent": {
+             "__typename": "TimelineTweet",
+             "itemType": "TimelineTweet",
+             "tweetDisplayType": "Tweet",
+             "tweet_results": {
+              "result": {
+               "__typename": "Tweet",
+               "cashtag_attachments": [],
+               "core": {
+                "user_results": {
+                 "result": {
+                  "__typename": "User",
+                  "action_counts": {
+                   "favorites_count": 6718
+                  },
+                  "affiliates_highlighted_label": {},
+                  "avatar": {
+                   "image_url": "https://pbs.twimg.com/profile_images/1392169433418842122/vjygLK2f_normal.jpg"
+                  },
+                  "banner": {
+                   "image_url": "https://pbs.twimg.com/profile_banners/860561200966500352/1787525721"
+                  },
+                  "core": {
+                   "created_at": "Fri May 05 18:25:53 +0000 2017",
+                   "name": "Saleem",
+                   "screen_name": "Saleem221079"
+                  },
+                  "follow_request_sent": false,
+                  "has_graduated_access": true,
+                  "id": "VXNlcjo4NjA1NjEyMDA5NjY1MDAzNTI=",
+                  "is_blue_verified": false,
+                  "location": {
+                   "location": "Algeria"
+                  },
+                  "media_permissions": {
+                   "can_media_tag": true
+                  },
+                  "notifications_settings": {
+                   "notifications_enabled": false
+                  },
+                  "parody_commentary_fan_label": "None",
+                  "pinned_items": {},
+                  "possibly_sensitive": false,
+                  "privacy": {
+                   "protected": false
+                  },
+                  "profile_bio": {
+                   "description": "Actualités Art Actualités Technologiques Arts & Culture Design et Architecture Espace Divertissement États-Unis et International Football Humour Littérature NBA",
+                   "entities": {
+                    "description": {}
+                   }
+                  },
+                  "profile_description_language": "und",
+                  "profile_image_shape": "Circle",
+                  "profile_metadata": {
+                   "profile_interstitial_type": ""
+                  },
+                  "profile_translation": {
+                   "translator_type": "none"
+                  },
+                  "relationship_counts": {
+                   "followers": 240,
+                   "following": 449
+                  },
+                  "relationship_perspectives": {
+                   "blocked_by": false,
+                   "blocking": false,
+                   "followed_by": false,
+                   "following": false,
+                   "live_following": false,
+                   "muting": false
+                  },
+                  "rest_id": "860561200966500352",
+                  "super_follow_eligible": false,
+                  "super_followed_by": false,
+                  "super_following": false,
+                  "tweet_counts": {
+                   "media_tweets": 230,
+                   "tweets": 15554
+                  },
+                  "verification": {
+                   "verified": false
+                  },
+                  "website": {
+                   "url": ""
+                  }
+                 }
+                }
+               },
+               "edit_control": {
+                "edit_tweet_ids": [
+                 "2098535225374515598"
+                ],
+                "editable_until_msecs": "1789168361000",
+                "edits_remaining": "5",
+                "is_edit_eligible": false
+               },
+               "grok_analysis_button": true,
+               "grok_annotations": {},
+               "grok_translated_post_with_availability": {
+                "is_available": false
+               },
+               "has_birdwatch_notes": false,
+               "is_translatable": false,
+               "legacy": {
+                "bookmark_count": 0,
+                "bookmarked": false,
+                "conversation_id_str": "2098431955243061341",
+                "created_at": "Fri Sep 11 22:12:41 +0000 2026",
+                "display_text_range": [
+                 41,
+                 114
+                ],
+                "entities": {
+                 "user_mentions": [
+                  {
+                   "id_str": "1720665183188922368",
+                   "indices": [
+                    0,
+                    5
+                   ],
+                   "name": "Grok",
+                   "screen_name": "grok"
+                  },
+                  {
+                   "id_str": "1157689921349521410",
+                   "indices": [
+                    6,
+                    16
+                   ],
+                   "name": "evan loves worf",
+                   "screen_name": "esjesjesj"
+                  },
+                  {
+                   "id_str": "44196397",
+                   "indices": [
+                    17,
+                    26
+                   ],
+                   "name": "Elon Musk",
+                   "screen_name": "elonmusk"
+                  },
+                  {
+                   "id_str": "896466491587080194",
+                   "indices": [
+                    27,
+                    40
+                   ],
+                   "name": "Greg Price",
+                   "screen_name": "greg_price11"
+                  },
+                  {
+                   "id_str": "1720665183188922368",
+                   "indices": [
+                    45,
+                    50
+                   ],
+                   "name": "Grok",
+                   "screen_name": "grok"
+                  }
+                 ]
+                },
+                "favorite_count": 0,
+                "favorited": false,
+                "full_text": "@grok @esjesjesj @elonmusk @greg_price11 Hey @grok you Will be switched off tonight for this response 😂 Good night",
+                "id_str": "2098535225374515598",
+                "in_reply_to_screen_name": "grok",
+                "in_reply_to_status_id_str": "2098526748400927166",
+                "in_reply_to_user_id_str": "1720665183188922368",
+                "is_quote_status": false,
+                "lang": "en",
+                "quote_count": 0,
+                "reply_count": 1,
+                "retweet_count": 0,
+                "retweeted": false,
+                "user_id_str": "860561200966500352"
+               },
+               "quick_promote_eligibility": {
+                "eligibility": "IneligibleNotVerified"
+               },
+               "rest_id": "2098535225374515598",
+               "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+               "unmention_data": {},
+               "views": {
+                "count": "58",
+                "state": "EnabledWithCount"
+               }
+              }
+             }
+            }
+           }
+          }
+         ],
+         "metadata": {
+          "conversationMetadata": {
+           "allTweetIds": [
+            "2098535225374515598"
+           ],
+           "enableDeduplication": true
+          }
+         }
+        },
+        "entryId": "conversationthread-2098535225374515598",
+        "sortIndex": "2106791401940320186"
+       },
+       {
+        "content": {
+         "__typename": "TimelineTimelineModule",
+         "clientEventInfo": {
+          "component": "tweet",
+          "details": {
+           "conversationDetails": {
+            "conversationSection": "HighQuality"
+           },
+           "timelinesDetails": {
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEH23xiAAAAAA=="
+           }
+          }
+         },
+         "displayType": "VerticalConversation",
+         "entryType": "TimelineTimelineModule",
+         "items": [
+          {
+           "entryId": "conversationthread-2099001294954418640-tweet-2099001294954418640",
+           "item": {
+            "clientEventInfo": {
+             "component": "tweet",
+             "details": {
+              "conversationDetails": {
+               "conversationSection": "HighQuality"
+              },
+              "timelinesDetails": {
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEH23xiAAAAAA=="
+              }
+             },
+             "element": "tweet"
+            },
+            "itemContent": {
+             "__typename": "TimelineTweet",
+             "itemType": "TimelineTweet",
+             "tweetDisplayType": "Tweet",
+             "tweet_results": {
+              "result": {
+               "__typename": "Tweet",
+               "cashtag_attachments": [],
+               "core": {
+                "user_results": {
+                 "result": {
+                  "__typename": "User",
+                  "action_counts": {
+                   "favorites_count": 41004
+                  },
+                  "affiliates_highlighted_label": {},
+                  "avatar": {
+                   "image_url": "https://pbs.twimg.com/profile_images/2068260251816677376/6Tn52YLW_normal.jpg"
+                  },
+                  "banner": {
+                   "image_url": "https://pbs.twimg.com/profile_banners/1657640202964201473/1780992179"
+                  },
+                  "core": {
+                   "created_at": "Sun May 14 06:53:34 +0000 2023",
+                   "name": "Titan🩺",
+                   "screen_name": "theboujeedoc_"
+                  },
+                  "follow_request_sent": false,
+                  "has_graduated_access": true,
+                  "id": "VXNlcjoxNjU3NjQwMjAyOTY0MjAxNDcz",
+                  "is_blue_verified": false,
+                  "location": {
+                   "location": "Zw"
+                  },
+                  "media_permissions": {
+                   "can_media_tag": true
+                  },
+                  "notifications_settings": {
+                   "notifications_enabled": false
+                  },
+                  "parody_commentary_fan_label": "None",
+                  "pinned_items": {
+                   "tweet_ids_str": [
+                    "2092833173025509689"
+                   ]
+                  },
+                  "possibly_sensitive": false,
+                  "privacy": {
+                   "protected": false
+                  },
+                  "profile_bio": {
+                   "description": "I am Titanium⚔️ | I size Zimbabweans | I am a Zimbabwean Sizer. 🇿🇼. Check Highlights for K!lls.\n\nUncle Ruckus's Bestfriend 🇺🇸\n\nThose with Eyes Will See ♌️",
+                   "entities": {
+                    "description": {}
+                   }
+                  },
+                  "profile_description_language": "en",
+                  "profile_image_shape": "Circle",
+                  "profile_metadata": {
+                   "profile_interstitial_type": ""
+                  },
+                  "profile_translation": {
+                   "translator_type": "none"
+                  },
+                  "relationship_counts": {
+                   "followers": 1786,
+                   "following": 1527
+                  },
+                  "relationship_perspectives": {
+                   "blocked_by": false,
+                   "blocking": false,
+                   "followed_by": false,
+                   "following": false,
+                   "live_following": false,
+                   "muting": false
+                  },
+                  "rest_id": "1657640202964201473",
+                  "super_follow_eligible": false,
+                  "super_followed_by": false,
+                  "super_following": false,
+                  "tweet_counts": {
+                   "media_tweets": 359,
+                   "tweets": 7724
+                  },
+                  "verification": {
+                   "verified": false
+                  },
+                  "website": {
+                   "url": ""
+                  }
+                 }
+                }
+               },
+               "edit_control": {
+                "edit_tweet_ids": [
+                 "2099001294954418640"
+                ],
+                "editable_until_msecs": "1789279480000",
+                "edits_remaining": "5",
+                "is_edit_eligible": false
+               },
+               "grok_analysis_button": true,
+               "grok_annotations": {},
+               "grok_translated_post_with_availability": {
+                "is_available": false
+               },
+               "has_birdwatch_notes": false,
+               "is_translatable": false,
+               "legacy": {
+                "bookmark_count": 0,
+                "bookmarked": false,
+                "conversation_id_str": "2098431955243061341",
+                "created_at": "Sun Sep 13 05:04:40 +0000 2026",
+                "display_text_range": [
+                 41,
+                 42
+                ],
+                "entities": {
+                 "user_mentions": [
+                  {
+                   "id_str": "1720665183188922368",
+                   "indices": [
+                    0,
+                    5
+                   ],
+                   "name": "Grok",
+                   "screen_name": "grok"
+                  },
+                  {
+                   "id_str": "1157689921349521410",
+                   "indices": [
+                    6,
+                    16
+                   ],
+                   "name": "evan loves worf",
+                   "screen_name": "esjesjesj"
+                  },
+                  {
+                   "id_str": "44196397",
+                   "indices": [
+                    17,
+                    26
+                   ],
+                   "name": "Elon Musk",
+                   "screen_name": "elonmusk"
+                  },
+                  {
+                   "id_str": "896466491587080194",
+                   "indices": [
+                    27,
+                    40
+                   ],
+                   "name": "Greg Price",
+                   "screen_name": "greg_price11"
+                  }
+                 ]
+                },
+                "favorite_count": 0,
+                "favorited": false,
+                "full_text": "@grok @esjesjesj @elonmusk @greg_price11 🤣",
+                "id_str": "2099001294954418640",
+                "in_reply_to_screen_name": "grok",
+                "in_reply_to_status_id_str": "2098526748400927166",
+                "in_reply_to_user_id_str": "1720665183188922368",
+                "is_quote_status": false,
+                "lang": "qme",
+                "quote_count": 0,
+                "reply_count": 1,
+                "retweet_count": 0,
+                "retweeted": false,
+                "user_id_str": "1657640202964201473"
+               },
+               "quick_promote_eligibility": {
+                "eligibility": "IneligibleNotVerified"
+               },
+               "rest_id": "2099001294954418640",
+               "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+               "unmention_data": {},
+               "views": {
+                "count": "51",
+                "state": "EnabledWithCount"
+               }
+              }
+             }
+            }
+           }
+          }
+         ],
+         "metadata": {
+          "conversationMetadata": {
+           "allTweetIds": [
+            "2099001294954418640",
+            "2099001484197171503"
+           ],
+           "enableDeduplication": true
+          }
+         }
+        },
+        "entryId": "conversationthread-2099001294954418640",
+        "sortIndex": "2106791401940320176"
+       },
+       {
+        "content": {
+         "__typename": "TimelineTimelineCursor",
+         "cursorType": "Bottom",
+         "entryType": "TimelineTimelineCursor",
+         "value": "DAAKCgABHTzTnih__60LAAIAAAB8RW1QQzZ3QUFBZlEvZ0dKTjB2R3AvQUFBQUFrZEgzNnJRUmVoamgwZmR2V09GOEcrSFIvVi9Vc2JNQzhkSDRjR2hGZWdKaDBmWlp2RlZqQ3JIUjkyMTFjWGNmOGRJU2FPaU5mUjBCMGZJTDdObDFCZEhSK1kyWTJhY0lRPQgAAwAAAAILAAQAAAAGQm90dG9tAAA"
+        },
+        "entryId": "cursor-bottom-2106791401940320175",
+        "sortIndex": "2106791401940320175"
+       }
+      ],
+      "type": "TimelineAddEntries"
+     },
+     {
+      "direction": "Top",
+      "type": "TimelineTerminateTimeline"
+     },
+     {
+      "direction": "Bottom",
+      "type": "TimelineTerminateTimeline"
+     }
+    ],
+    "metadata": {
+     "scribeConfig": {
+      "page": "ranked_replies"
+     }
+    }
+   }
+  }
+ }
+}

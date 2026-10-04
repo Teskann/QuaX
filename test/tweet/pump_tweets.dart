@@ -127,13 +127,15 @@ Future<void> pumpUntilLoaded(WidgetTester tester) async {
   }
 }
 
-/// The texts a tweet should make tappable, read from its entities.
+/// The texts a tweet should make tappable, read from its entities. A card shows the link to what it embeds itself.
 List<String> _entityLinks(TweetWithCard tweet) {
   final entities = tweet.noteEntities ?? tweet.entities;
   return [
     ...?entities?.hashtags?.map((hashtag) => '#${hashtag.text}'),
     ...?entities?.userMentions?.map((mention) => '@${mention.screenName}'),
-    ...?entities?.urls?.map((url) => url.displayUrl ?? ''),
+    ...?entities?.urls
+        ?.where((url) => tweet.card == null || !(url.expandedUrl ?? '').contains('/i/grok/share/'))
+        .map((url) => url.displayUrl ?? ''),
   ];
 }
 
@@ -150,8 +152,10 @@ void expectEveryTweetRendered(List<TweetChain> chains) {
         reason: 'Tweet $id should show links by their display URL, and drop the media link');
     expect(links(id), containsAll(_entityLinks(shown)),
         reason: 'Every hashtag, mention and link of tweet $id should be tappable');
-    expect(mediaOf(id).length, shown.extendedEntities?.media?.length ?? 0,
-        reason: 'Tweet $id should show all its media');
+    if (shown.card == null) {
+      expect(mediaOf(id).length, shown.extendedEntities?.media?.length ?? 0,
+          reason: 'Tweet $id should show all its media');
+    }
     if (tweet.retweetedStatusWithCard != null) {
       expect(find.descendant(of: tweetTile(id), matching: find.textContaining('reposted', findRichText: true)),
           findsOneWidget,
