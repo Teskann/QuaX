@@ -1,6 +1,6 @@
 {
- "scenario": "Reply whose card X only references as card://2035746613776322560, which the website draws as nothing and QuaX as an unsupported card",
- "sourceUrl": "https://x.com/grok/status/2098526748400927166",
+ "scenario": "Full profile: avatar, banner, bio with two links and a mention that has no entity",
+ "sourceUrl": "https://x.com/quax_tests",
  "operation": "ExploreSidebar",
  "host": "x.com",
  "queryId": "a_EaOYRmowjytmooCbPRtA",
@@ -53,7 +53,7 @@
   "x-rate-limit-limit": "500",
   "content-type": "application/json",
   "x-rate-limit-remaining": "498",
-  "x-rate-limit-reset": "1791134085"
+  "x-rate-limit-reset": "1791148142"
  },
  "body": {
   "data": {
@@ -91,13 +91,13 @@
           },
           "items": [
            {
-            "entryId": "trend-2106791404544983040-trend-Marteen",
+            "entryId": "trend-2106850361359728640-trend-Glucksmann",
             "item": {
              "clientEventInfo": {
               "component": "unified_events",
               "details": {
                "timelinesDetails": {
-                "controllerData": "DAACDAAQDAABCgAB6SHyqZIK6DEKAAIAAAGhB9t+zwAAAAA="
+                "controllerData": "DAACDAAQDAABCgABhpez6bW5LYEKAAIAAAGhCLH6nwAAAAA="
                }
               },
               "element": "trend"
@@ -116,7 +116,193 @@
                "-1457103155",
                "2103484841"
               ],
-              "feedbackMetadata": "DwABCwAAAAEAAAAHTWFydGVlbgoAA/O/x9zJKJd/BgAEAAEIAAYAAAACAA=="
+              "feedbackMetadata": "DwABCwAAAAEAAAAKR2x1Y2tzbWFubgoAA/O/x9zJKJd/BgAEAAEIAAYAAAACAA=="
+             },
+             "itemContent": {
+              "__typename": "TimelineTrend",
+              "itemType": "TimelineTrend",
+              "name": "Glucksmann",
+              "trend_metadata": {
+               "domain_context": "Politics · Trending",
+               "url": {
+                "url": "twitter://search/?query=Glucksmann&src=trend_click&pc=true&vertical=trends",
+                "urlType": "DeepLink",
+                "urtEndpointOptions": {
+                 "requestParams": [
+                  {
+                   "key": "cd",
+                   "value": "HBgKR2x1Y2tzbWFubgAA"
+                  }
+                 ]
+                }
+               }
+              },
+              "trend_url": {
+               "url": "twitter://search/?query=Glucksmann&src=trend_click&pc=true&vertical=trends",
+               "urlType": "DeepLink",
+               "urtEndpointOptions": {
+                "requestParams": [
+                 {
+                  "key": "cd",
+                  "value": "HBgKR2x1Y2tzbWFubgAA"
+                 }
+                ]
+               }
+              }
+             }
+            }
+           },
+           {
+            "entryId": "trend-2106850361359728640-trend-Verstappen",
+            "item": {
+             "clientEventInfo": {
+              "component": "unified_events",
+              "details": {
+               "timelinesDetails": {
+                "controllerData": "DAACDAAQDAABCgABhpez6bW5LYEKAAIAAAGhCLH6nwAAAAA="
+               }
+              },
+              "element": "trend"
+             },
+             "feedbackInfo": {
+              "clientEventInfo": {
+               "action": "click",
+               "component": "trends",
+               "element": "feedback"
+              },
+              "feedbackKeys": [
+               "-1336659320",
+               "1628041751",
+               "15718569",
+               "-619311538",
+               "-1457103155",
+               "2103484841"
+              ],
+              "feedbackMetadata": "DwABCwAAAAEAAAAKVmVyc3RhcHBlbgoAA/O/x9zJKJd/BgAEAAIIAAYAAAACAA=="
+             },
+             "itemContent": {
+              "__typename": "TimelineTrend",
+              "itemType": "TimelineTrend",
+              "name": "Verstappen",
+              "trend_metadata": {
+               "domain_context": "Motorsport · Trending",
+               "url": {
+                "url": "twitter://search/?query=Verstappen&src=trend_click&pc=true&vertical=trends",
+                "urlType": "DeepLink",
+                "urtEndpointOptions": {
+                 "requestParams": [
+                  {
+                   "key": "cd",
+                   "value": "HBgKVmVyc3RhcHBlbgAA"
+                  }
+                 ]
+                }
+               }
+              },
+              "trend_url": {
+               "url": "twitter://search/?query=Verstappen&src=trend_click&pc=true&vertical=trends",
+               "urlType": "DeepLink",
+               "urtEndpointOptions": {
+                "requestParams": [
+                 {
+                  "key": "cd",
+                  "value": "HBgKVmVyc3RhcHBlbgAA"
+                 }
+                ]
+               }
+              }
+             }
+            }
+           },
+           {
+            "entryId": "trend-2106850361359728640-trend-Bardella",
+            "item": {
+             "clientEventInfo": {
+              "component": "unified_events",
+              "details": {
+               "timelinesDetails": {
+                "controllerData": "DAACDAAQDAABCgABhpez6bW5LYEKAAIAAAGhCLH6nwAAAAA="
+               }
+              },
+              "element": "trend"
+             },
+             "feedbackInfo": {
+              "clientEventInfo": {
+               "action": "click",
+               "component": "trends",
+               "element": "feedback"
+              },
+              "feedbackKeys": [
+               "-1336659320",
+               "1628041751",
+               "15718569",
+               "-619311538",
+               "-1457103155",
+               "2103484841"
+              ],
+              "feedbackMetadata": "DwABCwAAAAEAAAAIQmFyZGVsbGEKAAPzv8fcySiXfwYABAADCAAGAAAAAgA="
+             },
+             "itemContent": {
+              "__typename": "TimelineTrend",
+              "itemType": "TimelineTrend",
+              "name": "Bardella",
+              "trend_metadata": {
+               "domain_context": "Politics · Trending",
+               "url": {
+                "url": "twitter://search/?query=Bardella&src=trend_click&pc=true&vertical=trends",
+                "urlType": "DeepLink",
+                "urtEndpointOptions": {
+                 "requestParams": [
+                  {
+                   "key": "cd",
+                   "value": "HBgIQmFyZGVsbGEAAA=="
+                  }
+                 ]
+                }
+               }
+              },
+              "trend_url": {
+               "url": "twitter://search/?query=Bardella&src=trend_click&pc=true&vertical=trends",
+               "urlType": "DeepLink",
+               "urtEndpointOptions": {
+                "requestParams": [
+                 {
+                  "key": "cd",
+                  "value": "HBgIQmFyZGVsbGEAAA=="
+                 }
+                ]
+               }
+              }
+             }
+            }
+           },
+           {
+            "entryId": "trend-2106850361359728640-trend-Marteen",
+            "item": {
+             "clientEventInfo": {
+              "component": "unified_events",
+              "details": {
+               "timelinesDetails": {
+                "controllerData": "DAACDAAQDAABCgABhpez6bW5LYEKAAIAAAGhCLH6nwAAAAA="
+               }
+              },
+              "element": "trend"
+             },
+             "feedbackInfo": {
+              "clientEventInfo": {
+               "action": "click",
+               "component": "trends",
+               "element": "feedback"
+              },
+              "feedbackKeys": [
+               "-1336659320",
+               "1628041751",
+               "15718569",
+               "-619311538",
+               "-1457103155",
+               "2103484841"
+              ],
+              "feedbackMetadata": "DwABCwAAAAEAAAAHTWFydGVlbgoAA/O/x9zJKJd/BgAEAAQIAAYAAAACAA=="
              },
              "itemContent": {
               "__typename": "TimelineTrend",
@@ -151,197 +337,11 @@
               }
              }
             }
-           },
-           {
-            "entryId": "trend-2106791404544983040-trend-#BahrainGP",
-            "item": {
-             "clientEventInfo": {
-              "component": "unified_events",
-              "details": {
-               "timelinesDetails": {
-                "controllerData": "DAACDAAQDAABCgAB6SHyqZIK6DEKAAIAAAGhB9t+zwAAAAA="
-               }
-              },
-              "element": "trend"
-             },
-             "feedbackInfo": {
-              "clientEventInfo": {
-               "action": "click",
-               "component": "trends",
-               "element": "feedback"
-              },
-              "feedbackKeys": [
-               "-1336659320",
-               "1628041751",
-               "15718569",
-               "-619311538",
-               "-1457103155",
-               "2103484841"
-              ],
-              "feedbackMetadata": "DwABCwAAAAEAAAAKI0JhaHJhaW5HUAoAA/O/x9zJKJd/BgAEAAIIAAYAAAACAA=="
-             },
-             "itemContent": {
-              "__typename": "TimelineTrend",
-              "itemType": "TimelineTrend",
-              "name": "#BahrainGP",
-              "trend_metadata": {
-               "domain_context": "Trending in France",
-               "url": {
-                "url": "twitter://search/?query=%23BahrainGP&src=trend_click&pc=true&vertical=trends",
-                "urlType": "DeepLink",
-                "urtEndpointOptions": {
-                 "requestParams": [
-                  {
-                   "key": "cd",
-                   "value": "HBgKI0JhaHJhaW5HUAAA"
-                  }
-                 ]
-                }
-               }
-              },
-              "trend_url": {
-               "url": "twitter://search/?query=%23BahrainGP&src=trend_click&pc=true&vertical=trends",
-               "urlType": "DeepLink",
-               "urtEndpointOptions": {
-                "requestParams": [
-                 {
-                  "key": "cd",
-                  "value": "HBgKI0JhaHJhaW5HUAAA"
-                 }
-                ]
-               }
-              }
-             }
-            }
-           },
-           {
-            "entryId": "trend-2106791404544983040-trend-$AGL",
-            "item": {
-             "clientEventInfo": {
-              "component": "unified_events",
-              "details": {
-               "timelinesDetails": {
-                "controllerData": "DAACDAAQDAABCgAB6SHyqZIK6DEKAAIAAAGhB9t+zwAAAAA="
-               }
-              },
-              "element": "trend"
-             },
-             "feedbackInfo": {
-              "clientEventInfo": {
-               "action": "click",
-               "component": "trends",
-               "element": "feedback"
-              },
-              "feedbackKeys": [
-               "-1336659320",
-               "1628041751",
-               "15718569",
-               "-619311538",
-               "-1457103155",
-               "2103484841"
-              ],
-              "feedbackMetadata": "DwABCwAAAAEAAAAEJEFHTAoAA/O/x9zJKJd/BgAEAAMIAAYAAAACAA=="
-             },
-             "itemContent": {
-              "__typename": "TimelineTrend",
-              "itemType": "TimelineTrend",
-              "name": "$AGL",
-              "trend_metadata": {
-               "domain_context": "Business & finance · Trending",
-               "url": {
-                "url": "twitter://search/?query=%24AGL&src=trend_click&pc=true&vertical=trends",
-                "urlType": "DeepLink",
-                "urtEndpointOptions": {
-                 "requestParams": [
-                  {
-                   "key": "cd",
-                   "value": "HBgEJEFHTAAA"
-                  }
-                 ]
-                }
-               }
-              },
-              "trend_url": {
-               "url": "twitter://search/?query=%24AGL&src=trend_click&pc=true&vertical=trends",
-               "urlType": "DeepLink",
-               "urtEndpointOptions": {
-                "requestParams": [
-                 {
-                  "key": "cd",
-                  "value": "HBgEJEFHTAAA"
-                 }
-                ]
-               }
-              }
-             }
-            }
-           },
-           {
-            "entryId": "trend-2106791404544983040-trend-#LGBTQIABuildingCommunity",
-            "item": {
-             "clientEventInfo": {
-              "component": "unified_events",
-              "details": {
-               "timelinesDetails": {
-                "controllerData": "DAACDAAQDAABCgAB6SHyqZIK6DEKAAIAAAGhB9t+zwAAAAA="
-               }
-              },
-              "element": "trend"
-             },
-             "feedbackInfo": {
-              "clientEventInfo": {
-               "action": "click",
-               "component": "trends",
-               "element": "feedback"
-              },
-              "feedbackKeys": [
-               "-1336659320",
-               "1628041751",
-               "15718569",
-               "-619311538",
-               "-1457103155",
-               "2103484841"
-              ],
-              "feedbackMetadata": "DwABCwAAAAEAAAAZI0xHQlRRSUFCdWlsZGluZ0NvbW11bml0eQoAA/O/x9zJKJd/BgAEAAQIAAYAAAACAA=="
-             },
-             "itemContent": {
-              "__typename": "TimelineTrend",
-              "itemType": "TimelineTrend",
-              "name": "#LGBTQIABuildingCommunity",
-              "trend_metadata": {
-               "domain_context": "Only on X · Trending",
-               "url": {
-                "url": "twitter://search/?query=%23LGBTQIABuildingCommunity&src=trend_click&pc=true&vertical=trends",
-                "urlType": "DeepLink",
-                "urtEndpointOptions": {
-                 "requestParams": [
-                  {
-                   "key": "cd",
-                   "value": "HBgZI0xHQlRRSUFCdWlsZGluZ0NvbW11bml0eQAA"
-                  }
-                 ]
-                }
-               }
-              },
-              "trend_url": {
-               "url": "twitter://search/?query=%23LGBTQIABuildingCommunity&src=trend_click&pc=true&vertical=trends",
-               "urlType": "DeepLink",
-               "urtEndpointOptions": {
-                "requestParams": [
-                 {
-                  "key": "cd",
-                  "value": "HBgZI0xHQlRRSUFCdWlsZGluZ0NvbW11bml0eQAA"
-                 }
-                ]
-               }
-              }
-             }
-            }
            }
           ]
          },
-         "entryId": "trend-2106791404544983040",
-         "sortIndex": "2106791404544983040"
+         "entryId": "trend-2106850361359728640",
+         "sortIndex": "2106850361359728640"
         },
         {
          "content": {
@@ -350,8 +350,8 @@
           "entryType": "TimelineTimelineCursor",
           "value": "DAAJAAA"
          },
-         "entryId": "cursor-top-2106791404544983041",
-         "sortIndex": "2106791404544983041"
+         "entryId": "cursor-top-2106850361359728641",
+         "sortIndex": "2106850361359728641"
         }
        ],
        "type": "TimelineAddEntries"

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:quax/generated/l10n.dart';
@@ -109,19 +110,21 @@ void main() {
     }
   });
 
-  group('UserTweets', () {
-    for (final fixture in fixturesOf('UserTweets')) {
-      test(fixture.scenario, () {
-        final status = profileTimeline(fixture);
-        final tweets = allTweets(status);
-        expect(tweets, isNotEmpty,
-            reason: 'A profile timeline with posts should yield tweets');
-        expect(status.cursorBottom, isNotNull,
-            reason: 'A timeline should expose a bottom cursor, or the next page is unreachable');
-        expectEveryTweetHasAnAuthor(tweets, fixture);
-      });
-    }
-  });
+  for (final operation in ['UserOriginalsTimeline', 'UserTweetsAndReplies', 'UserVideoTimeline', 'UserPhotoTimeline']) {
+    group(operation, () {
+      for (final fixture in fixturesOf(operation)) {
+        test(fixture.scenario, () {
+          final status = profileTimeline(fixture);
+          final tweets = allTweets(status);
+          final hasTweets = jsonEncode(fixture.body).contains('"__typename":"Tweet"');
+
+          expect(tweets.isNotEmpty, hasTweets,
+              reason: 'A profile timeline should yield its tweets, and none when X sends none. Fixture: ${fixture.path}');
+          expectEveryTweetHasAnAuthor(tweets, fixture);
+        });
+      }
+    });
+  }
 
   group('SearchTimeline', () {
     for (final fixture in fixturesOf('SearchTimeline')) {

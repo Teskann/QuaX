@@ -1,6 +1,6 @@
 {
- "scenario": "Default avatar, no banner, empty bio, zero followers",
- "sourceUrl": "https://x.com/quax_tests_2",
+ "scenario": "Photos filter of an account without media: empty",
+ "sourceUrl": "https://x.com/quax_tests_2/media?filter=photo",
  "operation": "SidebarUserRecommendations",
  "host": "x.com",
  "queryId": "XFGj2pdlasiM3FndUe1PrQ",
@@ -20,18 +20,18 @@
   "x-rate-limit-limit": "500",
   "content-type": "application/json",
   "x-rate-limit-remaining": "490",
-  "x-rate-limit-reset": "1790865375"
+  "x-rate-limit-reset": "1791148141"
  },
  "body": {
   "data": {
    "sidebar_user_recommendations": [
     {
-     "token": "CgAB0nDQRFXCxXkIAAIAAAACCAAEAAAAdQA=",
+     "token": "CgABFG3WqUS6swMIAAIAAAACCAAEAAAAdQA=",
      "user_results": {
       "result": {
        "__typename": "User",
        "action_counts": {
-        "favorites_count": 12561
+        "favorites_count": 12569
        },
        "affiliates_highlighted_label": {},
        "avatar": {
@@ -59,7 +59,11 @@
         "notifications_enabled": false
        },
        "parody_commentary_fan_label": "None",
-       "pinned_items": {},
+       "pinned_items": {
+        "tweet_ids_str": [
+         "2106711143477555666"
+        ]
+       },
        "possibly_sensitive": false,
        "privacy": {
         "protected": false
@@ -102,8 +106,8 @@
         "translator_type": "none"
        },
        "relationship_counts": {
-        "followers": 2454527,
-        "following": 13907
+        "followers": 2454601,
+        "following": 13906
        },
        "relationship_perspectives": {
         "blocked_by": false,
@@ -118,8 +122,8 @@
        "super_followed_by": false,
        "super_following": false,
        "tweet_counts": {
-        "media_tweets": 177408,
-        "tweets": 257168
+        "media_tweets": 177645,
+        "tweets": 257434
        },
        "verification": {
         "verified": false
@@ -131,7 +135,7 @@
      }
     },
     {
-     "token": "CgAB0nDQRFXCxXkIAAIAAAACCAAEAAAAdQA=",
+     "token": "CgABFG3WqUS6swMIAAIAAAACCAAEAAAAdQA=",
      "user_results": {
       "result": {
        "__typename": "User",
@@ -211,7 +215,7 @@
         "translator_type": "none"
        },
        "relationship_counts": {
-        "followers": 393648,
+        "followers": 393644,
         "following": 1625
        },
        "relationship_perspectives": {
@@ -240,62 +244,59 @@
      }
     },
     {
-     "token": "CgAB0nDQRFXCxXkIAAIAAAACCAAEAAAAdQA=",
+     "token": "CgABFG3WqUS6swMIAAIAAAACCAAEAAAAdQA=",
      "user_results": {
       "result": {
        "__typename": "User",
        "action_counts": {
-        "favorites_count": 467
+        "favorites_count": 15400
        },
        "affiliates_highlighted_label": {},
        "avatar": {
-        "image_url": "https://pbs.twimg.com/profile_images/1195411909920645120/95XmMy-V_normal.jpg"
+        "image_url": "https://pbs.twimg.com/profile_images/1795489577156718593/XXWoiGID_normal.jpg"
        },
        "banner": {
-        "image_url": "https://pbs.twimg.com/profile_banners/832304691581161475/1772383297"
+        "image_url": "https://pbs.twimg.com/profile_banners/1036595502/1690290750"
        },
        "core": {
-        "created_at": "Thu Feb 16 19:04:36 +0000 2017",
-        "name": "Manchester United",
-        "screen_name": "MUnitedFR"
+        "created_at": "Wed Dec 26 08:02:48 +0000 2012",
+        "name": "Real French Madrid",
+        "screen_name": "RMFrench_"
        },
        "follow_request_sent": false,
        "has_graduated_access": true,
-       "id": "VXNlcjo4MzIzMDQ2OTE1ODExNjE0NzU=",
-       "is_blue_verified": true,
+       "id": "VXNlcjoxMDM2NTk1NTAy",
+       "is_blue_verified": false,
        "location": {
-        "location": ""
+        "location": "Ile-de-France, France"
        },
        "media_permissions": {
-        "can_media_tag": true
+        "can_media_tag": false
        },
        "notifications_settings": {
         "notifications_enabled": false
        },
-       "parody_commentary_fan_label": "Fan",
-       "pinned_items": {},
+       "parody_commentary_fan_label": "None",
+       "pinned_items": {
+        "tweet_ids_str": [
+         "1825585768233926759"
+        ]
+       },
        "possibly_sensitive": false,
        "privacy": {
         "protected": false
        },
        "professional": {
-        "category": [
-         {
-          "icon_name": "IconBriefcaseStroke",
-          "id": 800,
-          "name": "Sports, Fitness & Recreation"
-         }
-        ],
+        "category": [],
         "professional_type": "Creator",
-        "rest_id": "1586338388554223618"
+        "rest_id": "1474018114652319756"
        },
        "profile_bio": {
-        "description": "Toute l'actualité en français de Manchester United. Anciennement @MUnitedFrance.\n🎥 Vidéos : @CompsMU\n#MUFC",
+        "description": "Le média N°1 sur l’actualité du Real Madrid en Français 🔝🤍 Collab & Contact 📩 : DM ou rmadridfrench@gmail.com",
         "entities": {
          "description": {}
         }
        },
-       "profile_description_language": "fr",
        "profile_image_shape": "Circle",
        "profile_metadata": {
         "profile_interstitial_type": ""
@@ -304,8 +305,8 @@
         "translator_type": "none"
        },
        "relationship_counts": {
-        "followers": 685709,
-        "following": 338
+        "followers": 430118,
+        "following": 383
        },
        "relationship_perspectives": {
         "blocked_by": false,
@@ -315,13 +316,13 @@
         "live_following": false,
         "muting": false
        },
-       "rest_id": "832304691581161475",
+       "rest_id": "1036595502",
        "super_follow_eligible": false,
        "super_followed_by": false,
        "super_following": false,
        "tweet_counts": {
-        "media_tweets": 88910,
-        "tweets": 106711
+        "media_tweets": 21789,
+        "tweets": 52792
        },
        "verification": {
         "verified": false

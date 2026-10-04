@@ -9,6 +9,7 @@ import 'package:quax/client/client.dart';
 import 'package:quax/profile/_follows.dart';
 import 'package:quax/profile/_media_grid.dart';
 import 'package:quax/profile/_tweets.dart';
+import 'package:quax/profile/media_kind.dart';
 import 'package:quax/profile/profile.dart';
 import 'package:quax/tweet/_video_controls.dart';
 import 'package:quax/tweet/tweet.dart';
@@ -44,7 +45,8 @@ UserWithExtra userOf(String screenName) =>
 /// Opens a profile on its posts tab. The header sizes itself from measured
 /// parts and overflows by a pixel with the test font: layout is not what these
 /// tests check, so overflow reports are dropped while the profile is drawn.
-Future<void> openProfile(WidgetTester tester, String fixtureName, String screenName, String timeline) async {
+Future<void> openProfile(WidgetTester tester, String fixtureName, String screenName, String timeline,
+    {Map<String, Fixture> more = const {}}) async {
   final onError = FlutterError.onError;
   FlutterError.onError = (details) {
     if (!details.exceptionAsString().contains('overflowed')) onError?.call(details);
@@ -56,7 +58,8 @@ Future<void> openProfile(WidgetTester tester, String fixtureName, String screenN
       arguments: ProfileScreenArguments.fromScreenName(screenName, null),
       fixtures: {
         'UserByScreenName': fixture('UserByScreenName', fixtureName),
-        'UserTweets': fixture('UserOriginalsTimeline', timeline),
+        'UserOriginalsTimeline': fixture('UserOriginalsTimeline', timeline),
+        ...more,
       },
     );
   } finally {
@@ -159,6 +162,53 @@ void main() {
     }
   });
 
+  group('Media tab of a profile', () {
+    Future<void> openMediaTab(WidgetTester tester) async {
+      await openProfile(tester, 'quax-tests', 'quax_tests', quaxTestsId, more: {
+        'UserVideoTimeline': fixture('UserVideoTimeline', quaxTestsId),
+        'UserPhotoTimeline': fixture('UserPhotoTimeline', quaxTestsId),
+      });
+      await tester.tap(find.descendant(of: find.byType(TabBar), matching: find.text('Media')));
+      await pumpUntilLoaded(tester);
+    }
+
+    final kindMenu = find.byType(CheckedPopupMenuItem<MediaKind>);
+
+    testWidgets('Should show the videos of the account, without a menu, when the tab is opened', (tester) async {
+      await openMediaTab(tester);
+
+      expect(kindMenu, findsNothing, reason: 'Opening the tab for the first time is not choosing a kind');
+      expect(find.byType(FritterCenterPlayButton), findsNWidgets(4),
+          reason: 'The tab starts on the videos, which are the four videos of the account');
+    });
+
+    testWidgets('Should offer videos and photos when the tab is tapped again', (tester) async {
+      await openMediaTab(tester);
+
+      await tester.tap(find.descendant(of: find.byType(TabBar), matching: find.text('Media')));
+      await pumpUntilLoaded(tester);
+
+      expect(kindMenu, findsNWidgets(2), reason: 'The second tap on the tab should offer the two kinds');
+      expect(find.widgetWithText(CheckedPopupMenuItem<MediaKind>, 'Videos'), findsOneWidget,
+          reason: 'Videos should be one of the choices');
+      expect(find.widgetWithText(CheckedPopupMenuItem<MediaKind>, 'Photos'), findsOneWidget,
+          reason: 'Photos should be one of the choices');
+    });
+
+    testWidgets('Should replace the videos by the photos once Photos is chosen', (tester) async {
+      await openMediaTab(tester);
+      await tester.tap(find.descendant(of: find.byType(TabBar), matching: find.text('Media')));
+      await pumpUntilLoaded(tester);
+
+      await tester.tap(find.widgetWithText(CheckedPopupMenuItem<MediaKind>, 'Photos'));
+      await pumpUntilLoaded(tester);
+
+      expect(find.byType(FritterCenterPlayButton), findsNothing,
+          reason: 'The photos should not carry the videos of the mixed post that X sends whole');
+      expect(find.byType(ExtendedImage), findsWidgets, reason: 'The photos of the account should fill the grid');
+    });
+  });
+
   group('Profile views', () {
     testWidgets('Should show the replies tab with its threads, the next page being empty', (tester) async {
       final chains = profileTimeline('UserRepliesTimeline', quaxTestsId);
@@ -174,16 +224,29 @@ void main() {
     });
 
     testWidgets('Should show every video of the media tab in the grid', (tester) async {
-      await openTab(tester, (prefs) => ProfileMediaGrid(user: userOf('quax-tests'), pref: prefs),
-          {'UserMedia': fixture('UserVideoTimeline', quaxTestsId)});
+      await openTab(tester, (prefs) => ProfileMediaGrid(user: userOf('quax-tests'), pref: prefs, kind: MediaKindModel()),
+          {'UserVideoTimeline': fixture('UserVideoTimeline', quaxTestsId)});
 
       expect(find.byType(FritterCenterPlayButton), findsNWidgets(4),
           reason: 'X sends the four videos of the account, each should be a grid cell with a play button');
     });
 
+    testWidgets('Should show the photos of the media tab when the Photos kind is selected', (tester) async {
+      final kind = MediaKindModel()..select(MediaKind.photos);
+      await openTab(tester, (prefs) => ProfileMediaGrid(user: userOf('quax-tests'), pref: prefs, kind: kind), {
+        'UserVideoTimeline': fixture('UserVideoTimeline', quaxTestsId),
+        'UserPhotoTimeline': fixture('UserPhotoTimeline', quaxTestsId),
+      });
+
+      expect(find.byType(FritterCenterPlayButton), findsNothing,
+          reason: 'X returns the mixed post whole, but the photos filter should keep only its photos');
+      expect(find.byType(ExtendedImage), findsWidgets,
+          reason: 'X sends the photos of the account under another request than the videos, they should fill the grid');
+    });
+
     testWidgets('Should say the media tab of an account without media is empty', (tester) async {
-      await openTab(tester, (prefs) => ProfileMediaGrid(user: userOf('quax-tests-2'), pref: prefs),
-          {'UserMedia': fixture('UserVideoTimeline', quaxTests2Id)});
+      await openTab(tester, (prefs) => ProfileMediaGrid(user: userOf('quax-tests-2'), pref: prefs, kind: MediaKindModel()),
+          {'UserVideoTimeline': fixture('UserVideoTimeline', quaxTests2Id)});
 
       expect(find.text("Couldn't find any posts by this user!"), findsOneWidget,
           reason: 'An empty media tab should say so rather than stay blank');

@@ -60,7 +60,10 @@
  },
  "status": 200,
  "headers": {
-  "content-type": "application/json"
+  "x-rate-limit-limit": "500",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "472",
+  "x-rate-limit-reset": "1791148185"
  },
  "body": {
   "data": {
@@ -210,7 +213,7 @@
      "rest_id": "2095916385209651546",
      "unmention_data": {},
      "views": {
-      "count": "21",
+      "count": "25",
       "state": "EnabledWithCount"
      }
     }

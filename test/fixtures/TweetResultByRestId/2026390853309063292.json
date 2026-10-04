@@ -63,7 +63,7 @@
   "x-rate-limit-limit": "500",
   "content-type": "application/json",
   "x-rate-limit-remaining": "468",
-  "x-rate-limit-reset": "1790865406"
+  "x-rate-limit-reset": "1791148185"
  },
  "body": {
   "data": {
@@ -73,23 +73,23 @@
      "birdwatch_pivot": {
       "callToAction": {
        "destinationUrl": "https://twitter.com/i/birdwatch/n/2026499345198293272",
-       "prompt": "Do you find this helpful?",
-       "title": "Rate it"
+       "prompt": "Trouvez-vous cette note utile ?",
+       "title": "Évaluer"
       },
       "destinationUrl": "https://twitter.com/i/birdwatch/n/2026499345198293272",
       "footer": {
        "entities": [
         {
-         "fromIndex": 83,
+         "fromIndex": 112,
          "ref": {
           "type": "TimelineUrl",
           "url": "https://x.com/i/flow/join-birdwatch",
           "urlType": "ExternalUrl"
          },
-         "toIndex": 96
+         "toIndex": 126
         }
        ],
-       "text": "Context is written by people who use X, and appears when rated helpful by others.  Find out more."
+       "text": "Le contexte est rédigé par des personnes qui utilisent X. Il est affiché quand il est jugé utile par d'autres.  En savoir plus."
       },
       "footerIconType": "BirdwatchEyeOff",
       "iconType": "BirdwatchV1Icon",
@@ -101,7 +101,7 @@
        "language": "",
        "rest_id": "2026499345198293272"
       },
-      "shorttitle": "Readers added context",
+      "shorttitle": "Des lecteurs ont ajouté du contexte",
       "subtitle": {
        "entities": [
         {
@@ -134,7 +134,7 @@
        ],
        "text": "Opinium poll shows Greens tied with Labour at 28%, Reform at 27% among voters; Greens at 30%, Labour/Reform at 28% among likely voters. Post's graphic omits Greens. Sample of 401; high uncertainty due to small size. x.com/OpiniumResearc… bylinetimes.com/2026/02/24/exc… fullfact.org/politics/gorto…"
       },
-      "title": "Readers added context they thought people might want to know",
+      "title": "Des lecteurs ont ajouté un contexte qu'ils jugent utile pour les utilisateurs.",
       "visualStyle": "Default"
      },
      "cashtag_attachments": [],
@@ -143,14 +143,14 @@
        "result": {
         "__typename": "User",
         "action_counts": {
-         "favorites_count": 648
+         "favorites_count": 650
         },
         "affiliates_highlighted_label": {},
         "avatar": {
          "image_url": "https://pbs.twimg.com/profile_images/1572133535703605249/Ap0Mz-Qj_normal.jpg"
         },
         "banner": {
-         "image_url": "https://pbs.twimg.com/profile_banners/14291684/1790496271"
+         "image_url": "https://pbs.twimg.com/profile_banners/14291684/1790930173"
         },
         "core": {
          "created_at": "Thu Apr 03 08:57:48 +0000 2008",
@@ -173,7 +173,7 @@
         "parody_commentary_fan_label": "None",
         "pinned_items": {
          "tweet_ids_str": [
-          "2104904363231813770"
+          "2106107903014736001"
          ]
         },
         "possibly_sensitive": false,
@@ -208,7 +208,7 @@
          "translator_type": "none"
         },
         "relationship_counts": {
-         "followers": 989256,
+         "followers": 989219,
          "following": 10013
         },
         "relationship_perspectives": {
@@ -224,8 +224,8 @@
         "super_followed_by": false,
         "super_following": false,
         "tweet_counts": {
-         "media_tweets": 11963,
-         "tweets": 41940
+         "media_tweets": 11969,
+         "tweets": 41967
         },
         "verification": {
          "verified": false
@@ -252,7 +252,7 @@
       "is_available": false
      },
      "has_birdwatch_notes": true,
-     "is_translatable": false,
+     "is_translatable": true,
      "legacy": {
       "bookmark_count": 102,
       "bookmarked": false,
@@ -456,7 +456,7 @@
         }
        ]
       },
-      "favorite_count": 1182,
+      "favorite_count": 1181,
       "favorited": false,
       "full_text": "🚨BREAKING: new poll suggests there is just one point between Labour and Reform in Gorton and Denton.\n\nEvery vote will count on Thursday. Back Labour and choose unity over Reform’s division. https://t.co/q8ocoMqKCP",
       "id_str": "2026390853309063292",
@@ -471,10 +471,9 @@
       "user_id_str": "14291684"
      },
      "rest_id": "2026390853309063292",
-     "source": "<a href=\"https://buffer.com\" rel=\"nofollow\">Buffer</a>",
      "unmention_data": {},
      "views": {
-      "count": "1217419",
+      "count": "1217464",
       "state": "EnabledWithCount"
      }
     }

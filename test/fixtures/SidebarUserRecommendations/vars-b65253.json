@@ -1,6 +1,6 @@
 {
- "scenario": "Full profile: avatar, banner, bio with two links and a mention that has no entity",
- "sourceUrl": "https://x.com/quax_tests",
+ "scenario": "Media tab filtered on photos: /media alone only lists videos now",
+ "sourceUrl": "https://x.com/quax_tests/media?filter=photo",
  "operation": "SidebarUserRecommendations",
  "host": "x.com",
  "queryId": "XFGj2pdlasiM3FndUe1PrQ",
@@ -19,38 +19,38 @@
  "headers": {
   "x-rate-limit-limit": "500",
   "content-type": "application/json",
-  "x-rate-limit-remaining": "498",
-  "x-rate-limit-reset": "1790865375"
+  "x-rate-limit-remaining": "495",
+  "x-rate-limit-reset": "1791148141"
  },
  "body": {
   "data": {
    "sidebar_user_recommendations": [
     {
-     "token": "CgABqU9blEBEudsIAAIAAAAACAAEAAAEYQA=",
+     "token": "CgABoR+YAQwamWIIAAIAAAAACAAEAAAEYQA=",
      "user_results": {
       "result": {
        "__typename": "User",
        "action_counts": {
-        "favorites_count": 13
+        "favorites_count": 7654
        },
        "affiliates_highlighted_label": {},
        "avatar": {
-        "image_url": "https://pbs.twimg.com/profile_images/1908236155046236160/OGv6cHg0_normal.png"
+        "image_url": "https://pbs.twimg.com/profile_images/1834328195904282624/_CAUqMol_normal.jpg"
        },
        "banner": {
-        "image_url": "https://pbs.twimg.com/profile_banners/71567590/1737734250"
+        "image_url": "https://pbs.twimg.com/profile_banners/15687962/1790288366"
        },
        "core": {
-        "created_at": "Fri Sep 04 15:57:18 +0000 2009",
-        "name": "St. Louis Fed",
-        "screen_name": "stlouisfed"
+        "created_at": "Fri Aug 01 11:26:10 +0000 2008",
+        "name": "Marvel Entertainment",
+        "screen_name": "Marvel"
        },
        "follow_request_sent": false,
        "has_graduated_access": true,
-       "id": "VXNlcjo3MTU2NzU5MA==",
+       "id": "VXNlcjoxNTY4Nzk2Mg==",
        "is_blue_verified": true,
        "location": {
-        "location": "St. Louis, MO"
+        "location": "New York, NY"
        },
        "media_permissions": {
         "can_media_tag": false
@@ -59,25 +59,40 @@
         "notifications_enabled": false
        },
        "parody_commentary_fan_label": "None",
-       "pinned_items": {},
+       "pinned_items": {
+        "tweet_ids_str": [
+         "2092282511804289238"
+        ]
+       },
        "possibly_sensitive": false,
        "privacy": {
         "protected": false
        },
+       "professional": {
+        "category": [
+         {
+          "icon_name": "IconBriefcaseStroke",
+          "id": 15,
+          "name": "Entertainment & Recreation"
+         }
+        ],
+        "professional_type": "Business",
+        "rest_id": "1487153207264657411"
+       },
        "profile_bio": {
-        "description": "Official Federal Reserve Bank of St. Louis account. We share economic data and insights. Home to FRED®.",
+        "description": "The official account for Marvel comics, movies, games, and more.",
         "entities": {
          "description": {},
          "url": {
           "urls": [
            {
-            "display_url": "stlouisfed.org",
-            "expanded_url": "http://www.stlouisfed.org/",
+            "display_url": "fandango.com/avengersdoomsd…",
+            "expanded_url": "http://fandango.com/avengersdoomsday",
             "indices": [
              0,
              23
             ],
-            "url": "https://t.co/43SyZQSKOF"
+            "url": "https://t.co/T4FKnID2sf"
            }
           ]
          }
@@ -89,11 +104,11 @@
         "profile_interstitial_type": ""
        },
        "profile_translation": {
-        "translator_type": "none"
+        "translator_type": "regular"
        },
        "relationship_counts": {
-        "followers": 336638,
-        "following": 37
+        "followers": 19666661,
+        "following": 662
        },
        "relationship_perspectives": {
         "blocked_by": false,
@@ -103,145 +118,50 @@
         "live_following": false,
         "muting": false
        },
-       "rest_id": "71567590",
+       "rest_id": "15687962",
        "super_follow_eligible": false,
        "super_followed_by": false,
        "super_following": false,
        "tweet_counts": {
-        "media_tweets": 36414,
-        "tweets": 56651
+        "media_tweets": 25025,
+        "tweets": 71355
        },
        "verification": {
         "verified": false,
-        "verified_type": "Government"
+        "verified_type": "Business"
        },
        "website": {
-        "url": "https://t.co/43SyZQSKOF"
+        "url": "https://t.co/T4FKnID2sf"
        }
       }
      }
     },
     {
-     "token": "CgABqU9blEBEudsIAAIAAAAACAAEAAAEYAA=",
+     "token": "CgABoR+YAQwamWIIAAIAAAAACAAEAAAEYQA=",
      "user_results": {
       "result": {
        "__typename": "User",
        "action_counts": {
-        "favorites_count": 1376
+        "favorites_count": 4
        },
        "affiliates_highlighted_label": {},
        "avatar": {
-        "image_url": "https://pbs.twimg.com/profile_images/2014086171161223168/OBhaah0Y_normal.jpg"
+        "image_url": "https://pbs.twimg.com/profile_images/1924871123524591616/mc3-jzbr_normal.jpg"
        },
        "banner": {
-        "image_url": "https://pbs.twimg.com/profile_banners/20608701/1769030538"
+        "image_url": "https://pbs.twimg.com/profile_banners/107225267/1747759784"
        },
        "core": {
-        "created_at": "Wed Feb 11 18:23:39 +0000 2009",
-        "name": "Physics Today",
-        "screen_name": "PhysicsToday"
+        "created_at": "Thu Jan 21 22:20:32 +0000 2010",
+        "name": "Steven Pinker",
+        "screen_name": "sapinker"
        },
        "follow_request_sent": false,
        "has_graduated_access": true,
-       "id": "VXNlcjoyMDYwODcwMQ==",
+       "id": "VXNlcjoxMDcyMjUyNjc=",
        "is_blue_verified": true,
        "location": {
-        "location": "College Park, MD"
-       },
-       "media_permissions": {
-        "can_media_tag": true
-       },
-       "notifications_settings": {
-        "notifications_enabled": false
-       },
-       "parody_commentary_fan_label": "None",
-       "pinned_items": {},
-       "possibly_sensitive": false,
-       "privacy": {
-        "protected": false
-       },
-       "profile_bio": {
-        "description": "The world's most popular physics magazine.",
-        "entities": {
-         "description": {},
-         "url": {
-          "urls": [
-           {
-            "display_url": "physicstoday.aip.org",
-            "expanded_url": "http://physicstoday.aip.org",
-            "indices": [
-             0,
-             23
-            ],
-            "url": "https://t.co/jeWApgdrIU"
-           }
-          ]
-         }
-        }
-       },
-       "profile_description_language": "en",
-       "profile_image_shape": "Circle",
-       "profile_metadata": {
-        "profile_interstitial_type": ""
-       },
-       "profile_translation": {
-        "translator_type": "none"
-       },
-       "relationship_counts": {
-        "followers": 1015298,
-        "following": 249
-       },
-       "relationship_perspectives": {
-        "blocked_by": false,
-        "blocking": false,
-        "followed_by": false,
-        "following": false,
-        "live_following": false,
-        "muting": false
-       },
-       "rest_id": "20608701",
-       "super_follow_eligible": false,
-       "super_followed_by": false,
-       "super_following": false,
-       "tweet_counts": {
-        "media_tweets": 1560,
-        "tweets": 27539
-       },
-       "verification": {
-        "verified": false
-       },
-       "website": {
-        "url": "https://t.co/jeWApgdrIU"
-       }
-      }
-     }
-    },
-    {
-     "token": "CgABqU9blEBEudsIAAIAAAAACAAEAAAEYAA=",
-     "user_results": {
-      "result": {
-       "__typename": "User",
-       "action_counts": {
-        "favorites_count": 7753
-       },
-       "affiliates_highlighted_label": {},
-       "avatar": {
-        "image_url": "https://pbs.twimg.com/profile_images/1029084163780079616/KL96wS4C_normal.jpg"
-       },
-       "banner": {
-        "image_url": "https://pbs.twimg.com/profile_banners/19722699/1709768018"
-       },
-       "core": {
-        "created_at": "Thu Jan 29 17:46:28 +0000 2009",
-        "name": "Popular Science",
-        "screen_name": "PopSci"
-       },
-       "follow_request_sent": false,
-       "has_graduated_access": true,
-       "id": "VXNlcjoxOTcyMjY5OQ==",
-       "is_blue_verified": true,
-       "location": {
-        "location": ""
+        "location": "Boston, MA"
        },
        "media_permissions": {
         "can_media_tag": true
@@ -252,50 +172,126 @@
        "parody_commentary_fan_label": "None",
        "pinned_items": {
         "tweet_ids_str": [
-         "2040885557144834368"
+         "2099158950033994122"
         ]
        },
        "possibly_sensitive": false,
        "privacy": {
         "protected": false
        },
-       "professional": {
-        "category": [
-         {
-          "icon_name": "IconBriefcaseStroke",
-          "id": 580,
-          "name": "Media & News Company"
-         }
-        ],
-        "professional_type": "Business",
-        "rest_id": "1488240910542462986"
-       },
        "profile_bio": {
-        "description": "Awe-inspiring science, tech, and DIY. Subscribe to our newsletter: https://t.co/k3JnXX3JNw",
+        "description": "Cognitive scientist at Harvard.",
         "entities": {
-         "description": {
-          "urls": [
-           {
-            "display_url": "popsci.com/email-signup/",
-            "expanded_url": "https://www.popsci.com/email-signup/",
-            "indices": [
-             67,
-             90
-            ],
-            "url": "https://t.co/k3JnXX3JNw"
-           }
-          ]
-         },
+         "description": {},
          "url": {
           "urls": [
            {
-            "display_url": "popsci.com",
-            "expanded_url": "https://www.popsci.com/",
+            "display_url": "stevenpinker.com",
+            "expanded_url": "http://www.stevenpinker.com",
             "indices": [
              0,
              23
             ],
-            "url": "https://t.co/EJniFa6cjX"
+            "url": "https://t.co/5HKE2sXzFw"
+           }
+          ]
+         }
+        }
+       },
+       "profile_description_language": "und",
+       "profile_image_shape": "Circle",
+       "profile_metadata": {
+        "profile_interstitial_type": ""
+       },
+       "profile_translation": {
+        "translator_type": "none"
+       },
+       "relationship_counts": {
+        "followers": 861626,
+        "following": 90
+       },
+       "relationship_perspectives": {
+        "blocked_by": false,
+        "blocking": false,
+        "followed_by": false,
+        "following": false,
+        "live_following": false,
+        "muting": false
+       },
+       "rest_id": "107225267",
+       "super_follow_eligible": false,
+       "super_followed_by": false,
+       "super_following": false,
+       "tweet_counts": {
+        "media_tweets": 1337,
+        "tweets": 17036
+       },
+       "verification": {
+        "verified": false
+       },
+       "website": {
+        "url": "https://t.co/5HKE2sXzFw"
+       }
+      }
+     }
+    },
+    {
+     "token": "CgABoR+YAQwamWIIAAIAAAAACAAEAAAEYQA=",
+     "user_results": {
+      "result": {
+       "__typename": "User",
+       "action_counts": {
+        "favorites_count": 15506
+       },
+       "affiliates_highlighted_label": {},
+       "avatar": {
+        "image_url": "https://pbs.twimg.com/profile_images/1874867754664407040/6rIjYra7_normal.jpg"
+       },
+       "banner": {
+        "image_url": "https://pbs.twimg.com/profile_banners/41806795/1783014645"
+       },
+       "core": {
+        "created_at": "Fri May 22 13:01:55 +0000 2009",
+        "name": "Lawrence Livermore National Laboratory",
+        "screen_name": "Livermore_Lab"
+       },
+       "follow_request_sent": false,
+       "has_graduated_access": true,
+       "id": "VXNlcjo0MTgwNjc5NQ==",
+       "is_blue_verified": false,
+       "location": {
+        "location": "Livermore, CA, USA"
+       },
+       "media_permissions": {
+        "can_media_tag": true
+       },
+       "notifications_settings": {
+        "notifications_enabled": false
+       },
+       "parody_commentary_fan_label": "None",
+       "pinned_items": {
+        "tweet_ids_str": [
+         "1730352742697406805"
+        ]
+       },
+       "possibly_sensitive": false,
+       "privacy": {
+        "protected": false
+       },
+       "profile_bio": {
+        "description": "U.S. @ENERGY and @NNSAnews laboratory. We use science and technology to make the world a safer place.",
+        "entities": {
+         "description": {},
+         "url": {
+          "urls": [
+           {
+            "display_url": "llnl.gov",
+            "expanded_url": "https://www.llnl.gov/",
+            "indices": [
+             0,
+             23
+            ],
+            "url": "https://t.co/xVPfffzTIN"
            }
           ]
          }
@@ -307,11 +303,11 @@
         "profile_interstitial_type": ""
        },
        "profile_translation": {
-        "translator_type": "regular"
+        "translator_type": "none"
        },
        "relationship_counts": {
-        "followers": 1599021,
-        "following": 1395
+        "followers": 68127,
+        "following": 992
        },
        "relationship_perspectives": {
         "blocked_by": false,
@@ -321,19 +317,20 @@
         "live_following": false,
         "muting": false
        },
-       "rest_id": "19722699",
+       "rest_id": "41806795",
        "super_follow_eligible": false,
        "super_followed_by": false,
        "super_following": false,
        "tweet_counts": {
-        "media_tweets": 95269,
-        "tweets": 160801
+        "media_tweets": 4384,
+        "tweets": 14685
        },
        "verification": {
-        "verified": false
+        "verified": false,
+        "verified_type": "Government"
        },
        "website": {
-        "url": "https://t.co/EJniFa6cjX"
+        "url": "https://t.co/xVPfffzTIN"
        }
       }
      }

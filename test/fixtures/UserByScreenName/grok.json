@@ -1,0 +1,192 @@
+{
+ "scenario": "Media tab of @grok, where a profile-grid item has an empty tweet_results (issue #204)",
+ "sourceUrl": "https://x.com/grok/media",
+ "operation": "UserByScreenName",
+ "host": "x.com",
+ "queryId": "KybxDj9RrADIITXlGG8kpw",
+ "features": {
+  "hidden_profile_subscriptions_enabled": true,
+  "profile_label_improvements_pcf_label_in_post_enabled": true,
+  "responsive_web_profile_redirect_enabled": true,
+  "rweb_tipjar_consumption_enabled": false,
+  "verified_phone_label_enabled": false,
+  "subscriptions_verification_info_is_identity_verified_enabled": true,
+  "subscriptions_verification_info_verified_since_enabled": true,
+  "highlights_tweets_tab_ui_enabled": true,
+  "responsive_web_twitter_article_notes_tab_enabled": true,
+  "subscriptions_feature_can_gift_premium": false,
+  "creator_subscriptions_tweet_preview_api_enabled": true,
+  "responsive_web_graphql_timeline_navigation_enabled": true
+ },
+ "fieldToggles": {
+  "withPayments": false,
+  "withAuxiliaryUserLabels": true
+ },
+ "variables": {
+  "screen_name": "grok",
+  "withGrokTranslatedBio": true
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "150",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "145",
+  "x-rate-limit-reset": "1791148143"
+ },
+ "body": {
+  "data": {
+   "user": {
+    "result": {
+     "__typename": "User",
+     "action_counts": {
+      "favorites_count": 142
+     },
+     "affiliates_highlighted_label": {
+      "label": {
+       "badge": {
+        "url": "https://pbs.twimg.com/profile_images/2074224934159876096/aelorWHq_bigger.jpg"
+       },
+       "description": "SpaceXAI",
+       "url": {
+        "url": "https://twitter.com/SpaceXAI",
+        "urlType": "DeepLink"
+       },
+       "userLabelDisplayType": "Badge",
+       "userLabelType": "BusinessLabel"
+      }
+     },
+     "avatar": {
+      "image_url": "https://pbs.twimg.com/profile_images/2057885623374290944/lmj0pawP_normal.jpg"
+     },
+     "banner": {
+      "image_url": "https://pbs.twimg.com/profile_banners/1720665183188922368/1778202520"
+     },
+     "business_account": {
+      "affiliates_count": 0
+     },
+     "core": {
+      "created_at": "Sat Nov 04 04:52:34 +0000 2023",
+      "name": "Grok",
+      "screen_name": "grok"
+     },
+     "creator_subscriptions_count": 0,
+     "follow_request_sent": false,
+     "grok_translated_bio_with_availability": {
+      "is_available": false
+     },
+     "has_graduated_access": true,
+     "has_hidden_subscriptions_on_profile": false,
+     "highlights_info": {
+      "can_highlight_tweets": true,
+      "highlighted_tweets": "3"
+     },
+     "id": "VXNlcjoxNzIwNjY1MTgzMTg4OTIyMzY4",
+     "is_blue_verified": true,
+     "is_profile_translatable": false,
+     "legacy_extended_profile": {},
+     "location": {
+      "location": ""
+     },
+     "media_permissions": {
+      "can_media_tag": true
+     },
+     "notifications_settings": {
+      "notifications_enabled": false
+     },
+     "parody_commentary_fan_label": "None",
+     "pinned_items": {
+      "tweet_ids_str": [
+       "2099876430561632548"
+      ]
+     },
+     "possibly_sensitive": false,
+     "privacy": {
+      "protected": false
+     },
+     "profile_bio": {
+      "description": "@grok it",
+      "entities": {
+       "description": {},
+       "url": {
+        "urls": [
+         {
+          "display_url": "grok.com/download",
+          "expanded_url": "http://grok.com/download",
+          "indices": [
+           0,
+           23
+          ],
+          "url": "https://t.co/fqNKQSjjG9"
+         }
+        ]
+       }
+      }
+     },
+     "profile_image_shape": "Square",
+     "profile_metadata": {
+      "profile_interstitial_type": ""
+     },
+     "profile_sort_enabled": false,
+     "profile_translation": {
+      "translator_type": "none"
+     },
+     "relationship_counts": {
+      "followers": 9137152,
+      "following": 4
+     },
+     "relationship_perspectives": {
+      "blocked_by": false,
+      "blocking": false,
+      "followed_by": false,
+      "following": false,
+      "live_following": false,
+      "muting": false
+     },
+     "rest_id": "1720665183188922368",
+     "super_follow_eligible": false,
+     "super_followed_by": false,
+     "super_following": false,
+     "tweet_counts": {
+      "media_tweets": 3983082,
+      "tweets": 138892997
+     },
+     "user_seed_tweet_count": 0,
+     "verification": {
+      "verified": false,
+      "verified_type": "Business"
+     },
+     "verification_info": {
+      "is_identity_verified": false,
+      "reason": {
+       "description": {
+        "entities": [
+         {
+          "from_index": 53,
+          "ref": {
+           "url": "https://twitter.com/SpaceXAI",
+           "url_type": "ExternalUrl"
+          },
+          "to_index": 62
+         },
+         {
+          "from_index": 69,
+          "ref": {
+           "url": "https://help.twitter.com/en/rules-and-policies/profile-labels",
+           "url_type": "ExternalUrl"
+          },
+          "to_index": 79
+         }
+        ],
+        "text": "This account is Premium because it's an affiliate of @SpaceXAI on X. Learn more"
+       },
+       "verified_since_msec": "1699406829926"
+      }
+     },
+     "website": {
+      "url": "https://t.co/fqNKQSjjG9"
+     }
+    }
+   }
+  }
+ }
+}

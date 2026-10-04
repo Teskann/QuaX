@@ -14,7 +14,7 @@
   "subscriptions_verification_info_verified_since_enabled": true,
   "highlights_tweets_tab_ui_enabled": true,
   "responsive_web_twitter_article_notes_tab_enabled": true,
-  "subscriptions_feature_can_gift_premium": true,
+  "subscriptions_feature_can_gift_premium": false,
   "creator_subscriptions_tweet_preview_api_enabled": true,
   "responsive_web_graphql_timeline_navigation_enabled": true
  },
@@ -30,8 +30,8 @@
  "headers": {
   "x-rate-limit-limit": "150",
   "content-type": "application/json",
-  "x-rate-limit-remaining": "140",
-  "x-rate-limit-reset": "1790865377"
+  "x-rate-limit-remaining": "136",
+  "x-rate-limit-reset": "1791148143"
  },
  "body": {
   "data": {
@@ -39,7 +39,7 @@
     "result": {
      "__typename": "User",
      "action_counts": {
-      "favorites_count": 65174
+      "favorites_count": 65269
      },
      "affiliates_highlighted_label": {},
      "avatar": {
@@ -85,7 +85,6 @@
       ]
      },
      "possibly_sensitive": false,
-     "premium_gifting_eligible": false,
      "privacy": {
       "protected": false
      },
@@ -104,8 +103,8 @@
       "translator_type": "none"
      },
      "relationship_counts": {
-      "followers": 20848,
-      "following": 37
+      "followers": 20910,
+      "following": 38
      },
      "relationship_perspectives": {
       "blocked_by": false,
@@ -120,10 +119,10 @@
      "super_followed_by": false,
      "super_following": false,
      "tweet_counts": {
-      "media_tweets": 9542,
-      "tweets": 40358
+      "media_tweets": 9562,
+      "tweets": 40437
      },
-     "user_seed_tweet_count": 42,
+     "user_seed_tweet_count": 43,
      "verification": {
       "verified": false
      },

@@ -9,6 +9,8 @@ import 'package:quax/profile/_follows.dart';
 import 'package:quax/profile/_media_grid.dart';
 import 'package:quax/profile/_saved.dart';
 import 'package:quax/profile/_tweets.dart';
+import 'package:quax/profile/media_kind.dart';
+import 'package:quax/ui/reselectable_tab_bar.dart';
 import 'package:quax/profile/profile_model.dart';
 import 'package:quax/search/search.dart';
 import 'package:quax/tweet/_media.dart';
@@ -118,6 +120,9 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
 
   late TabController _tabController;
 
+  final _mediaKind = MediaKindModel();
+  final GlobalKey _mediaTabKey = GlobalKey();
+
   bool _showBackToTopButton = false;
 
   double headerHeight = defaultHeight;
@@ -152,8 +157,40 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
   @override
   void dispose() {
     nestedScrollViewKey.currentState?.innerController.removeListener(_listen);
+    _mediaKind.destroy();
 
     super.dispose();
+  }
+
+  Widget _tab(NavigationTab tab) {
+    final title = Text(tab.titleBuilder(context), textAlign: TextAlign.center);
+    if (tab.id != ProfileTabs.media) return Tab(child: title);
+
+    return Tab(key: _mediaTabKey, child: Row(mainAxisSize: MainAxisSize.min, children: [title, const Icon(Icons.keyboard_arrow_down, size: 18)]));
+  }
+
+  void _onTabReselect(int index) {
+    if (profileTabs[index].id == ProfileTabs.media) _pickMediaKind();
+  }
+
+  Future<void> _pickMediaKind() async {
+    final box = _mediaTabKey.currentContext?.findRenderObject() as RenderBox?;
+    final overlay = Overlay.of(context).context.findRenderObject() as RenderBox?;
+    if (box == null || overlay == null) return;
+
+    final tab = box.localToGlobal(Offset.zero) & box.size;
+    final kind = await showMenu<MediaKind>(
+      context: context,
+      position: RelativeRect.fromRect(tab, Offset.zero & overlay.size),
+      items: [
+        for (final (kind, label) in [
+          (MediaKind.videos, L10n.of(context).videos),
+          (MediaKind.photos, L10n.of(context).photos),
+        ])
+          CheckedPopupMenuItem(value: kind, checked: kind == _mediaKind.state, child: Text(label)),
+      ],
+    );
+    if (kind != null) _mediaKind.select(kind);
   }
 
   void _listen() {
@@ -267,13 +304,10 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
                   bottom: AppBar(
                       automaticallyImplyLeading: false,
                       backgroundColor: theme.colorScheme.surface,
-                      flexibleSpace: TabBar(
+                      flexibleSpace: ReselectableTabBar(
                         controller: _tabController,
-                        tabs: profileTabs.map((t) =>
-                            Tab(
-                                child: Text(t.titleBuilder(context),
-                                  textAlign: TextAlign.center,
-                                ))).toList(),
+                        onReselect: _onTabReselect,
+                        tabs: profileTabs.map(_tab).toList(),
                         dividerColor: Theme
                             .of(context)
                             .colorScheme
@@ -606,7 +640,7 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
                     includeReplies: true,
                     pinnedTweets: widget.profile.pinnedTweets,
                     pref: prefs),
-                ProfileMediaGrid(user: user, pref: prefs),
+                ProfileMediaGrid(user: user, pref: prefs, kind: _mediaKind),
                 ProfileSaved(user: user),
               ],
             ),

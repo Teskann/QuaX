@@ -1,0 +1,30 @@
+{
+ "scenario": "Home timeline",
+ "sourceUrl": "https://x.com/home",
+ "operation": "SportsLeagueFollow",
+ "host": "x.com",
+ "queryId": "ROSPydUYihwVnF1940yA3A",
+ "features": null,
+ "fieldToggles": null,
+ "variables": {
+  "league": "Mlb"
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "1500",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "1498",
+  "x-rate-limit-reset": "1791148142"
+ },
+ "body": {
+  "data": {
+   "viewer": {
+    "user": {
+     "is_following_sports_league": {
+      "is_following": false
+     }
+    }
+   }
+  }
+ }
+}

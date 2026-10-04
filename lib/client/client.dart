@@ -206,12 +206,14 @@ class Twitter {
     "responsive_web_grok_share_attachment_enabled": true,
     "responsive_web_grok_show_grok_translated_post": true,
     "responsive_web_jetfuel_frame": true,
+    "responsive_web_nested_quote_preview_enabled": true,
     "responsive_web_profile_redirect_enabled": true,
     "responsive_web_twitter_article_tweet_consumption_enabled": true,
     "rweb_cashtags_composer_attachment_enabled": true,
     "rweb_cashtags_enabled": true,
     "rweb_conversational_replies_downvote_enabled": false,
     "rweb_tipjar_consumption_enabled": false,
+    "rweb_sports_post_context_enabled": true,
     "rweb_video_screen_enabled": false,
     "standardized_nudges_misinfo": true,
     "tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled": true,
@@ -252,9 +254,10 @@ class Twitter {
     if (screenName.startsWith('@')) {
       screenName = screenName.substring(1);
     }
-    var uri = Uri.https('twitter.com', '/i/api/graphql/Gb-d6r0vxPOADdG62OEBpQ/UserByScreenName', {
-      'variables': jsonEncode({'screen_name': screenName, "withSafetyModeUserFields": true}),
+    var uri = Uri.https('twitter.com', '/i/api/graphql/KybxDj9RrADIITXlGG8kpw/UserByScreenName', {
+      'variables': jsonEncode({'screen_name': screenName, "withGrokTranslatedBio": true}),
       'features': jsonEncode(_profileFeatures),
+      'fieldToggles': jsonEncode({"withPayments": false, "withAuxiliaryUserLabels": true}),
     });
 
     return _getProfile(uri);
@@ -311,7 +314,7 @@ class Twitter {
         userId,
         count,
         cursor: cursor,
-        queryId: 'qGZZDF3mp91q7X22s3HxpA',
+        queryId: 'uwmIAx89XrXNuGY-Y7WFLg',
         operation: 'Following',
       );
 
@@ -320,7 +323,7 @@ class Twitter {
         userId,
         count,
         cursor: cursor,
-        queryId: 'JNyQdTISpzCkj_1fqxDvFg',
+        queryId: 'mrqxgX8JzwlL6pvYiC5CPA',
         operation: 'Followers',
       );
 
@@ -339,7 +342,7 @@ class Twitter {
         "count": count,
         "cursor": ?cursor,
         "includePromotedContent": false,
-        "withGrokTranslatedBio": false,
+        "withGrokTranslatedBio": true,
       }),
       "features": jsonEncode(_timelineFeatures),
     });
@@ -445,26 +448,27 @@ class Twitter {
     return replies;
   }
 
+  /// X sends an empty `tweet_results` for a post it cannot show (the photos of @grok): skip it rather than fail the page.
+  static TweetChain? _singleTweetChain(Map<String, dynamic>? result, bool isPinned) {
+    final id = (result?['rest_id'] ?? result?['tweet']?['rest_id']) as String?;
+    if (result == null || id == null) return null;
+
+    return TweetChain(id: id, tweets: [TweetWithCard.fromGraphqlJson(result)], isPinned: isPinned);
+  }
+
   static List<TweetChain> createTweets(List<dynamic> addEntries, [bool isPinned = false]) {
     List<TweetChain> replies = [];
 
     for (var entry in addEntries) {
       var entryId = entry['entryId'] as String;
       if (entryId.startsWith('tweet-')) {
-        var result = entry['content']['itemContent']['tweet_results']['result'];
-        TweetWithCard? tweet = TweetWithCard.fromGraphqlJson(result);
-
-        replies.add(
-          TweetChain(id: result['rest_id'] ?? result['tweet']['rest_id'], tweets: [tweet], isPinned: isPinned),
-        );
-      } else if (entryId.startsWith('profile-grid-')) {
-        // We got a tweet queried from the media tab
-        for (var mediaTweet in entry['content']['items']) {
-          var result = mediaTweet['item']['itemContent']['tweet_results']['result'];
-          TweetWithCard? tweet = TweetWithCard.fromGraphqlJson(result);
-          replies.add(
-            TweetChain(id: result['rest_id'] ?? result['tweet']['rest_id'], tweets: [tweet], isPinned: isPinned),
-          );
+        final chain = _singleTweetChain(entry['content']?['itemContent']?['tweet_results']?['result'], isPinned);
+        if (chain != null) replies.add(chain);
+      } else if (entryId.startsWith('profile-grid-') || entryId.startsWith('profile-photo-grid-')) {
+        // We got a tweet queried from the media tab (videos or photos)
+        for (var mediaTweet in entry['content']?['items'] ?? const []) {
+          final chain = _singleTweetChain(mediaTweet['item']?['itemContent']?['tweet_results']?['result'], isPinned);
+          if (chain != null) replies.add(chain);
         }
       }
 
@@ -510,8 +514,8 @@ class Twitter {
       "fieldToggles": jsonEncode({
         "withArticleRichContentState": true,
         "withArticlePlainText": false,
-        "withArticleSummaryText": false,
-        "withArticleVoiceOver": false,
+        "withArticleSummaryText": true,
+        "withArticleVoiceOver": true,
         "withGrokAnalyze": false,
         "withDisallowedReplyControls": false,
       }),
@@ -527,7 +531,7 @@ class Twitter {
     defaultParam["variables"] = json.encode(variables);
 
     var response = await _twitterApi.client.get(
-      Uri.https('x.com', '/i/api/graphql/XMOz5h24KAZ86qKffKTLdQ/TweetDetail', defaultParam),
+      Uri.https('x.com', '/i/api/graphql/blErEeZkos5TDrWmrCp7cw/TweetDetail', defaultParam),
     );
 
     return parseTweetDetail(json.decode(response.body) as Map<String, dynamic>);
@@ -577,7 +581,7 @@ class Twitter {
       variables['cursor'] = cursor;
     }
 
-    var uri = Uri.https('x.com', '/i/api/graphql/hyPfJYJ_XAtDYoslQc-Rgg/SearchTimeline', {
+    var uri = Uri.https('x.com', '/i/api/graphql/uGB-gNd5HE4TkpO70OcFNw/SearchTimeline', {
       'variables': jsonEncode(variables),
       'features': jsonEncode(_timelineFeatures),
     });
@@ -655,7 +659,7 @@ class Twitter {
       variables['cursor'] = cursor;
     }
 
-    var uri = Uri.https('twitter.com', '/i/api/graphql/hyPfJYJ_XAtDYoslQc-Rgg/SearchTimeline', {
+    var uri = Uri.https('twitter.com', '/i/api/graphql/uGB-gNd5HE4TkpO70OcFNw/SearchTimeline', {
       'variables': jsonEncode(variables),
       'features': jsonEncode(_timelineFeatures),
     });
@@ -739,7 +743,7 @@ class Twitter {
     defaultUserTweetsParam["variables"] = json.encode(variables);
 
     var response = await _twitterApi.client.get(
-      Uri.https('twitter.com', 'i/api/graphql/wp06oo3fRGU4P1sK8rECqQ/HomeTimeline', defaultUserTweetsParam),
+      Uri.https('twitter.com', 'i/api/graphql/whgGeEQDhEDkPQEJiJvYQw/HomeTimeline', defaultUserTweetsParam),
     );
     var result = json.decode(response.body);
     //if this page is not first one on the profile page, dont add pinned tweet
@@ -756,6 +760,32 @@ class Twitter {
     );
   }
 
+  static const _postsVariables = {
+    "includePromotedContent": true,
+    "withQuickPromoteEligibilityTweetFields": true,
+    "withVoice": true,
+  };
+
+  static const _mediaVariables = {
+    "includePromotedContent": false,
+    "withClientEventToken": false,
+    "withBirdwatchNotes": false,
+    "withVoice": true,
+  };
+
+  /// The web's Media tab is split in two requests: videos (`media`) and photos.
+  static ({String path, Map<String, Object> variables}) _userTimeline(String type, bool includeReplies) {
+    return switch (type) {
+      "media" => (path: "/i/api/graphql/5A9PzD08T6PbvC2QlEYxMg/UserVideoTimeline", variables: _mediaVariables),
+      "photos" => (path: "/i/api/graphql/YqEBDpaXbWuRPks59hau0g/UserPhotoTimeline", variables: _mediaVariables),
+      _ when includeReplies => (
+          path: "/i/api/graphql/Z1m9j8S1leAzQp6yZXuaSg/UserTweetsAndReplies",
+          variables: {..._postsVariables, "withCommunity": true},
+        ),
+      _ => (path: "/i/api/graphql/qtvmQffnepvr0oPe4A8MqQ/UserOriginalsTimeline", variables: _postsVariables),
+    };
+  }
+
   static Future<TweetStatus> getTweets(
     String id,
     String type,
@@ -770,34 +800,13 @@ class Twitter {
     bool showPinnedTweet = true;
     var query = {...defaultParams, 'count': count.toString()};
 
+    final timeline = _userTimeline(type, includeReplies);
     Map<String, Object> defaultUserTweetsParam = {
-      "variables": jsonEncode({
-        "userId": "8341362",
-        "count": 20,
-        "includePromotedContent": true,
-        "withQuickPromoteEligibilityTweetFields": true,
-        "withVoice": true,
-      }),
+      "variables": jsonEncode({...timeline.variables, "userId": id, "count": count, "cursor": ?cursor}),
       "features": jsonEncode(_timelineFeatures),
-      "fieldToggles": jsonEncode({"withArticlePlainText": false}),
+      "fieldToggles": jsonEncode({"withPayments": false, "withArticlePlainText": false}),
     };
-
-    Map<String, dynamic> variables = json.decode(defaultUserTweetsParam["variables"].toString());
-    variables["userId"] = id;
-    if (cursor != null) {
-      variables['cursor'] = cursor;
-    }
-    variables['count'] = count;
-    defaultUserTweetsParam["variables"] = json.encode(variables);
-
-    late String path;
-    if (type == "media") {
-      path = "/i/api/graphql/36oKqyQ7E_9CmtONGjJRsA/UserMedia";
-    } else {
-      path = includeReplies
-          ? "/i/api/graphql/T52C7z3XOxUTSsIn1sQ5MA/UserTweetsAndReplies"
-          : '/i/api/graphql/eviprbEPLvNG88V3smUngQ/UserTweets';
-    }
+    final path = timeline.path;
 
     var response = await _twitterApi.client.get(Uri.https('x.com', path, defaultUserTweetsParam));
 
@@ -808,7 +817,7 @@ class Twitter {
     var result = json.decode(response.body);
 
     //if this page is not first one on the profile page, dont add pinned tweet
-    if (variables['cursor'] != null) showPinnedTweet = false;
+    if (cursor != null) showPinnedTweet = false;
     return createUnconversationedChains(
       result,
       'tweet',
