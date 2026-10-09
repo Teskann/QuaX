@@ -36,18 +36,38 @@ void main() {
               'in it. An AND would ask for a post written by all three at the same time');
     });
 
-    test('Should quote a search subscription so its words are looked up together', () {
+    test('Should put a multi-word search subscription in brackets so its words stay together', () {
       expect(buildFeedSearchQuery([search('flutter forever')], includeReplies: true, includeRetweets: true),
-          '("flutter forever") include:nativeretweets',
-          reason: 'Without the quotes X would look for the words apart, so a subscription to a phrase '
-              'would bring back posts that only share one word of it');
+          '((flutter forever)) include:nativeretweets',
+          reason: 'Brackets group the words as one AND term, and unlike quotes they leave X free to read '
+              'operators, so a subscription to a phrase still matches posts that hold all of its words');
+    });
+
+    test('Should put a single keyword search subscription in brackets', () {
+      expect(buildFeedSearchQuery([search('dart')], includeReplies: true, includeRetweets: true),
+          '((dart)) include:nativeretweets',
+          reason: 'A one-word search takes the same shape as a longer one, with nothing special-cased');
+    });
+
+    test('Should not quote a search subscription so X still applies its operators', () {
+      expect(buildFeedSearchQuery([search('list:123 keyword')], includeReplies: true, includeRetweets: true),
+          '((list:123 keyword)) include:nativeretweets',
+          reason: 'Quotes made X look for the literal text "list:123", so a saved search on a list returned '
+              'week-old posts. Brackets let list: filter and keyword narrow the results');
     });
 
     test('Should mix user and search subscriptions in the same query', () {
       expect(buildFeedSearchQuery([user('a'), search('dart')], includeReplies: true, includeRetweets: true),
-          '(from:a OR "dart") include:nativeretweets',
+          '(from:a OR (dart)) include:nativeretweets',
           reason: 'A group can hold both kinds at once, and both are looked up by the one request that '
               'loads the chunk');
+    });
+
+    test('Should join an operator search with user subscriptions using OR', () {
+      expect(buildFeedSearchQuery([user('a'), search('list:123 keyword')], includeReplies: false, includeRetweets: true),
+          '(from:a OR (list:123 keyword)) -filter:replies include:nativeretweets',
+          reason: 'The operator search is one OR term next to the user, and its own brackets keep the implicit '
+              'AND between list: and the keyword from leaking into the OR');
     });
 
     test('Should leave out the brackets when the group has no subscription', () {
