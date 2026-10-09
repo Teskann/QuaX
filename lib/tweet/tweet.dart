@@ -242,25 +242,29 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     );
   }
 
+  /// The color and the action of the translate button, or null while the translation is loading
+  ({Color? color, VoidCallback onTap})? _translateAction(Locale locale, {Color? idleColor}) {
+    final primary = Theme.of(context).colorScheme.primary;
+    return switch (_translationStatus) {
+      TranslationStatus.original => (color: idleColor, onTap: () => onClickTranslate(context, locale)),
+      TranslationStatus.translating => null,
+      TranslationStatus.translationFailed => (
+          color: Colors.red.harmonizeWith(primary),
+          onTap: () => onClickTranslate(context, locale)
+        ),
+      TranslationStatus.translated => (color: primary, onTap: () => onClickShowOriginal()),
+    };
+  }
+
   Widget _buildTranslateButton(Locale locale) {
-    switch (_translationStatus) {
-      case TranslationStatus.original:
-        return _createFooterIconButton(Icons.translate, buttonsColor(context), null, () async => onClickTranslate(context, locale));
-      case TranslationStatus.translating:
-        return const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24),
-          child: SizedBox(width: 16, height: 16, child: CircularProgressIndicator()),
-        );
-      case TranslationStatus.translationFailed:
-        return _createFooterIconButton(
-            Icons.translate,
-            Colors.red.harmonizeWith(Theme.of(context).colorScheme.primary),
-            null,
-            () async => onClickTranslate(context, locale));
-      case TranslationStatus.translated:
-        return _createFooterIconButton(
-            Icons.translate, Theme.of(context).colorScheme.primary, null, () async => onClickShowOriginal());
+    final action = _translateAction(locale, idleColor: buttonsColor(context));
+    if (action == null) {
+      return const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 24),
+        child: SizedBox(width: 16, height: 16, child: CircularProgressIndicator()),
+      );
     }
+    return _createFooterIconButton(Icons.translate, action.color, null, () async => action.onTap());
   }
 
   Future<void> _toggleLike(LikedTweetModel model, TweetWithCard tweet, bool isLiked) async {
@@ -426,7 +430,6 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
       onToggleSave: (model, isSaved) => _toggleSave(model, tweet, isSaved),
       onFileTweet: () => _fileTweet(tweet),
       onShare: () => _showShareSheet(tweet, tweetText, shareBaseUrl, isArticle),
-      extra: isArticle ? null : _buildTranslateButton(locale),
     );
   }
 
@@ -471,11 +474,14 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
   TextStyle _xTextStyle(BuildContext context) =>
       TextStyle(fontSize: 15, height: 20 / 15, color: XStyleColors.of(context).primaryText);
 
-  String? _formatTime(DateTime? time, bool absolute) {
+  String? _formatTime(DateTime? time, bool absolute, {bool compact = false}) {
     if (time == null) {
       return null;
     }
-    return absolute ? absoluteDateFormat.format(time.toLocal()) : createRelativeDate(time);
+    if (absolute) {
+      return absoluteDateFormat.format(time.toLocal());
+    }
+    return compact ? xRelativeTime(time, DateTime.now()) : createRelativeDate(time);
   }
 
   @override
@@ -798,7 +804,8 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
                   name: hideAuthorInformation ? null : tweet.user!.name,
                   handle: hideAuthorInformation ? null : tweet.user!.screenName,
                   verified: !hideAuthorInformation && (tweet.user!.verified ?? false),
-                  time: _formatTime(createdAt, prefs.get(optionUseAbsoluteTimestamp)),
+                  time: _formatTime(createdAt, prefs.get(optionUseAbsoluteTimestamp), compact: true),
+                  trailing: tweet.article == null ? XTranslateButton(action: _translateAction(locale)) : null,
                 ),
                 body: contentChildren,
                 actionBar: footerBar,

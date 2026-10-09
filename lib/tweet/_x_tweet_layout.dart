@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:quax/client/client.dart';
 import 'package:quax/saved/liked_tweet_model.dart';
 import 'package:quax/saved/saved_tweet_model.dart';
+import 'package:quax/ui/locale_fallback.dart';
 import 'package:quax/ui/x_style.dart';
 
 const _avatarSize = 40.0;
@@ -111,6 +112,7 @@ class XTweetHeader extends StatelessWidget {
   final String? handle;
   final bool verified;
   final String? time;
+  final Widget? trailing;
 
   const XTweetHeader({
     super.key,
@@ -118,43 +120,36 @@ class XTweetHeader extends StatelessWidget {
     this.handle,
     this.verified = false,
     this.time,
+    this.trailing,
   });
 
   @override
   Widget build(BuildContext context) {
-    final colors = XStyleColors.of(context);
-    final secondary = TextStyle(fontSize: 15, color: colors.secondaryText);
-    final details = [if (handle != null) '@$handle', ?time].join(' · ');
+    final info = Row(children: [..._name(XStyleColors.of(context)), ..._details(XStyleColors.of(context))]);
+    if (trailing == null) return info;
+    return Row(children: [Expanded(child: info), const SizedBox(width: 8), trailing!]);
+  }
 
-    return Row(
-      children: [
+  List<Widget> _name(XStyleColors colors) => [
         if (name != null)
           Flexible(
-            child: Text(
-              name!,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                color: colors.primaryText,
-              ),
-            ),
+            child: Text(name!,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: colors.primaryText)),
           ),
-        if (verified) ...[
-          const SizedBox(width: 2),
-          Icon(Icons.verified, size: 16, color: XStyleColors.verified),
-        ],
-        Flexible(
-          child: Text(
-            name == null ? details : ' $details',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: secondary,
-          ),
-        ),
-      ],
-    );
+        if (verified) ...[const SizedBox(width: 2), Icon(Icons.verified, size: 16, color: XStyleColors.verified)],
+      ];
+
+  /// The handle gives way first when the line is too short, so the time always stays readable, as in X
+  List<Widget> _details(XStyleColors colors) {
+    final style = TextStyle(fontSize: 15, color: colors.secondaryText);
+    final gap = name == null ? '' : ' ';
+    return [
+      if (handle != null)
+        Flexible(child: Text('$gap@$handle', maxLines: 1, overflow: TextOverflow.ellipsis, style: style)),
+      if (time != null) Text((handle == null ? gap : ' · ') + time!, maxLines: 1, style: style),
+    ];
   }
 }
 
@@ -190,7 +185,6 @@ class XActionBar extends StatelessWidget {
   final Future<void> Function(SavedTweetModel model, bool isSaved) onToggleSave;
   final VoidCallback onFileTweet;
   final VoidCallback onShare;
-  final Widget? extra;
 
   const XActionBar({
     super.key,
@@ -201,7 +195,6 @@ class XActionBar extends StatelessWidget {
     required this.onToggleSave,
     required this.onFileTweet,
     required this.onShare,
-    this.extra,
   });
 
   String _count(int? count) =>
@@ -213,30 +206,24 @@ class XActionBar extends StatelessWidget {
     final reposts = (tweet.retweetCount ?? 0) + (tweet.quoteCount ?? 0);
 
     return Container(
-      margin: const EdgeInsets.only(top: 12),
+      margin: const EdgeInsets.only(top: 6),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _XAction(
-            icon: Icons.chat_bubble_outline,
-            count: _count(tweet.replyCount),
-            onTap: onReply,
-          ),
-          _XAction(
-            icon: Icons.repeat,
-            count: _count(reposts),
-            color: retweeted ? XStyleColors.repost : null,
-          ),
-          _buildLike(),
-          _XAction(icon: Icons.bar_chart, count: _count(tweet.viewCount)),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [_buildBookmark(), _XAction.share(onShare), ?extra],
-          ),
+          ...[
+            _XAction(icon: Icons.chat_bubble_outline, count: _count(tweet.replyCount), onTap: onReply),
+            _XAction(icon: Icons.repeat, count: _count(reposts), color: retweeted ? XStyleColors.repost : null),
+            _buildLike(),
+            _XAction(icon: Icons.bar_chart, count: _count(tweet.viewCount)),
+          ].map(_slot),
+          _buildBookmark(),
+          _XAction.share(onShare),
         ],
       ),
     );
   }
+
+  /// The counted actions share the width evenly and start on the left of their slot, as in X
+  static Widget _slot(Widget action) => Expanded(child: Align(alignment: Alignment.centerLeft, child: action));
 
   Widget _buildLike() => Consumer<LikedTweetModel>(
     builder: (context, model, child) {
@@ -307,4 +294,36 @@ class _XAction extends StatelessWidget {
       ),
     );
   }
+}
+
+/// The translate button of the X header: a small icon where X puts its menu. [action] is null while translating.
+class XTranslateButton extends StatelessWidget {
+  final ({Color? color, VoidCallback onTap})? action;
+
+  const XTranslateButton({super.key, required this.action});
+
+  @override
+  Widget build(BuildContext context) {
+    final action = this.action;
+    if (action == null) {
+      return const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2));
+    }
+    return InkResponse(
+      onTap: action.onTap,
+      radius: 16,
+      child: Icon(Icons.translate, size: 16, color: action.color ?? XStyleColors.of(context).secondaryText),
+    );
+  }
+}
+
+/// How old a post is, written as short as X does: seconds, minutes and hours, then the day, and the year once it is
+/// not the current one.
+String xRelativeTime(DateTime time, DateTime now) {
+  final age = now.difference(time);
+  if (age.inMinutes < 1) return '${age.inSeconds.clamp(0, 59)}s';
+  if (age.inHours < 1) return '${age.inMinutes}m';
+  if (age.inDays < 1) return '${age.inHours}h';
+  final local = time.toLocal();
+  final sameYear = local.year == now.toLocal().year;
+  return (sameYear ? DateFormat.MMMd(safeIntlLocale()) : DateFormat.yMMMd(safeIntlLocale())).format(local);
 }

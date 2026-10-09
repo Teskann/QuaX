@@ -85,9 +85,11 @@ void main() {
           reason: 'The X design is flat: no card around a tweet');
       final header = find.byType(XTweetHeader);
       final name = find.descendant(of: header, matching: find.text('Ada Lovelace'));
-      final details = find.descendant(of: header, matching: find.textContaining('@ada · '));
+      final details = find.descendant(of: header, matching: find.text(' @ada'));
       expect(name, findsOneWidget, reason: 'The header should name the author');
-      expect(details, findsOneWidget, reason: 'The handle and the time should be separated by a dot');
+      expect(details, findsOneWidget, reason: 'The header should show the handle after the name');
+      expect(find.descendant(of: header, matching: find.text(' · 2h')), findsOneWidget,
+          reason: 'The time should follow the handle after a dot, written short as X does');
       expect(tester.getCenter(name).dy, moreOrLessEquals(tester.getCenter(details).dy, epsilon: 1),
           reason: 'The name and the handle should sit on the same line');
       expect(find.descendant(of: header, matching: find.byIcon(Icons.verified)), findsOneWidget,
