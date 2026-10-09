@@ -23,6 +23,7 @@ import 'package:quax/tweet/unavailable_tweet.dart';
 import 'package:quax/article/article.dart';
 import 'package:quax/ui/dates.dart';
 import 'package:quax/ui/errors.dart';
+import 'package:quax/ui/locale_fallback.dart';
 import 'package:quax/ui/x_style.dart';
 import 'package:quax/user.dart';
 import 'package:quax/utils/rich_text.dart';
@@ -492,7 +493,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
         currentUsername != null && tweet.user != null && currentUsername == tweet.user!.screenName;
     final hideAuthorInformation = !isTweetOnSameProfile && prefs.get(optionNonConfirmationBiasMode);
 
-    var numberFormat = NumberFormat.compact();
+    var numberFormat = NumberFormat.compact(locale: safeIntlLocale());
     var theme = Theme.of(context);
     final xStyle = isXStyle(context);
     final smallStyle = theme.textTheme.bodySmall!.copyWith(color: xStyle ? XStyleColors.of(context).secondaryText : null);

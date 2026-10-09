@@ -14,6 +14,7 @@ import 'package:quax/tweet/_grok_card.dart';
 import 'package:quax/tweet/_media.dart';
 import 'package:quax/tweet/_video.dart';
 import 'package:quax/ui/errors.dart';
+import 'package:quax/ui/locale_fallback.dart';
 import 'package:quax/utils/urls.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
@@ -178,7 +179,7 @@ class TweetCard extends StatelessWidget {
   }
 
   Container _createVoteCard(BuildContext context, Map<String, dynamic> card, int numberOfChoices) {
-    var numberFormat = NumberFormat.decimalPattern();
+    var numberFormat = NumberFormat.decimalPattern(safeIntlLocale());
 
     var counts = List.generate(
         numberOfChoices, (index) => double.parse(card['binding_values']['choice${index + 1}_count']['string_value']));

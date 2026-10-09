@@ -2,8 +2,9 @@ import 'package:material_ui/material_ui.dart';
 import 'package:quax/group/group_model.dart';
 import 'package:quax/user.dart';
 import 'package:intl/intl.dart';
+import 'package:quax/ui/locale_fallback.dart';
 
-final DateFormat sqliteDateFormat = DateFormat('yyyy-MM-dd HH:mm:ss');
+final DateFormat sqliteDateFormat = DateFormat('yyyy-MM-dd HH:mm:ss', safeIntlLocale());
 
 mixin ToMappable {
   Map<String, dynamic> toMap();

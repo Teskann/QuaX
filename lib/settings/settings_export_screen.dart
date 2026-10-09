@@ -12,6 +12,7 @@ import 'package:quax/saved/saved_tweet_model.dart';
 import 'package:quax/settings/_data.dart';
 import 'package:quax/subscriptions/users_model.dart';
 import 'package:intl/intl.dart';
+import 'package:quax/ui/locale_fallback.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
 import 'package:quax/generated/l10n.dart';
@@ -163,7 +164,7 @@ class _SettingsExportScreenState extends State<SettingsExportScreen> {
 
                 var exportData = jsonEncode(data.toJson());
 
-                var dateFormat = DateFormat('yyyy-MM-dd');
+                var dateFormat = DateFormat('yyyy-MM-dd', safeIntlLocale());
                 var fileName = 'quax-${dateFormat.format(DateTime.now())}.json';
 
                 // This platform can support the directory picker, so display it
