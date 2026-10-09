@@ -21,6 +21,11 @@ class SettingsThemeFragment extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8),
         child: ListView(children: [
+          PrefSwitch(
+            title: Text(L10n.of(context).x_design),
+            subtitle: Text(L10n.of(context).x_design_description),
+            pref: optionXStyle,
+          ),
           PrefDropdown(fullWidth: false, title: Text(L10n.of(context).theme_mode), pref: optionThemeMode, items: [
             DropdownMenuItem(
               value: 'system',

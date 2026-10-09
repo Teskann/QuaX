@@ -22,11 +22,11 @@ import '../fixtures.dart';
 import '../ui/pump_app.dart';
 
 /// Wraps [child] with the models tweet tiles and profiles read, as the app does.
-Widget withAppModels(Widget child) => MultiProvider(
+Widget withAppModels(Widget child, {LikedTweetModel? likedModel, SavedTweetModel? savedModel}) => MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ImportDataModel()),
-        Provider(create: (_) => LikedTweetModel()),
-        Provider(create: (_) => SavedTweetModel()),
+        Provider(create: (_) => likedModel ?? LikedTweetModel()),
+        Provider(create: (_) => savedModel ?? SavedTweetModel()),
         Provider(create: (_) => VideoControllerPool(maxSize: 2)),
         Provider(create: (context) => GroupsModel(PrefService.of(context, listen: false))),
         Provider(

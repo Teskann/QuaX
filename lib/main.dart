@@ -45,6 +45,7 @@ import 'package:provider/provider.dart';
 import 'package:quax/utils/urls.dart';
 import 'package:secure_content/secure_content.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:quax/ui/x_style.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:app_links/app_links.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -226,6 +227,7 @@ Future<void> main() async {
     optionSubscriptionOrderByAscending: true,
     optionSubscriptionOrderByField: 'name',
     optionSubscriptionOrderCustom: '',
+    optionXStyle: false,
     optionThemeMode: 'system',
     optionThemeColor: 'accent',
     optionThemeTrueBlack: false,
@@ -329,6 +331,7 @@ class _FritterAppState extends State<FritterApp> {
   String _themeColor = 'accent';
   bool _disableAnimations = false;
   bool _trueBlack = true;
+  bool _xStyle = false;
   bool _checkUpdates = false;
   bool _updateDialogShown = false;
   bool _discordDialogShown = false;
@@ -367,6 +370,7 @@ class _FritterAppState extends State<FritterApp> {
       _themeMode = prefService.get(optionThemeMode);
       _themeColor = prefService.get(optionThemeColor);
       _trueBlack = prefService.get(optionThemeTrueBlack);
+      _xStyle = prefService.get(optionXStyle);
       _disableAnimations = prefService.get(optionDisableAnimations);
       _checkUpdates = prefService.get(optionShouldCheckForUpdates);
       _isSecure = prefService.get(optionDisableScreenshots);
@@ -387,6 +391,12 @@ class _FritterAppState extends State<FritterApp> {
     prefService.addKeyListener(optionThemeTrueBlack, () {
       setState(() {
         _trueBlack = prefService.get(optionThemeTrueBlack);
+      });
+    });
+
+    prefService.addKeyListener(optionXStyle, () {
+      setState(() {
+        _xStyle = prefService.get(optionXStyle);
       });
     });
 
@@ -455,7 +465,10 @@ class _FritterAppState extends State<FritterApp> {
                   supportedLocales: L10n.delegate.supportedLocales,
                   locale: _locale,
                   title: 'QuaX',
-                  theme: ThemeData(
+                  theme: _xStyle
+                      ? buildXTheme(Brightness.light).copyWith(
+                          pageTransitionsTheme: _disableAnimations == true ? _noAnimationPageTransitionsTheme : null)
+                      : ThemeData(
                     colorScheme: _themeColor == 'accent'
                         ? lightDynamic
                         : ColorScheme.fromSeed(
@@ -465,7 +478,10 @@ class _FritterAppState extends State<FritterApp> {
                     pageTransitionsTheme: _disableAnimations == true ? _noAnimationPageTransitionsTheme : null,
                     useMaterial3: true,
                   ),
-                  darkTheme: ThemeData(
+                  darkTheme: _xStyle
+                      ? buildXTheme(Brightness.dark).copyWith(
+                          pageTransitionsTheme: _disableAnimations == true ? _noAnimationPageTransitionsTheme : null)
+                      : ThemeData(
                     colorScheme: (_trueBlack == true
                         ? (_themeColor == 'accent'
                                 ? darkDynamic

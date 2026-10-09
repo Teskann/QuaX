@@ -15,6 +15,7 @@ import 'package:quax/search/search.dart';
 import 'package:quax/subscriptions/subscriptions.dart';
 import 'package:quax/trends/trends_screen.dart';
 import 'package:quax/ui/errors.dart';
+import 'package:quax/ui/x_style.dart';
 
 typedef NavigationTitleBuilder = String Function(BuildContext context);
 
@@ -35,6 +36,21 @@ final List<NavigationPage> defaultHomePages = [
   NavigationPage(
       'saved', (c) => L10n.of(c).saved, const Icon(Icons.bookmark_border_outlined), const Icon(Icons.bookmark)),
 ];
+
+/// Draws the divider that tops the navigation bar of the X design.
+class _NavigationFrame extends StatelessWidget {
+  final Widget child;
+
+  const _NavigationFrame({required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    if (!isXStyle(context)) {
+      return child;
+    }
+    return Column(mainAxisSize: MainAxisSize.min, children: [const Divider(), child]);
+  }
+}
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -201,6 +217,8 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
   @override
   Widget build(BuildContext context) {
     final l10n = L10n.of(context);
+    final xStyle = isXStyle(context);
+    final showLabels = !xStyle && widget.prefs.get(optionShowNavigationLabels);
 
     return Scaffold(
       drawer: Drawer(
@@ -229,22 +247,22 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
         },
         children: widget.builder(_scrollControllers, _focusNodes),
       ),
-      bottomNavigationBar: NavigationBar(
+      bottomNavigationBar: _NavigationFrame(child: NavigationBar(
         selectedIndex: _currentPage,
-        labelBehavior: widget.prefs.get(optionShowNavigationLabels)
+        labelBehavior: showLabels
             ? NavigationDestinationLabelBehavior.alwaysShow
             : NavigationDestinationLabelBehavior.alwaysHide,
         shadowColor: Colors.transparent,
-        backgroundColor: Colors.transparent,
+        backgroundColor: xStyle ? null : Colors.transparent,
         indicatorColor: Colors.transparent,
-        height: 64,
+        height: xStyle ? null : 64,
         destinations: widget.pages.asMap().entries
             .map(
               (e) {
                 final index = e.key;
                 final page = e.value;
                 final isSelected = _currentPage == index;
-                final scale = widget.prefs.get(optionShowNavigationLabels) ? 1.0 : (isSelected ? 1.2 : 1.2);
+                final scale = showLabels ? 1.0 : (isSelected ? 1.2 : 1.2);
                 return NavigationDestination(
                   icon: AnimatedScale(
                     scale: scale,
@@ -278,7 +296,7 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
           unfocusOtherPages();
           _pageController.jumpToPage(index);
         },
-      ),
+      )),
     );
   }
 
