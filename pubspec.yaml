@@ -20,7 +20,7 @@ version: 4.16.0+400001049
 
 environment:
   sdk: "3.13.5"
-  flutter: 3.47.6
+  flutter: 3.47.7
 
 dependency_overrides:
   # auto_direction pins an old intl (^0.17/^0.18) that conflicts with
@@ -53,7 +53,7 @@ dependencies:
   # "sdk: <3.0.0" upper bound, which pub treats as auto-widened to any 3.x
   # SDK for packages published before Dart 3 shipped. 0.0.7 was published
   # after Dart 3 shipped, so its explicit "sdk: <3.13.0" bound is enforced
-  # literally and excludes our pinned 3.13.4 SDK.
+  # literally and excludes our pinned 3.13.5 SDK.
   auto_direction: ^0.0.6
   extended_image: ^10.0.0
   extended_nested_scroll_view: ^6.0.0
@@ -105,7 +105,7 @@ dependencies:
 
   # Miscellaneous
   async_button_builder: ^3.0.0+1
-  better_player_plus: ^1.3.4
+  better_player_plus: ^2.0.0
   ffcache: ^1.1.0
   animations: ^3.0.0
 
