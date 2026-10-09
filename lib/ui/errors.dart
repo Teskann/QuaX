@@ -373,21 +373,35 @@ class ErrorCard extends StatelessWidget {
   }
 }
 
-/// Card with a red icon, a title, details and actions, shared by errors and unavailable posts
-class StatusCard extends StatelessWidget {
+/// How serious a [StatusCard] is, which sets its icon and the color of the icon
+enum StatusLevel {
+  error(Icons.error_outline, Colors.red),
+  warning(Icons.warning_amber, Colors.amber);
+
   final IconData icon;
+  final Color color;
+
+  const StatusLevel(this.icon, this.color);
+}
+
+/// Card with a colored icon, a title, details and actions, shared by errors, warnings and unavailable posts. The
+/// [level] sets the color of the icon, and its default icon when none is given
+class StatusCard extends StatelessWidget {
+  final IconData? icon;
   final String title;
   final String details;
   final List<Widget> actions;
   final EdgeInsetsGeometry margin;
+  final StatusLevel level;
 
   const StatusCard(
       {super.key,
-      required this.icon,
+      this.icon,
       required this.title,
       required this.details,
       required this.actions,
-      this.margin = const EdgeInsets.all(12)});
+      this.margin = const EdgeInsets.all(12),
+      this.level = StatusLevel.error});
 
   @override
   Widget build(BuildContext context) {
@@ -414,7 +428,7 @@ class StatusCard extends StatelessWidget {
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
     return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Icon(icon, size: 32, color: Colors.red.harmonizeWith(colors.primary)),
+      Icon(icon ?? level.icon, size: 32, color: level.color.harmonizeWith(colors.primary)),
       const SizedBox(width: 12),
       Expanded(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
