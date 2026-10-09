@@ -8,6 +8,7 @@ import 'package:quax/database/entities.dart';
 import 'package:quax/database/repository.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/group/group_model.dart';
+import 'package:quax/home/home_model.dart';
 import 'package:quax/import_data_model.dart';
 import 'package:quax/saved/liked_tweet_model.dart';
 import 'package:quax/saved/saved_tweet_folder_model.dart';
@@ -78,6 +79,25 @@ class SettingsData {
   }
 }
 
+/// A value as the preferences can hold it. JSON reads lists back as lists of objects, which the preferences refuse
+Object? _storable(Object? value) => switch (value) {
+      List() => value.every((e) => e is String) ? value.cast<String>().toList() : null,
+      _ => value,
+    };
+
+bool _sameKind(Object? current, Object? value) =>
+    current == null || (current is List ? value is List : current.runtimeType == value.runtimeType);
+
+/// The [settings] of a backup that the preferences can take. What they cannot hold, or what is not of the kind they
+/// hold now, is left out, so that a damaged value keeps the current one instead of breaking the app
+Map<String, dynamic> restorableSettings(BasePrefService prefs, Map<String, dynamic> settings) => {
+      for (final MapEntry(:key, :value) in settings.entries)
+        if (_storable(value) case final storable? when _sameKind(prefs.get<dynamic>(key), storable)) key: storable,
+    };
+
+Future<void> importSettings(BasePrefService prefs, Map<String, dynamic> settings) =>
+    prefs.fromMap(restorableSettings(prefs, settings));
+
 Future<void> _importFromFile(BuildContext context, File file) async {
   var content = jsonDecode(file.readAsStringSync());
 
@@ -89,7 +109,7 @@ Future<void> _importFromFile(BuildContext context, File file) async {
 
   var settings = data.settings;
   if (settings != null) {
-    prefs.fromMap(settings);
+    await importSettings(prefs, settings);
   }
 
   var dataToImport = <String, List<ToMappable>>{};
@@ -136,6 +156,7 @@ Future<void> _importFromFile(BuildContext context, File file) async {
 
   await importModel.importData(dataToImport);
   await groupModel.reloadGroups();
+  context.mounted ? await context.read<HomeModel>().loadPages() : null;
   context.mounted ? await context.read<SubscriptionsModel>().reloadSubscriptions() : null;
   context.mounted ? await context.read<SavedTweetFolderModel>().listFolders() : null;
   context.mounted ? await context.read<LikedTweetModel>().listLikedTweets() : null;
