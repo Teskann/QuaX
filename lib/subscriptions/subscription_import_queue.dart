@@ -85,6 +85,9 @@ typedef PeriodicTimerFactory = Timer Function(Duration interval, void Function(T
 
 /// Imports the accounts waiting in the queue [smartImportBatch] at a time, every [smartImportInterval] while the app
 /// runs. The state is how many accounts are still waiting.
+///
+/// The batches are saved silently: reloading the models would rebuild the open feeds and search every chunk again each
+/// minute. The app is told once, when the queue gets empty.
 class SubscriptionImportQueueModel extends Store<int> {
   static final log = Logger('SubscriptionImportQueueModel');
 
@@ -131,7 +134,8 @@ class SubscriptionImportQueueModel extends Store<int> {
       await store.remove(batch.map((e) => e.id).toList());
     }
     update(await store.count());
-    if (state == 0) _stop();
+    if (state > 0) return;
+    _stop();
     if (batch.isNotEmpty) await saver.reload();
   }
 

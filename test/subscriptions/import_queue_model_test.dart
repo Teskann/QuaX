@@ -54,7 +54,50 @@ void main() {
 
         async.elapse(smartImportInterval);
         expect(saver.saved.last.first, '16', reason: 'The next batch should continue where the last stopped');
-        expect(saver.reloads, 2, reason: 'The app should be told after each batch');
+        expect(saver.reloads, 0, reason: 'The feeds should not reload while accounts are still waiting');
+      });
+    });
+
+    test('Should reload the app once, after the last batch', () {
+      fakeAsync((async) {
+        store.queued.addAll(subscriptions(40));
+        model().start();
+
+        async.elapse(smartImportInterval * 2);
+        expect(saver.saved.length, 2, reason: 'Two batches should be saved');
+        expect(saver.reloads, 0, reason: 'Batches before the last one should not reload anything');
+
+        async.elapse(smartImportInterval);
+        expect(saver.saved.length, 3, reason: 'The last batch should be saved');
+        expect(saver.reloads, 1, reason: 'The app should be told once the queue is empty');
+
+        async.elapse(smartImportInterval * 3);
+        expect(saver.reloads, 1, reason: 'Nothing more should reload once the queue is empty');
+      });
+    });
+
+    test('Should count down the waiting accounts on each tick', () {
+      fakeAsync((async) {
+        store.queued.addAll(subscriptions(40));
+        final queue = model()..start();
+        final counts = <int>[];
+        queue.observer(onState: counts.add);
+
+        async.elapse(smartImportInterval * 3);
+
+        expect(counts, [40, 25, 10, 0], reason: 'The count should start full and drop by a batch every minute');
+      });
+    });
+
+    test('Should not reload when a batch fails to save', () {
+      fakeAsync((async) {
+        store.queued.addAll(subscriptions(10));
+        model().start();
+        saver.failing = true;
+
+        async.elapse(smartImportInterval * 2);
+
+        expect(saver.reloads, 0, reason: 'Nothing was saved, so nothing changed');
       });
     });
 
