@@ -7,7 +7,7 @@ final RegExp indicesRegex = RegExp(
 );
 
 final RegExp entryScriptRegex = RegExp(
-  r'''src=["'](https://abs\.twimg\.com/[^"']+/entry-clienx[\w-]*\.js)["']''',
+  r'''src=["'](https://abs\.twimg\.com/[^"']+/entry-client[\w-]*\.js)["']''',
 );
 
 final RegExp signImporterRegex = RegExp(
