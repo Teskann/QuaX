@@ -1,9 +1,10 @@
 {
  "scenario": "Profile whose posts tab mixes subscriber-only previews (TweetPreviewDisplay) into its threads",
  "sourceUrl": "https://x.com/Osemka8",
+ "unstable": true,
  "operation": "UserByScreenName",
  "host": "x.com",
- "queryId": "KybxDj9RrADIITXlGG8kpw",
+ "queryId": "AMIBMjtxEEATh4z8V9GtRg",
  "features": {
   "hidden_profile_subscriptions_enabled": true,
   "profile_label_improvements_pcf_label_in_post_enabled": true,
@@ -30,8 +31,8 @@
  "headers": {
   "x-rate-limit-limit": "150",
   "content-type": "application/json",
-  "x-rate-limit-remaining": "136",
-  "x-rate-limit-reset": "1791148143"
+  "x-rate-limit-remaining": "148",
+  "x-rate-limit-reset": "1791665678"
  },
  "body": {
   "data": {
@@ -39,7 +40,7 @@
     "result": {
      "__typename": "User",
      "action_counts": {
-      "favorites_count": 65269
+      "favorites_count": 65411
      },
      "affiliates_highlighted_label": {},
      "avatar": {
@@ -103,7 +104,7 @@
       "translator_type": "none"
      },
      "relationship_counts": {
-      "followers": 20910,
+      "followers": 20986,
       "following": 38
      },
      "relationship_perspectives": {
@@ -119,10 +120,10 @@
      "super_followed_by": false,
      "super_following": false,
      "tweet_counts": {
-      "media_tweets": 9562,
-      "tweets": 40437
+      "media_tweets": 9625,
+      "tweets": 40608
      },
-     "user_seed_tweet_count": 43,
+     "user_seed_tweet_count": 47,
      "verification": {
       "verified": false
      },

@@ -1,0 +1,49 @@
+{
+ "scenario": "Profile to subscribe to, for the subscriptions feed",
+ "sourceUrl": "https://x.com/FlutterDev",
+ "unstable": true,
+ "operation": "ProfileSpotlightsQuery",
+ "host": "x.com",
+ "queryId": "mzoqrVGwk-YTSGME1dRfXQ",
+ "features": null,
+ "fieldToggles": null,
+ "variables": {
+  "screen_name": "FlutterDev"
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "500",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "492",
+  "x-rate-limit-reset": "1791665683"
+ },
+ "body": {
+  "data": {
+   "user_result_by_screen_name": {
+    "id": "VXNlclJlc3VsdHM6NDIwNzMwMzE2",
+    "result": {
+     "__typename": "User",
+     "core": {
+      "name": "Flutter",
+      "screen_name": "FlutterDev"
+     },
+     "id": "VXNlcjo0MjA3MzAzMTY=",
+     "is_verified_organization": false,
+     "privacy": {
+      "protected": false
+     },
+     "profilemodules": {
+      "v1": []
+     },
+     "relationship_perspectives": {
+      "blocked_by": false,
+      "blocking": false,
+      "followed_by": false,
+      "following": false
+     },
+     "rest_id": "420730316"
+    }
+   }
+  }
+ }
+}

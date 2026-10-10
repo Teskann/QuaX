@@ -1,0 +1,34 @@
+{
+ "scenario": "Media tab of @grok, where a profile-grid item has an empty tweet_results (issue #204)",
+ "sourceUrl": "https://x.com/grok/media",
+ "unstable": true,
+ "operation": "UserSportsProfile",
+ "host": "x.com",
+ "queryId": "u7J50a1cN3sp5ejJ4nTuEA",
+ "features": null,
+ "fieldToggles": null,
+ "variables": {
+  "rest_id": "1720665183188922368",
+  "start_time": "1790973531572",
+  "end_time": "1792874331572"
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "1500",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "1494",
+  "x-rate-limit-reset": "1791664779"
+ },
+ "body": {
+  "data": {
+   "user_results": {
+    "id": "VXNlclJlc3VsdHM6MTcyMDY2NTE4MzE4ODkyMjM2OA==",
+    "rest_id": "1720665183188922368",
+    "result": {
+     "__typename": "User",
+     "rest_id": "1720665183188922368"
+    }
+   }
+  }
+ }
+}

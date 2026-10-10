@@ -1,0 +1,332 @@
+{
+ "scenario": "Profile to subscribe to, for the subscriptions feed",
+ "sourceUrl": "https://x.com/FlutterDev",
+ "unstable": true,
+ "operation": "SidebarUserRecommendations",
+ "host": "x.com",
+ "queryId": "BSYrSirC_dVN6R9Q0Mpmvg",
+ "features": {
+  "profile_label_improvements_pcf_label_in_post_enabled": true,
+  "responsive_web_profile_redirect_enabled": true,
+  "rweb_tipjar_consumption_enabled": false,
+  "verified_phone_label_enabled": false,
+  "responsive_web_graphql_timeline_navigation_enabled": true
+ },
+ "fieldToggles": null,
+ "variables": {
+  "profileUserId": "420730316"
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "500",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "478",
+  "x-rate-limit-reset": "1791665678"
+ },
+ "body": {
+  "data": {
+   "sidebar_user_recommendations": [
+    {
+     "token": "CgABMh9JpdP1/VEIAAIAAAACCAAEAAAAgwA=",
+     "user_results": {
+      "result": {
+       "__typename": "User",
+       "action_counts": {
+        "favorites_count": 230
+       },
+       "affiliates_highlighted_label": {},
+       "avatar": {
+        "image_url": "https://pbs.twimg.com/profile_images/993555605078994945/Yr-pWI4G_normal.jpg"
+       },
+       "banner": {
+        "image_url": "https://pbs.twimg.com/profile_banners/376585411/1707434265"
+       },
+       "core": {
+        "created_at": "Tue Sep 20 04:21:29 +0000 2011",
+        "name": "Dart Language",
+        "screen_name": "dart_lang"
+       },
+       "follow_request_sent": false,
+       "has_graduated_access": true,
+       "id": "VXNlcjozNzY1ODU0MTE=",
+       "is_blue_verified": false,
+       "location": {
+        "location": ""
+       },
+       "media_permissions": {
+        "can_media_tag": true
+       },
+       "notifications_settings": {
+        "notifications_enabled": false
+       },
+       "parody_commentary_fan_label": "None",
+       "pinned_items": {},
+       "possibly_sensitive": false,
+       "privacy": {
+        "protected": false
+       },
+       "profile_bio": {
+        "description": "An approachable, portable, and productive language for high-quality apps on any platform",
+        "entities": {
+         "description": {},
+         "url": {
+          "urls": [
+           {
+            "display_url": "dart.dev",
+            "expanded_url": "http://dart.dev",
+            "indices": [
+             0,
+             23
+            ],
+            "url": "https://t.co/R18jZYXgD4"
+           }
+          ]
+         }
+        }
+       },
+       "profile_description_language": "en",
+       "profile_image_shape": "Circle",
+       "profile_metadata": {
+        "profile_interstitial_type": ""
+       },
+       "profile_translation": {
+        "translator_type": "none"
+       },
+       "relationship_counts": {
+        "followers": 87546,
+        "following": 48
+       },
+       "relationship_perspectives": {
+        "blocked_by": false,
+        "blocking": false,
+        "followed_by": false,
+        "following": false,
+        "live_following": false,
+        "muting": false
+       },
+       "rest_id": "376585411",
+       "super_follow_eligible": false,
+       "super_followed_by": false,
+       "super_following": false,
+       "tweet_counts": {
+        "media_tweets": 226,
+        "tweets": 1799
+       },
+       "verification": {
+        "verified": false
+       },
+       "website": {
+        "url": "https://t.co/R18jZYXgD4"
+       }
+      }
+     }
+    },
+    {
+     "token": "CgABMh9JpdP1/VEIAAIAAAACCAAEAAAAgwA=",
+     "user_results": {
+      "result": {
+       "__typename": "User",
+       "action_counts": {
+        "favorites_count": 2239
+       },
+       "affiliates_highlighted_label": {},
+       "avatar": {
+        "image_url": "https://pbs.twimg.com/profile_images/1785867863191932928/EpOqfO6d_normal.png"
+       },
+       "banner": {
+        "image_url": "https://pbs.twimg.com/profile_banners/1566463268/1714619053"
+       },
+       "core": {
+        "created_at": "Wed Jul 03 18:58:09 +0000 2013",
+        "name": "React",
+        "screen_name": "reactjs"
+       },
+       "follow_request_sent": false,
+       "has_graduated_access": true,
+       "id": "VXNlcjoxNTY2NDYzMjY4",
+       "is_blue_verified": true,
+       "location": {
+        "location": ""
+       },
+       "media_permissions": {
+        "can_media_tag": true
+       },
+       "notifications_settings": {
+        "notifications_enabled": false
+       },
+       "parody_commentary_fan_label": "None",
+       "pinned_items": {},
+       "possibly_sensitive": false,
+       "privacy": {
+        "protected": false
+       },
+       "profile_bio": {
+        "description": "The library for web and native user interfaces",
+        "entities": {
+         "description": {},
+         "url": {
+          "urls": [
+           {
+            "display_url": "react.dev",
+            "expanded_url": "https://react.dev",
+            "indices": [
+             0,
+             23
+            ],
+            "url": "https://t.co/ogFb8NRAiR"
+           }
+          ]
+         }
+        }
+       },
+       "profile_description_language": "en",
+       "profile_image_shape": "Circle",
+       "profile_metadata": {
+        "profile_interstitial_type": ""
+       },
+       "profile_translation": {
+        "translator_type": "none"
+       },
+       "relationship_counts": {
+        "followers": 847011,
+        "following": 253
+       },
+       "relationship_perspectives": {
+        "blocked_by": false,
+        "blocking": false,
+        "followed_by": false,
+        "following": false,
+        "live_following": false,
+        "muting": false
+       },
+       "rest_id": "1566463268",
+       "super_follow_eligible": false,
+       "super_followed_by": false,
+       "super_following": false,
+       "tweet_counts": {
+        "media_tweets": 349,
+        "tweets": 2808
+       },
+       "verification": {
+        "verified": false
+       },
+       "website": {
+        "url": "https://t.co/ogFb8NRAiR"
+       }
+      }
+     }
+    },
+    {
+     "token": "CgABMh9JpdP1/VEIAAIAAAACCAAEAAAAgwA=",
+     "user_results": {
+      "result": {
+       "__typename": "User",
+       "action_counts": {
+        "favorites_count": 5046
+       },
+       "affiliates_highlighted_label": {},
+       "avatar": {
+        "image_url": "https://pbs.twimg.com/profile_images/1727506224831242240/Sahghmm2_normal.jpg"
+       },
+       "banner": {
+        "image_url": "https://pbs.twimg.com/profile_banners/1002019241887916032/1700704595"
+       },
+       "core": {
+        "created_at": "Thu May 31 02:49:38 +0000 2018",
+        "name": "FlutterFlakes 💙",
+        "screen_name": "Flutter_Flakes"
+       },
+       "follow_request_sent": false,
+       "has_graduated_access": true,
+       "id": "VXNlcjoxMDAyMDE5MjQxODg3OTE2MDMy",
+       "is_blue_verified": false,
+       "location": {
+        "location": ""
+       },
+       "media_permissions": {
+        "can_media_tag": true
+       },
+       "notifications_settings": {
+        "notifications_enabled": false
+       },
+       "parody_commentary_fan_label": "None",
+       "pinned_items": {
+        "tweet_ids_str": [
+         "2086351425685348413"
+        ]
+       },
+       "possibly_sensitive": false,
+       "privacy": {
+        "protected": false
+       },
+       "professional": {
+        "category": [
+         {
+          "icon_name": "IconBriefcaseStroke",
+          "id": 715,
+          "name": "Éditeur de logiciels"
+         }
+        ],
+        "professional_type": "Business",
+        "rest_id": "1727506095239811478"
+       },
+       "profile_bio": {
+        "description": "India's Flutter developer community 💙 | Meetups, jobs, spotlights & resources | Bangalore-first, global ambition | Founded by @dhuma1981 (GDE Flutter & Dart) |",
+        "entities": {
+         "description": {},
+         "url": {
+          "urls": [
+           {
+            "display_url": "flutterflakes.com",
+            "expanded_url": "https://flutterflakes.com/",
+            "indices": [
+             0,
+             23
+            ],
+            "url": "https://t.co/EmrNGvc4Er"
+           }
+          ]
+         }
+        }
+       },
+       "profile_description_language": "en",
+       "profile_image_shape": "Circle",
+       "profile_metadata": {
+        "profile_interstitial_type": ""
+       },
+       "profile_translation": {
+        "translator_type": "none"
+       },
+       "relationship_counts": {
+        "followers": 22096,
+        "following": 386
+       },
+       "relationship_perspectives": {
+        "blocked_by": false,
+        "blocking": false,
+        "followed_by": false,
+        "following": false,
+        "live_following": false,
+        "muting": false
+       },
+       "rest_id": "1002019241887916032",
+       "super_follow_eligible": false,
+       "super_followed_by": false,
+       "super_following": false,
+       "tweet_counts": {
+        "media_tweets": 92,
+        "tweets": 4094
+       },
+       "verification": {
+        "verified": false
+       },
+       "website": {
+        "url": "https://t.co/EmrNGvc4Er"
+       }
+      }
+     }
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,171 @@
+{
+ "scenario": "Profile to subscribe to, for the subscriptions feed",
+ "sourceUrl": "https://x.com/FlutterDev",
+ "unstable": true,
+ "operation": "UserByScreenName",
+ "host": "x.com",
+ "queryId": "AMIBMjtxEEATh4z8V9GtRg",
+ "features": {
+  "hidden_profile_subscriptions_enabled": true,
+  "profile_label_improvements_pcf_label_in_post_enabled": true,
+  "responsive_web_profile_redirect_enabled": true,
+  "rweb_tipjar_consumption_enabled": false,
+  "verified_phone_label_enabled": false,
+  "subscriptions_verification_info_is_identity_verified_enabled": true,
+  "subscriptions_verification_info_verified_since_enabled": true,
+  "highlights_tweets_tab_ui_enabled": true,
+  "responsive_web_twitter_article_notes_tab_enabled": true,
+  "subscriptions_feature_can_gift_premium": false,
+  "creator_subscriptions_tweet_preview_api_enabled": true,
+  "responsive_web_graphql_timeline_navigation_enabled": true
+ },
+ "fieldToggles": {
+  "withPayments": false,
+  "withAuxiliaryUserLabels": true
+ },
+ "variables": {
+  "screen_name": "flutterdev",
+  "withGrokTranslatedBio": true
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "150",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "140",
+  "x-rate-limit-reset": "1791665678"
+ },
+ "body": {
+  "data": {
+   "user": {
+    "result": {
+     "__typename": "User",
+     "action_counts": {
+      "favorites_count": 3222
+     },
+     "affiliates_highlighted_label": {},
+     "avatar": {
+      "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
+     },
+     "banner": {
+      "image_url": "https://pbs.twimg.com/profile_banners/420730316/1785427735"
+     },
+     "business_account": {},
+     "core": {
+      "created_at": "Fri Nov 25 01:07:12 +0000 2011",
+      "name": "Flutter",
+      "screen_name": "FlutterDev"
+     },
+     "creator_subscriptions_count": 0,
+     "follow_request_sent": false,
+     "grok_translated_bio_with_availability": {
+      "is_available": false
+     },
+     "has_graduated_access": true,
+     "has_hidden_subscriptions_on_profile": false,
+     "highlights_info": {
+      "can_highlight_tweets": false,
+      "highlighted_tweets": "0"
+     },
+     "id": "VXNlcjo0MjA3MzAzMTY=",
+     "is_blue_verified": false,
+     "is_profile_translatable": false,
+     "legacy_extended_profile": {},
+     "location": {
+      "location": ""
+     },
+     "media_permissions": {
+      "can_media_tag": true
+     },
+     "notifications_settings": {
+      "notifications_enabled": false
+     },
+     "parody_commentary_fan_label": "None",
+     "pinned_items": {
+      "tweet_ids_str": [
+       "2101012855101218956"
+      ]
+     },
+     "possibly_sensitive": false,
+     "privacy": {
+      "protected": false
+     },
+     "profile_bio": {
+      "description": "Google’s UI toolkit to build apps for mobile, web, & desktop from a single codebase",
+      "entities": {
+       "description": {},
+       "url": {
+        "urls": [
+         {
+          "display_url": "flutter.dev",
+          "expanded_url": "https://flutter.dev",
+          "indices": [
+           0,
+           23
+          ],
+          "url": "https://t.co/bVj6OdNADd"
+         }
+        ]
+       }
+      }
+     },
+     "profile_description_language": "en",
+     "profile_image_shape": "Square",
+     "profile_metadata": {
+      "profile_interstitial_type": ""
+     },
+     "profile_sort_enabled": true,
+     "profile_translation": {
+      "translator_type": "none"
+     },
+     "relationship_counts": {
+      "followers": 277934,
+      "following": 60
+     },
+     "relationship_perspectives": {
+      "blocked_by": false,
+      "blocking": false,
+      "followed_by": false,
+      "following": false,
+      "live_following": false,
+      "muting": false
+     },
+     "rest_id": "420730316",
+     "super_follow_eligible": false,
+     "super_followed_by": false,
+     "super_following": false,
+     "tweet_counts": {
+      "media_tweets": 1979,
+      "tweets": 3919
+     },
+     "user_seed_tweet_count": 0,
+     "verification": {
+      "verified": false,
+      "verified_type": "Business"
+     },
+     "verification_info": {
+      "is_identity_verified": false,
+      "reason": {
+       "description": {
+        "entities": [
+         {
+          "from_index": 74,
+          "ref": {
+           "url": "https://help.twitter.com/en/rules-and-policies/profile-labels",
+           "url_type": "ExternalUrl"
+          },
+          "to_index": 88
+         }
+        ],
+        "text": "Ce compte est certifié car il s'agit d'une organisation officielle sur X. En savoir plus"
+       },
+       "verified_since_msec": "1506330987532"
+      }
+     },
+     "website": {
+      "url": "https://t.co/bVj6OdNADd"
+     }
+    }
+   }
+  }
+ }
+}

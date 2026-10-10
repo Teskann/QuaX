@@ -3,7 +3,7 @@
  "sourceUrl": "https://x.com/UKLabour/status/2026390853309063292",
  "operation": "TweetDetail",
  "host": "x.com",
- "queryId": "blErEeZkos5TDrWmrCp7cw",
+ "queryId": "3BlMtudy4N-d78ch7zTLZQ",
  "features": {
   "rweb_video_screen_enabled": false,
   "rweb_cashtags_enabled": true,
@@ -48,6 +48,7 @@
  },
  "fieldToggles": {
   "withPayments": false,
+  "withDmBlocks": false,
   "withArticleRichContentState": true,
   "withArticlePlainText": false,
   "withArticleSummaryText": true,
@@ -70,7 +71,7 @@
   "x-rate-limit-limit": "300",
   "content-type": "application/json",
   "x-rate-limit-remaining": "268",
-  "x-rate-limit-reset": "1791148185"
+  "x-rate-limit-reset": "1791665693"
  },
  "body": {
   "data": {
@@ -98,69 +99,60 @@
             "__typename": "Tweet",
             "birdwatch_pivot": {
              "callToAction": {
-              "destinationUrl": "https://twitter.com/i/birdwatch/n/2026499345198293272",
-              "prompt": "Trouvez-vous cette note utile ?",
-              "title": "Évaluer"
+              "destinationUrl": "https://twitter.com/i/birdwatch/n/2026433888222904557",
+              "prompt": "Do you find this helpful?",
+              "title": "Rate it"
              },
-             "destinationUrl": "https://twitter.com/i/birdwatch/n/2026499345198293272",
+             "destinationUrl": "https://twitter.com/i/birdwatch/n/2026433888222904557",
              "footer": {
               "entities": [
                {
-                "fromIndex": 112,
+                "fromIndex": 83,
                 "ref": {
                  "type": "TimelineUrl",
                  "url": "https://x.com/i/flow/join-birdwatch",
                  "urlType": "ExternalUrl"
                 },
-                "toIndex": 126
+                "toIndex": 96
                }
               ],
-              "text": "Le contexte est rédigé par des personnes qui utilisent X. Il est affiché quand il est jugé utile par d'autres.  En savoir plus."
+              "text": "Context is written by people who use X, and appears when rated helpful by others.  Find out more."
              },
              "footerIconType": "BirdwatchEyeOff",
-             "iconType": "BirdwatchV1Icon",
+             "iconType": "BirdwatchPhoto",
              "note": {
               "grok_translated_community_note_with_availability": {
                "is_available": false
               },
               "is_community_note_translatable": false,
-              "language": "",
-              "rest_id": "2026499345198293272"
+              "language": "en",
+              "rest_id": "2026433888222904557"
              },
-             "shorttitle": "Des lecteurs ont ajouté du contexte",
+             "shorttitle": "Readers added context",
              "subtitle": {
               "entities": [
                {
-                "fromIndex": 216,
+                "fromIndex": 226,
                 "ref": {
                  "type": "TimelineUrl",
-                 "url": "https://t.co/S2l95QlDsc",
+                 "url": "https://t.co/XwyWUwTQLu",
                  "urlType": "ExternalUrl"
                 },
-                "toIndex": 237
+                "toIndex": 257
                },
                {
-                "fromIndex": 238,
+                "fromIndex": 259,
                 "ref": {
                  "type": "TimelineUrl",
-                 "url": "https://t.co/0jzScQ20ky",
+                 "url": "https://t.co/bW5zepHT5W",
                  "urlType": "ExternalUrl"
                 },
-                "toIndex": 269
-               },
-               {
-                "fromIndex": 270,
-                "ref": {
-                 "type": "TimelineUrl",
-                 "url": "https://t.co/F85M48rm5X",
-                 "urlType": "ExternalUrl"
-                },
-                "toIndex": 298
+                "toIndex": 287
                }
               ],
-              "text": "Opinium poll shows Greens tied with Labour at 28%, Reform at 27% among voters; Greens at 30%, Labour/Reform at 28% among likely voters. Post's graphic omits Greens. Sample of 401; high uncertainty due to small size. x.com/OpiniumResearc… bylinetimes.com/2026/02/24/exc… fullfact.org/politics/gorto…"
+              "text": "The Opinium/Byline Times poll (fieldwork 16-24 Feb 2026) shows Greens tied with Labour at 28%, Reform 27% among voters stating intention; among likely voters, Greens lead at 30%, Labour/Reform 28% each. Graphic omits Greens.\n\nbylinetimes.com/2026/02/24/exc…\n\nfullfact.org/politics/gorto…"
              },
-             "title": "Des lecteurs ont ajouté un contexte qu'ils jugent utile pour les utilisateurs.",
+             "title": "Readers added context to this image",
              "visualStyle": "Default"
             },
             "cashtag_attachments": [],
@@ -169,7 +161,7 @@
               "result": {
                "__typename": "User",
                "action_counts": {
-                "favorites_count": 650
+                "favorites_count": 656
                },
                "affiliates_highlighted_label": {},
                "avatar": {
@@ -197,11 +189,7 @@
                 "notifications_enabled": false
                },
                "parody_commentary_fan_label": "None",
-               "pinned_items": {
-                "tweet_ids_str": [
-                 "2106107903014736001"
-                ]
-               },
+               "pinned_items": {},
                "possibly_sensitive": false,
                "privacy": {
                 "protected": false
@@ -234,8 +222,8 @@
                 "translator_type": "none"
                },
                "relationship_counts": {
-                "followers": 989223,
-                "following": 10013
+                "followers": 988933,
+                "following": 10008
                },
                "relationship_perspectives": {
                 "blocked_by": false,
@@ -250,8 +238,8 @@
                "super_followed_by": false,
                "super_following": false,
                "tweet_counts": {
-                "media_tweets": 11969,
-                "tweets": 41967
+                "media_tweets": 11980,
+                "tweets": 42016
                },
                "verification": {
                 "verified": false
@@ -278,7 +266,7 @@
              "is_available": false
             },
             "has_birdwatch_notes": true,
-            "is_translatable": true,
+            "is_translatable": false,
             "legacy": {
              "bookmark_count": 102,
              "bookmarked": false,
@@ -482,7 +470,7 @@
                }
               ]
              },
-             "favorite_count": 1181,
+             "favorite_count": 1180,
              "favorited": false,
              "full_text": "🚨BREAKING: new poll suggests there is just one point between Labour and Reform in Gorton and Denton.\n\nEvery vote will count on Thursday. Back Labour and choose unity over Reform’s division. https://t.co/q8ocoMqKCP",
              "id_str": "2026390853309063292",
@@ -491,7 +479,7 @@
              "possibly_sensitive": false,
              "possibly_sensitive_editable": true,
              "quote_count": 425,
-             "reply_count": 1995,
+             "reply_count": 1992,
              "retweet_count": 271,
              "retweeted": false,
              "user_id_str": "14291684"
@@ -502,7 +490,7 @@
             "rest_id": "2026390853309063292",
             "unmention_data": {},
             "views": {
-             "count": "1217464",
+             "count": "1217498",
              "state": "EnabledWithCount"
             }
            }
@@ -510,7 +498,7 @@
          }
         },
         "entryId": "tweet-2026390853309063292",
-        "sortIndex": "2106850990895398912"
+        "sortIndex": "2109022008808308736"
        },
        {
         "content": {
@@ -522,7 +510,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -539,7 +527,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -557,14 +545,14 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 838
+                   "favorites_count": 854
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
                    "image_url": "https://pbs.twimg.com/profile_images/2047846140000006144/CX2U5nSr_normal.jpg"
                   },
                   "banner": {
-                   "image_url": "https://pbs.twimg.com/profile_banners/1044647459581038594/1779141609"
+                   "image_url": "https://pbs.twimg.com/profile_banners/1044647459581038594/1791535795"
                   },
                   "core": {
                    "created_at": "Tue Sep 25 17:58:57 +0000 2018",
@@ -599,7 +587,7 @@
                     {
                      "icon_name": "IconBriefcaseStroke",
                      "id": 955,
-                     "name": "Journaliste"
+                     "name": "Journalist"
                     }
                    ],
                    "professional_type": "Creator",
@@ -633,7 +621,7 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 99948,
+                   "followers": 99867,
                    "following": 0
                   },
                   "relationship_perspectives": {
@@ -649,8 +637,8 @@
                   "super_followed_by": false,
                   "super_following": false,
                   "tweet_counts": {
-                   "media_tweets": 10681,
-                   "tweets": 57147
+                   "media_tweets": 10692,
+                   "tweets": 57247
                   },
                   "verification": {
                    "verified": false
@@ -675,7 +663,7 @@
                 "is_available": false
                },
                "has_birdwatch_notes": false,
-               "is_translatable": true,
+               "is_translatable": false,
                "legacy": {
                 "bookmark_count": 32,
                 "bookmarked": false,
@@ -896,7 +884,7 @@
                   }
                  ]
                 },
-                "favorite_count": 4672,
+                "favorite_count": 4670,
                 "favorited": false,
                 "full_text": "@UKLabour You are so fucking shameless lol https://t.co/KHLZtMsb9V",
                 "id_str": "2026400821366120912",
@@ -939,7 +927,7 @@
          }
         },
         "entryId": "conversationthread-2026400821366120912",
-        "sortIndex": "2106850990895398902"
+        "sortIndex": "2109022008808308726"
        },
        {
         "content": {
@@ -951,7 +939,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -968,7 +956,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -986,7 +974,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 161229
+                   "favorites_count": 161531
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -1056,8 +1044,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 53080,
-                   "following": 2843
+                   "followers": 53108,
+                   "following": 2844
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -1072,8 +1060,8 @@
                   "super_followed_by": false,
                   "super_following": false,
                   "tweet_counts": {
-                   "media_tweets": 2139,
-                   "tweets": 49788
+                   "media_tweets": 2141,
+                   "tweets": 49854
                   },
                   "verification": {
                    "verified": false
@@ -1098,7 +1086,7 @@
                 "is_available": false
                },
                "has_birdwatch_notes": false,
-               "is_translatable": true,
+               "is_translatable": false,
                "legacy": {
                 "bookmark_count": 7,
                 "bookmarked": false,
@@ -1319,7 +1307,7 @@
                   }
                  ]
                 },
-                "favorite_count": 1414,
+                "favorite_count": 1412,
                 "favorited": false,
                 "full_text": "@UKLabour You missed a bit off https://t.co/IoBUtqIJO0",
                 "id_str": "2026400143155613804",
@@ -1362,7 +1350,7 @@
          }
         },
         "entryId": "conversationthread-2026400143155613804",
-        "sortIndex": "2106850990895398892"
+        "sortIndex": "2109022008808308716"
        },
        {
         "content": {
@@ -1374,7 +1362,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -1391,7 +1379,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -1409,7 +1397,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 56006
+                   "favorites_count": 56383
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -1439,7 +1427,7 @@
                   "parody_commentary_fan_label": "None",
                   "pinned_items": {
                    "tweet_ids_str": [
-                    "2106121129706332500"
+                    "2108902493593743570"
                    ]
                   },
                   "possibly_sensitive": false,
@@ -1506,8 +1494,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 75614,
-                   "following": 7622
+                   "followers": 75577,
+                   "following": 7623
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -1522,8 +1510,8 @@
                   "super_followed_by": false,
                   "super_following": false,
                   "tweet_counts": {
-                   "media_tweets": 8055,
-                   "tweets": 73653
+                   "media_tweets": 8165,
+                   "tweets": 74269
                   },
                   "verification": {
                    "verified": false
@@ -1548,7 +1536,7 @@
                 "is_available": false
                },
                "has_birdwatch_notes": false,
-               "is_translatable": true,
+               "is_translatable": false,
                "legacy": {
                 "bookmark_count": 8,
                 "bookmarked": false,
@@ -1763,7 +1751,7 @@
                   }
                  ]
                 },
-                "favorite_count": 1261,
+                "favorite_count": 1258,
                 "favorited": false,
                 "full_text": "@UKLabour Wow. Talk about corrupt and misleading. https://t.co/ZGstKhxqtI",
                 "id_str": "2026403285167493208",
@@ -1806,7 +1794,7 @@
          }
         },
         "entryId": "conversationthread-2026403285167493208",
-        "sortIndex": "2106850990895398882"
+        "sortIndex": "2109022008808308706"
        },
        {
         "content": {
@@ -1818,7 +1806,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -1835,7 +1823,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -1853,7 +1841,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 8895
+                   "favorites_count": 8922
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -1895,7 +1883,7 @@
                     {
                      "icon_name": "IconBriefcaseStroke",
                      "id": 956,
-                     "name": "Écrivain"
+                     "name": "Writer"
                     }
                    ],
                    "professional_type": "Creator",
@@ -1950,8 +1938,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 298131,
-                   "following": 562
+                   "followers": 298494,
+                   "following": 567
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -1966,8 +1954,8 @@
                   "super_followed_by": false,
                   "super_following": false,
                   "tweet_counts": {
-                   "media_tweets": 7288,
-                   "tweets": 71705
+                   "media_tweets": 7297,
+                   "tweets": 71782
                   },
                   "verification": {
                    "verified": false
@@ -1992,7 +1980,7 @@
                 "is_available": false
                },
                "has_birdwatch_notes": false,
-               "is_translatable": true,
+               "is_translatable": false,
                "legacy": {
                 "bookmark_count": 3,
                 "bookmarked": false,
@@ -2024,7 +2012,7 @@
                   }
                  ]
                 },
-                "favorite_count": 926,
+                "favorite_count": 927,
                 "favorited": false,
                 "full_text": "@UKLabour You have literally spent the entire campaign criticising people for misleading graphs. You started this campaign misinforming voters and you are ending it misinforming voters. @lucympowell should be ashamed",
                 "id_str": "2026594505130906052",
@@ -2046,7 +2034,7 @@
                "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
                "unmention_data": {},
                "views": {
-                "count": "10224",
+                "count": "10225",
                 "state": "EnabledWithCount"
                }
               }
@@ -2065,7 +2053,7 @@
          }
         },
         "entryId": "conversationthread-2026594505130906052",
-        "sortIndex": "2106850990895398872"
+        "sortIndex": "2109022008808308696"
        },
        {
         "content": {
@@ -2077,7 +2065,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -2094,7 +2082,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -2112,7 +2100,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 226124
+                   "favorites_count": 226660
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -2150,7 +2138,7 @@
                     {
                      "icon_name": "IconBriefcaseStroke",
                      "id": 579,
-                     "name": "Médias et actualités"
+                     "name": "Media & News"
                     }
                    ],
                    "professional_type": "Business",
@@ -2170,8 +2158,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 84543,
-                   "following": 52390
+                   "followers": 84509,
+                   "following": 52400
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -2186,8 +2174,8 @@
                   "super_followed_by": false,
                   "super_following": false,
                   "tweet_counts": {
-                   "media_tweets": 34713,
-                   "tweets": 634928
+                   "media_tweets": 34717,
+                   "tweets": 635746
                   },
                   "verification": {
                    "verified": false
@@ -2212,7 +2200,7 @@
                 "is_available": false
                },
                "has_birdwatch_notes": false,
-               "is_translatable": true,
+               "is_translatable": false,
                "legacy": {
                 "bookmark_count": 6,
                 "bookmarked": false,
@@ -2427,7 +2415,7 @@
                   }
                  ]
                 },
-                "favorite_count": 701,
+                "favorite_count": 699,
                 "favorited": false,
                 "full_text": "@UKLabour Labour is spreading misinformation about the Gorton &amp; Denton poll - here is the rest of the poll they have hidden: https://t.co/ssIwhrBACa",
                 "id_str": "2026397337979895949",
@@ -2470,7 +2458,7 @@
          }
         },
         "entryId": "conversationthread-2026397337979895949",
-        "sortIndex": "2106850990895398862"
+        "sortIndex": "2109022008808308686"
        },
        {
         "content": {
@@ -2482,7 +2470,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -2499,7 +2487,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -2555,7 +2543,7 @@
                     {
                      "icon_name": "IconBriefcaseStroke",
                      "id": 713,
-                     "name": "Science et technologie"
+                     "name": "Science & Technology"
                     }
                    ],
                    "professional_type": "Business",
@@ -2589,8 +2577,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 18274,
-                   "following": 1923
+                   "followers": 18254,
+                   "following": 1922
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -2605,8 +2593,8 @@
                   "super_followed_by": false,
                   "super_following": false,
                   "tweet_counts": {
-                   "media_tweets": 1293,
-                   "tweets": 4913
+                   "media_tweets": 1297,
+                   "tweets": 4925
                   },
                   "verification": {
                    "verified": false
@@ -2846,7 +2834,7 @@
                   }
                  ]
                 },
-                "favorite_count": 697,
+                "favorite_count": 696,
                 "favorited": false,
                 "full_text": "@UKLabour Don’t be fooled https://t.co/IkHAc0js8m",
                 "id_str": "2026397830651265391",
@@ -2889,7 +2877,7 @@
          }
         },
         "entryId": "conversationthread-2026397830651265391",
-        "sortIndex": "2106850990895398852"
+        "sortIndex": "2109022008808308676"
        },
        {
         "content": {
@@ -2901,7 +2889,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -2918,7 +2906,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -2936,7 +2924,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 34160
+                   "favorites_count": 34403
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -2995,8 +2983,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 117842,
-                   "following": 2915
+                   "followers": 118203,
+                   "following": 2919
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -3011,8 +2999,8 @@
                   "super_followed_by": false,
                   "super_following": false,
                   "tweet_counts": {
-                   "media_tweets": 4341,
-                   "tweets": 37030
+                   "media_tweets": 4363,
+                   "tweets": 37242
                   },
                   "verification": {
                    "verified": false
@@ -3037,7 +3025,7 @@
                 "is_available": false
                },
                "has_birdwatch_notes": false,
-               "is_translatable": true,
+               "is_translatable": false,
                "legacy": {
                 "bookmark_count": 2,
                 "bookmarked": false,
@@ -3101,7 +3089,7 @@
          }
         },
         "entryId": "conversationthread-2026403203139473690",
-        "sortIndex": "2106850990895398842"
+        "sortIndex": "2109022008808308666"
        },
        {
         "content": {
@@ -3113,7 +3101,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -3130,7 +3118,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -3148,7 +3136,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 78241
+                   "favorites_count": 78278
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -3178,7 +3166,7 @@
                   "parody_commentary_fan_label": "None",
                   "pinned_items": {
                    "tweet_ids_str": [
-                    "2106444351400542512"
+                    "2108935685671367001"
                    ]
                   },
                   "possibly_sensitive": false,
@@ -3210,8 +3198,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 178358,
-                   "following": 24274
+                   "followers": 178288,
+                   "following": 24266
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -3226,8 +3214,8 @@
                   "super_followed_by": false,
                   "super_following": false,
                   "tweet_counts": {
-                   "media_tweets": 9431,
-                   "tweets": 81238
+                   "media_tweets": 9428,
+                   "tweets": 81240
                   },
                   "verification": {
                    "verified": false
@@ -3252,7 +3240,7 @@
                 "is_available": false
                },
                "has_birdwatch_notes": false,
-               "is_translatable": true,
+               "is_translatable": false,
                "legacy": {
                 "bookmark_count": 0,
                 "bookmarked": false,
@@ -3467,7 +3455,7 @@
                   }
                  ]
                 },
-                "favorite_count": 387,
+                "favorite_count": 386,
                 "favorited": false,
                 "full_text": "@UKLabour The poll you refer to. Notice anything ? https://t.co/qSszRB5sVP",
                 "id_str": "2026429869211430958",
@@ -3510,7 +3498,7 @@
          }
         },
         "entryId": "conversationthread-2026429869211430958",
-        "sortIndex": "2106850990895398832"
+        "sortIndex": "2109022008808308656"
        },
        {
         "content": {
@@ -3522,7 +3510,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -3539,7 +3527,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -3557,7 +3545,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 231734
+                   "favorites_count": 232089
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -3605,8 +3593,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 77815,
-                   "following": 9890
+                   "followers": 77794,
+                   "following": 9892
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -3621,8 +3609,8 @@
                   "super_followed_by": false,
                   "super_following": false,
                   "tweet_counts": {
-                   "media_tweets": 13994,
-                   "tweets": 102051
+                   "media_tweets": 14043,
+                   "tweets": 102408
                   },
                   "verification": {
                    "verified": false
@@ -3647,7 +3635,7 @@
                 "is_available": false
                },
                "has_birdwatch_notes": false,
-               "is_translatable": true,
+               "is_translatable": false,
                "legacy": {
                 "bookmark_count": 0,
                 "bookmarked": false,
@@ -3711,7 +3699,7 @@
          }
         },
         "entryId": "conversationthread-2026417606429655251",
-        "sortIndex": "2106850990895398822"
+        "sortIndex": "2109022008808308646"
        },
        {
         "content": {
@@ -3723,7 +3711,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -3740,7 +3728,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -3758,7 +3746,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 8488
+                   "favorites_count": 8554
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -3769,7 +3757,7 @@
                   },
                   "core": {
                    "created_at": "Sun Oct 02 13:16:32 +0000 2016",
-                   "name": "Pileus Media",
+                   "name": "Pileus $7,000",
                    "screen_name": "thepileus"
                   },
                   "follow_request_sent": false,
@@ -3796,7 +3784,7 @@
                    "protected": false
                   },
                   "profile_bio": {
-                   "description": "10 years of the Pileus. Founded in 2016, following 2016 #ChickenCoup. Pro-Polanski. Pro-Corbyn. Pro-Socialism.",
+                   "description": "The old Pileus is finished. The $7,000 Pileus is here.",
                    "entities": {
                     "description": {}
                    }
@@ -3810,8 +3798,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 45163,
-                   "following": 13641
+                   "followers": 45069,
+                   "following": 13629
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -3827,7 +3815,7 @@
                   "super_following": false,
                   "tweet_counts": {
                    "media_tweets": 3513,
-                   "tweets": 12410
+                   "tweets": 12598
                   },
                   "verification": {
                    "verified": false
@@ -3852,7 +3840,7 @@
                 "is_available": false
                },
                "has_birdwatch_notes": false,
-               "is_translatable": true,
+               "is_translatable": false,
                "legacy": {
                 "bookmark_count": 3,
                 "bookmarked": false,
@@ -4097,7 +4085,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "4199",
+                "count": "4200",
                 "state": "EnabledWithCount"
                }
               }
@@ -4116,7 +4104,7 @@
          }
         },
         "entryId": "conversationthread-2026393706547278032",
-        "sortIndex": "2106850990895398812"
+        "sortIndex": "2109022008808308636"
        },
        {
         "content": {
@@ -4128,7 +4116,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -4145,7 +4133,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -4163,7 +4151,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 226124
+                   "favorites_count": 226660
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -4201,7 +4189,7 @@
                     {
                      "icon_name": "IconBriefcaseStroke",
                      "id": 579,
-                     "name": "Médias et actualités"
+                     "name": "Media & News"
                     }
                    ],
                    "professional_type": "Business",
@@ -4221,8 +4209,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 84543,
-                   "following": 52390
+                   "followers": 84509,
+                   "following": 52400
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -4237,8 +4225,8 @@
                   "super_followed_by": false,
                   "super_following": false,
                   "tweet_counts": {
-                   "media_tweets": 34713,
-                   "tweets": 634928
+                   "media_tweets": 34717,
+                   "tweets": 635746
                   },
                   "verification": {
                    "verified": false
@@ -4263,7 +4251,7 @@
                 "is_available": false
                },
                "has_birdwatch_notes": false,
-               "is_translatable": true,
+               "is_translatable": false,
                "legacy": {
                 "bookmark_count": 0,
                 "bookmarked": false,
@@ -4327,7 +4315,7 @@
          }
         },
         "entryId": "conversationthread-2026402688691482963",
-        "sortIndex": "2106850990895398802"
+        "sortIndex": "2109022008808308626"
        },
        {
         "content": {
@@ -4339,7 +4327,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -4356,7 +4344,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -4374,7 +4362,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 226124
+                   "favorites_count": 226660
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -4412,7 +4400,7 @@
                     {
                      "icon_name": "IconBriefcaseStroke",
                      "id": 579,
-                     "name": "Médias et actualités"
+                     "name": "Media & News"
                     }
                    ],
                    "professional_type": "Business",
@@ -4432,8 +4420,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 84543,
-                   "following": 52390
+                   "followers": 84509,
+                   "following": 52400
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -4448,8 +4436,8 @@
                   "super_followed_by": false,
                   "super_following": false,
                   "tweet_counts": {
-                   "media_tweets": 34713,
-                   "tweets": 634928
+                   "media_tweets": 34717,
+                   "tweets": 635746
                   },
                   "verification": {
                    "verified": false
@@ -4474,7 +4462,7 @@
                 "is_available": false
                },
                "has_birdwatch_notes": false,
-               "is_translatable": true,
+               "is_translatable": false,
                "legacy": {
                 "bookmark_count": 1,
                 "bookmarked": false,
@@ -4497,7 +4485,7 @@
                   }
                  ]
                 },
-                "favorite_count": 198,
+                "favorite_count": 197,
                 "favorited": false,
                 "full_text": "@UKLabour How can anyone trust Labour when the party even lies about a poll? \n\nLabour is on course to lose Gorton &amp; Denton based on latest polling which can be found below",
                 "id_str": "2026400977415282696",
@@ -4529,7 +4517,7 @@
                    "result": {
                     "__typename": "User",
                     "action_counts": {
-                     "favorites_count": 226124
+                     "favorites_count": 226660
                     },
                     "affiliates_highlighted_label": {},
                     "avatar": {
@@ -4567,7 +4555,7 @@
                       {
                        "icon_name": "IconBriefcaseStroke",
                        "id": 579,
-                       "name": "Médias et actualités"
+                       "name": "Media & News"
                       }
                      ],
                      "professional_type": "Business",
@@ -4587,8 +4575,8 @@
                      "translator_type": "none"
                     },
                     "relationship_counts": {
-                     "followers": 84543,
-                     "following": 52390
+                     "followers": 84509,
+                     "following": 52400
                     },
                     "relationship_perspectives": {
                      "blocked_by": false,
@@ -4603,8 +4591,8 @@
                     "super_followed_by": false,
                     "super_following": false,
                     "tweet_counts": {
-                     "media_tweets": 34713,
-                     "tweets": 634928
+                     "media_tweets": 34717,
+                     "tweets": 635746
                     },
                     "verification": {
                      "verified": false
@@ -4628,7 +4616,7 @@
                   "is_available": false
                  },
                  "has_birdwatch_notes": false,
-                 "is_translatable": true,
+                 "is_translatable": false,
                  "legacy": {
                   "bookmark_count": 0,
                   "bookmarked": false,
@@ -4665,7 +4653,7 @@
                      "result": {
                       "__typename": "User",
                       "action_counts": {
-                       "favorites_count": 3978
+                       "favorites_count": 3977
                       },
                       "affiliates_highlighted_label": {},
                       "avatar": {
@@ -4726,8 +4714,8 @@
                        "translator_type": "none"
                       },
                       "relationship_counts": {
-                       "followers": 27769,
-                       "following": 4704
+                       "followers": 27762,
+                       "following": 4701
                       },
                       "relationship_perspectives": {
                        "blocked_by": false,
@@ -4742,8 +4730,8 @@
                       "super_followed_by": false,
                       "super_following": false,
                       "tweet_counts": {
-                       "media_tweets": 2148,
-                       "tweets": 9599
+                       "media_tweets": 2152,
+                       "tweets": 9602
                       },
                       "verification": {
                        "verified": false
@@ -4767,7 +4755,7 @@
                     "is_available": false
                    },
                    "has_birdwatch_notes": false,
-                   "is_translatable": true,
+                   "is_translatable": false,
                    "legacy": {
                     "bookmark_count": 30,
                     "bookmarked": false,
@@ -4982,7 +4970,7 @@
                       }
                      ]
                     },
-                    "favorite_count": 260,
+                    "favorite_count": 259,
                     "favorited": false,
                     "full_text": "🚨 Opinium constituency poll for @BylineTimes &amp; @forwarddemo 🚨\n\nA very close three-way contest in Gorton &amp; Denton: \n&gt; the Greens and Labour are both on 28%, just one point ahead of Reform on 27%.\n&gt; Among those most likely to turn out on Thursday, the Greens edge ahead to 30%. https://t.co/SBSNBePNga",
                     "id_str": "2026386747819520263",
@@ -4999,7 +4987,7 @@
                    "rest_id": "2026386747819520263",
                    "unmention_data": {},
                    "views": {
-                    "count": "100206",
+                    "count": "100213",
                     "state": "EnabledWithCount"
                    }
                   }
@@ -5042,7 +5030,7 @@
          }
         },
         "entryId": "conversationthread-2026400977415282696",
-        "sortIndex": "2106850990895398792"
+        "sortIndex": "2109022008808308616"
        },
        {
         "content": {
@@ -5054,7 +5042,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -5071,7 +5059,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -5089,7 +5077,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 145775
+                   "favorites_count": 145903
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -5131,7 +5119,7 @@
                     {
                      "icon_name": "IconBriefcaseStroke",
                      "id": 955,
-                     "name": "Journaliste"
+                     "name": "Journalist"
                     }
                    ],
                    "professional_type": "Creator",
@@ -5165,8 +5153,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 187463,
-                   "following": 33289
+                   "followers": 187342,
+                   "following": 33275
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -5181,8 +5169,8 @@
                   "super_followed_by": false,
                   "super_following": false,
                   "tweet_counts": {
-                   "media_tweets": 4455,
-                   "tweets": 66991
+                   "media_tweets": 4457,
+                   "tweets": 67070
                   },
                   "verification": {
                    "verified": false
@@ -5207,7 +5195,7 @@
                 "is_available": false
                },
                "has_birdwatch_notes": false,
-               "is_translatable": true,
+               "is_translatable": false,
                "legacy": {
                 "bookmark_count": 1,
                 "bookmarked": false,
@@ -5471,7 +5459,7 @@
          }
         },
         "entryId": "conversationthread-2026576517971718588",
-        "sortIndex": "2106850990895398782"
+        "sortIndex": "2109022008808308606"
        },
        {
         "content": {
@@ -5483,7 +5471,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -5500,7 +5488,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -5518,7 +5506,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 445411
+                   "favorites_count": 449702
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -5570,8 +5558,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 85113,
-                   "following": 22849
+                   "followers": 85200,
+                   "following": 22857
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -5587,7 +5575,7 @@
                   "super_following": false,
                   "tweet_counts": {
                    "media_tweets": 234,
-                   "tweets": 31579
+                   "tweets": 31778
                   },
                   "verification": {
                    "verified": false
@@ -5612,7 +5600,7 @@
                 "is_available": false
                },
                "has_birdwatch_notes": false,
-               "is_translatable": true,
+               "is_translatable": false,
                "legacy": {
                 "bookmark_count": 0,
                 "bookmarked": false,
@@ -5676,7 +5664,7 @@
          }
         },
         "entryId": "conversationthread-2026399845842325680",
-        "sortIndex": "2106850990895398772"
+        "sortIndex": "2109022008808308596"
        },
        {
         "content": {
@@ -5688,7 +5676,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -5705,7 +5693,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -5723,7 +5711,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 650766
+                   "favorites_count": 653663
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -5761,7 +5749,7 @@
                    "protected": false
                   },
                   "profile_bio": {
-                   "description": "Public law & UK politics. First-class LLB; considering an LLM. Not a practising solicitor or barrister. I try to get the legal point right, no party affiliation",
+                   "description": "Public law & UK politics.\nFirst-class LLB (Hons); commencing LLM.\nAcademic. Not a practising solicitor or barrister. Accurate analysis, no party affiliation.",
                    "entities": {
                     "description": {}
                    }
@@ -5775,8 +5763,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 74646,
-                   "following": 17862
+                   "followers": 74608,
+                   "following": 17847
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -5791,8 +5779,8 @@
                   "super_followed_by": false,
                   "super_following": false,
                   "tweet_counts": {
-                   "media_tweets": 10368,
-                   "tweets": 114732
+                   "media_tweets": 10402,
+                   "tweets": 115196
                   },
                   "verification": {
                    "verified": false
@@ -6814,7 +6802,7 @@
                   }
                  ]
                 },
-                "favorite_count": 135,
+                "favorite_count": 134,
                 "favorited": false,
                 "full_text": "@UKLabour Are 28% of Gorton and Denton paedos? https://t.co/2IuGFDcqWO",
                 "id_str": "2026556658814419429",
@@ -6857,7 +6845,7 @@
          }
         },
         "entryId": "conversationthread-2026556658814419429",
-        "sortIndex": "2106850990895398762"
+        "sortIndex": "2109022008808308586"
        },
        {
         "content": {
@@ -6869,7 +6857,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -6886,7 +6874,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -6904,14 +6892,14 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 838
+                   "favorites_count": 854
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
                    "image_url": "https://pbs.twimg.com/profile_images/2047846140000006144/CX2U5nSr_normal.jpg"
                   },
                   "banner": {
-                   "image_url": "https://pbs.twimg.com/profile_banners/1044647459581038594/1779141609"
+                   "image_url": "https://pbs.twimg.com/profile_banners/1044647459581038594/1791535795"
                   },
                   "core": {
                    "created_at": "Tue Sep 25 17:58:57 +0000 2018",
@@ -6946,7 +6934,7 @@
                     {
                      "icon_name": "IconBriefcaseStroke",
                      "id": 955,
-                     "name": "Journaliste"
+                     "name": "Journalist"
                     }
                    ],
                    "professional_type": "Creator",
@@ -6980,7 +6968,7 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 99948,
+                   "followers": 99867,
                    "following": 0
                   },
                   "relationship_perspectives": {
@@ -6996,8 +6984,8 @@
                   "super_followed_by": false,
                   "super_following": false,
                   "tweet_counts": {
-                   "media_tweets": 10681,
-                   "tweets": 57147
+                   "media_tweets": 10692,
+                   "tweets": 57247
                   },
                   "verification": {
                    "verified": false
@@ -7286,7 +7274,7 @@
          }
         },
         "entryId": "conversationthread-2027386493912662246",
-        "sortIndex": "2106850990895398752"
+        "sortIndex": "2109022008808308576"
        },
        {
         "content": {
@@ -7298,7 +7286,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -7315,7 +7303,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -7410,8 +7398,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 19811,
-                   "following": 2149
+                   "followers": 19800,
+                   "following": 2148
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -7452,7 +7440,7 @@
                 "is_available": false
                },
                "has_birdwatch_notes": false,
-               "is_translatable": true,
+               "is_translatable": false,
                "legacy": {
                 "bookmark_count": 2,
                 "bookmarked": false,
@@ -7678,7 +7666,7 @@
                   }
                  ]
                 },
-                "favorite_count": 307,
+                "favorite_count": 306,
                 "favorited": false,
                 "full_text": "@UKLabour Excuse me - you dropped the rest of your poll!\n\nhttps://t.co/K14aONC64N https://t.co/l9di4me0Ta",
                 "id_str": "2026396911008096525",
@@ -7721,7 +7709,7 @@
          }
         },
         "entryId": "conversationthread-2026396911008096525",
-        "sortIndex": "2106850990895398742"
+        "sortIndex": "2109022008808308566"
        },
        {
         "content": {
@@ -7733,7 +7721,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -7750,7 +7738,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -7768,7 +7756,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 24193
+                   "favorites_count": 24258
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -7811,7 +7799,7 @@
                    "rest_id": "1943998044787073037"
                   },
                   "profile_bio": {
-                   "description": "Unapologetically British 🇬🇧 | Refusing to kneel to woke nonsense | Freedom • Truth • Common Sense | We will not bend. We will not break. We Stand United! 🇬🇧",
+                   "description": "Freedom • Truth • Common Sense | We will not bend. We will not break. We Stand United! 🇬🇧",
                    "entities": {
                     "description": {},
                     "url": {
@@ -7838,8 +7826,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 39904,
-                   "following": 2520
+                   "followers": 39855,
+                   "following": 2518
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -7854,8 +7842,8 @@
                   "super_followed_by": false,
                   "super_following": false,
                   "tweet_counts": {
-                   "media_tweets": 1074,
-                   "tweets": 6555
+                   "media_tweets": 1085,
+                   "tweets": 6576
                   },
                   "verification": {
                    "verified": false
@@ -7880,7 +7868,7 @@
                 "is_available": false
                },
                "has_birdwatch_notes": false,
-               "is_translatable": true,
+               "is_translatable": false,
                "legacy": {
                 "bookmark_count": 1,
                 "bookmarked": false,
@@ -7944,7 +7932,7 @@
          }
         },
         "entryId": "conversationthread-2026414460122861811",
-        "sortIndex": "2106850990895398732"
+        "sortIndex": "2109022008808308556"
        },
        {
         "content": {
@@ -7956,7 +7944,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -7973,7 +7961,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -7991,7 +7979,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 80988
+                   "favorites_count": 81076
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -8044,8 +8032,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 86691,
-                   "following": 1997
+                   "followers": 86649,
+                   "following": 1994
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -8060,8 +8048,8 @@
                   "super_followed_by": false,
                   "super_following": false,
                   "tweet_counts": {
-                   "media_tweets": 10085,
-                   "tweets": 205047
+                   "media_tweets": 10097,
+                   "tweets": 205215
                   },
                   "verification": {
                    "verified": false
@@ -8086,7 +8074,7 @@
                 "is_available": false
                },
                "has_birdwatch_notes": false,
-               "is_translatable": true,
+               "is_translatable": false,
                "legacy": {
                 "bookmark_count": 0,
                 "bookmarked": false,
@@ -8159,7 +8147,7 @@
          }
         },
         "entryId": "conversationthread-2026422546892005538",
-        "sortIndex": "2106850990895398722"
+        "sortIndex": "2109022008808308546"
        },
        {
         "content": {
@@ -8171,7 +8159,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -8188,7 +8176,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -8206,7 +8194,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 15535
+                   "favorites_count": 15612
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -8234,11 +8222,7 @@
                    "notifications_enabled": false
                   },
                   "parody_commentary_fan_label": "None",
-                  "pinned_items": {
-                   "tweet_ids_str": [
-                    "2069468514776224193"
-                   ]
-                  },
+                  "pinned_items": {},
                   "possibly_sensitive": false,
                   "privacy": {
                    "protected": false
@@ -8270,8 +8254,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 56838,
-                   "following": 553
+                   "followers": 65939,
+                   "following": 558
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -8286,8 +8270,8 @@
                   "super_followed_by": false,
                   "super_following": false,
                   "tweet_counts": {
-                   "media_tweets": 1294,
-                   "tweets": 5778
+                   "media_tweets": 1305,
+                   "tweets": 5786
                   },
                   "verification": {
                    "verified": false
@@ -8376,7 +8360,7 @@
          }
         },
         "entryId": "conversationthread-2026404680247484420",
-        "sortIndex": "2106850990895398712"
+        "sortIndex": "2109022008808308536"
        },
        {
         "content": {
@@ -8388,7 +8372,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -8405,7 +8389,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -8423,7 +8407,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 17633
+                   "favorites_count": 17744
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -8480,8 +8464,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 3387,
-                   "following": 1840
+                   "followers": 3367,
+                   "following": 1839
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -8496,8 +8480,8 @@
                   "super_followed_by": false,
                   "super_following": false,
                   "tweet_counts": {
-                   "media_tweets": 7565,
-                   "tweets": 42468
+                   "media_tweets": 7591,
+                   "tweets": 42642
                   },
                   "verification": {
                    "verified": false
@@ -8737,7 +8721,7 @@
                   }
                  ]
                 },
-                "favorite_count": 273,
+                "favorite_count": 272,
                 "favorited": false,
                 "full_text": "@UKLabour The whole truth https://t.co/8p63fh5Ulf",
                 "id_str": "2026395386911355134",
@@ -8780,7 +8764,7 @@
          }
         },
         "entryId": "conversationthread-2026395386911355134",
-        "sortIndex": "2106850990895398702"
+        "sortIndex": "2109022008808308526"
        },
        {
         "content": {
@@ -8792,7 +8776,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -8809,7 +8793,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -8830,7 +8814,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 226124
+                   "favorites_count": 226660
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -8868,7 +8852,7 @@
                     {
                      "icon_name": "IconBriefcaseStroke",
                      "id": 579,
-                     "name": "Médias et actualités"
+                     "name": "Media & News"
                     }
                    ],
                    "professional_type": "Business",
@@ -8888,8 +8872,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 84543,
-                   "following": 52390
+                   "followers": 84509,
+                   "following": 52400
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -8904,8 +8888,8 @@
                   "super_followed_by": false,
                   "super_following": false,
                   "tweet_counts": {
-                   "media_tweets": 34713,
-                   "tweets": 634928
+                   "media_tweets": 34717,
+                   "tweets": 635746
                   },
                   "verification": {
                    "verified": false
@@ -8998,7 +8982,7 @@
                    "result": {
                     "__typename": "User",
                     "action_counts": {
-                     "favorites_count": 3978
+                     "favorites_count": 3977
                     },
                     "affiliates_highlighted_label": {},
                     "avatar": {
@@ -9059,8 +9043,8 @@
                      "translator_type": "none"
                     },
                     "relationship_counts": {
-                     "followers": 27769,
-                     "following": 4704
+                     "followers": 27762,
+                     "following": 4701
                     },
                     "relationship_perspectives": {
                      "blocked_by": false,
@@ -9075,8 +9059,8 @@
                     "super_followed_by": false,
                     "super_following": false,
                     "tweet_counts": {
-                     "media_tweets": 2148,
-                     "tweets": 9599
+                     "media_tweets": 2152,
+                     "tweets": 9602
                     },
                     "verification": {
                      "verified": false
@@ -9100,7 +9084,7 @@
                   "is_available": false
                  },
                  "has_birdwatch_notes": false,
-                 "is_translatable": true,
+                 "is_translatable": false,
                  "legacy": {
                   "bookmark_count": 30,
                   "bookmarked": false,
@@ -9315,7 +9299,7 @@
                     }
                    ]
                   },
-                  "favorite_count": 260,
+                  "favorite_count": 259,
                   "favorited": false,
                   "full_text": "🚨 Opinium constituency poll for @BylineTimes &amp; @forwarddemo 🚨\n\nA very close three-way contest in Gorton &amp; Denton: \n&gt; the Greens and Labour are both on 28%, just one point ahead of Reform on 27%.\n&gt; Among those most likely to turn out on Thursday, the Greens edge ahead to 30%. https://t.co/SBSNBePNga",
                   "id_str": "2026386747819520263",
@@ -9332,7 +9316,7 @@
                  "rest_id": "2026386747819520263",
                  "unmention_data": {},
                  "views": {
-                  "count": "100206",
+                  "count": "100213",
                   "state": "EnabledWithCount"
                  }
                 }
@@ -9360,7 +9344,7 @@
          }
         },
         "entryId": "conversationthread-2026398784192754102",
-        "sortIndex": "2106850990895398692"
+        "sortIndex": "2109022008808308516"
        },
        {
         "content": {
@@ -9372,7 +9356,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -9389,7 +9373,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -9407,7 +9391,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 87362
+                   "favorites_count": 87416
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -9459,8 +9443,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 148538,
-                   "following": 62654
+                   "followers": 148628,
+                   "following": 62680
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -9475,8 +9459,8 @@
                   "super_followed_by": false,
                   "super_following": false,
                   "tweet_counts": {
-                   "media_tweets": 7642,
-                   "tweets": 40534
+                   "media_tweets": 7679,
+                   "tweets": 40594
                   },
                   "verification": {
                    "verified": false
@@ -9565,7 +9549,7 @@
          }
         },
         "entryId": "conversationthread-2026452707674853501",
-        "sortIndex": "2106850990895398682"
+        "sortIndex": "2109022008808308506"
        },
        {
         "content": {
@@ -9577,7 +9561,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -9594,7 +9578,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -9612,7 +9596,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 15906
+                   "favorites_count": 15956
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -9682,8 +9666,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 143484,
-                   "following": 1677
+                   "followers": 143381,
+                   "following": 1679
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -9698,8 +9682,8 @@
                   "super_followed_by": false,
                   "super_following": false,
                   "tweet_counts": {
-                   "media_tweets": 12695,
-                   "tweets": 152892
+                   "media_tweets": 12720,
+                   "tweets": 153275
                   },
                   "verification": {
                    "verified": false
@@ -9724,7 +9708,7 @@
                 "is_available": false
                },
                "has_birdwatch_notes": false,
-               "is_translatable": true,
+               "is_translatable": false,
                "legacy": {
                 "bookmark_count": 0,
                 "bookmarked": false,
@@ -9788,7 +9772,7 @@
          }
         },
         "entryId": "conversationthread-2026437588991570226",
-        "sortIndex": "2106850990895398672"
+        "sortIndex": "2109022008808308496"
        },
        {
         "content": {
@@ -9800,7 +9784,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -9817,7 +9801,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -9835,7 +9819,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 40945
+                   "favorites_count": 40943
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -9900,8 +9884,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 15990,
-                   "following": 2541
+                   "followers": 15974,
+                   "following": 2538
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -9917,7 +9901,7 @@
                   "super_following": false,
                   "tweet_counts": {
                    "media_tweets": 4833,
-                   "tweets": 19519
+                   "tweets": 19517
                   },
                   "verification": {
                    "verified": false
@@ -10006,7 +9990,7 @@
          }
         },
         "entryId": "conversationthread-2026407586661015707",
-        "sortIndex": "2106850990895398662"
+        "sortIndex": "2109022008808308486"
        },
        {
         "content": {
@@ -10018,7 +10002,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -10035,7 +10019,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -10053,7 +10037,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 16149
+                   "favorites_count": 16233
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -10100,8 +10084,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 5365,
-                   "following": 2540
+                   "followers": 5358,
+                   "following": 2546
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -10116,8 +10100,8 @@
                   "super_followed_by": false,
                   "super_following": false,
                   "tweet_counts": {
-                   "media_tweets": 4122,
-                   "tweets": 111609
+                   "media_tweets": 4125,
+                   "tweets": 111674
                   },
                   "verification": {
                    "verified": false
@@ -10142,7 +10126,7 @@
                 "is_available": false
                },
                "has_birdwatch_notes": false,
-               "is_translatable": true,
+               "is_translatable": false,
                "legacy": {
                 "bookmark_count": 0,
                 "bookmarked": false,
@@ -10206,7 +10190,7 @@
          }
         },
         "entryId": "conversationthread-2026465853114347664",
-        "sortIndex": "2106850990895398652"
+        "sortIndex": "2109022008808308476"
        },
        {
         "content": {
@@ -10218,7 +10202,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -10235,7 +10219,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -10253,7 +10237,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 929
+                   "favorites_count": 973
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -10314,8 +10298,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 16796,
-                   "following": 608
+                   "followers": 16774,
+                   "following": 610
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -10330,8 +10314,8 @@
                   "super_followed_by": false,
                   "super_following": false,
                   "tweet_counts": {
-                   "media_tweets": 695,
-                   "tweets": 384450
+                   "media_tweets": 699,
+                   "tweets": 384901
                   },
                   "verification": {
                    "verified": false
@@ -10356,7 +10340,7 @@
                 "is_available": false
                },
                "has_birdwatch_notes": false,
-               "is_translatable": true,
+               "is_translatable": false,
                "legacy": {
                 "bookmark_count": 0,
                 "bookmarked": false,
@@ -10420,7 +10404,7 @@
          }
         },
         "entryId": "conversationthread-2026425191195099582",
-        "sortIndex": "2106850990895398642"
+        "sortIndex": "2109022008808308466"
        },
        {
         "content": {
@@ -10432,7 +10416,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -10449,7 +10433,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -10467,7 +10451,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 23665
+                   "favorites_count": 23857
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -10519,8 +10503,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 6704,
-                   "following": 6752
+                   "followers": 6678,
+                   "following": 6739
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -10535,8 +10519,8 @@
                   "super_followed_by": false,
                   "super_following": false,
                   "tweet_counts": {
-                   "media_tweets": 599,
-                   "tweets": 19901
+                   "media_tweets": 601,
+                   "tweets": 20143
                   },
                   "verification": {
                    "verified": false
@@ -10561,7 +10545,7 @@
                 "is_available": false
                },
                "has_birdwatch_notes": false,
-               "is_translatable": true,
+               "is_translatable": false,
                "legacy": {
                 "bookmark_count": 2,
                 "bookmarked": false,
@@ -10634,7 +10618,7 @@
          }
         },
         "entryId": "conversationthread-2026396632271474952",
-        "sortIndex": "2106850990895398632"
+        "sortIndex": "2109022008808308456"
        },
        {
         "content": {
@@ -10646,7 +10630,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -10663,7 +10647,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -10681,7 +10665,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 270855
+                   "favorites_count": 270827
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -10738,8 +10722,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 19623,
-                   "following": 18218
+                   "followers": 19615,
+                   "following": 18203
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -10755,7 +10739,7 @@
                   "super_following": false,
                   "tweet_counts": {
                    "media_tweets": 23175,
-                   "tweets": 190408
+                   "tweets": 190402
                   },
                   "verification": {
                    "verified": false
@@ -10844,7 +10828,7 @@
          }
         },
         "entryId": "conversationthread-2026674280524653022",
-        "sortIndex": "2106850990895398622"
+        "sortIndex": "2109022008808308446"
        },
        {
         "content": {
@@ -10856,7 +10840,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -10873,7 +10857,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -10891,7 +10875,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 12271
+                   "favorites_count": 12272
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -10952,8 +10936,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 36006,
-                   "following": 23580
+                   "followers": 35987,
+                   "following": 23569
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -10968,8 +10952,8 @@
                   "super_followed_by": false,
                   "super_following": false,
                   "tweet_counts": {
-                   "media_tweets": 7193,
-                   "tweets": 127149
+                   "media_tweets": 7202,
+                   "tweets": 127187
                   },
                   "verification": {
                    "verified": false
@@ -11058,7 +11042,7 @@
          }
         },
         "entryId": "conversationthread-2026402489373720869",
-        "sortIndex": "2106850990895398612"
+        "sortIndex": "2109022008808308436"
        },
        {
         "content": {
@@ -11070,7 +11054,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -11087,7 +11071,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -11108,7 +11092,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 419998
+                   "favorites_count": 422129
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -11138,7 +11122,7 @@
                   "parody_commentary_fan_label": "None",
                   "pinned_items": {
                    "tweet_ids_str": [
-                    "2106842216710754775"
+                    "2059974748205924702"
                    ]
                   },
                   "possibly_sensitive": false,
@@ -11150,7 +11134,7 @@
                     {
                      "icon_name": "IconBriefcaseStroke",
                      "id": 552,
-                     "name": "Photographe"
+                     "name": "Photographer"
                     }
                    ],
                    "professional_type": "Creator",
@@ -11184,8 +11168,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 28502,
-                   "following": 5820
+                   "followers": 28436,
+                   "following": 5808
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -11200,8 +11184,8 @@
                   "super_followed_by": false,
                   "super_following": false,
                   "tweet_counts": {
-                   "media_tweets": 5852,
-                   "tweets": 394658
+                   "media_tweets": 5854,
+                   "tweets": 396882
                   },
                   "verification": {
                    "verified": false
@@ -11294,7 +11278,7 @@
                    "result": {
                     "__typename": "User",
                     "action_counts": {
-                     "favorites_count": 34160
+                     "favorites_count": 34403
                     },
                     "affiliates_highlighted_label": {},
                     "avatar": {
@@ -11353,8 +11337,8 @@
                      "translator_type": "none"
                     },
                     "relationship_counts": {
-                     "followers": 117842,
-                     "following": 2915
+                     "followers": 118203,
+                     "following": 2919
                     },
                     "relationship_perspectives": {
                      "blocked_by": false,
@@ -11369,8 +11353,8 @@
                     "super_followed_by": false,
                     "super_following": false,
                     "tweet_counts": {
-                     "media_tweets": 4341,
-                     "tweets": 37030
+                     "media_tweets": 4363,
+                     "tweets": 37242
                     },
                     "verification": {
                      "verified": false
@@ -11398,9 +11382,9 @@
                   "is_available": false
                  },
                  "has_birdwatch_notes": false,
-                 "is_translatable": true,
+                 "is_translatable": false,
                  "legacy": {
-                  "bookmark_count": 24,
+                  "bookmark_count": 25,
                   "bookmarked": false,
                   "conversation_id_str": "2026402821570998482",
                   "created_at": "Tue Feb 24 21:04:16 +0000 2026",
@@ -11608,7 +11592,7 @@
                     }
                    ]
                   },
-                  "favorite_count": 1866,
+                  "favorite_count": 1867,
                   "favorited": false,
                   "full_text": "Never, ever, ever, vote for this disingenuous, shameful genocide party ever again.\n\nMay they be condemned to the dustbin of history. https://t.co/HbrMgcFxbJ",
                   "id_str": "2026402821570998482",
@@ -11624,7 +11608,7 @@
                    "url": "https://t.co/1VhRrrNQAE"
                   },
                   "reply_count": 48,
-                  "retweet_count": 283,
+                  "retweet_count": 282,
                   "retweeted": false,
                   "user_id_str": "1372837930650234880"
                  },
@@ -11633,69 +11617,60 @@
                    "__typename": "Tweet",
                    "birdwatch_pivot": {
                     "callToAction": {
-                     "destinationUrl": "https://twitter.com/i/birdwatch/n/2026499345198293272",
-                     "prompt": "Trouvez-vous cette note utile ?",
-                     "title": "Évaluer"
+                     "destinationUrl": "https://twitter.com/i/birdwatch/n/2026433888222904557",
+                     "prompt": "Do you find this helpful?",
+                     "title": "Rate it"
                     },
-                    "destinationUrl": "https://twitter.com/i/birdwatch/n/2026499345198293272",
+                    "destinationUrl": "https://twitter.com/i/birdwatch/n/2026433888222904557",
                     "footer": {
                      "entities": [
                       {
-                       "fromIndex": 112,
+                       "fromIndex": 83,
                        "ref": {
                         "type": "TimelineUrl",
                         "url": "https://x.com/i/flow/join-birdwatch",
                         "urlType": "ExternalUrl"
                        },
-                       "toIndex": 126
+                       "toIndex": 96
                       }
                      ],
-                     "text": "Le contexte est rédigé par des personnes qui utilisent X. Il est affiché quand il est jugé utile par d'autres.  En savoir plus."
+                     "text": "Context is written by people who use X, and appears when rated helpful by others.  Find out more."
                     },
                     "footerIconType": "BirdwatchEyeOff",
-                    "iconType": "BirdwatchV1Icon",
+                    "iconType": "BirdwatchPhoto",
                     "note": {
                      "grok_translated_community_note_with_availability": {
                       "is_available": false
                      },
                      "is_community_note_translatable": false,
-                     "language": "",
-                     "rest_id": "2026499345198293272"
+                     "language": "en",
+                     "rest_id": "2026433888222904557"
                     },
-                    "shorttitle": "Des lecteurs ont ajouté du contexte",
+                    "shorttitle": "Readers added context",
                     "subtitle": {
                      "entities": [
                       {
-                       "fromIndex": 216,
+                       "fromIndex": 226,
                        "ref": {
                         "type": "TimelineUrl",
-                        "url": "https://t.co/S2l95QlDsc",
+                        "url": "https://t.co/XwyWUwTQLu",
                         "urlType": "ExternalUrl"
                        },
-                       "toIndex": 237
+                       "toIndex": 257
                       },
                       {
-                       "fromIndex": 238,
+                       "fromIndex": 259,
                        "ref": {
                         "type": "TimelineUrl",
-                        "url": "https://t.co/0jzScQ20ky",
+                        "url": "https://t.co/bW5zepHT5W",
                         "urlType": "ExternalUrl"
                        },
-                       "toIndex": 269
-                      },
-                      {
-                       "fromIndex": 270,
-                       "ref": {
-                        "type": "TimelineUrl",
-                        "url": "https://t.co/F85M48rm5X",
-                        "urlType": "ExternalUrl"
-                       },
-                       "toIndex": 298
+                       "toIndex": 287
                       }
                      ],
-                     "text": "Opinium poll shows Greens tied with Labour at 28%, Reform at 27% among voters; Greens at 30%, Labour/Reform at 28% among likely voters. Post's graphic omits Greens. Sample of 401; high uncertainty due to small size. x.com/OpiniumResearc… bylinetimes.com/2026/02/24/exc… fullfact.org/politics/gorto…"
+                     "text": "The Opinium/Byline Times poll (fieldwork 16-24 Feb 2026) shows Greens tied with Labour at 28%, Reform 27% among voters stating intention; among likely voters, Greens lead at 30%, Labour/Reform 28% each. Graphic omits Greens.\n\nbylinetimes.com/2026/02/24/exc…\n\nfullfact.org/politics/gorto…"
                     },
-                    "title": "Des lecteurs ont ajouté un contexte qu'ils jugent utile pour les utilisateurs.",
+                    "title": "Readers added context to this image",
                     "visualStyle": "Default"
                    },
                    "core": {
@@ -11703,7 +11678,7 @@
                      "result": {
                       "__typename": "User",
                       "action_counts": {
-                       "favorites_count": 650
+                       "favorites_count": 656
                       },
                       "affiliates_highlighted_label": {},
                       "avatar": {
@@ -11731,11 +11706,7 @@
                        "notifications_enabled": false
                       },
                       "parody_commentary_fan_label": "None",
-                      "pinned_items": {
-                       "tweet_ids_str": [
-                        "2106107903014736001"
-                       ]
-                      },
+                      "pinned_items": {},
                       "possibly_sensitive": false,
                       "privacy": {
                        "protected": false
@@ -11768,8 +11739,8 @@
                        "translator_type": "none"
                       },
                       "relationship_counts": {
-                       "followers": 989223,
-                       "following": 10013
+                       "followers": 988933,
+                       "following": 10008
                       },
                       "relationship_perspectives": {
                        "blocked_by": false,
@@ -11784,8 +11755,8 @@
                       "super_followed_by": false,
                       "super_following": false,
                       "tweet_counts": {
-                       "media_tweets": 11969,
-                       "tweets": 41967
+                       "media_tweets": 11980,
+                       "tweets": 42016
                       },
                       "verification": {
                        "verified": false
@@ -11809,7 +11780,7 @@
                     "is_available": false
                    },
                    "has_birdwatch_notes": true,
-                   "is_translatable": true,
+                   "is_translatable": false,
                    "legacy": {
                     "bookmark_count": 102,
                     "bookmarked": false,
@@ -12013,7 +11984,7 @@
                       }
                      ]
                     },
-                    "favorite_count": 1181,
+                    "favorite_count": 1180,
                     "favorited": false,
                     "full_text": "🚨BREAKING: new poll suggests there is just one point between Labour and Reform in Gorton and Denton.\n\nEvery vote will count on Thursday. Back Labour and choose unity over Reform’s division. https://t.co/q8ocoMqKCP",
                     "id_str": "2026390853309063292",
@@ -12022,7 +11993,7 @@
                     "possibly_sensitive": false,
                     "possibly_sensitive_editable": true,
                     "quote_count": 425,
-                    "reply_count": 1995,
+                    "reply_count": 1992,
                     "retweet_count": 271,
                     "retweeted": false,
                     "user_id_str": "14291684"
@@ -12030,7 +12001,7 @@
                    "rest_id": "2026390853309063292",
                    "unmention_data": {},
                    "views": {
-                    "count": "1217464",
+                    "count": "1217498",
                     "state": "EnabledWithCount"
                    }
                   }
@@ -12079,7 +12050,7 @@
          }
         },
         "entryId": "conversationthread-2026422707445752300",
-        "sortIndex": "2106850990895398602"
+        "sortIndex": "2109022008808308426"
        },
        {
         "content": {
@@ -12091,7 +12062,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -12108,7 +12079,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -12126,7 +12097,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 13870
+                   "favorites_count": 14042
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -12191,7 +12162,7 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 25312,
+                   "followers": 25277,
                    "following": 1711
                   },
                   "relationship_perspectives": {
@@ -12207,8 +12178,8 @@
                   "super_followed_by": false,
                   "super_following": false,
                   "tweet_counts": {
-                   "media_tweets": 873,
-                   "tweets": 18073
+                   "media_tweets": 889,
+                   "tweets": 18252
                   },
                   "verification": {
                    "verified": false
@@ -12233,7 +12204,7 @@
                 "is_available": false
                },
                "has_birdwatch_notes": false,
-               "is_translatable": true,
+               "is_translatable": false,
                "legacy": {
                 "bookmark_count": 0,
                 "bookmarked": false,
@@ -12297,7 +12268,7 @@
          }
         },
         "entryId": "conversationthread-2026569076101845005",
-        "sortIndex": "2106850990895398592"
+        "sortIndex": "2109022008808308416"
        },
        {
         "content": {
@@ -12309,7 +12280,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -12326,7 +12297,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -12344,7 +12315,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 199228
+                   "favorites_count": 199311
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -12392,8 +12363,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 5437,
-                   "following": 5876
+                   "followers": 5414,
+                   "following": 5871
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -12409,7 +12380,7 @@
                   "super_following": false,
                   "tweet_counts": {
                    "media_tweets": 1903,
-                   "tweets": 48663
+                   "tweets": 48704
                   },
                   "verification": {
                    "verified": false
@@ -12434,7 +12405,7 @@
                 "is_available": false
                },
                "has_birdwatch_notes": false,
-               "is_translatable": true,
+               "is_translatable": false,
                "legacy": {
                 "bookmark_count": 1,
                 "bookmarked": false,
@@ -12802,7 +12773,7 @@
          }
         },
         "entryId": "conversationthread-2026392163718766981",
-        "sortIndex": "2106850990895398582"
+        "sortIndex": "2109022008808308406"
        },
        {
         "content": {
@@ -12814,7 +12785,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -12831,7 +12802,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -12849,7 +12820,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 29633
+                   "favorites_count": 29980
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -12897,8 +12868,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 3390,
-                   "following": 4103
+                   "followers": 3446,
+                   "following": 4166
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -12913,8 +12884,8 @@
                   "super_followed_by": false,
                   "super_following": false,
                   "tweet_counts": {
-                   "media_tweets": 5423,
-                   "tweets": 43565
+                   "media_tweets": 5481,
+                   "tweets": 44438
                   },
                   "verification": {
                    "verified": false
@@ -12939,7 +12910,7 @@
                 "is_available": false
                },
                "has_birdwatch_notes": false,
-               "is_translatable": true,
+               "is_translatable": false,
                "legacy": {
                 "bookmark_count": 3,
                 "bookmarked": false,
@@ -13196,7 +13167,7 @@
                "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
                "unmention_data": {},
                "views": {
-                "count": "2514",
+                "count": "2517",
                 "state": "EnabledWithCount"
                }
               }
@@ -13215,7 +13186,7 @@
          }
         },
         "entryId": "conversationthread-2026413154251534478",
-        "sortIndex": "2106850990895398572"
+        "sortIndex": "2109022008808308396"
        },
        {
         "content": {
@@ -13227,7 +13198,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -13244,7 +13215,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -13262,7 +13233,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 199228
+                   "favorites_count": 199311
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -13310,8 +13281,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 5437,
-                   "following": 5876
+                   "followers": 5414,
+                   "following": 5871
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -13327,7 +13298,7 @@
                   "super_following": false,
                   "tweet_counts": {
                    "media_tweets": 1903,
-                   "tweets": 48663
+                   "tweets": 48704
                   },
                   "verification": {
                    "verified": false
@@ -13352,7 +13323,7 @@
                 "is_available": false
                },
                "has_birdwatch_notes": false,
-               "is_translatable": true,
+               "is_translatable": false,
                "legacy": {
                 "bookmark_count": 1,
                 "bookmarked": false,
@@ -13597,7 +13568,7 @@
                "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
                "unmention_data": {},
                "views": {
-                "count": "2806",
+                "count": "2809",
                 "state": "EnabledWithCount"
                }
               }
@@ -13616,7 +13587,7 @@
          }
         },
         "entryId": "conversationthread-2026401780347589080",
-        "sortIndex": "2106850990895398562"
+        "sortIndex": "2109022008808308386"
        },
        {
         "content": {
@@ -13628,7 +13599,7 @@
             "conversationSection": "HighQuality"
            },
            "timelinesDetails": {
-            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+            "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
            }
           }
          },
@@ -13645,7 +13616,7 @@
                "conversationSection": "HighQuality"
               },
               "timelinesDetails": {
-               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEItETrAAAAAA=="
+               "controllerData": "DAACDAAEDAABCgABAAAAAAAAAAEKAAIAAAAAAAAAAAoAAwAAAaEnjmLpAAAAAA=="
               }
              },
              "element": "tweet"
@@ -13663,7 +13634,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 7289
+                   "favorites_count": 7361
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -13711,8 +13682,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 10163,
-                   "following": 11030
+                   "followers": 10224,
+                   "following": 11211
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -13728,7 +13699,7 @@
                   "super_following": false,
                   "tweet_counts": {
                    "media_tweets": 47,
-                   "tweets": 10400
+                   "tweets": 10488
                   },
                   "verification": {
                    "verified": false
@@ -13753,7 +13724,7 @@
                 "is_available": false
                },
                "has_birdwatch_notes": false,
-               "is_translatable": true,
+               "is_translatable": false,
                "legacy": {
                 "bookmark_count": 0,
                 "bookmarked": false,
@@ -13798,7 +13769,7 @@
                "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
                "unmention_data": {},
                "views": {
-                "count": "1654",
+                "count": "1657",
                 "state": "EnabledWithCount"
                }
               }
@@ -13817,17 +13788,17 @@
          }
         },
         "entryId": "conversationthread-2026391433104494678",
-        "sortIndex": "2106850990895398552"
+        "sortIndex": "2109022008808308376"
        },
        {
         "content": {
          "__typename": "TimelineTimelineCursor",
          "cursorType": "Bottom",
          "entryType": "TimelineTimelineCursor",
-         "value": "DAAKCgABHT0J0Er__pULAAIAAAGoRW1QQzZ3QUFBZlEvZ0dKTjB2R3AvQUFBQUNVY0gweVI2RmNnb2h3ZlJUY1BWcER6SEIvbzl3NFdFY1FjSURHRk5oZWgzaHdmV2tBclYzRXlIQjlvQUVNV2tIMGNIMU02eEphd0xod2ZOVUVXbGlFTkhDSzVSbEFXd09ZY0gwUUhBMWR3amh3Zk9hN1IxbEhZSEI4N0RUQVgwRmdjSDA3NWxSWkJ2aHdmTWxiOTFuRFFIQjh2dnF1V1lId2NIenFDVDFveFV4d2ZOYVNBRnNDTkhCODI5VGtYc2JZY0g5aWJGOW94dkJ3Zk9QUGZWNkFJSEI4NHo0b1dZZEFjSDBnVG5kWkEweHdmTTk0N1YzRCtIQi9SMW1YWGtBMGNIemd4b1pkUWJCd2ZOK3hvVnBDd0hCODhVZ0ZYSUFRY0h6RHZ4aGVoaFJ3ZlRMZEtGdUhzSEI5ejlPeFc4SkFjSHpZWE5aZEJieHdmTUVXcUZwQldIQjg2VStjV2dTVWNIOGFMUmRZQjVSd2ZOUUF3bHRFSUhCOCs5clVXSUpzY0h6cjZGdGVSR2c9PQgAAwAAAAILAAQAAAAGQm90dG9tAAA"
+         "value": "DAAKCgABHUTAV8p__pULAAIAAAGoRW1QQzZ3QUFBZlEvZ0dKTjB2R3AvQUFBQUNVY0gweVI2RmNnb2h3ZlJUY1BWcER6SEIvbzl3NFdFY1FjSURHRk5oZWgzaHdmV2tBclYzRXlIQjlvQUVNV2tIMGNIMU02eEphd0xod2ZOVUVXbGlFTkhDSzVSbEFXd09ZY0gwUUhBMWR3amh3Zk9hN1IxbEhZSEI4N0RUQVgwRmdjSDA3NWxSWkJ2aHdmTWxiOTFuRFFIQjh2dnF1V1lId2NIenFDVDFveFV4d2ZOYVNBRnNDTkhCODI5VGtYc2JZY0g5aWJGOW94dkJ3Zk9QUGZWNkFJSEI4NHo0b1dZZEFjSDBnVG5kWkEweHdmTTk0N1YzRCtIQi9SMW1YWGtBMGNIemd4b1pkUWJCd2ZOK3hvVnBDd0hCODhVZ0ZYSUFRY0h6RHZ4aGVoaFJ3ZlRMZEtGdUhzSEI5ejlPeFc4SkFjSHpZWE5aZEJieHdmTUVXcUZwQldIQjg2VStjV2dTVWNIOGFMUmRZQjVSd2ZOUUF3bHRFSUhCOCs5clVXSUpzY0h6cjZGdGVSR2c9PQgAAwAAAAILAAQAAAAGQm90dG9tAAA"
         },
-        "entryId": "cursor-bottom-2106850990895398551",
-        "sortIndex": "2106850990895398551"
+        "entryId": "cursor-bottom-2109022008808308375",
+        "sortIndex": "2109022008808308375"
        }
       ],
       "type": "TimelineAddEntries"

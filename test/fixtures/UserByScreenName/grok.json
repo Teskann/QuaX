@@ -1,9 +1,10 @@
 {
  "scenario": "Media tab of @grok, where a profile-grid item has an empty tweet_results (issue #204)",
  "sourceUrl": "https://x.com/grok/media",
+ "unstable": true,
  "operation": "UserByScreenName",
  "host": "x.com",
- "queryId": "KybxDj9RrADIITXlGG8kpw",
+ "queryId": "AMIBMjtxEEATh4z8V9GtRg",
  "features": {
   "hidden_profile_subscriptions_enabled": true,
   "profile_label_improvements_pcf_label_in_post_enabled": true,
@@ -30,8 +31,8 @@
  "headers": {
   "x-rate-limit-limit": "150",
   "content-type": "application/json",
-  "x-rate-limit-remaining": "145",
-  "x-rate-limit-reset": "1791148143"
+  "x-rate-limit-remaining": "144",
+  "x-rate-limit-reset": "1791664778"
  },
  "body": {
   "data": {
@@ -39,16 +40,16 @@
     "result": {
      "__typename": "User",
      "action_counts": {
-      "favorites_count": 142
+      "favorites_count": 145
      },
      "affiliates_highlighted_label": {
       "label": {
        "badge": {
-        "url": "https://pbs.twimg.com/profile_images/2074224934159876096/aelorWHq_bigger.jpg"
+        "url": "https://pbs.twimg.com/profile_images/2108973816865067008/eES3dbLy_bigger.jpg"
        },
-       "description": "SpaceXAI",
+       "description": "SpaceX Super Intelligence",
        "url": {
-        "url": "https://twitter.com/SpaceXAI",
+        "url": "https://twitter.com/SpaceXSI",
         "urlType": "DeepLink"
        },
        "userLabelDisplayType": "Badge",
@@ -94,11 +95,7 @@
       "notifications_enabled": false
      },
      "parody_commentary_fan_label": "None",
-     "pinned_items": {
-      "tweet_ids_str": [
-       "2099876430561632548"
-      ]
-     },
+     "pinned_items": {},
      "possibly_sensitive": false,
      "privacy": {
       "protected": false
@@ -131,7 +128,7 @@
       "translator_type": "none"
      },
      "relationship_counts": {
-      "followers": 9137152,
+      "followers": 9154034,
       "following": 4
      },
      "relationship_perspectives": {
@@ -147,8 +144,8 @@
      "super_followed_by": false,
      "super_following": false,
      "tweet_counts": {
-      "media_tweets": 3983082,
-      "tweets": 138892997
+      "media_tweets": 3998778,
+      "tweets": 140147630
      },
      "user_seed_tweet_count": 0,
      "verification": {
@@ -163,7 +160,7 @@
          {
           "from_index": 53,
           "ref": {
-           "url": "https://twitter.com/SpaceXAI",
+           "url": "https://twitter.com/SpaceXSI",
            "url_type": "ExternalUrl"
           },
           "to_index": 62
@@ -177,7 +174,7 @@
           "to_index": 79
          }
         ],
-        "text": "This account is Premium because it's an affiliate of @SpaceXAI on X. Learn more"
+        "text": "This account is Premium because it's an affiliate of @SpaceXSI on X. Learn more"
        },
        "verified_since_msec": "1699406829926"
       }

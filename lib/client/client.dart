@@ -53,6 +53,9 @@ class _QuackerTwitterClient extends TwitterClient {
   /// With no account, an unauthenticated (guest) request is sent, and
   /// [NoAccountAvailableException] is thrown only if it also fails.
   static Future<http.Response> fetch(Uri uri, {Map<String, String>? headers}) async {
+    if (mockXServer.isNotEmpty) {
+      return http.get(Uri.parse('$mockXServer/${uri.host}${uri.path}').replace(query: uri.hasQuery ? uri.query : null));
+    }
     final endpoint = uri.path;
     final now = DateTime.now();
     final accounts = await getAccounts();
@@ -230,7 +233,7 @@ class Twitter {
     "responsive_web_profile_redirect_enabled": true,
     "responsive_web_twitter_article_notes_tab_enabled": true,
     "rweb_tipjar_consumption_enabled": false,
-    "subscriptions_feature_can_gift_premium": true,
+    "subscriptions_feature_can_gift_premium": false,
     "subscriptions_verification_info_is_identity_verified_enabled": true,
     "subscriptions_verification_info_verified_since_enabled": true,
     "verified_phone_label_enabled": false,
@@ -254,8 +257,8 @@ class Twitter {
     if (screenName.startsWith('@')) {
       screenName = screenName.substring(1);
     }
-    var uri = Uri.https('twitter.com', '/i/api/graphql/KybxDj9RrADIITXlGG8kpw/UserByScreenName', {
-      'variables': jsonEncode({'screen_name': screenName, "withGrokTranslatedBio": true}),
+    var uri = Uri.https('x.com', '/i/api/graphql/AMIBMjtxEEATh4z8V9GtRg/UserByScreenName', {
+      'variables': jsonEncode({'screen_name': screenName.toLowerCase(), "withGrokTranslatedBio": true}),
       'features': jsonEncode(_profileFeatures),
       'fieldToggles': jsonEncode({"withPayments": false, "withAuxiliaryUserLabels": true}),
     });
@@ -314,7 +317,7 @@ class Twitter {
         userId,
         count,
         cursor: cursor,
-        queryId: 'uwmIAx89XrXNuGY-Y7WFLg',
+        queryId: 'ath0FIohYC_c3Hj3SsxoCg',
         operation: 'Following',
       );
 
@@ -323,7 +326,7 @@ class Twitter {
         userId,
         count,
         cursor: cursor,
-        queryId: 'mrqxgX8JzwlL6pvYiC5CPA',
+        queryId: 'stpzFPAIZ2qv8s2lRzPOnQ',
         operation: 'Followers',
       );
 
@@ -512,6 +515,8 @@ class Twitter {
       }),
       "features": jsonEncode(_timelineFeatures),
       "fieldToggles": jsonEncode({
+        "withPayments": false,
+        "withDmBlocks": false,
         "withArticleRichContentState": true,
         "withArticlePlainText": false,
         "withArticleSummaryText": true,
@@ -526,12 +531,13 @@ class Twitter {
 
     if (cursor != null) {
       variables['cursor'] = cursor;
+      variables['referrer'] = 'tweet';
     }
 
     defaultParam["variables"] = json.encode(variables);
 
     var response = await _twitterApi.client.get(
-      Uri.https('x.com', '/i/api/graphql/blErEeZkos5TDrWmrCp7cw/TweetDetail', defaultParam),
+      Uri.https('x.com', '/i/api/graphql/3BlMtudy4N-d78ch7zTLZQ/TweetDetail', defaultParam),
     );
 
     return parseTweetDetail(json.decode(response.body) as Map<String, dynamic>);
@@ -555,10 +561,31 @@ class Twitter {
     // TODO: Could this use createUnconversationedChains at some point?
     var chains = createTweetChains(addEntries);
 
-    String? cursorBottom = getCursor(addEntries, repEntries, 'cursor-bottom', 'Bottom');
+    String? cursorBottom = _endsAtBottom(instructions) ? null : getCursor(addEntries, repEntries, 'cursor-bottom', 'Bottom');
     String? cursorTop = getCursor(addEntries, repEntries, 'cursor-top', 'Top');
 
     return TweetStatus(chains: chains, cursorBottom: cursorBottom, cursorTop: cursorTop);
+  }
+
+  /// X still hands a Bottom cursor when nothing follows, but then ends the timeline at the bottom too, and the
+  /// website does not ask for the next page.
+  static bool _endsAtBottom(List<dynamic> instructions) =>
+      instructions.any((e) => e['type'] == 'TimelineTerminateTimeline' && e['direction'] == 'Bottom');
+
+  /// What the website sends for a typed search, tab by tab.
+  static Uri _searchUri(String query, String product, int count, String? cursor) {
+    return Uri.https('x.com', '/i/api/graphql/irezafrnzav4Ulf1vDkEBg/SearchTimeline', {
+      'variables': jsonEncode({
+        "rawQuery": query,
+        "count": count,
+        "cursor": ?cursor,
+        "querySource": "typed_query",
+        "product": product,
+        "withGrokTranslatedBio": product == "People" || product == "Top",
+        "withQuickPromoteEligibilityTweetFields": false,
+      }),
+      'features': jsonEncode(_timelineFeatures),
+    });
   }
 
   static Future<TweetStatus> searchTweets(
@@ -567,26 +594,7 @@ class Twitter {
     String? cursor,
     String product = "Latest",
   }) async {
-    var variables = {
-      "rawQuery": query,
-      "count": limit.toString(),
-      "querySource": "typed_query",
-      "product": product,
-      "withGrokTranslatedBio": true,
-      "withQuickPromoteEligibilityTweetFields": false,
-    };
-
-
-    if (cursor != null) {
-      variables['cursor'] = cursor;
-    }
-
-    var uri = Uri.https('x.com', '/i/api/graphql/uGB-gNd5HE4TkpO70OcFNw/SearchTimeline', {
-      'variables': jsonEncode(variables),
-      'features': jsonEncode(_timelineFeatures),
-    });
-
-    var response = await _twitterApi.client.get(uri);
+    var response = await _twitterApi.client.get(_searchUri(query, product, limit, cursor));
     return parseSearchTimeline(
       json.decode(response.body) as Map<String, dynamic>,
       product: product,
@@ -643,28 +651,8 @@ class Twitter {
     return TweetStatus(chains: chains, cursorBottom: cursorBottom, cursorTop: cursorTop);
   }
 
-  static Future<List<UserWithExtra>> searchUsers(String query, {int limit = 25, String? cursor}) async {
-    var variables = {
-      "rawQuery": query,
-      "count": limit.toString(),
-      "querySource": "typed_query",
-      "product": 'People',
-      "withDownvotePerspective": false,
-      "withReactionsMetadata": false,
-      "withReactionsPerspective": false,
-    };
-
-
-    if (cursor != null) {
-      variables['cursor'] = cursor;
-    }
-
-    var uri = Uri.https('twitter.com', '/i/api/graphql/uGB-gNd5HE4TkpO70OcFNw/SearchTimeline', {
-      'variables': jsonEncode(variables),
-      'features': jsonEncode(_timelineFeatures),
-    });
-
-    var response = await _twitterApi.client.get(uri);
+  static Future<List<UserWithExtra>> searchUsers(String query, {int limit = 20, String? cursor}) async {
+    var response = await _twitterApi.client.get(_searchUri(query, 'People', limit, cursor));
     if (response.body.isEmpty) {
       return [];
     }
@@ -717,10 +705,9 @@ class Twitter {
   }
 
   static Future<TweetStatus> getTimelineTweets(
-    String id,
     String type, {
     List<String>? pinnedTweets,
-    int count = 10,
+    int count = 20,
     String? cursor,
     bool includeReplies = true,
     bool includeRetweets = true,
@@ -729,25 +716,24 @@ class Twitter {
   }) async {
     bool showPinnedTweet = true;
     Map<String, Object> defaultUserTweetsParam = {
-      "variables":
-          "{\"userId\":\"160534877\",\"count\":$count,\"includePromotedContent\":false,\"withQuickPromoteEligibilityTweetFields\":true,\"withVoice\":true,\"withV2Timeline\":true}",
+      "variables": jsonEncode({
+        "count": count,
+        "cursor": ?cursor,
+        "includePromotedContent": true,
+        // Only sent by the website when the timeline is first opened
+        if (cursor == null) "requestContext": "launch",
+        "withCommunity": true,
+      }),
       "features": jsonEncode(_timelineFeatures),
-      "fieldToggles": "{\"withAuxiliaryUserLabels\":false,\"withArticleRichContentState\":false}",
+      "fieldToggles": jsonEncode({"withPayments": false}),
     };
 
-    Map<String, dynamic> variables = json.decode(defaultUserTweetsParam["variables"].toString());
-    variables["userId"] = id;
-    if (cursor != null) {
-      variables['cursor'] = cursor;
-    }
-    defaultUserTweetsParam["variables"] = json.encode(variables);
-
     var response = await _twitterApi.client.get(
-      Uri.https('twitter.com', 'i/api/graphql/whgGeEQDhEDkPQEJiJvYQw/HomeTimeline', defaultUserTweetsParam),
+      Uri.https('x.com', '/i/api/graphql/svLglq6U2wlTyZMGDDcLYQ/HomeTimeline', defaultUserTweetsParam),
     );
     var result = json.decode(response.body);
     //if this page is not first one on the profile page, dont add pinned tweet
-    if (variables['cursor'] != null) showPinnedTweet = false;
+    if (cursor != null) showPinnedTweet = false;
     return createTimelineChains(
       result,
       'tweet',
@@ -776,13 +762,13 @@ class Twitter {
   /// The web's Media tab is split in two requests: videos (`media`) and photos.
   static ({String path, Map<String, Object> variables}) _userTimeline(String type, bool includeReplies) {
     return switch (type) {
-      "media" => (path: "/i/api/graphql/5A9PzD08T6PbvC2QlEYxMg/UserVideoTimeline", variables: _mediaVariables),
-      "photos" => (path: "/i/api/graphql/YqEBDpaXbWuRPks59hau0g/UserPhotoTimeline", variables: _mediaVariables),
+      "media" => (path: "/i/api/graphql/oAFGPinlLUFMoa3u70mnAw/UserVideoTimeline", variables: _mediaVariables),
+      "photos" => (path: "/i/api/graphql/sa-ZQ0jW0FT_VnNKT1PtYg/UserPhotoTimeline", variables: _mediaVariables),
       _ when includeReplies => (
-          path: "/i/api/graphql/Z1m9j8S1leAzQp6yZXuaSg/UserTweetsAndReplies",
+          path: "/i/api/graphql/bnsYxFljT6y98rFwiGr3fw/UserTweetsAndReplies",
           variables: {..._postsVariables, "withCommunity": true},
         ),
-      _ => (path: "/i/api/graphql/qtvmQffnepvr0oPe4A8MqQ/UserOriginalsTimeline", variables: _postsVariables),
+      _ => (path: "/i/api/graphql/QLGv_wL7wziqsHhU0K100w/UserOriginalsTimeline", variables: _postsVariables),
     };
   }
 
@@ -976,7 +962,7 @@ class Twitter {
 
     for (final addModEntry in addModEntries) {
       final entryId = addModEntry['entryId'] as String? ?? addModEntry['entry_id'] as String? ?? '';
-      if (entryId.startsWith('profile-grid-')) {
+      if (entryId.startsWith('profile-grid-') || entryId.startsWith('profile-photo-grid-')) {
         Map<String, dynamic>? result = addModEntry['item']?['content']?['tweetResult']?['result'];
         result ??= addModEntry['item']?['itemContent']?['tweet_results']?['result'];
         result ??= addModEntry['item']?['content']?['tweet_results']?['result'];

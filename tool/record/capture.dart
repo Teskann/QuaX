@@ -9,7 +9,7 @@
 //   fvm dart run tool/record/capture.dart --attach    uses a Chrome already open
 //   fvm dart run tool/record/capture.dart --only 2082854732020760880
 //                                                     captures only the links containing the text,
-//                                                     and prunes nothing
+//                                                     and prunes only what those links used to produce
 //
 // Chrome is started as described in chrome.dart.
 //
@@ -19,6 +19,7 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:collection/collection.dart';
 import 'package:puppeteer/puppeteer.dart';
@@ -67,6 +68,10 @@ final _writtenThisRun = <String, String>{};
 
 const _port = 9222;
 
+/// A reader scrolls while the list keeps growing; busy timelines never end, so
+/// they stop here: the first page and two more are plenty.
+const _maxScrolls = 2;
+
 /// A page that has not reached domContentLoaded in this long is not going to.
 const _pageTimeout = Duration(seconds: 15);
 
@@ -76,16 +81,24 @@ const _pageTimeout = Duration(seconds: 15);
 const _quiet = Duration(milliseconds: 1200);
 const _settleCap = Duration(seconds: 8);
 
+/// The website takes a moment to notice it reached the end of a list and ask
+/// for more.
+const _afterScroll = Duration(milliseconds: 2500);
+
 /// Chrome sometimes never finishes a body; these keep one such response from
 /// holding the whole run.
 const _bodyTimeout = Duration(seconds: 10);
 const _drainTimeout = Duration(seconds: 10);
 
 class Scenario {
-  Scenario(this.url, this.description);
+  Scenario(this.url, this.description, {this.unstable = false});
 
   final String url;
   final String description;
+
+  /// What X answers changes from one capture to the next (someone else's
+  /// timeline, a search, the home timeline): tests may only check its shape.
+  final bool unstable;
 }
 
 Future<void> main(List<String> args) async {
@@ -110,14 +123,17 @@ Future<void> main(List<String> args) async {
   for (final (index, scenario) in scenarios.indexed) {
     print('\n[${index + 1}/${scenarios.length}] ${scenario.description}');
     print('         ${scenario.url}');
+    final watch = Stopwatch()..start();
     written += await _visit(page, scenario);
+    print('         ${(watch.elapsedMilliseconds / 1000).toStringAsFixed(1)} s');
   }
 
   browser.disconnect();
   chrome?.kill();
 
   print('\n$written fixtures under ${_outDir.path}');
-  if (only == null) _prune();
+  final visited = scenarios.map((s) => s.url).toSet();
+  _prune(only == null ? (_) => true : (file) => visited.contains(_sourceUrl(file)));
   final names = _seen.keys.toList()..sort();
   print('\n${names.length} distinct operations recorded:');
   for (final name in names) {
@@ -202,25 +218,34 @@ Map<String, dynamic> _readLinks() =>
 List<Scenario> _readScenarios(Map<String, dynamic> root) =>
     (root['scenarios'] as List<dynamic>)
         .cast<Map<String, dynamic>>()
-        .map((entry) => Scenario(entry['url'] as String, entry['description'] as String? ?? ''))
+        .map((entry) => Scenario(entry['url'] as String, entry['description'] as String? ?? '',
+            unstable: entry['unstable'] as bool? ?? false))
         .toList();
 
 
-/// Loads one scenario, scrolls a few times so the cursor pages are requested
-/// too, and saves every GraphQL response seen along the way.
+/// Loads one scenario, scrolls down like a reader while the list keeps growing,
+/// and saves every GraphQL response seen along the way.
 Future<int> _visit(Page page, Scenario scenario) async {
   final captured = <String, Map<String, dynamic>>{};
   final pending = <Future<void>>[];
-  var lastSeen = DateTime.now();
+  DateTime? lastSeen;
+  var nextPages = 0;
+
+  // x.com polls other operations all the time, so the page as a whole is never
+  // quiet: only lists count, recognised by their shape rather than by name, as
+  // X renames operations.
+  void onSaved(Map<String, dynamic> fixture) {
+    if (!_isList(fixture['body'])) return;
+    lastSeen = DateTime.now();
+    if ((fixture['variables'] as Map?)?['cursor'] != null) nextPages++;
+  }
 
   final subscription = page.onResponse.listen((response) {
-    final match = _graphql.firstMatch(response.url);
-    if (match == null) return;
-    lastSeen = DateTime.now();
+    if (!_graphql.hasMatch(response.url)) return;
     // One unreadable response must not take the whole run down: Future.wait
     // rethrows the first failure it sees, and an Error is not an Exception, so
     // the catch inside _collect would not stop it from escaping.
-    pending.add(_collect(response, scenario, captured).catchError((Object error) {
+    pending.add(_collect(response, scenario, captured, onSaved).catchError((Object error) {
       print('  skipped a response: $error');
     }));
   });
@@ -234,28 +259,36 @@ Future<int> _visit(Page page, Scenario scenario) async {
     _failures++;
   }
 
-  for (var scroll = 0; scroll < 4; scroll++) {
-    await _settle(() => lastSeen);
+  await _settle(() => lastSeen);
+  for (var scroll = 0; scroll < _maxScrolls; scroll++) {
+    final before = nextPages;
+    print('  v scroll');
     try {
-      await page.evaluate('() => window.scrollBy(0, document.body.scrollHeight)');
-    } on Exception {
+      final size = await page.evaluate<Map<String, dynamic>>(
+          '() => ({width: innerWidth, height: innerHeight, page: document.documentElement.scrollHeight})');
+      await page.mouse.move(Point(size['width'] / 2, size['height'] / 2));
+      await page.mouse.wheel(deltaY: size['page']);
+    } on Exception catch (error) {
+      print('  could not scroll: $error');
       break; // navigated away or closed; whatever landed is still worth keeping
     }
+    await _settle(() => lastSeen, since: DateTime.now(), quiet: _afterScroll);
+    if (nextPages == before) break; // the end of the list, or a page without one
   }
-  await _settle(() => lastSeen);
 
   await Future.wait(pending).timeout(_drainTimeout, onTimeout: () => <void>[]);
   await subscription.cancel();
   return _write(captured);
 }
 
-/// Deletes fixtures this run did not produce, so the directory always describes
-/// the current links.json and nothing else. The x-client-transaction-id
-/// fixtures come from transaction_id.dart and are kept.
+/// Deletes the fixtures [isOurs] that this run did not produce: all of them on a
+/// full run, so the directory always describes the current links.json and
+/// nothing else, and only those of the links it visited with --only. The
+/// x-client-transaction-id fixtures come from transaction_id.dart and are kept.
 ///
 /// Skipped when a page failed to load: a run that lost scenarios would delete
 /// exactly the fixtures it failed to refresh, and the loss would be silent.
-void _prune() {
+void _prune(bool Function(File file) isOurs) {
   if (!_outDir.existsSync()) return;
   if (_failures > 0) {
     print('\n$_failures page(s) failed to load, so nothing was pruned. '
@@ -269,6 +302,7 @@ void _prune() {
       .where((file) => file.path.endsWith('.json'))
       .where((file) => !file.path.startsWith(transactionIdFixtures.path))
       .where((file) => !_writtenThisRun.containsKey(file.path))
+      .where(isOurs)
       .toList();
 
   for (final file in stale) {
@@ -284,11 +318,23 @@ void _prune() {
   if (stale.isNotEmpty) print('${stale.length} stale fixture(s) removed');
 }
 
-/// Returns as soon as the page has been quiet for [_quiet], or at [_settleCap].
-Future<void> _settle(DateTime Function() lastSeen) async {
+/// The link that produced a fixture, which a run with --only may prune.
+String? _sourceUrl(File file) {
+  try {
+    return (jsonDecode(file.readAsStringSync()) as Map<String, dynamic>)['sourceUrl'] as String?;
+  } on FormatException {
+    return null;
+  }
+}
+
+/// Returns once a list has loaded and the page has been [quiet]
+/// since then, and since [since] when given (a scroll the page has yet to answer),
+/// or at [_settleCap].
+Future<void> _settle(DateTime? Function() lastSeen, {DateTime? since, Duration quiet = _quiet}) async {
   final deadline = DateTime.now().add(_settleCap);
   while (DateTime.now().isBefore(deadline)) {
-    if (DateTime.now().difference(lastSeen()) > _quiet) return;
+    final last = [lastSeen(), since].nonNulls.maxOrNull;
+    if (last != null && DateTime.now().difference(last) > quiet) return;
     await Future.delayed(Duration(milliseconds: 250));
   }
 }
@@ -297,6 +343,7 @@ Future<void> _collect(
   Response response,
   Scenario scenario,
   Map<String, Map<String, dynamic>> into,
+  void Function(Map<String, dynamic> fixture) onSaved,
 ) async {
   final match = _graphql.firstMatch(response.url)!;
   final uri = Uri.parse(response.url);
@@ -311,9 +358,10 @@ Future<void> _collect(
   _seen[operation] = (_seen[operation] ?? 0) + 1;
   print('  <- $operation');
 
-  into['$operation|${uri.queryParameters['variables']}'] = {
+  final fixture = into['$operation|${uri.queryParameters['variables']}'] = {
     'scenario': scenario.description,
     'sourceUrl': scenario.url,
+    if (scenario.unstable) 'unstable': true,
     'operation': operation,
     'host': uri.host,
     'queryId': match.group(1),
@@ -327,7 +375,15 @@ Future<void> _collect(
     },
     'body': _decode(body) ?? body,
   };
+  onSaved(fixture);
 }
+
+/// Every timeline of X, whatever the operation, is a list of instructions.
+bool _isList(dynamic node) => switch (node) {
+      Map() => node['instructions'] is List || node.values.any(_isList),
+      List() => node.any(_isList),
+      _ => false,
+    };
 
 dynamic _decode(String? raw) {
   if (raw == null) return null;

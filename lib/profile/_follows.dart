@@ -22,7 +22,7 @@ class _ProfileFollowsState extends State<ProfileFollows> with AutomaticKeepAlive
   late final CursorPagingController<String, UserWithExtra> _paging;
   PagingController<int, UserWithExtra> get _pagingController => _paging.pagingController;
 
-  final int _pageSize = 200;
+  final int _pageSize = 20;
   final Set<String> _seenIds = {};
 
   @override

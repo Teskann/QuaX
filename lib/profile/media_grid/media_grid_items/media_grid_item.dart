@@ -89,7 +89,7 @@ CursorPage<String, MediaGridItem> mediaPageFromStatus(TweetStatus status, String
   if (next == cursor) {
     return (items: const <MediaGridItem>[], nextCursor: null);
   }
-  return (items: mediaItemsFromChains(status.chains), nextCursor: next);
+  return (items: mediaItemsFromChains(status.chains), nextCursor: status.chains.isEmpty ? null : next);
 }
 
 List<MediaGridItem> mediaItemsFromChains(List<TweetChain> chains) {

@@ -7,7 +7,9 @@
     "The description is copied into every fixture the link produces, under the",
     "\"scenario\" key, so a test can say why the fixture exists.",
     "A profile URL triggers UserByScreenName AND the profile timeline at once,",
-    "and the script scrolls, so later pages and cursors come for free."
+    "and the script scrolls, so later pages come for free.",
+    "\"unstable\": true marks a page whose content changes between captures",
+    "(someone else's timeline, a search, the home timeline): tests may only check its shape."
   ],
   "scenarios": [
     {
@@ -28,11 +30,13 @@
     },
     {
       "url": "https://x.com/grok/media",
-      "description": "Media tab of @grok, where a profile-grid item has an empty tweet_results (issue #204)"
+      "description": "Media tab of @grok, where a profile-grid item has an empty tweet_results (issue #204)",
+      "unstable": true
     },
     {
       "url": "https://x.com/grok/media?filter=photo",
-      "description": "Photos filter of @grok, a busy account with many photos"
+      "description": "Photos filter of @grok, a busy account with many photos",
+      "unstable": true
     },
     {
       "url": "https://x.com/quax_tests_2/media?filter=photo",
@@ -64,7 +68,8 @@
     },
     {
       "url": "https://x.com/Osemka8",
-      "description": "Profile whose posts tab mixes subscriber-only previews (TweetPreviewDisplay) into its threads"
+      "description": "Profile whose posts tab mixes subscriber-only previews (TweetPreviewDisplay) into its threads",
+      "unstable": true
     },
     {
       "url": "https://x.com/Osemka8/status/2105589900078641579",
@@ -229,24 +234,123 @@
       "description": "Reply whose card X only references as card://2035746613776322560, which the website draws as nothing and QuaX as an unsupported card"
     },
     {
+      "url": "https://x.com/quax_tests/status/2095914386225344607",
+      "description": "Plain post with a mention, opened from its repost"
+    },
+    {
+      "url": "https://x.com/quax_tests/status/2095914582808117532",
+      "description": "Plain post with a link, opened from its repost"
+    },
+    {
+      "url": "https://x.com/quax_tests/status/2095914730011382213",
+      "description": "Plain post on several lines, opened from its repost"
+    },
+    {
+      "url": "https://x.com/quax_tests/status/2095915139694248014",
+      "description": "First post of a two-post self-thread"
+    },
+    {
+      "url": "https://x.com/quax_tests/status/2095915980287349182",
+      "description": "First post of a five-post self-thread"
+    },
+    {
+      "url": "https://x.com/quax_tests/status/2095915984624275852",
+      "description": "Middle of a five-post self-thread: ancestors above the focal post, descendants below"
+    },
+    {
+      "url": "https://x.com/quax_tests/status/2095915988608823380",
+      "description": "Last post of a five-post self-thread: only ancestors"
+    },
+    {
+      "url": "https://x.com/quax_tests/status/2095918690092884214",
+      "description": "Post with one photo, listed in the photos tab"
+    },
+    {
       "url": "https://x.com/home",
-      "description": "Home timeline"
+      "description": "Home timeline",
+      "unstable": true
     },
     {
-      "url": "https://x.com/search?q=quax&f=live",
-      "description": "Search, Latest tab"
+      "url": "https://x.com/search?q=quax&src=typed_query&f=live",
+      "description": "Search, Latest tab",
+      "unstable": true
     },
     {
-      "url": "https://x.com/search?q=quax&f=user",
-      "description": "Search, People tab"
+      "url": "https://x.com/search?q=quax&src=typed_query&f=user",
+      "description": "Search, People tab",
+      "unstable": true
+    },
+    {
+      "url": "https://x.com/search?q=from%3Aquax_tests&src=typed_query&f=live",
+      "description": "Search, Latest tab: X hides the test accounts from Latest, so this comes back empty"
+    },
+    {
+      "url": "https://x.com/search?q=from%3Aquax_tests&src=typed_query&f=top",
+      "description": "Search, Top tab, on posts that never change"
+    },
+    {
+      "url": "https://x.com/search?q=from%3Aquax_tests&src=typed_query&f=media",
+      "description": "Search, Media tab: a grid of modules instead of a list of entries"
+    },
+    {
+      "url": "https://x.com/search?q=from%3Aquax_tests&src=typed_query&f=user",
+      "description": "Search, People tab, which the app loads along with the others: no account matches",
+      "unstable": true
+    },
+    {
+      "url": "https://x.com/search?q=quax_tests&src=typed_query&f=user",
+      "description": "Search, People tab, finding both test accounts",
+      "unstable": true
+    },
+    {
+      "url": "https://x.com/search?q=from%3Aquax_tests_2%20zzqxjv&src=typed_query&f=live",
+      "description": "Search without a single result"
+    },
+    {
+      "url": "https://x.com/FlutterDev",
+      "description": "Profile to subscribe to, for the subscriptions feed",
+      "unstable": true
+    },
+    {
+      "url": "https://x.com/dart_lang",
+      "description": "Second profile to subscribe to, for the subscriptions feed",
+      "unstable": true
+    },
+    {
+      "url": "https://x.com/search?q=(from%3AFlutterDev%20OR%20from%3Adart_lang)%20include%3Anativeretweets&src=typed_query&f=live",
+      "description": "Subscriptions feed of @FlutterDev then @dart_lang, replies and reposts included (the default). Not the test accounts: X hides them from Latest",
+      "unstable": true
+    },
+    {
+      "url": "https://x.com/search?q=(from%3AFlutterDev%20OR%20from%3Adart_lang)%20-filter%3Areplies%20include%3Anativeretweets&src=typed_query&f=live",
+      "description": "Subscriptions feed of @FlutterDev then @dart_lang, replies hidden",
+      "unstable": true
+    },
+    {
+      "url": "https://x.com/search?q=(from%3AFlutterDev%20OR%20from%3Adart_lang)%20-filter%3Aretweets&src=typed_query&f=live",
+      "description": "Subscriptions feed of @FlutterDev then @dart_lang, reposts hidden",
+      "unstable": true
+    },
+    {
+      "url": "https://x.com/search?q=(from%3AFlutterDev%20OR%20from%3Adart_lang)%20-filter%3Areplies%20-filter%3Aretweets&src=typed_query&f=live",
+      "description": "Subscriptions feed of @FlutterDev then @dart_lang, replies and reposts hidden",
+      "unstable": true
     },
     {
       "url": "https://x.com/explore/tabs/trending",
-      "description": "Trends"
+      "description": "Trends",
+      "unstable": true
     }
   ],
   "_to_publish_then_add": [
     "a suspended or deactivated account to point at (UserUnavailable)",
-    "whatever makes X answer with a real errors array — trigger still unknown"
+    "whatever makes X answer with a real errors array — trigger still unknown",
+    "@quax_tests_2 following 25+ accounts: Following page 2 and the subscription import",
+    "25+ accounts following @quax_tests: Followers page 2",
+    "a post of @quax_tests with 40+ replies: TweetDetail page 2 through cursor-bottom",
+    "a poll with three options (poll3choice_text_only)",
+    "a long post over 280 characters (note_tweet, needs Premium)",
+    "an X article (needs Premium)",
+    "cards image_website, video_website, promo_website, live_event and broadcast, from third-party posts"
   ]
 }

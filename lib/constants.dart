@@ -93,6 +93,8 @@ final Map<String, String> userAgentHeader = {
 const String bearerToken =
     "Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA";
 
+const String mockXServer = String.fromEnvironment('QUAX_MOCK_X');
+
 // Rate-limit window assumed when a 429 comes without the x-rate-limit-reset header.
 const Duration rateLimitFallback = Duration(minutes: 15);
 

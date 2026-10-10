@@ -6,7 +6,6 @@ import '../fixtures.dart';
 
 const grokShareTweet = '2098507671083036843';
 const carouselTweet = '2082854732020760880';
-const imageWebsiteTweet = '2091848397166895354';
 
 /// The tweet [id] as the app reads it from its recorded TweetDetail.
 TweetWithCard detailTweet(String id) => Twitter.parseTweetDetail(fixture('TweetDetail', id).body)
@@ -14,16 +13,29 @@ TweetWithCard detailTweet(String id) => Twitter.parseTweetDetail(fixture('TweetD
     .expand((chain) => chain.tweets)
     .firstWhere((tweet) => tweet.idStr == id);
 
-/// The tweet [id] of the recorded home timeline, read the way the app reads any tweet result. The app itself drops the
-/// promoted ones of a timeline, which is what the image website cards of this recording are.
-TweetWithCard homeTweet(String id) => TweetWithCard.fromGraphqlJson(_findResult(fixture('HomeTimeline', 'vars-2a4d9c').body, id)!);
+/// The first image website card of the recorded home timeline, read the way the app reads any tweet result. These
+/// cards are ads, which the app drops from a timeline and which change with every recording, hence no fixed id.
+TweetWithCard imageWebsiteTweet() => TweetWithCard.fromGraphqlJson(_maps(fixture('HomeTimeline', 'vars-2a4d9c', unstable: true).body)
+    .firstWhere((node) => node['rest_id'] != null && node['legacy'] != null && _unifiedType(node) == 'image_website'));
 
-Map<String, dynamic>? _findResult(Object? node, String id) {
+String? _unifiedType(Map<String, dynamic> tweet) {
+  final card = tweet['card']?['legacy'] as Map<String, dynamic>?;
+  final values = card?['binding_values'];
+  if (values is! List || !values.any((e) => e['key'] == 'unified_card')) return null;
+  return unifiedOf(card!)['type'] as String?;
+}
+
+Iterable<Map<String, dynamic>> _maps(Object? node) sync* {
   if (node is Map<String, dynamic>) {
-    if (node['rest_id'] == id && node['legacy'] != null) return node;
-    return node.values.map((child) => _findResult(child, id)).nonNulls.firstOrNull;
+    yield node;
+    for (final child in node.values) {
+      yield* _maps(child);
+    }
+  } else if (node is List) {
+    for (final child in node) {
+      yield* _maps(child);
+    }
   }
-  return node is List ? node.map((child) => _findResult(child, id)).nonNulls.firstOrNull : null;
 }
 
 /// The card of the tweet [id] exactly as X sent it, its binding values still a list.

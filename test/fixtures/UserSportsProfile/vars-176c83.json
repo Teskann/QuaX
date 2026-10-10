@@ -1,0 +1,34 @@
+{
+ "scenario": "Profile whose posts tab mixes subscriber-only previews (TweetPreviewDisplay) into its threads",
+ "sourceUrl": "https://x.com/Osemka8",
+ "unstable": true,
+ "operation": "UserSportsProfile",
+ "host": "x.com",
+ "queryId": "u7J50a1cN3sp5ejJ4nTuEA",
+ "features": null,
+ "fieldToggles": null,
+ "variables": {
+  "rest_id": "3864149734",
+  "start_time": "1790973583210",
+  "end_time": "1792874383210"
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "1500",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "1499",
+  "x-rate-limit-reset": "1791665683"
+ },
+ "body": {
+  "data": {
+   "user_results": {
+    "id": "VXNlclJlc3VsdHM6Mzg2NDE0OTczNA==",
+    "rest_id": "3864149734",
+    "result": {
+     "__typename": "User",
+     "rest_id": "3864149734"
+    }
+   }
+  }
+ }
+}

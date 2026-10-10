@@ -1,9 +1,10 @@
 {
- "scenario": "Media tab filtered on photos: /media alone only lists videos now",
- "sourceUrl": "https://x.com/quax_tests/media?filter=photo",
+ "scenario": "Media tab of @grok, where a profile-grid item has an empty tweet_results (issue #204)",
+ "sourceUrl": "https://x.com/grok/media",
+ "unstable": true,
  "operation": "SidebarUserRecommendations",
  "host": "x.com",
- "queryId": "XFGj2pdlasiM3FndUe1PrQ",
+ "queryId": "BSYrSirC_dVN6R9Q0Mpmvg",
  "features": {
   "profile_label_improvements_pcf_label_in_post_enabled": true,
   "responsive_web_profile_redirect_enabled": true,
@@ -19,41 +20,41 @@
  "headers": {
   "x-rate-limit-limit": "500",
   "content-type": "application/json",
-  "x-rate-limit-remaining": "495",
-  "x-rate-limit-reset": "1791148141"
+  "x-rate-limit-remaining": "487",
+  "x-rate-limit-reset": "1791664777"
  },
  "body": {
   "data": {
    "sidebar_user_recommendations": [
     {
-     "token": "CgABoR+YAQwamWIIAAIAAAAACAAEAAAEYQA=",
+     "token": "CgAB7jPXOPhg4g4IAAIAAAAACAAEAAAEYQA=",
      "user_results": {
       "result": {
        "__typename": "User",
        "action_counts": {
-        "favorites_count": 7654
+        "favorites_count": 45893
        },
        "affiliates_highlighted_label": {},
        "avatar": {
-        "image_url": "https://pbs.twimg.com/profile_images/1834328195904282624/_CAUqMol_normal.jpg"
+        "image_url": "https://pbs.twimg.com/profile_images/1885156373039898624/9yRTCokF_normal.jpg"
        },
        "banner": {
-        "image_url": "https://pbs.twimg.com/profile_banners/15687962/1790288366"
+        "image_url": "https://pbs.twimg.com/profile_banners/35018926/1784990790"
        },
        "core": {
-        "created_at": "Fri Aug 01 11:26:10 +0000 2008",
-        "name": "Marvel Entertainment",
-        "screen_name": "Marvel"
+        "created_at": "Fri Apr 24 19:47:45 +0000 2009",
+        "name": "VIZ Media",
+        "screen_name": "VIZMedia"
        },
        "follow_request_sent": false,
        "has_graduated_access": true,
-       "id": "VXNlcjoxNTY4Nzk2Mg==",
+       "id": "VXNlcjozNTAxODkyNg==",
        "is_blue_verified": true,
        "location": {
-        "location": "New York, NY"
+        "location": "San Francisco, CA"
        },
        "media_permissions": {
-        "can_media_tag": false
+        "can_media_tag": true
        },
        "notifications_settings": {
         "notifications_enabled": false
@@ -61,7 +62,7 @@
        "parody_commentary_fan_label": "None",
        "pinned_items": {
         "tweet_ids_str": [
-         "2092282511804289238"
+         "2107576634652209198"
         ]
        },
        "possibly_sensitive": false,
@@ -77,29 +78,250 @@
          }
         ],
         "professional_type": "Business",
-        "rest_id": "1487153207264657411"
+        "rest_id": "1667311179289722886"
        },
        "profile_bio": {
-        "description": "The official account for Marvel comics, movies, games, and more.",
+        "description": "",
         "entities": {
          "description": {},
          "url": {
           "urls": [
            {
-            "display_url": "fandango.com/avengersdoomsd…",
-            "expanded_url": "http://fandango.com/avengersdoomsday",
+            "display_url": "viz.com",
+            "expanded_url": "http://www.viz.com",
             "indices": [
              0,
              23
             ],
-            "url": "https://t.co/T4FKnID2sf"
+            "url": "https://t.co/TkgshFtVB8"
+           }
+          ]
+         }
+        }
+       },
+       "profile_image_shape": "Square",
+       "profile_metadata": {
+        "profile_interstitial_type": ""
+       },
+       "profile_translation": {
+        "translator_type": "none"
+       },
+       "relationship_counts": {
+        "followers": 1288041,
+        "following": 807
+       },
+       "relationship_perspectives": {
+        "blocked_by": false,
+        "blocking": false,
+        "followed_by": false,
+        "following": false,
+        "live_following": false,
+        "muting": false
+       },
+       "rest_id": "35018926",
+       "super_follow_eligible": false,
+       "super_followed_by": false,
+       "super_following": false,
+       "tweet_counts": {
+        "media_tweets": 26774,
+        "tweets": 60189
+       },
+       "verification": {
+        "verified": false,
+        "verified_type": "Business"
+       },
+       "website": {
+        "url": "https://t.co/TkgshFtVB8"
+       }
+      }
+     }
+    },
+    {
+     "token": "CgAB7jPXOPhg4g4IAAIAAAAACAAEAAAEYAA=",
+     "user_results": {
+      "result": {
+       "__typename": "User",
+       "action_counts": {
+        "favorites_count": 529
+       },
+       "affiliates_highlighted_label": {},
+       "avatar": {
+        "image_url": "https://pbs.twimg.com/profile_images/1877466471686684672/8PJsUiB__normal.jpg"
+       },
+       "banner": {
+        "image_url": "https://pbs.twimg.com/profile_banners/19402238/1403559093"
+       },
+       "core": {
+        "created_at": "Fri Jan 23 16:56:32 +0000 2009",
+        "name": "Science News",
+        "screen_name": "ScienceNews"
+       },
+       "follow_request_sent": false,
+       "has_graduated_access": true,
+       "id": "VXNlcjoxOTQwMjIzOA==",
+       "is_blue_verified": true,
+       "location": {
+        "location": "Washington, DC"
+       },
+       "media_permissions": {
+        "can_media_tag": true
+       },
+       "notifications_settings": {
+        "notifications_enabled": false
+       },
+       "parody_commentary_fan_label": "None",
+       "pinned_items": {
+        "tweet_ids_str": [
+         "1565445141741142017"
+        ]
+       },
+       "possibly_sensitive": false,
+       "privacy": {
+        "protected": false
+       },
+       "profile_bio": {
+        "description": "Covering the latest news in all fields of science. Publisher @society4science. See also @SN_Explores.",
+        "entities": {
+         "description": {},
+         "url": {
+          "urls": [
+           {
+            "display_url": "sciencenews.org",
+            "expanded_url": "https://www.sciencenews.org",
+            "indices": [
+             0,
+             23
+            ],
+            "url": "https://t.co/qDpSL8ca1J"
            }
           ]
          }
         }
        },
        "profile_description_language": "en",
-       "profile_image_shape": "Square",
+       "profile_image_shape": "Circle",
+       "profile_metadata": {
+        "profile_interstitial_type": ""
+       },
+       "profile_translation": {
+        "translator_type": "none"
+       },
+       "relationship_counts": {
+        "followers": 5350066,
+        "following": 512
+       },
+       "relationship_perspectives": {
+        "blocked_by": false,
+        "blocking": false,
+        "followed_by": false,
+        "following": false,
+        "live_following": false,
+        "muting": false
+       },
+       "rest_id": "19402238",
+       "super_follow_eligible": false,
+       "super_followed_by": false,
+       "super_following": false,
+       "tweet_counts": {
+        "media_tweets": 11306,
+        "tweets": 82797
+       },
+       "verification": {
+        "verified": false
+       },
+       "website": {
+        "url": "https://t.co/qDpSL8ca1J"
+       }
+      }
+     }
+    },
+    {
+     "token": "CgAB7jPXOPhg4g4IAAIAAAAACAAEAAAEYAA=",
+     "user_results": {
+      "result": {
+       "__typename": "User",
+       "action_counts": {
+        "favorites_count": 7752
+       },
+       "affiliates_highlighted_label": {},
+       "avatar": {
+        "image_url": "https://pbs.twimg.com/profile_images/1029084163780079616/KL96wS4C_normal.jpg"
+       },
+       "banner": {
+        "image_url": "https://pbs.twimg.com/profile_banners/19722699/1709768018"
+       },
+       "core": {
+        "created_at": "Thu Jan 29 17:46:28 +0000 2009",
+        "name": "Popular Science",
+        "screen_name": "PopSci"
+       },
+       "follow_request_sent": false,
+       "has_graduated_access": true,
+       "id": "VXNlcjoxOTcyMjY5OQ==",
+       "is_blue_verified": true,
+       "location": {
+        "location": ""
+       },
+       "media_permissions": {
+        "can_media_tag": true
+       },
+       "notifications_settings": {
+        "notifications_enabled": false
+       },
+       "parody_commentary_fan_label": "None",
+       "pinned_items": {
+        "tweet_ids_str": [
+         "2040885557144834368"
+        ]
+       },
+       "possibly_sensitive": false,
+       "privacy": {
+        "protected": false
+       },
+       "professional": {
+        "category": [
+         {
+          "icon_name": "IconBriefcaseStroke",
+          "id": 580,
+          "name": "Media & News Company"
+         }
+        ],
+        "professional_type": "Business",
+        "rest_id": "1488240910542462986"
+       },
+       "profile_bio": {
+        "description": "Awe-inspiring science, tech, and DIY. Subscribe to our newsletter: https://t.co/k3JnXX3JNw",
+        "entities": {
+         "description": {
+          "urls": [
+           {
+            "display_url": "popsci.com/email-signup/",
+            "expanded_url": "https://www.popsci.com/email-signup/",
+            "indices": [
+             67,
+             90
+            ],
+            "url": "https://t.co/k3JnXX3JNw"
+           }
+          ]
+         },
+         "url": {
+          "urls": [
+           {
+            "display_url": "popsci.com",
+            "expanded_url": "https://www.popsci.com/",
+            "indices": [
+             0,
+             23
+            ],
+            "url": "https://t.co/EJniFa6cjX"
+           }
+          ]
+         }
+        }
+       },
+       "profile_description_language": "en",
+       "profile_image_shape": "Circle",
        "profile_metadata": {
         "profile_interstitial_type": ""
        },
@@ -107,8 +329,8 @@
         "translator_type": "regular"
        },
        "relationship_counts": {
-        "followers": 19666661,
-        "following": 662
+        "followers": 1598112,
+        "following": 1395
        },
        "relationship_perspectives": {
         "blocked_by": false,
@@ -118,219 +340,19 @@
         "live_following": false,
         "muting": false
        },
-       "rest_id": "15687962",
+       "rest_id": "19722699",
        "super_follow_eligible": false,
        "super_followed_by": false,
        "super_following": false,
        "tweet_counts": {
-        "media_tweets": 25025,
-        "tweets": 71355
-       },
-       "verification": {
-        "verified": false,
-        "verified_type": "Business"
-       },
-       "website": {
-        "url": "https://t.co/T4FKnID2sf"
-       }
-      }
-     }
-    },
-    {
-     "token": "CgABoR+YAQwamWIIAAIAAAAACAAEAAAEYQA=",
-     "user_results": {
-      "result": {
-       "__typename": "User",
-       "action_counts": {
-        "favorites_count": 4
-       },
-       "affiliates_highlighted_label": {},
-       "avatar": {
-        "image_url": "https://pbs.twimg.com/profile_images/1924871123524591616/mc3-jzbr_normal.jpg"
-       },
-       "banner": {
-        "image_url": "https://pbs.twimg.com/profile_banners/107225267/1747759784"
-       },
-       "core": {
-        "created_at": "Thu Jan 21 22:20:32 +0000 2010",
-        "name": "Steven Pinker",
-        "screen_name": "sapinker"
-       },
-       "follow_request_sent": false,
-       "has_graduated_access": true,
-       "id": "VXNlcjoxMDcyMjUyNjc=",
-       "is_blue_verified": true,
-       "location": {
-        "location": "Boston, MA"
-       },
-       "media_permissions": {
-        "can_media_tag": true
-       },
-       "notifications_settings": {
-        "notifications_enabled": false
-       },
-       "parody_commentary_fan_label": "None",
-       "pinned_items": {
-        "tweet_ids_str": [
-         "2099158950033994122"
-        ]
-       },
-       "possibly_sensitive": false,
-       "privacy": {
-        "protected": false
-       },
-       "profile_bio": {
-        "description": "Cognitive scientist at Harvard.",
-        "entities": {
-         "description": {},
-         "url": {
-          "urls": [
-           {
-            "display_url": "stevenpinker.com",
-            "expanded_url": "http://www.stevenpinker.com",
-            "indices": [
-             0,
-             23
-            ],
-            "url": "https://t.co/5HKE2sXzFw"
-           }
-          ]
-         }
-        }
-       },
-       "profile_description_language": "und",
-       "profile_image_shape": "Circle",
-       "profile_metadata": {
-        "profile_interstitial_type": ""
-       },
-       "profile_translation": {
-        "translator_type": "none"
-       },
-       "relationship_counts": {
-        "followers": 861626,
-        "following": 90
-       },
-       "relationship_perspectives": {
-        "blocked_by": false,
-        "blocking": false,
-        "followed_by": false,
-        "following": false,
-        "live_following": false,
-        "muting": false
-       },
-       "rest_id": "107225267",
-       "super_follow_eligible": false,
-       "super_followed_by": false,
-       "super_following": false,
-       "tweet_counts": {
-        "media_tweets": 1337,
-        "tweets": 17036
+        "media_tweets": 95269,
+        "tweets": 160847
        },
        "verification": {
         "verified": false
        },
        "website": {
-        "url": "https://t.co/5HKE2sXzFw"
-       }
-      }
-     }
-    },
-    {
-     "token": "CgABoR+YAQwamWIIAAIAAAAACAAEAAAEYQA=",
-     "user_results": {
-      "result": {
-       "__typename": "User",
-       "action_counts": {
-        "favorites_count": 15506
-       },
-       "affiliates_highlighted_label": {},
-       "avatar": {
-        "image_url": "https://pbs.twimg.com/profile_images/1874867754664407040/6rIjYra7_normal.jpg"
-       },
-       "banner": {
-        "image_url": "https://pbs.twimg.com/profile_banners/41806795/1783014645"
-       },
-       "core": {
-        "created_at": "Fri May 22 13:01:55 +0000 2009",
-        "name": "Lawrence Livermore National Laboratory",
-        "screen_name": "Livermore_Lab"
-       },
-       "follow_request_sent": false,
-       "has_graduated_access": true,
-       "id": "VXNlcjo0MTgwNjc5NQ==",
-       "is_blue_verified": false,
-       "location": {
-        "location": "Livermore, CA, USA"
-       },
-       "media_permissions": {
-        "can_media_tag": true
-       },
-       "notifications_settings": {
-        "notifications_enabled": false
-       },
-       "parody_commentary_fan_label": "None",
-       "pinned_items": {
-        "tweet_ids_str": [
-         "1730352742697406805"
-        ]
-       },
-       "possibly_sensitive": false,
-       "privacy": {
-        "protected": false
-       },
-       "profile_bio": {
-        "description": "U.S. @ENERGY and @NNSAnews laboratory. We use science and technology to make the world a safer place.",
-        "entities": {
-         "description": {},
-         "url": {
-          "urls": [
-           {
-            "display_url": "llnl.gov",
-            "expanded_url": "https://www.llnl.gov/",
-            "indices": [
-             0,
-             23
-            ],
-            "url": "https://t.co/xVPfffzTIN"
-           }
-          ]
-         }
-        }
-       },
-       "profile_description_language": "en",
-       "profile_image_shape": "Circle",
-       "profile_metadata": {
-        "profile_interstitial_type": ""
-       },
-       "profile_translation": {
-        "translator_type": "none"
-       },
-       "relationship_counts": {
-        "followers": 68127,
-        "following": 992
-       },
-       "relationship_perspectives": {
-        "blocked_by": false,
-        "blocking": false,
-        "followed_by": false,
-        "following": false,
-        "live_following": false,
-        "muting": false
-       },
-       "rest_id": "41806795",
-       "super_follow_eligible": false,
-       "super_followed_by": false,
-       "super_following": false,
-       "tweet_counts": {
-        "media_tweets": 4384,
-        "tweets": 14685
-       },
-       "verification": {
-        "verified": false,
-        "verified_type": "Government"
-       },
-       "website": {
-        "url": "https://t.co/xVPfffzTIN"
+        "url": "https://t.co/EJniFa6cjX"
        }
       }
      }

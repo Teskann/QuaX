@@ -1,0 +1,338 @@
+{
+ "scenario": "Second profile to subscribe to, for the subscriptions feed",
+ "sourceUrl": "https://x.com/dart_lang",
+ "unstable": true,
+ "operation": "SidebarUserRecommendations",
+ "host": "x.com",
+ "queryId": "BSYrSirC_dVN6R9Q0Mpmvg",
+ "features": {
+  "profile_label_improvements_pcf_label_in_post_enabled": true,
+  "responsive_web_profile_redirect_enabled": true,
+  "rweb_tipjar_consumption_enabled": false,
+  "verified_phone_label_enabled": false,
+  "responsive_web_graphql_timeline_navigation_enabled": true
+ },
+ "fieldToggles": null,
+ "variables": {
+  "profileUserId": "376585411"
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "500",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "476",
+  "x-rate-limit-reset": "1791665678"
+ },
+ "body": {
+  "data": {
+   "sidebar_user_recommendations": [
+    {
+     "token": "CgABpAvIuqsv2vAIAAIAAAACCAAEAAAAgwA=",
+     "user_results": {
+      "result": {
+       "__typename": "User",
+       "action_counts": {
+        "favorites_count": 3222
+       },
+       "affiliates_highlighted_label": {},
+       "avatar": {
+        "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
+       },
+       "banner": {
+        "image_url": "https://pbs.twimg.com/profile_banners/420730316/1785427735"
+       },
+       "core": {
+        "created_at": "Fri Nov 25 01:07:12 +0000 2011",
+        "name": "Flutter",
+        "screen_name": "FlutterDev"
+       },
+       "follow_request_sent": false,
+       "has_graduated_access": true,
+       "id": "VXNlcjo0MjA3MzAzMTY=",
+       "is_blue_verified": false,
+       "location": {
+        "location": ""
+       },
+       "media_permissions": {
+        "can_media_tag": true
+       },
+       "notifications_settings": {
+        "notifications_enabled": false
+       },
+       "parody_commentary_fan_label": "None",
+       "pinned_items": {
+        "tweet_ids_str": [
+         "2101012855101218956"
+        ]
+       },
+       "possibly_sensitive": false,
+       "privacy": {
+        "protected": false
+       },
+       "profile_bio": {
+        "description": "Google’s UI toolkit to build apps for mobile, web, & desktop from a single codebase",
+        "entities": {
+         "description": {},
+         "url": {
+          "urls": [
+           {
+            "display_url": "flutter.dev",
+            "expanded_url": "https://flutter.dev",
+            "indices": [
+             0,
+             23
+            ],
+            "url": "https://t.co/bVj6OdNADd"
+           }
+          ]
+         }
+        }
+       },
+       "profile_description_language": "en",
+       "profile_image_shape": "Square",
+       "profile_metadata": {
+        "profile_interstitial_type": ""
+       },
+       "profile_translation": {
+        "translator_type": "none"
+       },
+       "relationship_counts": {
+        "followers": 277933,
+        "following": 60
+       },
+       "relationship_perspectives": {
+        "blocked_by": false,
+        "blocking": false,
+        "followed_by": false,
+        "following": false,
+        "live_following": false,
+        "muting": false
+       },
+       "rest_id": "420730316",
+       "super_follow_eligible": false,
+       "super_followed_by": false,
+       "super_following": false,
+       "tweet_counts": {
+        "media_tweets": 1979,
+        "tweets": 3919
+       },
+       "verification": {
+        "verified": false,
+        "verified_type": "Business"
+       },
+       "website": {
+        "url": "https://t.co/bVj6OdNADd"
+       }
+      }
+     }
+    },
+    {
+     "token": "CgABpAvIuqsv2vAIAAIAAAACCAAEAAAAgwA=",
+     "user_results": {
+      "result": {
+       "__typename": "User",
+       "action_counts": {
+        "favorites_count": 6354
+       },
+       "affiliates_highlighted_label": {},
+       "avatar": {
+        "image_url": "https://pbs.twimg.com/profile_images/1846614339169693696/AnrWwe-G_normal.png"
+       },
+       "banner": {
+        "image_url": "https://pbs.twimg.com/profile_banners/447644824/1785427911"
+       },
+       "core": {
+        "created_at": "Tue Dec 27 03:47:52 +0000 2011",
+        "name": "Firebase",
+        "screen_name": "Firebase"
+       },
+       "follow_request_sent": false,
+       "has_graduated_access": true,
+       "id": "VXNlcjo0NDc2NDQ4MjQ=",
+       "is_blue_verified": false,
+       "location": {
+        "location": "The Internet"
+       },
+       "media_permissions": {
+        "can_media_tag": true
+       },
+       "notifications_settings": {
+        "notifications_enabled": false
+       },
+       "parody_commentary_fan_label": "None",
+       "pinned_items": {
+        "tweet_ids_str": [
+         "2104939763165704424"
+        ]
+       },
+       "possibly_sensitive": false,
+       "privacy": {
+        "protected": false
+       },
+       "profile_bio": {
+        "description": "Unlock the power of generative AI for your app and business. Firebase helps you prototype, build, and run modern apps that users love at scale.",
+        "entities": {
+         "description": {},
+         "url": {
+          "urls": [
+           {
+            "display_url": "Firebase.google.com",
+            "expanded_url": "https://Firebase.google.com",
+            "indices": [
+             0,
+             23
+            ],
+            "url": "https://t.co/5cSclTcMi0"
+           }
+          ]
+         }
+        }
+       },
+       "profile_description_language": "en",
+       "profile_image_shape": "Square",
+       "profile_metadata": {
+        "profile_interstitial_type": ""
+       },
+       "profile_translation": {
+        "translator_type": "none"
+       },
+       "relationship_counts": {
+        "followers": 224357,
+        "following": 45
+       },
+       "relationship_perspectives": {
+        "blocked_by": false,
+        "blocking": false,
+        "followed_by": false,
+        "following": false,
+        "live_following": false,
+        "muting": false
+       },
+       "rest_id": "447644824",
+       "super_follow_eligible": false,
+       "super_followed_by": false,
+       "super_following": false,
+       "tweet_counts": {
+        "media_tweets": 2786,
+        "tweets": 6422
+       },
+       "verification": {
+        "verified": false,
+        "verified_type": "Business"
+       },
+       "website": {
+        "url": "https://t.co/5cSclTcMi0"
+       }
+      }
+     }
+    },
+    {
+     "token": "CgABpAvIuqsv2vAIAAIAAAACCAAEAAAAgwA=",
+     "user_results": {
+      "result": {
+       "__typename": "User",
+       "action_counts": {
+        "favorites_count": 315
+       },
+       "affiliates_highlighted_label": {},
+       "avatar": {
+        "image_url": "https://pbs.twimg.com/profile_images/1141781661551665153/BMnvVd2u_normal.jpg"
+       },
+       "banner": {
+        "image_url": "https://pbs.twimg.com/profile_banners/1034173808024924162/1535496038"
+       },
+       "core": {
+        "created_at": "Mon Aug 27 20:20:24 +0000 2018",
+        "name": "Flutter Community",
+        "screen_name": "FlutterComm"
+       },
+       "follow_request_sent": false,
+       "has_graduated_access": true,
+       "id": "VXNlcjoxMDM0MTczODA4MDI0OTI0MTYy",
+       "is_blue_verified": false,
+       "location": {
+        "location": ""
+       },
+       "media_permissions": {
+        "can_media_tag": true
+       },
+       "notifications_settings": {
+        "notifications_enabled": false
+       },
+       "parody_commentary_fan_label": "None",
+       "pinned_items": {},
+       "possibly_sensitive": false,
+       "privacy": {
+        "protected": false
+       },
+       "professional": {
+        "category": [
+         {
+          "icon_name": "IconBriefcaseStroke",
+          "id": 1009,
+          "name": "Communauté"
+         }
+        ],
+        "professional_type": "Business",
+        "rest_id": "1456639104729456643"
+       },
+       "profile_bio": {
+        "description": "Follow to get notifications of new articles and packages from the #FlutterCommunity ~Official Flutter Community Account~",
+        "entities": {
+         "description": {},
+         "url": {
+          "urls": [
+           {
+            "display_url": "medium.com/flutter-commun…",
+            "expanded_url": "https://medium.com/flutter-community",
+            "indices": [
+             0,
+             23
+            ],
+            "url": "https://t.co/kF9VcUe6id"
+           }
+          ]
+         }
+        }
+       },
+       "profile_description_language": "en",
+       "profile_image_shape": "Circle",
+       "profile_metadata": {
+        "profile_interstitial_type": ""
+       },
+       "profile_translation": {
+        "translator_type": "none"
+       },
+       "relationship_counts": {
+        "followers": 55760,
+        "following": 19
+       },
+       "relationship_perspectives": {
+        "blocked_by": false,
+        "blocking": false,
+        "followed_by": false,
+        "following": false,
+        "live_following": false,
+        "muting": false
+       },
+       "rest_id": "1034173808024924162",
+       "super_follow_eligible": false,
+       "super_followed_by": false,
+       "super_following": false,
+       "tweet_counts": {
+        "media_tweets": 392,
+        "tweets": 1836
+       },
+       "verification": {
+        "verified": false
+       },
+       "website": {
+        "url": "https://t.co/kF9VcUe6id"
+       }
+      }
+     }
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,150 @@
+{
+ "scenario": "Second profile to subscribe to, for the subscriptions feed",
+ "sourceUrl": "https://x.com/dart_lang",
+ "unstable": true,
+ "operation": "UserByScreenName",
+ "host": "x.com",
+ "queryId": "AMIBMjtxEEATh4z8V9GtRg",
+ "features": {
+  "hidden_profile_subscriptions_enabled": true,
+  "profile_label_improvements_pcf_label_in_post_enabled": true,
+  "responsive_web_profile_redirect_enabled": true,
+  "rweb_tipjar_consumption_enabled": false,
+  "verified_phone_label_enabled": false,
+  "subscriptions_verification_info_is_identity_verified_enabled": true,
+  "subscriptions_verification_info_verified_since_enabled": true,
+  "highlights_tweets_tab_ui_enabled": true,
+  "responsive_web_twitter_article_notes_tab_enabled": true,
+  "subscriptions_feature_can_gift_premium": false,
+  "creator_subscriptions_tweet_preview_api_enabled": true,
+  "responsive_web_graphql_timeline_navigation_enabled": true
+ },
+ "fieldToggles": {
+  "withPayments": false,
+  "withAuxiliaryUserLabels": true
+ },
+ "variables": {
+  "screen_name": "dart_lang",
+  "withGrokTranslatedBio": true
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "150",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "139",
+  "x-rate-limit-reset": "1791665678"
+ },
+ "body": {
+  "data": {
+   "user": {
+    "result": {
+     "__typename": "User",
+     "action_counts": {
+      "favorites_count": 230
+     },
+     "affiliates_highlighted_label": {},
+     "avatar": {
+      "image_url": "https://pbs.twimg.com/profile_images/993555605078994945/Yr-pWI4G_normal.jpg"
+     },
+     "banner": {
+      "image_url": "https://pbs.twimg.com/profile_banners/376585411/1707434265"
+     },
+     "business_account": {},
+     "core": {
+      "created_at": "Tue Sep 20 04:21:29 +0000 2011",
+      "name": "Dart Language",
+      "screen_name": "dart_lang"
+     },
+     "creator_subscriptions_count": 0,
+     "follow_request_sent": false,
+     "grok_translated_bio_with_availability": {
+      "is_available": false
+     },
+     "has_graduated_access": true,
+     "has_hidden_subscriptions_on_profile": false,
+     "highlights_info": {
+      "can_highlight_tweets": false,
+      "highlighted_tweets": "0"
+     },
+     "id": "VXNlcjozNzY1ODU0MTE=",
+     "is_blue_verified": false,
+     "is_profile_translatable": false,
+     "legacy_extended_profile": {},
+     "location": {
+      "location": ""
+     },
+     "media_permissions": {
+      "can_media_tag": true
+     },
+     "notifications_settings": {
+      "notifications_enabled": false
+     },
+     "parody_commentary_fan_label": "None",
+     "pinned_items": {},
+     "possibly_sensitive": false,
+     "privacy": {
+      "protected": false
+     },
+     "profile_bio": {
+      "description": "An approachable, portable, and productive language for high-quality apps on any platform",
+      "entities": {
+       "description": {},
+       "url": {
+        "urls": [
+         {
+          "display_url": "dart.dev",
+          "expanded_url": "http://dart.dev",
+          "indices": [
+           0,
+           23
+          ],
+          "url": "https://t.co/R18jZYXgD4"
+         }
+        ]
+       }
+      }
+     },
+     "profile_description_language": "en",
+     "profile_image_shape": "Circle",
+     "profile_metadata": {
+      "profile_interstitial_type": ""
+     },
+     "profile_sort_enabled": true,
+     "profile_translation": {
+      "translator_type": "none"
+     },
+     "relationship_counts": {
+      "followers": 87546,
+      "following": 48
+     },
+     "relationship_perspectives": {
+      "blocked_by": false,
+      "blocking": false,
+      "followed_by": false,
+      "following": false,
+      "live_following": false,
+      "muting": false
+     },
+     "rest_id": "376585411",
+     "super_follow_eligible": false,
+     "super_followed_by": false,
+     "super_following": false,
+     "tweet_counts": {
+      "media_tweets": 226,
+      "tweets": 1799
+     },
+     "user_seed_tweet_count": 0,
+     "verification": {
+      "verified": false
+     },
+     "verification_info": {
+      "is_identity_verified": false
+     },
+     "website": {
+      "url": "https://t.co/R18jZYXgD4"
+     }
+    }
+   }
+  }
+ }
+}

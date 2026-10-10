@@ -1,9 +1,10 @@
 {
  "scenario": "Profile whose posts tab mixes subscriber-only previews (TweetPreviewDisplay) into its threads",
  "sourceUrl": "https://x.com/Osemka8",
+ "unstable": true,
  "operation": "SidebarUserRecommendations",
  "host": "x.com",
- "queryId": "XFGj2pdlasiM3FndUe1PrQ",
+ "queryId": "BSYrSirC_dVN6R9Q0Mpmvg",
  "features": {
   "profile_label_improvements_pcf_label_in_post_enabled": true,
   "responsive_web_profile_redirect_enabled": true,
@@ -19,19 +20,19 @@
  "headers": {
   "x-rate-limit-limit": "500",
   "content-type": "application/json",
-  "x-rate-limit-remaining": "481",
-  "x-rate-limit-reset": "1791148141"
+  "x-rate-limit-remaining": "498",
+  "x-rate-limit-reset": "1791665678"
  },
  "body": {
   "data": {
    "sidebar_user_recommendations": [
     {
-     "token": "CgAByntRChtpunUIAAIAAAACCAAEAAAAgwA=",
+     "token": "CgABXLvf2c+zxhMIAAIAAAACCAAEAAAAgwA=",
      "user_results": {
       "result": {
        "__typename": "User",
        "action_counts": {
-        "favorites_count": 137816
+        "favorites_count": 137963
        },
        "affiliates_highlighted_label": {},
        "avatar": {
@@ -79,8 +80,8 @@
         "translator_type": "none"
        },
        "relationship_counts": {
-        "followers": 1088,
-        "following": 1139
+        "followers": 1043,
+        "following": 1143
        },
        "relationship_perspectives": {
         "blocked_by": false,
@@ -96,7 +97,7 @@
        "super_following": false,
        "tweet_counts": {
         "media_tweets": 95,
-        "tweets": 47663
+        "tweets": 47705
        },
        "verification": {
         "verified": false
@@ -108,12 +109,12 @@
      }
     },
     {
-     "token": "CgAByntRChtpunUIAAIAAAACCAAEAAAAgwA=",
+     "token": "CgABXLvf2c+zxhMIAAIAAAACCAAEAAAAgwA=",
      "user_results": {
       "result": {
        "__typename": "User",
        "action_counts": {
-        "favorites_count": 5423
+        "favorites_count": 5476
        },
        "affiliates_highlighted_label": {},
        "avatar": {
@@ -178,8 +179,8 @@
         "translator_type": "none"
        },
        "relationship_counts": {
-        "followers": 81200,
-        "following": 529
+        "followers": 81110,
+        "following": 530
        },
        "relationship_perspectives": {
         "blocked_by": false,
@@ -194,8 +195,8 @@
        "super_followed_by": false,
        "super_following": false,
        "tweet_counts": {
-        "media_tweets": 3255,
-        "tweets": 7573
+        "media_tweets": 3280,
+        "tweets": 7622
        },
        "verification": {
         "verified": false,
@@ -208,48 +209,65 @@
      }
     },
     {
-     "token": "CgAByntRChtpunUIAAIAAAACCAAEAAAAgwA=",
+     "token": "CgABXLvf2c+zxhMIAAIAAAACCAAEAAAAgwA=",
      "user_results": {
       "result": {
        "__typename": "User",
        "action_counts": {
-        "favorites_count": 46927
+        "favorites_count": 15474
        },
        "affiliates_highlighted_label": {},
        "avatar": {
-        "image_url": "https://pbs.twimg.com/profile_images/1786924348701286400/hN7USU4Y_normal.jpg"
+        "image_url": "https://pbs.twimg.com/profile_images/2024133028562268160/GPndPUZv_normal.jpg"
        },
        "banner": {
-        "image_url": "https://pbs.twimg.com/profile_banners/1276528724318588929/1627940003"
+        "image_url": "https://pbs.twimg.com/profile_banners/250638875/1771697504"
        },
        "core": {
-        "created_at": "Fri Jun 26 14:52:36 +0000 2020",
-        "name": "OIO",
-        "screen_name": "iii_OIO_iii"
+        "created_at": "Fri Feb 11 14:05:59 +0000 2011",
+        "name": "ElCopttan ⚡️⛵️",
+        "screen_name": "ElCopttan"
        },
        "follow_request_sent": false,
        "has_graduated_access": true,
-       "id": "VXNlcjoxMjc2NTI4NzI0MzE4NTg4OTI5",
+       "id": "VXNlcjoyNTA2Mzg4NzU=",
        "is_blue_verified": false,
        "location": {
-        "location": ""
+        "location": "Ocean "
        },
        "media_permissions": {
-        "can_media_tag": false
+        "can_media_tag": true
        },
        "notifications_settings": {
         "notifications_enabled": false
        },
        "parody_commentary_fan_label": "None",
-       "pinned_items": {},
+       "pinned_items": {
+        "tweet_ids_str": [
+         "2045582220362928296"
+        ]
+       },
        "possibly_sensitive": false,
        "privacy": {
         "protected": false
        },
        "profile_bio": {
-        "description": "Worlds most favored OIO",
+        "description": "Your guide to the world of profit and knowledge 💎",
         "entities": {
-         "description": {}
+         "description": {},
+         "url": {
+          "urls": [
+           {
+            "display_url": "linktr.ee/elcopttan",
+            "expanded_url": "https://linktr.ee/elcopttan",
+            "indices": [
+             0,
+             23
+            ],
+            "url": "https://t.co/Qh6UJwytdE"
+           }
+          ]
+         }
         }
        },
        "profile_description_language": "en",
@@ -261,8 +279,8 @@
         "translator_type": "none"
        },
        "relationship_counts": {
-        "followers": 8480,
-        "following": 1419
+        "followers": 15278,
+        "following": 1
        },
        "relationship_perspectives": {
         "blocked_by": false,
@@ -272,19 +290,19 @@
         "live_following": false,
         "muting": false
        },
-       "rest_id": "1276528724318588929",
+       "rest_id": "250638875",
        "super_follow_eligible": false,
        "super_followed_by": false,
        "super_following": false,
        "tweet_counts": {
-        "media_tweets": 1090,
-        "tweets": 14685
+        "media_tweets": 4964,
+        "tweets": 12939
        },
        "verification": {
         "verified": false
        },
        "website": {
-        "url": ""
+        "url": "https://t.co/Qh6UJwytdE"
        }
       }
      }

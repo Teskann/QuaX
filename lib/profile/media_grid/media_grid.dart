@@ -72,6 +72,7 @@ class _MediaGridState extends State<MediaGrid> with AutomaticKeepAliveClientMixi
           mainAxisSpacing: 2,
           crossAxisSpacing: 2,
           addAutomaticKeepAlives: false,
+          showNewPageErrorIndicatorAsGridChild: false,
           builderDelegate: PagedChildBuilderDelegate<MediaGridItem>(
             itemBuilder: (context, item, index) => _MediaGridTile(item: item, gifGate: _gifGate),
             firstPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(

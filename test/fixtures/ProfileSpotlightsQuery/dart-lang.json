@@ -1,0 +1,49 @@
+{
+ "scenario": "Second profile to subscribe to, for the subscriptions feed",
+ "sourceUrl": "https://x.com/dart_lang",
+ "unstable": true,
+ "operation": "ProfileSpotlightsQuery",
+ "host": "x.com",
+ "queryId": "mzoqrVGwk-YTSGME1dRfXQ",
+ "features": null,
+ "fieldToggles": null,
+ "variables": {
+  "screen_name": "dart_lang"
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "500",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "491",
+  "x-rate-limit-reset": "1791665683"
+ },
+ "body": {
+  "data": {
+   "user_result_by_screen_name": {
+    "id": "VXNlclJlc3VsdHM6Mzc2NTg1NDEx",
+    "result": {
+     "__typename": "User",
+     "core": {
+      "name": "Dart Language",
+      "screen_name": "dart_lang"
+     },
+     "id": "VXNlcjozNzY1ODU0MTE=",
+     "is_verified_organization": false,
+     "privacy": {
+      "protected": false
+     },
+     "profilemodules": {
+      "v1": []
+     },
+     "relationship_perspectives": {
+      "blocked_by": false,
+      "blocking": false,
+      "followed_by": false,
+      "following": false
+     },
+     "rest_id": "376585411"
+    }
+   }
+  }
+ }
+}
