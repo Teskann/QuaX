@@ -1,8 +1,7 @@
 import 'package:material_ui/material_ui.dart';
-import 'package:quax/constants.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/group/group_model.dart';
-import 'package:quax/search/search.dart';
+import 'package:quax/home/_x_topics.dart';
 import 'package:quax/subscriptions/_groups.dart';
 import 'package:quax/ui/x_icons.dart';
 import 'package:quax/ui/x_overlay_feed.dart';
@@ -45,14 +44,13 @@ class XCreateTimelineSheet extends StatelessWidget {
   }
 }
 
-/// Offers to create a timeline from accounts (a new group) or from a topic (a search to subscribe to).
+/// Offers to create a timeline from accounts (a new group) or from a topic (a saved search in its own group).
 void showCreateTimelineSheet(BuildContext context) {
   showModalBottomSheet(
     context: context,
     builder: (_) => XCreateTimelineSheet(
       onFromAccounts: () => openSubscriptionGroupDialog(context, null, '', defaultGroupIcon),
-      onFromTopic: () =>
-          Navigator.pushNamed(context, routeSearch, arguments: SearchArguments(0, focusInputOnOpen: true)),
+      onFromTopic: () => Navigator.push(context, MaterialPageRoute<String>(builder: (_) => const XTopicsScreen())),
     ),
   );
 }
