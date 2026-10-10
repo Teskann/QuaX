@@ -127,7 +127,7 @@ Future<void> _recordSignedIds(String homePageHtml, String signFileText) async {
 }
 
 Future<List<String>> _signInChrome(String html, String signModule, int nowMs) async {
-  final browser = await puppeteer.launch();
+  final browser = await puppeteer.launch(executablePath: installedChrome());
   try {
     final page = await browser.newPage();
     await page.setRequestInterception(true);
