@@ -90,6 +90,7 @@ class _TweetMediaItemState extends State<_TweetMediaItem> {
           size: size,
           pullToClose: false,
           inPageView: false,
+          fullscreen: false,
           tweetId: widget.tweetId,
           mediaIndex: widget.mediaIndex);
     } else {
@@ -348,6 +349,7 @@ class _TweetMediaViewState extends State<TweetMediaView> {
               size: size,
               pullToClose: true,
               inPageView: true,
+              fullscreen: true,
               tweetId: widget.tweetId,
               mediaIndex: index);
         },
@@ -368,6 +370,7 @@ class _TweetMediaThing extends StatelessWidget {
   final String? size;
   final bool pullToClose;
   final bool inPageView;
+  final bool fullscreen;
   final String? tweetId;
   final int mediaIndex;
 
@@ -377,6 +380,7 @@ class _TweetMediaThing extends StatelessWidget {
       required this.size,
       required this.pullToClose,
       required this.inPageView,
+      required this.fullscreen,
       this.tweetId,
       this.mediaIndex = 0});
 
@@ -401,7 +405,7 @@ class _TweetMediaThing extends StatelessWidget {
           mediaIndex: mediaIndex);
     } else if (item.type == 'photo') {
       media = TweetPhoto(
-          size: size, uri: item.mediaUrlHttps!, fit: BoxFit.contain, pullToClose: pullToClose, inPageView: inPageView);
+          size: size, uri: item.mediaUrlHttps!, fit: BoxFit.contain, pullToClose: pullToClose, inPageView: inPageView, fullscreen: fullscreen);
     } else {
       media = Text(L10n.of(context).unknown);
     }

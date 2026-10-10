@@ -14,6 +14,7 @@ import 'package:quax/tweet/_grok_card.dart';
 import 'package:quax/tweet/_media.dart';
 import 'package:quax/tweet/_video.dart';
 import 'package:quax/ui/errors.dart';
+import 'package:quax/ui/formats.dart';
 import 'package:quax/utils/urls.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
@@ -62,10 +63,13 @@ class TweetCard extends StatelessWidget {
     if (size == 'disabled') {
       child = Container();
     } else {
-      child = ExtendedImage.network(
-        image['url'],
-        cache: true,
-        fit: fit,
+      child = LayoutBuilder(
+        builder: (context, constraints) => ExtendedImage.network(
+          image['url'],
+          cache: true,
+          fit: fit,
+          cacheWidth: decodeWidthFor(constraints, MediaQuery.devicePixelRatioOf(context)),
+        ),
       );
     }
 

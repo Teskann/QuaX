@@ -13,7 +13,7 @@ import 'package:quax/subscriptions/users_model.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:provider/provider.dart';
 
-Widget _createUserAvatar(String? uri, double size) {
+Widget _createUserAvatar(String? uri, double size, double devicePixelRatio) {
   if (uri == null) {
     return SizedBox(width: size, height: size);
   } else {
@@ -22,6 +22,7 @@ Widget _createUserAvatar(String? uri, double size) {
       uri.replaceAll('normal', '200x200'),
       width: size,
       height: size,
+      cacheWidth: (size * devicePixelRatio).round(),
       loadStateChanged: (state) {
         switch (state.extendedImageLoadState) {
           case LoadState.failed:
@@ -67,7 +68,7 @@ class UserAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(size),
-      child: _createUserAvatar(uri, size),
+      child: _createUserAvatar(uri, size, MediaQuery.devicePixelRatioOf(context)),
     );
   }
 }

@@ -22,6 +22,7 @@ import 'package:quax/tweet/unavailable_tweet.dart';
 import 'package:quax/article/article.dart';
 import 'package:quax/ui/dates.dart';
 import 'package:quax/ui/errors.dart';
+import 'package:quax/ui/formats.dart';
 import 'package:quax/user.dart';
 import 'package:quax/utils/rich_text.dart';
 import 'package:quax/utils/urls.dart';
@@ -52,6 +53,9 @@ class TweetTile extends StatefulWidget {
   final bool threadConnectBottom;
 
   final bool tweetOpened;
+
+  // Whether the tile is one of a scrolling feed, where the text need not be selectable
+  final bool inFeed;
   final bool addSeparator;
   final bool isBirdwatchQuote;
   final int initialMediaIndex;
@@ -64,6 +68,7 @@ class TweetTile extends StatefulWidget {
       this.isPinned = false,
       this.isThread = false,
       this.tweetOpened = false,
+      this.inFeed = false,
       this.addSeparator = true,
       this.isQuotedTweet = false,
       this.isBirdwatchQuote = false,
@@ -466,7 +471,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
         currentUsername != null && tweet.user != null && currentUsername == tweet.user!.screenName;
     final hideAuthorInformation = !isTweetOnSameProfile && prefs.get(optionNonConfirmationBiasMode);
 
-    var numberFormat = NumberFormat.compact();
+    final numberFormat = compactNumberFormat();
     var theme = Theme.of(context);
 
     if (tweet.isTombstone ?? false) {
@@ -607,6 +612,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
               currentUsername: currentUsername,
               addSeparator: false,
               isQuotedTweet: true,
+              inFeed: widget.inFeed,
             )
           : _buildUnavailableQuote(tweet);
       quotedTweet = Container(
@@ -632,6 +638,8 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
               textSpans: displayRichText(_displayParts),
               onTap: () => !widget.tweetOpened ? onClickOpenTweet(tweet) : null,
               maxLines: PrefService.of(context).get(alwaysShowFullTweetContents) ? null : 8,
+              selectable: !widget.inFeed,
+              fadeColor: tweetCardColor(context),
             ),
           ));
     }
@@ -642,13 +650,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
       localeStr = Platform.localeName;
     }
 
-    final splitLocale = localeStr!.split(RegExp(r'[-_]'));
-    late Locale locale;
-    if (splitLocale.length == 1) {
-      locale = Locale(splitLocale[0]);
-    } else {
-      locale = Locale(splitLocale[0], splitLocale[1]);
-    }
+    final locale = parseLocale(localeStr!);
 
     final footerBar = _buildFooterBar(tweet, tweetText, shareBaseUrl, locale, numberFormat, isArticle: tweet.article != null);
 
@@ -669,10 +671,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
 
     final avatar = hideAuthorInformation
         ? const Icon(Icons.account_circle, size: 48)
-        : ClipRRect(
-            borderRadius: BorderRadius.circular(64),
-            child: UserAvatar(uri: tweet.user!.profileImageUrlHttps),
-          );
+        : UserAvatar(uri: tweet.user!.profileImageUrlHttps);
 
     void onTapProfile() {
       // If the tweet is by the currently-viewed profile, don't allow clicks as it doesn't make sense
@@ -868,17 +867,23 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
   }
 }
 
+final Map<(Brightness, Color), Color> _cardColors = {};
+
+/// The card color derived from [seed], built once per brightness and seed since building a [ThemeData] is costly
+Color cardColorFor({required Color seed, required Brightness brightness, required bool trueBlack}) {
+  if (trueBlack) return Colors.black;
+  return _cardColors.putIfAbsent(
+      (brightness, seed),
+      () => ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: seed, brightness: brightness)).cardColor);
+}
+
 Color? tweetCardColor(BuildContext context) {
   final theme = Theme.of(context);
   final prefs = PrefService.of(context, listen: false);
   final trueBlack = theme.brightness == Brightness.dark &&
       prefs.get(optionThemeTrueBlack) &&
       prefs.get(optionThemeTrueBlackTweetCards);
-  return trueBlack
-      ? Colors.black
-      : ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: theme.colorScheme.primary, brightness: theme.brightness),
-        ).cardColor;
+  return cardColorFor(seed: theme.colorScheme.primary, brightness: theme.brightness, trueBlack: trueBlack);
 }
 
 class TweetHasNoContentException {

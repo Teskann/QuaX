@@ -136,6 +136,7 @@ class _GrokAnswer extends StatelessWidget {
               style: theme.textTheme.bodyMedium,
               child: ExpandableTweetText(
                 textSpans: [TextSpan(text: share.answer)],
+                fadeColor: theme.colorScheme.surfaceContainerHigh,
                 onTap: () => openUri(context, share.uri),
               ),
             ),

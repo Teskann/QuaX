@@ -9,6 +9,7 @@ class TweetConversation extends StatefulWidget {
   final bool isPinned;
   final List<TweetWithCard> tweets;
   final bool tweetOpened;
+  final bool inFeed;
   final int initialMediaIndex;
 
   const TweetConversation(
@@ -18,6 +19,7 @@ class TweetConversation extends StatefulWidget {
       required this.isPinned,
       required this.tweets,
       this.tweetOpened = false,
+      this.inFeed = false,
       this.initialMediaIndex = 0});
 
   @override
@@ -34,6 +36,7 @@ class _TweetConversationState extends State<TweetConversation> {
           currentUsername: widget.username,
           isPinned: widget.isPinned,
           tweetOpened: widget.tweetOpened,
+          inFeed: widget.inFeed,
           initialMediaIndex: widget.initialMediaIndex);
     }
 
@@ -49,6 +52,7 @@ class _TweetConversationState extends State<TweetConversation> {
           isThread: i == 0,
           threadConnectTop: i > 0,
           threadConnectBottom: i < tweets.length - 1,
+          inFeed: widget.inFeed,
           initialMediaIndex: tweets[i].idStr == widget.id ? widget.initialMediaIndex : 0));
     }
 
