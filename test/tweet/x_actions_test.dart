@@ -11,7 +11,6 @@ import 'package:quax/tweet/tweet.dart';
 import 'package:quax/ui/x_icons.dart';
 import 'package:quax/ui/x_sheet.dart';
 import 'package:quax/user.dart';
-// ignore_for_file: depend_on_referenced_packages
 import 'package:url_launcher_platform_interface/link.dart';
 import 'package:url_launcher_platform_interface/url_launcher_platform_interface.dart';
 
