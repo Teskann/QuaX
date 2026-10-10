@@ -118,6 +118,7 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
   FeedRefreshController? _refreshController;
   bool _firstLoadStarted = false;
   bool _pendingInitialLoad = false;
+  bool _builtAsPreview = false;
 
   PagingController<int, TweetChain> get _controller => widget.feed.controller;
 
@@ -129,8 +130,6 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
     // can't trigger the first page itself — we rebuild to swap it in once items
     // arrive, so listen for that.
     _controller.addListener(_onControllerChanged);
-    widget.feed.refreshError.addListener(_onControllerChanged);
-    widget.feed.partialError.addListener(_onControllerChanged);
   }
 
   @override
@@ -158,11 +157,7 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
     widget.feed.loader = widget.loadPage;
     if (!identical(oldWidget.feed, widget.feed)) {
       oldWidget.feed.controller.removeListener(_onControllerChanged);
-      oldWidget.feed.refreshError.removeListener(_onControllerChanged);
-      oldWidget.feed.partialError.removeListener(_onControllerChanged);
       _controller.addListener(_onControllerChanged);
-      widget.feed.refreshError.addListener(_onControllerChanged);
-      widget.feed.partialError.addListener(_onControllerChanged);
       // A fresh feed may need its first page kicked off again from the preview.
       _firstLoadStarted = false;
     }
@@ -171,14 +166,14 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
   @override
   void dispose() {
     _controller.removeListener(_onControllerChanged);
-    widget.feed.refreshError.removeListener(_onControllerChanged);
-    widget.feed.partialError.removeListener(_onControllerChanged);
     _refreshController?.unregister(_showRefresh);
     super.dispose();
   }
 
+  // Once the real list is shown, PagingListener follows the controller by itself. The wrapper only has to rebuild
+  // around the moments the cached preview is on screen or is being swapped out
   void _onControllerChanged() {
-    if (mounted) setState(() {});
+    if (mounted && (_builtAsPreview || _showingPreview)) setState(() {});
   }
 
   // Drives the same RefreshIndicator the user pulls down, so the app-bar refresh
@@ -192,6 +187,7 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
         tweets: chain.tweets,
         username: widget.username,
         isPinned: chain.isPinned,
+        inFeed: true,
       );
 
   /// Soft refresh used by the pull-to-refresh gesture. Runs the caller's
@@ -269,7 +265,8 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
 
   @override
   Widget build(BuildContext context) {
-    if (_showingPreview) {
+    _builtAsPreview = _showingPreview;
+    if (_builtAsPreview) {
       _maybeStartFirstLoad();
       return _wrapWithRefresh(CachedTweetList(widget.firstPagePreview!,
           username: widget.username, header: _errorAbove(pagingErrorOf(_controller.value), _retryFirstLoad)));
@@ -279,7 +276,13 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
       controller: _controller,
       builder: (context, state, fetchNextPage) => CustomScrollView(slivers: [
         SliverToBoxAdapter(
-            child: _errorAbove(widget.feed.refreshError.value ?? widget.feed.partialError.value, _showRefresh)),
+          child: ListenableBuilder(
+            listenable: Listenable.merge([widget.feed.refreshError, widget.feed.partialError]),
+            builder: (context, _) =>
+                _errorAbove(widget.feed.refreshError.value ?? widget.feed.partialError.value, _showRefresh) ??
+                const SizedBox.shrink(),
+          ),
+        ),
         SliverPadding(
           padding: EdgeInsets.only(top: 4, bottom: MediaQuery.of(context).padding.bottom),
           sliver: _pagedList(state, fetchNextPage),

@@ -1,5 +1,6 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:quax/ui/formats.dart';
 
 List<double> _doubleTapScales = <double>[1.0, 4.0];
 
@@ -10,13 +11,18 @@ class TweetPhoto extends StatefulWidget {
   final bool pullToClose;
   final bool inPageView;
 
+  /// Whether the photo is shown by the full-screen viewer, the only place that zooms and slides out. In a feed it is a
+  /// plain image decoded at the size it is laid out
+  final bool fullscreen;
+
   const TweetPhoto(
       {super.key,
       required this.uri,
       this.fit = BoxFit.fitWidth,
       required this.size,
       required this.pullToClose,
-      required this.inPageView});
+      required this.inPageView,
+      this.fullscreen = false});
 
   @override
   State<TweetPhoto> createState() => _TweetPhotoState();
@@ -28,8 +34,26 @@ class _TweetPhotoState extends State<TweetPhoto> with SingleTickerProviderStateM
   late final AnimationController _doubleClickAnimationController =
       AnimationController(duration: const Duration(milliseconds: 150), vsync: this);
 
+  String get _url => widget.size != null ? '${widget.uri}:${widget.size}' : widget.uri;
+
   @override
   Widget build(BuildContext context) {
+    return widget.fullscreen ? _buildFullscreen(context) : _buildFeedImage(context);
+  }
+
+  Widget _buildFeedImage(BuildContext context) {
+    final devicePixelRatio = MediaQuery.devicePixelRatioOf(context);
+    return LayoutBuilder(
+      builder: (context, constraints) => ExtendedImage.network(
+        _url,
+        cache: true,
+        fit: widget.fit,
+        cacheWidth: decodeWidthFor(constraints, devicePixelRatio),
+      ),
+    );
+  }
+
+  Widget _buildFullscreen(BuildContext context) {
     return ExtendedImageSlidePage(
       slideAxis: SlideAxis.vertical,
       slidePageBackgroundHandler: (offset, pageSize) => defaultSlidePageBackgroundHandler(
@@ -39,7 +63,7 @@ class _TweetPhotoState extends State<TweetPhoto> with SingleTickerProviderStateM
         pageGestureAxis: SlideAxis.vertical,
       ),
       child: ExtendedImage.network(
-        widget.size != null ? '${widget.uri}:${widget.size}' : widget.uri,
+        _url,
         cache: true,
         width: 5000,
         height: 5000,
