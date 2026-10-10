@@ -1,3 +1,10 @@
+## QuaX v4.17.0
+
+What's new in QuaX v4.17.0:
+  - Fixed #219 "Couldn't find the sign module" issues <sup>[[view modified code]](https://github.com/teskann/quax/commit/a05afe0c4a644b2aca41d3b9a9b8b5841de1d52c)</sup>
+  - Upgraded Flutter to 3.47.7 and refreshed the dependencies (#218) (by @github-actions[bot]) <sup>[[view modified code]](https://github.com/teskann/quax/commit/ced462d92a94dbef1e32959150a79bc58eec8349)</sup>
+  - Fixed broken fullscreen on some videos <sup>[[view modified code]](https://github.com/teskann/quax/commit/f0e035086c1a8988723f0c98f081696f1a860bbe)</sup>
+
 ## QuaX v4.16.0
 
 What's new in QuaX v4.16.0:
