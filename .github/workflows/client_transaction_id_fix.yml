@@ -1,0 +1,70 @@
+name: Client transaction id fix
+
+on:
+  issues:
+    types: [opened]
+
+permissions: {}
+
+concurrency:
+  group: client-transaction-id-fix
+  cancel-in-progress: false
+
+env:
+  FIX_BRANCH: fix/client-transaction-id
+  TRIGGERED_LABEL: fix-triggered
+  BOT: quax-bot
+  MARKER: "<!-- quax:client-transaction-id -->"
+
+jobs:
+  trigger:
+    name: Start the routine unless a fix is under way
+    if: contains(github.event.issue.body, '<!-- quax:client-transaction-id -->')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: none
+      issues: write
+      pull-requests: read
+
+    steps:
+      - name: Look for a fix under way
+        id: guard
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          ISSUE: ${{ github.event.issue.number }}
+        run: |
+          open_prs=$(gh pr list --author "$BOT" --head "$FIX_BRANCH" --state open --json number --jq length)
+          cutoff=$(date -u -d '1 hour ago' +%Y-%m-%dT%H:%M:%SZ)
+          recent=$(gh issue list --label "$TRIGGERED_LABEL" --state all --limit 100 --json number,createdAt \
+            --jq "[.[] | select(.number != $ISSUE and .createdAt > \"$cutoff\")] | length")
+          if [ "$open_prs" != 0 ] || [ "$recent" != 0 ]; then
+            echo "A fix is already under way (open PRs: $open_prs, recent triggers: $recent)"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Start the routine
+        if: steps.guard.outputs.skip != 'true'
+        env:
+          FIRE_URL: ${{ secrets.CLAUDE_X_TRANSACTION_ROUTINE_FIRE_URL }}
+          FIRE_TOKEN: ${{ secrets.CLAUDE_X_TRANSACTION_ROUTINE_TRIGGER_TOKEN }}
+          ISSUE: ${{ github.event.issue.number }}
+        run: |
+          payload=$(jq -n --arg issue "$ISSUE" '{text: "There is a problem with the x-client-transaction-id. Follow the steps of docs/fix-client-transaction-id.md and fix it. Make sure the commit message contains \"Fixed #\($issue)\"."}')
+          curl --fail-with-body --silent --show-error -X POST "$FIRE_URL" \
+            -H "Authorization: Bearer $FIRE_TOKEN" \
+            -H "anthropic-version: 2023-06-01" \
+            -H "Content-Type: application/json" \
+            -d "$payload"
+
+      - name: Mark the issue as the one that started the routine
+        if: steps.guard.outputs.skip != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          ISSUE: ${{ github.event.issue.number }}
+        run: |
+          gh label create "$TRIGGERED_LABEL" --force \
+            --description "This issue started the client transaction id fix routine"
+          gh issue edit "$ISSUE" --add-label "$TRIGGERED_LABEL"

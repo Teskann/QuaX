@@ -1,3 +1,4 @@
+import 'package:quax/client/x_client_transaction_id/client_transaction_id_exception.dart';
 import 'package:quax/constants.dart';
 
 // Undocumented GitHub limit, measured around 7000 for logged out users, whose URL gets re-encoded into a login redirect
@@ -13,7 +14,8 @@ Uri _issueUri(String title, String header, String error, List<String> stackLines
 
 Uri bugReportUri(String context, Object? error, StackTrace? stackTrace, {required String version, String? screenName}) {
   final facts = ['Version: $version', if (screenName != null) 'Profile: ${Uri.https('x.com', screenName)}'];
-  final header = '### $context\n\n${facts.join('\n')}\n\n';
+  final marker = error is ClientTransactionIdException ? '$clientTransactionIdReportMarker\n\n' : '';
+  final header = '### $context\n\n${facts.join('\n')}\n\n$marker';
   final errorText = _truncate('$error', _maxErrorLength);
   final title = _truncate(errorText.split('\n').first, _maxTitleLength);
   final lines = stackTrace == null ? <String>[] : '$stackTrace'.trimRight().split('\n');

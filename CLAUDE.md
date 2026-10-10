@@ -73,6 +73,8 @@ final text = result["data"]["text"] as String;
 
 `client.dart` wraps `dart_twitter_api` and adds caching via `FFCache`. `client_unauthenticated.dart` uses a hardcoded bearer token from `constants.dart`; `client_regular_account.dart` uses stored OAuth credentials.
 
+When requests fail because of the `x-client-transaction-id` header (e.g. `Couldn't find the sign module`), follow `docs/fix-client-transaction-id.md`.
+
 **Account selection strategy.** `_QuackerTwitterClient.fetch()` in `client.dart` asks `AccountSelector` (`account_selector.dart`, a pure/testable policy) for an account with credits left, then retries on another account on a 429. Only rate limits count: any other error is surfaced without trying another account.
 
 **Rate limit (`429`)** is **per-endpoint** (X rate-limits per endpoint, not per account). It is tracked **in memory** by `RateLimitTracker` (`rate_limit_tracker.dart`), keyed by `AccountEndpoint` (account id + `uri.path`), from the `x-rate-limit-remaining` / `x-rate-limit-reset` headers of **every** response (a `429` without headers falls back to `rateLimitFallback`). `fetch()` counts down one credit locally (`consume`) right when it picks an account, so a parallel batch (e.g. the per-chunk searches of a group feed) never sends more requests than the known quota left; an answer from X never raises the local count within the same window. An unknown quota counts as available. Not persisted — windows are short. The selector receives this via an injected `hasCredit` predicate. `RateLimitedException` carries the earliest reset time, shown in the error card.

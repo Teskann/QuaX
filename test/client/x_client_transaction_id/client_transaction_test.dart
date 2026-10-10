@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:quax/client/x_client_transaction_id/client_transaction.dart';
+import 'package:quax/client/x_client_transaction_id/client_transaction_id_exception.dart';
 
 const _fixtures = 'test/fixtures/XClientTransactionId';
 
@@ -31,6 +32,26 @@ Future<ClientTransaction> _recordedTransaction() async {
 }
 
 void main() {
+  test('Should raise a ClientTransactionIdException when x.com serves nothing the generator can be built from', () {
+    expect(
+      () => ClientTransaction.fromSources(homePageHtml: '', signFileText: ''),
+      throwsA(isA<ClientTransactionIdException>()),
+      reason: 'Bug reports about this failure are recognised by the type of the exception',
+    );
+  });
+
+  test('Should raise a ClientTransactionIdException when the page no longer has the shape the generator reads', () async {
+    final sources = await ClientTransaction.fetchSources(fetch: _replay);
+    expect(
+      () => ClientTransaction.fromSources(
+        homePageHtml: sources.homePageHtml.replaceAll('loading-x-anim', 'gone'),
+        signFileText: sources.signFileText,
+      ),
+      throwsA(isA<ClientTransactionIdException>()),
+      reason: 'A RangeError would not carry the marker that starts the fix, although X changed the page',
+    );
+  });
+
   test('Should find the sign module by following the recorded x.com files', () async {
     await expectLater(ClientTransaction.fetchSources(fetch: _replay), completes,
         reason: 'The chain page -> entry script -> importer -> sign module no longer leads to the sign module: '

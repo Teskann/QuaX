@@ -7,6 +7,7 @@ import 'package:html/dom.dart' as html_dom;
 import 'package:html/parser.dart' as html_parser;
 import 'package:http/http.dart' as http;
 
+import 'client_transaction_id_exception.dart';
 import 'constants.dart';
 import 'cubic_curve.dart';
 import 'interpolate.dart';
@@ -67,22 +68,31 @@ class ClientTransaction {
     String randomKeyword = defaultKeyword,
     int randomNumber = additionalRandomNumber,
   }) {
-    final homePageDoc = html_parser.parse(homePageHtml);
-    final (rowIndex, keyBytesIndices) = _getIndices(signFileText);
-    final keyBytes = _getKeyBytes(_getKey(homePageDoc));
-    final animationKey = _computeAnimationKey(
-      keyBytes: keyBytes,
-      rowIndex: rowIndex,
-      keyBytesIndices: keyBytesIndices,
-      homePageDoc: homePageDoc,
-    );
+    try {
+      final homePageDoc = html_parser.parse(homePageHtml);
+      final (rowIndex, keyBytesIndices) = _getIndices(signFileText);
+      final keyBytes = _getKeyBytes(_getKey(homePageDoc));
+      final animationKey = _computeAnimationKey(
+        keyBytes: keyBytes,
+        rowIndex: rowIndex,
+        keyBytesIndices: keyBytesIndices,
+        homePageDoc: homePageDoc,
+      );
 
-    return ClientTransaction._(
-      keyBytes: keyBytes,
-      animationKey: animationKey,
-      randomKeyword: randomKeyword,
-      randomNumber: randomNumber,
-    );
+      return ClientTransaction._(
+        keyBytes: keyBytes,
+        animationKey: animationKey,
+        randomKeyword: randomKeyword,
+        randomNumber: randomNumber,
+      );
+    } on ClientTransactionIdException {
+      rethrow;
+    } catch (error, stackTrace) {
+      Error.throwWithStackTrace(
+        ClientTransactionIdException("Couldn't read the page and the sign module: $error"),
+        stackTrace,
+      );
+    }
   }
 
   /// Generates the x-client-transaction-id for the given HTTP method and path.
@@ -117,7 +127,7 @@ class ClientTransaction {
         .allMatches(signFileText)
         .map((m) => int.parse(m.group(2)!))
         .toList();
-    if (indices.isEmpty) throw Exception("Couldn't get KEY_BYTE indices");
+    if (indices.isEmpty) throw const ClientTransactionIdException("Couldn't get KEY_BYTE indices");
     return (indices[0], indices.sublist(1));
   }
 
@@ -125,7 +135,7 @@ class ClientTransaction {
     final element =
         doc.querySelector("meta[name='twitter-site-verification']");
     if (element == null) {
-      throw Exception(
+      throw const ClientTransactionIdException(
           "Couldn't get [twitter-site-verification] key from the page source");
     }
     return element.attributes['content']!;
@@ -146,7 +156,7 @@ class ClientTransaction {
 
   static Uri _resolveImport(Uri base, String text, RegExp regex, String what) {
     final match = regex.firstMatch(text);
-    if (match == null) throw Exception("Couldn't find the $what");
+    if (match == null) throw ClientTransactionIdException("Couldn't find the $what");
     return base.resolve(match.group(1)!);
   }
 

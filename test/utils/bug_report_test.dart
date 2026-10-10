@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:quax/client/x_client_transaction_id/client_transaction_id_exception.dart';
 import 'package:quax/utils/bug_report.dart';
 
 StackTrace fakeStackTrace(int frames) => StackTrace.fromString(
@@ -77,5 +78,29 @@ void main() {
     expect(body, contains('#0 '), reason: 'The top frames locate the bug and should be kept');
     expect(body, isNot(contains('#999 ')), reason: 'The deepest frames should be the ones dropped');
     expect(body, endsWith('\n```'), reason: 'The code block should still be closed after truncation');
+  });
+
+  test('Should carry the marker that triggers the fix workflow when the transaction id could not be built', () {
+    final body = bugReportUri(
+      'Unable to load the tweets',
+      const ClientTransactionIdException("Couldn't find the sign module"),
+      null,
+      version: '4.13.4',
+    ).queryParameters['body'];
+    expect(
+      body,
+      contains(clientTransactionIdReportMarker),
+      reason: 'The workflow only starts the fix routine for reports carrying the marker',
+    );
+  });
+
+  test('Should carry no marker for any other error', () {
+    final body = bugReportUri('Unable to load the tweets', Exception('boom'), null, version: '4.13.4')
+        .queryParameters['body'];
+    expect(
+      body,
+      isNot(contains(clientTransactionIdReportMarker)),
+      reason: 'A marker on unrelated reports would start the fix routine for nothing',
+    );
   });
 }
