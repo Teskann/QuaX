@@ -180,6 +180,13 @@ void main() {
       expect(find.byType(XTweetLayout), findsWidgets, reason: 'The replies keep the tile of the timeline');
     });
 
+    testWidgets('Should have no reply composer, since QuaX cannot post', (tester) async {
+      await openScreen(tester);
+
+      expect(find.byType(TextField), findsNothing, reason: 'Replying happens in X, not in a bar at the bottom');
+      expect(find.text('Post your reply'), findsNothing, reason: 'The composer is gone');
+    });
+
     testWidgets('Should keep the regular app bar outside the X design', (tester) async {
       await openScreen(tester, xStyle: false);
 

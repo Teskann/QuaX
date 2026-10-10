@@ -11,6 +11,8 @@ import 'package:quax/tweet/x_text_width_cache.dart';
 import 'package:quax/ui/locale_fallback.dart';
 import 'package:quax/ui/x_icons.dart';
 import 'package:quax/ui/x_style.dart';
+import 'package:quax/utils/urls.dart';
+import 'package:quax/utils/x_post_url.dart';
 
 const xTweetAvatarSize = 44.0;
 const _paddingLeft = 8.0;
@@ -214,19 +216,19 @@ class XMediaFrame extends StatelessWidget {
   }
 }
 
-/// The row of actions under a tweet. What each action does is up to the tweet tile.
+/// The row of actions under a tweet. Replying and reposting open the post in X, where the user acts, since QuaX cannot
+/// post. What the other actions do is up to the tweet tile.
 class XActionBar extends StatelessWidget {
   static const defaultIconSize = 18.0;
 
   final TweetWithCard tweet;
   final NumberFormat numberFormat;
-  final VoidCallback onReply;
-  final VoidCallback onRepost;
   final Future<void> Function(LikedTweetModel model, bool isLiked) onToggleLike;
   final Future<void> Function(SavedTweetModel model, bool isSaved) onToggleSave;
   final VoidCallback onFileTweet;
   final VoidCallback onShare;
   final double iconSize;
+  final Future<void> Function(String url) opener;
 
   /// Spreads the actions over the whole width instead of giving the counted ones an equal slot on the left
   final bool spread;
@@ -237,16 +239,17 @@ class XActionBar extends StatelessWidget {
     this.spread = false,
     required this.tweet,
     required this.numberFormat,
-    required this.onReply,
-    required this.onRepost,
     required this.onToggleLike,
     required this.onToggleSave,
     required this.onFileTweet,
     required this.onShare,
+    this.opener = openUriExternally,
   });
 
   String _count(int? count) =>
       count == null || count == 0 ? '' : numberFormat.format(count);
+
+  void _openPost() => opener(xPostUri(tweet.user?.screenName, tweet.idStr!));
 
   @override
   Widget build(BuildContext context) {
@@ -263,14 +266,14 @@ class XActionBar extends StatelessWidget {
                 icon: XIcons.reply,
                 count: _count(tweet.replyCount),
                 iconSize: iconSize,
-                onTap: onReply,
+                onTap: _openPost,
                 flushLeft: true),
             _XAction(
                 icon: XIcons.repost,
                 count: _count(reposts),
                 iconSize: iconSize,
                 color: retweeted ? XStyleColors.repost : null,
-                onTap: onRepost),
+                onTap: _openPost),
             _buildLike(),
             _XAction(icon: XIcons.views, count: _count(tweet.viewCount), iconSize: iconSize),
           ].map(spread ? (action) => action : _slot),

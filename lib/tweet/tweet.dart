@@ -18,7 +18,6 @@ import 'package:quax/status.dart';
 import 'package:quax/tweet/_expandable_tweet_text.dart';
 import 'package:quax/tweet/_card.dart';
 import 'package:quax/tweet/_media.dart';
-import 'package:quax/tweet/_x_repost_sheet.dart';
 import 'package:quax/tweet/_x_tweet_layout.dart';
 import 'package:quax/tweet/unavailable_tweet.dart';
 import 'package:quax/article/article.dart';
@@ -195,14 +194,13 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     });
   }
 
-  void onClickOpenTweet(TweetWithCard tweet, {bool focusReply = false}) {
+  void onClickOpenTweet(TweetWithCard tweet) {
     Navigator.pushNamed(context, routeStatus,
         arguments: StatusScreenArguments(
             id: tweet.idStr!,
             username: tweet.user!.screenName!,
             tweetOpened: true,
-            initialTweet: tweet,
-            focusReply: focusReply));
+            initialTweet: tweet));
   }
 
   IconButton _createFooterIconButton(IconData icon, [Color? color, double? fill, Function()? onPressed]) {
@@ -437,9 +435,6 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
       spread: widget.isFocal,
       tweet: tweet,
       numberFormat: numberFormat,
-      onReply: () => onClickOpenTweet(tweet, focusReply: true),
-      onRepost: () =>
-          showXRepostSheet(context, tweetId: tweet.idStr!, screenName: tweet.user!.screenName!),
       onToggleLike: (model, isLiked) => _toggleLike(model, tweet, isLiked),
       onToggleSave: (model, isSaved) => _toggleSave(model, tweet, isSaved),
       onFileTweet: () => _fileTweet(tweet),

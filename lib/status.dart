@@ -4,7 +4,6 @@ import 'package:quax/constants.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/profile/profile.dart';
 import 'package:quax/tweet/_media.dart';
-import 'package:quax/tweet/_x_reply_composer.dart';
 import 'package:quax/tweet/conversation.dart';
 import 'package:quax/tweet/unavailable_tweet.dart';
 import 'package:quax/ui/errors.dart';
@@ -23,7 +22,6 @@ class StatusScreenArguments {
   final int initialMediaIndex;
   final bool openMediaFullScreen;
   final TweetWithCard? initialTweet;
-  final bool focusReply;
 
   StatusScreenArguments(
       {required this.id,
@@ -31,8 +29,7 @@ class StatusScreenArguments {
       this.tweetOpened = false,
       this.initialMediaIndex = 0,
       this.openMediaFullScreen = false,
-      this.initialTweet,
-      this.focusReply = false});
+      this.initialTweet});
 
   @override
   String toString() {
@@ -53,8 +50,7 @@ class StatusScreen extends StatelessWidget {
         tweetOpened: args.tweetOpened,
         initialMediaIndex: args.initialMediaIndex,
         openMediaFullScreen: args.openMediaFullScreen,
-        initialTweet: args.initialTweet,
-        focusReply: args.focusReply);
+        initialTweet: args.initialTweet);
   }
 }
 
@@ -65,7 +61,6 @@ class _StatusScreen extends StatefulWidget {
   final int initialMediaIndex;
   final bool openMediaFullScreen;
   final TweetWithCard? initialTweet;
-  final bool focusReply;
 
   const _StatusScreen(
       {required this.username,
@@ -73,8 +68,7 @@ class _StatusScreen extends StatefulWidget {
       required this.tweetOpened,
       this.initialMediaIndex = 0,
       this.openMediaFullScreen = false,
-      this.initialTweet,
-      this.focusReply = false});
+      this.initialTweet});
 
   @override
   _StatusScreenState createState() => _StatusScreenState();
@@ -201,9 +195,6 @@ class _StatusScreenState extends State<_StatusScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: isXStyle(context) ? _buildXAppBar(context) : AppBar(),
-      bottomNavigationBar: isXStyle(context)
-          ? XReplyComposer(tweetId: widget.id, autofocus: widget.focusReply)
-          : null,
       body: ChangeNotifierProvider<TweetContextState>(
         create: (context) => TweetContextState(PrefService.of(context, listen: false).get(optionTweetsHideSensitive)),
         child: _showingPreview ? _buildPreview(context) : _buildConversation(context),
