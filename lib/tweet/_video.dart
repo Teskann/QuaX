@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:better_player_plus/better_player_plus.dart'
     hide VisibilityDetector, VisibilityDetectorController, VisibilityInfo;
 import 'package:dart_twitter_api/twitter_api.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:pref/pref.dart';
 import 'package:quax/constants.dart';
@@ -435,12 +436,11 @@ class _TweetVideoState extends State<TweetVideo> with WidgetsBindingObserver {
       if (key != null) _pool?.markVisible(key, this);
       _pauseTimer?.cancel();
       _pauseTimer = null;
-      if (_autoPlay && !wasVisible && !pooled.isPlaying) {
+      if ((_autoPlay || widget.alwaysPlay) && !wasVisible && !pooled.isPlaying) {
         pooled.controller.play();
       }
     } else if (wasVisible || _assumedVisible) {
       if (key != null) _pool?.markHidden(key, this);
-      if (widget.alwaysPlay) return;
       _pauseTimer ??= Timer(const Duration(milliseconds: 100), () {
         _pauseTimer = null;
         if (key != null && (_pool?.anyVisible(key) ?? false)) return;
@@ -493,7 +493,7 @@ class _TweetVideoState extends State<TweetVideo> with WidgetsBindingObserver {
               alignment: Alignment.center,
               children: [
                 if (widget.metadata.imageUrl != null)
-                  Image.network(widget.metadata.imageUrl!, fit: BoxFit.cover),
+                  _PosterImage(widget.metadata.imageUrl!),
                 if (!widget.disableControls) const Center(child: CircularProgressIndicator()),
                 // A GIF shown static (still buffering, or no decoder available)
                 // gets a "GIF" label; it fades out with the poster once it plays.
@@ -553,7 +553,7 @@ class _TweetVideoState extends State<TweetVideo> with WidgetsBindingObserver {
           alignment: Alignment.center,
           children: [
             if (widget.metadata.imageUrl != null)
-              Positioned.fill(child: Image.network(widget.metadata.imageUrl!, fit: BoxFit.cover)),
+              Positioned.fill(child: _PosterImage(widget.metadata.imageUrl!)),
             FritterCenterPlayButton(
               backgroundColor: Colors.black54,
               iconColor: Colors.white,
@@ -570,7 +570,7 @@ class _TweetVideoState extends State<TweetVideo> with WidgetsBindingObserver {
 
   // No player yet: still off screen, or given back to the pool.
   Widget _buildIdle() {
-    if (!_evicted) return _buildPoster(loading: true);
+    if (!_evicted) return _buildPoster(loading: !widget.disableControls);
     return widget.disableControls ? _buildPoster(loading: false) : _buildTapToPlay();
   }
 
@@ -581,7 +581,7 @@ class _TweetVideoState extends State<TweetVideo> with WidgetsBindingObserver {
         alignment: Alignment.center,
         children: [
           if (widget.metadata.imageUrl != null)
-            Positioned.fill(child: Image.network(widget.metadata.imageUrl!, fit: BoxFit.cover)),
+            Positioned.fill(child: _PosterImage(widget.metadata.imageUrl!)),
           if (loading) const CircularProgressIndicator(),
           if (!loading) const Positioned(left: 6, bottom: 6, child: GifBadge()),
         ],
@@ -661,7 +661,7 @@ class _TweetVideoState extends State<TweetVideo> with WidgetsBindingObserver {
         // showing it again (the feed, back from the tweet) has yet to report it.
         final pooled = _pooled;
         final pool = _pool;
-        if (!widget.alwaysPlay && pooled != null) {
+        if (pooled != null) {
           Timer(VisibilityDetectorController.instance.updateInterval + const Duration(milliseconds: 100), () {
             if (!(pool?.anyVisible(key) ?? false)) pooled.pause();
           });
@@ -671,6 +671,28 @@ class _TweetVideoState extends State<TweetVideo> with WidgetsBindingObserver {
       }
     }
     super.dispose();
+  }
+}
+
+/// Poster decoded at the size it is shown, not at the full size of the file,
+/// and kept on disk so it is not downloaded again on every rebuild.
+class _PosterImage extends StatelessWidget {
+  final String url;
+
+  const _PosterImage(this.url);
+
+  @override
+  Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final pixelRatio = MediaQuery.devicePixelRatioOf(context);
+    return LayoutBuilder(
+      builder: (context, constraints) => ExtendedImage.network(
+        url,
+        cache: true,
+        fit: BoxFit.cover,
+        cacheWidth: max(1, (min(constraints.maxWidth, screenWidth) * pixelRatio).round()),
+      ),
+    );
   }
 }
 
