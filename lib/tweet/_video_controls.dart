@@ -159,6 +159,7 @@ class _QuaxControlsState extends State<QuaxControls> {
             qualities: widget.qualities,
             downloadUrl: widget.downloadUrl,
             accentColor: accent,
+            visible: _visible,
           ),
         ),
       ],
@@ -240,6 +241,7 @@ class _BottomBar extends StatelessWidget {
   final List<TweetVideoQuality> qualities;
   final String? downloadUrl;
   final Color accentColor;
+  final bool visible;
 
   const _BottomBar({
     required this.controller,
@@ -247,6 +249,7 @@ class _BottomBar extends StatelessWidget {
     required this.qualities,
     required this.downloadUrl,
     required this.accentColor,
+    required this.visible,
   });
 
   @override
@@ -275,7 +278,7 @@ class _BottomBar extends StatelessWidget {
           offset: const Offset(0, -8),
           child: Padding(
             padding: const EdgeInsets.only(left: 14, right: 16, bottom: 6),
-            child: _SeekBar(controller: controller, accentColor: accentColor),
+            child: _SeekBar(controller: controller, accentColor: accentColor, visible: visible),
           ),
         ),
       ],
@@ -467,7 +470,10 @@ class _SeekBar extends StatefulWidget {
   final BetterPlayerController controller;
   final Color accentColor;
 
-  const _SeekBar({required this.controller, required this.accentColor});
+  /// The bar only animates while the controls are shown.
+  final bool visible;
+
+  const _SeekBar({required this.controller, required this.accentColor, required this.visible});
 
   @override
   State<_SeekBar> createState() => _SeekBarState();
@@ -492,18 +498,41 @@ class _SeekBarState extends State<_SeekBar> with SingleTickerProviderStateMixin 
     super.initState();
     _sync();
     _listener = (_) {
-      if (mounted) setState(_sync);
+      if (!mounted) return;
+      setState(_sync);
+      _updateTicker();
     };
     widget.controller.addEventsListener(_listener);
-    _ticker.start();
+    _updateTicker();
+  }
+
+  @override
+  void didUpdateWidget(_SeekBar oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.visible != widget.visible) {
+      _sync();
+      _updateTicker();
+    }
   }
 
   // The player only samples position ~every 300ms; interpolate between samples
   // off the ticker so the played bar advances smoothly at ~60fps.
   void _onTick(Duration elapsed) {
     _elapsed = elapsed;
-    if (_playing && !_buffering && _dragFraction == null && mounted) {
-      setState(() {});
+    setState(() {});
+  }
+
+  // A running ticker schedules a frame on every vsync, so it only runs while
+  // the bar actually moves. A restarted ticker counts from zero again.
+  void _updateTicker() {
+    final shouldRun = widget.visible && _playing && !_buffering && _dragFraction == null;
+    if (shouldRun == _ticker.isActive) return;
+    if (shouldRun) {
+      _elapsed = Duration.zero;
+      _baseElapsed = Duration.zero;
+      _ticker.start();
+    } else {
+      _ticker.stop();
     }
   }
 
@@ -552,6 +581,7 @@ class _SeekBarState extends State<_SeekBar> with SingleTickerProviderStateMixin 
       _baseElapsed = _elapsed;
     }
     setState(() => _dragFraction = null);
+    _updateTicker();
   }
 
   @override
@@ -570,6 +600,7 @@ class _SeekBarState extends State<_SeekBar> with SingleTickerProviderStateMixin 
 
         void update(double dx) {
           setState(() => _dragFraction = (dx / width).clamp(0.0, 1.0));
+          _updateTicker();
         }
 
         // Explicit width + left anchor so the fill grows from the left edge; an
