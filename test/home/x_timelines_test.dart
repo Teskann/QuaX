@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:quax/constants.dart';
 import 'package:quax/home/_x_timelines.dart';
+import 'package:quax/home/_x_topics.dart';
 import 'package:quax/ui/x_icons.dart';
 import 'package:quax/ui/x_style.dart';
 
@@ -56,7 +56,7 @@ void main() {
   });
 
   group('showCreateTimelineSheet', () {
-    testWidgets('Should open the search to pick a topic', (tester) async {
+    testWidgets('Should open the screen to pick a topic', (tester) async {
       final app = await pumpXApp(
           tester,
           Builder(
@@ -68,7 +68,8 @@ void main() {
       await tester.tap(find.text('From a topic'));
       await tester.pumpAndSettle();
 
-      expect(app.pushed, [routeSearch], reason: 'A topic is a search the user can subscribe to');
+      expect(find.byType(XTopicsScreen), findsOneWidget, reason: 'A topic is picked among trends and categories');
+      expect(app.pushed, isEmpty, reason: 'The search screen is not the way to make a topic timeline anymore');
     });
   });
 

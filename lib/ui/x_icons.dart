@@ -31,6 +31,22 @@ abstract final class XIcons {
   static const lists = IconData(0xe2f2, fontFamily: _regular); // listBullets
   static const settings = IconData(0xe270, fontFamily: _regular); // gear
   static const timelines = IconData(0xebe0, fontFamily: _regular); // listMagnifyingGlass
+  static const hash = IconData(0xe2a2, fontFamily: _regular);
+  static const topicNews = IconData(0xe344, fontFamily: _regular); // newspaper
+  static const topicSports = IconData(0xe724, fontFamily: _regular); // basketball
+  static const topicFootball = IconData(0xe716, fontFamily: _regular); // soccerBall
+  static const topicTechnology = IconData(0xe610, fontFamily: _regular); // cpu
+  static const topicAi = IconData(0xe762, fontFamily: _regular); // robot
+  static const topicScience = IconData(0xe79e, fontFamily: _regular); // flask
+  static const topicGaming = IconData(0xe26e, fontFamily: _regular); // gameController
+  static const topicMusic = IconData(0xe340, fontFamily: _regular); // musicNotes
+  static const topicMovies = IconData(0xe8c2, fontFamily: _regular); // filmSlate
+  static const topicAnime = IconData(0xe6a2, fontFamily: _regular); // sparkle
+  static const topicBusiness = IconData(0xe156, fontFamily: _regular); // chartLineUp
+  static const topicCrypto = IconData(0xe618, fontFamily: _regular); // currencyBtc
+  static const topicPolitics = IconData(0xe0b4, fontFamily: _regular); // bank
+  static const topicHealth = IconData(0xe2ac, fontFamily: _regular); // heartbeat
+  static const topicSpace = IconData(0xe3fe, fontFamily: _regular); // rocketLaunch
 
   static const _house = IconData(0xe2c2, fontFamily: _regular);
   static const _houseFill = IconData(0xe2c2, fontFamily: _fill);
@@ -54,7 +70,9 @@ abstract final class XIcons {
   static const all = <IconData>[
     reply, repost, like, liked, views, bookmark, bookmarked, share, translate, verified, retweetBanner, pinned,
     userCircle, profile, dotsThree, dotsThreeVertical, plus, sun, moonStars, lists, settings, timelines, search,
-    _house, _houseFill, _users, _usersFill, _search, _searchBold,
+    _house, _houseFill, _users, _usersFill, _search, _searchBold, hash, topicNews, topicSports, topicFootball,
+    topicTechnology, topicAi, topicScience, topicGaming, topicMusic, topicMovies, topicAnime, topicBusiness,
+    topicCrypto, topicPolitics, topicHealth, topicSpace,
   ];
 }
 
