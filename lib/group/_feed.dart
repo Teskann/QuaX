@@ -10,6 +10,7 @@ import 'package:quax/database/entities.dart';
 import 'package:quax/database/repository.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/group/feed_cache.dart';
+import 'package:quax/group/feed_paging.dart';
 import 'package:quax/group/feed_session_cache.dart';
 import 'package:quax/group/group_screen.dart';
 import 'package:quax/group/search_query.dart';
@@ -243,10 +244,11 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
           // We're currently at the end of our current feed, so load the oldest chunk and use its cursor to load more
           var storedChunks = await repository.query(tableFeedGroupChunk,
               where: 'cursor_id = ? AND hash = ?', whereArgs: [int.parse(cursorKey), hash]);
-          if (storedChunks.isNotEmpty) {
-            searchCursor = storedChunks.first['cursor_bottom'] as String;
-          } else {
-            searchCursor = null;
+          switch (decideChunkPaging(storedChunks)) {
+            case SkipChunk():
+              return tweets;
+            case SearchFromCursor(:var cursor):
+              searchCursor = cursor;
           }
         }
 
@@ -259,6 +261,7 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
         } catch (e, stackTrace) {
           errors.add(PagingError(e, stackTrace));
           failedSubscriptions += chunk.users.length;
+          await _carryForwardCursor(repository, int.parse(nextCursor), hash, searchCursor);
           return tweets;
         }
         shouldShowUnrelatedPostsInFeedWarning |= feedContainsUnrelatedTweets(result, chunk.users);
@@ -304,6 +307,14 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
     }
 
     return (chains: threads, nextCursor: nextCursor);
+  }
+
+  /// Keeps the position of a failed chunk, so the next page retries it from there rather than from the top.
+  Future<void> _carryForwardCursor(Database repository, int nextCursorId, String hash, String? searchCursor) async {
+    var row = carryForwardRow(nextCursorId: nextCursorId, hash: hash, searchCursor: searchCursor);
+    if (row != null) {
+      await repository.insert(tableFeedGroupChunk, row);
+    }
   }
 
   /// The error to show above the tweets for the chunks that failed. A rate limit tells how much of the feed could load
