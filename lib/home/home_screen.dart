@@ -10,6 +10,7 @@ import 'package:quax/group/group_screen.dart';
 import 'package:quax/home/_feed.dart';
 import 'package:quax/home/_missing.dart';
 import 'package:quax/home/_saved.dart';
+import 'package:quax/home/_x_drawer.dart';
 import 'package:quax/home/home_model.dart';
 import 'package:quax/search/search.dart';
 import 'package:quax/subscriptions/subscriptions.dart';
@@ -169,6 +170,14 @@ class _HomeScreenState extends State<_HomeScreen> {
   }
 }
 
+/// A page of the navigation that the user hid from the bottom bar, shown on its own from the drawer of the X design.
+Widget _standalonePage(String pageId, ScrollController scrollController) {
+  return switch (pageId) {
+    'saved' => Scaffold(body: SavedScreen(scrollController: scrollController)),
+    _ => SubscriptionsScreen(scrollController: scrollController),
+  };
+}
+
 class ScaffoldWithBottomNavigation extends StatefulWidget {
   final List<NavigationPage> pages;
   final BasePrefService prefs;
@@ -194,6 +203,25 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
         focusNode.unfocus();
       }
     });
+  }
+
+  void _switchToPage(String pageId) {
+    final index = widget.pages.indexWhere((e) => e.id == pageId);
+    if (index >= 0) {
+      unfocusOtherPages();
+      _pageController.jumpToPage(index);
+    }
+  }
+
+  Widget _buildDrawer(BuildContext context, bool xStyle) {
+    if (xStyle) {
+      return XDrawer(
+        pageIds: widget.pages.map((e) => e.id).toList(),
+        onSwitchPage: _switchToPage,
+        pageBuilder: _standalonePage,
+      );
+    }
+    return _buildDefaultDrawer(context);
   }
 
   @override
@@ -225,31 +253,35 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
     }
   }
 
+  Widget _buildDefaultDrawer(BuildContext context) {
+    final l10n = L10n.of(context);
+    return Drawer(
+      child: ListView(
+        children: [
+          ListTile(
+            leading: const Icon(Icons.search),
+            title: Text(l10n.search),
+            onTap: () =>
+                Navigator.pushNamed(context, routeSearch, arguments: SearchArguments(0, focusInputOnOpen: true)),
+          ),
+          ListTile(
+            leading: const Icon(Icons.settings),
+            title: Text(l10n.settings),
+            onTap: () => Navigator.pushNamed(context, routeSettings),
+          )
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final l10n = L10n.of(context);
     final xStyle = isXStyle(context);
     final showLabels = !xStyle && widget.prefs.get(optionShowNavigationLabels);
 
     return Scaffold(
       extendBody: xStyle,
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            ListTile(
-              leading: const Icon(Icons.search),
-              title: Text(l10n.search),
-              onTap: () =>
-                  Navigator.pushNamed(context, routeSearch, arguments: SearchArguments(0, focusInputOnOpen: true)),
-            ),
-            ListTile(
-              leading: const Icon(Icons.settings),
-              title: Text(l10n.settings),
-              onTap: () => Navigator.pushNamed(context, routeSettings),
-            )
-          ],
-        ),
-      ),
+      drawer: _buildDrawer(context, xStyle),
       body: PageView(
         controller: _pageController,
         onPageChanged: (page) {

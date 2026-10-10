@@ -99,7 +99,7 @@ ThemeData buildXTheme(Brightness brightness) {
 
 TabBarThemeData _buildXTabBarTheme(XStyleColors colors) => TabBarThemeData(
   indicator: UnderlineTabIndicator(
-    borderSide: BorderSide(width: 4, color: colors.accent),
+    borderSide: BorderSide(width: 4, color: colors.primaryText),
     borderRadius: BorderRadius.circular(4),
   ),
   indicatorSize: TabBarIndicatorSize.label,

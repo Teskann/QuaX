@@ -12,18 +12,21 @@ import 'package:quax/ui/x_style.dart';
 class GroupFeedShell extends StatefulWidget {
   final ScrollController scrollController;
   final String groupId;
-  final WidgetBuilder titleBuilder;
+  final WidgetBuilder? titleBuilder;
   final WidgetBuilder bodyBuilder;
-  final List<Widget> Function(BuildContext) actionsBuilder;
+  final List<Widget> Function(BuildContext)? actionsBuilder;
+  // Replaces the whole app bar, which then ignores [titleBuilder] and [actionsBuilder].
+  final WidgetBuilder? appBarBuilder;
 
   const GroupFeedShell({
     super.key,
     required this.scrollController,
     required this.groupId,
-    required this.titleBuilder,
+    this.titleBuilder,
     required this.bodyBuilder,
-    required this.actionsBuilder,
-  });
+    this.actionsBuilder,
+    this.appBarBuilder,
+  }) : assert(appBarBuilder != null || (titleBuilder != null && actionsBuilder != null));
 
   @override
   State<GroupFeedShell> createState() => _GroupFeedShellState();
@@ -85,6 +88,10 @@ class _GroupFeedShellState extends State<GroupFeedShell> with AutomaticKeepAlive
   }
 
   Widget _buildAppBar(BuildContext context) {
+    final appBarBuilder = widget.appBarBuilder;
+    if (appBarBuilder != null) {
+      return appBarBuilder(context);
+    }
     final xStyle = isXStyle(context);
     return SliverAppBar(
       backgroundColor: xStyle ? Colors.transparent : Theme.of(context).colorScheme.surface,
@@ -93,8 +100,8 @@ class _GroupFeedShellState extends State<GroupFeedShell> with AutomaticKeepAlive
       pinned: false,
       snap: true,
       floating: true,
-      title: widget.titleBuilder(context),
-      actions: widget.actionsBuilder(context),
+      title: widget.titleBuilder!(context),
+      actions: widget.actionsBuilder!(context),
     );
   }
 

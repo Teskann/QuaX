@@ -10,6 +10,20 @@ void main() {
       expect(XIcons.translate.fontFamily, 'PhosphorRegular', reason: 'Translate should be regular');
     });
 
+    test('Should share with the connected dots icon', () {
+      expect(XIcons.share.codePoint, 0xe408, reason: 'X shares with the shareNetwork glyph');
+    });
+
+    test('Should draw the icons of the home header and drawer with the regular font', () {
+      const icons = [
+        XIcons.userCircle, XIcons.profile, XIcons.dotsThree, XIcons.dotsThreeVertical, XIcons.plus, XIcons.sun,
+        XIcons.moonStars, XIcons.lists, XIcons.settings, XIcons.timelines, XIcons.search,
+      ];
+      for (final icon in icons) {
+        expect(icon.fontFamily, 'PhosphorRegular', reason: '${icon.codePoint.toRadixString(16)} should be regular');
+      }
+    });
+
     test('Should draw the filled icons with the fill font', () {
       for (final icon in [XIcons.liked, XIcons.bookmarked, XIcons.verified, XIcons.pinned]) {
         expect(icon.fontFamily, 'PhosphorFill', reason: '${icon.codePoint.toRadixString(16)} should be filled');

@@ -16,11 +16,21 @@ abstract final class XIcons {
   static const views = IconData(0xe150, fontFamily: _regular); // chartBar
   static const bookmark = IconData(0xe0ea, fontFamily: _regular); // bookmarkSimple
   static const bookmarked = IconData(0xe0ea, fontFamily: _fill);
-  static const share = IconData(0xe4c0, fontFamily: _regular); // uploadSimple
+  static const share = IconData(0xe408, fontFamily: _regular); // shareNetwork
   static const translate = IconData(0xe4a2, fontFamily: _regular);
   static const verified = IconData(0xe606, fontFamily: _fill); // sealCheck
   static const retweetBanner = repost;
   static const pinned = IconData(0xe3e2, fontFamily: _fill); // pushPin
+  static const userCircle = IconData(0xe4c4, fontFamily: _regular);
+  static const profile = IconData(0xe4c2, fontFamily: _regular); // user
+  static const dotsThree = IconData(0xe1fe, fontFamily: _regular);
+  static const dotsThreeVertical = IconData(0xe208, fontFamily: _regular);
+  static const plus = IconData(0xe3d4, fontFamily: _regular);
+  static const sun = IconData(0xe472, fontFamily: _regular);
+  static const moonStars = IconData(0xe58e, fontFamily: _regular);
+  static const lists = IconData(0xe2f2, fontFamily: _regular); // listBullets
+  static const settings = IconData(0xe270, fontFamily: _regular); // gear
+  static const timelines = IconData(0xebe0, fontFamily: _regular); // listMagnifyingGlass
 
   static const _house = IconData(0xe2c2, fontFamily: _regular);
   static const _houseFill = IconData(0xe2c2, fontFamily: _fill);
@@ -28,6 +38,7 @@ abstract final class XIcons {
   static const _usersFill = IconData(0xe4d6, fontFamily: _fill);
   static const _search = IconData(0xe30c, fontFamily: _regular); // magnifyingGlass
   static const _searchBold = IconData(0xe30c, fontFamily: _bold);
+  static const search = _search;
 
   static const navSize = 26.0;
 
@@ -42,6 +53,7 @@ abstract final class XIcons {
   /// Every icon of the design, to check them as a whole.
   static const all = <IconData>[
     reply, repost, like, liked, views, bookmark, bookmarked, share, translate, verified, retweetBanner, pinned,
+    userCircle, profile, dotsThree, dotsThreeVertical, plus, sun, moonStars, lists, settings, timelines, search,
     _house, _houseFill, _users, _usersFill, _search, _searchBold,
   ];
 }

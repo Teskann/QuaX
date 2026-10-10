@@ -19,6 +19,7 @@ import 'package:quax/group/group_model.dart';
 import 'package:quax/group/group_screen.dart';
 import 'package:quax/home/_feed.dart';
 import 'package:quax/home/home_model.dart';
+import 'package:quax/home/x_account_model.dart';
 import 'package:quax/home/home_screen.dart';
 import 'package:quax/import_data_model.dart';
 import 'package:quax/onboarding/onboarding_screen.dart';
@@ -294,6 +295,7 @@ Future<void> main() async {
             Provider(create: (context) => feedSessionCache),
             Provider(create: (context) => VideoControllerPool(maxSize: videoPlayerBudget)),
             Provider(create: (context) => homeModel),
+            Provider(create: (context) => XAccountModel()),
             ChangeNotifierProvider(create: (context) => importDataModel),
             Provider(create: (context) => subscriptionsModel),
             Provider(create: (context) => SavedTweetModel()),

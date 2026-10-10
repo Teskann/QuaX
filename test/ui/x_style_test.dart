@@ -45,12 +45,12 @@ void main() {
       expect(navigation.height, 56, reason: 'The bar is compact');
     });
 
-    test('Should underline the selected tab with a thick accent bar', () {
+    test('Should underline the selected tab with a thick bar in the primary text color', () {
       final tabs = buildXTheme(Brightness.light).tabBarTheme;
       final indicator = tabs.indicator as UnderlineTabIndicator;
 
       expect(indicator.borderSide.width, 4, reason: 'The underline is 4px thick');
-      expect(indicator.borderSide.color, XStyleColors.light.accent, reason: 'The underline is the accent');
+      expect(indicator.borderSide.color, XStyleColors.light.primaryText, reason: 'The underline is not blue');
       expect(tabs.labelColor, XStyleColors.light.primaryText, reason: 'The selected tab reads in primary text');
       expect(tabs.unselectedLabelColor, XStyleColors.light.secondaryText, reason: 'Other tabs read in secondary text');
     });
