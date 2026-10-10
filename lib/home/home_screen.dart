@@ -227,7 +227,11 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
             _currentPage = page;
           });
         },
-        children: widget.builder(_scrollControllers, _focusNodes),
+        children: widget
+            .builder(_scrollControllers, _focusNodes)
+            .indexed
+            .map((e) => TickerMode(enabled: e.$1 == _currentPage, child: e.$2))
+            .toList(),
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _currentPage,

@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:dynamic_color/dynamic_color.dart';
+import 'package:flutter/foundation.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_localizations/flutter_localizations.dart' as flutter_l10n;
 import 'package:flutter/services.dart';
@@ -180,6 +181,7 @@ Future<void> _decideOnboarding(BasePrefService prefs, SubscriptionsModel subscri
 }
 
 Future<void> main() async {
+  Logger.root.level = defaultLogLevel(release: kReleaseMode || kProfileMode);
   Logger.root.onRecord.listen((event) async {
     log(event.message, error: event.error, stackTrace: event.stackTrace);
   });
@@ -310,11 +312,105 @@ Future<void> main() async {
   }
 }
 
+Level defaultLogLevel({required bool release}) => release ? Level.WARNING : Level.INFO;
+
+Locale? localeFromPref(String? locale) {
+  if (locale == null || locale == optionLocaleDefault) {
+    return null;
+  }
+  final splitLocale = locale.split(RegExp(r'[-_]'));
+  if (splitLocale.length == 1) {
+    return Locale(splitLocale[0]);
+  }
+  if (splitLocale[1].length == 4) {
+    // 4 characters -> unicode_script_subtag
+    return Locale.fromSubtags(languageCode: splitLocale[0], scriptCode: splitLocale[1]);
+  }
+  // Other than 4 characters -> unicode_region_subtag (country)
+  return Locale(splitLocale[0], splitLocale[1]);
+}
+
+class AppThemes {
+  final ThemeData light;
+  final ThemeData dark;
+
+  const AppThemes(this.light, this.dark);
+}
+
+/// Builds the light and dark themes only when one of their inputs changed
+class AppThemeCache {
+  ({String themeColor, bool trueBlack, bool disableAnimations, ColorScheme? lightDynamic, ColorScheme? darkDynamic})?
+      _inputs;
+  AppThemes? _themes;
+
+  AppThemes resolve({
+    required String themeColor,
+    required bool trueBlack,
+    required bool disableAnimations,
+    required ColorScheme? lightDynamic,
+    required ColorScheme? darkDynamic,
+  }) {
+    final inputs = (
+      themeColor: themeColor,
+      trueBlack: trueBlack,
+      disableAnimations: disableAnimations,
+      lightDynamic: lightDynamic,
+      darkDynamic: darkDynamic,
+    );
+    final cached = _themes;
+    if (cached != null && inputs == _inputs) {
+      return cached;
+    }
+    _inputs = inputs;
+    return _themes = AppThemes(
+      _buildLightTheme(themeColor, disableAnimations, lightDynamic),
+      _buildDarkTheme(themeColor, trueBlack, disableAnimations, darkDynamic),
+    );
+  }
+}
+
+ColorScheme? _colorScheme(String themeColor, ColorScheme? dynamicScheme, Brightness brightness) {
+  if (themeColor == 'accent') {
+    return dynamicScheme;
+  }
+  return ColorScheme.fromSeed(
+      seedColor: themeColors[themeColor]!.harmonizeWith(dynamicScheme?.primary ?? Colors.transparent),
+      brightness: brightness);
+}
+
+ThemeData _buildLightTheme(String themeColor, bool disableAnimations, ColorScheme? lightDynamic) {
+  return ThemeData(
+    colorScheme: _colorScheme(themeColor, lightDynamic, Brightness.light),
+    pageTransitionsTheme: disableAnimations ? _noAnimationPageTransitionsTheme : null,
+    useMaterial3: true,
+  );
+}
+
+ThemeData _buildDarkTheme(String themeColor, bool trueBlack, bool disableAnimations, ColorScheme? darkDynamic) {
+  final scheme = _colorScheme(themeColor, darkDynamic, Brightness.dark);
+  return ThemeData(
+    colorScheme: trueBlack ? scheme?.copyWith(surface: Colors.black) : scheme,
+    navigationBarTheme: (trueBlack ? NavigationBarThemeData(backgroundColor: Colors.black) : null),
+    scaffoldBackgroundColor: (trueBlack ? Colors.black : null),
+    appBarTheme: (trueBlack ? AppBarThemeData(backgroundColor: Colors.black) : null),
+    pageTransitionsTheme: disableAnimations ? _noAnimationPageTransitionsTheme : null,
+    useMaterial3: true,
+  );
+}
+
 class FritterApp extends StatefulWidget {
   /// Whether the app opens on the onboarding, which then replaces the dialogs shown at launch
   final bool onboarding;
 
-  const FritterApp({super.key, required this.onboarding});
+  /// Replaces the home route, so tests do not need the whole app behind it
+  @visibleForTesting
+  final WidgetBuilder? homeBuilder;
+
+  /// Called on every build of the app root
+  @visibleForTesting
+  final VoidCallback? onBuild;
+
+  const FritterApp({super.key, required this.onboarding, this.homeBuilder, this.onBuild});
 
   @override
   State<FritterApp> createState() => _FritterAppState();
@@ -324,6 +420,21 @@ class _FritterAppState extends State<FritterApp> {
   static final log = Logger('_MyAppState');
 
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>(); // NEW: Navigator key
+
+  static const _watchedPrefs = [
+    optionShouldCheckForUpdates,
+    optionLocale,
+    optionThemeTrueBlack,
+    optionThemeMode,
+    optionThemeColor,
+    optionDisableScreenshots,
+    optionTextScaleFactor,
+    optionDisableAnimations,
+  ];
+
+  final AppThemeCache _themeCache = AppThemeCache();
+  SystemUiOverlayStyle? _appliedOverlayStyle;
+  BasePrefService? _prefs;
 
   String _themeMode = 'system';
   String _themeColor = 'accent';
@@ -340,83 +451,56 @@ class _FritterAppState extends State<FritterApp> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    var prefService = PrefService.of(context);
-
-    void setLocale(String? locale) {
-      if (locale == null || locale == optionLocaleDefault) {
-        _locale = null;
-      } else {
-        var splitLocale = locale.split(RegExp(r'[-_]'));
-        if (splitLocale.length == 1) {
-          _locale = Locale(splitLocale[0]);
-        } else {
-          if (splitLocale[1].length == 4) {
-            // 4 characters -> unicode_script_subtag
-            _locale = Locale.fromSubtags(languageCode: splitLocale[0], scriptCode: splitLocale[1]);
-          } else {
-            // Other than 4 characters -> unicode_region_subtag (country)
-            _locale = Locale(splitLocale[0], splitLocale[1]);
-          }
-        }
-      }
+    if (_prefs != null) {
+      return;
     }
 
-    // Set any already-enabled preferences
-    setState(() {
-      setLocale(prefService.get<String>(optionLocale));
-      _themeMode = prefService.get(optionThemeMode);
-      _themeColor = prefService.get(optionThemeColor);
-      _trueBlack = prefService.get(optionThemeTrueBlack);
-      _disableAnimations = prefService.get(optionDisableAnimations);
-      _checkUpdates = prefService.get(optionShouldCheckForUpdates);
-      _isSecure = prefService.get(optionDisableScreenshots);
-      _textScaleFactor = prefService.get(optionTextScaleFactor);
-    });
+    // Not listening to the service: it notifies on every preference change, and the watched ones are handled below
+    final prefs = _prefs = PrefService.of(context, listen: false);
+    _readPrefs(prefs);
+    for (final key in _watchedPrefs) {
+      prefs.addKeyListener(key, _onWatchedPrefChanged);
+    }
+  }
 
-    prefService.addKeyListener(optionShouldCheckForUpdates, () {
-      setState(() {});
-    });
+  @override
+  void dispose() {
+    final prefs = _prefs;
+    if (prefs != null) {
+      for (final key in _watchedPrefs) {
+        prefs.removeKeyListener(key, _onWatchedPrefChanged);
+      }
+    }
+    super.dispose();
+  }
 
-    prefService.addKeyListener(optionLocale, () {
-      setState(() {
-        setLocale(prefService.get<String>(optionLocale));
-      });
-    });
+  void _onWatchedPrefChanged() {
+    setState(() => _readPrefs(_prefs!));
+  }
 
-    // Whenever the "true black" preference is toggled, apply the toggle
-    prefService.addKeyListener(optionThemeTrueBlack, () {
-      setState(() {
-        _trueBlack = prefService.get(optionThemeTrueBlack);
-      });
-    });
+  void _readPrefs(BasePrefService prefs) {
+    _locale = localeFromPref(prefs.get<String>(optionLocale));
+    _themeMode = prefs.get(optionThemeMode);
+    _themeColor = prefs.get(optionThemeColor);
+    _trueBlack = prefs.get(optionThemeTrueBlack);
+    _disableAnimations = prefs.get(optionDisableAnimations);
+    _checkUpdates = prefs.get(optionShouldCheckForUpdates);
+    _isSecure = prefs.get(optionDisableScreenshots);
+    _textScaleFactor = prefs.get<double?>(optionTextScaleFactor) ?? 1.0;
+  }
 
-    prefService.addKeyListener(optionThemeMode, () {
-      setState(() {
-        _themeMode = prefService.get(optionThemeMode);
-      });
-    });
-
-    prefService.addKeyListener(optionThemeColor, () {
-      setState(() {
-        _themeColor = prefService.get(optionThemeColor);
-      });
-    });
-
-    prefService.addKeyListener(optionDisableScreenshots, () {
-      setState(() {
-        _isSecure = prefService.get(optionDisableScreenshots);
-      });
-    });
-
-    prefService.addKeyListener(optionTextScaleFactor, () {
-      setState(() {
-        _textScaleFactor = prefService.get<double?>(optionTextScaleFactor) ?? 1.0;
-      });
-    });
+  void _applySystemOverlayStyle() {
+    final style = SystemUiOverlayStyle.dark.copyWith(systemNavigationBarColor: Colors.transparent);
+    if (style != _appliedOverlayStyle) {
+      _appliedOverlayStyle = style;
+      SystemChrome.setSystemUIOverlayStyle(style);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    widget.onBuild?.call();
+
     ThemeMode themeMode;
     switch (_themeMode) {
       case 'dark':
@@ -434,16 +518,18 @@ class _FritterAppState extends State<FritterApp> {
         break;
     }
 
-    final systemOverlayStyle = SystemUiOverlayStyle.dark.copyWith(systemNavigationBarColor: Colors.transparent);
-    SystemChrome.setSystemUIOverlayStyle(systemOverlayStyle);
-    final systemScaleFactor = MediaQuery.textScalerOf(context).scale(1.0);
+    _applySystemOverlayStyle();
 
-    return MediaQuery(
-        data: MediaQuery.of(context).copyWith(
-          textScaler: TextScaler.linear(_textScaleFactor * systemScaleFactor),
-        ),
-        child: DynamicColorBuilder(builder: (lightDynamic, darkDynamic) {
-          return Portal(
+    return DynamicColorBuilder(builder: (lightDynamic, darkDynamic) {
+      final themes = _themeCache.resolve(
+        themeColor: _themeColor,
+        trueBlack: _trueBlack,
+        disableAnimations: _disableAnimations,
+        lightDynamic: lightDynamic,
+        darkDynamic: darkDynamic,
+      );
+
+      return Portal(
               child: MaterialApp(
                   navigatorKey: _navigatorKey,
                   localizationsDelegates: const [
@@ -455,44 +541,15 @@ class _FritterAppState extends State<FritterApp> {
                   supportedLocales: L10n.delegate.supportedLocales,
                   locale: _locale,
                   title: 'QuaX',
-                  theme: ThemeData(
-                    colorScheme: _themeColor == 'accent'
-                        ? lightDynamic
-                        : ColorScheme.fromSeed(
-                            seedColor: themeColors[_themeColor]!
-                                .harmonizeWith(lightDynamic?.primary ?? Colors.transparent),
-                            brightness: Brightness.light),
-                    pageTransitionsTheme: _disableAnimations == true ? _noAnimationPageTransitionsTheme : null,
-                    useMaterial3: true,
-                  ),
-                  darkTheme: ThemeData(
-                    colorScheme: (_trueBlack == true
-                        ? (_themeColor == 'accent'
-                                ? darkDynamic
-                                : ColorScheme.fromSeed(
-                                    seedColor: themeColors[_themeColor]!
-                                        .harmonizeWith(darkDynamic?.primary ?? Colors.transparent),
-                                    brightness: Brightness.dark))
-                            ?.copyWith(surface: Colors.black)
-                        : (_themeColor == 'accent'
-                            ? darkDynamic
-                            : ColorScheme.fromSeed(
-                                seedColor: themeColors[_themeColor]!
-                                    .harmonizeWith(darkDynamic?.primary ?? Colors.transparent),
-                                brightness: Brightness.dark))),
-                    navigationBarTheme:
-                        (_trueBlack == true ? NavigationBarThemeData(backgroundColor: Colors.black) : null),
-                    scaffoldBackgroundColor: (_trueBlack == true ? Colors.black : null),
-                    appBarTheme: (_trueBlack == true ? AppBarThemeData(backgroundColor: Colors.black) : null),
-                    pageTransitionsTheme: _disableAnimations == true ? _noAnimationPageTransitionsTheme : null,
-                    useMaterial3: true,
-                  ),
+                  theme: themes.light,
+                  darkTheme: themes.dark,
                   themeMode: themeMode,
                   initialRoute: '/',
                   routes: {
-                    routeHome: (context) => PrefService.of(context, listen: false).get<bool>(optionOnboardingDone)!
-                        ? const DefaultPage()
-                        : const OnboardingWizard(),
+                    routeHome: widget.homeBuilder ??
+                        (context) => PrefService.of(context, listen: false).get<bool>(optionOnboardingDone)!
+                            ? const DefaultPage()
+                            : const OnboardingWizard(),
                     routeGroup: (context) => const GroupScreen(),
                     routeProfile: (context) => const ProfileScreen(),
                     routeSearch: (context) => const ResultsScreen(),
@@ -529,16 +586,38 @@ class _FritterAppState extends State<FritterApp> {
                           prefix: (l10n) => l10n.something_broke_in_fritter,
                         );
 
-                    // ignore: deprecated_member_use
-                    return MaterialUiCompatibilityBridge(
-                      child: SecureContentScope(
-                        enabled: _isSecure,
-                        child: child ?? Container(),
+                    return _TextScaleScope(
+                      factor: _textScaleFactor,
+                      // ignore: deprecated_member_use
+                      child: MaterialUiCompatibilityBridge(
+                        child: SecureContentScope(
+                          enabled: _isSecure,
+                          child: child ?? Container(),
+                        ),
                       ),
                     );
                   },
                 ));
-        }));
+    });
+  }
+}
+
+/// Applies the text scale preference on top of the system one. It is the only widget that follows
+/// the whole [MediaQuery], so the app root is not rebuilt on every keyboard animation frame.
+class _TextScaleScope extends StatelessWidget {
+  final double factor;
+  final Widget child;
+
+  const _TextScaleScope({required this.factor, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+
+    return MediaQuery(
+      data: mediaQuery.copyWith(textScaler: TextScaler.linear(factor * mediaQuery.textScaler.scale(1.0))),
+      child: child,
+    );
   }
 }
 
