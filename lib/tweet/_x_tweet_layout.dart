@@ -7,6 +7,7 @@ import 'package:quax/client/client.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/saved/liked_tweet_model.dart';
 import 'package:quax/saved/saved_tweet_model.dart';
+import 'package:quax/tweet/x_text_width_cache.dart';
 import 'package:quax/ui/locale_fallback.dart';
 import 'package:quax/ui/x_icons.dart';
 import 'package:quax/ui/x_style.dart';
@@ -131,6 +132,7 @@ class XTweetLayout extends StatelessWidget {
 /// fit, and disappears when there is no room for a piece of it.
 class XTweetHeader extends StatelessWidget {
   static const _badgeWidth = 18.0;
+  static final _widths = TextWidthCache();
 
   final String? name;
   final String? handle;
@@ -160,15 +162,8 @@ class XTweetHeader extends StatelessWidget {
 
   double _width(BuildContext context, String? text, TextStyle style) {
     if (text == null) return 0;
-    final painter = TextPainter(
-      text: TextSpan(text: text, style: DefaultTextStyle.of(context).style.merge(style)),
-      textDirection: Directionality.of(context),
-      textScaler: MediaQuery.textScalerOf(context),
-      maxLines: 1,
-    )..layout();
-    final width = painter.width;
-    painter.dispose();
-    return width;
+    return _widths.width(text, DefaultTextStyle.of(context).style.merge(style), MediaQuery.textScalerOf(context),
+        Directionality.of(context));
   }
 
   Widget _line(BuildContext context, double maxWidth) {

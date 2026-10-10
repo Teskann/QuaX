@@ -296,7 +296,8 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
     var threads = sortChainsNewestFirst(result.expand((element) => element).toList());
 
     if (!mounted) {
-      return (chains: <TweetChain>[], nextCursor: null);
+      // A cached controller outlives this feed (the user left the tab while it loaded) and keeps what was loaded
+      return _usesCache ? (chains: threads, nextCursor: nextCursor) : (chains: <TweetChain>[], nextCursor: null);
     }
 
     if (shouldShowUnrelatedPostsInFeedWarning &&

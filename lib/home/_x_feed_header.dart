@@ -23,6 +23,10 @@ class XFeedTab {
 
   String get id => group?.id ?? kind.name;
 
+  /// Where the feed of the tab keeps its loaded state in the `FeedSessionCache`, so that coming back to the tab does
+  /// not load it again. Prefixed so as not to share the state of a group opened on its own
+  String get cacheKey => 'x-home:$id';
+
   bool get hasSettings => kind == XFeedTabKind.following || kind == XFeedTabKind.group;
 
   String label(L10n l10n) => switch (kind) {

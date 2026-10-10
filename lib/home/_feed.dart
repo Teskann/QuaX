@@ -49,8 +49,8 @@ class _FeedScreenState extends State<FeedScreen> {
 
   Widget _buildXBody(BuildContext context, XFeedTab tab, BasePrefService prefs) => switch (tab.kind) {
         XFeedTabKind.forYou => ForYouTweets(_feedController, type: 'profile', includeReplies: false, pref: prefs),
-        XFeedTabKind.following => SubscriptionGroupScreenContent(id: widget.id),
-        XFeedTabKind.group => SubscriptionGroupScreenContent(id: tab.group!.id),
+        XFeedTabKind.following => SubscriptionGroupScreenContent(id: widget.id, cacheKey: tab.cacheKey),
+        XFeedTabKind.group => SubscriptionGroupScreenContent(id: tab.group!.id, cacheKey: tab.cacheKey),
         XFeedTabKind.add => XAddTimelinesPage(onAdd: () => showCreateTimelineSheet(context)),
       };
 

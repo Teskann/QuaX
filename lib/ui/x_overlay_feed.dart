@@ -70,7 +70,9 @@ class _XOverlayFeedState extends State<XOverlayFeed> {
               inset: inset,
               child: MediaQuery(
                 data: media.copyWith(padding: media.padding.copyWith(top: inset)),
-                child: PrimaryScrollController(controller: widget.scrollController, child: widget.body),
+                child: RepaintBoundary(
+                  child: PrimaryScrollController(controller: widget.scrollController, child: widget.body),
+                ),
               ),
             ),
           ),

@@ -6,10 +6,11 @@ import 'package:quax/constants.dart';
 import 'package:quax/ui/x_style.dart';
 
 /// The translucent bars of the X design: the content scrolling underneath shows through, blurred. The blur is
-/// GPU-expensive, so the bar turns opaque when the user disabled animations.
+/// GPU-expensive, so the bar turns opaque when the user disabled animations, and the bars below the same
+/// [BackdropGroup] share one capture of what is behind them.
 class XFrostedBar extends StatelessWidget {
-  static const double opacity = 0.85;
-  static const double sigma = 12;
+  static const double opacity = 0.9;
+  static const double sigma = 6;
 
   final Widget child;
 
@@ -23,7 +24,7 @@ class XFrostedBar extends StatelessWidget {
       return ColoredBox(color: background, child: child);
     }
     return ClipRect(
-      child: BackdropFilter(
+      child: BackdropFilter.grouped(
         filter: ImageFilter.blur(sigmaX: sigma, sigmaY: sigma),
         child: ColoredBox(color: background.withValues(alpha: opacity), child: child),
       ),

@@ -279,7 +279,8 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
     final xStyle = isXStyle(context);
     final showLabels = !xStyle && widget.prefs.get(optionShowNavigationLabels);
 
-    return Scaffold(
+    // The bars of the X design share one capture of what is behind them
+    return BackdropGroup(child: Scaffold(
       extendBody: xStyle,
       drawer: _buildDrawer(context, xStyle),
       body: PageView(
@@ -340,7 +341,7 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
           _pageController.jumpToPage(index);
         },
       )),
-    );
+    ));
   }
 
   @override
