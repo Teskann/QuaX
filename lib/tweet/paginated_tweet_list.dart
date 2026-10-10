@@ -280,10 +280,13 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
     final list = PagingListener<int, TweetChain>(
       controller: _controller,
       builder: (context, state, fetchNextPage) => CustomScrollView(slivers: [
-        SliverToBoxAdapter(
-            child: _errorAbove(widget.feed.refreshError.value ?? widget.feed.partialError.value, _showRefresh)),
+        // The cards above the tweets go below the X design header too, not under it
         SliverPadding(
-          padding: EdgeInsets.only(top: 4 + XHeaderInset.of(context), bottom: MediaQuery.of(context).padding.bottom),
+            padding: EdgeInsets.only(top: XHeaderInset.of(context)),
+            sliver: SliverToBoxAdapter(
+                child: _errorAbove(widget.feed.refreshError.value ?? widget.feed.partialError.value, _showRefresh))),
+        SliverPadding(
+          padding: EdgeInsets.only(top: 4, bottom: MediaQuery.of(context).padding.bottom),
           sliver: _pagedList(state, fetchNextPage),
         ),
       ]),

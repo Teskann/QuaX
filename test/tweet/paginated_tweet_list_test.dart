@@ -58,6 +58,33 @@ void main() {
           reason: 'The spinner must not be hidden by the header');
     });
 
+    testWidgets('Should show the cards above the tweets below the header, not under it', (tester) async {
+      final feed = TweetFeedController();
+      addTearDown(feed.dispose);
+      await pumpInApp(
+          tester,
+          XHeaderInset(
+              inset: 96,
+              child: PaginatedTweetList(
+                feed: feed,
+                loadPage: (cursor) async {
+                  feed.partialError.value = PagingError(RateLimitedException(), StackTrace.current);
+                  return (chains: <TweetChain>[], nextCursor: null);
+                },
+                username: null,
+                firstPageErrorPrefix: (l10n) => 'Unable to load',
+                newPageErrorPrefix: (l10n) => 'Unable to load more',
+                emptyMessage: 'Nothing here',
+              )));
+
+      final card = find.byType(ErrorCard);
+      final scaffoldTop = tester.getTopLeft(find.byType(PaginatedTweetList)).dy;
+      expect(tester.getTopLeft(card).dy - scaffoldTop, greaterThanOrEqualTo(96),
+          reason: 'A card hidden by the header cannot be read nor tapped');
+      expect(tester.getTopLeft(find.text('Nothing here')).dy, greaterThan(tester.getBottomLeft(card).dy),
+          reason: 'The tweets should follow right after the card, without the header inset a second time');
+    });
+
     testWidgets('Should keep the spinner at the top when no header is laid over the feed', (tester) async {
       await pumpList(tester);
 
