@@ -220,41 +220,42 @@ class GroupsModel extends Store<List<SubscriptionGroup>> {
     );
   }
 
+  /// Saves the group, then lists the groups again. The reload runs on its own, as running it inside the save let the
+  /// save end with the list from before and hide the group that was just saved
   Future saveGroup(String? id, String name, String icon, Color? color, Set<String> subscriptions) async {
-    await execute(() async {
-      var database = await Repository.writable();
+    await _writeGroup(id, name, icon, color, subscriptions);
+    await reloadGroups();
+  }
 
-      // First insert or update the subscription group details
-      if (id == null) {
-        id = const Uuid().v4();
+  Future<void> _writeGroup(String? id, String name, String icon, Color? color, Set<String> subscriptions) async {
+    var database = await Repository.writable();
 
-        await database.insert(tableSubscriptionGroup, {'id': id, 'name': name, 'color': color?.toARGB32(), 'icon': icon});
-      } else {
-        await database.update(
-            tableSubscriptionGroup,
-            {
-              'name': name,
-              'color': color?.toARGB32(),
-              'icon': icon,
-            },
-            where: 'id = ?',
-            whereArgs: [id]);
-      }
+    // First insert or update the subscription group details
+    if (id == null) {
+      id = const Uuid().v4();
 
-      // Then clear out any existing subscriptions for the group and add our new set
-      await database.delete(tableSubscriptionGroupMember, where: 'group_id = ?', whereArgs: [id]);
+      await database.insert(tableSubscriptionGroup, {'id': id, 'name': name, 'color': color?.toARGB32(), 'icon': icon});
+    } else {
+      await database.update(
+          tableSubscriptionGroup,
+          {
+            'name': name,
+            'color': color?.toARGB32(),
+            'icon': icon,
+          },
+          where: 'id = ?',
+          whereArgs: [id]);
+    }
 
-      var batch = database.batch();
-      for (var subscription in subscriptions) {
-        batch.insert(tableSubscriptionGroupMember, {'group_id': id, 'profile_id': subscription});
-      }
+    // Then clear out any existing subscriptions for the group and add our new set
+    await database.delete(tableSubscriptionGroupMember, where: 'group_id = ?', whereArgs: [id]);
 
-      await batch.commit(noResult: true);
-      await reloadGroups();
+    var batch = database.batch();
+    for (var subscription in subscriptions) {
+      batch.insert(tableSubscriptionGroupMember, {'group_id': id, 'profile_id': subscription});
+    }
 
-      // TODO: Replace the group in the state instead
-      return state;
-    });
+    await batch.commit(noResult: true);
   }
 
   void changeOrderSubscriptionGroupsBy(String? value) async {
