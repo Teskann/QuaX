@@ -456,6 +456,10 @@ class Twitter {
     return TweetChain(id: id, tweets: [TweetWithCard.fromGraphqlJson(result)], isPinned: isPinned);
   }
 
+  /// Media tab items: videos come as `profile-grid-`, photos as `profile-photo-grid-`.
+  static bool isProfileGridEntry(String entryId) =>
+      entryId.startsWith('profile-grid-') || entryId.startsWith('profile-photo-grid-');
+
   static List<TweetChain> createTweets(List<dynamic> addEntries, [bool isPinned = false]) {
     List<TweetChain> replies = [];
 
@@ -464,7 +468,7 @@ class Twitter {
       if (entryId.startsWith('tweet-')) {
         final chain = _singleTweetChain(entry['content']?['itemContent']?['tweet_results']?['result'], isPinned);
         if (chain != null) replies.add(chain);
-      } else if (entryId.startsWith('profile-grid-') || entryId.startsWith('profile-photo-grid-')) {
+      } else if (isProfileGridEntry(entryId)) {
         // We got a tweet queried from the media tab (videos or photos)
         for (var mediaTweet in entry['content']?['items'] ?? const []) {
           final chain = _singleTweetChain(mediaTweet['item']?['itemContent']?['tweet_results']?['result'], isPinned);
@@ -976,7 +980,7 @@ class Twitter {
 
     for (final addModEntry in addModEntries) {
       final entryId = addModEntry['entryId'] as String? ?? addModEntry['entry_id'] as String? ?? '';
-      if (entryId.startsWith('profile-grid-')) {
+      if (isProfileGridEntry(entryId)) {
         Map<String, dynamic>? result = addModEntry['item']?['content']?['tweetResult']?['result'];
         result ??= addModEntry['item']?['itemContent']?['tweet_results']?['result'];
         result ??= addModEntry['item']?['content']?['tweet_results']?['result'];
