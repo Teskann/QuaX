@@ -2,6 +2,7 @@ import 'package:flutter/rendering.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:pref/pref.dart';
 import 'package:quax/constants.dart';
+import 'package:quax/ui/x_frosted.dart';
 
 /// The space a header laid over a feed takes at the top, which the feed leaves empty so its first item starts below
 /// the header, while the rest of it scrolls underneath.
@@ -88,6 +89,16 @@ class _XOverlayFeedState extends State<XOverlayFeed> {
             child: widget.header,
           ),
         ),
+        // Once the header slid away, the status bar keeps its frosted strip, so the content never shows under the clock
+        if (!_headerVisible && media.padding.top > 0)
+          Positioned(
+            key: const ValueKey('x-status-bar-strip'),
+            top: 0,
+            left: 0,
+            right: 0,
+            height: media.padding.top,
+            child: const IgnorePointer(child: XFrostedBar(child: SizedBox.expand())),
+          ),
       ],
     );
   }
