@@ -3,18 +3,15 @@ name: New version
 on:
   workflow_dispatch:
     inputs:
-      major:
-        description: "Major version number"
+      bump:
+        description: "Which part of the latest released version to increase"
         required: true
-        type: string
-      minor:
-        description: "Minor version number"
-        required: true
-        type: string
-      patch:
-        description: "Patch version number"
-        required: true
-        type: string
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+        default: patch
       custom_message:
         description: "Optional custom message to add to the release notes (below the list of commits)"
         required: false
@@ -38,7 +35,15 @@ jobs:
       - name: Compute version
         id: version
         run: |
-          VERSION="${{ github.event.inputs.major }}.${{ github.event.inputs.minor }}.${{ github.event.inputs.patch }}"
+          latest=$(git tag --list 'v*' --sort=-v:refname | head -n1)
+          IFS=. read -r major minor patch <<< "${latest#v}"
+          case "${{ github.event.inputs.bump }}" in
+            major) major=$((major + 1)); minor=0; patch=0 ;;
+            minor) minor=$((minor + 1)); patch=0 ;;
+            patch) patch=$((patch + 1)) ;;
+          esac
+          VERSION="$major.$minor.$patch"
+          echo "Latest tag is $latest, new version is $VERSION"
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Get current codeNumber from pubspec.yaml
