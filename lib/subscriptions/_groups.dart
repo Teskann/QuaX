@@ -184,10 +184,10 @@ class _SubscriptionGroupEditDialogState extends State<SubscriptionGroupEditDialo
         TextButton(
           onPressed: () async {
             if (_formKey.currentState!.validate()) {
-              await context.read<GroupsModel>().saveGroup(id, name!, icon, color, members);
+              final savedId = await context.read<GroupsModel>().saveGroup(id, name!, icon, color, members);
 
               if (context.mounted) {
-                Navigator.pop(context);
+                Navigator.pop(context, savedId);
               }
             }
           },

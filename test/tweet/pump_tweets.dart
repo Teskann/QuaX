@@ -22,11 +22,11 @@ import '../fixtures.dart';
 import '../ui/pump_app.dart';
 
 /// Wraps [child] with the models tweet tiles and profiles read, as the app does.
-Widget withAppModels(Widget child) => MultiProvider(
+Widget withAppModels(Widget child, {LikedTweetModel? likedModel, SavedTweetModel? savedModel}) => MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ImportDataModel()),
-        Provider(create: (_) => LikedTweetModel()),
-        Provider(create: (_) => SavedTweetModel()),
+        Provider(create: (_) => likedModel ?? LikedTweetModel()),
+        Provider(create: (_) => savedModel ?? SavedTweetModel()),
         Provider(create: (_) => VideoControllerPool(maxSize: 2)),
         Provider(create: (context) => GroupsModel(PrefService.of(context, listen: false))),
         Provider(
@@ -104,7 +104,7 @@ List<TweetWithCard> tweetsOf(List<TweetChain> chains) => chains.expand((chain) =
 /// Opens [screen] as a route carrying [arguments], answering its requests with
 /// [fixtures] keyed by GraphQL operation, then lets the pages load.
 Future<void> pumpScreen(WidgetTester tester, Widget screen,
-    {required Object arguments, required Map<String, Fixture> fixtures}) async {
+    {required Object arguments, required Map<String, Fixture> fixtures, Map<String, dynamic> prefs = const {}, Widget Function(Widget app)? aboveApp}) async {
   Twitter.client = FixtureTwitterClient(fixtures);
   tester.view
     ..physicalSize = const Size(1080, 2400)
@@ -116,6 +116,8 @@ Future<void> pumpScreen(WidgetTester tester, Widget screen,
         onGenerateRoute: (_) =>
             MaterialPageRoute(builder: (_) => screen, settings: RouteSettings(arguments: arguments)),
       )),
+      prefs: prefs,
+      aboveApp: aboveApp,
       settle: false);
   await pumpUntilLoaded(tester);
 }

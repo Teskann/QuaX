@@ -51,6 +51,7 @@ const optionSubscriptionOrderCustom = 'subscription.order_by.custom';
 const optionSubscriptionOrderByField = 'subscription.order_by.field';
 const optionDefaultProfileTab = 'subscription.default_tab';
 
+const optionXStyle = 'x_style';
 const optionThemeMode = 'theme.mode';
 const optionThemeColor = 'theme.color';
 const optionThemeTrueBlack = 'theme.true_black';

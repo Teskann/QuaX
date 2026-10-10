@@ -1,11 +1,13 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:quax/client/client.dart';
 import 'package:quax/constants.dart';
+import 'package:quax/generated/l10n.dart';
 import 'package:quax/profile/profile.dart';
 import 'package:quax/tweet/_media.dart';
 import 'package:quax/tweet/conversation.dart';
 import 'package:quax/tweet/unavailable_tweet.dart';
 import 'package:quax/ui/errors.dart';
+import 'package:quax/ui/x_style.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
@@ -192,13 +194,19 @@ class _StatusScreenState extends State<_StatusScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: isXStyle(context) ? _buildXAppBar(context) : AppBar(),
       body: ChangeNotifierProvider<TweetContextState>(
         create: (context) => TweetContextState(PrefService.of(context, listen: false).get(optionTweetsHideSensitive)),
         child: _showingPreview ? _buildPreview(context) : _buildConversation(context),
       ),
     );
   }
+
+  AppBar _buildXAppBar(BuildContext context) => AppBar(
+        centerTitle: false,
+        title: Text(L10n.of(context).post,
+            style: TextStyle(fontSize: 19, fontWeight: FontWeight.w800, color: XStyleColors.of(context).primaryText)),
+      );
 
   Widget _buildPreview(BuildContext context) {
     _maybeStartFirstLoad();
@@ -213,6 +221,7 @@ class _StatusScreenState extends State<_StatusScreen> {
           isPinned: false,
           tweetOpened: widget.tweetOpened,
           initialMediaIndex: widget.initialMediaIndex,
+          focal: true,
         ),
         const Padding(
           padding: EdgeInsets.all(16),
@@ -247,7 +256,8 @@ class _StatusScreenState extends State<_StatusScreen> {
                       username: null,
                       isPinned: chain.isPinned,
                       tweetOpened: widget.tweetOpened,
-                      initialMediaIndex: chain.id == widget.id ? widget.initialMediaIndex : 0),
+                      initialMediaIndex: chain.id == widget.id ? widget.initialMediaIndex : 0,
+                      focal: chain.id == widget.id),
             );
           },
           firstPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(

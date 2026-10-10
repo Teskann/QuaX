@@ -5,7 +5,6 @@ import 'dart:io';
 
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:flutter_localizations/flutter_localizations.dart' as flutter_l10n;
 import 'package:flutter/services.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 import 'package:quax/client/accounts.dart';
@@ -20,6 +19,7 @@ import 'package:quax/group/group_model.dart';
 import 'package:quax/group/group_screen.dart';
 import 'package:quax/home/_feed.dart';
 import 'package:quax/home/home_model.dart';
+import 'package:quax/home/x_account_model.dart';
 import 'package:quax/home/home_screen.dart';
 import 'package:quax/import_data_model.dart';
 import 'package:quax/onboarding/onboarding_screen.dart';
@@ -39,12 +39,14 @@ import 'package:quax/trends/trends_model.dart';
 import 'package:quax/tweet/_video.dart';
 import 'package:quax/ui/discord_popup.dart';
 import 'package:quax/ui/errors.dart';
+import 'package:quax/ui/locale_fallback.dart';
 import 'package:logging/logging.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
 import 'package:quax/utils/urls.dart';
 import 'package:secure_content/secure_content.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:quax/ui/x_style.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:app_links/app_links.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -226,6 +228,7 @@ Future<void> main() async {
     optionSubscriptionOrderByAscending: true,
     optionSubscriptionOrderByField: 'name',
     optionSubscriptionOrderCustom: '',
+    optionXStyle: false,
     optionThemeMode: 'system',
     optionThemeColor: 'accent',
     optionThemeTrueBlack: false,
@@ -292,6 +295,7 @@ Future<void> main() async {
             Provider(create: (context) => feedSessionCache),
             Provider(create: (context) => VideoControllerPool(maxSize: videoPlayerBudget)),
             Provider(create: (context) => homeModel),
+            Provider(create: (context) => XAccountModel()),
             ChangeNotifierProvider(create: (context) => importDataModel),
             Provider(create: (context) => subscriptionsModel),
             Provider(create: (context) => SavedTweetModel()),
@@ -329,6 +333,7 @@ class _FritterAppState extends State<FritterApp> {
   String _themeColor = 'accent';
   bool _disableAnimations = false;
   bool _trueBlack = true;
+  bool _xStyle = false;
   bool _checkUpdates = false;
   bool _updateDialogShown = false;
   bool _discordDialogShown = false;
@@ -367,6 +372,7 @@ class _FritterAppState extends State<FritterApp> {
       _themeMode = prefService.get(optionThemeMode);
       _themeColor = prefService.get(optionThemeColor);
       _trueBlack = prefService.get(optionThemeTrueBlack);
+      _xStyle = prefService.get(optionXStyle);
       _disableAnimations = prefService.get(optionDisableAnimations);
       _checkUpdates = prefService.get(optionShouldCheckForUpdates);
       _isSecure = prefService.get(optionDisableScreenshots);
@@ -387,6 +393,12 @@ class _FritterAppState extends State<FritterApp> {
     prefService.addKeyListener(optionThemeTrueBlack, () {
       setState(() {
         _trueBlack = prefService.get(optionThemeTrueBlack);
+      });
+    });
+
+    prefService.addKeyListener(optionXStyle, () {
+      setState(() {
+        _xStyle = prefService.get(optionXStyle);
       });
     });
 
@@ -440,22 +452,20 @@ class _FritterAppState extends State<FritterApp> {
 
     return MediaQuery(
         data: MediaQuery.of(context).copyWith(
-          textScaler: TextScaler.linear(_textScaleFactor * systemScaleFactor),
+          textScaler: appTextScaler(xStyle: _xStyle, appFactor: _textScaleFactor, systemFactor: systemScaleFactor),
         ),
         child: DynamicColorBuilder(builder: (lightDynamic, darkDynamic) {
           return Portal(
               child: MaterialApp(
                   navigatorKey: _navigatorKey,
-                  localizationsDelegates: const [
-                    L10n.delegate,
-                    ...GlobalMaterialLocalizations.delegates,
-                    flutter_l10n.GlobalMaterialLocalizations.delegate,
-                    flutter_l10n.GlobalCupertinoLocalizations.delegate,
-                  ],
+                  localizationsDelegates: appLocalizationsDelegates,
                   supportedLocales: L10n.delegate.supportedLocales,
                   locale: _locale,
                   title: 'QuaX',
-                  theme: ThemeData(
+                  theme: _xStyle
+                      ? buildXTheme(Brightness.light).copyWith(
+                          pageTransitionsTheme: _disableAnimations == true ? _noAnimationPageTransitionsTheme : null)
+                      : ThemeData(
                     colorScheme: _themeColor == 'accent'
                         ? lightDynamic
                         : ColorScheme.fromSeed(
@@ -465,7 +475,10 @@ class _FritterAppState extends State<FritterApp> {
                     pageTransitionsTheme: _disableAnimations == true ? _noAnimationPageTransitionsTheme : null,
                     useMaterial3: true,
                   ),
-                  darkTheme: ThemeData(
+                  darkTheme: _xStyle
+                      ? buildXTheme(Brightness.dark).copyWith(
+                          pageTransitionsTheme: _disableAnimations == true ? _noAnimationPageTransitionsTheme : null)
+                      : ThemeData(
                     colorScheme: (_trueBlack == true
                         ? (_themeColor == 'accent'
                                 ? darkDynamic

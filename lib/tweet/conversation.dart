@@ -11,6 +11,9 @@ class TweetConversation extends StatefulWidget {
   final bool tweetOpened;
   final int initialMediaIndex;
 
+  /// Whether this is the conversation of the opened post, whose post (when alone) the X design lays out in its own way
+  final bool focal;
+
   const TweetConversation(
       {super.key,
       required this.id,
@@ -18,7 +21,8 @@ class TweetConversation extends StatefulWidget {
       required this.isPinned,
       required this.tweets,
       this.tweetOpened = false,
-      this.initialMediaIndex = 0});
+      this.initialMediaIndex = 0,
+      this.focal = false});
 
   @override
   State<TweetConversation> createState() => _TweetConversationState();
@@ -34,7 +38,8 @@ class _TweetConversationState extends State<TweetConversation> {
           currentUsername: widget.username,
           isPinned: widget.isPinned,
           tweetOpened: widget.tweetOpened,
-          initialMediaIndex: widget.initialMediaIndex);
+          initialMediaIndex: widget.initialMediaIndex,
+          isFocal: widget.focal);
     }
 
     var tiles = <Widget>[];

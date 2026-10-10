@@ -5,6 +5,7 @@ import 'package:quax/constants.dart';
 import 'package:quax/client/client.dart';
 import 'package:quax/database/entities.dart';
 import 'package:quax/database/repository.dart';
+import 'package:quax/generated/l10n.dart';
 import 'package:quax/group/_feed.dart';
 import 'package:quax/group/_feed_shell.dart';
 import 'package:quax/group/feed_cache.dart';
@@ -12,6 +13,7 @@ import 'package:quax/group/group_model.dart';
 import 'package:quax/tweet/cached_tweet_list.dart';
 import 'package:quax/tweet/tweet_context_scope.dart';
 import 'package:quax/ui/errors.dart';
+import 'package:quax/ui/x_overlay_feed.dart';
 import 'package:provider/provider.dart';
 import 'package:quax/utils/iterables.dart';
 import 'package:quiver/iterables.dart';
@@ -104,7 +106,27 @@ class _SubscriptionGroupScreenContentState extends State<SubscriptionGroupScreen
     if (preview != null && preview.isNotEmpty) {
       return TweetContextScope(child: CachedTweetList(preview));
     }
-    return const Center(child: CircularProgressIndicator());
+    return Padding(
+      padding: EdgeInsets.only(top: XHeaderInset.of(context)),
+      child: const Center(child: CircularProgressIndicator()),
+    );
+  }
+
+  /// Under a header laid over the feed (X design) the error takes the page below that header, with no app bar of its own
+  Widget _loadError(BuildContext context, Object? error) {
+    String prefix(L10n l10n) => l10n.unable_to_load_the_group;
+    final inset = XHeaderInset.of(context);
+    if (inset == 0) {
+      return ScaffoldErrorWidget(error: error, stackTrace: null, prefix: prefix);
+    }
+    return MediaQuery.removePadding(
+      context: context,
+      removeTop: true,
+      child: Padding(
+        padding: EdgeInsets.only(top: inset),
+        child: FullPageErrorWidget(error: error, stackTrace: null, prefix: prefix),
+      ),
+    );
   }
 
   @override
@@ -112,8 +134,7 @@ class _SubscriptionGroupScreenContentState extends State<SubscriptionGroupScreen
     return ScopedBuilder<GroupModel, SubscriptionGroupGet>.transition(
       store: context.read<GroupModel>(),
       onLoading: (_) => _loadingView(),
-      onError: (_, error) =>
-          ScaffoldErrorWidget(error: error, stackTrace: null, prefix: (l10n) => l10n.unable_to_load_the_group),
+      onError: (context, error) => _loadError(context, error),
       onState: (_, group) {
         // TODO: This is pretty gross. Figure out how to have a "no data" state
         if (group.id.isEmpty) {

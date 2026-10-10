@@ -16,6 +16,7 @@ import 'package:quax/client/login_webview.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/tweet/tweet.dart';
+import 'package:quax/ui/locale_fallback.dart';
 import 'package:quax/utils/bug_report.dart';
 import 'package:quax/utils/urls.dart';
 
@@ -334,7 +335,7 @@ class ErrorCard extends StatelessWidget {
     };
   }
 
-  String _time(DateTime dateTime) => DateFormat.jm().format(dateTime.toLocal());
+  String _time(DateTime dateTime) => DateFormat.jm(safeIntlLocale()).format(dateTime.toLocal());
 
   @override
   Widget build(BuildContext context) {

@@ -15,6 +15,9 @@ import 'package:quax/profile/profile_model.dart';
 import 'package:quax/search/search.dart';
 import 'package:quax/tweet/_media.dart';
 import 'package:quax/ui/errors.dart';
+import 'package:quax/ui/locale_fallback.dart';
+import 'package:quax/ui/x_icons.dart';
+import 'package:quax/ui/x_style.dart';
 import 'package:quax/user.dart';
 import 'package:quax/utils/urls.dart';
 import 'package:quax/utils/rich_text.dart';
@@ -128,7 +131,7 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
   double headerHeight = defaultHeight;
   bool headerResized = false;
 
-  NumberFormat numberFormat = NumberFormat.compact();
+  NumberFormat numberFormat = NumberFormat.compact(locale: safeIntlLocale());
 
   @override
   void initState() {
@@ -247,6 +250,9 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
 
     // The flexible space starts behind the status bar, so these offsets must not depend on its height
     var profileImageTop = bannerHeight - 44;
+    final xStyle = isXStyle(context);
+    final avatarSize = xStyle ? 80.0 : 96.0;
+    final avatarBorder = xStyle ? 4.0 : 2.0;
     var profileActionsTop = bannerHeight + 8;
     var profileStuffTop = bannerHeight + 48;
 
@@ -308,11 +314,7 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
                         controller: _tabController,
                         onReselect: _onTabReselect,
                         tabs: profileTabs.map(_tab).toList(),
-                        dividerColor: Theme
-                            .of(context)
-                            .colorScheme
-                            .surfaceBright
-                            .withAlpha(150),
+                        dividerColor: xStyle ? null : theme.colorScheme.surfaceBright.withAlpha(150),
                       )),
                   flexibleSpace: FlexibleSpaceBar(
                     centerTitle: true,
@@ -358,7 +360,7 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
                                           ),
                                           if (user.verified ?? false) const SizedBox(width: 6),
                                           if (user.verified ?? false)
-                                            Icon(Icons.verified, size: 24, color: theme.colorScheme.primary),
+                                            Icon(verifiedIcon(context), size: 24, color: verifiedColor(context)),
                                           if (user.protected ?? false) const SizedBox(width: 6),
                                           if (user.protected ?? false)
                                             Icon(Icons.lock, size: 24, color: theme.colorScheme.primary)
@@ -476,7 +478,7 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
                                                                             : Colors.black),
                                                                     const SizedBox(width: 4),
                                                                     Text(
-                                                                        L10n.of(context).joined(DateFormat('MMMM yyyy')
+                                                                        L10n.of(context).joined(DateFormat('MMMM yyyy', safeIntlLocale())
                                                                             .format(user.createdAt!)),
                                                                         style: metadataTextStyle),
                                                                   ],
@@ -595,10 +597,10 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
                           alignment: Alignment.topLeft,
                           margin: EdgeInsets.fromLTRB(16, profileImageTop, 16, 16),
                           child: CircleAvatar(
-                            radius: 50,
-                            backgroundColor: Colors.white,
+                            radius: avatarSize / 2 + avatarBorder,
+                            backgroundColor: xStyle ? theme.colorScheme.surface : Colors.white,
                             child: GestureDetector(
-                              child: UserAvatar(uri: user.profileImageUrlHttps, size: 96),
+                              child: UserAvatar(uri: user.profileImageUrlHttps, size: avatarSize),
                               onTap: () {
                                 Navigator.push(
                                   context,

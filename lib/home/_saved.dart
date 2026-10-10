@@ -96,7 +96,7 @@ class _SavedScreenState extends State<SavedScreen> with AutomaticKeepAliveClient
     return ListView.builder(
       controller: widget.scrollController,
       physics: const AlwaysScrollableScrollPhysics(),
-      padding: const EdgeInsets.only(top: 4),
+      padding: EdgeInsets.only(top: 4, bottom: MediaQuery.paddingOf(context).bottom),
       itemCount: itemCount,
       itemBuilder: (context, index) => tileAt(index),
     );

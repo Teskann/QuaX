@@ -18,10 +18,14 @@ import 'package:quax/status.dart';
 import 'package:quax/tweet/_expandable_tweet_text.dart';
 import 'package:quax/tweet/_card.dart';
 import 'package:quax/tweet/_media.dart';
+import 'package:quax/tweet/_x_tweet_layout.dart';
 import 'package:quax/tweet/unavailable_tweet.dart';
 import 'package:quax/article/article.dart';
 import 'package:quax/ui/dates.dart';
 import 'package:quax/ui/errors.dart';
+import 'package:quax/ui/locale_fallback.dart';
+import 'package:quax/ui/x_icons.dart';
+import 'package:quax/ui/x_style.dart';
 import 'package:quax/user.dart';
 import 'package:quax/utils/rich_text.dart';
 import 'package:quax/utils/urls.dart';
@@ -56,6 +60,9 @@ class TweetTile extends StatefulWidget {
   final bool isBirdwatchQuote;
   final int initialMediaIndex;
 
+  /// Whether this is the post whose conversation is open, which the X design lays out in its own way
+  final bool isFocal;
+
   const TweetTile(
       {super.key,
       required this.clickable,
@@ -69,7 +76,8 @@ class TweetTile extends StatefulWidget {
       this.isBirdwatchQuote = false,
       this.threadConnectTop = false,
       this.threadConnectBottom = false,
-      this.initialMediaIndex = 0});
+      this.initialMediaIndex = 0,
+      this.isFocal = false});
 
   @override
   TweetTileState createState() => TweetTileState();
@@ -189,7 +197,10 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
   void onClickOpenTweet(TweetWithCard tweet) {
     Navigator.pushNamed(context, routeStatus,
         arguments: StatusScreenArguments(
-            id: tweet.idStr!, username: tweet.user!.screenName!, tweetOpened: true, initialTweet: tweet));
+            id: tweet.idStr!,
+            username: tweet.user!.screenName!,
+            tweetOpened: true,
+            initialTweet: tweet));
   }
 
   IconButton _createFooterIconButton(IconData icon, [Color? color, double? fill, Function()? onPressed]) {
@@ -239,25 +250,121 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     );
   }
 
+  /// The color and the action of the translate button, or null while the translation is loading
+  ({Color? color, VoidCallback onTap})? _translateAction(Locale locale, {Color? idleColor}) {
+    final primary = Theme.of(context).colorScheme.primary;
+    return switch (_translationStatus) {
+      TranslationStatus.original => (color: idleColor, onTap: () => onClickTranslate(context, locale)),
+      TranslationStatus.translating => null,
+      TranslationStatus.translationFailed => (
+          color: Colors.red.harmonizeWith(primary),
+          onTap: () => onClickTranslate(context, locale)
+        ),
+      TranslationStatus.translated => (color: primary, onTap: () => onClickShowOriginal()),
+    };
+  }
+
   Widget _buildTranslateButton(Locale locale) {
-    switch (_translationStatus) {
-      case TranslationStatus.original:
-        return _createFooterIconButton(Icons.translate, buttonsColor(context), null, () async => onClickTranslate(context, locale));
-      case TranslationStatus.translating:
-        return const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24),
-          child: SizedBox(width: 16, height: 16, child: CircularProgressIndicator()),
-        );
-      case TranslationStatus.translationFailed:
-        return _createFooterIconButton(
-            Icons.translate,
-            Colors.red.harmonizeWith(Theme.of(context).colorScheme.primary),
-            null,
-            () async => onClickTranslate(context, locale));
-      case TranslationStatus.translated:
-        return _createFooterIconButton(
-            Icons.translate, Theme.of(context).colorScheme.primary, null, () async => onClickShowOriginal());
+    final action = _translateAction(locale, idleColor: buttonsColor(context));
+    if (action == null) {
+      return const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 24),
+        child: SizedBox(width: 16, height: 16, child: CircularProgressIndicator()),
+      );
     }
+    return _createFooterIconButton(Icons.translate, action.color, null, () async => action.onTap());
+  }
+
+  Future<void> _toggleLike(LikedTweetModel model, TweetWithCard tweet, bool isLiked) async {
+    if (isLiked) {
+      await model.unlikeTweet(tweet.idStr!);
+    } else {
+      await model.likeTweet(tweet.idStr!, tweet.user?.idStr, tweet.toJson());
+    }
+    if (!mounted) {
+      return;
+    }
+    setState(() {});
+    if (!isLiked) {
+      _maybeShowLikeToast(context);
+    }
+  }
+
+  Future<void> _toggleSave(SavedTweetModel model, TweetWithCard tweet, bool isSaved) async {
+    if (isSaved) {
+      await model.deleteSavedTweet(tweet.idStr!);
+    } else {
+      await model.saveTweet(tweet.idStr!, tweet.user?.idStr, tweet.toJson());
+    }
+    if (!mounted) {
+      return;
+    }
+    setState(() {});
+    if (!isSaved) {
+      _maybeShowFolderHint(context);
+    }
+  }
+
+  Future<void> _fileTweet(TweetWithCard tweet) async {
+    await showSaveToFolderSheet(context, tweetId: tweet.idStr!, userId: tweet.user?.idStr, content: tweet.toJson());
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  void _showShareSheet(TweetWithCard tweet, String tweetText, String shareBaseUrl, bool isArticle) {
+    showModalBottomSheet(
+        context: context,
+        builder: (sheetContext) => SafeArea(
+            child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: _shareSheetEntries(sheetContext, tweet, tweetText, shareBaseUrl, isArticle),
+        )));
+  }
+
+  List<Widget> _shareSheetEntries(
+      BuildContext sheetContext, TweetWithCard tweet, String tweetText, String shareBaseUrl, bool isArticle) {
+    final l10n = L10n.of(sheetContext);
+    final link = '$shareBaseUrl/${tweet.user!.screenName}/status/${tweet.idStr}';
+    createSheetButton(title, icon, onTap) => ListTile(
+          onTap: onTap,
+          leading: Icon(icon),
+          title: Text(title),
+        );
+
+    return [
+      if (!isArticle)
+        createSheetButton(l10n.share_tweet_content, Icons.text_snippet, () async {
+          SharePlus.instance.share(ShareParams(text: tweetText));
+          Navigator.pop(sheetContext);
+        }),
+      createSheetButton(isArticle ? l10n.share_article_link : l10n.share_tweet_link, Icons.link, () async {
+        SharePlus.instance.share(ShareParams(text: link));
+        Navigator.pop(sheetContext);
+      }),
+      if (!isArticle)
+        createSheetButton(l10n.share_tweet_content_and_link, Icons.add_link, () async {
+          SharePlus.instance.share(ShareParams(text: '$tweetText\n\n$link'));
+          Navigator.pop(sheetContext);
+        }),
+      createSheetButton(isArticle ? l10n.share_article_as_image : l10n.share_tweet_as_image, Icons.screenshot,
+          () async {
+        Uint8List? imgBytes = await captureWidget();
+        if (imgBytes != null) {
+          SharePlus.instance.share(ShareParams(files: [XFile.fromData(imgBytes, mimeType: 'image/png')]));
+        }
+        if (sheetContext.mounted) {
+          Navigator.pop(sheetContext);
+        }
+      }),
+      const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16),
+        child: Divider(
+          thickness: 1.0,
+        ),
+      ),
+      createSheetButton(l10n.cancel, Icons.close, () => Navigator.pop(sheetContext)),
+    ];
   }
 
   Widget _buildFooterBar(TweetWithCard tweet, String tweetText, String shareBaseUrl, Locale locale, NumberFormat numberFormat, {bool isArticle = false}) {
@@ -287,20 +394,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
                   isLiked: isLiked,
                   label: label,
                   color: isLiked ? Theme.of(context).colorScheme.primary : buttonsColor(context),
-                  onPressed: () async {
-                    if (isLiked) {
-                      await likedModel.unlikeTweet(tweet.idStr!);
-                    } else {
-                      await likedModel.likeTweet(tweet.idStr!, tweet.user?.idStr, tweet.toJson());
-                    }
-                    if (!mounted) {
-                      return;
-                    }
-                    setState(() {});
-                    if (!isLiked) {
-                      _maybeShowLikeToast(this.context);
-                    }
-                  },
+                  onPressed: () => _toggleLike(likedModel, tweet, isLiked),
                 );
               }),
               if (tweet.viewCount != null)
@@ -314,102 +408,37 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
               Consumer<SavedTweetModel>(builder: (context, model, child) {
                 var isSaved = model.isSaved(tweet.idStr!);
                 var button = isSaved
-                    ? _createFooterIconButton(Icons.bookmark, Theme.of(context).colorScheme.primary, 1, () async {
-                        await model.deleteSavedTweet(tweet.idStr!);
-                        setState(() {});
-                      })
-                    : _createFooterIconButton(Icons.bookmark_border, buttonsColor(context), 0, () async {
-                        await model.saveTweet(tweet.idStr!, tweet.user?.idStr, tweet.toJson());
-                        setState(() {});
-                        if (context.mounted) {
-                          _maybeShowFolderHint(context);
-                        }
-                      });
+                    ? _createFooterIconButton(
+                        Icons.bookmark, Theme.of(context).colorScheme.primary, 1, () => _toggleSave(model, tweet, true))
+                    : _createFooterIconButton(
+                        Icons.bookmark_border, buttonsColor(context), 0, () => _toggleSave(model, tweet, false));
 
                 return GestureDetector(
-                  onLongPress: () async {
-                    await showSaveToFolderSheet(context,
-                        tweetId: tweet.idStr!, userId: tweet.user?.idStr, content: tweet.toJson());
-                    if (mounted) {
-                      setState(() {});
-                    }
-                  },
+                  onLongPress: () => _fileTweet(tweet),
                   child: button,
                 );
               }),
-              _createFooterIconButton(
-                Icons.share,
-                buttonsColor(context),
-                null,
-                () async {
-                  createSheetButton(title, icon, onTap) => ListTile(
-                        onTap: onTap,
-                        leading: Icon(icon),
-                        title: Text(title),
-                      );
-
-                  showModalBottomSheet(
-                      context: context,
-                      builder: (context) {
-                        return SafeArea(
-                            child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            if (!isArticle)
-                              createSheetButton(
-                                L10n.of(context).share_tweet_content,
-                                Icons.text_snippet,
-                                      () async {
-                                    SharePlus.instance.share(ShareParams(text: tweetText));
-                                    Navigator.pop(context);
-                                  },
-                              ),
-                            createSheetButton(isArticle ? L10n.of(context).share_article_link : L10n.of(context).share_tweet_link, Icons.link,
-                                () async {
-                              SharePlus.instance.share(
-                                  ShareParams(text: '$shareBaseUrl/${tweet.user!.screenName}/status/${tweet.idStr}'));
-                              Navigator.pop(context);
-                            }),
-                            if (!isArticle)
-                              createSheetButton(
-                                  L10n.of(context).share_tweet_content_and_link, Icons.add_link,
-                                      () async {
-                                        SharePlus.instance.share(ShareParams(
-                                            text:
-                                                '$tweetText\n\n$shareBaseUrl/${tweet.user!.screenName}/status/${tweet.idStr}'));
-                                        Navigator.pop(context);
-                                      }),
-                            createSheetButton(isArticle ? L10n.of(context).share_article_as_image : L10n.of(context).share_tweet_as_image, Icons.screenshot, () async {
-                              Uint8List? imgBytes = await captureWidget();
-                              if (imgBytes != null) {
-                                SharePlus.instance.share(
-                                    ShareParams(files: [XFile.fromData(imgBytes, mimeType: 'image/png')]));
-                              }
-                              if (context.mounted) {
-                                Navigator.pop(context);
-                              }
-                            }),
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 16),
-                              child: Divider(
-                                thickness: 1.0,
-                              ),
-                            ),
-                            createSheetButton(
-                              L10n.of(context).cancel,
-                              Icons.close,
-                              () => Navigator.pop(context),
-                            )
-                          ],
-                        ));
-                      });
-                },
-              ),
+              _createFooterIconButton(Icons.share, buttonsColor(context), null,
+                  () async => _showShareSheet(tweet, tweetText, shareBaseUrl, isArticle)),
               if (!isArticle) _buildTranslateButton(locale),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildXActionBar(TweetWithCard tweet, String tweetText, String shareBaseUrl, Locale locale,
+      NumberFormat numberFormat, {bool isArticle = false}) {
+    return XActionBar(
+      iconSize: widget.isFocal ? XFocalTweetLayout.actionIconSize : XActionBar.defaultIconSize,
+      spread: widget.isFocal,
+      tweet: tweet,
+      numberFormat: numberFormat,
+      onToggleLike: (model, isLiked) => _toggleLike(model, tweet, isLiked),
+      onToggleSave: (model, isSaved) => _toggleSave(model, tweet, isSaved),
+      onFileTweet: () => _fileTweet(tweet),
+      onShare: () => _showShareSheet(tweet, tweetText, shareBaseUrl, isArticle),
     );
   }
 
@@ -451,6 +480,21 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     return pngBytes;
   }
 
+  TextStyle _xTextStyle(BuildContext context) => TextStyle(
+      fontSize: widget.isFocal ? 17 : 16,
+      height: widget.isFocal ? 1.35 : 1.3,
+      color: XStyleColors.of(context).primaryText);
+
+  String? _formatTime(DateTime? time, bool absolute, {bool compact = false}) {
+    if (time == null) {
+      return null;
+    }
+    if (absolute) {
+      return absoluteDateFormat.format(time.toLocal());
+    }
+    return compact ? xRelativeTime(time, DateTime.now()) : createRelativeDate(time);
+  }
+
   @override
   Widget build(BuildContext context) {
     final prefs = PrefService.of(context, listen: false);
@@ -466,8 +510,10 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
         currentUsername != null && tweet.user != null && currentUsername == tweet.user!.screenName;
     final hideAuthorInformation = !isTweetOnSameProfile && prefs.get(optionNonConfirmationBiasMode);
 
-    var numberFormat = NumberFormat.compact();
+    var numberFormat = NumberFormat.compact(locale: safeIntlLocale());
     var theme = Theme.of(context);
+    final xStyle = isXStyle(context);
+    final smallStyle = theme.textTheme.bodySmall!.copyWith(color: xStyle ? XStyleColors.of(context).secondaryText : null);
 
     if (tweet.isTombstone ?? false) {
       return UnavailableTweetCard(reason: tweet.text);
@@ -482,20 +528,27 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
         initialMediaIndex: widget.initialMediaIndex,
         tweetId: tweet.idStr,
       );
+      if (xStyle) {
+        media = XMediaFrame(child: media);
+      }
     }
 
     Widget retweetBanner = Container();
     Widget retweetSidebar = Container();
     if (this.tweet.retweetedStatusWithCard != null) {
       retweetBanner = _TweetTileLeading(
-        icon: Icons.repeat,
+        icon: xStyle ? XIcons.retweetBanner : Icons.repeat,
         onTap: () => Navigator.pushNamed(context, routeProfile,
             arguments: ProfileScreenArguments.fromScreenName(this.tweet.user!.screenName!, null)),
         children: [
-          TextSpan(
-              text: L10n.of(context)
-                  .this_tweet_user_name_retweeted(this.tweet.user!.name!, createRelativeDate(this.tweet.createdAt!)),
-              style: theme.textTheme.bodySmall)
+          xStyle
+              ? TextSpan(
+                  text: L10n.of(context).x_user_reposted(this.tweet.user!.name!),
+                  style: smallStyle.copyWith(fontSize: 13, fontWeight: FontWeight.w700))
+              : TextSpan(
+                  text: L10n.of(context).this_tweet_user_name_retweeted(
+                      this.tweet.user!.name!, createRelativeDate(this.tweet.createdAt!)),
+                  style: smallStyle)
         ],
       );
 
@@ -521,8 +574,8 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
         },
         icon: Icons.reply,
         children: [
-          TextSpan(text: '${L10n.of(context).replying_to} ', style: theme.textTheme.bodySmall),
-          TextSpan(text: '@$replyTo', style: theme.textTheme.bodySmall!.copyWith(fontWeight: FontWeight.bold)),
+          TextSpan(text: '${L10n.of(context).replying_to} ', style: smallStyle),
+          TextSpan(text: '@$replyTo', style: smallStyle.copyWith(fontWeight: FontWeight.bold)),
         ],
       );
     }
@@ -595,7 +648,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
       );
     }
 
-    var quotedTweet = Container();
+    Widget quotedTweet = Container();
 
     // don't display a nested quoted tweet if we are already building a quoted tweet
     if (!isQuotedTweet && (tweet.isQuoteStatus ?? false)) {
@@ -609,13 +662,15 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
               isQuotedTweet: true,
             )
           : _buildUnavailableQuote(tweet);
-      quotedTweet = Container(
-        decoration: BoxDecoration(
-        border: Border.all(color: theme.colorScheme.surfaceBright.withAlpha(180)),
-        borderRadius: BorderRadius.circular(8)),
-        margin: const EdgeInsets.all(8),
-        child: quotedContent,
-      );
+      quotedTweet = xStyle
+          ? XMediaFrame(child: quotedContent)
+          : Container(
+              decoration: BoxDecoration(
+                  border: Border.all(color: theme.colorScheme.surfaceBright.withAlpha(180)),
+                  borderRadius: BorderRadius.circular(8)),
+              margin: const EdgeInsets.all(8),
+              child: quotedContent,
+            );
     }
 
     // Only create the tweet content if the tweet contains text
@@ -625,13 +680,16 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
       content = Container(
           // Fill the width so both RTL and LTR text are displayed correctly
           width: double.infinity,
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          padding: xStyle ? const EdgeInsets.only(top: 2) : const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
           child: AutoDirection(
             text: tweetText,
-            child: ExpandableTweetText(
-              textSpans: displayRichText(_displayParts),
-              onTap: () => !widget.tweetOpened ? onClickOpenTweet(tweet) : null,
-              maxLines: PrefService.of(context).get(alwaysShowFullTweetContents) ? null : 8,
+            child: DefaultTextStyle.merge(
+              style: xStyle ? _xTextStyle(context) : null,
+              child: ExpandableTweetText(
+                textSpans: displayRichText(_displayParts),
+                onTap: () => !widget.tweetOpened ? onClickOpenTweet(tweet) : null,
+                maxLines: PrefService.of(context).get(alwaysShowFullTweetContents) ? null : 8,
+              ),
             ),
           ));
     }
@@ -650,7 +708,8 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
       locale = Locale(splitLocale[0], splitLocale[1]);
     }
 
-    final footerBar = _buildFooterBar(tweet, tweetText, shareBaseUrl, locale, numberFormat, isArticle: tweet.article != null);
+    final buildFooter = xStyle ? _buildXActionBar : _buildFooterBar;
+    final footerBar = buildFooter(tweet, tweetText, shareBaseUrl, locale, numberFormat, isArticle: tweet.article != null);
 
     Widget article = Container();
     if (tweet.article != null) {
@@ -667,11 +726,12 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
       createdAt = tweet.createdAt;
     }
 
+    final avatarSize = xStyle ? xTweetAvatarSize : 48.0;
     final avatar = hideAuthorInformation
-        ? const Icon(Icons.account_circle, size: 48)
+        ? Icon(Icons.account_circle, size: avatarSize)
         : ClipRRect(
             borderRadius: BorderRadius.circular(64),
-            child: UserAvatar(uri: tweet.user!.profileImageUrlHttps),
+            child: UserAvatar(uri: tweet.user!.profileImageUrlHttps, size: avatarSize),
           );
 
     void onTapProfile() {
@@ -695,7 +755,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
                       style: const TextStyle(fontWeight: FontWeight.w500))),
               if (tweet.user!.verified ?? false) const SizedBox(width: 4),
               if (tweet.user!.verified ?? false)
-                Icon(Icons.verified, size: 18, color: Theme.of(context).colorScheme.primary)
+                Icon(verifiedIcon(context), size: 18, color: verifiedColor(context))
             ],
           ),
         ),
@@ -726,26 +786,70 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     );
 
     final pinnedBadge = isPinned
-        ? _TweetTileLeading(icon: Icons.push_pin, children: [
-            TextSpan(text: L10n.of(context).pinned_tweet, style: theme.textTheme.bodySmall)
+        ? _TweetTileLeading(icon: xStyle ? XIcons.pinned : Icons.push_pin, children: [
+            TextSpan(text: L10n.of(context).pinned_tweet, style: smallStyle)
           ])
         : null;
     final threadBadge = isThread
         ? _TweetTileLeading(icon: Icons.forum, children: [
-            TextSpan(text: L10n.of(context).thread, style: theme.textTheme.bodySmall)
+            TextSpan(text: L10n.of(context).thread, style: smallStyle)
           ])
         : null;
 
-    final bodyChildren = <Widget>[
+    final tweetCard = TweetCard(tweet: tweet, card: tweet.card);
+    final contentChildren = <Widget>[
       if (tweet.article == null) content,
       if (tweet.isSubscriberPreview) _SubscriberPreviewNotice(screenName: tweet.user?.screenName ?? ''),
       media,
       quotedTweet,
-      TweetCard(tweet: tweet, card: tweet.card),
+      xStyle && tweet.card != null ? XMediaFrame(child: tweetCard) : tweetCard,
       birdwatchQuoted,
       article,
-      footerBar,
     ];
+    final bodyChildren = [...contentChildren, footerBar];
+
+    if (xStyle && widget.isFocal) {
+      return Consumer<ImportDataModel>(
+          builder: (context, model, child) => RepaintBoundary(
+              key: _globalKey,
+              child: XFocalTweetLayout(
+                badges: [retweetBanner, replyToTile, ?pinnedBadge, ?threadBadge],
+                avatar: avatar,
+                name: hideAuthorInformation ? null : tweet.user!.name,
+                handle: hideAuthorInformation ? null : tweet.user!.screenName,
+                verified: !hideAuthorInformation && (tweet.user!.verified ?? false),
+                trailing: tweet.article == null ? XTranslateButton(action: _translateAction(locale)) : null,
+                body: contentChildren,
+                createdAt: createdAt,
+                views: tweet.viewCount,
+                actionBar: footerBar,
+                onTapProfile: onTapProfile,
+              )));
+    }
+
+    if (xStyle) {
+      return Consumer<ImportDataModel>(
+          builder: (context, model, child) => RepaintBoundary(
+              key: _globalKey,
+              child: XTweetLayout(
+                badges: [retweetBanner, if (!widget.threadConnectTop) replyToTile, ?pinnedBadge, ?threadBadge],
+                avatar: avatar,
+                header: XTweetHeader(
+                  name: hideAuthorInformation ? null : tweet.user!.name,
+                  handle: hideAuthorInformation ? null : tweet.user!.screenName,
+                  verified: !hideAuthorInformation && (tweet.user!.verified ?? false),
+                  time: _formatTime(createdAt, prefs.get(optionUseAbsoluteTimestamp), compact: true),
+                  trailing: tweet.article == null ? XTranslateButton(action: _translateAction(locale)) : null,
+                ),
+                body: contentChildren,
+                actionBar: footerBar,
+                onTapProfile: onTapProfile,
+                onTap: clickable && !widget.tweetOpened ? () => onClickOpenTweet(tweet) : null,
+                showDivider: addSeparator && !widget.threadConnectBottom,
+                connectTop: widget.threadConnectTop,
+                connectBottom: widget.threadConnectBottom,
+              )));
+    }
 
     final isThreadTile = widget.threadConnectTop || widget.threadConnectBottom;
 
@@ -922,6 +1026,10 @@ class _TweetTileLeading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (isXStyle(context)) {
+      return _buildX(context);
+    }
+
     return Container(
       margin: const EdgeInsets.only(top: 16),
       child: InkWell(
@@ -938,6 +1046,26 @@ class _TweetTileLeading extends StatelessWidget {
               ...children
             ]),
           ),
+        ),
+      ),
+    );
+  }
+
+  /// A single line whose icon ends 4px before the content column of the tweet, which starts at 60
+  Widget _buildX(BuildContext context) {
+    const iconSize = 16.0;
+    const gap = 4.0;
+    return Container(
+      margin: const EdgeInsets.only(top: 8),
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.only(left: xTweetContentLeft - gap - iconSize, right: 16),
+          child: Row(children: [
+            Icon(icon, size: iconSize, color: XStyleColors.of(context).secondaryText),
+            const SizedBox(width: gap),
+            Flexible(child: Text.rich(TextSpan(children: children.toList()), maxLines: 1, overflow: TextOverflow.ellipsis)),
+          ]),
         ),
       ),
     );

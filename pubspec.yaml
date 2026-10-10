@@ -137,6 +137,31 @@ flutter:
     - assets/icon.png
     - assets/icon-monochrome-432x432.png
 
+  # Phosphor Icons (MIT, see assets/fonts/phosphor/LICENSE), used by the X design
+  fonts:
+    - family: PhosphorRegular
+      fonts:
+        - asset: assets/fonts/phosphor/Phosphor-Regular.ttf
+    - family: PhosphorFill
+      fonts:
+        - asset: assets/fonts/phosphor/Phosphor-Fill.ttf
+    - family: PhosphorBold
+      fonts:
+        - asset: assets/fonts/phosphor/Phosphor-Bold.ttf
+    # Inter (SIL OFL, see assets/fonts/inter/LICENSE.txt), the closest open font to X's Chirp, used by the X design
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/inter/Inter-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/inter/Inter-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/inter/Inter-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/inter/Inter-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/inter/Inter-ExtraBold.ttf
+          weight: 800
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see

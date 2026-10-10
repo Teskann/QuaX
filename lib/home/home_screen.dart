@@ -10,11 +10,15 @@ import 'package:quax/group/group_screen.dart';
 import 'package:quax/home/_feed.dart';
 import 'package:quax/home/_missing.dart';
 import 'package:quax/home/_saved.dart';
+import 'package:quax/home/_x_drawer.dart';
 import 'package:quax/home/home_model.dart';
 import 'package:quax/search/search.dart';
 import 'package:quax/subscriptions/subscriptions.dart';
 import 'package:quax/trends/trends_screen.dart';
 import 'package:quax/ui/errors.dart';
+import 'package:quax/ui/x_frosted.dart';
+import 'package:quax/ui/x_icons.dart';
+import 'package:quax/ui/x_style.dart';
 
 typedef NavigationTitleBuilder = String Function(BuildContext context);
 
@@ -35,6 +39,30 @@ final List<NavigationPage> defaultHomePages = [
   NavigationPage(
       'saved', (c) => L10n.of(c).saved, const Icon(Icons.bookmark_border_outlined), const Icon(Icons.bookmark)),
 ];
+
+/// Frosts the navigation bar of the X design and tops it with a divider.
+class _NavigationFrame extends StatelessWidget {
+  final Widget child;
+
+  const _NavigationFrame({required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    if (!isXStyle(context)) {
+      return child;
+    }
+    return XFrostedBar(child: Column(mainAxisSize: MainAxisSize.min, children: [const Divider(), child]));
+  }
+}
+
+/// The icon of a page in the navigation bar: the X one in the X design when the page has one.
+Widget _pageIcon(NavigationPage page, {required bool selected, required bool xStyle}) {
+  final xIcons = xStyle ? XIcons.navigation[page.id] : null;
+  if (xIcons == null) {
+    return selected ? page.selectedIcon : page.icon;
+  }
+  return Icon(selected ? xIcons.$2 : xIcons.$1, size: XIcons.navSize);
+}
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -142,6 +170,14 @@ class _HomeScreenState extends State<_HomeScreen> {
   }
 }
 
+/// A page of the navigation that the user hid from the bottom bar, shown on its own from the drawer of the X design.
+Widget _standalonePage(String pageId, ScrollController scrollController) {
+  return switch (pageId) {
+    'saved' => Scaffold(body: SavedScreen(scrollController: scrollController)),
+    _ => SubscriptionsScreen(scrollController: scrollController),
+  };
+}
+
 class ScaffoldWithBottomNavigation extends StatefulWidget {
   final List<NavigationPage> pages;
   final BasePrefService prefs;
@@ -167,6 +203,25 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
         focusNode.unfocus();
       }
     });
+  }
+
+  void _switchToPage(String pageId) {
+    final index = widget.pages.indexWhere((e) => e.id == pageId);
+    if (index >= 0) {
+      unfocusOtherPages();
+      _pageController.jumpToPage(index);
+    }
+  }
+
+  Widget _buildDrawer(BuildContext context, bool xStyle) {
+    if (xStyle) {
+      return XDrawer(
+        pageIds: widget.pages.map((e) => e.id).toList(),
+        onSwitchPage: _switchToPage,
+        pageBuilder: _standalonePage,
+      );
+    }
+    return _buildDefaultDrawer(context);
   }
 
   @override
@@ -198,28 +253,36 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
     }
   }
 
+  Widget _buildDefaultDrawer(BuildContext context) {
+    final l10n = L10n.of(context);
+    return Drawer(
+      child: ListView(
+        children: [
+          ListTile(
+            leading: const Icon(Icons.search),
+            title: Text(l10n.search),
+            onTap: () =>
+                Navigator.pushNamed(context, routeSearch, arguments: SearchArguments(0, focusInputOnOpen: true)),
+          ),
+          ListTile(
+            leading: const Icon(Icons.settings),
+            title: Text(l10n.settings),
+            onTap: () => Navigator.pushNamed(context, routeSettings),
+          )
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final l10n = L10n.of(context);
+    final xStyle = isXStyle(context);
+    final showLabels = !xStyle && widget.prefs.get(optionShowNavigationLabels);
 
-    return Scaffold(
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            ListTile(
-              leading: const Icon(Icons.search),
-              title: Text(l10n.search),
-              onTap: () =>
-                  Navigator.pushNamed(context, routeSearch, arguments: SearchArguments(0, focusInputOnOpen: true)),
-            ),
-            ListTile(
-              leading: const Icon(Icons.settings),
-              title: Text(l10n.settings),
-              onTap: () => Navigator.pushNamed(context, routeSettings),
-            )
-          ],
-        ),
-      ),
+    // The bars of the X design share one capture of what is behind them
+    return BackdropGroup(child: Scaffold(
+      extendBody: xStyle,
+      drawer: _buildDrawer(context, xStyle),
       body: PageView(
         controller: _pageController,
         onPageChanged: (page) {
@@ -229,34 +292,33 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
         },
         children: widget.builder(_scrollControllers, _focusNodes),
       ),
-      bottomNavigationBar: NavigationBar(
+      bottomNavigationBar: _NavigationFrame(child: NavigationBar(
         selectedIndex: _currentPage,
-        labelBehavior: widget.prefs.get(optionShowNavigationLabels)
+        labelBehavior: showLabels
             ? NavigationDestinationLabelBehavior.alwaysShow
             : NavigationDestinationLabelBehavior.alwaysHide,
         shadowColor: Colors.transparent,
         backgroundColor: Colors.transparent,
         indicatorColor: Colors.transparent,
-        height: 64,
+        height: xStyle ? null : 64,
         destinations: widget.pages.asMap().entries
             .map(
               (e) {
-                final index = e.key;
                 final page = e.value;
-                final isSelected = _currentPage == index;
-                final scale = widget.prefs.get(optionShowNavigationLabels) ? 1.0 : (isSelected ? 1.2 : 1.2);
+                final hasXIcon = xStyle && XIcons.navigation.containsKey(page.id);
+                final scale = showLabels || hasXIcon ? 1.0 : 1.2;
                 return NavigationDestination(
                   icon: AnimatedScale(
                     scale: scale,
                     duration: const Duration(milliseconds: 0),
                     curve: Curves.easeOut,
-                    child: page.icon,
+                    child: _pageIcon(page, selected: false, xStyle: xStyle),
                   ),
                   selectedIcon: AnimatedScale(
                     scale: scale,
                     duration: const Duration(milliseconds: 0),
                     curve: Curves.easeOut,
-                    child: page.selectedIcon,
+                    child: _pageIcon(page, selected: true, xStyle: xStyle),
                   ),
                   label: page.titleBuilder(context),
                 );
@@ -278,8 +340,8 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
           unfocusOtherPages();
           _pageController.jumpToPage(index);
         },
-      ),
-    );
+      )),
+    ));
   }
 
   @override

@@ -6,22 +6,31 @@ import 'package:quax/group/_settings.dart';
 import 'package:quax/group/feed_refresh_controller.dart';
 import 'package:quax/group/group_model.dart';
 import 'package:quax/subscriptions/users_model.dart';
+import 'package:quax/ui/x_frosted.dart';
+import 'package:quax/ui/x_overlay_feed.dart';
+import 'package:quax/ui/x_style.dart';
 
 class GroupFeedShell extends StatefulWidget {
   final ScrollController scrollController;
   final String groupId;
-  final WidgetBuilder titleBuilder;
+  final WidgetBuilder? titleBuilder;
   final WidgetBuilder bodyBuilder;
-  final List<Widget> Function(BuildContext) actionsBuilder;
+  final List<Widget> Function(BuildContext)? actionsBuilder;
+  // Replaces the app bar and the NestedScrollView by a header laid over the body, which scrolls under it. The header
+  // then ignores [titleBuilder] and [actionsBuilder].
+  final WidgetBuilder? overlayHeaderBuilder;
+  final double overlayHeaderHeight;
 
   const GroupFeedShell({
     super.key,
     required this.scrollController,
     required this.groupId,
-    required this.titleBuilder,
+    this.titleBuilder,
     required this.bodyBuilder,
-    required this.actionsBuilder,
-  });
+    this.actionsBuilder,
+    this.overlayHeaderBuilder,
+    this.overlayHeaderHeight = 0,
+  }) : assert(overlayHeaderBuilder != null || (titleBuilder != null && actionsBuilder != null));
 
   @override
   State<GroupFeedShell> createState() => _GroupFeedShellState();
@@ -82,6 +91,20 @@ class _GroupFeedShellState extends State<GroupFeedShell> with AutomaticKeepAlive
     super.dispose();
   }
 
+  Widget _buildAppBar(BuildContext context) {
+    final xStyle = isXStyle(context);
+    return SliverAppBar(
+      backgroundColor: xStyle ? Colors.transparent : Theme.of(context).colorScheme.surface,
+      flexibleSpace: xStyle ? const XFrostedBar(child: SizedBox.expand()) : null,
+      shape: xStyle ? xBarBorder(context) : null,
+      pinned: false,
+      snap: true,
+      floating: true,
+      title: widget.titleBuilder!(context),
+      actions: widget.actionsBuilder!(context),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -90,28 +113,35 @@ class _GroupFeedShellState extends State<GroupFeedShell> with AutomaticKeepAlive
       builder: (context, child) {
         return Provider<FeedRefreshController>.value(
           value: _feedRefreshController,
-          child: NestedScrollView(
-            controller: widget.scrollController,
-            floatHeaderSlivers: true,
-            headerSliverBuilder: (context, innerBoxIsScrolled) {
-              return [
-                SliverAppBar(
-                  backgroundColor: Theme.of(context).colorScheme.surface,
-                  pinned: false,
-                  snap: true,
-                  floating: true,
-                  title: widget.titleBuilder(context),
-                  actions: widget.actionsBuilder(context),
-                ),
-              ];
-            },
-            body: KeyedSubtree(
-              key: ValueKey(_refreshCounter),
-              child: widget.bodyBuilder(context),
-            ),
-          ),
+          child: _buildScrollView(context),
         );
       },
+    );
+  }
+
+  Widget _buildScrollView(BuildContext context) {
+    final body = KeyedSubtree(
+      key: ValueKey(_refreshCounter),
+      child: widget.bodyBuilder(context),
+    );
+    final overlayHeaderBuilder = widget.overlayHeaderBuilder;
+    if (overlayHeaderBuilder != null) {
+      return XOverlayFeed(
+        headerHeight: widget.overlayHeaderHeight,
+        scrollController: widget.scrollController,
+        header: overlayHeaderBuilder(context),
+        body: body,
+      );
+    }
+    return NestedScrollView(
+      controller: widget.scrollController,
+      floatHeaderSlivers: true,
+      headerSliverBuilder: (context, innerBoxIsScrolled) {
+        return [
+          _buildAppBar(context),
+        ];
+      },
+      body: body,
     );
   }
 }
