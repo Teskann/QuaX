@@ -291,6 +291,22 @@
   },
   "imported_snapshot_data_users_so_far": "{snapshotData} users imported so far",
   "@imported_snapshot_data_users_so_far": {},
+  "importing_more_subscriptions": "{count, plural, one{Importing 1 more subscription, {batch} per minute} other{Importing {count} more subscriptions, {batch} per minute}}",
+  "@importing_more_subscriptions": {
+    "description": "Shown while followed accounts wait to be imported a few at a time, with how many are left and how many are added per minute",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "batch": {
+        "type": "int"
+      }
+    }
+  },
+  "importing_more_subscriptions_details": "Adding them gradually avoids X rate limits. It continues while QuaX is open.",
+  "@importing_more_subscriptions_details": {
+    "description": "Explains why subscriptions are added gradually"
+  },
   "include_replies": "Include replies",
   "@include_replies": {},
   "include_retweets": "Include reposts",

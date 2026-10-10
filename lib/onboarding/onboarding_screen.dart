@@ -2,21 +2,18 @@ import 'package:animations/animations.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:pref/pref.dart';
-import 'package:provider/provider.dart';
 import 'package:quax/client/login_webview.dart';
 import 'package:quax/client/accounts.dart';
 import 'package:quax/client/client_regular_account.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/database/entities.dart';
-import 'package:quax/group/group_model.dart';
-import 'package:quax/import_data_model.dart';
 import 'package:quax/onboarding/_other_account_step.dart';
 import 'package:quax/onboarding/_steps.dart';
 import 'package:quax/onboarding/_subscriptions_step.dart';
 import 'package:quax/onboarding/onboarding_model.dart';
 import 'package:quax/settings/_data.dart' as data;
+import 'package:quax/subscriptions/importer_of.dart';
 import 'package:quax/subscriptions/subscription_importer.dart';
-import 'package:quax/subscriptions/users_model.dart';
 import 'package:quax/utils/urls.dart';
 
 /// What the onboarding does outside of itself, replaced in tests.
@@ -43,8 +40,7 @@ class OnboardingActions {
         context, MaterialPageRoute(builder: (_) => const TwitterLoginWebview(guided: true))),
     logOut: (account) => XRegularAccount().deleteAccount(account.id),
     joinDiscord: (context) => openUri(context, discordInviteUrl),
-    importer: (context) => SubscriptionImporter(
-        context.read<ImportDataModel>(), context.read<GroupsModel>(), context.read<SubscriptionsModel>()),
+    importer: subscriptionImporterOf,
   );
 }
 

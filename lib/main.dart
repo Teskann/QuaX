@@ -34,6 +34,7 @@ import 'package:quax/settings/_home.dart';
 import 'package:quax/settings/settings.dart';
 import 'package:quax/settings/settings_export_screen.dart';
 import 'package:quax/status.dart';
+import 'package:quax/subscriptions/subscription_import_queue.dart';
 import 'package:quax/subscriptions/users_model.dart';
 import 'package:quax/trends/trends_model.dart';
 import 'package:quax/tweet/_video.dart';
@@ -271,6 +272,10 @@ Future<void> main() async {
 
     await _decideOnboarding(prefService, subscriptionsModel);
 
+    var subscriptionSaver = SubscriptionSaver(importDataModel, groupsModel, subscriptionsModel);
+    var importQueueModel = SubscriptionImportQueueModel(const SqliteSubscriptionImportStore(), subscriptionSaver);
+    await importQueueModel.start();
+
     var feedSessionCache = FeedSessionCache();
     // Registration order matters: invalidateAll must run before any
     // GroupFeedShell reload listener, so by the time the shell remounts the
@@ -294,6 +299,8 @@ Future<void> main() async {
             Provider(create: (context) => homeModel),
             ChangeNotifierProvider(create: (context) => importDataModel),
             Provider(create: (context) => subscriptionsModel),
+            Provider(create: (context) => subscriptionSaver),
+            Provider(create: (context) => importQueueModel),
             Provider(create: (context) => SavedTweetModel()),
             Provider(create: (context) => SavedTweetFolderModel()),
             Provider(create: (context) => LikedTweetModel()),
