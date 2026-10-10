@@ -1,5 +1,6 @@
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:quax/constants.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/onboarding/onboarding_model.dart';
 import 'package:quax/ui/errors.dart';
@@ -24,8 +25,10 @@ List<Widget>? importProgress(
     ImportTooLarge progress => _tooLarge(l10n, progress, importModel),
     Importing(imported: final imported) =>
       [_status(context, Icons.downloading, l10n.imported_snapshot_data_users_so_far(imported.toString()))],
-    ImportFinished(imported: final imported) =>
-      [_status(context, Icons.check_circle, l10n.subscriptions_imported(imported))],
+    ImportFinished(imported: final imported, queued: final queued) => [
+        _status(context, Icons.check_circle, l10n.subscriptions_imported(imported)),
+        if (queued > 0) _status(context, Icons.schedule, l10n.importing_more_subscriptions(queued, smartImportBatch)),
+      ],
   };
 }
 

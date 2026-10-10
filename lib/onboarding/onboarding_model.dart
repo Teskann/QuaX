@@ -112,7 +112,10 @@ class Importing extends SubscriptionImportProgress {
 class ImportFinished extends SubscriptionImportProgress {
   final int imported;
 
-  const ImportFinished(this.imported);
+  /// Accounts still to be added, a few at a time
+  final int queued;
+
+  const ImportFinished(this.imported, {this.queued = 0});
 }
 
 class SubscriptionImportModel extends Store<SubscriptionImportProgress> {
@@ -138,11 +141,12 @@ class SubscriptionImportModel extends Store<SubscriptionImportProgress> {
   Future<void> start(String screenName, int maxCount) async {
     update(const Importing(0));
     try {
-      await for (final imported in importer.import(screenName, maxCount)) {
-        update(Importing(imported));
+      var last = const ImportProgress(collected: 0);
+      await for (final progress in importer.import(screenName, maxCount)) {
+        last = progress;
+        update(Importing(progress.collected));
       }
-      final progress = state;
-      update(ImportFinished(progress is Importing ? progress.imported : 0));
+      update(ImportFinished(last.imported, queued: last.queued));
     } catch (e) {
       setError(e);
     }

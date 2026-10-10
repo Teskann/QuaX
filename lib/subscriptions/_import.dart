@@ -3,12 +3,10 @@ import 'dart:async';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 
-import 'package:quax/group/group_model.dart';
-import 'package:quax/import_data_model.dart';
+import 'package:quax/constants.dart';
+import 'package:quax/subscriptions/importer_of.dart';
 import 'package:quax/subscriptions/subscription_importer.dart';
-import 'package:quax/subscriptions/users_model.dart';
 import 'package:quax/ui/errors.dart';
-import 'package:provider/provider.dart';
 import 'package:quax/generated/l10n.dart';
 
 class SubscriptionImportScreen extends StatefulWidget {
@@ -22,7 +20,7 @@ class SubscriptionImportScreen extends StatefulWidget {
 
 class _SubscriptionImportScreenState extends State<SubscriptionImportScreen> {
   String? _screenName;
-  StreamController<int>? _streamController;
+  StreamController<ImportProgress>? _streamController;
 
   @override
   void initState() {
@@ -41,8 +39,7 @@ class _SubscriptionImportScreenState extends State<SubscriptionImportScreen> {
         return;
       }
 
-      var importer = SubscriptionImporter(
-          context.read<ImportDataModel>(), context.read<GroupsModel>(), context.read<SubscriptionsModel>());
+      var importer = subscriptionImporterOf(context);
 
       var maxCount = await _chooseHowMany(await importer.size(screenName));
       if (maxCount == null) {
@@ -50,7 +47,7 @@ class _SubscriptionImportScreenState extends State<SubscriptionImportScreen> {
         return;
       }
 
-      _streamController?.add(0);
+      _streamController?.add(const ImportProgress(collected: 0));
       await _streamController?.addStream(importer.import(screenName, maxCount));
       _streamController?.close();
     } catch (e, stackTrace) {
@@ -92,7 +89,7 @@ class _SubscriptionImportScreenState extends State<SubscriptionImportScreen> {
   Widget _field(BuildContext context, bool running) => ImportUsernameField(
       initialValue: widget.screenName, enabled: !running, onChanged: (value) => setState(() => _screenName = value));
 
-  Widget _status(BuildContext context, AsyncSnapshot<int> snapshot) {
+  Widget _status(BuildContext context, AsyncSnapshot<ImportProgress> snapshot) {
     final l10n = L10n.of(context);
     if (snapshot.error != null) {
       return ErrorCard(error: snapshot.error, stackTrace: snapshot.stackTrace, prefix: (l10n) => l10n.unable_to_import);
@@ -102,12 +99,15 @@ class _SubscriptionImportScreenState extends State<SubscriptionImportScreen> {
       ConnectionState.active => Column(crossAxisAlignment: CrossAxisAlignment.start, spacing: 8, children: [
           // ignore: deprecated_member_use
           const LinearProgressIndicator(year2023: false),
-          Text(l10n.imported_snapshot_data_users_so_far(snapshot.data.toString())),
+          Text(l10n.imported_snapshot_data_users_so_far((snapshot.data?.collected ?? 0).toString())),
         ]),
       ConnectionState.done => ListTile(
           contentPadding: EdgeInsets.zero,
           leading: Icon(Icons.check_circle, size: 36, color: Theme.of(context).colorScheme.primary),
-          title: Text(l10n.subscriptions_imported(snapshot.data ?? 0)),
+          title: Text(l10n.subscriptions_imported(snapshot.data?.imported ?? 0)),
+          subtitle: (snapshot.data?.queued ?? 0) > 0
+              ? Text(l10n.importing_more_subscriptions(snapshot.data!.queued, smartImportBatch))
+              : null,
         ),
     };
   }
@@ -131,7 +131,7 @@ class _SubscriptionImportScreenState extends State<SubscriptionImportScreen> {
           alignment: Alignment.topCenter,
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 600),
-            child: StreamBuilder<int>(
+            child: StreamBuilder<ImportProgress>(
               stream: _streamController?.stream,
               builder: (context, snapshot) {
                 final running = snapshot.connectionState == ConnectionState.active && snapshot.error == null;

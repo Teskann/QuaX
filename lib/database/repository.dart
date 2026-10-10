@@ -20,6 +20,7 @@ const String tableSearchSubscriptionGroupMember = 'search_subscription_group_mem
 const String tableSubscription = 'subscription';
 const String tableSubscriptionGroup = 'subscription_group';
 const String tableSubscriptionGroupMember = 'subscription_group_member';
+const String tableSubscriptionImportQueue = 'subscription_import_queue';
 
 const String tableAccounts = 'accounts';
 
@@ -268,10 +269,16 @@ class Repository {
             'INSERT INTO $tableAccounts (id, auth_header, screen_name) SELECT id, auth_header, screen_name FROM ${tableAccounts}_old'),
         SqlMigration('DROP TABLE ${tableAccounts}_old'),
       ],
+      28: [
+        // Followed accounts waiting to be imported a few at a time, lowest position first
+        SqlMigration(
+            'CREATE TABLE IF NOT EXISTS $tableSubscriptionImportQueue (position INTEGER, id VARCHAR PRIMARY KEY, name VARCHAR, screen_name VARCHAR, profile_image_url_https VARCHAR, verified INTEGER, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)',
+            reverseSql: 'DROP TABLE $tableSubscriptionImportQueue'),
+      ],
     });
     await openDatabase(
       databaseName,
-      version: 27,
+      version: 28,
       onUpgrade: myMigrationPlan.call,
       onCreate: myMigrationPlan.call,
       onDowngrade: myMigrationPlan.call,

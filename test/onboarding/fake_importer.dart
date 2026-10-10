@@ -18,12 +18,13 @@ class FakeImporter implements SubscriptionImporter {
   }
 
   @override
-  Stream<int> import(String screenName, int maxCount) async* {
+  Stream<ImportProgress> import(String screenName, int maxCount) async* {
     requests.add((screenName, maxCount));
     final total = following < maxCount ? following : maxCount;
-    for (var imported = 1; imported <= total; imported++) {
-      yield imported;
+    for (var collected = 1; collected <= total; collected++) {
+      yield ImportProgress(collected: collected);
     }
+    yield ImportProgress(collected: total, imported: total);
   }
 
   @override

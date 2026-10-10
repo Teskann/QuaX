@@ -760,6 +760,28 @@ class Twitter {
     );
   }
 
+  // UNVERIFIED: guessed from the web client, not recorded yet. If X answers 404, capture the "Following" tab of the
+  // home timeline (tool/record) and update this id.
+  static const _homeLatestTimelineQueryId = '0dateTVgvXjpkf7kyBZy0g';
+
+  /// A page of the logged-in account's chronological "Following" home timeline.
+  static Future<TweetStatus> getLatestHomeTimeline({String? cursor, int count = 40}) async {
+    final variables = {
+      "count": count,
+      "cursor": ?cursor,
+      "includePromotedContent": false,
+      "latestControlAvailable": true,
+      "requestContext": "launch",
+    };
+    final response = await _twitterApi.client.get(
+      Uri.https('twitter.com', 'i/api/graphql/$_homeLatestTimelineQueryId/HomeLatestTimeline', {
+        "variables": jsonEncode(variables),
+        "features": jsonEncode(_timelineFeatures),
+      }),
+    );
+    return createTimelineChains(json.decode(response.body), 'tweet', [], false, true, false, () => 0, () {});
+  }
+
   static const _postsVariables = {
     "includePromotedContent": true,
     "withQuickPromoteEligibilityTweetFields": true,

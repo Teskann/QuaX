@@ -3,6 +3,7 @@ import 'package:quax/constants.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/group/group_model.dart';
 import 'package:quax/subscriptions/_groups.dart';
+import 'package:quax/subscriptions/_import_queue_card.dart';
 import 'package:quax/subscriptions/_import.dart';
 import 'package:quax/subscriptions/_list.dart';
 import 'package:quax/subscriptions/users_model.dart';
@@ -160,6 +161,7 @@ class SubscriptionsScreen extends StatelessWidget {
               ),
             ),
           ),
+          const SliverToBoxAdapter(child: ImportQueueCard()),
           const SubscriptionUsers(),
           SliverToBoxAdapter(child: SizedBox(height: MediaQuery.of(context).padding.bottom)),
         ],

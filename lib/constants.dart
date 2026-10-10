@@ -101,6 +101,13 @@ const int subscriptionsPerSearch = 16;
 // Assume feed is refreshed every 5 min in a normal usage
 const int maxSubscriptionsPerAccount = (maxSearchesPer15min - 2) ~/ 3 * subscriptionsPerSearch;
 
+// Smart import of many followed accounts: the most recently active ones at once, the rest a few at a time, so that
+// loading their feeds does not hit the X rate limits
+const int smartImportFirstBatch = 100;
+const int smartImportBatch = 15;
+const Duration smartImportInterval = Duration(minutes: 1);
+const int smartImportRankingPages = 5;
+
 const routeHome = '/';
 const routeGroup = '/group';
 const routeProfile = '/profile';
