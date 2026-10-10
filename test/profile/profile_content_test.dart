@@ -27,9 +27,24 @@ const subscribersOnly = 'Post reserved for subscribers of @Osemka8';
 
 int _counter = 0;
 
+/// The posts X only previews to non-subscribers, wherever they sit in a recorded body.
+Iterable<Map<String, dynamic>> subscriberPreviews(Object? node) sync* {
+  if (node is Map<String, dynamic>) {
+    if (node['__typename'] == 'TweetPreviewDisplay' && node['tweet'] is Map<String, dynamic>) yield node['tweet'];
+    for (final child in node.values) {
+      yield* subscriberPreviews(child);
+    }
+  } else if (node is List) {
+    for (final child in node) {
+      yield* subscriberPreviews(child);
+    }
+  }
+}
+
 /// A profile view as the app parses it.
-List<TweetChain> profileTimeline(String operation, String name) => Twitter.createUnconversationedChains(
-      fixture(operation, name).body,
+List<TweetChain> profileTimeline(String operation, String name, {bool unstable = false}) =>
+    Twitter.createUnconversationedChains(
+      fixture(operation, name, unstable: unstable).body,
       'tweet',
       const [],
       false,
@@ -46,7 +61,7 @@ UserWithExtra userOf(String screenName) =>
 /// parts and overflows by a pixel with the test font: layout is not what these
 /// tests check, so overflow reports are dropped while the profile is drawn.
 Future<void> openProfile(WidgetTester tester, String fixtureName, String screenName, String timeline,
-    {Map<String, Fixture> more = const {}}) async {
+    {Map<String, Fixture> more = const {}, bool unstable = false}) async {
   final onError = FlutterError.onError;
   FlutterError.onError = (details) {
     if (!details.exceptionAsString().contains('overflowed')) onError?.call(details);
@@ -57,8 +72,8 @@ Future<void> openProfile(WidgetTester tester, String fixtureName, String screenN
       const ProfileScreen(),
       arguments: ProfileScreenArguments.fromScreenName(screenName, null),
       fixtures: {
-        'UserByScreenName': fixture('UserByScreenName', fixtureName),
-        'UserOriginalsTimeline': fixture('UserOriginalsTimeline', timeline),
+        'UserByScreenName': fixture('UserByScreenName', fixtureName, unstable: unstable),
+        'UserOriginalsTimeline': fixture('UserOriginalsTimeline', timeline, unstable: unstable),
         ...more,
       },
     );
@@ -129,7 +144,7 @@ void main() {
     });
 
     testWidgets('Should open a profile whose posts include subscriber-only previews', (tester) async {
-      await openProfile(tester, 'osemka8', 'Osemka8', osemkaId);
+      await openProfile(tester, 'osemka8', 'Osemka8', osemkaId, unstable: true);
 
       expect(find.byType(ErrorCard), findsNothing, reason: 'Subscriber-only previews used to fail the whole timeline');
       expect(headerText(find.text('@Osemka8')), findsOneWidget, reason: 'The profile should be shown');
@@ -301,17 +316,23 @@ void main() {
     });
 
     testWidgets('Should show subscriber-only previews as truncated posts marked as such', (tester) async {
-      const preview = '2105589900078641579';
-      final chains = profileTimeline('UserOriginalsTimeline', osemkaId);
+      final previews = {
+        for (final tweet in subscriberPreviews(fixture('UserOriginalsTimeline', osemkaId, unstable: true).body))
+          tweet['rest_id'] as String: tweet['text'] as String,
+      };
+      final plain = previews.entries.firstWhere((preview) => !preview.value.contains(RegExp(r'[@#$]|http')));
+      final chains = profileTimeline('UserOriginalsTimeline', osemkaId, unstable: true);
       await pumpChains(tester, chains);
 
       expectEveryTweetRendered(chains);
-      expect(visibleText(preview), "I know I've written about this for you guys, but c…",
+      expect(previews, isNotEmpty, reason: 'The recording should hold subscriber-only previews, or this test proves nothing');
+      expect(visibleText(plain.key), plain.value,
           reason: 'X only sends the beginning of a subscriber-only post, which should be shown as is');
-      expect(find.descendant(of: tweetTile(preview), matching: find.text(subscribersOnly)), findsOneWidget,
-          reason: 'A preview should say why the post is cut');
-      expect(find.text(subscribersOnly), findsNWidgets(7),
-          reason: 'All seven previews should be marked, those inside threads included, and only them');
+      for (final id in previews.keys) {
+        expect(find.descendant(of: tweetTile(id), matching: find.text(subscribersOnly)), findsOneWidget,
+            reason: 'The preview $id should say why the post is cut, inside a thread too');
+      }
+      expect(find.text(subscribersOnly), findsNWidgets(previews.length), reason: 'Only previews should be marked');
       expect(chains.where((chain) => chain.tweets.length > 1), isNotEmpty,
           reason: 'Threads of the posts tab, named profile-originals-conversation, should be kept');
     });

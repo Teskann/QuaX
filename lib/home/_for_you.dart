@@ -40,7 +40,6 @@ class _ForYouTweetsState extends State<ForYouTweets> with AutomaticKeepAliveClie
 
   Future<TweetPageResult> _loadTweets(String? cursor) async {
     final result = await Twitter.getTimelineTweets(
-      user.idStr!,
       widget.type,
       cursor: cursor,
       count: pageSize,

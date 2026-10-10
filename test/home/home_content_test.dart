@@ -13,7 +13,7 @@ void main() {
   setUpAll(() => HttpOverrides.global = FakeImageHttpOverrides());
 
   testWidgets('Should show every tweet of the home timeline', (tester) async {
-    final chains = Twitter.createTimelineChains(fixture('HomeTimeline', 'vars-2a4d9c').body, 'tweet', const [], false,
+    final chains = Twitter.createTimelineChains(fixture('HomeTimeline', 'vars-2a4d9c', unstable: true).body, 'tweet', const [], false,
             true, true, () => _counter, () => _counter++)
         .chains;
     await pumpChains(tester, chains);

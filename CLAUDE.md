@@ -73,6 +73,8 @@ final text = result["data"]["text"] as String;
 
 `client.dart` wraps `dart_twitter_api` and adds caching via `FFCache`. `client_unauthenticated.dart` uses a hardcoded bearer token from `constants.dart`; `client_regular_account.dart` uses stored OAuth credentials.
 
+To run the app without an X account (automated QA), use the mock of X described in `tool/mock_x/README.md`. It answers only requests identical to the recorded fixtures, so a request change in `client.dart` needs a fresh capture.
+
 When requests fail because of the `x-client-transaction-id` header (e.g. `Couldn't find the sign module`), follow `docs/fix-client-transaction-id.md`.
 
 **Account selection strategy.** `_QuackerTwitterClient.fetch()` in `client.dart` asks `AccountSelector` (`account_selector.dart`, a pure/testable policy) for an account with credits left, then retries on another account on a 429. Only rate limits count: any other error is surfaced without trying another account.

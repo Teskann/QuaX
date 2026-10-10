@@ -1,0 +1,2371 @@
+{
+ "scenario": "Profile whose posts tab mixes subscriber-only previews (TweetPreviewDisplay) into its threads",
+ "sourceUrl": "https://x.com/Osemka8",
+ "unstable": true,
+ "operation": "SmartTagAttachmentQuery",
+ "host": "x.com",
+ "queryId": "qlU4kwL73-PXdo3qpTA4MA",
+ "features": null,
+ "fieldToggles": null,
+ "variables": {
+  "assetSymbol": "celestia:native",
+  "timeframe": "1D",
+  "candleSize": "5m"
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "500",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "498",
+  "x-rate-limit-reset": "1791731108"
+ },
+ "body": {
+  "data": {
+   "finance_asset_data": {
+    "asset": {
+     "crypto": {
+      "__typename": "FinanceCryptoAsset",
+      "contract_address": ""
+     },
+     "logo_url": "https://abs.twimg.com/finance/v1/crypto/celestia/native.png",
+     "name": "Celestia",
+     "quote": {
+      "change_24h_percent": 16.57845,
+      "market_cap": {
+       "currency_code": "USD",
+       "nanos": 0,
+       "units": "568745644"
+      },
+      "price": {
+       "currency_code": "USD",
+       "nanos": 581733000,
+       "units": "0"
+      }
+     },
+     "ticker": "TIA"
+    }
+   },
+   "finance_chart_data": {
+    "data_points": [
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 496300000,
+       "units": "0"
+      },
+      "timestamp": 1791644700000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 500200000,
+       "units": "0"
+      },
+      "timestamp": 1791645000000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 500700000,
+       "units": "0"
+      },
+      "timestamp": 1791645300000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 498400000,
+       "units": "0"
+      },
+      "timestamp": 1791645600000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 499100000,
+       "units": "0"
+      },
+      "timestamp": 1791645900000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 500299999,
+       "units": "0"
+      },
+      "timestamp": 1791646200000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 502399999,
+       "units": "0"
+      },
+      "timestamp": 1791646500000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 501399999,
+       "units": "0"
+      },
+      "timestamp": 1791646800000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 501000000,
+       "units": "0"
+      },
+      "timestamp": 1791647100000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 501800000,
+       "units": "0"
+      },
+      "timestamp": 1791647400000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 516700000,
+       "units": "0"
+      },
+      "timestamp": 1791647700000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 513499999,
+       "units": "0"
+      },
+      "timestamp": 1791648000000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 512000000,
+       "units": "0"
+      },
+      "timestamp": 1791648300000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 513599999,
+       "units": "0"
+      },
+      "timestamp": 1791648600000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 513800000,
+       "units": "0"
+      },
+      "timestamp": 1791648900000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 510900000,
+       "units": "0"
+      },
+      "timestamp": 1791649200000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 505200000,
+       "units": "0"
+      },
+      "timestamp": 1791649500000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 505100000,
+       "units": "0"
+      },
+      "timestamp": 1791649800000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 508300000,
+       "units": "0"
+      },
+      "timestamp": 1791650100000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 508800000,
+       "units": "0"
+      },
+      "timestamp": 1791650400000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 508700000,
+       "units": "0"
+      },
+      "timestamp": 1791650700000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 511700000,
+       "units": "0"
+      },
+      "timestamp": 1791651000000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 513000000,
+       "units": "0"
+      },
+      "timestamp": 1791651300000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 510399999,
+       "units": "0"
+      },
+      "timestamp": 1791651600000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 507600000,
+       "units": "0"
+      },
+      "timestamp": 1791651900000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 507100000,
+       "units": "0"
+      },
+      "timestamp": 1791652200000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 509200000,
+       "units": "0"
+      },
+      "timestamp": 1791652500000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 512800000,
+       "units": "0"
+      },
+      "timestamp": 1791652800000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 512700000,
+       "units": "0"
+      },
+      "timestamp": 1791653100000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 513000000,
+       "units": "0"
+      },
+      "timestamp": 1791653400000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 513700000,
+       "units": "0"
+      },
+      "timestamp": 1791653700000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 512700000,
+       "units": "0"
+      },
+      "timestamp": 1791654000000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 509200000,
+       "units": "0"
+      },
+      "timestamp": 1791654300000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 508499999,
+       "units": "0"
+      },
+      "timestamp": 1791654600000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 508499999,
+       "units": "0"
+      },
+      "timestamp": 1791654900000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 508700000,
+       "units": "0"
+      },
+      "timestamp": 1791655200000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 513599999,
+       "units": "0"
+      },
+      "timestamp": 1791655500000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 512800000,
+       "units": "0"
+      },
+      "timestamp": 1791655800000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 512599999,
+       "units": "0"
+      },
+      "timestamp": 1791656100000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 518700000,
+       "units": "0"
+      },
+      "timestamp": 1791656400000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 527900000,
+       "units": "0"
+      },
+      "timestamp": 1791656700000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 532100000,
+       "units": "0"
+      },
+      "timestamp": 1791657000000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 548500000,
+       "units": "0"
+      },
+      "timestamp": 1791657300000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 542300000,
+       "units": "0"
+      },
+      "timestamp": 1791657600000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 544200000,
+       "units": "0"
+      },
+      "timestamp": 1791657900000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 545600000,
+       "units": "0"
+      },
+      "timestamp": 1791658200000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 542100000,
+       "units": "0"
+      },
+      "timestamp": 1791658500000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 543500000,
+       "units": "0"
+      },
+      "timestamp": 1791658800000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 552200000,
+       "units": "0"
+      },
+      "timestamp": 1791659100000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 549100000,
+       "units": "0"
+      },
+      "timestamp": 1791659400000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 552200000,
+       "units": "0"
+      },
+      "timestamp": 1791659700000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 564200000,
+       "units": "0"
+      },
+      "timestamp": 1791660000000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 560800000,
+       "units": "0"
+      },
+      "timestamp": 1791660300000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 557200000,
+       "units": "0"
+      },
+      "timestamp": 1791660600000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 558500000,
+       "units": "0"
+      },
+      "timestamp": 1791660900000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 551400000,
+       "units": "0"
+      },
+      "timestamp": 1791661200000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 553200000,
+       "units": "0"
+      },
+      "timestamp": 1791661500000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 559000000,
+       "units": "0"
+      },
+      "timestamp": 1791661800000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 567500000,
+       "units": "0"
+      },
+      "timestamp": 1791662100000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 568600000,
+       "units": "0"
+      },
+      "timestamp": 1791662400000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 568900000,
+       "units": "0"
+      },
+      "timestamp": 1791662700000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 576600000,
+       "units": "0"
+      },
+      "timestamp": 1791663000000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 575000000,
+       "units": "0"
+      },
+      "timestamp": 1791663300000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 574000000,
+       "units": "0"
+      },
+      "timestamp": 1791663600000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 568700000,
+       "units": "0"
+      },
+      "timestamp": 1791663900000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 571100000,
+       "units": "0"
+      },
+      "timestamp": 1791664200000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 574000000,
+       "units": "0"
+      },
+      "timestamp": 1791664500000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 580600000,
+       "units": "0"
+      },
+      "timestamp": 1791664800000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 578900000,
+       "units": "0"
+      },
+      "timestamp": 1791665100000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 580400000,
+       "units": "0"
+      },
+      "timestamp": 1791665400000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 579400000,
+       "units": "0"
+      },
+      "timestamp": 1791665700000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 577600000,
+       "units": "0"
+      },
+      "timestamp": 1791666000000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 581300000,
+       "units": "0"
+      },
+      "timestamp": 1791666300000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 579400000,
+       "units": "0"
+      },
+      "timestamp": 1791666600000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 580300000,
+       "units": "0"
+      },
+      "timestamp": 1791666900000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 582200000,
+       "units": "0"
+      },
+      "timestamp": 1791667200000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 579900000,
+       "units": "0"
+      },
+      "timestamp": 1791667500000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 581800000,
+       "units": "0"
+      },
+      "timestamp": 1791667800000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 577800000,
+       "units": "0"
+      },
+      "timestamp": 1791668100000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 572900000,
+       "units": "0"
+      },
+      "timestamp": 1791668400000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 572700000,
+       "units": "0"
+      },
+      "timestamp": 1791668700000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 571000000,
+       "units": "0"
+      },
+      "timestamp": 1791669000000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 574400000,
+       "units": "0"
+      },
+      "timestamp": 1791669300000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 574900000,
+       "units": "0"
+      },
+      "timestamp": 1791669600000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 573300000,
+       "units": "0"
+      },
+      "timestamp": 1791669900000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 569300000,
+       "units": "0"
+      },
+      "timestamp": 1791670200000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 571200000,
+       "units": "0"
+      },
+      "timestamp": 1791670500000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 575500000,
+       "units": "0"
+      },
+      "timestamp": 1791670800000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 581100000,
+       "units": "0"
+      },
+      "timestamp": 1791671100000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 582100000,
+       "units": "0"
+      },
+      "timestamp": 1791671400000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 586900000,
+       "units": "0"
+      },
+      "timestamp": 1791671700000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 585200000,
+       "units": "0"
+      },
+      "timestamp": 1791672000000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 584800000,
+       "units": "0"
+      },
+      "timestamp": 1791672300000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 586200000,
+       "units": "0"
+      },
+      "timestamp": 1791672600000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 590700000,
+       "units": "0"
+      },
+      "timestamp": 1791672900000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 595000000,
+       "units": "0"
+      },
+      "timestamp": 1791673200000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 597200000,
+       "units": "0"
+      },
+      "timestamp": 1791673500000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 593900000,
+       "units": "0"
+      },
+      "timestamp": 1791673800000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 594400000,
+       "units": "0"
+      },
+      "timestamp": 1791674100000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 593700000,
+       "units": "0"
+      },
+      "timestamp": 1791674400000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 594300000,
+       "units": "0"
+      },
+      "timestamp": 1791674700000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 597800000,
+       "units": "0"
+      },
+      "timestamp": 1791675000000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 601000000,
+       "units": "0"
+      },
+      "timestamp": 1791675300000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 604000000,
+       "units": "0"
+      },
+      "timestamp": 1791675600000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 604300000,
+       "units": "0"
+      },
+      "timestamp": 1791675900000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 608400000,
+       "units": "0"
+      },
+      "timestamp": 1791676200000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 607700000,
+       "units": "0"
+      },
+      "timestamp": 1791676500000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 601900000,
+       "units": "0"
+      },
+      "timestamp": 1791676800000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 600700000,
+       "units": "0"
+      },
+      "timestamp": 1791677100000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 596800000,
+       "units": "0"
+      },
+      "timestamp": 1791677400000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 601000000,
+       "units": "0"
+      },
+      "timestamp": 1791677700000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 596900000,
+       "units": "0"
+      },
+      "timestamp": 1791678000000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 599100000,
+       "units": "0"
+      },
+      "timestamp": 1791678300000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 599000000,
+       "units": "0"
+      },
+      "timestamp": 1791678600000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 598000000,
+       "units": "0"
+      },
+      "timestamp": 1791678900000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 599800000,
+       "units": "0"
+      },
+      "timestamp": 1791679200000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 600800000,
+       "units": "0"
+      },
+      "timestamp": 1791679500000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 599800000,
+       "units": "0"
+      },
+      "timestamp": 1791679800000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 598300000,
+       "units": "0"
+      },
+      "timestamp": 1791680100000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 592900000,
+       "units": "0"
+      },
+      "timestamp": 1791680400000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 596700000,
+       "units": "0"
+      },
+      "timestamp": 1791680700000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 598000000,
+       "units": "0"
+      },
+      "timestamp": 1791681000000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 598000000,
+       "units": "0"
+      },
+      "timestamp": 1791681300000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 600800000,
+       "units": "0"
+      },
+      "timestamp": 1791681600000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 607900000,
+       "units": "0"
+      },
+      "timestamp": 1791681900000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 607000000,
+       "units": "0"
+      },
+      "timestamp": 1791682200000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 610000000,
+       "units": "0"
+      },
+      "timestamp": 1791682500000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 612300000,
+       "units": "0"
+      },
+      "timestamp": 1791682800000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 612000000,
+       "units": "0"
+      },
+      "timestamp": 1791683100000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 626900000,
+       "units": "0"
+      },
+      "timestamp": 1791683400000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 626600000,
+       "units": "0"
+      },
+      "timestamp": 1791683700000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 628400000,
+       "units": "0"
+      },
+      "timestamp": 1791684000000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 618900000,
+       "units": "0"
+      },
+      "timestamp": 1791684300000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 593400000,
+       "units": "0"
+      },
+      "timestamp": 1791684600000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 601000000,
+       "units": "0"
+      },
+      "timestamp": 1791684900000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 604700000,
+       "units": "0"
+      },
+      "timestamp": 1791685200000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 604700000,
+       "units": "0"
+      },
+      "timestamp": 1791685500000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 611500000,
+       "units": "0"
+      },
+      "timestamp": 1791685800000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 613700000,
+       "units": "0"
+      },
+      "timestamp": 1791686100000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 612000000,
+       "units": "0"
+      },
+      "timestamp": 1791686400000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 609200000,
+       "units": "0"
+      },
+      "timestamp": 1791686700000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 609700000,
+       "units": "0"
+      },
+      "timestamp": 1791687000000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 609500000,
+       "units": "0"
+      },
+      "timestamp": 1791687300000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 611200000,
+       "units": "0"
+      },
+      "timestamp": 1791687600000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 608200000,
+       "units": "0"
+      },
+      "timestamp": 1791687900000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 612000000,
+       "units": "0"
+      },
+      "timestamp": 1791688200000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 602700000,
+       "units": "0"
+      },
+      "timestamp": 1791688500000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 602200000,
+       "units": "0"
+      },
+      "timestamp": 1791688800000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 599900000,
+       "units": "0"
+      },
+      "timestamp": 1791689100000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 600500000,
+       "units": "0"
+      },
+      "timestamp": 1791689400000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 600100000,
+       "units": "0"
+      },
+      "timestamp": 1791689700000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 602400000,
+       "units": "0"
+      },
+      "timestamp": 1791690000000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 602400000,
+       "units": "0"
+      },
+      "timestamp": 1791690300000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 603200000,
+       "units": "0"
+      },
+      "timestamp": 1791690600000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 600400000,
+       "units": "0"
+      },
+      "timestamp": 1791690900000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 597500000,
+       "units": "0"
+      },
+      "timestamp": 1791691200000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 599600000,
+       "units": "0"
+      },
+      "timestamp": 1791691500000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 593900000,
+       "units": "0"
+      },
+      "timestamp": 1791691800000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 592800000,
+       "units": "0"
+      },
+      "timestamp": 1791692100000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 593100000,
+       "units": "0"
+      },
+      "timestamp": 1791692400000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 592800000,
+       "units": "0"
+      },
+      "timestamp": 1791692700000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 607800000,
+       "units": "0"
+      },
+      "timestamp": 1791693000000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 608500000,
+       "units": "0"
+      },
+      "timestamp": 1791693300000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 603600000,
+       "units": "0"
+      },
+      "timestamp": 1791693600000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 606800000,
+       "units": "0"
+      },
+      "timestamp": 1791693900000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 599100000,
+       "units": "0"
+      },
+      "timestamp": 1791694200000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 605300000,
+       "units": "0"
+      },
+      "timestamp": 1791694500000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 603200000,
+       "units": "0"
+      },
+      "timestamp": 1791694800000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 614200000,
+       "units": "0"
+      },
+      "timestamp": 1791695100000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 613300000,
+       "units": "0"
+      },
+      "timestamp": 1791695400000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 613700000,
+       "units": "0"
+      },
+      "timestamp": 1791695700000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 612000000,
+       "units": "0"
+      },
+      "timestamp": 1791696000000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 608400000,
+       "units": "0"
+      },
+      "timestamp": 1791696300000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 607600000,
+       "units": "0"
+      },
+      "timestamp": 1791696600000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 615200000,
+       "units": "0"
+      },
+      "timestamp": 1791696900000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 612500000,
+       "units": "0"
+      },
+      "timestamp": 1791697200000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 608700000,
+       "units": "0"
+      },
+      "timestamp": 1791697500000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 608800000,
+       "units": "0"
+      },
+      "timestamp": 1791697800000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 611400000,
+       "units": "0"
+      },
+      "timestamp": 1791698100000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 607500000,
+       "units": "0"
+      },
+      "timestamp": 1791698400000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 610900000,
+       "units": "0"
+      },
+      "timestamp": 1791698700000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 610700000,
+       "units": "0"
+      },
+      "timestamp": 1791699000000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 606300000,
+       "units": "0"
+      },
+      "timestamp": 1791699300000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 605100000,
+       "units": "0"
+      },
+      "timestamp": 1791699600000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 607200000,
+       "units": "0"
+      },
+      "timestamp": 1791699900000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 613700000,
+       "units": "0"
+      },
+      "timestamp": 1791700200000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 611600000,
+       "units": "0"
+      },
+      "timestamp": 1791700500000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 616500000,
+       "units": "0"
+      },
+      "timestamp": 1791700800000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 612600000,
+       "units": "0"
+      },
+      "timestamp": 1791701100000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 614300000,
+       "units": "0"
+      },
+      "timestamp": 1791701400000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 614100000,
+       "units": "0"
+      },
+      "timestamp": 1791701700000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 610300000,
+       "units": "0"
+      },
+      "timestamp": 1791702000000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 608200000,
+       "units": "0"
+      },
+      "timestamp": 1791702300000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 609200000,
+       "units": "0"
+      },
+      "timestamp": 1791702600000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 607800000,
+       "units": "0"
+      },
+      "timestamp": 1791702900000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 606500000,
+       "units": "0"
+      },
+      "timestamp": 1791703200000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 602000000,
+       "units": "0"
+      },
+      "timestamp": 1791703500000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 602200000,
+       "units": "0"
+      },
+      "timestamp": 1791703800000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 600400000,
+       "units": "0"
+      },
+      "timestamp": 1791704100000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 602100000,
+       "units": "0"
+      },
+      "timestamp": 1791704400000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 603200000,
+       "units": "0"
+      },
+      "timestamp": 1791704700000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 609100000,
+       "units": "0"
+      },
+      "timestamp": 1791705000000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 603100000,
+       "units": "0"
+      },
+      "timestamp": 1791705300000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 603000000,
+       "units": "0"
+      },
+      "timestamp": 1791705600000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 604300000,
+       "units": "0"
+      },
+      "timestamp": 1791705900000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 607200000,
+       "units": "0"
+      },
+      "timestamp": 1791706200000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 605500000,
+       "units": "0"
+      },
+      "timestamp": 1791706500000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 605800000,
+       "units": "0"
+      },
+      "timestamp": 1791706800000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 603900000,
+       "units": "0"
+      },
+      "timestamp": 1791707100000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 599800000,
+       "units": "0"
+      },
+      "timestamp": 1791707400000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 597000000,
+       "units": "0"
+      },
+      "timestamp": 1791707700000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 597400000,
+       "units": "0"
+      },
+      "timestamp": 1791708000000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 600500000,
+       "units": "0"
+      },
+      "timestamp": 1791708300000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 597200000,
+       "units": "0"
+      },
+      "timestamp": 1791708600000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 592900000,
+       "units": "0"
+      },
+      "timestamp": 1791708900000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 590900000,
+       "units": "0"
+      },
+      "timestamp": 1791709200000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 589200000,
+       "units": "0"
+      },
+      "timestamp": 1791709500000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 591000000,
+       "units": "0"
+      },
+      "timestamp": 1791709800000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 592700000,
+       "units": "0"
+      },
+      "timestamp": 1791710100000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 590700000,
+       "units": "0"
+      },
+      "timestamp": 1791710400000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 590500000,
+       "units": "0"
+      },
+      "timestamp": 1791710700000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 589100000,
+       "units": "0"
+      },
+      "timestamp": 1791711000000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 593200000,
+       "units": "0"
+      },
+      "timestamp": 1791711300000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 592700000,
+       "units": "0"
+      },
+      "timestamp": 1791711600000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 591400000,
+       "units": "0"
+      },
+      "timestamp": 1791711900000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 588900000,
+       "units": "0"
+      },
+      "timestamp": 1791712200000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 596200000,
+       "units": "0"
+      },
+      "timestamp": 1791712500000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 595400000,
+       "units": "0"
+      },
+      "timestamp": 1791712800000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 594700000,
+       "units": "0"
+      },
+      "timestamp": 1791713100000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 591500000,
+       "units": "0"
+      },
+      "timestamp": 1791713400000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 590300000,
+       "units": "0"
+      },
+      "timestamp": 1791713700000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 592300000,
+       "units": "0"
+      },
+      "timestamp": 1791714000000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 589400000,
+       "units": "0"
+      },
+      "timestamp": 1791714300000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 587400000,
+       "units": "0"
+      },
+      "timestamp": 1791714600000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 581700000,
+       "units": "0"
+      },
+      "timestamp": 1791714900000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 581900000,
+       "units": "0"
+      },
+      "timestamp": 1791715200000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 583100000,
+       "units": "0"
+      },
+      "timestamp": 1791715500000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 583300000,
+       "units": "0"
+      },
+      "timestamp": 1791715800000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 580800000,
+       "units": "0"
+      },
+      "timestamp": 1791716100000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 580200000,
+       "units": "0"
+      },
+      "timestamp": 1791716400000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 577800000,
+       "units": "0"
+      },
+      "timestamp": 1791716700000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 579400000,
+       "units": "0"
+      },
+      "timestamp": 1791717000000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 580100000,
+       "units": "0"
+      },
+      "timestamp": 1791717300000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 587600000,
+       "units": "0"
+      },
+      "timestamp": 1791717600000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 589200000,
+       "units": "0"
+      },
+      "timestamp": 1791717900000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 588400000,
+       "units": "0"
+      },
+      "timestamp": 1791718200000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 585900000,
+       "units": "0"
+      },
+      "timestamp": 1791718500000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 585500000,
+       "units": "0"
+      },
+      "timestamp": 1791718800000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 584400000,
+       "units": "0"
+      },
+      "timestamp": 1791719100000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 585300000,
+       "units": "0"
+      },
+      "timestamp": 1791719400000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 582500000,
+       "units": "0"
+      },
+      "timestamp": 1791719700000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 582700000,
+       "units": "0"
+      },
+      "timestamp": 1791720000000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 583500000,
+       "units": "0"
+      },
+      "timestamp": 1791720300000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 581100000,
+       "units": "0"
+      },
+      "timestamp": 1791720600000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 574900000,
+       "units": "0"
+      },
+      "timestamp": 1791720900000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 572000000,
+       "units": "0"
+      },
+      "timestamp": 1791721200000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 570800000,
+       "units": "0"
+      },
+      "timestamp": 1791721500000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 569500000,
+       "units": "0"
+      },
+      "timestamp": 1791721800000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 572000000,
+       "units": "0"
+      },
+      "timestamp": 1791722100000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 575000000,
+       "units": "0"
+      },
+      "timestamp": 1791722400000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 574100000,
+       "units": "0"
+      },
+      "timestamp": 1791722700000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 573600000,
+       "units": "0"
+      },
+      "timestamp": 1791723000000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 575000000,
+       "units": "0"
+      },
+      "timestamp": 1791723300000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 577100000,
+       "units": "0"
+      },
+      "timestamp": 1791723600000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 576500000,
+       "units": "0"
+      },
+      "timestamp": 1791723900000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 578400000,
+       "units": "0"
+      },
+      "timestamp": 1791724200000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 580200000,
+       "units": "0"
+      },
+      "timestamp": 1791724500000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 578100000,
+       "units": "0"
+      },
+      "timestamp": 1791724800000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 575000000,
+       "units": "0"
+      },
+      "timestamp": 1791725100000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 574400000,
+       "units": "0"
+      },
+      "timestamp": 1791725400000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 576000000,
+       "units": "0"
+      },
+      "timestamp": 1791725700000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 579700000,
+       "units": "0"
+      },
+      "timestamp": 1791726000000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 578700000,
+       "units": "0"
+      },
+      "timestamp": 1791726300000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 577500000,
+       "units": "0"
+      },
+      "timestamp": 1791726600000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 576500000,
+       "units": "0"
+      },
+      "timestamp": 1791726900000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 578400000,
+       "units": "0"
+      },
+      "timestamp": 1791727200000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 580500000,
+       "units": "0"
+      },
+      "timestamp": 1791727500000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 583000000,
+       "units": "0"
+      },
+      "timestamp": 1791727800000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 581400000,
+       "units": "0"
+      },
+      "timestamp": 1791728100000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 586200000,
+       "units": "0"
+      },
+      "timestamp": 1791728400000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 587100000,
+       "units": "0"
+      },
+      "timestamp": 1791728700000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 591500000,
+       "units": "0"
+      },
+      "timestamp": 1791729000000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 591500000,
+       "units": "0"
+      },
+      "timestamp": 1791729300000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 592500000,
+       "units": "0"
+      },
+      "timestamp": 1791729600000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 592100000,
+       "units": "0"
+      },
+      "timestamp": 1791729900000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 581700000,
+       "units": "0"
+      },
+      "timestamp": 1791730200000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 580300000,
+       "units": "0"
+      },
+      "timestamp": 1791730500000
+     },
+     {
+      "price": {
+       "currency_code": "USD",
+       "nanos": 580300000,
+       "units": "0"
+      },
+      "timestamp": 1791730800000
+     }
+    ],
+    "gaps": [],
+    "sessions": []
+   },
+   "smart_tag_by_rest_id": {
+    "id": "U21hcnRUYWc6Y2VsZXN0aWE6bmF0aXZl",
+    "info": {
+     "info": {
+      "active": true,
+      "theme_override": "FINANCE_THEME_OVERRIDE_UNSPECIFIED",
+      "tradable_platforms": []
+     }
+    },
+    "rest_id": "celestia:native"
+   }
+  }
+ }
+}

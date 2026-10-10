@@ -99,6 +99,21 @@ void main() {
     });
   });
 
+  group('Next replies', () {
+    test('Should not ask for more replies when X ends the conversation at the bottom', () {
+      final status = Twitter.parseTweetDetail(fixture('TweetDetail', '2095915984624275852').body);
+
+      expect(status.cursorBottom, isNull,
+          reason: 'X still sends a Bottom cursor under a short thread, which the website never follows');
+    });
+
+    test('Should ask for more replies when X leaves the bottom of the conversation open', () {
+      final status = Twitter.parseTweetDetail(fixture('TweetDetail', '2026390853309063292').body);
+
+      expect(status.cursorBottom, isNotNull, reason: 'A post with many replies goes on, as the website loads its page 2');
+    });
+  });
+
   group('TweetDetail', () {
     for (final fixture in fixturesOf('TweetDetail')) {
       test(fixture.scenario, () {

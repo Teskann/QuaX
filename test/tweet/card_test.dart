@@ -118,12 +118,12 @@ void main() {
     });
 
     testWidgets('Should show an image website card with its page', (tester) async {
-      final tweet = homeTweet(imageWebsiteTweet);
+      final tweet = imageWebsiteTweet();
+      final details = unifiedOf(tweet.card!)['component_objects']['details_1']['data'];
       await _pumpCard(tester, tweet);
 
-      expect(find.text('Le test est gratuit. La consultation des résultats est payante.'), findsOneWidget,
-          reason: 'The title of the page should be shown');
-      expect(find.text('wwiqtest.com'), findsOneWidget, reason: 'The site it leads to should be shown');
+      expect(find.text(details['title']['content']), findsOneWidget, reason: 'The title of the page should be shown');
+      expect(find.text(details['subtitle']['content']), findsOneWidget, reason: 'The site it leads to should be shown');
     });
   });
 
@@ -157,10 +157,11 @@ void main() {
 
     testWidgets('Should open the page of an image website card when tapped', (tester) async {
       final spy = _PlatformSpy();
-      final tweet = homeTweet(imageWebsiteTweet);
+      final tweet = imageWebsiteTweet();
+      final site = unifiedOf(tweet.card!)['component_objects']['details_1']['data']['subtitle']['content'];
       await _pumpCard(tester, tweet);
-      await tester.ensureVisible(find.text('wwiqtest.com'));
-      await tester.tap(find.text('wwiqtest.com'));
+      await tester.ensureVisible(find.text(site));
+      await tester.tap(find.text(site));
 
       expect(spy.urls, [unifiedOf(tweet.card!)['destination_objects']['browser_1']['data']['url_data']['url']],
           reason: 'The card should lead to the page');

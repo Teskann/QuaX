@@ -16,7 +16,8 @@ fvm dart run tool/record/capture.dart
 2. Log in when asked. Only the first run asks: the profile is kept in
    `tool/record/.chrome-profile/`. As this runs automatic page loadings, it's
    better to use a throwaway account.
-3. Wait. Each page loads, scrolls four times, and every response is written.
+3. Wait. Each page loads, then scrolls down like a reader while the list keeps
+   growing, and every response is written.
 4. Review the diff before committing.
 
 ## Adding a scenario
@@ -29,6 +30,13 @@ One entry in `links.json`:
 ```
 
 The description lands in the fixture under `scenario`, next to `sourceUrl`.
+
+Add `"unstable": true` when what X answers changes from one capture to the next:
+someone else's timeline, a search, the home timeline. Every fixture of the
+scenario then carries `"unstable": true`, and `fixture(...)` in the tests refuses
+it unless the test passes `unstable: true`, to say it checks the shape only
+(tweets are there, each has an author…), never a name, a text or a count. Loops
+over `fixturesOf(...)` and the mock use them like any other.
 
 A profile URL triggers `UserByScreenName` and the profile timeline at once. The
 profile views have their own URLs: `/`, `/all`, `/with_replies`, `/reposts`,
@@ -43,8 +51,15 @@ To record a new scenario without touching the other fixtures, add it to
 fvm dart run tool/record/capture.dart --only 2082854732020760880
 ```
 
-Only the links containing that text are opened, and nothing is pruned.
-Fixtures written by an earlier run are left as they are.
+Only the links containing that text are opened. The fixtures those links
+produced on an earlier run and did not produce this time are deleted; the
+fixtures of every other link are left as they are.
+
+## Next pages
+
+The script only drives Chrome: next pages are the ones the website loads while
+it scrolls, up to two scrolls (three pages), stopping as soon as a scroll loads nothing. It
+never sends a request of its own.
 
 ## What gets saved
 

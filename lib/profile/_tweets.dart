@@ -72,9 +72,10 @@ class _ProfileTweetsState extends State<ProfileTweets> with AutomaticKeepAliveCl
       incrementTweetsCounter: incrementLoadTweetsCounter,
     );
 
-    // Stop when the cursor doesn't advance (or is gone), keeping the chains.
+    // Stop on an empty page, or when the cursor doesn't advance (or is gone), keeping the chains.
+    // X hands a fresh cursor even with an empty page.
     final next = result.cursorBottom;
-    return (items: result.chains, nextCursor: next == cursor ? null : next);
+    return (items: result.chains, nextCursor: result.chains.isEmpty || next == cursor ? null : next);
   }
 
   @override
