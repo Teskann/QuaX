@@ -637,7 +637,7 @@ class _DefaultPageState extends State<DefaultPage> {
     return PopScope(
         canPop: false,
         onPopInvokedWithResult: (didPop, result) async {
-          if (didPop) return;
+          if (didPop || closeOpenDrawer(homeScaffoldKey.currentState)) return;
           var prefService = PrefService.of(context);
           if (!prefService.get(optionConfirmClose)) {
             SystemNavigator.pop();
