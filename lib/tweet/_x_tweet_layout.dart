@@ -8,10 +8,10 @@ import 'package:quax/generated/l10n.dart';
 import 'package:quax/saved/liked_tweet_model.dart';
 import 'package:quax/saved/saved_tweet_model.dart';
 import 'package:quax/tweet/x_text_width_cache.dart';
+import 'package:quax/tweet/x_web_action_screen.dart';
 import 'package:quax/ui/locale_fallback.dart';
 import 'package:quax/ui/x_icons.dart';
 import 'package:quax/ui/x_style.dart';
-import 'package:quax/utils/urls.dart';
 import 'package:quax/utils/x_post_url.dart';
 
 const xTweetAvatarSize = 44.0;
@@ -216,8 +216,8 @@ class XMediaFrame extends StatelessWidget {
   }
 }
 
-/// The row of actions under a tweet. Replying and reposting open the post in X, where the user acts, since QuaX cannot
-/// post. What the other actions do is up to the tweet tile.
+/// The row of actions under a tweet. Replying and reposting open X's own page in QuaX, where the user acts, since QuaX
+/// cannot post. What the other actions do is up to the tweet tile.
 class XActionBar extends StatelessWidget {
   static const defaultIconSize = 18.0;
 
@@ -228,7 +228,6 @@ class XActionBar extends StatelessWidget {
   final VoidCallback onFileTweet;
   final VoidCallback onShare;
   final double iconSize;
-  final Future<void> Function(String url) opener;
 
   /// Spreads the actions over the whole width instead of giving the counted ones an equal slot on the left
   final bool spread;
@@ -243,13 +242,19 @@ class XActionBar extends StatelessWidget {
     required this.onToggleSave,
     required this.onFileTweet,
     required this.onShare,
-    this.opener = openUriExternally,
   });
 
   String _count(int? count) =>
       count == null || count == 0 ? '' : numberFormat.format(count);
 
-  void _openPost() => opener(xPostUri(tweet.user?.screenName, tweet.idStr!));
+  void _openWebAction(BuildContext context, String uri, String title) =>
+      Navigator.push(context, MaterialPageRoute(builder: (_) => XWebActionScreen(uri: uri, title: title)));
+
+  void _reply(BuildContext context) =>
+      _openWebAction(context, xReplyIntentUri(tweet.idStr!), L10n.of(context).x_web_reply);
+
+  void _repost(BuildContext context) =>
+      _openWebAction(context, xRepostIntentUri(tweet.idStr!), L10n.of(context).x_web_repost);
 
   @override
   Widget build(BuildContext context) {
@@ -266,14 +271,14 @@ class XActionBar extends StatelessWidget {
                 icon: XIcons.reply,
                 count: _count(tweet.replyCount),
                 iconSize: iconSize,
-                onTap: _openPost,
+                onTap: () => _reply(context),
                 flushLeft: true),
             _XAction(
                 icon: XIcons.repost,
                 count: _count(reposts),
                 iconSize: iconSize,
                 color: retweeted ? XStyleColors.repost : null,
-                onTap: _openPost),
+                onTap: () => _repost(context)),
             _buildLike(),
             _XAction(icon: XIcons.views, count: _count(tweet.viewCount), iconSize: iconSize),
           ].map(spread ? (action) => action : _slot),

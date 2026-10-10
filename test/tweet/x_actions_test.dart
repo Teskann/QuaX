@@ -8,11 +8,10 @@ import 'package:quax/constants.dart';
 import 'package:quax/status.dart';
 import 'package:quax/tweet/_x_tweet_layout.dart';
 import 'package:quax/tweet/tweet.dart';
+import 'package:quax/tweet/x_web_action_screen.dart';
 import 'package:quax/ui/x_icons.dart';
 import 'package:quax/ui/x_sheet.dart';
 import 'package:quax/user.dart';
-import 'package:url_launcher_platform_interface/link.dart';
-import 'package:url_launcher_platform_interface/url_launcher_platform_interface.dart';
 
 import '../ui/fake_images.dart';
 import '../ui/pump_app.dart';
@@ -34,9 +33,13 @@ TweetWithCard _tweet({int replies = 0, int favorites = 0, int views = 0}) => Twe
 
 class _Recorder extends NavigatorObserver {
   final pushed = <RouteSettings>[];
+  final routes = <Route<dynamic>>[];
 
   @override
-  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) => pushed.add(route.settings);
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    pushed.add(route.settings);
+    routes.add(route);
+  }
 }
 
 Future<_Recorder> _pumpTile(WidgetTester tester, TweetWithCard tweet) async {
@@ -50,38 +53,21 @@ Future<_Recorder> _pumpTile(WidgetTester tester, TweetWithCard tweet) async {
       onGenerateRoute: (settings) =>
           MaterialPageRoute(settings: settings, builder: (_) => Scaffold(body: Text('route ${settings.name}'))));
   recorder.pushed.clear();
+  recorder.routes.clear();
   return recorder;
 }
 
 StatusScreenArguments _lastStatus(_Recorder recorder) =>
     recorder.pushed.single.arguments as StatusScreenArguments;
 
-/// Records what is launched, and how, instead of leaving the app
-class _FakeLauncher extends UrlLauncherPlatform {
-  final launched = <({String url, PreferredLaunchMode mode})>[];
-
-  @override
-  LinkDelegate? get linkDelegate => null;
-
-  @override
-  Future<bool> canLaunch(String url) async => true;
-
-  @override
-  Future<bool> launchUrl(String url, LaunchOptions options) async {
-    launched.add((url: url, mode: options.mode));
-    return true;
-  }
+/// The screen a button pushed. It is read from the route without building it, as its web view needs the platform.
+XWebActionScreen _pushedWebAction(WidgetTester tester, _Recorder recorder) {
+  final route = recorder.routes.single as MaterialPageRoute<dynamic>;
+  return route.builder(tester.element(find.byType(XActionBar))) as XWebActionScreen;
 }
 
 void main() {
-  late _FakeLauncher launcher;
-
   setUpAll(() => HttpOverrides.global = FakeImageHttpOverrides());
-
-  setUp(() {
-    launcher = _FakeLauncher();
-    UrlLauncherPlatform.instance = launcher;
-  });
 
   group('Tap on the card', () {
     testWidgets('Should open the post when the card is tapped where nothing else is', (tester) async {
@@ -103,27 +89,27 @@ void main() {
       expect(recorder.pushed.single.name, routeProfile, reason: 'The avatar keeps its own action');
     });
 
-    testWidgets('Should open the post in X from the reply button, without opening it in QuaX', (tester) async {
+    testWidgets('Should open the reply page of X in QuaX from the reply button, without opening the post', (tester) async {
       final recorder = await _pumpTile(tester, _tweet());
 
       await tester.tap(find.byIcon(XIcons.reply));
-      await tester.pump();
 
-      expect(launcher.launched, [(url: 'https://x.com/ada/status/100', mode: PreferredLaunchMode.externalApplication)],
-          reason: 'The reply button hands the post over to the X app, or the browser');
-      expect(recorder.pushed, isEmpty, reason: 'QuaX cannot reply, so its own post screen does not open');
+      final screen = _pushedWebAction(tester, recorder);
+      expect(screen.uri, 'https://x.com/intent/post?in_reply_to=100', reason: 'The page replies to the tapped post');
+      expect(screen.title, 'Reply', reason: 'The page is titled after the action');
+      expect(recorder.pushed.single.name, isNull, reason: 'It is a page of its own, not the post screen of QuaX');
     });
 
-    testWidgets('Should open the post in X from the repost button, without any sheet', (tester) async {
+    testWidgets('Should open the repost page of X in QuaX from the repost button, without any sheet', (tester) async {
       final recorder = await _pumpTile(tester, _tweet());
 
       await tester.tap(find.byIcon(XIcons.repost));
-      await tester.pumpAndSettle();
 
-      expect(launcher.launched, [(url: 'https://x.com/ada/status/100', mode: PreferredLaunchMode.externalApplication)],
-          reason: 'One tap on repost opens the post in the X app, or the browser');
+      final screen = _pushedWebAction(tester, recorder);
+      expect(screen.uri, 'https://x.com/intent/retweet?tweet_id=100', reason: 'The page reposts the tapped post');
+      expect(screen.title, 'Repost', reason: 'The page is titled after the action');
       expect(find.byType(XSheet), findsNothing, reason: 'There is no repost or quote sheet anymore');
-      expect(recorder.pushed, isEmpty, reason: 'The post does not open in QuaX');
+      expect(recorder.pushed.single.name, isNull, reason: 'It is a page of its own, not the post screen of QuaX');
     });
   });
 

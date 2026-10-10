@@ -28,9 +28,6 @@ Future<void> openUri(BuildContext context, String uri) async {
   );
 }
 
-/// Opens an address in another app (the X app for a post, when installed), whatever the browser preference says
-Future<void> openUriExternally(String uri) => launchUrlString(uri, mode: LaunchMode.externalApplication);
-
 sealed class UriParseResult {}
 
 enum ProfileTabs { posts, postsAndReplies, media, saved }
