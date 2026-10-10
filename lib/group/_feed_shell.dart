@@ -6,6 +6,8 @@ import 'package:quax/group/_settings.dart';
 import 'package:quax/group/feed_refresh_controller.dart';
 import 'package:quax/group/group_model.dart';
 import 'package:quax/subscriptions/users_model.dart';
+import 'package:quax/ui/x_frosted.dart';
+import 'package:quax/ui/x_style.dart';
 
 class GroupFeedShell extends StatefulWidget {
   final ScrollController scrollController;
@@ -82,6 +84,20 @@ class _GroupFeedShellState extends State<GroupFeedShell> with AutomaticKeepAlive
     super.dispose();
   }
 
+  Widget _buildAppBar(BuildContext context) {
+    final xStyle = isXStyle(context);
+    return SliverAppBar(
+      backgroundColor: xStyle ? Colors.transparent : Theme.of(context).colorScheme.surface,
+      flexibleSpace: xStyle ? const XFrostedBar(child: SizedBox.expand()) : null,
+      shape: xStyle ? xBarBorder(context) : null,
+      pinned: false,
+      snap: true,
+      floating: true,
+      title: widget.titleBuilder(context),
+      actions: widget.actionsBuilder(context),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -95,14 +111,7 @@ class _GroupFeedShellState extends State<GroupFeedShell> with AutomaticKeepAlive
             floatHeaderSlivers: true,
             headerSliverBuilder: (context, innerBoxIsScrolled) {
               return [
-                SliverAppBar(
-                  backgroundColor: Theme.of(context).colorScheme.surface,
-                  pinned: false,
-                  snap: true,
-                  floating: true,
-                  title: widget.titleBuilder(context),
-                  actions: widget.actionsBuilder(context),
-                ),
+                _buildAppBar(context),
               ];
             },
             body: KeyedSubtree(

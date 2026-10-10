@@ -136,6 +136,18 @@ flutter:
     - assets/icon.png
     - assets/icon-monochrome-432x432.png
 
+  # Phosphor Icons (MIT, see assets/fonts/phosphor/LICENSE), used by the X design
+  fonts:
+    - family: PhosphorRegular
+      fonts:
+        - asset: assets/fonts/phosphor/Phosphor-Regular.ttf
+    - family: PhosphorFill
+      fonts:
+        - asset: assets/fonts/phosphor/Phosphor-Fill.ttf
+    - family: PhosphorBold
+      fonts:
+        - asset: assets/fonts/phosphor/Phosphor-Bold.ttf
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see

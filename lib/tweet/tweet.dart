@@ -24,6 +24,7 @@ import 'package:quax/article/article.dart';
 import 'package:quax/ui/dates.dart';
 import 'package:quax/ui/errors.dart';
 import 'package:quax/ui/locale_fallback.dart';
+import 'package:quax/ui/x_icons.dart';
 import 'package:quax/ui/x_style.dart';
 import 'package:quax/user.dart';
 import 'package:quax/utils/rich_text.dart';
@@ -526,7 +527,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     Widget retweetSidebar = Container();
     if (this.tweet.retweetedStatusWithCard != null) {
       retweetBanner = _TweetTileLeading(
-        icon: Icons.repeat,
+        icon: xStyle ? XIcons.retweetBanner : Icons.repeat,
         onTap: () => Navigator.pushNamed(context, routeProfile,
             arguments: ProfileScreenArguments.fromScreenName(this.tweet.user!.screenName!, null)),
         children: [
@@ -740,7 +741,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
                       style: const TextStyle(fontWeight: FontWeight.w500))),
               if (tweet.user!.verified ?? false) const SizedBox(width: 4),
               if (tweet.user!.verified ?? false)
-                Icon(Icons.verified, size: 18, color: verifiedColor(context))
+                Icon(verifiedIcon(context), size: 18, color: verifiedColor(context))
             ],
           ),
         ),
@@ -771,7 +772,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     );
 
     final pinnedBadge = isPinned
-        ? _TweetTileLeading(icon: Icons.push_pin, children: [
+        ? _TweetTileLeading(icon: xStyle ? XIcons.pinned : Icons.push_pin, children: [
             TextSpan(text: L10n.of(context).pinned_tweet, style: smallStyle)
           ])
         : null;

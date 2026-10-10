@@ -16,6 +16,7 @@ import 'package:quax/search/search.dart';
 import 'package:quax/tweet/_media.dart';
 import 'package:quax/ui/errors.dart';
 import 'package:quax/ui/locale_fallback.dart';
+import 'package:quax/ui/x_icons.dart';
 import 'package:quax/ui/x_style.dart';
 import 'package:quax/user.dart';
 import 'package:quax/utils/urls.dart';
@@ -359,7 +360,7 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
                                           ),
                                           if (user.verified ?? false) const SizedBox(width: 6),
                                           if (user.verified ?? false)
-                                            Icon(Icons.verified, size: 24, color: verifiedColor(context)),
+                                            Icon(verifiedIcon(context), size: 24, color: verifiedColor(context)),
                                           if (user.protected ?? false) const SizedBox(width: 6),
                                           if (user.protected ?? false)
                                             Icon(Icons.lock, size: 24, color: theme.colorScheme.primary)

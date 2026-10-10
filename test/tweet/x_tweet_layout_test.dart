@@ -10,6 +10,7 @@ import 'package:quax/saved/liked_tweet_model.dart';
 import 'package:quax/saved/saved_tweet_model.dart';
 import 'package:quax/tweet/_x_tweet_layout.dart';
 import 'package:quax/tweet/tweet.dart';
+import 'package:quax/ui/x_icons.dart';
 import 'package:quax/user.dart';
 
 import '../ui/fake_images.dart';
@@ -92,14 +93,14 @@ void main() {
           reason: 'The time should follow the handle after a dot, written short as X does');
       expect(tester.getCenter(name).dy, moreOrLessEquals(tester.getCenter(details).dy, epsilon: 1),
           reason: 'The name and the handle should sit on the same line');
-      expect(find.descendant(of: header, matching: find.byIcon(Icons.verified)), findsOneWidget,
+      expect(find.descendant(of: header, matching: find.byIcon(XIcons.verified)), findsOneWidget,
           reason: 'A verified author should get the badge in the header');
     });
 
     testWidgets('Should leave the badge out of unverified authors', (tester) async {
       await _pumpTile(tester, _tweet(verified: false));
 
-      expect(find.byIcon(Icons.verified), findsNothing, reason: 'Only verified authors get a badge');
+      expect(find.byIcon(XIcons.verified), findsNothing, reason: 'Only verified authors get a badge');
     });
 
     testWidgets('Should keep only the time when the author is hidden', (tester) async {
@@ -107,7 +108,7 @@ void main() {
 
       expect(find.text('Ada Lovelace'), findsNothing, reason: 'The hidden author should not be named');
       expect(find.textContaining('@ada'), findsNothing, reason: 'The hidden author should not show a handle');
-      expect(find.byIcon(Icons.verified), findsNothing, reason: 'The hidden author should not show a badge');
+      expect(find.byIcon(XIcons.verified), findsNothing, reason: 'The hidden author should not show a badge');
     });
 
     testWidgets('Should show a 40px avatar next to the content', (tester) async {
@@ -123,12 +124,12 @@ void main() {
       await _pumpTile(tester, _tweet());
 
       for (final icon in [
-        Icons.chat_bubble_outline,
-        Icons.repeat,
-        Icons.favorite_border,
-        Icons.bar_chart,
-        Icons.bookmark_border,
-        Icons.ios_share,
+        XIcons.reply,
+        XIcons.repost,
+        XIcons.like,
+        XIcons.views,
+        XIcons.bookmark,
+        XIcons.share,
       ]) {
         expect(_inActionBar(find.byIcon(icon)), findsOneWidget, reason: '$icon should be in the action bar');
       }
@@ -151,21 +152,21 @@ void main() {
       final liked = LikedTweetModel()..update([LikedTweet(id: '100', user: '1', content: '{}')], force: true);
       await _pumpTile(tester, _tweet(), likedModel: liked);
 
-      expect(tester.widget<Icon>(find.byIcon(Icons.favorite)).color, _pink, reason: 'A liked tweet should be pink');
-      expect(find.byIcon(Icons.favorite_border), findsNothing, reason: 'The heart should be filled when liked');
+      expect(tester.widget<Icon>(find.byIcon(XIcons.liked)).color, _pink, reason: 'A liked tweet should be pink');
+      expect(find.byIcon(XIcons.like), findsNothing, reason: 'The heart should be filled when liked');
     });
 
     testWidgets('Should paint a reposted tweet in green', (tester) async {
       await _pumpTile(tester, _tweet(retweeted: true));
 
-      expect(tester.widget<Icon>(_inActionBar(find.byIcon(Icons.repeat))).color, _green,
+      expect(tester.widget<Icon>(_inActionBar(find.byIcon(XIcons.repost))).color, _green,
           reason: 'A reposted tweet should be green');
     });
 
     testWidgets('Should leave the repost icon grey when the tweet is not reposted', (tester) async {
       await _pumpTile(tester, _tweet());
 
-      expect(tester.widget<Icon>(_inActionBar(find.byIcon(Icons.repeat))).color, isNot(_green),
+      expect(tester.widget<Icon>(_inActionBar(find.byIcon(XIcons.repost))).color, isNot(_green),
           reason: 'A tweet not reposted should stay grey');
     });
 
@@ -173,7 +174,7 @@ void main() {
       final saved = SavedTweetModel()..update([SavedTweet(id: '100', user: '1', content: '{}', folderId: null)], force: true);
       await _pumpTile(tester, _tweet(), savedModel: saved);
 
-      expect(_inActionBar(find.byIcon(Icons.bookmark)), findsOneWidget, reason: 'A saved tweet shows a filled bookmark');
+      expect(_inActionBar(find.byIcon(XIcons.bookmarked)), findsOneWidget, reason: 'A saved tweet shows a filled bookmark');
     });
   });
 
@@ -215,7 +216,7 @@ void main() {
 
       expect(find.textContaining('Grace Hopper', findRichText: true), findsOneWidget,
           reason: 'The banner should name who reposted');
-      final banner = find.byWidgetPredicate((widget) => widget is Icon && widget.icon == Icons.repeat && widget.size == 16);
+      final banner = find.byWidgetPredicate((widget) => widget is Icon && widget.icon == XIcons.retweetBanner && widget.size == 16);
       expect(banner, findsOneWidget, reason: 'The banner icon should be 16px');
     });
 
@@ -258,6 +259,9 @@ void main() {
           reason: 'The regular design keeps its card');
       expect(find.byType(XTweetLayout), findsNothing, reason: 'The X layout should stay unused');
       expect(find.byIcon(Icons.mode_comment_outlined), findsOneWidget, reason: 'The regular footer should be kept');
+      expect(find.byIcon(Icons.verified), findsOneWidget, reason: 'The regular badge should stay the Material one');
+      expect(find.byIcon(XIcons.verified), findsNothing, reason: 'The X icons belong to the X design only');
+      expect(find.byIcon(XIcons.reply), findsNothing, reason: 'The regular footer should not use the X icons');
     });
   });
 }

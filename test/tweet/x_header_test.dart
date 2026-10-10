@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:quax/tweet/_x_tweet_layout.dart';
+import 'package:quax/ui/x_icons.dart';
 
 import '../ui/pump_app.dart';
 
@@ -44,14 +45,14 @@ void main() {
       await pumpInApp(tester, const XTranslateButton(action: null), settle: false);
 
       expect(find.byType(CircularProgressIndicator), findsOneWidget, reason: 'A loading translation shows progress');
-      expect(find.byIcon(Icons.translate), findsNothing, reason: 'The button cannot be tapped while translating');
+      expect(find.byIcon(XIcons.translate), findsNothing, reason: 'The button cannot be tapped while translating');
     });
 
     testWidgets('Should run its action when tapped', (tester) async {
       var tapped = false;
       await pumpInApp(tester, XTranslateButton(action: (color: null, onTap: () => tapped = true)));
 
-      await tester.tap(find.byIcon(Icons.translate));
+      await tester.tap(find.byIcon(XIcons.translate));
 
       expect(tapped, isTrue, reason: 'Tapping the icon should translate the post');
     });
@@ -59,7 +60,7 @@ void main() {
     testWidgets('Should use the color of its action', (tester) async {
       await pumpInApp(tester, XTranslateButton(action: (color: Colors.red, onTap: () {})));
 
-      expect(tester.widget<Icon>(find.byIcon(Icons.translate)).color, Colors.red,
+      expect(tester.widget<Icon>(find.byIcon(XIcons.translate)).color, Colors.red,
           reason: 'A failed or done translation is told apart by its color');
     });
   });

@@ -3,6 +3,7 @@ import 'package:dart_twitter_api/src/utils/date_utils.dart';
 import 'package:dart_twitter_api/twitter_api.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:quax/ui/x_icons.dart';
 import 'package:quax/ui/x_style.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:quax/constants.dart';
@@ -87,7 +88,7 @@ class UserTile extends StatelessWidget {
         children: [
           Flexible(child: Text(user.name, maxLines: 1, overflow: TextOverflow.ellipsis)),
           if (user.verified) const SizedBox(width: 6),
-          if (user.verified) Icon(Icons.verified, size: 14, color: verifiedColor(context))
+          if (user.verified) Icon(verifiedIcon(context), size: 14, color: verifiedColor(context))
         ],
       ),
       subtitle: Text('@${user.screenName}', maxLines: 1, overflow: TextOverflow.ellipsis),

@@ -5,6 +5,7 @@ import 'package:quax/client/client.dart';
 import 'package:quax/saved/liked_tweet_model.dart';
 import 'package:quax/saved/saved_tweet_model.dart';
 import 'package:quax/ui/locale_fallback.dart';
+import 'package:quax/ui/x_icons.dart';
 import 'package:quax/ui/x_style.dart';
 
 const _avatarSize = 40.0;
@@ -138,7 +139,7 @@ class XTweetHeader extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: colors.primaryText)),
           ),
-        if (verified) ...[const SizedBox(width: 2), Icon(Icons.verified, size: 16, color: XStyleColors.verified)],
+        if (verified) ...[const SizedBox(width: 2), Icon(XIcons.verified, size: 16, color: XStyleColors.verified)],
       ];
 
   /// The handle gives way first when the line is too short, so the time always stays readable, as in X
@@ -210,10 +211,10 @@ class XActionBar extends StatelessWidget {
       child: Row(
         children: [
           ...[
-            _XAction(icon: Icons.chat_bubble_outline, count: _count(tweet.replyCount), onTap: onReply),
-            _XAction(icon: Icons.repeat, count: _count(reposts), color: retweeted ? XStyleColors.repost : null),
+            _XAction(icon: XIcons.reply, count: _count(tweet.replyCount), onTap: onReply),
+            _XAction(icon: XIcons.repost, count: _count(reposts), color: retweeted ? XStyleColors.repost : null),
             _buildLike(),
-            _XAction(icon: Icons.bar_chart, count: _count(tweet.viewCount)),
+            _XAction(icon: XIcons.views, count: _count(tweet.viewCount)),
           ].map(_slot),
           _buildBookmark(),
           _XAction.share(onShare),
@@ -230,7 +231,7 @@ class XActionBar extends StatelessWidget {
       final isLiked = model.isLiked(tweet.idStr!);
 
       return _XAction(
-        icon: isLiked ? Icons.favorite : Icons.favorite_border,
+        icon: isLiked ? XIcons.liked : XIcons.like,
         count: _count(tweet.favoriteCount),
         color: isLiked ? XStyleColors.like : null,
         onTap: () => onToggleLike(model, isLiked),
@@ -243,7 +244,7 @@ class XActionBar extends StatelessWidget {
       final isSaved = model.isSaved(tweet.idStr!);
 
       return _XAction(
-        icon: isSaved ? Icons.bookmark : Icons.bookmark_border,
+        icon: isSaved ? XIcons.bookmarked : XIcons.bookmark,
         color: isSaved ? XStyleColors.of(context).accent : null,
         onTap: () => onToggleSave(model, isSaved),
         onLongPress: onFileTweet,
@@ -268,7 +269,7 @@ class _XAction extends StatelessWidget {
   });
 
   factory _XAction.share(VoidCallback onTap) =>
-      _XAction(icon: Icons.ios_share, onTap: onTap);
+      _XAction(icon: XIcons.share, onTap: onTap);
 
   @override
   Widget build(BuildContext context) {
@@ -311,7 +312,7 @@ class XTranslateButton extends StatelessWidget {
     return InkResponse(
       onTap: action.onTap,
       radius: 16,
-      child: Icon(Icons.translate, size: 16, color: action.color ?? XStyleColors.of(context).secondaryText),
+      child: Icon(XIcons.translate, size: 16, color: action.color ?? XStyleColors.of(context).secondaryText),
     );
   }
 }

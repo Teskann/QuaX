@@ -1,0 +1,50 @@
+import 'package:material_ui/material_ui.dart';
+import 'package:quax/ui/x_style.dart';
+
+const _regular = 'PhosphorRegular';
+const _fill = 'PhosphorFill';
+const _bold = 'PhosphorBold';
+
+/// The icons of the X design, drawn with Phosphor Icons (MIT, https://phosphoricons.com), whose fonts are bundled
+/// in assets/fonts/phosphor and whose code points come from the phosphor_flutter package. The default design keeps
+/// its Material icons.
+abstract final class XIcons {
+  static const reply = IconData(0xe168, fontFamily: _regular); // chatCircle
+  static const repost = IconData(0xe3f6, fontFamily: _regular); // repeat
+  static const like = IconData(0xe2a8, fontFamily: _regular); // heart
+  static const liked = IconData(0xe2a8, fontFamily: _fill);
+  static const views = IconData(0xe150, fontFamily: _regular); // chartBar
+  static const bookmark = IconData(0xe0ea, fontFamily: _regular); // bookmarkSimple
+  static const bookmarked = IconData(0xe0ea, fontFamily: _fill);
+  static const share = IconData(0xe4c0, fontFamily: _regular); // uploadSimple
+  static const translate = IconData(0xe4a2, fontFamily: _regular);
+  static const verified = IconData(0xe606, fontFamily: _fill); // sealCheck
+  static const retweetBanner = repost;
+  static const pinned = IconData(0xe3e2, fontFamily: _fill); // pushPin
+
+  static const _house = IconData(0xe2c2, fontFamily: _regular);
+  static const _houseFill = IconData(0xe2c2, fontFamily: _fill);
+  static const _users = IconData(0xe4d6, fontFamily: _regular);
+  static const _usersFill = IconData(0xe4d6, fontFamily: _fill);
+  static const _search = IconData(0xe30c, fontFamily: _regular); // magnifyingGlass
+  static const _searchBold = IconData(0xe30c, fontFamily: _bold);
+
+  static const navSize = 26.0;
+
+  /// The icons of the bottom navigation by page id, as (icon, selected icon). Pages not listed keep their own icons.
+  static const navigation = <String, (IconData, IconData)>{
+    'feed': (_house, _houseFill),
+    'subscriptions': (_users, _usersFill),
+    'trending': (_search, _searchBold),
+    'saved': (bookmark, bookmarked),
+  };
+
+  /// Every icon of the design, to check them as a whole.
+  static const all = <IconData>[
+    reply, repost, like, liked, views, bookmark, bookmarked, share, translate, verified, retweetBanner, pinned,
+    _house, _houseFill, _users, _usersFill, _search, _searchBold,
+  ];
+}
+
+/// The verified badge: the X seal in the X design, the Material one otherwise.
+IconData verifiedIcon(BuildContext context) => isXStyle(context) ? XIcons.verified : Icons.verified;

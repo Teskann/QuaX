@@ -15,6 +15,8 @@ import 'package:quax/search/search.dart';
 import 'package:quax/subscriptions/subscriptions.dart';
 import 'package:quax/trends/trends_screen.dart';
 import 'package:quax/ui/errors.dart';
+import 'package:quax/ui/x_frosted.dart';
+import 'package:quax/ui/x_icons.dart';
 import 'package:quax/ui/x_style.dart';
 
 typedef NavigationTitleBuilder = String Function(BuildContext context);
@@ -37,7 +39,7 @@ final List<NavigationPage> defaultHomePages = [
       'saved', (c) => L10n.of(c).saved, const Icon(Icons.bookmark_border_outlined), const Icon(Icons.bookmark)),
 ];
 
-/// Draws the divider that tops the navigation bar of the X design.
+/// Frosts the navigation bar of the X design and tops it with a divider.
 class _NavigationFrame extends StatelessWidget {
   final Widget child;
 
@@ -48,8 +50,17 @@ class _NavigationFrame extends StatelessWidget {
     if (!isXStyle(context)) {
       return child;
     }
-    return Column(mainAxisSize: MainAxisSize.min, children: [const Divider(), child]);
+    return XFrostedBar(child: Column(mainAxisSize: MainAxisSize.min, children: [const Divider(), child]));
   }
+}
+
+/// The icon of a page in the navigation bar: the X one in the X design when the page has one.
+Widget _pageIcon(NavigationPage page, {required bool selected, required bool xStyle}) {
+  final xIcons = xStyle ? XIcons.navigation[page.id] : null;
+  if (xIcons == null) {
+    return selected ? page.selectedIcon : page.icon;
+  }
+  return Icon(selected ? xIcons.$2 : xIcons.$1, size: XIcons.navSize);
 }
 
 class HomeScreen extends StatelessWidget {
@@ -221,6 +232,7 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
     final showLabels = !xStyle && widget.prefs.get(optionShowNavigationLabels);
 
     return Scaffold(
+      extendBody: xStyle,
       drawer: Drawer(
         child: ListView(
           children: [
@@ -253,28 +265,27 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
             ? NavigationDestinationLabelBehavior.alwaysShow
             : NavigationDestinationLabelBehavior.alwaysHide,
         shadowColor: Colors.transparent,
-        backgroundColor: xStyle ? null : Colors.transparent,
+        backgroundColor: Colors.transparent,
         indicatorColor: Colors.transparent,
         height: xStyle ? null : 64,
         destinations: widget.pages.asMap().entries
             .map(
               (e) {
-                final index = e.key;
                 final page = e.value;
-                final isSelected = _currentPage == index;
-                final scale = showLabels ? 1.0 : (isSelected ? 1.2 : 1.2);
+                final hasXIcon = xStyle && XIcons.navigation.containsKey(page.id);
+                final scale = showLabels || hasXIcon ? 1.0 : 1.2;
                 return NavigationDestination(
                   icon: AnimatedScale(
                     scale: scale,
                     duration: const Duration(milliseconds: 0),
                     curve: Curves.easeOut,
-                    child: page.icon,
+                    child: _pageIcon(page, selected: false, xStyle: xStyle),
                   ),
                   selectedIcon: AnimatedScale(
                     scale: scale,
                     duration: const Duration(milliseconds: 0),
                     curve: Curves.easeOut,
-                    child: page.selectedIcon,
+                    child: _pageIcon(page, selected: true, xStyle: xStyle),
                   ),
                   label: page.titleBuilder(context),
                 );
