@@ -174,27 +174,27 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
     super.initState();
     _currentPage = widget.initialPage;
     _pageController = PageController(initialPage: widget.initialPage);
-    for (int i = 0; i < widget.pages.length; i++) {
-      _scrollControllers[i] = ScrollController();
-      _focusNodes[i] = FocusNode();
-    }
+    _syncPageResources();
   }
 
   @override
   void didUpdateWidget(covariant ScaffoldWithBottomNavigation oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.pages.length != oldWidget.pages.length) {
-      // Dispose controllers that are no longer needed.
-      _scrollControllers.keys.where((k) => k >= widget.pages.length).toList().forEach((k) {
-        _scrollControllers[k]?.dispose();
-        _scrollControllers.remove(k);
-      });
-      // Create controllers for new pages.
-      for (int i = 0; i < widget.pages.length; i++) {
-        if (!_scrollControllers.containsKey(i)) {
-          _scrollControllers[i] = ScrollController();
-        }
-      }
+      _syncPageResources();
+    }
+  }
+
+  void _syncPageResources() {
+    final count = widget.pages.length;
+    _syncMap(_scrollControllers, count, ScrollController.new, (c) => c.dispose());
+    _syncMap(_focusNodes, count, FocusNode.new, (n) => n.dispose());
+  }
+
+  static void _syncMap<T>(Map<int, T> map, int count, T Function() create, void Function(T) dispose) {
+    map.keys.where((k) => k >= count).toList().forEach((k) => dispose(map.remove(k) as T));
+    for (int i = 0; i < count; i++) {
+      map.putIfAbsent(i, create);
     }
   }
 
@@ -287,6 +287,9 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
     _pageController.dispose();
     for (final controller in _scrollControllers.values) {
       controller.dispose();
+    }
+    for (final node in _focusNodes.values) {
+      node.dispose();
     }
     super.dispose();
   }
