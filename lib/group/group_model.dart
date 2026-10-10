@@ -220,7 +220,8 @@ class GroupsModel extends Store<List<SubscriptionGroup>> {
     );
   }
 
-  Future saveGroup(String? id, String name, String icon, Color? color, Set<String> subscriptions) async {
+  /// Saves the group and returns its id, which is only known once saved when it is a new one. Null when it failed.
+  Future<String?> saveGroup(String? id, String name, String icon, Color? color, Set<String> subscriptions) async {
     await execute(() async {
       var database = await Repository.writable();
 
@@ -255,6 +256,7 @@ class GroupsModel extends Store<List<SubscriptionGroup>> {
       // TODO: Replace the group in the state instead
       return state;
     });
+    return id;
   }
 
   void changeOrderSubscriptionGroupsBy(String? value) async {

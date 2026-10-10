@@ -61,6 +61,9 @@ class TweetTile extends StatefulWidget {
   final bool isBirdwatchQuote;
   final int initialMediaIndex;
 
+  /// Whether this is the post whose conversation is open, which the X design lays out in its own way
+  final bool isFocal;
+
   const TweetTile(
       {super.key,
       required this.clickable,
@@ -74,7 +77,8 @@ class TweetTile extends StatefulWidget {
       this.isBirdwatchQuote = false,
       this.threadConnectTop = false,
       this.threadConnectBottom = false,
-      this.initialMediaIndex = 0});
+      this.initialMediaIndex = 0,
+      this.isFocal = false});
 
   @override
   TweetTileState createState() => TweetTileState();
@@ -429,6 +433,8 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
   Widget _buildXActionBar(TweetWithCard tweet, String tweetText, String shareBaseUrl, Locale locale,
       NumberFormat numberFormat, {bool isArticle = false}) {
     return XActionBar(
+      iconSize: widget.isFocal ? XFocalTweetLayout.actionIconSize : XActionBar.defaultIconSize,
+      spread: widget.isFocal,
       tweet: tweet,
       numberFormat: numberFormat,
       onReply: () => onClickOpenTweet(tweet, focusReply: true),
@@ -479,8 +485,10 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     return pngBytes;
   }
 
-  TextStyle _xTextStyle(BuildContext context) =>
-      TextStyle(fontSize: 16, height: 1.3, color: XStyleColors.of(context).primaryText);
+  TextStyle _xTextStyle(BuildContext context) => TextStyle(
+      fontSize: widget.isFocal ? 17 : 16,
+      height: widget.isFocal ? 1.35 : 1.3,
+      color: XStyleColors.of(context).primaryText);
 
   String? _formatTime(DateTime? time, bool absolute, {bool compact = false}) {
     if (time == null) {
@@ -804,6 +812,25 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
       article,
     ];
     final bodyChildren = [...contentChildren, footerBar];
+
+    if (xStyle && widget.isFocal) {
+      return Consumer<ImportDataModel>(
+          builder: (context, model, child) => RepaintBoundary(
+              key: _globalKey,
+              child: XFocalTweetLayout(
+                badges: [retweetBanner, replyToTile, ?pinnedBadge, ?threadBadge],
+                avatar: avatar,
+                name: hideAuthorInformation ? null : tweet.user!.name,
+                handle: hideAuthorInformation ? null : tweet.user!.screenName,
+                verified: !hideAuthorInformation && (tweet.user!.verified ?? false),
+                trailing: tweet.article == null ? XTranslateButton(action: _translateAction(locale)) : null,
+                body: contentChildren,
+                createdAt: createdAt,
+                views: tweet.viewCount,
+                actionBar: footerBar,
+                onTapProfile: onTapProfile,
+              )));
+    }
 
     if (xStyle) {
       return Consumer<ImportDataModel>(

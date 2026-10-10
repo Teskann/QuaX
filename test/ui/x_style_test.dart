@@ -83,6 +83,48 @@ void main() {
     });
   });
 
+  group('buildXTheme snack bars', () {
+    test('Should float a blue snack bar with white 15px medium text, 8px corners and a 16px margin', () {
+      for (final brightness in Brightness.values) {
+        final snackBar = buildXTheme(brightness).snackBarTheme;
+
+        expect(snackBar.behavior, SnackBarBehavior.floating, reason: 'X snack bars float above the content');
+        expect(snackBar.backgroundColor, const Color(0xFF1D9BF0), reason: 'The background is X blue in $brightness');
+        expect(snackBar.contentTextStyle?.color, Colors.white, reason: 'The text is white in $brightness');
+        expect(snackBar.contentTextStyle?.fontSize, 15, reason: 'The text is 15px');
+        expect(snackBar.contentTextStyle?.fontWeight, FontWeight.w500, reason: 'The text is medium');
+        expect(snackBar.shape, RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            reason: 'The corners are 8px');
+        expect(snackBar.insetPadding, const EdgeInsets.all(16), reason: 'The margin around it is 16px');
+      }
+    });
+
+    testWidgets('Should show a snack bar as the theme describes it', (tester) async {
+      await tester.pumpWidget(MaterialApp(
+        theme: buildXTheme(Brightness.light),
+        home: Scaffold(
+          body: Builder(
+            builder: (context) => TextButton(
+              onPressed: () => ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Done'))),
+              child: const Text('open'),
+            ),
+          ),
+        ),
+      ));
+      await tester.tap(find.text('open'));
+      await tester.pumpAndSettle();
+
+      final snackBar = tester.widget<SnackBar>(find.byType(SnackBar));
+      expect(snackBar.behavior ?? SnackBarBehavior.floating, SnackBarBehavior.floating,
+          reason: 'The snack bar floats');
+      final material = tester.widget<Material>(
+          find.descendant(of: find.byType(SnackBar), matching: find.byType(Material)).first);
+      expect(material.color, const Color(0xFF1D9BF0), reason: 'The shown snack bar is blue');
+      expect(tester.getRect(find.byWidget(material)).left, 16, reason: 'It keeps a 16px margin from the edge');
+      expect(tester.widget<Text>(find.text('Done')).style, isNull, reason: 'The text takes the style of the theme');
+    });
+  });
+
   group('isXStyle', () {
     Future<bool> readStyle(WidgetTester tester, Map<String, dynamic> prefs) async {
       late bool result;

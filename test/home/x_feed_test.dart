@@ -3,9 +3,12 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:provider/provider.dart';
+import 'package:quax/group/group_model.dart';
 import 'package:quax/home/_x_account.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/home/_x_feed.dart';
+import 'package:quax/home/_x_feed_controller.dart';
 import 'package:quax/home/_x_feed_header.dart';
 import 'package:quax/home/_x_timelines.dart';
 import 'package:quax/ui/x_icons.dart';
@@ -15,6 +18,17 @@ import 'package:quax/user.dart';
 
 import '../ui/fake_images.dart';
 import 'x_pump.dart';
+
+/// Stands for the topics screen: makes the group 'g3' and gives its id back
+Widget _fakeTopics(BuildContext context) => Scaffold(
+      body: TextButton(
+        onPressed: () {
+          context.read<GroupsModel>().update([fakeGroup('g1', 'Friends'), fakeGroup('g2', 'News'), fakeGroup('g3', 'Sports')]);
+          Navigator.pop(context, 'g3');
+        },
+        child: const Text('make the timeline'),
+      ),
+    );
 
 void main() {
   setUpAll(() => HttpOverrides.global = FakeImageHttpOverrides());
@@ -28,10 +42,13 @@ void main() {
           id: '-1',
           initialKind: initialKind,
           bodyBuilder: (context, tab) => tab.kind == XFeedTabKind.add
-              ? XAddTimelinesPage(onAdd: () => showCreateTimelineSheet(context))
+              ? XAddTimelinesPage(onAdd: () => showCreateTimelineSheet(context, topicsBuilder: _fakeTopics))
               : Text('body ${tab.id}'),
         ),
       );
+
+  XFeedController xFeedController(WidgetTester tester) =>
+      Provider.of<XFeedController>(tester.element(find.byType(TabBar)), listen: false);
 
   TabController tabController(WidgetTester tester) => tester.widget<TabBar>(find.byType(TabBar)).controller!;
 
@@ -46,16 +63,33 @@ void main() {
       expect(find.byIcon(XIcons.plus), findsOneWidget, reason: 'The Add tab should carry a plus');
     });
 
-    testWidgets('Should size the header like X: 52px toolbar, 44px tabs, 20px logo and a caret after For you',
-        (tester) async {
+    testWidgets('Should size the header like X: 52px toolbar, 44px tabs and a 24px logo', (tester) async {
       await pumpXApp(tester, feed(), groups: groups);
 
       expect(tester.getSize(find.byType(XFeedHeader)).height, 96, reason: 'The toolbar and the tabs make 52 + 44');
       expect(tester.getSize(find.byType(TabBar)).height, 44, reason: 'The tab bar is 44px');
-      expect(tester.getSize(find.byType(Image)).height, 20, reason: 'The logo is 20px');
+      expect(tester.getSize(find.byKey(xFeedLogoKey)).height, 24, reason: 'The Q of the logo is 24px, not its margin');
       expect(tester.getSize(find.byType(XAccountAvatar)), const Size(32, 32), reason: 'The avatar is 32px');
-      expect(find.descendant(of: find.byType(TabBar), matching: find.byIcon(XIcons.caretDown)), findsOneWidget,
-          reason: 'For you carries a chevron, as in X');
+    });
+
+    testWidgets('Should show the chevron of For you only while For you is selected', (tester) async {
+      await pumpXApp(tester, feed(), groups: groups);
+      final chevron = find.descendant(of: find.byType(TabBar), matching: find.byIcon(XIcons.caretDown));
+      expect(chevron, findsOneWidget, reason: 'For you is selected, so it carries the chevron');
+
+      await tester.tap(find.text('Following'));
+      await tester.pumpAndSettle();
+      expect(chevron, findsNothing, reason: 'Another tab is selected, so the chevron is gone');
+
+      await tester.tap(find.text('For you'));
+      await tester.pumpAndSettle();
+      expect(chevron, findsOneWidget, reason: 'The chevron comes back with the selection');
+    });
+
+    testWidgets('Should not show the chevron when the app opens on Following', (tester) async {
+      await pumpXApp(tester, feed(initialKind: XFeedTabKind.following), groups: groups);
+
+      expect(find.byIcon(XIcons.caretDown), findsNothing, reason: 'For you is not selected');
     });
 
     testWidgets('Should open on the tab the user chose as default', (tester) async {
@@ -156,6 +190,78 @@ void main() {
       expect(tester.widget<TabBar>(find.byType(TabBar)).isScrollable, isTrue, reason: 'Many tabs scroll');
       expect(tester.widget<TabBar>(find.byType(TabBar)).tabAlignment, TabAlignment.start,
           reason: 'Scrolling tabs start at the left');
+      expect(tester.widget<TabBar>(find.byType(TabBar)).labelPadding, const EdgeInsets.symmetric(horizontal: 16),
+          reason: 'Labels have 16px on each side');
+      expect(tester.getTopLeft(find.text('For you')).dx, 16, reason: 'The first tab starts after its padding');
+    });
+
+    testWidgets('Should scroll the selected tab into view and show the first one whole when it is selected',
+        (tester) async {
+      final many = List.generate(12, (i) => fakeGroup('m$i', 'A long group name $i'));
+      await pumpXApp(tester, feed(), groups: many);
+      final width = tester.getSize(find.byType(TabBar)).width;
+
+      xFeedController(tester).selectGroup('m11');
+      await tester.pumpAndSettle();
+      expect(tester.getRect(find.text('A long group name 11')).right, lessThanOrEqualTo(width),
+          reason: 'The last tab should be scrolled into view');
+
+      await tester.drag(find.byType(TabBar), const Offset(5000, 0));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('For you'));
+      await tester.pumpAndSettle();
+      expect(tester.getTopLeft(find.text('For you')).dx, 16, reason: 'The first tab should not be cut');
+    });
+  });
+
+  group('XFeedScreen group selection', () {
+    testWidgets('Should select the tab of a group created from the Add page', (tester) async {
+      final app = await pumpXApp(tester, feed(), groups: groups);
+      await tester.tap(find.text('Add'));
+      await tester.pumpAndSettle();
+      expect(find.text('Explore your interests'), findsOneWidget, reason: 'The Add page is shown');
+
+      app.groups.update([...groups, fakeGroup('g3', 'Sports')]);
+      await tester.pumpAndSettle();
+      xFeedController(tester).selectGroup('g3');
+      await tester.pumpAndSettle();
+
+      expect(tabController(tester).index, 4, reason: 'Sports is the fourth tab after the groups');
+      expect(find.text('body g3'), findsOneWidget, reason: 'The new timeline should be the one shown');
+    });
+
+    testWidgets('Should select the new group even when it is announced before the tabs reload', (tester) async {
+      final app = await pumpXApp(tester, feed(), groups: groups);
+
+      xFeedController(tester).selectGroup('g3');
+      app.groups.update([...groups, fakeGroup('g3', 'Sports')]);
+      await tester.pumpAndSettle();
+
+      expect(find.text('body g3'), findsOneWidget, reason: 'The selection waits for the group to be there');
+    });
+
+    testWidgets('Should select the timeline created from a topic', (tester) async {
+      await pumpXApp(tester, feed(), groups: groups);
+      await tester.tap(find.text('Add'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Add Timelines'));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('From a topic'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('make the timeline'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('body g3'), findsOneWidget, reason: 'The group returned by the topic screen is selected');
+    });
+
+    testWidgets('Should keep the selected tab when the group announced is unknown', (tester) async {
+      await pumpXApp(tester, feed(), groups: groups);
+
+      xFeedController(tester).selectGroup('nope');
+      await tester.pumpAndSettle();
+
+      expect(find.text('body forYou'), findsOneWidget, reason: 'An unknown group changes nothing');
     });
   });
 

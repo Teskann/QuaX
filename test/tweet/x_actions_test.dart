@@ -11,6 +11,7 @@ import 'package:quax/tweet/_x_repost_sheet.dart';
 import 'package:quax/tweet/_x_tweet_layout.dart';
 import 'package:quax/tweet/tweet.dart';
 import 'package:quax/ui/x_icons.dart';
+import 'package:quax/ui/x_sheet.dart';
 import 'package:quax/user.dart';
 
 import '../home/x_pump.dart';
@@ -103,6 +104,23 @@ void main() {
   });
 
   group('Repost sheet', () {
+    testWidgets('Should be an X sheet with a Cancel button that closes it', (tester) async {
+      await pumpXApp(
+          tester,
+          Builder(
+              builder: (context) => TextButton(
+                  onPressed: () => showXRepostSheet(context, tweetId: '100', screenName: 'ada'),
+                  child: const Text('open sheet'))));
+      await tester.tap(find.text('open sheet'));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(XSheet), findsOneWidget, reason: 'The sheet has the chrome of the X design');
+      await tester.tap(find.text('Cancel'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Repost'), findsNothing, reason: 'Cancel closes the sheet');
+    });
+
     testWidgets('Should open the repost and quote intents', (tester) async {
       final opened = <String>[];
       await pumpXApp(

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dart_twitter_api/twitter_api.dart' show PlaceType, TrendLocation;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:quax/generated/l10n.dart';
@@ -8,6 +9,21 @@ import 'package:quax/home/_x_topics.dart';
 import 'package:quax/ui/x_icons.dart';
 
 import 'x_pump.dart';
+
+XTrends _trends(List<String> names, {String place = 'Worldwide'}) => XTrends(place: place, names: names);
+
+TrendLocation _location(String name, int woeid, {String? countryCode, String? country, String type = 'Country'}) =>
+    TrendLocation()
+  ..name = name
+  ..woeid = woeid
+  ..country = country ?? (countryCode == null ? '' : name)
+  ..countryCode = countryCode
+  ..placeType = (PlaceType()..name = type);
+
+final _worldwide = _location('Worldwide', 1, type: 'Supername');
+final _brazil = _location('Brazil', 23424768, countryCode: 'BR');
+final _saoPaulo = _location('Sao Paulo', 455827, countryCode: 'BR', country: 'Brazil', type: 'Town');
+final _available = [_worldwide, _saoPaulo, _brazil, _location('Canada', 23424775, countryCode: 'CA')];
 
 const _technologyQuery = '(technology OR tech OR gadgets OR software) min_faves:20 -filter:replies';
 
@@ -23,7 +39,7 @@ void main() {
 
   Future<void> start(
     WidgetTester tester, {
-    TrendNamesLoader? loadTrends,
+    TrendsLoader? loadTrends,
     TopicTimelineCreator? createTimeline,
     List<String?>? popped,
   }) async {
@@ -40,7 +56,7 @@ void main() {
                 context,
                 MaterialPageRoute<String>(
                   builder: (_) => XTopicsScreen(
-                    loadTrends: loadTrends ?? () async => [],
+                    loadTrends: loadTrends ?? () async => const XTrends(),
                     createTimeline: createTimeline ?? fakeCreate,
                   ),
                 ),
@@ -145,16 +161,16 @@ void main() {
 
   group('XTopicsScreen trending', () {
     testWidgets('Should show the trends, at most ten', (tester) async {
-      await start(tester, loadTrends: () async => List.generate(12, (i) => '#trend$i'));
+      await start(tester, loadTrends: () async => _trends(List.generate(12, (i) => '#trend$i')));
 
-      expect(find.text('Trending'), findsOneWidget, reason: 'The trends have their section');
+      expect(find.text('Trending in Worldwide'), findsOneWidget, reason: 'The trends have their section');
       expect(find.text('#trend0'), findsOneWidget, reason: 'The first trend should be shown');
       expect(find.text('#trend9'), findsOneWidget, reason: 'The tenth trend should be shown');
       expect(find.text('#trend10'), findsNothing, reason: 'Only ten trends are shown');
     });
 
     testWidgets('Should create the timeline of a trend with the trend as search', (tester) async {
-      await start(tester, loadTrends: () async => ['#quax', 'Some words']);
+      await start(tester, loadTrends: () async => _trends(['#quax', 'Some words']));
 
       await add(tester, '#quax');
 
@@ -162,7 +178,7 @@ void main() {
     });
 
     testWidgets('Should search a trend of several words as a phrase', (tester) async {
-      await start(tester, loadTrends: () async => ['Some words']);
+      await start(tester, loadTrends: () async => _trends(['Some words']));
 
       await add(tester, 'Some words');
 
@@ -172,15 +188,69 @@ void main() {
     testWidgets('Should hide the trends silently when they fail to load', (tester) async {
       await start(tester, loadTrends: () async => throw Exception('rate limited'));
 
-      expect(find.text('Trending'), findsNothing, reason: 'No section without trends');
+      expect(find.textContaining('Trending'), findsNothing, reason: 'No section without trends');
       expect(find.text('Topics'), findsOneWidget, reason: 'The curated topics are still there');
       expect(find.textContaining('Exception'), findsNothing, reason: 'The error is not shown');
     });
 
     testWidgets('Should hide the trending section when there is no trend', (tester) async {
-      await start(tester, loadTrends: () async => []);
+      await start(tester, loadTrends: () async => _trends([]));
 
-      expect(find.text('Trending'), findsNothing, reason: 'An empty section is useless');
+      expect(find.textContaining('Trending'), findsNothing, reason: 'An empty section is useless');
+    });
+  });
+
+  group('XTopicsScreen trending place', () {
+    testWidgets('Should name the place of the trends in the section title', (tester) async {
+      await start(tester, loadTrends: () async => _trends(['#quax'], place: 'Brazil'));
+
+      expect(find.text('Trending in Brazil'), findsOneWidget, reason: 'The section says whose trends these are');
+    });
+
+    testWidgets('Should fall back to a plain title when the place is unknown', (tester) async {
+      await start(tester, loadTrends: () async => const XTrends(names: ['#quax']));
+
+      expect(find.text('Trending'), findsOneWidget, reason: 'Without a place, the title has none either');
+    });
+  });
+
+  group('trendLocationFor', () {
+    test('Should use the country of the locale while the active location is Worldwide', () {
+      final location = trendLocationFor(active: _worldwide, available: _available, countryCode: 'BR');
+
+      expect(location.woeid, _brazil.woeid, reason: 'The country, not one of its towns, replaces Worldwide');
+    });
+
+    test('Should match the country code whatever its case', () {
+      final location = trendLocationFor(active: _worldwide, available: _available, countryCode: 'ca');
+
+      expect(location.name, 'Canada', reason: 'Codes are compared without case');
+    });
+
+    test('Should stay on Worldwide when the country has no location', () {
+      final location = trendLocationFor(active: _worldwide, available: _available, countryCode: 'JP');
+
+      expect(location, same(_worldwide), reason: 'There is nothing better than Worldwide for Japan here');
+    });
+
+    test('Should stay on Worldwide when the locale has no country', () {
+      final location = trendLocationFor(active: _worldwide, available: _available, countryCode: null);
+
+      expect(location, same(_worldwide), reason: 'Without a country there is nothing to look for');
+    });
+
+    test('Should keep an active location that is not Worldwide', () {
+      final canada = _available.last;
+      final location = trendLocationFor(active: canada, available: _available, countryCode: 'BR');
+
+      expect(location, same(canada), reason: 'The choice of the user wins over the locale');
+    });
+
+    test('Should take the country of the app language, else the one of the device', () {
+      expect(localeCountryCode(const Locale('pt', 'BR'), const Locale('en', 'US')), 'BR',
+          reason: 'The language of the app comes first');
+      expect(localeCountryCode(const Locale('pt'), const Locale('en', 'US')), 'US',
+          reason: 'Without a country there, the device decides');
     });
   });
 

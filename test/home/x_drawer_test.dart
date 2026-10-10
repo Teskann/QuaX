@@ -4,9 +4,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:pref/pref.dart';
 import 'package:quax/constants.dart';
+import 'package:quax/home/_x_account.dart';
 import 'package:quax/home/_x_drawer.dart';
 import 'package:quax/home/home_screen.dart';
 import 'package:quax/ui/x_icons.dart';
+import 'package:quax/ui/x_style.dart';
 
 import '../ui/fake_images.dart';
 import 'x_pump.dart';
@@ -75,6 +77,49 @@ void main() {
           tester.getSize(find.ancestor(of: find.text('Settings and privacy'), matching: find.byType(SizedBox)).first).height,
           40,
           reason: 'Secondary rows are 40px high');
+    });
+
+    testWidgets('Should take 93% of a narrow screen', (tester) async {
+      tester.view
+        ..physicalSize = const Size(360, 800)
+        ..devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      await pumpDrawer(tester);
+
+      expect(tester.getSize(find.byType(Drawer)).width, moreOrLessEquals(360 * 0.93),
+          reason: 'The drawer leaves a strip of the page visible');
+    });
+
+    testWidgets('Should stop at 400px on a wide screen', (tester) async {
+      await pumpDrawer(tester);
+
+      expect(tester.getSize(find.byType(Drawer)).width, 400, reason: 'The drawer never gets wider than 400');
+    });
+
+    testWidgets('Should draw a 36px avatar and a 28px outlined more button with a 16px icon', (tester) async {
+      await pumpDrawer(tester);
+
+      expect(tester.getSize(find.byType(XAccountAvatar)), const Size(36, 36), reason: 'The avatar is 36px');
+      final button = find.ancestor(of: find.byIcon(XIcons.dotsThreeVertical), matching: find.byType(Container)).first;
+      expect(tester.getSize(button), const Size(28, 28), reason: 'The circle of the button is 28px');
+      final decoration = tester.widget<Container>(button).decoration! as BoxDecoration;
+      expect(decoration.shape, BoxShape.circle, reason: 'The button is a circle');
+      expect(decoration.border, Border.all(color: XStyleColors.light.secondaryText),
+          reason: 'The circle has a 1px outline in secondary text');
+      expect(tester.widget<Icon>(find.byIcon(XIcons.dotsThreeVertical)).size, 16, reason: 'The icon is 16px');
+    });
+
+    testWidgets('Should inset the dividers by 16px and start the first item right after the first one',
+        (tester) async {
+      await pumpDrawer(tester);
+
+      final dividers = tester.widgetList<Divider>(find.byType(Divider)).toList();
+      expect(dividers, hasLength(2), reason: 'One divider under the header and one above the secondary items');
+      expect(dividers.map((e) => (e.indent, e.endIndent)), everyElement((16.0, 16.0)),
+          reason: 'Dividers stop 16px short of both edges');
+      final profile = find.ancestor(of: find.text('Profile'), matching: find.byType(SizedBox)).first;
+      expect(tester.getTopLeft(profile).dy, tester.getBottomLeft(find.byType(Divider).first).dy,
+          reason: 'The first item has no padding above it');
     });
 
     testWidgets('Should hide the counts the profile did not tell', (tester) async {

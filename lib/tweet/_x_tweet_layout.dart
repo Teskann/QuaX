@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:quax/client/client.dart';
+import 'package:quax/generated/l10n.dart';
 import 'package:quax/saved/liked_tweet_model.dart';
 import 'package:quax/saved/saved_tweet_model.dart';
 import 'package:quax/ui/locale_fallback.dart';
@@ -220,7 +221,7 @@ class XMediaFrame extends StatelessWidget {
 
 /// The row of actions under a tweet. What each action does is up to the tweet tile.
 class XActionBar extends StatelessWidget {
-  static const iconSize = 18.0;
+  static const defaultIconSize = 18.0;
 
   final TweetWithCard tweet;
   final NumberFormat numberFormat;
@@ -230,9 +231,15 @@ class XActionBar extends StatelessWidget {
   final Future<void> Function(SavedTweetModel model, bool isSaved) onToggleSave;
   final VoidCallback onFileTweet;
   final VoidCallback onShare;
+  final double iconSize;
+
+  /// Spreads the actions over the whole width instead of giving the counted ones an equal slot on the left
+  final bool spread;
 
   const XActionBar({
     super.key,
+    this.iconSize = defaultIconSize,
+    this.spread = false,
     required this.tweet,
     required this.numberFormat,
     required this.onReply,
@@ -254,19 +261,26 @@ class XActionBar extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(top: 6),
       child: Row(
+        mainAxisAlignment: spread ? MainAxisAlignment.spaceBetween : MainAxisAlignment.start,
         children: [
           ...[
-            _XAction(icon: XIcons.reply, count: _count(tweet.replyCount), onTap: onReply, flushLeft: true),
+            _XAction(
+                icon: XIcons.reply,
+                count: _count(tweet.replyCount),
+                iconSize: iconSize,
+                onTap: onReply,
+                flushLeft: true),
             _XAction(
                 icon: XIcons.repost,
                 count: _count(reposts),
+                iconSize: iconSize,
                 color: retweeted ? XStyleColors.repost : null,
                 onTap: onRepost),
             _buildLike(),
-            _XAction(icon: XIcons.views, count: _count(tweet.viewCount)),
-          ].map(_slot),
+            _XAction(icon: XIcons.views, count: _count(tweet.viewCount), iconSize: iconSize),
+          ].map(spread ? (action) => action : _slot),
           _buildBookmark(),
-          _XAction.share(onShare),
+          _XAction(icon: XIcons.share, iconSize: iconSize, onTap: onShare),
         ],
       ),
     );
@@ -282,6 +296,7 @@ class XActionBar extends StatelessWidget {
       return _XAction(
         icon: isLiked ? XIcons.liked : XIcons.like,
         count: _count(tweet.favoriteCount),
+        iconSize: iconSize,
         color: isLiked ? XStyleColors.like : null,
         onTap: () => onToggleLike(model, isLiked),
       );
@@ -294,6 +309,7 @@ class XActionBar extends StatelessWidget {
 
       return _XAction(
         icon: isSaved ? XIcons.bookmarked : XIcons.bookmark,
+        iconSize: iconSize,
         color: isSaved ? XStyleColors.of(context).accent : null,
         onTap: () => onToggleSave(model, isSaved),
         onLongPress: onFileTweet,
@@ -305,6 +321,7 @@ class XActionBar extends StatelessWidget {
 class _XAction extends StatelessWidget {
   final IconData icon;
   final String count;
+  final double iconSize;
   final Color? color;
   final VoidCallback? onTap;
   final VoidCallback? onLongPress;
@@ -314,15 +331,13 @@ class _XAction extends StatelessWidget {
 
   const _XAction({
     required this.icon,
+    required this.iconSize,
     this.count = '',
     this.color,
     this.onTap,
     this.onLongPress,
     this.flushLeft = false,
   });
-
-  factory _XAction.share(VoidCallback onTap) =>
-      _XAction(icon: XIcons.share, onTap: onTap);
 
   @override
   Widget build(BuildContext context) {
@@ -338,7 +353,7 @@ class _XAction extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, size: XActionBar.iconSize, color: tint),
+            Icon(icon, size: iconSize, color: tint),
             if (count.isNotEmpty) ...[
               const SizedBox(width: 4),
               Flexible(
@@ -383,4 +398,132 @@ String xRelativeTime(DateTime time, DateTime now) {
   final local = time.toLocal();
   final sameYear = local.year == now.toLocal().year;
   return (sameYear ? DateFormat.MMMd(safeIntlLocale()) : DateFormat.yMMMd(safeIntlLocale())).format(local);
+}
+
+/// The time and the date of a post, as X writes them under a post that is open: "3:45 PM · Sep 5, 2026".
+String xFocalTimestamp(DateTime time, {String? locale}) {
+  final local = time.toLocal();
+  final name = safeIntlLocale(locale);
+  return '${DateFormat.jm(name).format(local)} · ${DateFormat.yMMMd(name).format(local)}';
+}
+
+const _focalPadding = 16.0;
+
+/// The post that was opened, laid out like in the official X app: the author on top with the avatar, then the content
+/// on the whole width, when it was posted and how many times it was seen, and the actions between two dividers.
+class XFocalTweetLayout extends StatelessWidget {
+  static const actionIconSize = 22.0;
+
+  final List<Widget> badges;
+  final Widget avatar;
+
+  /// Null when the author is hidden
+  final String? name;
+  final String? handle;
+  final bool verified;
+  final Widget? trailing;
+  final List<Widget> body;
+  final DateTime? createdAt;
+  final int? views;
+  final Widget actionBar;
+  final VoidCallback onTapProfile;
+
+  const XFocalTweetLayout({
+    super.key,
+    required this.badges,
+    required this.avatar,
+    required this.name,
+    required this.handle,
+    required this.verified,
+    required this.trailing,
+    required this.body,
+    required this.createdAt,
+    required this.views,
+    required this.actionBar,
+    required this.onTapProfile,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final divider = Divider(height: 1, thickness: 1, color: XStyleColors.of(context).divider);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        ...badges,
+        Padding(padding: const EdgeInsets.fromLTRB(_focalPadding, 12, _focalPadding, 0), child: _author(context)),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(_focalPadding, 12, _focalPadding, 0),
+          child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: body),
+        ),
+        _details(context),
+        divider,
+        Padding(padding: const EdgeInsets.symmetric(horizontal: _focalPadding), child: actionBar),
+        divider,
+      ],
+    );
+  }
+
+  Widget _author(BuildContext context) {
+    final colors = XStyleColors.of(context);
+    final trailing = this.trailing;
+    return Row(
+      children: [
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: onTapProfile,
+          child: SizedBox(width: xTweetAvatarSize, height: xTweetAvatarSize, child: avatar),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: onTapProfile,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (name != null) _name(colors),
+                if (handle != null)
+                  Text('@$handle',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 15, color: colors.secondaryText)),
+              ],
+            ),
+          ),
+        ),
+        if (trailing != null) ...[const SizedBox(width: 8), trailing],
+      ],
+    );
+  }
+
+  Widget _name(XStyleColors colors) => Row(children: [
+        Flexible(
+          child: Text(name!,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: colors.primaryText)),
+        ),
+        if (verified) ...[const SizedBox(width: 2), Icon(XIcons.verified, size: 16, color: XStyleColors.verified)],
+      ]);
+
+  Widget _details(BuildContext context) {
+    final colors = XStyleColors.of(context);
+    final createdAt = this.createdAt;
+    final views = this.views;
+    if (createdAt == null && views == null) return const SizedBox(height: 12);
+    final count = views == null ? null : NumberFormat.compact(locale: safeIntlLocale()).format(views);
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(_focalPadding, 12, _focalPadding, 12),
+      child: Text.rich(
+        TextSpan(style: TextStyle(fontSize: 15, color: colors.secondaryText), children: [
+          if (createdAt != null) TextSpan(text: xFocalTimestamp(createdAt)),
+          if (createdAt != null && count != null) const TextSpan(text: ' · '),
+          if (count != null) ...[
+            TextSpan(text: count, style: TextStyle(fontWeight: FontWeight.w700, color: colors.primaryText)),
+            TextSpan(text: ' ${L10n.of(context).views}'),
+          ],
+        ]),
+      ),
+    );
+  }
 }

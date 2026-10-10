@@ -46,9 +46,10 @@ const xTabBarHeight = 44.0;
 /// The height of the home header below the status bar
 const xFeedHeaderHeight = xToolbarHeight + xTabBarHeight;
 
-const _toolbarLogoSize = 20.0;
+const _toolbarLogoSize = 24.0;
 const _avatarSize = 32.0;
-const _tabLabelPadding = 32.0;
+const _tabLabelHorizontalPadding = 16.0;
+const _tabLabelPadding = 2 * _tabLabelHorizontalPadding;
 const _addIconSize = 18.0;
 const _caretIconSize = 14.0;
 
@@ -63,15 +64,17 @@ double _textWidth(BuildContext context, String text) {
   return width;
 }
 
-/// The icon after the label of a tab, if it has one
-(IconData, double)? _tabIcon(XFeedTab tab) => switch (tab.kind) {
+/// The icon after the label of a tab, if it has one: the chevron of For you shows only while it is selected
+(IconData, double)? _tabIcon(XFeedTab tab, {required bool selected}) => switch (tab.kind) {
       XFeedTabKind.add => (XIcons.plus, _addIconSize),
-      XFeedTabKind.forYou => (XIcons.caretDown, _caretIconSize),
+      XFeedTabKind.forYou when selected => (XIcons.caretDown, _caretIconSize),
       _ => null,
     };
 
+// Counts the chevron of For you, so that the tabs do not switch between sharing the width and scrolling as the
+// selection moves
 double _tabWidth(BuildContext context, XFeedTab tab) {
-  final icon = _tabIcon(tab)?.$2;
+  final icon = _tabIcon(tab, selected: true)?.$2;
   return _textWidth(context, tab.label(L10n.of(context))) + (icon == null ? 0 : icon + 4) + _tabLabelPadding;
 }
 
@@ -79,9 +82,9 @@ double _tabWidth(BuildContext context, XFeedTab tab) {
 bool xTabsFit(BuildContext context, List<XFeedTab> tabs, double maxWidth) =>
     tabs.fold(0.0, (widest, tab) => max(widest, _tabWidth(context, tab))) * tabs.length <= maxWidth;
 
-Widget _tabWidget(BuildContext context, XFeedTab tab) {
+Widget _tabWidget(BuildContext context, XFeedTab tab, {required bool selected}) {
   final label = tab.label(L10n.of(context));
-  final icon = _tabIcon(tab);
+  final icon = _tabIcon(tab, selected: selected);
   if (icon == null) {
     return Tab(text: label, height: xTabBarHeight);
   }
@@ -112,24 +115,37 @@ class _XFeedTabs extends StatelessWidget {
           controller: controller,
           isScrollable: !fit,
           tabAlignment: fit ? TabAlignment.fill : TabAlignment.start,
+          labelPadding: const EdgeInsets.symmetric(horizontal: _tabLabelHorizontalPadding),
           onTap: (_) => onTap(),
-          tabs: tabs.map((e) => _tabWidget(context, e)).toList(),
+          tabs: List.generate(
+              tabs.length, (i) => _tabWidget(context, tabs[i], selected: i == controller.index)),
         );
       }),
     );
   }
 }
 
+/// What the Q fills of the Android monochrome icon, which leaves a margin around it, like an icon would
+const _logoGlyphWidthFactor = 242 / 432;
+const _logoGlyphHeightFactor = 286 / 432;
+
+const xFeedLogoKey = Key('x-feed-logo');
+
 class _XLogo extends StatelessWidget {
   const _XLogo();
 
   @override
   Widget build(BuildContext context) {
-    // The Android monochrome icon leaves a margin around the Q, like an icon would
-    return Image.asset('assets/icon-monochrome-432x432.png',
-        height: _toolbarLogoSize,
-        color: XStyleColors.of(context).primaryText,
-        colorBlendMode: BlendMode.srcIn);
+    // The image is scaled up so that the Q, not the whole icon, is as tall as the logo, and its margin is cropped
+    return Align(
+      key: xFeedLogoKey,
+      widthFactor: _logoGlyphWidthFactor,
+      heightFactor: _logoGlyphHeightFactor,
+      child: Image.asset('assets/icon-monochrome-432x432.png',
+          height: _toolbarLogoSize / _logoGlyphHeightFactor,
+          color: XStyleColors.of(context).primaryText,
+          colorBlendMode: BlendMode.srcIn),
+    );
   }
 }
 

@@ -96,6 +96,7 @@ ThemeData buildXTheme(Brightness brightness) {
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(),
     ),
+    snackBarTheme: _buildXSnackBarTheme(colors),
     tabBarTheme: _buildXTabBarTheme(colors),
     navigationBarTheme: _buildXNavigationBarTheme(colors),
   );
@@ -104,6 +105,14 @@ ThemeData buildXTheme(Brightness brightness) {
 /// The text scale of the app. X ignores the scale chosen inside the app and follows the system one only.
 TextScaler appTextScaler({required bool xStyle, required double appFactor, required double systemFactor}) =>
     TextScaler.linear((xStyle ? 1.0 : appFactor) * systemFactor);
+
+SnackBarThemeData _buildXSnackBarTheme(XStyleColors colors) => SnackBarThemeData(
+  behavior: SnackBarBehavior.floating,
+  backgroundColor: colors.accent,
+  contentTextStyle: const TextStyle(fontFamily: xFontFamily, fontSize: 15, fontWeight: FontWeight.w500, color: Colors.white),
+  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+  insetPadding: const EdgeInsets.all(16),
+);
 
 const xTabLabelStyle = TextStyle(fontFamily: xFontFamily, fontSize: 15, fontWeight: FontWeight.w700);
 

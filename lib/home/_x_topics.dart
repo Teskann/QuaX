@@ -1,3 +1,6 @@
+import 'dart:ui' show PlatformDispatcher;
+
+import 'package:dart_twitter_api/twitter_api.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
@@ -10,8 +13,17 @@ import 'package:quax/subscriptions/users_model.dart';
 import 'package:quax/trends/trends_model.dart';
 import 'package:quax/ui/x_icons.dart';
 import 'package:quax/ui/x_style.dart';
+import 'package:quax/utils/iterables.dart';
 
-typedef TrendNamesLoader = Future<List<String>> Function();
+/// The names of the trends of a place, and the name of that place
+class XTrends {
+  final String? place;
+  final List<String> names;
+
+  const XTrends({this.place, this.names = const []});
+}
+
+typedef TrendsLoader = Future<XTrends> Function();
 
 /// Makes a timeline of the search [query] named [name], and returns the id of its group.
 typedef TopicTimelineCreator = Future<String> Function(String name, String query);
@@ -21,7 +33,38 @@ const _maxTrends = 10;
 /// The search that finds a trend: a trend of several words is searched as a phrase.
 String trendQuery(String name) => name.contains(RegExp(r'\s')) ? '"$name"' : name;
 
-/// The names of the trends of the active location.
+const _worldwideWoeid = 1;
+
+bool _isWorldwide(TrendLocation location) => (location.woeid ?? _worldwideWoeid) == _worldwideWoeid;
+
+bool _isCountry(TrendLocation location) =>
+    location.placeType?.name == 'Country' || (location.country != null && location.country == location.name);
+
+/// The country of the user: the one of the language chosen for the app, else the one of the device
+String? localeCountryCode(Locale appLocale, Locale deviceLocale) => appLocale.countryCode ?? deviceLocale.countryCode;
+
+/// The location whose trends to show: the [active] one, unless it is Worldwide and there is a location for the country
+/// [countryCode] among the [available] ones.
+TrendLocation trendLocationFor({
+  required TrendLocation active,
+  required List<TrendLocation> available,
+  required String? countryCode,
+}) {
+  if (!_isWorldwide(active) || countryCode == null) return active;
+  final country = available.firstWhereOrNull(
+      (e) => _isCountry(e) && e.countryCode?.toUpperCase() == countryCode.toUpperCase());
+  return country ?? active;
+}
+
+Future<List<TrendLocation>> _availableLocations() async {
+  try {
+    return await Twitter.getTrendLocations();
+  } catch (_) {
+    return const [];
+  }
+}
+
+/// The names of the trends of the location [woeid].
 Future<List<String>> loadActiveTrendNames(int woeid) async {
   final trends = await Twitter.getTrends(woeid);
   return trends
@@ -31,18 +74,30 @@ Future<List<String>> loadActiveTrendNames(int woeid) async {
       .toList(growable: false);
 }
 
-class XTrendingTopicsModel extends Store<List<String>> {
-  final TrendNamesLoader _load;
+/// The trends of the [active] location, or of the country of the user while the active one is Worldwide.
+Future<XTrends> loadActiveTrends(TrendLocation active, String? countryCode) async {
+  final available = _isWorldwide(active) && countryCode != null ? await _availableLocations() : const <TrendLocation>[];
+  final location = trendLocationFor(active: active, available: available, countryCode: countryCode);
+  return XTrends(place: location.name, names: await loadActiveTrendNames(location.woeid ?? _worldwideWoeid));
+}
 
-  XTrendingTopicsModel(this._load) : super(const []);
+class XTrendingTopicsModel extends Store<XTrends> {
+  final TrendsLoader _load;
 
-  Future<void> load() => execute(() async => (await _load()).take(_maxTrends).toList(growable: false));
+  XTrendingTopicsModel(this._load) : super(const XTrends());
+
+  Future<void> load() async {
+    await execute(() async {
+      final trends = await _load();
+      return XTrends(place: trends.place, names: trends.names.take(_maxTrends).toList(growable: false));
+    });
+  }
 }
 
 /// Where the user picks the topic of a new timeline: a custom search, a trend or a ready-made topic. Pops with the id
 /// of the group of the timeline.
 class XTopicsScreen extends StatefulWidget {
-  final TrendNamesLoader? loadTrends;
+  final TrendsLoader? loadTrends;
   final TopicTimelineCreator? createTimeline;
 
   const XTopicsScreen({super.key, this.loadTrends, this.createTimeline});
@@ -56,17 +111,27 @@ class _XTopicsScreenState extends State<XTopicsScreen> {
   late final TopicTimelineCreator _create;
   final _controller = TextEditingController();
   bool _adding = false;
+  bool _trendsRequested = false;
 
   @override
   void initState() {
     super.initState();
     _trends = XTrendingTopicsModel(widget.loadTrends ?? _loadActiveTrends);
     _create = widget.createTimeline ?? _createAndReload;
-    _trends.load();
   }
 
-  Future<List<String>> _loadActiveTrends() =>
-      loadActiveTrendNames(context.read<UserTrendLocationModel>().state.active.woeid ?? 1);
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_trendsRequested) {
+      _trendsRequested = true;
+      _trends.load();
+    }
+  }
+
+  Future<XTrends> _loadActiveTrends() => loadActiveTrends(
+      context.read<UserTrendLocationModel>().state.active,
+      localeCountryCode(Localizations.localeOf(context), PlatformDispatcher.instance.locale));
 
   Future<String> _createAndReload(String name, String query) async {
     final subscriptions = context.read<SubscriptionsModel>();
@@ -177,22 +242,25 @@ class _TrendingSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScopedBuilder<XTrendingTopicsModel, List<String>>(
+    return ScopedBuilder<XTrendingTopicsModel, XTrends>(
       store: model,
       onLoading: (_) => const SizedBox.shrink(),
       onError: (_, _) => const SizedBox.shrink(),
-      onState: (context, names) => names.isEmpty
+      onState: (context, trends) => trends.names.isEmpty
           ? const SizedBox.shrink()
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _SectionTitle(L10n.of(context).trending),
-                ...names.map((name) => _TopicRow(icon: XIcons.hash, name: name, onAdd: () => onAdd(name))),
+                _SectionTitle(_title(L10n.of(context), trends.place)),
+                ...trends.names.map((name) => _TopicRow(icon: XIcons.hash, name: name, onAdd: () => onAdd(name))),
               ],
             ),
     );
   }
 }
+
+String _title(L10n l10n, String? place) =>
+    place == null || place.isEmpty ? l10n.trending : l10n.trending_in(place);
 
 class _TopicRow extends StatelessWidget {
   final IconData icon;

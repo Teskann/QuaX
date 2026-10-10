@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:intl/intl.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:pref/pref.dart';
@@ -12,6 +14,12 @@ import 'package:quax/ui/errors.dart';
 import 'package:quax/ui/locale_fallback.dart';
 import 'package:quax/ui/x_icons.dart';
 import 'package:quax/ui/x_style.dart';
+
+const _drawerWidthFactor = 0.93;
+const _drawerMaxWidth = 400.0;
+const _avatarSize = 36.0;
+const _moreButtonSize = 28.0;
+const _moreIconSize = 16.0;
 
 typedef XDrawerPageBuilder = Widget Function(String pageId, ScrollController scrollController);
 
@@ -61,7 +69,7 @@ class XDrawer extends StatelessWidget {
     final account = state.account;
     return [
       _XDrawerHeader(state: state, accountsBuilder: accountsBuilder),
-      const Divider(),
+      const _XDrawerDivider(),
       _XDrawerItem.primary(
           icon: XIcons.profile,
           label: l10n.profile,
@@ -69,7 +77,7 @@ class XDrawer extends StatelessWidget {
       _XDrawerItem.primary(icon: XIcons.bookmark, label: l10n.bookmarks, onTap: () => _openPage(context, 'saved')),
       _XDrawerItem.primary(
           icon: XIcons.lists, label: l10n.lists, onTap: () => _openPage(context, 'subscriptions')),
-      const Divider(),
+      const _XDrawerDivider(),
       _XDrawerItem.secondary(
           icon: XIcons.settings, label: l10n.settings_and_privacy, onTap: () => _openSettings(context)),
       if (!pageIds.contains('trending'))
@@ -80,6 +88,7 @@ class XDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      width: min(MediaQuery.sizeOf(context).width * _drawerWidthFactor, _drawerMaxWidth),
       backgroundColor: XStyleColors.of(context).background,
       child: SafeArea(
         child: XAccountBuilder(
@@ -135,11 +144,8 @@ class _XDrawerHeader extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const XAccountAvatar(size: 40),
-              IconButton.outlined(
-                icon: const Icon(XIcons.dotsThreeVertical),
-                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: accountsBuilder)),
-              ),
+              const XAccountAvatar(size: _avatarSize),
+              _MoreButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: accountsBuilder))),
             ],
           ),
           const SizedBox(height: 12),
@@ -159,6 +165,34 @@ class _XDrawerHeader extends StatelessWidget {
     }
     return FilledButton(onPressed: () => openAddAccount(context), child: Text(L10n.of(context).add_account));
   }
+}
+
+class _MoreButton extends StatelessWidget {
+  final VoidCallback onPressed;
+
+  const _MoreButton({required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = XStyleColors.of(context);
+    return InkResponse(
+      onTap: onPressed,
+      customBorder: const CircleBorder(),
+      child: Container(
+        width: _moreButtonSize,
+        height: _moreButtonSize,
+        decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: colors.secondaryText)),
+        child: Icon(XIcons.dotsThreeVertical, size: _moreIconSize, color: colors.primaryText),
+      ),
+    );
+  }
+}
+
+class _XDrawerDivider extends StatelessWidget {
+  const _XDrawerDivider();
+
+  @override
+  Widget build(BuildContext context) => const Divider(indent: 16, endIndent: 16);
 }
 
 class _XAccountIdentity extends StatelessWidget {
