@@ -244,8 +244,7 @@ class XActionBar extends StatelessWidget {
     required this.onShare,
   });
 
-  String _count(int? count) =>
-      count == null || count == 0 ? '' : numberFormat.format(count);
+  String _count(int? count) => count == null || count == 0 ? '' : xCompactCount(count, numberFormat);
 
   void _openWebAction(BuildContext context, String uri, String title) =>
       Navigator.push(context, MaterialPageRoute(builder: (_) => XWebActionScreen(uri: uri, title: title)));
@@ -529,4 +528,14 @@ class XFocalTweetLayout extends StatelessWidget {
       ),
     );
   }
+}
+
+/// How X writes a count: in full under a thousand, then with at most one decimal below ten of a unit and none above
+/// (4.1K, 28K, 542K, 1.2M), cut rather than rounded so a count is never shown higher than it is. [compact] gives the
+/// unit and the decimal sign of the locale.
+String xCompactCount(int count, NumberFormat compact) {
+  if (count < 1000) return '$count';
+  final unit = count < 1000000 ? 1000 : (count < 1000000000 ? 1000000 : 1000000000);
+  final step = count < unit * 10 ? unit ~/ 10 : unit;
+  return compact.format(count - count % step);
 }
