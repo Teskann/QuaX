@@ -1,12 +1,15 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:quax/home/_x_account.dart';
+import 'package:quax/constants.dart';
 import 'package:quax/home/_x_feed.dart';
 import 'package:quax/home/_x_feed_header.dart';
 import 'package:quax/home/_x_timelines.dart';
 import 'package:quax/ui/x_icons.dart';
+import 'package:quax/ui/x_overlay_feed.dart';
 import 'package:quax/ui/x_style.dart';
 import 'package:quax/user.dart';
 
@@ -41,6 +44,18 @@ void main() {
             reason: '$label should be a tab');
       }
       expect(find.byIcon(XIcons.plus), findsOneWidget, reason: 'The Add tab should carry a plus');
+    });
+
+    testWidgets('Should size the header like X: 52px toolbar, 44px tabs, 20px logo and a caret after For you',
+        (tester) async {
+      await pumpXApp(tester, feed(), groups: groups);
+
+      expect(tester.getSize(find.byType(XFeedHeader)).height, 96, reason: 'The toolbar and the tabs make 52 + 44');
+      expect(tester.getSize(find.byType(TabBar)).height, 44, reason: 'The tab bar is 44px');
+      expect(tester.getSize(find.byType(Image)).height, 20, reason: 'The logo is 20px');
+      expect(tester.getSize(find.byType(XAccountAvatar)), const Size(32, 32), reason: 'The avatar is 32px');
+      expect(find.descendant(of: find.byType(TabBar), matching: find.byIcon(XIcons.caretDown)), findsOneWidget,
+          reason: 'For you carries a chevron, as in X');
     });
 
     testWidgets('Should open on the tab the user chose as default', (tester) async {
@@ -122,12 +137,13 @@ void main() {
 
       app.groups.update([groups.first]);
       await tester.pumpAndSettle();
+      await tester.pump(const Duration(milliseconds: 100));
 
       expect(find.text('body forYou'), findsOneWidget, reason: 'Without its group, the first tab is shown');
     });
 
     testWidgets('Should share the width between the tabs when they fit', (tester) async {
-      await pumpXApp(tester, feed(), groups: groups);
+      await pumpXApp(tester, feed(), groups: [groups.first]);
 
       expect(tester.widget<TabBar>(find.byType(TabBar)).isScrollable, isFalse, reason: 'Few tabs share the width');
       expect(tester.widget<TabBar>(find.byType(TabBar)).tabAlignment, TabAlignment.fill,
@@ -140,6 +156,115 @@ void main() {
       expect(tester.widget<TabBar>(find.byType(TabBar)).isScrollable, isTrue, reason: 'Many tabs scroll');
       expect(tester.widget<TabBar>(find.byType(TabBar)).tabAlignment, TabAlignment.start,
           reason: 'Scrolling tabs start at the left');
+    });
+  });
+
+  group('XFeedScreen overlay', () {
+    const statusBar = 24.0;
+
+    Widget scrollingFeed(List<double> insets) => Scaffold(
+          body: XFeedScreen(
+            scrollController: ScrollController(),
+            id: '-1',
+            initialKind: XFeedTabKind.forYou,
+            bodyBuilder: (context, tab) => Builder(builder: (context) {
+              insets
+                ..clear()
+                ..addAll([MediaQuery.paddingOf(context).top, XHeaderInset.of(context)]);
+              return ListView.builder(
+                  itemCount: 100,
+                  itemBuilder: (context, i) => SizedBox(height: 100, child: Text('item $i')));
+            }),
+          ),
+        );
+
+    Future<void> withStatusBar(WidgetTester tester) async {
+      tester.view.devicePixelRatio = 1;
+      tester.view.padding = const FakeViewPadding(top: statusBar);
+      tester.view.viewPadding = const FakeViewPadding(top: statusBar);
+      addTearDown(tester.view.reset);
+    }
+
+    double headerTop(WidgetTester tester) => tester.getTopLeft(find.byType(XFeedHeader)).dy;
+
+    testWidgets('Should lay the header over the body, which starts below it', (tester) async {
+      await withStatusBar(tester);
+      final insets = <double>[];
+      await pumpXApp(tester, scrollingFeed(insets), groups: groups);
+
+      const inset = statusBar + 52 + 44;
+      expect(insets, [inset, inset], reason: 'The body leaves room for the status bar, the toolbar and the tabs');
+      expect(tester.getSize(find.byType(XFeedHeader)).height, inset, reason: 'The header covers exactly that room');
+      expect(tester.getTopLeft(find.text('item 0')).dy, inset, reason: 'The first item starts below the header');
+      expect(tester.getTopLeft(find.byType(ListView)).dy, 0, reason: 'The list itself fills the screen');
+    });
+
+    testWidgets('Should let the content scroll under the header', (tester) async {
+      await withStatusBar(tester);
+      await pumpXApp(tester, scrollingFeed([]), groups: groups);
+
+      await tester.drag(find.byType(ListView), const Offset(0, -40));
+      await tester.pumpAndSettle();
+
+      expect(tester.getTopLeft(find.text('item 0')).dy, lessThan(statusBar + 52 + 44),
+          reason: 'The first item moves up under the header instead of being pushed');
+    });
+
+    testWidgets('Should hide the header scrolling down and bring it back scrolling up', (tester) async {
+      await withStatusBar(tester);
+      await pumpXApp(tester, scrollingFeed([]), groups: groups);
+      expect(headerTop(tester), 0, reason: 'The header starts in view');
+
+      await tester.drag(find.byType(ListView), const Offset(0, -300));
+      await tester.pumpAndSettle();
+      expect(headerTop(tester), -(statusBar + 52 + 44), reason: 'Scrolling down slides the header out of view');
+
+      await tester.drag(find.byType(ListView), const Offset(0, 100));
+      await tester.pumpAndSettle();
+      expect(headerTop(tester), 0, reason: 'Scrolling up brings the header back');
+    });
+
+    testWidgets('Should slide the header over 200ms', (tester) async {
+      await pumpXApp(tester, scrollingFeed([]), groups: groups);
+
+      await tester.drag(find.byType(ListView), const Offset(0, -300));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+
+      expect(headerTop(tester), lessThan(0), reason: 'The header is on its way out');
+      expect(headerTop(tester), greaterThan(-96), reason: 'The header has not left yet halfway through');
+      await tester.pumpAndSettle();
+    });
+
+    testWidgets('Should hide the header at once when animations are disabled', (tester) async {
+      await pumpXApp(tester, scrollingFeed([]), groups: groups, prefs: {optionDisableAnimations: true});
+
+      await tester.drag(find.byType(ListView), const Offset(0, -300));
+      await tester.pump();
+
+      expect(headerTop(tester), -96, reason: 'Without animations the header is gone right away');
+    });
+
+    testWidgets('Should bring the header back when scrolled to the top by the controller', (tester) async {
+      final controller = ScrollController();
+      await pumpXApp(
+          tester,
+          Scaffold(
+              body: XFeedScreen(
+                  scrollController: controller,
+                  id: '-1',
+                  initialKind: XFeedTabKind.forYou,
+                  bodyBuilder: (context, tab) => ListView.builder(
+                      itemCount: 100, itemBuilder: (context, i) => const SizedBox(height: 100)))),
+          groups: groups);
+      await tester.drag(find.byType(ListView), const Offset(0, -300));
+      await tester.pumpAndSettle();
+      expect(headerTop(tester), -96, reason: 'The header is hidden after scrolling down');
+
+      unawaited(controller.animateTo(0, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut));
+      await tester.pumpAndSettle();
+
+      expect(headerTop(tester), 0, reason: 'Reselecting the home tab scrolls to the top and shows the header');
     });
   });
 

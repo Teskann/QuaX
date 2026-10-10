@@ -5,6 +5,7 @@ import 'package:quax/group/group_model.dart';
 import 'package:quax/search/search.dart';
 import 'package:quax/subscriptions/_groups.dart';
 import 'package:quax/ui/x_icons.dart';
+import 'package:quax/ui/x_overlay_feed.dart';
 import 'package:quax/ui/x_style.dart';
 
 /// The ways to create a timeline, which becomes a tab of the home header.
@@ -68,6 +69,7 @@ class XAddTimelinesPage extends StatelessWidget {
     final l10n = L10n.of(context);
     return CustomScrollView(
       slivers: [
+        SliverPadding(padding: EdgeInsets.only(top: XHeaderInset.of(context))),
         SliverFillRemaining(
           hasScrollBody: false,
           child: Center(

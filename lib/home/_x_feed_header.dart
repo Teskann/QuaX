@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:quax/database/entities.dart';
@@ -7,6 +9,7 @@ import 'package:quax/group/group_model.dart';
 import 'package:quax/home/_x_account.dart';
 import 'package:quax/ui/x_frosted.dart';
 import 'package:quax/ui/x_icons.dart';
+import 'package:quax/ui/x_overlay_feed.dart';
 import 'package:quax/ui/x_style.dart';
 
 enum XFeedTabKind { forYou, following, group, add }
@@ -37,14 +40,21 @@ List<XFeedTab> xFeedTabs(List<SubscriptionGroup> groups) => [
       const XFeedTab(XFeedTabKind.add),
     ];
 
-const _toolbarLogoSize = 46.0;
-const _tabLabelStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.bold);
+const xToolbarHeight = 52.0;
+const xTabBarHeight = 44.0;
+
+/// The height of the home header below the status bar
+const xFeedHeaderHeight = xToolbarHeight + xTabBarHeight;
+
+const _toolbarLogoSize = 20.0;
+const _avatarSize = 32.0;
 const _tabLabelPadding = 32.0;
 const _addIconSize = 18.0;
+const _caretIconSize = 14.0;
 
 double _textWidth(BuildContext context, String text) {
   final painter = TextPainter(
-    text: TextSpan(text: text, style: _tabLabelStyle),
+    text: TextSpan(text: text, style: xTabLabelStyle),
     textDirection: Directionality.of(context),
     textScaler: MediaQuery.textScalerOf(context),
   )..layout();
@@ -53,30 +63,39 @@ double _textWidth(BuildContext context, String text) {
   return width;
 }
 
+/// The icon after the label of a tab, if it has one
+(IconData, double)? _tabIcon(XFeedTab tab) => switch (tab.kind) {
+      XFeedTabKind.add => (XIcons.plus, _addIconSize),
+      XFeedTabKind.forYou => (XIcons.caretDown, _caretIconSize),
+      _ => null,
+    };
+
 double _tabWidth(BuildContext context, XFeedTab tab) {
-  final icon = tab.kind == XFeedTabKind.add ? _addIconSize + 4 : 0;
-  return _textWidth(context, tab.label(L10n.of(context))) + icon + _tabLabelPadding;
+  final icon = _tabIcon(tab)?.$2;
+  return _textWidth(context, tab.label(L10n.of(context))) + (icon == null ? 0 : icon + 4) + _tabLabelPadding;
 }
 
-/// Whether the tabs fit side by side in [maxWidth]; they only scroll when they do not.
+/// Whether the tabs fit side by side in [maxWidth], sharing it evenly; they only scroll when they do not.
 bool xTabsFit(BuildContext context, List<XFeedTab> tabs, double maxWidth) =>
-    tabs.fold(0.0, (sum, tab) => sum + _tabWidth(context, tab)) <= maxWidth;
+    tabs.fold(0.0, (widest, tab) => max(widest, _tabWidth(context, tab))) * tabs.length <= maxWidth;
 
 Widget _tabWidget(BuildContext context, XFeedTab tab) {
   final label = tab.label(L10n.of(context));
-  if (tab.kind != XFeedTabKind.add) {
-    return Tab(text: label);
+  final icon = _tabIcon(tab);
+  if (icon == null) {
+    return Tab(text: label, height: xTabBarHeight);
   }
   return Tab(
+    height: xTabBarHeight,
     child: Row(mainAxisSize: MainAxisSize.min, children: [
       Text(label),
       const SizedBox(width: 4),
-      const Icon(XIcons.plus, size: _addIconSize),
+      Icon(icon.$1, size: icon.$2),
     ]),
   );
 }
 
-class _XFeedTabs extends StatelessWidget implements PreferredSizeWidget {
+class _XFeedTabs extends StatelessWidget {
   final List<XFeedTab> tabs;
   final TabController controller;
   final VoidCallback onTap;
@@ -84,22 +103,20 @@ class _XFeedTabs extends StatelessWidget implements PreferredSizeWidget {
   const _XFeedTabs({required this.tabs, required this.controller, required this.onTap});
 
   @override
-  Size get preferredSize => const Size.fromHeight(kTextTabBarHeight + 1);
-
-  @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      final fit = xTabsFit(context, tabs, constraints.maxWidth);
-      return TabBar(
-        controller: controller,
-        isScrollable: !fit,
-        tabAlignment: fit ? TabAlignment.fill : TabAlignment.start,
-        labelStyle: _tabLabelStyle,
-        unselectedLabelStyle: _tabLabelStyle,
-        onTap: (_) => onTap(),
-        tabs: tabs.map((e) => _tabWidget(context, e)).toList(),
-      );
-    });
+    return SizedBox(
+      height: xTabBarHeight,
+      child: LayoutBuilder(builder: (context, constraints) {
+        final fit = xTabsFit(context, tabs, constraints.maxWidth);
+        return TabBar(
+          controller: controller,
+          isScrollable: !fit,
+          tabAlignment: fit ? TabAlignment.fill : TabAlignment.start,
+          onTap: (_) => onTap(),
+          tabs: tabs.map((e) => _tabWidget(context, e)).toList(),
+        );
+      }),
+    );
   }
 }
 
@@ -116,38 +133,46 @@ class _XLogo extends StatelessWidget {
   }
 }
 
-/// The app bar of the home feed in the X design: the account avatar that opens the drawer, the logo, and the tabs.
-class XFeedAppBar extends StatelessWidget {
+/// The header of the home feed in the X design: the account avatar that opens the drawer, the logo, and the tabs, on
+/// a frosted bar that starts under the status bar. It is laid over the feed (see [XOverlayFeed]).
+class XFeedHeader extends StatelessWidget {
   final List<XFeedTab> tabs;
   final TabController controller;
   final VoidCallback onTabTap;
 
-  const XFeedAppBar({super.key, required this.tabs, required this.controller, required this.onTabTap});
+  const XFeedHeader({super.key, required this.tabs, required this.controller, required this.onTabTap});
+
+  Widget _toolbar(BuildContext context) => SizedBox(
+        height: xToolbarHeight,
+        child: NavigationToolbar(
+          leading: IconButton(
+            icon: const XAccountAvatar(size: _avatarSize),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
+          middle: const _XLogo(),
+          trailing: tabs[controller.index].hasSettings
+              ? IconButton(
+                  icon: const Icon(XIcons.dotsThree),
+                  onPressed: () => showFeedSettings(context, context.read<GroupModel>()),
+                )
+              : null,
+          centerMiddle: true,
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
-    return SliverAppBar(
-      backgroundColor: Colors.transparent,
-      flexibleSpace: const XFrostedBar(child: SizedBox.expand()),
-      pinned: false,
-      snap: true,
-      floating: true,
-      centerTitle: true,
-      leading: Builder(
-        builder: (context) => IconButton(
-          icon: const XAccountAvatar(size: 32),
-          onPressed: () => Scaffold.of(context).openDrawer(),
+    return XFrostedBar(
+      child: Padding(
+        padding: EdgeInsets.only(top: MediaQuery.paddingOf(context).top),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _toolbar(context),
+            _XFeedTabs(tabs: tabs, controller: controller, onTap: onTabTap),
+          ],
         ),
       ),
-      title: const _XLogo(),
-      actions: [
-        if (tabs[controller.index].hasSettings)
-          IconButton(
-            icon: const Icon(XIcons.dotsThree),
-            onPressed: () => showFeedSettings(context, context.read<GroupModel>()),
-          ),
-      ],
-      bottom: _XFeedTabs(tabs: tabs, controller: controller, onTap: onTabTap),
     );
   }
 }

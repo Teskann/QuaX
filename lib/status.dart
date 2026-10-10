@@ -3,9 +3,11 @@ import 'package:quax/client/client.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/profile/profile.dart';
 import 'package:quax/tweet/_media.dart';
+import 'package:quax/tweet/_x_reply_composer.dart';
 import 'package:quax/tweet/conversation.dart';
 import 'package:quax/tweet/unavailable_tweet.dart';
 import 'package:quax/ui/errors.dart';
+import 'package:quax/ui/x_style.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +22,7 @@ class StatusScreenArguments {
   final int initialMediaIndex;
   final bool openMediaFullScreen;
   final TweetWithCard? initialTweet;
+  final bool focusReply;
 
   StatusScreenArguments(
       {required this.id,
@@ -27,7 +30,8 @@ class StatusScreenArguments {
       this.tweetOpened = false,
       this.initialMediaIndex = 0,
       this.openMediaFullScreen = false,
-      this.initialTweet});
+      this.initialTweet,
+      this.focusReply = false});
 
   @override
   String toString() {
@@ -48,7 +52,8 @@ class StatusScreen extends StatelessWidget {
         tweetOpened: args.tweetOpened,
         initialMediaIndex: args.initialMediaIndex,
         openMediaFullScreen: args.openMediaFullScreen,
-        initialTweet: args.initialTweet);
+        initialTweet: args.initialTweet,
+        focusReply: args.focusReply);
   }
 }
 
@@ -59,6 +64,7 @@ class _StatusScreen extends StatefulWidget {
   final int initialMediaIndex;
   final bool openMediaFullScreen;
   final TweetWithCard? initialTweet;
+  final bool focusReply;
 
   const _StatusScreen(
       {required this.username,
@@ -66,7 +72,8 @@ class _StatusScreen extends StatefulWidget {
       required this.tweetOpened,
       this.initialMediaIndex = 0,
       this.openMediaFullScreen = false,
-      this.initialTweet});
+      this.initialTweet,
+      this.focusReply = false});
 
   @override
   _StatusScreenState createState() => _StatusScreenState();
@@ -193,6 +200,9 @@ class _StatusScreenState extends State<_StatusScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
+      bottomNavigationBar: isXStyle(context)
+          ? XReplyComposer(tweetId: widget.id, autofocus: widget.focusReply)
+          : null,
       body: ChangeNotifierProvider<TweetContextState>(
         create: (context) => TweetContextState(PrefService.of(context, listen: false).get(optionTweetsHideSensitive)),
         child: _showingPreview ? _buildPreview(context) : _buildConversation(context),

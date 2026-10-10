@@ -76,7 +76,8 @@ class _XFeedScreenState extends State<XFeedScreen> with TickerProviderStateMixin
       key: ValueKey(groupId),
       scrollController: widget.scrollController,
       groupId: groupId,
-      appBarBuilder: (_) => XFeedAppBar(tabs: _tabs, controller: _controller, onTabTap: () => setState(() {})),
+      overlayHeaderHeight: xFeedHeaderHeight,
+      overlayHeaderBuilder: (_) => XFeedHeader(tabs: _tabs, controller: _controller, onTabTap: () => setState(() {})),
       bodyBuilder: (context) => widget.bodyBuilder(context, tab),
     );
   }

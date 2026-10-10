@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter/rendering.dart' show RenderParagraph;
 import 'package:material_ui/material_ui.dart';
 import 'package:quax/tweet/_x_tweet_layout.dart';
 import 'package:quax/ui/x_icons.dart';
@@ -84,6 +85,46 @@ void main() {
 
       expect(find.text(' · 2h'), findsOneWidget, reason: 'The handle gives way before the time');
       expect(tester.takeException(), isNull, reason: 'A long handle must not overflow the line');
+    });
+
+    Future<void> pumpHeader(WidgetTester tester, double width, {bool verified = false}) => pumpInApp(
+        tester,
+        Align(
+            alignment: Alignment.topLeft,
+            child: SizedBox(
+                width: width,
+                child: XTweetHeader(
+                    name: 'Ada Lovelace',
+                    handle: 'a_really_long_handle_that_cannot_fit',
+                    verified: verified,
+                    time: '2h'))));
+
+    bool cut(WidgetTester tester, Finder text) => tester.renderObject<RenderParagraph>(text).didExceedMaxLines;
+
+    testWidgets('Should keep the whole name and cut the handle when only the handle is too long', (tester) async {
+      await pumpHeader(tester, 400);
+
+      expect(cut(tester, find.text('Ada Lovelace')), isFalse, reason: 'The name keeps its width first');
+      expect(cut(tester, find.textContaining('@a_really')), isTrue, reason: 'The handle takes what is left, cut');
+      expect(find.text(' · 2h'), findsOneWidget, reason: 'The time always stays');
+      expect(tester.takeException(), isNull, reason: 'The line must not overflow');
+    });
+
+    testWidgets('Should drop the handle and cut the name when there is no room for the handle', (tester) async {
+      await pumpHeader(tester, 120);
+
+      expect(find.textContaining('@a_really'), findsNothing, reason: 'The handle disappears before the name is cut');
+      expect(cut(tester, find.text('Ada Lovelace')), isTrue, reason: 'The name is cut only when it cannot fit');
+      expect(find.text(' · 2h'), findsOneWidget, reason: 'The time always stays');
+      expect(tester.takeException(), isNull, reason: 'The line must not overflow');
+    });
+
+    testWidgets('Should keep the verified badge next to a cut name', (tester) async {
+      await pumpHeader(tester, 150, verified: true);
+
+      expect(find.byIcon(XIcons.verified), findsOneWidget, reason: 'The badge is never cut');
+      expect(find.text(' · 2h'), findsOneWidget, reason: 'The time always stays');
+      expect(tester.takeException(), isNull, reason: 'The line must not overflow');
     });
 
     testWidgets('Should show only the time when the author is hidden', (tester) async {

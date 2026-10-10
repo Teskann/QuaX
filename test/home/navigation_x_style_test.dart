@@ -53,7 +53,7 @@ void main() {
     await pumpNavigation(tester, xStyle: true);
 
     final icon = tester.widget<Icon>(find.byIcon(XIcons.navigation['feed']!.$2));
-    expect(icon.size, XIcons.navSize, reason: 'The icons of the bar should be 26px');
+    expect(icon.size, XIcons.navSize, reason: 'The icons of the bar should be 24px');
   });
 
   testWidgets('Should keep the icon of pages the X design has no icon for', (tester) async {

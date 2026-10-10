@@ -2,6 +2,9 @@ import 'package:material_ui/material_ui.dart';
 import 'package:pref/pref.dart';
 import 'package:quax/constants.dart';
 
+/// Inter (SIL OFL), the closest open font to Chirp, which X does not release
+const xFontFamily = 'Inter';
+
 /// The palette of the official X app, in its light and "Lights out" variants.
 @immutable
 class XStyleColors {
@@ -72,6 +75,7 @@ ThemeData buildXTheme(Brightness brightness) {
 
   return ThemeData(
     useMaterial3: true,
+    fontFamily: xFontFamily,
     colorScheme: scheme,
     scaffoldBackgroundColor: colors.background,
     dividerTheme: DividerThemeData(
@@ -97,16 +101,22 @@ ThemeData buildXTheme(Brightness brightness) {
   );
 }
 
+/// The text scale of the app. X ignores the scale chosen inside the app and follows the system one only.
+TextScaler appTextScaler({required bool xStyle, required double appFactor, required double systemFactor}) =>
+    TextScaler.linear((xStyle ? 1.0 : appFactor) * systemFactor);
+
+const xTabLabelStyle = TextStyle(fontFamily: xFontFamily, fontSize: 15, fontWeight: FontWeight.w700);
+
 TabBarThemeData _buildXTabBarTheme(XStyleColors colors) => TabBarThemeData(
   indicator: UnderlineTabIndicator(
-    borderSide: BorderSide(width: 4, color: colors.primaryText),
-    borderRadius: BorderRadius.circular(4),
+    borderSide: BorderSide(width: 2.5, color: colors.primaryText),
+    borderRadius: BorderRadius.circular(2),
   ),
-  indicatorSize: TabBarIndicatorSize.label,
+  indicatorSize: TabBarIndicatorSize.tab,
   labelColor: colors.primaryText,
   unselectedLabelColor: colors.secondaryText,
-  labelStyle: const TextStyle(fontWeight: FontWeight.bold),
-  unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
+  labelStyle: xTabLabelStyle,
+  unselectedLabelStyle: xTabLabelStyle,
   dividerColor: colors.divider,
   dividerHeight: 1,
 );
@@ -117,9 +127,9 @@ NavigationBarThemeData _buildXNavigationBarTheme(XStyleColors colors) =>
       surfaceTintColor: Colors.transparent,
       indicatorColor: Colors.transparent,
       elevation: 0,
-      height: 56,
+      height: 52,
       labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
       iconTheme: WidgetStatePropertyAll(
-        IconThemeData(color: colors.primaryText),
+        IconThemeData(color: colors.primaryText, size: 24),
       ),
     );

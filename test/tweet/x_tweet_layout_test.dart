@@ -111,10 +111,10 @@ void main() {
       expect(find.byIcon(XIcons.verified), findsNothing, reason: 'The hidden author should not show a badge');
     });
 
-    testWidgets('Should show a 40px avatar next to the content', (tester) async {
+    testWidgets('Should show a 44px avatar next to the content', (tester) async {
       await _pumpTile(tester, _tweet());
 
-      expect(tester.getSize(find.byType(UserAvatar)), const Size(40, 40), reason: 'X avatars are 40px');
+      expect(tester.getSize(find.byType(UserAvatar)), const Size(44, 44), reason: 'X avatars are 44px');
       expect(find.text('Hello from the X design'), findsOneWidget, reason: 'The text should be shown');
     });
   });
@@ -218,6 +218,24 @@ void main() {
           reason: 'The banner should name who reposted');
       final banner = find.byWidgetPredicate((widget) => widget is Icon && widget.icon == XIcons.retweetBanner && widget.size == 16);
       expect(banner, findsOneWidget, reason: 'The banner icon should be 16px');
+    });
+
+    testWidgets('Should say "reposted" without any time, aligned with the content column', (tester) async {
+      final repost = TweetWithCard()
+        ..idStr = '200'
+        ..createdAt = DateTime.now().subtract(const Duration(hours: 5))
+        ..user = (User()
+          ..idStr = '2'
+          ..name = 'Grace Hopper'
+          ..screenName = 'grace')
+        ..retweetedStatusWithCard = _tweet();
+      await _pumpTile(tester, repost);
+
+      final text = find.text('Grace Hopper reposted', findRichText: true);
+      expect(text, findsOneWidget, reason: 'The banner reads "{name} reposted" and nothing else');
+      expect(tester.getTopLeft(text).dx, xTweetContentLeft, reason: 'The text starts at the content column');
+      final icon = find.byWidgetPredicate((w) => w is Icon && w.icon == XIcons.retweetBanner && w.size == 16);
+      expect(tester.getTopRight(icon).dx, xTweetContentLeft - 4, reason: 'The icon ends 4px before the text');
     });
 
     testWidgets('Should show who a tweet replies to', (tester) async {

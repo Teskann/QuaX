@@ -59,6 +59,24 @@ void main() {
       expect(find.text('Add account'), findsNothing, reason: 'There is an account already');
     });
 
+    testWidgets('Should size the drawer like X', (tester) async {
+      await pumpDrawer(tester);
+
+      TextStyle? styleOf(String text) => tester.widget<Text>(find.text(text)).style;
+      expect(styleOf('Jane Doe')?.fontSize, 20, reason: 'The name is 20px');
+      expect(styleOf('Jane Doe')?.fontWeight, FontWeight.w800, reason: 'The name is extra bold');
+      expect(styleOf('@jane')?.fontSize, 15, reason: 'The handle is 15px');
+      expect(styleOf('Profile')?.fontSize, 20, reason: 'Primary items read at 20px');
+      expect(styleOf('Profile')?.fontWeight, FontWeight.w700, reason: 'Primary items are bold');
+      expect(styleOf('Settings and privacy')?.fontSize, 16, reason: 'Secondary items read at 16px');
+      expect(tester.getSize(find.ancestor(of: find.text('Profile'), matching: find.byType(SizedBox)).first).height, 52,
+          reason: 'Primary rows are 52px high');
+      expect(
+          tester.getSize(find.ancestor(of: find.text('Settings and privacy'), matching: find.byType(SizedBox)).first).height,
+          40,
+          reason: 'Secondary rows are 40px high');
+    });
+
     testWidgets('Should hide the counts the profile did not tell', (tester) async {
       await pumpDrawer(tester, following: null, followers: null);
 

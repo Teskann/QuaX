@@ -12,6 +12,7 @@ import 'package:quax/group/group_model.dart';
 import 'package:quax/tweet/cached_tweet_list.dart';
 import 'package:quax/tweet/tweet_context_scope.dart';
 import 'package:quax/ui/errors.dart';
+import 'package:quax/ui/x_overlay_feed.dart';
 import 'package:provider/provider.dart';
 import 'package:quax/utils/iterables.dart';
 import 'package:quiver/iterables.dart';
@@ -104,7 +105,10 @@ class _SubscriptionGroupScreenContentState extends State<SubscriptionGroupScreen
     if (preview != null && preview.isNotEmpty) {
       return TweetContextScope(child: CachedTweetList(preview));
     }
-    return const Center(child: CircularProgressIndicator());
+    return Padding(
+      padding: EdgeInsets.only(top: XHeaderInset.of(context)),
+      child: const Center(child: CircularProgressIndicator()),
+    );
   }
 
   @override

@@ -22,6 +22,7 @@ import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:quax/utils/urls.dart';
+import 'package:quax/ui/x_overlay_feed.dart';
 
 class SubscriptionGroupFeed extends StatefulWidget {
   final SubscriptionGroupGet group;
@@ -366,7 +367,10 @@ class EmptyGroupFeed extends StatelessWidget {
                 prefix: (l10n) => l10n.unable_to_load_the_tweets_for_the_feed),
           ]);
         }
-        return Center(child: Text(L10n.of(context).this_group_contains_no_subscriptions));
+        return Padding(
+          padding: EdgeInsets.only(top: XHeaderInset.of(context)),
+          child: Center(child: Text(L10n.of(context).this_group_contains_no_subscriptions)),
+        );
       },
     );
   }

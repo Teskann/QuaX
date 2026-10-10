@@ -452,7 +452,7 @@ class _FritterAppState extends State<FritterApp> {
 
     return MediaQuery(
         data: MediaQuery.of(context).copyWith(
-          textScaler: TextScaler.linear(_textScaleFactor * systemScaleFactor),
+          textScaler: appTextScaler(xStyle: _xStyle, appFactor: _textScaleFactor, systemFactor: systemScaleFactor),
         ),
         child: DynamicColorBuilder(builder: (lightDynamic, darkDynamic) {
           return Portal(

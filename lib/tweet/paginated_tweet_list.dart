@@ -6,6 +6,7 @@ import 'package:quax/group/feed_refresh_controller.dart';
 import 'package:quax/tweet/cached_tweet_list.dart';
 import 'package:quax/tweet/conversation.dart';
 import 'package:quax/ui/errors.dart';
+import 'package:quax/ui/x_overlay_feed.dart';
 import 'package:quax/utils/paging.dart';
 
 typedef TweetPageResult = ({List<TweetChain> chains, String? nextCursor});
@@ -264,7 +265,8 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
 
   Widget _wrapWithRefresh(Widget child) {
     if (widget.onRefresh == null) return child;
-    return RefreshIndicator(key: _refreshKey, onRefresh: _onRefreshTriggered, child: child);
+    return RefreshIndicator(
+        key: _refreshKey, edgeOffset: XHeaderInset.of(context), onRefresh: _onRefreshTriggered, child: child);
   }
 
   @override
@@ -281,7 +283,7 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
         SliverToBoxAdapter(
             child: _errorAbove(widget.feed.refreshError.value ?? widget.feed.partialError.value, _showRefresh)),
         SliverPadding(
-          padding: EdgeInsets.only(top: 4, bottom: MediaQuery.of(context).padding.bottom),
+          padding: EdgeInsets.only(top: 4 + XHeaderInset.of(context), bottom: MediaQuery.of(context).padding.bottom),
           sliver: _pagedList(state, fetchNextPage),
         ),
       ]),

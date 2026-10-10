@@ -18,6 +18,7 @@ import 'package:quax/status.dart';
 import 'package:quax/tweet/_expandable_tweet_text.dart';
 import 'package:quax/tweet/_card.dart';
 import 'package:quax/tweet/_media.dart';
+import 'package:quax/tweet/_x_repost_sheet.dart';
 import 'package:quax/tweet/_x_tweet_layout.dart';
 import 'package:quax/tweet/unavailable_tweet.dart';
 import 'package:quax/article/article.dart';
@@ -190,10 +191,14 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     });
   }
 
-  void onClickOpenTweet(TweetWithCard tweet) {
+  void onClickOpenTweet(TweetWithCard tweet, {bool focusReply = false}) {
     Navigator.pushNamed(context, routeStatus,
         arguments: StatusScreenArguments(
-            id: tweet.idStr!, username: tweet.user!.screenName!, tweetOpened: true, initialTweet: tweet));
+            id: tweet.idStr!,
+            username: tweet.user!.screenName!,
+            tweetOpened: true,
+            initialTweet: tweet,
+            focusReply: focusReply));
   }
 
   IconButton _createFooterIconButton(IconData icon, [Color? color, double? fill, Function()? onPressed]) {
@@ -426,7 +431,9 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     return XActionBar(
       tweet: tweet,
       numberFormat: numberFormat,
-      onReply: () => onClickOpenTweet(tweet),
+      onReply: () => onClickOpenTweet(tweet, focusReply: true),
+      onRepost: () =>
+          showXRepostSheet(context, tweetId: tweet.idStr!, screenName: tweet.user!.screenName!),
       onToggleLike: (model, isLiked) => _toggleLike(model, tweet, isLiked),
       onToggleSave: (model, isSaved) => _toggleSave(model, tweet, isSaved),
       onFileTweet: () => _fileTweet(tweet),
@@ -473,7 +480,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
   }
 
   TextStyle _xTextStyle(BuildContext context) =>
-      TextStyle(fontSize: 15, height: 20 / 15, color: XStyleColors.of(context).primaryText);
+      TextStyle(fontSize: 16, height: 1.3, color: XStyleColors.of(context).primaryText);
 
   String? _formatTime(DateTime? time, bool absolute, {bool compact = false}) {
     if (time == null) {
@@ -531,10 +538,14 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
         onTap: () => Navigator.pushNamed(context, routeProfile,
             arguments: ProfileScreenArguments.fromScreenName(this.tweet.user!.screenName!, null)),
         children: [
-          TextSpan(
-              text: L10n.of(context)
-                  .this_tweet_user_name_retweeted(this.tweet.user!.name!, createRelativeDate(this.tweet.createdAt!)),
-              style: smallStyle)
+          xStyle
+              ? TextSpan(
+                  text: L10n.of(context).x_user_reposted(this.tweet.user!.name!),
+                  style: smallStyle.copyWith(fontSize: 13, fontWeight: FontWeight.w700))
+              : TextSpan(
+                  text: L10n.of(context).this_tweet_user_name_retweeted(
+                      this.tweet.user!.name!, createRelativeDate(this.tweet.createdAt!)),
+                  style: smallStyle)
         ],
       );
 
@@ -712,7 +723,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
       createdAt = tweet.createdAt;
     }
 
-    final avatarSize = xStyle ? 40.0 : 48.0;
+    final avatarSize = xStyle ? xTweetAvatarSize : 48.0;
     final avatar = hideAuthorInformation
         ? Icon(Icons.account_circle, size: avatarSize)
         : ClipRRect(
@@ -811,6 +822,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
                 body: contentChildren,
                 actionBar: footerBar,
                 onTapProfile: onTapProfile,
+                onTap: clickable && !widget.tweetOpened ? () => onClickOpenTweet(tweet) : null,
                 showDivider: addSeparator && !widget.threadConnectBottom,
                 connectTop: widget.threadConnectTop,
                 connectBottom: widget.threadConnectBottom,
@@ -992,26 +1004,46 @@ class _TweetTileLeading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final xStyle = isXStyle(context);
+    if (isXStyle(context)) {
+      return _buildX(context);
+    }
 
     return Container(
-      margin: EdgeInsets.only(top: xStyle ? 8 : 16),
+      margin: const EdgeInsets.only(top: 16),
       child: InkWell(
         onTap: onTap,
         child: Container(
           alignment: Alignment.centerLeft,
-          padding: EdgeInsets.only(bottom: 0, left: xStyle ? 60 : 52, right: 16, top: 0),
+          padding: const EdgeInsets.only(bottom: 0, left: 52, right: 16, top: 0),
           child: RichText(
             text: TextSpan(children: [
               WidgetSpan(
-                  child: Icon(icon,
-                      size: xStyle ? 16 : 12,
-                      color: xStyle ? XStyleColors.of(context).secondaryText : Theme.of(context).hintColor),
+                  child: Icon(icon, size: 12, color: Theme.of(context).hintColor),
                   alignment: PlaceholderAlignment.middle),
-              WidgetSpan(child: SizedBox(width: xStyle ? 8 : 16)),
+              const WidgetSpan(child: SizedBox(width: 16)),
               ...children
             ]),
           ),
+        ),
+      ),
+    );
+  }
+
+  /// A single line whose icon ends 4px before the content column of the tweet, which starts at 60
+  Widget _buildX(BuildContext context) {
+    const iconSize = 16.0;
+    const gap = 4.0;
+    return Container(
+      margin: const EdgeInsets.only(top: 8),
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.only(left: xTweetContentLeft - gap - iconSize, right: 16),
+          child: Row(children: [
+            Icon(icon, size: iconSize, color: XStyleColors.of(context).secondaryText),
+            const SizedBox(width: gap),
+            Flexible(child: Text.rich(TextSpan(children: children.toList()), maxLines: 1, overflow: TextOverflow.ellipsis)),
+          ]),
         ),
       ),
     );

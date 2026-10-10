@@ -7,6 +7,7 @@ import 'package:quax/group/feed_refresh_controller.dart';
 import 'package:quax/group/group_model.dart';
 import 'package:quax/subscriptions/users_model.dart';
 import 'package:quax/ui/x_frosted.dart';
+import 'package:quax/ui/x_overlay_feed.dart';
 import 'package:quax/ui/x_style.dart';
 
 class GroupFeedShell extends StatefulWidget {
@@ -15,8 +16,10 @@ class GroupFeedShell extends StatefulWidget {
   final WidgetBuilder? titleBuilder;
   final WidgetBuilder bodyBuilder;
   final List<Widget> Function(BuildContext)? actionsBuilder;
-  // Replaces the whole app bar, which then ignores [titleBuilder] and [actionsBuilder].
-  final WidgetBuilder? appBarBuilder;
+  // Replaces the app bar and the NestedScrollView by a header laid over the body, which scrolls under it. The header
+  // then ignores [titleBuilder] and [actionsBuilder].
+  final WidgetBuilder? overlayHeaderBuilder;
+  final double overlayHeaderHeight;
 
   const GroupFeedShell({
     super.key,
@@ -25,8 +28,9 @@ class GroupFeedShell extends StatefulWidget {
     this.titleBuilder,
     required this.bodyBuilder,
     this.actionsBuilder,
-    this.appBarBuilder,
-  }) : assert(appBarBuilder != null || (titleBuilder != null && actionsBuilder != null));
+    this.overlayHeaderBuilder,
+    this.overlayHeaderHeight = 0,
+  }) : assert(overlayHeaderBuilder != null || (titleBuilder != null && actionsBuilder != null));
 
   @override
   State<GroupFeedShell> createState() => _GroupFeedShellState();
@@ -88,10 +92,6 @@ class _GroupFeedShellState extends State<GroupFeedShell> with AutomaticKeepAlive
   }
 
   Widget _buildAppBar(BuildContext context) {
-    final appBarBuilder = widget.appBarBuilder;
-    if (appBarBuilder != null) {
-      return appBarBuilder(context);
-    }
     final xStyle = isXStyle(context);
     return SliverAppBar(
       backgroundColor: xStyle ? Colors.transparent : Theme.of(context).colorScheme.surface,
@@ -113,21 +113,35 @@ class _GroupFeedShellState extends State<GroupFeedShell> with AutomaticKeepAlive
       builder: (context, child) {
         return Provider<FeedRefreshController>.value(
           value: _feedRefreshController,
-          child: NestedScrollView(
-            controller: widget.scrollController,
-            floatHeaderSlivers: true,
-            headerSliverBuilder: (context, innerBoxIsScrolled) {
-              return [
-                _buildAppBar(context),
-              ];
-            },
-            body: KeyedSubtree(
-              key: ValueKey(_refreshCounter),
-              child: widget.bodyBuilder(context),
-            ),
-          ),
+          child: _buildScrollView(context),
         );
       },
+    );
+  }
+
+  Widget _buildScrollView(BuildContext context) {
+    final body = KeyedSubtree(
+      key: ValueKey(_refreshCounter),
+      child: widget.bodyBuilder(context),
+    );
+    final overlayHeaderBuilder = widget.overlayHeaderBuilder;
+    if (overlayHeaderBuilder != null) {
+      return XOverlayFeed(
+        headerHeight: widget.overlayHeaderHeight,
+        scrollController: widget.scrollController,
+        header: overlayHeaderBuilder(context),
+        body: body,
+      );
+    }
+    return NestedScrollView(
+      controller: widget.scrollController,
+      floatHeaderSlivers: true,
+      headerSliverBuilder: (context, innerBoxIsScrolled) {
+        return [
+          _buildAppBar(context),
+        ];
+      },
+      body: body,
     );
   }
 }

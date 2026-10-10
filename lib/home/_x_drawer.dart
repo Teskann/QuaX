@@ -135,7 +135,7 @@ class _XDrawerHeader extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const XAccountAvatar(size: 48),
+              const XAccountAvatar(size: 40),
               IconButton.outlined(
                 icon: const Icon(XIcons.dotsThreeVertical),
                 onPressed: () => Navigator.push(context, MaterialPageRoute(builder: accountsBuilder)),
@@ -175,11 +175,11 @@ class _XAccountIdentity extends StatelessWidget {
         Text(account.name ?? account.screenName,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: colors.primaryText)),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800, color: colors.primaryText)),
         Text('@${account.screenName}',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontSize: 18, color: colors.secondaryText)),
+            style: TextStyle(fontSize: 15, color: colors.secondaryText)),
         _XFollowCounts(account: account),
       ],
     );
@@ -211,7 +211,7 @@ class _XFollowCounts extends StatelessWidget {
                   TextSpan(children: [
                     TextSpan(
                         text: format.format(e.$1),
-                        style: TextStyle(fontWeight: FontWeight.bold, color: colors.primaryText)),
+                        style: TextStyle(fontWeight: FontWeight.w700, color: colors.primaryText)),
                     TextSpan(text: ' ${e.$2}', style: TextStyle(color: colors.secondaryText)),
                   ]),
                   style: const TextStyle(fontSize: 15),
@@ -232,16 +232,16 @@ class _XDrawerItem extends StatelessWidget {
   final double height;
 
   const _XDrawerItem.primary({required this.icon, required this.label, required this.onTap})
-      : iconSize = 28,
-        fontSize = 26,
-        weight = FontWeight.bold,
-        height = 64;
-
-  const _XDrawerItem.secondary({required this.icon, required this.label, required this.onTap})
       : iconSize = 24,
         fontSize = 20,
-        weight = FontWeight.normal,
+        weight = FontWeight.w700,
         height = 52;
+
+  const _XDrawerItem.secondary({required this.icon, required this.label, required this.onTap})
+      : iconSize = 22,
+        fontSize = 16,
+        weight = FontWeight.w400,
+        height = 40;
 
   @override
   Widget build(BuildContext context) {

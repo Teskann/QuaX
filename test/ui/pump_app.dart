@@ -10,7 +10,10 @@ import 'package:visibility_detector/visibility_detector.dart';
 /// Without [settle], only a few frames are drawn: enough to build the content
 /// while images, which never finish loading in tests, keep spinning.
 Future<void> pumpInApp(WidgetTester tester, Widget body,
-    {bool settle = true, Map<String, dynamic> prefs = const {}}) async {
+    {bool settle = true,
+    Map<String, dynamic> prefs = const {},
+    List<NavigatorObserver> navigatorObservers = const [],
+    RouteFactory? onGenerateRoute}) async {
   // Videos wait for their visibility to be reported, which is otherwise
   // debounced by a timer left pending when the test ends.
   VisibilityDetectorController.instance.updateInterval = Duration.zero;
@@ -36,6 +39,8 @@ Future<void> pumpInApp(WidgetTester tester, Widget body,
     child: MaterialApp(
       localizationsDelegates: appLocalizationsDelegates,
       supportedLocales: L10n.delegate.supportedLocales,
+      navigatorObservers: navigatorObservers,
+      onGenerateRoute: onGenerateRoute,
       home: Scaffold(body: body),
     ),
   ));

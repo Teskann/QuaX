@@ -26,6 +26,8 @@ abstract final class XIcons {
   static const dotsThree = IconData(0xe1fe, fontFamily: _regular);
   static const dotsThreeVertical = IconData(0xe208, fontFamily: _regular);
   static const plus = IconData(0xe3d4, fontFamily: _regular);
+  static const caretDown = IconData(0xe136, fontFamily: _regular);
+  static const pencilSimpleLine = IconData(0xebc6, fontFamily: _regular);
   static const sun = IconData(0xe472, fontFamily: _regular);
   static const moonStars = IconData(0xe58e, fontFamily: _regular);
   static const lists = IconData(0xe2f2, fontFamily: _regular); // listBullets
@@ -40,7 +42,7 @@ abstract final class XIcons {
   static const _searchBold = IconData(0xe30c, fontFamily: _bold);
   static const search = _search;
 
-  static const navSize = 26.0;
+  static const navSize = 24.0;
 
   /// The icons of the bottom navigation by page id, as (icon, selected icon). Pages not listed keep their own icons.
   static const navigation = <String, (IconData, IconData)>{
@@ -53,7 +55,9 @@ abstract final class XIcons {
   /// Every icon of the design, to check them as a whole.
   static const all = <IconData>[
     reply, repost, like, liked, views, bookmark, bookmarked, share, translate, verified, retweetBanner, pinned,
-    userCircle, profile, dotsThree, dotsThreeVertical, plus, sun, moonStars, lists, settings, timelines, search,
+    userCircle, profile, dotsThree, dotsThreeVertical, plus, caretDown, pencilSimpleLine, sun, moonStars, lists,
+    settings, timelines,
+    search,
     _house, _houseFill, _users, _usersFill, _search, _searchBold,
   ];
 }
