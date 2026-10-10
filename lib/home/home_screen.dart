@@ -142,6 +142,18 @@ class _HomeScreenState extends State<_HomeScreen> {
   }
 }
 
+/// The scaffold of the home screen, so that the back button can close its drawer before anything else
+final homeScaffoldKey = GlobalKey<ScaffoldState>();
+
+/// Closes the drawer of [scaffold] when it is open, telling whether it did
+bool closeOpenDrawer(ScaffoldState? scaffold) {
+  if (scaffold == null || !scaffold.isDrawerOpen) {
+    return false;
+  }
+  scaffold.closeDrawer();
+  return true;
+}
+
 class ScaffoldWithBottomNavigation extends StatefulWidget {
   final List<NavigationPage> pages;
   final BasePrefService prefs;
@@ -203,6 +215,7 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
     final l10n = L10n.of(context);
 
     return Scaffold(
+      key: homeScaffoldKey,
       drawer: Drawer(
         child: ListView(
           children: [
