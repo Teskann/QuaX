@@ -711,10 +711,10 @@ class _MoreButtonState extends State<_MoreButton> {
   }
 
   Future<void> _openMenu(BuildContext context) async {
-    await showModalBottomSheet<void>(
-      context: context,
-      useRootNavigator: true,
-      builder: (sheetContext) => SafeArea(
+    await showPlayerSheet<void>(
+      context,
+      widget.controller,
+      (sheetContext) => SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -765,15 +765,68 @@ class _MoreButtonState extends State<_MoreButton> {
   }
 }
 
+bool isLandscapeVideo(BetterPlayerController controller) =>
+    (controller.videoPlayerController?.value.aspectRatio ?? 1.0) >= 1.0;
+
+Future<T?> showPlayerSheet<T>(
+  BuildContext context,
+  BetterPlayerController controller,
+  WidgetBuilder builder, {
+  bool isScrollControlled = false,
+}) {
+  // Fullscreen turns a landscape video inside a portrait screen, so sheets must turn with it.
+  if (!(controller.isFullScreen && isLandscapeVideo(controller))) {
+    return showModalBottomSheet<T>(
+      context: context,
+      isScrollControlled: isScrollControlled,
+      useRootNavigator: true,
+      builder: builder,
+    );
+  }
+  return showGeneralDialog<T>(
+    context: context,
+    useRootNavigator: true,
+    barrierDismissible: true,
+    barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+    barrierColor: Colors.black54,
+    transitionDuration: const Duration(milliseconds: 200),
+    pageBuilder: (sheetContext, _, _) => RotatedBox(
+      quarterTurns: 1,
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: LayoutBuilder(
+          builder: (_, constraints) => ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 640, maxHeight: constraints.maxHeight * 0.9),
+            child: Material(
+              color: Theme.of(sheetContext).colorScheme.surfaceContainerLow,
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+              clipBehavior: Clip.antiAlias,
+              child: ScrollConfiguration(
+                behavior: ScrollConfiguration.of(sheetContext).copyWith(overscroll: false),
+                child: MediaQuery.removePadding(
+                  context: sheetContext,
+                  removeTop: true,
+                  removeBottom: true,
+                  child: builder(sheetContext),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
 const _kSpeeds = [0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0];
 
 Future<void> _openSpeedSheet(BuildContext context, BetterPlayerController controller) async {
   final current = _valueOf(controller).speed;
-  final chosen = await showModalBottomSheet<double>(
-    context: context,
+  final chosen = await showPlayerSheet<double>(
+    context,
+    controller,
+    (_) => _SpeedSheet(speeds: _kSpeeds, selected: current),
     isScrollControlled: true,
-    useRootNavigator: true,
-    builder: (_) => _SpeedSheet(speeds: _kSpeeds, selected: current),
   );
   if (chosen != null) {
     await controller.setSpeed(chosen);
@@ -782,14 +835,14 @@ Future<void> _openSpeedSheet(BuildContext context, BetterPlayerController contro
 
 Future<void> _openQualitySheet(
     BuildContext context, BetterPlayerController controller, List<TweetVideoQuality> qualities) async {
-  final chosen = await showModalBottomSheet<TweetVideoQuality>(
-    context: context,
-    isScrollControlled: true,
-    useRootNavigator: true,
-    builder: (_) => _QualitySheet(
+  final chosen = await showPlayerSheet<TweetVideoQuality>(
+    context,
+    controller,
+    (_) => _QualitySheet(
       qualities: qualities,
       selectedUrl: controller.betterPlayerDataSource?.url,
     ),
+    isScrollControlled: true,
   );
   if (chosen == null || chosen.url == controller.betterPlayerDataSource?.url) {
     return;

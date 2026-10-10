@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:math';
+import 'dart:ui' as ui;
 
 import 'package:better_player_plus/better_player_plus.dart'
     hide VisibilityDetector, VisibilityDetectorController, VisibilityInfo;
 import 'package:dart_twitter_api/twitter_api.dart';
+import 'package:flutter/services.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:pref/pref.dart';
 import 'package:quax/constants.dart';
@@ -127,6 +129,7 @@ class _TweetVideoState extends State<TweetVideo> with WidgetsBindingObserver {
   bool _posterGone = false;
   bool _prefBackground = true;
   final Key _visibilityKey = UniqueKey();
+  final GlobalKey _playerKey = GlobalKey();
   double _visibleFraction = 0.0;
   bool _visibilityReported = false;
   bool _assumedVisible = false;
@@ -224,7 +227,17 @@ class _TweetVideoState extends State<TweetVideo> with WidgetsBindingObserver {
       handleLifecycle: false,
       // GIFs may let the screen sleep; a real video keeps it awake while playing.
       allowedScreenSleep: widget.disableControls,
-      autoDetectFullscreenDeviceOrientation: true,
+      // The activity stays in portrait so the feed underneath does not relayout;
+      // the fullscreen page turns a landscape video itself.
+      autoDetectFullscreenDeviceOrientation: false,
+      deviceOrientationsOnFullScreen: const [DeviceOrientation.portraitUp],
+      // Bars come back once the exit animation is over: showing them at its start
+      // changes the insets mid-animation and makes it stutter.
+      systemOverlaysAfterFullScreen: const [],
+      routePageBuilder: (context, animation, secondaryAnimation, provider) {
+        animation.addStatusListener(_restoreSystemBars);
+        return _FullscreenPage(provider: provider, animation: animation, from: _playerRect);
+      },
       autoDetectFullscreenAspectRatio: true,
       controlsConfiguration: controlsConfiguration,
       // The player's own error UI is suppressed; errors surface via events and
@@ -536,7 +549,18 @@ class _TweetVideoState extends State<TweetVideo> with WidgetsBindingObserver {
       content = _acquireFuture == null ? _buildIdle() : _buildPlayer(key);
     }
 
-    return VisibilityDetector(key: _visibilityKey, onVisibilityChanged: _onVisibilityChanged, child: content);
+    return VisibilityDetector(
+      key: _visibilityKey,
+      onVisibilityChanged: _onVisibilityChanged,
+      child: KeyedSubtree(key: _playerKey, child: content),
+    );
+  }
+
+  /// Where the inline player is on screen: the fullscreen animation starts and ends there.
+  Rect? _playerRect() {
+    final box = _playerKey.currentContext?.findRenderObject();
+    if (box is! RenderBox || !box.attached) return null;
+    return box.localToGlobal(Offset.zero) & box.size;
   }
 
   void _requestPlay() => setState(() {
@@ -705,5 +729,79 @@ class VideoContextState extends ChangeNotifier {
     if (muted && volume > 0 || !muted && volume == 0) {
       _muted.value = !muted;
     }
+  }
+}
+
+class _FullscreenPage extends StatelessWidget {
+  final BetterPlayerControllerProvider provider;
+  final Animation<double> animation;
+  final Rect? Function() from;
+
+  const _FullscreenPage({required this.provider, required this.animation, required this.from});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.transparent,
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          FadeTransition(opacity: animation, child: const ColoredBox(color: Colors.black)),
+          if (isLandscapeVideo(provider.controller))
+            LayoutBuilder(builder: (context, constraints) => _turning(constraints))
+          else
+            FadeTransition(opacity: animation, child: provider),
+        ],
+      ),
+    );
+  }
+
+  // The player sits in a frame that goes from the inline player's rectangle to the
+  // landscape fullscreen size while it turns, so the controls never get scaled.
+  Widget _turning(BoxConstraints constraints) {
+    final screen = constraints.biggest;
+    final center = screen.center(Offset.zero);
+    final aspectRatio = provider.controller.videoPlayerController?.value.aspectRatio ?? 1.0;
+    final fallback = Rect.fromCenter(center: center, width: screen.width, height: screen.width / aspectRatio);
+    final end = ui.Size(screen.height, screen.width);
+    final eased = animation.drive(CurveTween(curve: Curves.easeInOutCubic));
+    return AnimatedBuilder(
+      animation: eased,
+      builder: (context, child) {
+        // Measured on every frame: the feed moves when the system bars come and go.
+        final startRect = from() ?? fallback;
+        final frame = ui.Size.lerp(startRect.size, end, eased.value)!;
+        final angle = eased.value * pi / 2;
+        return Transform.translate(
+          offset: Offset.lerp(startRect.center - center, Offset.zero, eased.value)!,
+          child: Center(
+            child: OverflowBox(
+              minWidth: frame.width,
+              maxWidth: frame.width,
+              minHeight: frame.height,
+              maxHeight: frame.height,
+              child: Transform.scale(
+                scale: _fitScale(frame, angle, screen),
+                child: Transform.rotate(angle: angle, child: provider),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  // 1 unless the turning frame would stick out of the screen.
+  double _fitScale(ui.Size frame, double angle, ui.Size screen) {
+    final width = frame.width * cos(angle).abs() + frame.height * sin(angle).abs();
+    final height = frame.width * sin(angle).abs() + frame.height * cos(angle).abs();
+    return min(1.0, min(screen.width / width, screen.height / height));
+  }
+}
+
+void _restoreSystemBars(AnimationStatus status) {
+  if (status == AnimationStatus.dismissed) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
   }
 }
