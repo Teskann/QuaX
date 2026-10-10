@@ -3,6 +3,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
 import 'package:quax/client/client.dart';
 import 'package:quax/group/feed_refresh_controller.dart';
+import 'package:quax/group/unrelated_posts_warning.dart';
 import 'package:quax/tweet/cached_tweet_list.dart';
 import 'package:quax/tweet/conversation.dart';
 import 'package:quax/ui/errors.dart';
@@ -29,6 +30,10 @@ class TweetFeedController {
   /// Error of the part of the last page that could not be loaded while the rest could, shown above the tweets. Set by
   /// loaders made of several requests, like the group feeds
   final ValueNotifier<PagingError?> partialError = ValueNotifier(null);
+
+  /// Whether X returned posts from people the feed does not follow, which is warned about above the tweets until the
+  /// next refresh
+  final ValueNotifier<bool> unrelatedPostsWarning = ValueNotifier(false);
 
   TweetFeedController() {
     _paging = CursorPagingController<String, TweetChain>(_fetch);
@@ -74,6 +79,7 @@ class TweetFeedController {
     _paging.dispose();
     refreshError.dispose();
     partialError.dispose();
+    unrelatedPostsWarning.dispose();
   }
 }
 
@@ -131,6 +137,7 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
     _controller.addListener(_onControllerChanged);
     widget.feed.refreshError.addListener(_onControllerChanged);
     widget.feed.partialError.addListener(_onControllerChanged);
+    widget.feed.unrelatedPostsWarning.addListener(_onControllerChanged);
   }
 
   @override
@@ -160,9 +167,11 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
       oldWidget.feed.controller.removeListener(_onControllerChanged);
       oldWidget.feed.refreshError.removeListener(_onControllerChanged);
       oldWidget.feed.partialError.removeListener(_onControllerChanged);
+      oldWidget.feed.unrelatedPostsWarning.removeListener(_onControllerChanged);
       _controller.addListener(_onControllerChanged);
       widget.feed.refreshError.addListener(_onControllerChanged);
       widget.feed.partialError.addListener(_onControllerChanged);
+    widget.feed.unrelatedPostsWarning.addListener(_onControllerChanged);
       // A fresh feed may need its first page kicked off again from the preview.
       _firstLoadStarted = false;
     }
@@ -173,6 +182,7 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
     _controller.removeListener(_onControllerChanged);
     widget.feed.refreshError.removeListener(_onControllerChanged);
     widget.feed.partialError.removeListener(_onControllerChanged);
+    widget.feed.unrelatedPostsWarning.removeListener(_onControllerChanged);
     _refreshController?.unregister(_showRefresh);
     super.dispose();
   }
@@ -248,6 +258,13 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
     refreshState.show();
   }
 
+  /// The error, then the warning below it, which are shown above the tweets without replacing them
+  Widget _aboveTweets() => Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        ?_errorAbove(widget.feed.refreshError.value ?? widget.feed.partialError.value, _showRefresh),
+        if (widget.feed.unrelatedPostsWarning.value)
+          UnrelatedPostsWarningCard(onHide: () => widget.feed.unrelatedPostsWarning.value = false),
+      ]);
+
   Widget? _errorAbove(PagingError? error, VoidCallback onRetry) => error == null
       ? null
       : ErrorCard(
@@ -278,8 +295,7 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
     final list = PagingListener<int, TweetChain>(
       controller: _controller,
       builder: (context, state, fetchNextPage) => CustomScrollView(slivers: [
-        SliverToBoxAdapter(
-            child: _errorAbove(widget.feed.refreshError.value ?? widget.feed.partialError.value, _showRefresh)),
+        SliverToBoxAdapter(child: _aboveTweets()),
         SliverPadding(
           padding: EdgeInsets.only(top: 4, bottom: MediaQuery.of(context).padding.bottom),
           sliver: _pagedList(state, fetchNextPage),

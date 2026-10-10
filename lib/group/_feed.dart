@@ -21,7 +21,26 @@ import 'package:quax/utils/paging.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:quax/utils/urls.dart';
+
+/// Whether [tweets] hold a post written by someone who is not one of [users]. Accounts are told apart by their id,
+/// since handles are case-insensitive and change. A keyword search can match any author, so it is never checked
+bool feedContainsUnrelatedTweets(TweetStatus tweets, List<Subscription> users) {
+  if (users.any((user) => user is SearchSubscription)) {
+    return false;
+  }
+  final ids = users.map((user) => user.id).toSet();
+  return tweets.chains.any((chain) => chain.tweets.any((tweet) {
+        final id = tweet.user?.idStr;
+        return id != null && !ids.contains(id);
+      }));
+}
+
+/// Whether the unrelated posts warning is shown after a page was loaded. It stays until the next refresh, so only the
+/// first page can take it down
+bool unrelatedPostsWarningAfterPage(
+    {required bool found, required bool disabled, required bool isFirstPage, required bool shown}) {
+  return !disabled && (found || (!isFirstPage && shown));
+}
 
 class SubscriptionGroupFeed extends StatefulWidget {
   final SubscriptionGroupGet group;
@@ -164,54 +183,6 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
     return (await repository.insert(tableFeedGroupCursor, {}, nullColumnHack: 'id')).toString();
   }
 
-  bool feedContainsUnrelatedTweets(TweetStatus tweets, List<Subscription> users) {
-    final screenNames = users.map((e) => e.screenName).toSet();
-    return tweets.chains.any(
-        (chain) => chain.tweets.any((tweet) => tweet.user != null && !screenNames.contains(tweet.user!.screenName)));
-  }
-
-  Future<void> showUnrelatedPostsInFeedWarning() async {
-    await showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text("⚠️ ${L10n.of(context).feed_issue_detected}"),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(L10n.of(context).feed_contains_unrelated_tweets),
-                SizedBox(height: Theme.of(context).textTheme.bodyMedium!.fontSize! * 2),
-                PrefCheckbox(
-                  title: Text(
-                    L10n.of(context).never_show_again,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  pref: optionDisableWarningsForUnrelatedPostsInFeed,
-                )
-              ],
-            ),
-            actions: [
-              TextButton(
-                child: Text(L10n.of(context).more_info),
-                onPressed: () async {
-                  await openUri(context, "https://github.com/Teskann/QuaX/issues/26");
-                  if (context.mounted) {
-                    Navigator.of(context).pop();
-                  }
-                },
-              ),
-              TextButton(
-                child: Text(L10n.of(context).close),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        });
-  }
-
   /// Search for our next "page" of tweets.
   ///
   /// Here, each page is actually a set of mappings, where the ID of each set is the hash of all the user IDs in that
@@ -298,12 +269,16 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
       return (chains: <TweetChain>[], nextCursor: null);
     }
 
-    if (shouldShowUnrelatedPostsInFeedWarning &&
-        !PrefService.of(context).get(optionDisableWarningsForUnrelatedPostsInFeed)) {
-      await showUnrelatedPostsInFeedWarning();
-    }
+    _updateUnrelatedPostsWarning(shouldShowUnrelatedPostsInFeedWarning, isFirstPage: cursorKey == null);
 
     return (chains: threads, nextCursor: nextCursor);
+  }
+
+  void _updateUnrelatedPostsWarning(bool found, {required bool isFirstPage}) {
+    final disabled = PrefService.of(context).get(optionDisableWarningsForUnrelatedPostsInFeed) == true;
+    final warning = _feedController.unrelatedPostsWarning;
+    warning.value = unrelatedPostsWarningAfterPage(
+        found: found, disabled: disabled, isFirstPage: isFirstPage, shown: warning.value);
   }
 
   /// The error to show above the tweets for the chunks that failed. A rate limit tells how much of the feed could load
