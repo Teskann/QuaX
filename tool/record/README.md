@@ -68,19 +68,21 @@ the directory always matches `links.json` — skipped when a page failed to load
 
 ## x-client-transaction-id
 
-When X changes how it signs requests, every call fails before reaching the API
-(e.g. `Couldn't find the sign module`). To check the port against x.com:
+When X changes how it signs requests, calls fail before reaching the API
+(e.g. `Couldn't find the sign module`).
 
 ```bash
 fvm dart run tool/record/transaction_id.dart
 fvm flutter test test/client/x_client_transaction_id/
 ```
 
-The script downloads the page and the sign module with the app's own code, so
-if it fails, the app fails the same way: fix `client_transaction.dart` first.
-Then X's own sign module computes a few ids in a headless Chrome, and the
-page, the module and those ids land in `test/fixtures/XClientTransactionId/`.
-No login is needed. If the test then fails, X changed the algorithm itself.
+The script opens x.com in a real, logged-out Chrome (no account needed) and
+saves what Chrome downloads: the page, the entry script, the plugin and the
+sign module, listed in `sources.json`. It uses none of the app's code, so it
+works even when the app is broken. Chrome's own sign module then computes a few
+ids, saved in `expected.json`.
 
-A real browser matters: the key comes from a CSS animation read back with
-`getComputedStyle`, and a bare JS engine formats the numbers differently.
+The tests replay those files through the app. A failure tells what to fix:
+- the app asks for a file Chrome never downloaded: fix `_findSignFileUrl` /
+  `constants.dart` to follow the files listed in `sources.json`;
+- the ids differ: X changed the algorithm itself.

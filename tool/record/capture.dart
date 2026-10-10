@@ -11,10 +11,7 @@
 //                                                     captures only the links containing the text,
 //                                                     and prunes nothing
 //
-// Chrome is started as a plain process — not through puppeteer's launcher — and
-// then driven over the debugging port. That matters: puppeteer's launcher adds
-// --enable-automation, which X reads on the login page and answers by limiting
-// the account. Started this way, the browser looks like any other.
+// Chrome is started as described in chrome.dart.
 //
 // It gets its own profile in tool/record/.chrome-profile, both because the
 // debugging port is refused on Chrome's default profile since version 136, and
@@ -26,6 +23,7 @@ import 'dart:io';
 import 'package:collection/collection.dart';
 import 'package:puppeteer/puppeteer.dart';
 
+import 'chrome.dart';
 import 'transaction_id.dart' show transactionIdFixtures;
 
 /// Response headers worth keeping. An allow-list, so a header X adds tomorrow
@@ -103,7 +101,7 @@ Future<void> main(List<String> args) async {
   }
 
   final attach = args.contains('--attach');
-  final chrome = attach ? null : await _startChrome();
+  final chrome = attach ? null : await startChrome(profile: _profileDir, port: _port);
   final browser = await _connect(attach);
   final page = (await browser.pages).firstOrNull ?? await browser.newPage();
   await _requireLogin(page);
@@ -180,65 +178,14 @@ Future<String> _cookieNames(Page page) async {
   return cookies.map((cookie) => cookie.name).join(', ');
 }
 
-/// Starts Chrome the way a person would, plus the debugging port. No
-/// --enable-automation, so nothing announces the browser as driven.
-Future<Process> _startChrome() async {
-  final executable = await _chromeExecutable();
-  print('Starting $executable on port $_port');
-  final process = await Process.start(executable, [
-    '--remote-debugging-port=$_port',
-    '--user-data-dir=${_profileDir.absolute.path}',
-    '--no-first-run',
-    '--no-default-browser-check',
-    '--start-maximized',
-    // Opens a blank page rather than Chrome's new-tab page. The new-tab page
-    // fetches its own content and is briefly not a real frame, which makes
-    // connect() fail with "No frame for given id found" as it enumerates pages.
-    'about:blank',
-  ]);
-  await _waitForPort();
-  return process;
-}
-
-/// Chrome opens the port a moment after the process starts, so connecting
-/// immediately fails with "connection refused".
-Future<void> _waitForPort() async {
-  final client = HttpClient();
-  for (var attempt = 0; attempt < 40; attempt++) {
-    try {
-      final request = await client.get('localhost', _port, '/json/version');
-      await (await request.close()).drain<void>();
-      client.close();
-      return;
-    } on SocketException {
-      await Future.delayed(Duration(milliseconds: 500));
-    }
-  }
-  client.close();
-  print('Chrome never opened port $_port. Is another Chrome already using it?');
-  exit(1);
-}
-
 Future<Browser> _connect(bool attach) async {
-  Object? lastError;
-  // Chrome answers on the port before its first tab is fully attachable, so a
-  // single attempt races with the browser's own start-up.
-  for (var attempt = 0; attempt < 5; attempt++) {
-    try {
-      return await puppeteer.connect(browserUrl: 'http://localhost:$_port', defaultViewport: null);
-    } on Exception catch (error) {
-      if (attempt == 0) print('Chrome is not attachable yet, retrying…');
-      lastError = error;
-      await Future.delayed(Duration(seconds: 1));
-    }
-  }
-
-  {
-    final error = lastError;
+  try {
+    return await connectChrome(_port);
+  } on Exception catch (error) {
     print('\nCould not reach Chrome on port $_port: $error');
     if (attach) {
       print('\n--attach expects a Chrome already started with:');
-      print('  ${_installedChrome() ?? 'google-chrome'} \\');
+      print('  ${installedChrome() ?? 'google-chrome'} \\');
       print('    --remote-debugging-port=$_port \\');
       print('    --user-data-dir=${_profileDir.absolute.path}');
       print('\nNote that the flag is ignored if Chrome is already running, and');
@@ -258,30 +205,6 @@ List<Scenario> _readScenarios(Map<String, dynamic> root) =>
         .map((entry) => Scenario(entry['url'] as String, entry['description'] as String? ?? ''))
         .toList();
 
-
-/// Prefers an installed Chrome, and otherwise reuses the one puppeteer keeps in
-/// its cache — downloading it on the first run only.
-Future<String> _chromeExecutable() async {
-  final installed = _installedChrome();
-  if (installed != null) return installed;
-
-  print('No system Chrome found, using the one puppeteer manages…');
-  return (await downloadChrome()).executablePath;
-}
-
-String? _installedChrome() {
-  final fromEnv = Platform.environment['CHROME_PATH'];
-  if (fromEnv != null && File(fromEnv).existsSync()) return fromEnv;
-
-  const candidates = [
-    '/usr/bin/google-chrome',
-    '/usr/bin/google-chrome-stable',
-    '/usr/bin/chromium',
-    '/usr/bin/chromium-browser',
-    '/snap/bin/chromium',
-  ];
-  return candidates.firstWhereOrNull((path) => File(path).existsSync());
-}
 
 /// Loads one scenario, scrolls a few times so the cursor pages are requested
 /// too, and saves every GraphQL response seen along the way.

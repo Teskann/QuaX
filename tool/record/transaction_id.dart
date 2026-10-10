@@ -3,8 +3,9 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:collection/collection.dart';
 import 'package:puppeteer/puppeteer.dart';
-import 'package:quax/client/x_client_transaction_id/client_transaction.dart';
+import 'chrome.dart';
 
 /// Written by this script, not by capture.dart, which must leave it alone.
 final transactionIdFixtures = Directory('test/fixtures/XClientTransactionId');
@@ -31,17 +32,90 @@ async (html, nowMs, requests) => {
 }
 ''';
 
-Future<void> main() async {
-  print('Downloading x.com and its sign module…');
-  final (:homePageHtml, :signFileText) = await ClientTransaction.fetchSources();
-  final nowMs = DateTime.now().millisecondsSinceEpoch;
+/// What the page needs to sign requests, by the name X gives each file. Kept
+/// loose on purpose: recording must not fail because X renamed something.
+final _recordedScripts = RegExp(r'/(entry-client[\w-]*|client-transaction-id-plugin-[\w-]+|sign\.o-[\w-]+)\.js$');
 
+const _port = 9334;
+const _loadTimeout = Duration(seconds: 20);
+const _homePage = 'https://x.com/home';
+
+Future<void> main() async {
+  transactionIdFixtures.createSync(recursive: true);
+  print('Loading x.com in Chrome and recording the files it downloads…');
+  final sources = await _recordInChrome();
+  sources.writeTo(transactionIdFixtures);
+  print('Recorded ${sources.files.length} file(s): ${sources.files.keys.join(', ')}');
+
+  final signUrl = sources.files.keys.firstWhereOrNull(_isSignModule);
+  if (signUrl == null) {
+    print('\nChrome downloaded no sign module. Read the recorded files in ${transactionIdFixtures.path}/ to see how');
+    print('X loads it now, then adapt _recordedScripts.');
+    return;
+  }
+  await _recordSignedIds(sources.files[_homePage]!, sources.files[signUrl]!);
+}
+
+/// A real, logged-out Chrome: the app gets the same page, and X refuses a
+/// browser started by puppeteer's launcher.
+Future<_Sources> _recordInChrome() async {
+  final profile = Directory.systemTemp.createTempSync('quax-transaction-id');
+  final chrome = await startChrome(profile: profile, port: _port);
+  final browser = await connectChrome(_port);
+  try {
+    final page = (await browser.pages).first;
+    final bodies = <String, Future<String>>{};
+    page.onResponse.listen((response) {
+      final isPage = response.request.resourceType == ResourceType.document && response.status == 200;
+      if (isPage && response.url.startsWith('https://x.com/')) bodies[_homePage] = response.text;
+      if (_recordedScripts.hasMatch(response.url)) bodies[response.url] = response.text;
+    });
+    // Never Until.networkIdle: x.com keeps polling, so "idle" may never come.
+    try {
+      await page.goto(_homePage, wait: Until.domContentLoaded, timeout: _loadTimeout);
+    } on Exception catch (error) {
+      print('Page did not finish loading ($error), keeping what arrived.');
+    }
+    await _waitFor(() => bodies.keys.any(_isSignModule));
+    return _Sources({
+      for (final entry in bodies.entries)
+        entry.key: await entry.value.timeout(_loadTimeout, onTimeout: () => ''),
+    });
+  } finally {
+    browser.disconnect();
+    chrome.kill();
+    await chrome.exitCode;
+    profile.deleteSync(recursive: true);
+  }
+}
+
+bool _isSignModule(String url) => url.contains('/sign.o-');
+
+/// The sign module is imported lazily, a moment after the page itself.
+Future<void> _waitFor(bool Function() condition) async {
+  final deadline = DateTime.now().add(_loadTimeout);
+  while (!condition() && DateTime.now().isBefore(deadline)) {
+    await Future.delayed(const Duration(milliseconds: 250));
+  }
+}
+
+class _Sources {
+  const _Sources(this.files);
+
+  /// URL -> content. The x.com page is stored under the URL the app asks for.
+  final Map<String, String> files;
+
+  void writeTo(Directory directory) {
+    final names = {for (final url in files.keys) url: url == _homePage ? 'home.html' : Uri.parse(url).pathSegments.last};
+    names.forEach((url, name) => File('${directory.path}/$name').writeAsStringSync(files[url]!));
+    File('${directory.path}/sources.json').writeAsStringSync(const JsonEncoder.withIndent('  ').convert(names));
+  }
+}
+
+Future<void> _recordSignedIds(String homePageHtml, String signFileText) async {
+  final nowMs = DateTime.now().millisecondsSinceEpoch;
   print('Signing ${_requests.length} requests in Chrome…');
   final ids = await _signInChrome(homePageHtml, signFileText, nowMs);
-
-  transactionIdFixtures.createSync(recursive: true);
-  File('${transactionIdFixtures.path}/home.html').writeAsStringSync(homePageHtml);
-  File('${transactionIdFixtures.path}/sign.js').writeAsStringSync(signFileText);
   File('${transactionIdFixtures.path}/expected.json').writeAsStringSync(const JsonEncoder.withIndent('  ').convert({
     'nowMs': nowMs,
     'cases': [

@@ -13,19 +13,39 @@ List<int> _payloadOf(String transactionId) {
   return bytes.skip(1).map((byte) => byte ^ bytes.first).toList();
 }
 
+/// Replays the files recorded by tool/record/transaction_id.dart.
+Future<String> _replay(Uri uri) async {
+  final index = jsonDecode(File('$_fixtures/sources.json').readAsStringSync()) as Map<String, dynamic>;
+  final name = index['$uri'] as String?;
+  if (name == null) {
+    throw StateError('The app asked for $uri, which Chrome never downloaded on x.com, so the app no longer '
+        'follows the path Chrome takes. Files Chrome downloaded: ${index.keys.join(', ')}. '
+        'Fix ClientTransaction._findSignFileUrl / constants.dart to follow them');
+  }
+  return File('$_fixtures/$name').readAsStringSync();
+}
+
+Future<ClientTransaction> _recordedTransaction() async {
+  final sources = await ClientTransaction.fetchSources(fetch: _replay);
+  return ClientTransaction.fromSources(homePageHtml: sources.homePageHtml, signFileText: sources.signFileText);
+}
+
 void main() {
+  test('Should find the sign module by following the recorded x.com files', () async {
+    await expectLater(ClientTransaction.fetchSources(fetch: _replay), completes,
+        reason: 'The chain page -> entry script -> importer -> sign module no longer leads to the sign module: '
+            'read the recorded files and fix ClientTransaction._findSignFileUrl / constants.dart');
+  });
+
   final expected = jsonDecode(File('$_fixtures/expected.json').readAsStringSync()) as Map<String, dynamic>;
   final now = DateTime.fromMillisecondsSinceEpoch(expected['nowMs'] as int);
-  final transaction = ClientTransaction.fromSources(
-    homePageHtml: File('$_fixtures/home.html').readAsStringSync(),
-    signFileText: File('$_fixtures/sign.js').readAsStringSync(),
-  );
 
   for (final testCase in (expected['cases'] as List).cast<Map<String, dynamic>>()) {
     final method = testCase['method'] as String;
     final path = testCase['path'] as String;
 
-    test('Should sign $method $path exactly like x.com does', () {
+    test('Should sign $method $path exactly like x.com does', () async {
+      final transaction = await _recordedTransaction();
       expect(
         _payloadOf(transaction.generateTransactionId(method, path, now: now)),
         _payloadOf(testCase['transactionId'] as String),

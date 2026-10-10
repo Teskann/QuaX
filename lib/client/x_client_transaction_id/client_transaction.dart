@@ -23,6 +23,8 @@ const _browserHeaders = {
   'X-Twitter-Client-Language': 'en',
 };
 
+typedef TextFetcher = Future<String> Function(Uri uri);
+
 class ClientTransaction {
   final List<int> _keyBytes;
   final String _animationKey;
@@ -51,9 +53,10 @@ class ClientTransaction {
   }
 
   /// Downloads the x.com page and the sign module the generator is built from.
-  static Future<({String homePageHtml, String signFileText})> fetchSources() async {
-    final homePageHtml = await _fetchText(Uri.https('x.com', '/home'));
-    final signFileText = await _fetchText(await _findSignFileUrl(homePageHtml));
+  /// [fetch] lets the tests replay recorded files instead of using the network.
+  static Future<({String homePageHtml, String signFileText})> fetchSources({TextFetcher fetch = _fetchText}) async {
+    final homePageHtml = await fetch(Uri.https('x.com', '/home'));
+    final signFileText = await fetch(await _findSignFileUrl(homePageHtml, fetch));
     return (homePageHtml: homePageHtml, signFileText: signFileText);
   }
 
@@ -133,11 +136,11 @@ class ClientTransaction {
   static Future<String> _fetchText(Uri uri) async =>
       (await http.get(uri, headers: _browserHeaders)).body;
 
-  static Future<Uri> _findSignFileUrl(String homePageHtml) async {
+  static Future<Uri> _findSignFileUrl(String homePageHtml, TextFetcher fetch) async {
     final entryUrl = _resolveImport(Uri.https('x.com', '/'), homePageHtml, entryScriptRegex, 'entry script');
-    final entryText = await _fetchText(entryUrl);
+    final entryText = await fetch(entryUrl);
     final importerUrl = _resolveImport(entryUrl, entryText, signImporterRegex, 'sign module importer');
-    final importerText = await _fetchText(importerUrl);
+    final importerText = await fetch(importerUrl);
     return _resolveImport(importerUrl, importerText, signFileRegex, 'sign module');
   }
 
