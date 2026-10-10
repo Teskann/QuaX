@@ -62,3 +62,43 @@ Map<String, dynamic> withUnified(Map<String, dynamic> card, void Function(Map<St
 
 /// The card [card] of a tweet, as the tweet carries it once read by the app.
 Map<String, dynamic> cardOf(TweetWithCard tweet) => _copy(tweet.card!);
+
+Map<String, dynamic> _stringValue(String value) => {'type': 'STRING', 'string_value': value};
+
+Map<String, dynamic> _imageValue(String url) => {
+      'type': 'IMAGE',
+      'image_value': {'url': url, 'width': 200, 'height': 200},
+    };
+
+/// A poll card with [choices] image choices, shaped like the ones named `<id>:poll_choice_images`. As X does, it
+/// also lists the counts of the choices 3 and 4 when the poll has fewer. [edit] breaks one thing of its binding values.
+Map<String, dynamic> imagePollCard(
+    {int choices = 2,
+    String name = '1906814671912599552:poll_choice_images',
+    String endsAt = '2020-01-01T00:00:00Z',
+    void Function(Map<String, dynamic> bindingValues)? edit}) {
+  final values = <String, dynamic>{
+    'choice_count': _stringValue('$choices'),
+    'end_datetime_utc': _stringValue(endsAt),
+    for (var i = 1; i <= 4; i++) 'choice${i}_count': _stringValue(i == 1 ? '3' : '1'),
+    for (var i = 1; i <= choices; i++) ...{
+      'choice${i}_label': _stringValue('Choice $i'),
+      for (final size in ['', '_small', '_large', '_x_large', '_original'])
+        'choice${i}_image$size': _imageValue('https://pbs.twimg.com/card_img/$i$size.jpg'),
+    },
+  };
+  edit?.call(values);
+  return {'name': name, 'url': 'card://1', 'binding_values': values};
+}
+
+/// A text poll card, which has no image.
+Map<String, dynamic> textPollCard({int choices = 2}) {
+  final values = <String, dynamic>{
+    'end_datetime_utc': _stringValue('2020-01-01T00:00:00Z'),
+    for (var i = 1; i <= choices; i++) ...{
+      'choice${i}_label': _stringValue('Text $i'),
+      'choice${i}_count': _stringValue(i == 1 ? '3' : '1'),
+    },
+  };
+  return {'name': 'poll${choices}choice_text_only', 'url': 'card://1', 'binding_values': values};
+}

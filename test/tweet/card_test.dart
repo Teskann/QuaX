@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:quax/client/client.dart';
+import 'package:quax/constants.dart';
 import 'package:quax/tweet/_card.dart';
 import 'package:quax/tweet/_media.dart';
 import 'package:quax/user.dart';
@@ -38,9 +40,10 @@ class _PlatformSpy {
 }
 
 /// Draws the card of [tweet], or [card] when a copy of it was broken on purpose.
-Future<void> _pumpCard(WidgetTester tester, TweetWithCard tweet, {Map<String, dynamic>? card}) => pumpInApp(
-    tester, withAppModels(SingleChildScrollView(child: TweetCard(tweet: tweet, card: card ?? tweet.card))),
-    settle: false);
+Future<void> _pumpCard(WidgetTester tester, TweetWithCard tweet,
+        {Map<String, dynamic>? card, Map<String, dynamic> prefs = const {}}) =>
+    pumpInApp(tester, withAppModels(SingleChildScrollView(child: TweetCard(tweet: tweet, card: card ?? tweet.card))),
+        settle: false, prefs: prefs);
 
 void expectUnsupported(String reason) =>
     expect(find.textContaining("isn't supported yet"), findsOneWidget, reason: reason);
@@ -250,5 +253,137 @@ void main() {
 
       expectUnsupported('A unified card whose payload is missing should be reported as unsupported');
     });
+  });
+
+  group('Poll cards', () {
+    Finder imageOf(String url) => find.byWidgetPredicate(
+        (w) => w is ExtendedImage && w.image is ExtendedNetworkImageProvider && (w.image as ExtendedNetworkImageProvider).url == url);
+
+    testWidgets('Should show the choices of an image poll with their picture and results', (tester) async {
+      await _pumpCard(tester, grok, card: imagePollCard());
+
+      expect(find.text('Choice 1'), findsOneWidget, reason: 'The first choice should show its label');
+      expect(find.text('Choice 2'), findsOneWidget, reason: 'The second choice should show its label');
+      expect(find.text('75.0%'), findsOneWidget, reason: 'The leading choice should show its share of the votes');
+      expect(find.text('25.0%'), findsOneWidget, reason: 'The other choice should show its share of the votes');
+      expect(find.textContaining('Ended', findRichText: true), findsOneWidget, reason: 'A past poll should say it ended');
+      expect(find.byType(ExtendedImage), findsNWidgets(2), reason: 'Only the 2 choices of the poll should have a picture');
+    });
+
+    testWidgets('Should use the small picture of each choice', (tester) async {
+      await _pumpCard(tester, grok, card: imagePollCard());
+
+      expect(imageOf('https://pbs.twimg.com/card_img/1_small.jpg'), findsOneWidget,
+          reason: 'The thumbnail of the first choice should be the small picture');
+      expect(imageOf('https://pbs.twimg.com/card_img/2_small.jpg'), findsOneWidget,
+          reason: 'The thumbnail of the second choice should be the small picture');
+    });
+
+    testWidgets('Should show an image poll of four choices', (tester) async {
+      await _pumpCard(tester, grok, card: imagePollCard(choices: 4));
+
+      for (var i = 1; i <= 4; i++) {
+        expect(find.text('Choice $i'), findsOneWidget, reason: 'The choice $i of 4 should be shown');
+      }
+      expect(find.byType(ExtendedImage), findsNWidgets(4), reason: 'Each of the 4 choices should have a picture');
+    });
+
+    testWidgets('Should say an image poll is still running when it ends in the future', (tester) async {
+      final endsAt = DateTime.now().add(const Duration(days: 2)).toUtc().toIso8601String();
+      await _pumpCard(tester, grok, card: imagePollCard(endsAt: endsAt));
+
+      expect(find.textContaining('Ends', findRichText: true), findsOneWidget,
+          reason: 'A poll that is not over should say when it ends');
+      expect(find.textContaining('Ended', findRichText: true), findsNothing, reason: 'The poll is not over yet');
+    });
+
+    testWidgets('Should read an image poll whose name has no id prefix', (tester) async {
+      await _pumpCard(tester, grok, card: imagePollCard(name: 'poll_choice_images'));
+
+      expect(find.text('Choice 1'), findsOneWidget, reason: 'The name alone should be enough to find an image poll');
+    });
+
+    testWidgets('Should not take a card whose name only looks like an image poll for one', (tester) async {
+      await _pumpCard(tester, grok, card: imagePollCard(name: '12:poll_choice_images_v2'));
+
+      expectUnsupported('Only the exact poll_choice_images name, after an optional id, is an image poll');
+    });
+
+    for (final count in [null, 'abc', '', '1', '5']) {
+      testWidgets('Should say an image poll with choice_count $count is not supported', (tester) async {
+        final card = imagePollCard(edit: (values) {
+          count == null ? values.remove('choice_count') : values['choice_count'] = {'string_value': count};
+        });
+        await _pumpCard(tester, grok, card: card);
+
+        expectUnsupported('The number of choices cannot be guessed, so the card should not be drawn');
+      });
+    }
+
+    testWidgets('Should keep the label of a choice that has no picture', (tester) async {
+      final card = imagePollCard(edit: (values) {
+        values.removeWhere((key, _) => key.startsWith('choice2_image'));
+      });
+      await _pumpCard(tester, grok, card: card);
+
+      expect(find.text('Choice 2'), findsOneWidget, reason: 'A choice without picture should still be shown');
+      expect(find.byType(ExtendedImage), findsOneWidget, reason: 'Only the choice with a picture should show one');
+    });
+
+    testWidgets('Should fall back on the full picture when the small one is missing', (tester) async {
+      final card = imagePollCard(edit: (values) => values.remove('choice1_image_small'));
+      await _pumpCard(tester, grok, card: card);
+
+      expect(imageOf('https://pbs.twimg.com/card_img/1.jpg'), findsOneWidget,
+          reason: 'The picture of the choice should still be found without its small version');
+    });
+
+    testWidgets('Should keep the label of a choice whose picture has no address', (tester) async {
+      final card = imagePollCard(edit: (values) => values['choice1_image_small'] = {'type': 'IMAGE'});
+      await _pumpCard(tester, grok, card: card);
+
+      expect(find.text('Choice 1'), findsOneWidget, reason: 'A picture without address should not hide the choice');
+      expect(find.byType(ExtendedImage), findsOneWidget, reason: 'Only the second choice has a usable picture');
+    });
+
+    testWidgets('Should not load the pictures of an image poll when images are disabled', (tester) async {
+      await _pumpCard(tester, grok, card: imagePollCard(), prefs: {optionImageQuality: 'disabled'});
+
+      expect(find.text('Choice 1'), findsOneWidget, reason: 'The choices should be shown without their pictures');
+      expect(find.byType(ExtendedImage), findsNothing, reason: 'Disabled images should not be downloaded');
+    });
+
+    testWidgets('Should say an image poll without label for a choice is not supported', (tester) async {
+      final card = imagePollCard(edit: (values) => values.remove('choice2_label'));
+      await _pumpCard(tester, grok, card: card);
+
+      expectUnsupported('An incomplete image poll should fall back on the unsupported card, not crash');
+    });
+
+    testWidgets('Should say an image poll without end date is not supported', (tester) async {
+      final card = imagePollCard(edit: (values) => values.remove('end_datetime_utc'));
+      await _pumpCard(tester, grok, card: card);
+
+      expectUnsupported('An image poll without end date should fall back on the unsupported card, not crash');
+    });
+
+    testWidgets('Should say an image poll without binding values is not supported', (tester) async {
+      await _pumpCard(tester, grok, card: {...imagePollCard(), 'binding_values': null});
+
+      expectUnsupported('An image poll without binding values should be reported as unsupported');
+    });
+
+    for (final choices in [2, 3, 4]) {
+      testWidgets('Should still show a text poll of $choices choices without pictures', (tester) async {
+        await _pumpCard(tester, grok, card: textPollCard(choices: choices));
+
+        for (var i = 1; i <= choices; i++) {
+          expect(find.text('Text $i'), findsOneWidget, reason: 'The choice $i of the text poll should be shown');
+        }
+        expect(find.byType(ExtendedImage), findsNothing, reason: 'A text poll has no picture');
+        expect(find.text({2: '75.0%', 3: '60.0%', 4: '50.0%'}[choices]!), findsOneWidget,
+            reason: 'The leading choice should show its share of the votes');
+      });
+    }
   });
 }

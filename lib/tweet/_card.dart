@@ -22,6 +22,7 @@ import 'package:timeago/timeago.dart' as timeago;
 
 class TweetCard extends StatelessWidget {
   static final log = Logger('TweetCard');
+  static final _imagePollName = RegExp(r'^(\d+:)?poll_choice_images$');
 
   final TweetWithCard tweet;
   final Map<String, dynamic>? card;
@@ -78,7 +79,16 @@ class TweetCard extends StatelessWidget {
   Widget _createListTile(String title, String? description, String? uri) =>
       CardDetails(title: title, description: description, uri: uri);
 
-  Widget _createVoteBar(BuildContext context, String label, double count, double total, bool isLeading) {
+  Widget _createChoiceImage(String url) => Padding(
+        padding: const EdgeInsets.only(right: 8),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(6),
+          child: ExtendedImage.network(url, cache: true, fit: BoxFit.cover, width: 40, height: 40),
+        ),
+      );
+
+  Widget _createVoteBar(BuildContext context, String label, double count, double total, bool isLeading,
+      {String? imageUrl}) {
     var colorScheme = Theme.of(context).colorScheme;
     var fillColor = isLeading ? colorScheme.primaryContainer : colorScheme.secondaryContainer;
     var textStyle = TextStyle(
@@ -106,6 +116,7 @@ class TweetCard extends StatelessWidget {
                 Icon(Icons.check_circle, size: 18, color: colorScheme.onPrimaryContainer),
                 const SizedBox(width: 8),
               ],
+              if (imageUrl != null) _createChoiceImage(imageUrl),
               Expanded(child: Text(label, style: textStyle)),
               const SizedBox(width: 8),
               Text('${(total == 0 ? 0 : 100 * count / total).toStringAsFixed(1)}%', style: textStyle),
@@ -177,7 +188,36 @@ class TweetCard extends StatelessWidget {
     }
   }
 
-  Container _createVoteCard(BuildContext context, Map<String, dynamic> card, int numberOfChoices) {
+  int? _imagePollChoices(Map<String, dynamic> card) {
+    final count = int.tryParse(card['binding_values']?['choice_count']?['string_value'] as String? ?? '');
+    return count != null && count >= 2 && count <= 4 ? count : null;
+  }
+
+  List<String?> _choiceImageUrls(Map<String, dynamic> card, int numberOfChoices, String imageSize) =>
+      List.generate(numberOfChoices, (index) {
+        final values = card['binding_values'];
+        final image = values?['choice${index + 1}_image_small'] ?? values?['choice${index + 1}_image'];
+        return imageSize == 'disabled' ? null : image?['image_value']?['url'] as String?;
+      });
+
+  Widget _createImagePollCard(BuildContext context, Map<String, dynamic> card, String imageSize) {
+    final numberOfChoices = _imagePollChoices(card);
+    if (numberOfChoices == null) {
+      log.warning('Image poll without a valid choice_count on $_tweetUrl');
+      return _createUnsupportedCard(context);
+    }
+
+    try {
+      return _createVoteCard(context, card, numberOfChoices,
+          imageUrls: _choiceImageUrls(card, numberOfChoices, imageSize));
+    } catch (e) {
+      log.severe('Unable to render the image poll on $_tweetUrl');
+      return _createUnsupportedCard(context);
+    }
+  }
+
+  Container _createVoteCard(BuildContext context, Map<String, dynamic> card, int numberOfChoices,
+      {List<String?>? imageUrls}) {
     var numberFormat = NumberFormat.decimalPattern();
 
     var counts = List.generate(
@@ -209,7 +249,8 @@ class TweetCard extends StatelessWidget {
                     card['binding_values']['choice${index + 1}_label']['string_value'],
                     counts[index],
                     total,
-                    counts[index] > 0 && counts[index] == maxCount)),
+                    counts[index] > 0 && counts[index] == maxCount,
+                    imageUrl: imageUrls?[index])),
             Container(
               alignment: Alignment.centerRight,
               margin: const EdgeInsets.only(top: 8),
@@ -309,6 +350,8 @@ class TweetCard extends StatelessWidget {
                         card['binding_values']?['vanity_url']?['string_value']))
               ],
             ));
+      case final String name when _imagePollName.hasMatch(name):
+        return _createImagePollCard(context, card, imageSize);
       case 'poll2choice_text_only':
         return _createVoteCard(context, card, 2);
       case 'poll3choice_text_only':
