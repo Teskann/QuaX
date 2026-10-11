@@ -182,6 +182,14 @@ void main() {
       expect(thumbnails(), isEmpty, reason: 'No image should be loaded when the setting disables them');
     });
 
+    testWidgets('Should write the votes and the end of the poll in the color of the theme', (tester) async {
+      await _pumpCard(tester, poll);
+
+      final footer = find.textContaining('Ends', findRichText: true).evaluate().single;
+      expect((footer.widget as RichText).text.style?.color, DefaultTextStyle.of(footer).style.color,
+          reason: 'The footer should be readable in light mode, not white on a light card');
+    });
+
     testWidgets('Should say a poll with images that does not give its number of choices is not supported',
         (tester) async {
       final card = cardOf(poll);

@@ -261,8 +261,8 @@ class TweetCard extends StatelessWidget {
             Container(
               alignment: Alignment.centerRight,
               margin: const EdgeInsets.only(top: 8),
-              child: RichText(
-                text: TextSpan(children: [
+              child: Text.rich(
+                TextSpan(children: [
                   TextSpan(
                     text: L10n.of(context).numberFormat_format_total_votes(
                       total,
