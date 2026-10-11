@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:quax/client/client.dart';
+import 'package:quax/constants.dart';
 import 'package:quax/tweet/_card.dart';
 import 'package:quax/tweet/_media.dart';
 import 'package:quax/user.dart';
@@ -37,10 +39,18 @@ class _PlatformSpy {
   }
 }
 
-/// Draws the card of [tweet], or [card] when a copy of it was broken on purpose.
-Future<void> _pumpCard(WidgetTester tester, TweetWithCard tweet, {Map<String, dynamic>? card}) => pumpInApp(
-    tester, withAppModels(SingleChildScrollView(child: TweetCard(tweet: tweet, card: card ?? tweet.card))),
-    settle: false);
+/// Draws the card of [tweet], or [card] when a copy of it was broken on purpose, with the settings [prefs].
+Future<void> _pumpCard(WidgetTester tester, TweetWithCard tweet,
+        {Map<String, dynamic>? card, Map<String, dynamic> prefs = const {}}) =>
+    pumpInApp(tester, withAppModels(SingleChildScrollView(child: TweetCard(tweet: tweet, card: card ?? tweet.card))),
+        settle: false, prefs: prefs);
+
+/// The address of every network image the card draws, in order.
+List<String> thumbnails() => find
+    .byType(ExtendedImage)
+    .evaluate()
+    .map((element) => ((element.widget as ExtendedImage).image as ExtendedNetworkImageProvider).url)
+    .toList();
 
 void expectUnsupported(String reason) =>
     expect(find.textContaining("isn't supported yet"), findsOneWidget, reason: reason);
@@ -127,6 +137,60 @@ void main() {
     });
   });
 
+  group('Polls with images', () {
+    final poll = detailTweet(imagePollTweet);
+    String imageUrl(Map<String, dynamic> card, int choice, String size) =>
+        card['binding_values']['choice${choice}_image$size']['image_value']['url'];
+
+    testWidgets('Should show each choice with its label and its image', (tester) async {
+      await _pumpCard(tester, poll);
+
+      for (final label in ['Option A', 'Option B', 'Option C']) {
+        expect(find.text(label), findsOneWidget, reason: 'The choice $label should be shown');
+      }
+      expect(thumbnails(), [1, 2, 3].map((choice) => imageUrl(poll.card!, choice, '_large')),
+          reason: 'Each choice should show its image, in the size the image quality setting asks for');
+    });
+
+    testWidgets('Should open the original image of the tapped choice, the other choices a swipe away', (tester) async {
+      await _pumpCard(tester, poll);
+      await tester.tap(find.byType(ExtendedImage).at(1));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+
+      final viewer = tester.widget<TweetMediaView>(find.byType(TweetMediaView));
+      expect(viewer.media.map((media) => media.mediaUrlHttps),
+          [1, 2, 3].map((choice) => imageUrl(poll.card!, choice, '_original')),
+          reason: 'The viewer should hold the full-size image of every choice, in order');
+      expect(viewer.initialIndex, 1, reason: 'The viewer should open on the image that was tapped');
+    });
+
+    testWidgets('Should still show a choice that has no image', (tester) async {
+      final card = cardOf(poll);
+      (card['binding_values'] as Map).removeWhere((key, _) => key.startsWith('choice2_image'));
+      await _pumpCard(tester, poll, card: card);
+
+      expect(find.text('Option B'), findsOneWidget, reason: 'A choice without image should keep its bar');
+      expect(thumbnails(), [1, 3].map((choice) => imageUrl(card, choice, '_large')),
+          reason: 'Only the choices that have an image should show one');
+    });
+
+    testWidgets('Should show no image when images are disabled', (tester) async {
+      await _pumpCard(tester, poll, prefs: {optionImageQuality: 'disabled'});
+
+      expect(find.text('Option A'), findsOneWidget, reason: 'The poll should still be shown');
+      expect(thumbnails(), isEmpty, reason: 'No image should be loaded when the setting disables them');
+    });
+
+    testWidgets('Should say a poll with images that does not give its number of choices is not supported',
+        (tester) async {
+      final card = cardOf(poll);
+      (card['binding_values'] as Map).remove('choice_count');
+      await _pumpCard(tester, poll, card: card);
+
+      expectUnsupported('Without its number of choices the poll cannot be drawn');
+    });
+  });
   group('Opening links', () {
     testWidgets('Should open the conversation when a Grok share is tapped', (tester) async {
       final spy = _PlatformSpy();

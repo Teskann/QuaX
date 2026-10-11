@@ -78,7 +78,8 @@ class TweetCard extends StatelessWidget {
   Widget _createListTile(String title, String? description, String? uri) =>
       CardDetails(title: title, description: description, uri: uri);
 
-  Widget _createVoteBar(BuildContext context, String label, double count, double total, bool isLeading) {
+  Widget _createVoteBar(BuildContext context, String label, double count, double total, bool isLeading,
+      {Widget? leading}) {
     var colorScheme = Theme.of(context).colorScheme;
     var fillColor = isLeading ? colorScheme.primaryContainer : colorScheme.secondaryContainer;
     var textStyle = TextStyle(
@@ -100,8 +101,15 @@ class TweetCard extends StatelessWidget {
           ),
           Container(
             constraints: const BoxConstraints(minHeight: 40),
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            padding: leading == null
+                ? const EdgeInsets.symmetric(horizontal: 12, vertical: 8)
+                : const EdgeInsets.fromLTRB(6, 6, 12, 6),
             child: Row(children: [
+              if (leading != null) ...[
+                SizedBox.square(
+                    dimension: 48, child: ClipRRect(borderRadius: BorderRadius.circular(8), child: leading)),
+                const SizedBox(width: 12),
+              ],
               if (isLeading) ...[
                 Icon(Icons.check_circle, size: 18, color: colorScheme.onPrimaryContainer),
                 const SizedBox(width: 8),
@@ -177,7 +185,46 @@ class TweetCard extends StatelessWidget {
     }
   }
 
-  Container _createVoteCard(BuildContext context, Map<String, dynamic> card, int numberOfChoices) {
+  Widget _createImagePollCard(BuildContext context, Map<String, dynamic> card, String imageKey, String? imageSize) {
+    final values = card['binding_values'] as Map<String, dynamic>? ?? const {};
+    final numberOfChoices = int.tryParse(values['choice_count']?['string_value'] as String? ?? '');
+    if (numberOfChoices == null) {
+      return _createUnsupportedCard(context);
+    }
+    final images =
+        imageSize == 'disabled' ? const <Widget?>[] : _createChoiceImages(context, values, numberOfChoices, imageKey);
+    return _createVoteCard(context, card, numberOfChoices, images: images);
+  }
+
+  /// The image of each choice of a poll, null for a choice without one. Tapping one opens all of them
+  List<Widget?> _createChoiceImages(
+      BuildContext context, Map<String, dynamic> values, int numberOfChoices, String imageKey) {
+    String? url(int index, String size) => values['choice${index + 1}_image$size']?['image_value']?['url'] as String?;
+    final thumbnails = List.generate(numberOfChoices, (index) => url(index, imageKey));
+    final gallery = List.generate(numberOfChoices, (index) => url(index, '_original') ?? thumbnails[index])
+        .nonNulls
+        .map((original) => createMediaFromUrl(original, null))
+        .toList();
+
+    return List.generate(numberOfChoices, (index) {
+      final thumbnail = thumbnails[index];
+      return thumbnail == null
+          ? null
+          : GestureDetector(
+              onTap: () => _openImages(context, gallery, thumbnails.take(index).nonNulls.length),
+              child: ExtendedImage.network(thumbnail, cache: true, fit: BoxFit.cover),
+            );
+    });
+  }
+
+  void _openImages(BuildContext context, List<Media> media, int index) => Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => TweetMediaView(
+              initialIndex: index, media: media, username: tweet.user?.screenName ?? '', tweetMedia: false)));
+
+  Container _createVoteCard(BuildContext context, Map<String, dynamic> card, int numberOfChoices,
+      {List<Widget?> images = const []}) {
     var numberFormat = NumberFormat.decimalPattern();
 
     var counts = List.generate(
@@ -209,7 +256,8 @@ class TweetCard extends StatelessWidget {
                     card['binding_values']['choice${index + 1}_label']['string_value'],
                     counts[index],
                     total,
-                    counts[index] > 0 && counts[index] == maxCount)),
+                    counts[index] > 0 && counts[index] == maxCount,
+                    leading: images.elementAtOrNull(index))),
             Container(
               alignment: Alignment.centerRight,
               margin: const EdgeInsets.only(top: 8),
@@ -315,6 +363,8 @@ class TweetCard extends StatelessWidget {
         return _createVoteCard(context, card, 3);
       case 'poll4choice_text_only':
         return _createVoteCard(context, card, 4);
+      case String name when name.endsWith(':poll_choice_images'):
+        return _createImagePollCard(context, card, imageKey, imageSize);
       case 'promo_website':
         // https://twitter.com/CMEGroup/status/1573288572647612416
         var url = card['binding_values']['website_url']['string_value'];

@@ -6,6 +6,7 @@ import '../fixtures.dart';
 
 const grokShareTweet = '2098507671083036843';
 const carouselTweet = '2082854732020760880';
+const imagePollTweet = '2109301223363064091';
 
 /// The tweet [id] as the app reads it from its recorded TweetDetail.
 TweetWithCard detailTweet(String id) => Twitter.parseTweetDetail(fixture('TweetDetail', id).body)
