@@ -4,4 +4,6 @@
          to allow setting breakpoints, to provide hot reload, etc.
     -->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- The mock of X (tool/mock_x/server.dart) is served over plain HTTP -->
+    <application android:usesCleartextTraffic="true"/>
 </manifest>

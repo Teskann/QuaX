@@ -1,0 +1,25 @@
+appId: com.teskann.quax
+name: Should show the posts of the accounts a visitor subscribed to in the home feed
+---
+- launchApp
+- openLink:
+    link: https://x.com/FlutterDev
+    autoVerify: true
+- assertVisible: "(?s).*@FlutterDev.*"
+- tapOn: "Show menu"
+- tapOn: "Subscribe"
+- openLink:
+    link: https://x.com/dart_lang
+    autoVerify: true
+- assertVisible: "(?s).*@dart_lang.*"
+- tapOn: "Show menu"
+- tapOn: "Subscribe"
+- back
+- back
+- tapOn: "(?s)Home.*"
+- assertVisible: "(?s).*(@FlutterDev|@dart_lang).*"
+- repeat:
+    times: 4
+    commands:
+      - swipe:
+          direction: UP

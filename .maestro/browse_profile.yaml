@@ -1,0 +1,24 @@
+appId: com.teskann.quax
+name: Should let a visitor scroll a profile and switch to its replies
+---
+- launchApp
+- openLink:
+    link: https://x.com/quax_tests
+    autoVerify: true
+- assertVisible: "(?s).*QuaX Tests.*"
+- repeat:
+    times: 6
+    commands:
+      - swipe:
+          direction: UP
+- repeat:
+    times: 3
+    commands:
+      - swipe:
+          direction: DOWN
+- tapOn: "(?s)Posts & Replies.*"
+- repeat:
+    times: 3
+    commands:
+      - swipe:
+          direction: UP

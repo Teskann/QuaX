@@ -1,0 +1,20 @@
+appId: com.teskann.quax
+name: Should let a visitor read the replies of a post and come back
+---
+- launchApp
+- openLink:
+    link: https://x.com/UKLabour/status/2026390853309063292
+    autoVerify: true
+- assertVisible: "(?s).*new poll suggests.*"
+- repeat:
+    times: 6
+    commands:
+      - swipe:
+          direction: UP
+- repeat:
+    times: 2
+    commands:
+      - swipe:
+          direction: DOWN
+- tapOn: "Back"
+- assertNotVisible: "(?s).*new poll suggests.*"

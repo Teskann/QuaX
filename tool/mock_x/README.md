@@ -26,3 +26,22 @@ from X's public servers, so the device needs internet.
 
 `test/client/mock_x_test.dart` fails when the app's requests stop matching the
 fixtures.
+
+## On an emulator
+
+`emulator_qa.dart` serves the fixtures itself, installs a profile APK on the
+running emulator and records each Maestro flow of `.maestro/` to a video:
+
+```bash
+fvm flutter build apk --profile --dart-define=QUAX_MOCK_X=http://localhost:8787
+fvm dart run tool/mock_x/emulator_qa.dart \
+  build/app/outputs/flutter-apk/app-profile.apk .maestro emulator-output
+```
+
+The second argument can also be a single `.yaml` flow. With `--port`, build
+the APK with the same port. The script fails when a flow fails or the server
+answered nothing. It clears the app, skips the onboarding, makes x.com links
+open QuaX, hides the "app isn't responding" dialogs and turns on dark mode.
+
+[quax-emulated](https://github.com/quax-bot/quax-emulated) runs it on GitHub
+Actions for any ref of QuaX or a fork.

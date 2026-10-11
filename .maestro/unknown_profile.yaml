@@ -1,0 +1,10 @@
+appId: com.teskann.quax
+name: Should tell a visitor that an unknown account does not exist
+---
+- launchApp
+- openLink:
+    link: https://x.com/ce_pseudo_nexiste_pas_quax
+    autoVerify: true
+- assertVisible: "(?s).*User not found.*"
+- back
+- assertNotVisible: "(?s).*User not found.*"
