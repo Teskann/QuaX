@@ -1,8 +1,14 @@
+import 'package:better_player_plus/better_player_plus.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
+import 'package:provider/provider.dart';
 import 'package:quax/tweet/_video.dart';
+import 'package:quax/tweet/video_controller_pool.dart';
 import 'package:quax/tweet/video_wakelock.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 import 'package:wakelock_plus_platform_interface/wakelock_plus_platform_interface.dart';
+
+import '../ui/pump_app.dart';
 
 class _FakeWakelock extends WakelockPlusPlatformInterface {
   final List<bool> toggles = [];
@@ -14,6 +20,23 @@ class _FakeWakelock extends WakelockPlusPlatformInterface {
 
   @override
   Future<bool> get enabled async => isEnabled;
+}
+
+// A player that already plays, so it will not post a play event again.
+class _PlayingController extends BetterPlayerController {
+  _PlayingController() : super(const BetterPlayerConfiguration());
+
+  @override
+  bool? isPlaying() => true;
+
+  @override
+  bool? isVideoInitialized() => true;
+
+  @override
+  Future<void> setVolume(double volume) async {}
+
+  @override
+  Future<void> pause() async {}
 }
 
 void main() {
@@ -134,6 +157,46 @@ void main() {
               'on. Nothing else would turn it back on: no new play event is emitted');
 
       VideoWakelock.release(video);
+    });
+  });
+
+  group('TweetVideo', () {
+    testWidgets('Should keep the screen awake when its player is already playing', (tester) async {
+      final pool = VideoControllerPool(maxSize: 2, afterFrame: (callback) => callback());
+      final controller = _PlayingController();
+      final startedElsewhere = Object();
+      await pool.acquire('1:0', startedElsewhere, () async => PooledVideo(
+            controller: controller,
+            downloadUrl: null,
+            qualities: const [],
+            ready: Future.value(),
+            pausableByPolicy: true,
+          ));
+      pool.release('1:0', startedElsewhere);
+
+      await pumpInApp(
+        tester,
+        MultiProvider(
+          providers: [
+            Provider<VideoControllerPool>.value(value: pool),
+            ChangeNotifierProvider<VideoContextState>(create: (_) => VideoContextState(true)),
+          ],
+          child: TweetVideo(
+            username: 'quax',
+            loop: false,
+            metadata: TweetVideoMetadata(1.0, null, () async => TweetVideoUrls('', null)),
+            tweetId: '1',
+          ),
+        ),
+        settle: false,
+      );
+
+      expect(wakelock.isEnabled, isTrue,
+          reason: 'A tapped video starts playing before the widget listens to it, and a video '
+              'opened from the feed keeps playing: no play event comes, yet the screen must stay on');
+
+      await tester.pumpWidget(const SizedBox());
+      await tester.pump(const Duration(milliseconds: 100));
     });
   });
 }

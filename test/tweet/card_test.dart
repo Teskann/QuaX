@@ -185,7 +185,7 @@ void main() {
     testWidgets('Should write the votes and the end of the poll in the color of the theme', (tester) async {
       await _pumpCard(tester, poll);
 
-      final footer = find.textContaining('Ends', findRichText: true).evaluate().single;
+      final footer = find.textContaining('End', findRichText: true).evaluate().single;
       expect((footer.widget as RichText).text.style?.color, DefaultTextStyle.of(footer).style.color,
           reason: 'The footer should be readable in light mode, not white on a light card');
     });
