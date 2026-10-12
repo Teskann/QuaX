@@ -3,7 +3,7 @@ import 'package:quax/group/group_model.dart';
 import 'package:quax/user.dart';
 import 'package:intl/intl.dart';
 
-final DateFormat sqliteDateFormat = DateFormat('yyyy-MM-dd HH:mm:ss');
+final DateFormat sqliteDateFormat = DateFormat('yyyy-MM-dd HH:mm:ss', 'en_US');
 
 mixin ToMappable {
   Map<String, dynamic> toMap();

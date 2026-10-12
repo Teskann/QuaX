@@ -5,7 +5,6 @@ import 'dart:io';
 
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:flutter_localizations/flutter_localizations.dart' as flutter_l10n;
 import 'package:flutter/services.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 import 'package:quax/client/accounts.dart';
@@ -13,6 +12,7 @@ import 'package:quax/client/accounts.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/database/repository.dart';
 import 'package:quax/generated/l10n.dart';
+import 'package:quax/ui/locale_fallback.dart';
 import 'package:quax/group/feed_session_cache.dart';
 import 'package:quax/tweet/video_controller_pool.dart';
 import 'package:quax/tweet/video_player_budget.dart';
@@ -446,12 +446,7 @@ class _FritterAppState extends State<FritterApp> {
           return Portal(
               child: MaterialApp(
                   navigatorKey: _navigatorKey,
-                  localizationsDelegates: const [
-                    L10n.delegate,
-                    ...GlobalMaterialLocalizations.delegates,
-                    flutter_l10n.GlobalMaterialLocalizations.delegate,
-                    flutter_l10n.GlobalCupertinoLocalizations.delegate,
-                  ],
+                  localizationsDelegates: appLocalizationsDelegates,
                   supportedLocales: L10n.delegate.supportedLocales,
                   locale: _locale,
                   title: 'QuaX',

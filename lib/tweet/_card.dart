@@ -16,6 +16,7 @@ import 'package:quax/tweet/_video.dart';
 import 'package:quax/ui/errors.dart';
 import 'package:quax/utils/urls.dart';
 import 'package:intl/intl.dart';
+import 'package:quax/ui/locale_fallback.dart';
 import 'package:logging/logging.dart';
 import 'package:pref/pref.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -225,7 +226,7 @@ class TweetCard extends StatelessWidget {
 
   Container _createVoteCard(BuildContext context, Map<String, dynamic> card, int numberOfChoices,
       {List<Widget?> images = const []}) {
-    var numberFormat = NumberFormat.decimalPattern();
+    var numberFormat = NumberFormat.decimalPattern(formattingLocale());
 
     var counts = List.generate(
         numberOfChoices, (index) => double.parse(card['binding_values']['choice${index + 1}_count']['string_value']));
@@ -237,11 +238,11 @@ class TweetCard extends StatelessWidget {
     var endsAt = DateTime.parse(card['binding_values']['end_datetime_utc']['string_value']);
     if (endsAt.isBefore(DateTime.now())) {
       endsAtText = L10n.of(context).ended_timeago_format_endsAt_allowFromNow_true(
-        timeago.format(endsAt, allowFromNow: true, locale: Intl.shortLocale(Intl.getCurrentLocale())),
+        timeago.format(endsAt, allowFromNow: true, locale: Intl.shortLocale(formattingLocale())),
       );
     } else {
       endsAtText = L10n.of(context).ends_timeago_format_endsAt_allowFromNow_true(
-        timeago.format(endsAt, allowFromNow: true, locale: Intl.shortLocale(Intl.getCurrentLocale())),
+        timeago.format(endsAt, allowFromNow: true, locale: Intl.shortLocale(formattingLocale())),
       );
     }
 

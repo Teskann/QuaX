@@ -1,11 +1,12 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:intl/intl.dart';
+import 'package:quax/ui/locale_fallback.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-final absoluteDateFormat = DateFormat.yMMMd().add_Hms();
+final absoluteDateFormat = DateFormat.yMMMd(formattingLocale()).add_Hms();
 
 String createRelativeDate(DateTime dateTime) {
-  return timeago.format(dateTime, locale: Intl.shortLocale(Intl.getCurrentLocale()));
+  return timeago.format(dateTime, locale: Intl.shortLocale(formattingLocale()));
 }
 
 class Timestamp extends StatefulWidget {
