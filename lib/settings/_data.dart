@@ -16,6 +16,10 @@ import 'package:logging/logging.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
 
+// jsonDecode gives back List<dynamic>, which PrefService silently refuses to store
+Map<String, dynamic>? _settingsFromJson(Map<String, dynamic>? settings) =>
+    settings?.map((key, value) => MapEntry(key, value is List ? List<String>.from(value) : value));
+
 class SettingsData {
   final Map<String, dynamic>? settings;
   final List<SearchSubscription>? searchSubscriptions;
@@ -40,7 +44,7 @@ class SettingsData {
 
   factory SettingsData.fromJson(Map<String, dynamic> json) {
     return SettingsData(
-        settings: json['settings'],
+        settings: _settingsFromJson(json['settings']),
         searchSubscriptions: json['searchSubscriptions'] != null
             ? List.from(json['searchSubscriptions']).map((e) => SearchSubscription.fromMap(e)).toList()
             : null,
@@ -89,7 +93,7 @@ Future<void> _importFromFile(BuildContext context, File file) async {
 
   var settings = data.settings;
   if (settings != null) {
-    prefs.fromMap(settings);
+    await prefs.fromMap(settings);
   }
 
   var dataToImport = <String, List<ToMappable>>{};
