@@ -187,6 +187,8 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     });
   }
 
+  bool _hasVisibleText() => TextSpan(children: displayRichText(_displayParts)).toPlainText().trim().isNotEmpty;
+
   void onClickOpenTweet(TweetWithCard tweet) {
     Navigator.pushNamed(context, routeStatus,
         arguments: StatusScreenArguments(
@@ -622,7 +624,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     // Only create the tweet content if the tweet contains text
     Widget content = Container();
 
-    if (tweet.displayTextRange![1] != 0) {
+    if (tweet.displayTextRange![1] != 0 && _hasVisibleText()) {
       content = Container(
           // Fill the width so both RTL and LTR text are displayed correctly
           width: double.infinity,

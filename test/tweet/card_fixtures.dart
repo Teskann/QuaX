@@ -5,6 +5,8 @@ import 'package:quax/client/client.dart';
 import '../fixtures.dart';
 
 const grokShareTweet = '2098507671083036843';
+const shortGrokShareTweet = '2109403816038666716';
+const longQuestionGrokShareTweet = '2109405630372991224';
 const carouselTweet = '2082854732020760880';
 const imagePollTweet = '2109301223363064091';
 

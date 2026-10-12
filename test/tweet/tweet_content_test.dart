@@ -5,6 +5,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:quax/client/client.dart';
 import 'package:quax/status.dart';
 import 'package:quax/tweet/_card_frame.dart';
+import 'package:quax/tweet/_expandable_tweet_text.dart';
+import 'package:quax/tweet/_grok_card.dart';
 import 'package:quax/tweet/_media.dart';
 import 'package:quax/tweet/_photo.dart';
 import 'package:quax/tweet/_video.dart';
@@ -15,6 +17,7 @@ import 'package:quax/user.dart';
 
 import '../fixtures.dart';
 import '../ui/fake_images.dart';
+import 'card_fixtures.dart';
 import 'pump_tweets.dart';
 
 /// Opens the post [id] as recorded in its TweetDetail fixture, checking every
@@ -291,6 +294,20 @@ void main() {
           reason: 'The answer of Grok should be shown');
       expect(find.textContaining('<grok:render'), findsNothing, reason: 'The markup inside the answer should be removed');
       expect(find.byType(UserAvatar), findsWidgets, reason: 'The picture of Grok comes with the card');
+    });
+
+    testWidgets('Should leave no blank above the card of a post that only links a Grok share', (tester) async {
+      final tweet = detailTweet(shortGrokShareTweet);
+      final link = tweet.entities!.urls!.single;
+      tweet.fullText = tweet.fullText!.substring(link.indices![0]);
+      link.indices = [0, link.indices![1] - link.indices![0]];
+      tweet.displayTextRange = [0, link.indices![1]];
+      await pumpChains(tester, [TweetChain(id: shortGrokShareTweet, tweets: [tweet], isPinned: false)]);
+
+      final texts = find.descendant(of: tweetTile(shortGrokShareTweet), matching: find.byType(ExpandableTweetText));
+      final cardTexts = find.descendant(of: find.byType(GrokShareCard), matching: find.byType(ExpandableTweetText));
+      expect(texts.evaluate().length, cardTexts.evaluate().length,
+          reason: 'The text only held the link the card replaces, so the post should show no text block');
     });
 
     testWidgets('Should show an image carousel card with all its images', (tester) async {

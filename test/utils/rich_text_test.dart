@@ -29,6 +29,11 @@ void main() {
         reason: 'Without a card, the link is the only way to reach the conversation');
   });
 
+  testWidgets('Should not leave the line break before the link of a Grok share once dropped', (tester) async {
+    expect(await _shownText(tester, detailTweet(shortGrokShareTweet), hideCardUrls: true), 'I discussed with Grok today !',
+        reason: 'The line break before the dropped link would show as an empty line above the card');
+  });
+
   testWidgets('Should keep any other link, even with a card', (tester) async {
     final tweet = detailTweet(_summaryCardTweet);
 
