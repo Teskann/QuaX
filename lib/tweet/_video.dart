@@ -410,6 +410,7 @@ class _TweetVideoState extends State<TweetVideo> with WidgetsBindingObserver {
       }
     };
     controller.addEventsListener(_onEvent!);
+    if (widget.keepsScreenAwake && pooled.isPlaying) VideoWakelock.acquire(this);
   }
 
   void _detachListeners() {
