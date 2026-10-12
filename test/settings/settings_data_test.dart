@@ -1,9 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:pref/pref.dart';
+import 'package:quax/constants.dart';
 import 'package:quax/database/entities.dart';
-import 'package:quax/group/group_model.dart' show defaultGroupIcon;
+import 'package:quax/group/group_model.dart' show GroupsModel, defaultGroupIcon;
+import 'package:quax/home/home_model.dart';
 import 'package:quax/settings/_data.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   SettingsData full() => SettingsData(
@@ -115,6 +119,25 @@ void main() {
           .subscriptionGroups?.single.numberOfMembers, 0,
           reason: 'Nothing carries the count through the backup, so it should come back at 0 and '
               'be filled in by the group query');
+    });
+
+    test('Should restore the order and the enabled home tabs, group tabs included', () async {
+      SharedPreferences.setMockInitialValues({});
+      final prefs = await PrefServiceShared.init(prefix: 'pref_');
+      final backup = full().toJson()
+        ..['settings'] = {
+          optionHomePages: ['group-g1', 'feed', 'saved'],
+        };
+      final restored = SettingsData.fromJson(jsonDecode(jsonEncode(backup)));
+
+      await prefs.fromMap(restored.settings!);
+      final home = HomeModel(prefs, GroupsModel(prefs)..update(restored.subscriptionGroups!));
+      await home.loadPages();
+
+      expect(home.state.where((page) => page.selected).map((page) => page.id), ['group-g1', 'feed', 'saved'],
+          reason: 'PrefService drops a list that is not a List<String> without any error, so the '
+              'home tabs of the backup, with the tab of the imported group first, should be the '
+              'ones shown and in the same order');
     });
   });
 }
