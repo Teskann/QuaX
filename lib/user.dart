@@ -319,6 +319,12 @@ class UserWithExtra extends User {
     return List<String>.from(ids as List<dynamic>? ?? const []);
   }
 
+  static bool postsHiddenOf(Map<String, dynamic> json) {
+    var protected = json['privacy']?['protected'] ?? json['legacy']?['protected'];
+    var following = json['relationship_perspectives']?['following'] ?? json['legacy']?['following'];
+    return protected == true && following != true;
+  }
+
   factory UserWithExtra.fromJson(Map<String, dynamic> json) {
     var userWithExtra = UserWithExtra()
       ..idStr = json['id_str'] as String?

@@ -6,7 +6,10 @@ class Profile {
   final UserWithExtra user;
   final List<String> pinnedTweets;
 
-  Profile(this.user, this.pinnedTweets);
+  /// The account is protected and the viewer does not follow it: X shows none of its posts.
+  final bool postsHidden;
+
+  Profile(this.user, this.pinnedTweets, {this.postsHidden = false});
 }
 
 class ProfileModel extends Store<Profile> {

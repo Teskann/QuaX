@@ -309,7 +309,7 @@ class Twitter {
 
     var user = UserWithExtra.fromNonLegacyJson(result);
 
-    return Profile(user, UserWithExtra.pinnedTweetIdsOf(result));
+    return Profile(user, UserWithExtra.pinnedTweetIdsOf(result), postsHidden: UserWithExtra.postsHiddenOf(result));
   }
 
   // GraphQL "Following"
