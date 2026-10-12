@@ -56,6 +56,9 @@ List<RichTextPart> buildRichText(BuildContext context, String rawText, Object? r
 
     // Add any text between the last entity's end and the start of this one
     var textPart = _convertRunesToText(runesAsIterable, index, start);
+    if (part is HiddenUrlEntity && _convertRunesToText(runesAsIterable, end)?.trim().isNotEmpty != true) {
+      textPart = textPart?.trimRight();
+    }
     _handleTextParts(context, textPart, richTextParts);
 
     // Then add the actual entity

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:material_ui/material_ui.dart';
 import 'package:quax/tweet/_card_frame.dart';
 import 'package:quax/tweet/_expandable_tweet_text.dart';
@@ -62,7 +64,7 @@ class GrokShareCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _GrokQuestion(message: share.question),
+            _GrokQuestion(share: share),
             const SizedBox(height: 12),
             _GrokAnswer(share: share),
           ],
@@ -73,19 +75,34 @@ class GrokShareCard extends StatelessWidget {
 }
 
 class _GrokQuestion extends StatelessWidget {
-  final String message;
+  final GrokShare share;
 
-  const _GrokQuestion({required this.message});
+  const _GrokQuestion({required this.share});
+
+  static const _padding = EdgeInsets.symmetric(horizontal: 14, vertical: 10);
+
+  double _lineWidth(BuildContext context, TextStyle style) {
+    final painter = TextPainter(
+      text: TextSpan(text: share.question, style: style),
+      textDirection: TextDirection.ltr,
+      textScaler: MediaQuery.textScalerOf(context),
+    )..layout();
+    final width = painter.width;
+    painter.dispose();
+    return width;
+  }
 
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
+    final style = Theme.of(context).textTheme.bodyMedium!.copyWith(color: colors.onPrimaryContainer);
+    final bubbleWidth = _lineWidth(context, style) + _padding.horizontal + 4;
     return Align(
       alignment: Alignment.centerRight,
       child: ConstrainedBox(
-        constraints: BoxConstraints(maxWidth: MediaQuery.sizeOf(context).width * 0.7),
+        constraints: BoxConstraints(maxWidth: min(MediaQuery.sizeOf(context).width * 0.7, bubbleWidth)),
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+          padding: _padding,
           decoration: BoxDecoration(
             color: colors.primaryContainer,
             borderRadius: const BorderRadius.only(
@@ -95,11 +112,13 @@ class _GrokQuestion extends StatelessWidget {
               bottomRight: Radius.circular(4),
             ),
           ),
-          child: Text(
-            message,
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: colors.onPrimaryContainer),
+          child: DefaultTextStyle.merge(
+            style: style,
+            child: ExpandableTweetText(
+              textSpans: [TextSpan(text: share.question)],
+              onTap: () => openUri(context, share.uri),
+              maxLines: 3,
+            ),
           ),
         ),
       ),

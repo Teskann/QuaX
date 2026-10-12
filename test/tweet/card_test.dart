@@ -7,6 +7,8 @@ import 'package:material_ui/material_ui.dart';
 import 'package:quax/client/client.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/tweet/_card.dart';
+import 'package:quax/tweet/_expandable_tweet_text.dart';
+import 'package:quax/tweet/_grok_card.dart';
 import 'package:quax/tweet/_media.dart';
 import 'package:quax/user.dart';
 
@@ -51,6 +53,9 @@ List<String> thumbnails() => find
     .evaluate()
     .map((element) => ((element.widget as ExtendedImage).image as ExtendedNetworkImageProvider).url)
     .toList();
+
+Finder grokQuestion(String question) => find.byWidgetPredicate(
+    (w) => w is ExpandableTweetText && TextSpan(children: w.textSpans).toPlainText() == question);
 
 void expectUnsupported(String reason) =>
     expect(find.textContaining("isn't supported yet"), findsOneWidget, reason: reason);
@@ -125,6 +130,26 @@ void main() {
 
       expect(tester.takeException(), isNull, reason: 'A missing answer should not fail the card');
       expect(find.text('Is this real?'), findsOneWidget, reason: 'The question should still be shown');
+    });
+
+    testWidgets('Should let a question longer than three lines be expanded', (tester) async {
+      final tweet = detailTweet(longQuestionGrokShareTweet);
+      await _pumpCard(tester, tweet);
+
+      final question = grokQuestion(GrokShare.fromUnifiedCard(unifiedOf(tweet.card!))!.question);
+      expect(find.descendant(of: question, matching: find.text('Show more')), findsOneWidget,
+          reason: 'A long question should be cut after three lines and offer to show the rest');
+      await tester.tap(find.descendant(of: question, matching: find.text('Show more')));
+      await tester.pump();
+      expect(find.descendant(of: question, matching: find.text('Show more')), findsNothing,
+          reason: 'Once expanded, the question should not offer more');
+    });
+
+    testWidgets('Should show a short question whole', (tester) async {
+      await _pumpCard(tester, detailTweet(shortGrokShareTweet));
+
+      expect(find.descendant(of: grokQuestion('this is a test discussion with you !'), matching: find.text('Show more')),
+          findsNothing, reason: 'A question that fits should not offer more');
     });
 
     testWidgets('Should show an image website card with its page', (tester) async {

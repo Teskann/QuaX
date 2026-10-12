@@ -1,0 +1,291 @@
+{
+ "scenario": "Grok share: a short conversation, the post text only adds a line before the link",
+ "sourceUrl": "https://x.com/quax_tests/status/2109403816038666716",
+ "operation": "TweetResultByRestId",
+ "host": "x.com",
+ "queryId": "xZfFqfOmKQu_OXekGI59mg",
+ "features": {
+  "creator_subscriptions_tweet_preview_api_enabled": true,
+  "premium_content_api_read_enabled": false,
+  "communities_web_enable_tweet_community_results_fetch": true,
+  "c9s_tweet_anatomy_moderator_badge_enabled": true,
+  "responsive_web_grok_analyze_button_fetch_trends_enabled": false,
+  "responsive_web_grok_analyze_post_followups_enabled": true,
+  "rweb_cashtags_composer_attachment_enabled": true,
+  "responsive_web_jetfuel_frame": true,
+  "rweb_sports_post_context_enabled": true,
+  "responsive_web_grok_share_attachment_enabled": true,
+  "responsive_web_grok_annotations_enabled": true,
+  "articles_preview_enabled": true,
+  "responsive_web_edit_tweet_api_enabled": true,
+  "rweb_conversational_replies_downvote_enabled": false,
+  "graphql_is_translatable_rweb_tweet_is_translatable_enabled": true,
+  "view_counts_everywhere_api_enabled": true,
+  "longform_notetweets_consumption_enabled": true,
+  "responsive_web_twitter_article_tweet_consumption_enabled": true,
+  "content_disclosure_indicator_enabled": true,
+  "content_disclosure_ai_generated_indicator_enabled": true,
+  "responsive_web_grok_show_grok_translated_post": true,
+  "responsive_web_grok_analysis_button_from_backend": true,
+  "post_ctas_fetch_enabled": false,
+  "rweb_cashtags_enabled": true,
+  "freedom_of_speech_not_reach_fetch_enabled": true,
+  "standardized_nudges_misinfo": true,
+  "tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled": true,
+  "longform_notetweets_rich_text_read_enabled": true,
+  "longform_notetweets_inline_media_enabled": false,
+  "profile_label_improvements_pcf_label_in_post_enabled": true,
+  "responsive_web_profile_redirect_enabled": true,
+  "rweb_tipjar_consumption_enabled": false,
+  "verified_phone_label_enabled": false,
+  "responsive_web_nested_quote_preview_enabled": true,
+  "responsive_web_grok_image_annotation_enabled": true,
+  "responsive_web_grok_imagine_annotation_enabled": true,
+  "responsive_web_grok_community_note_auto_translation_is_enabled": true,
+  "responsive_web_graphql_timeline_navigation_enabled": true
+ },
+ "fieldToggles": {
+  "withArticleRichContentState": true,
+  "withArticlePlainText": false,
+  "withArticleSummaryText": true,
+  "withArticleVoiceOver": true,
+  "withPayments": false
+ },
+ "variables": {
+  "tweetId": "2109403816038666716",
+  "includePromotedContent": true,
+  "withBirdwatchNotes": true,
+  "withVoice": true,
+  "withCommunity": true
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "500",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "499",
+  "x-rate-limit-reset": "1791839713"
+ },
+ "body": {
+  "data": {
+   "tweetResult": {
+    "result": {
+     "__typename": "Tweet",
+     "card": {
+      "legacy": {
+       "binding_values": [
+        {
+         "key": "unified_card",
+         "value": {
+          "string_value": "{\"component_objects\":{\"details_1\":{\"type\":\"grok_share\",\"data\":{\"profile_user\":{\"id_str\":\"0\",\"name\":\"\",\"verified\":false,\"is_blue_verified\":false},\"grok_user\":{\"id_str\":\"1720665183188922368\",\"profile_image_url_https\":\"https:\\/\\/pbs.twimg.com\\/profile_images\\/2057885623374290944\\/lmj0pawP.jpg\",\"name\":\"Grok\",\"screen_name\":\"grok\",\"highlighted_label\":{\"description\":\"SpaceX Super Intelligence\",\"badge\":{\"url\":\"https:\\/\\/pbs.twimg.com\\/profile_images\\/2108973816865067008\\/eES3dbLy_bigger.jpg\"},\"url\":{\"urlType\":\"DeepLink\",\"url\":\"https:\\/\\/twitter.com\\/SpaceXSI\"},\"userLabelType\":\"BusinessLabel\",\"userLabelDisplayType\":\"Badge\"},\"verified\":false,\"is_blue_verified\":true,\"verified_type\":\"Business\"},\"id\":\"32db3dd9ab8941ecbad132eeadd54f37\",\"conversation_preview\":[{\"message\":\"this is a test discussion with you !\",\"sender\":\"USER\",\"grokMode\":\"NORMAL\",\"mediaUrls\":[]},{\"message\":\"Got it! Test discussion initiated.  \\nI'm here, ready, and fully operational. Fire away with whatever you want to chat about, test, or dive into. What's on your mind? \\ud83d\\ude80\",\"sender\":\"AGENT\",\"grokMode\":\"NORMAL\",\"mediaUrls\":[],\"deepsearchHeaders\":[{\"header\":\"Thinking about your request\",\"steps\":[{\"finalMessage\":\"Got\"}]}]}],\"destination\":\"destination_1\",\"allowed_actions\":[\"ASK_IT_YOURSELF\"],\"metadata\":{\"text\":\"Answer by Grok\"}}}},\"destination_objects\":{\"destination_1\":{\"type\":\"browser\",\"data\":{\"url_data\":{\"url\":\"https:\\/\\/x.com\\/i\\/grok\\/share\\/32db3dd9ab8941ecbad132eeadd54f37\",\"vanity\":\"Grok\"}}}},\"components\":[\"details_1\"]}",
+          "type": "STRING"
+         }
+        },
+        {
+         "key": "card_url",
+         "value": {
+          "scribe_key": "card_url",
+          "string_value": "https://t.co/v55JVdUSt7",
+          "type": "STRING"
+         }
+        }
+       ],
+       "card_platform": {
+        "platform": {
+         "audience": {
+          "name": "production"
+         },
+         "device": {
+          "name": "Swift",
+          "version": "12"
+         }
+        }
+       },
+       "name": "unified_card",
+       "url": "https://t.co/v55JVdUSt7",
+       "user_refs_results": []
+      },
+      "rest_id": "https://t.co/v55JVdUSt7"
+     },
+     "cashtag_attachments": [],
+     "core": {
+      "user_results": {
+       "result": {
+        "__typename": "User",
+        "action_counts": {
+         "favorites_count": 0
+        },
+        "affiliates_highlighted_label": {},
+        "avatar": {
+         "image_url": "https://pbs.twimg.com/profile_images/2095923817080295424/YjqaAMdO_normal.jpg"
+        },
+        "banner": {
+         "image_url": "https://pbs.twimg.com/profile_banners/2095909295913103360/1788542164"
+        },
+        "core": {
+         "created_at": "Fri Sep 04 16:19:42 +0000 2026",
+         "name": "QuaX Tests",
+         "screen_name": "quax_tests"
+        },
+        "follow_request_sent": false,
+        "has_graduated_access": false,
+        "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
+        "is_blue_verified": false,
+        "location": {
+         "location": "India"
+        },
+        "media_permissions": {
+         "can_media_tag": true
+        },
+        "notifications_settings": {
+         "notifications_enabled": false
+        },
+        "parody_commentary_fan_label": "None",
+        "pinned_items": {},
+        "possibly_sensitive": false,
+        "privacy": {
+         "protected": false
+        },
+        "profile_bio": {
+         "description": "🧪 Throwaway account · QuaX parsing fixtures 🇫🇷\n  Nothing real, every post is a test case.\n  https://t.co/XbzZfYVJIK · https://t.co/Akx2T6uckh\n  Ping @jack",
+         "entities": {
+          "description": {
+           "urls": [
+            {
+             "display_url": "github.com/Teskann/QuaX",
+             "expanded_url": "http://github.com/Teskann/QuaX",
+             "indices": [
+              92,
+              115
+             ],
+             "url": "https://t.co/XbzZfYVJIK"
+            },
+            {
+             "display_url": "flutter.dev",
+             "expanded_url": "https://flutter.dev",
+             "indices": [
+              118,
+              141
+             ],
+             "url": "https://t.co/Akx2T6uckh"
+            }
+           ]
+          }
+         }
+        },
+        "profile_description_language": "en",
+        "profile_image_shape": "Circle",
+        "profile_metadata": {
+         "profile_interstitial_type": ""
+        },
+        "profile_translation": {
+         "translator_type": "none"
+        },
+        "relationship_counts": {
+         "followers": 0,
+         "following": 0
+        },
+        "relationship_perspectives": {
+         "blocked_by": false,
+         "blocking": false,
+         "followed_by": false,
+         "following": false,
+         "live_following": false,
+         "muting": false
+        },
+        "rest_id": "2095909295913103360",
+        "super_follow_eligible": false,
+        "super_followed_by": false,
+        "super_following": false,
+        "tweet_counts": {
+         "media_tweets": 17,
+         "tweets": 45
+        },
+        "verification": {
+         "verified": false
+        },
+        "website": {
+         "url": ""
+        }
+       }
+      }
+     },
+     "edit_control": {
+      "edit_tweet_ids": [
+       "2109403816038666716"
+      ],
+      "editable_until_msecs": "1791759635000",
+      "edits_remaining": "5",
+      "is_edit_eligible": true
+     },
+     "grok_analysis_button": false,
+     "grok_annotations": {},
+     "grok_share_attachment": {
+      "items": [
+       {
+        "media_urls": [],
+        "message": "this is a test discussion with you !"
+       },
+       {
+        "deepsearch_headers": [
+         {
+          "steps": [
+           {}
+          ]
+         }
+        ],
+        "media_urls": [],
+        "message": "Got it! Test discussion initiated.  \n\nI'm here, ready, and fully operational. Fire away with whatever you want to chat about, test, or dive into. What's on your mind? 🚀"
+       }
+      ]
+     },
+     "grok_translated_post_with_availability": {
+      "is_available": false
+     },
+     "has_birdwatch_notes": false,
+     "is_translatable": false,
+     "legacy": {
+      "bookmark_count": 0,
+      "bookmarked": false,
+      "conversation_id_str": "2109403816038666716",
+      "created_at": "Sun Oct 11 22:00:35 +0000 2026",
+      "display_text_range": [
+       0,
+       53
+      ],
+      "entities": {
+       "urls": [
+        {
+         "display_url": "x.com/i/grok/share/3…",
+         "expanded_url": "https://x.com/i/grok/share/32db3dd9ab8941ecbad132eeadd54f37",
+         "indices": [
+          30,
+          53
+         ],
+         "url": "https://t.co/v55JVdUSt7"
+        }
+       ]
+      },
+      "favorite_count": 0,
+      "favorited": false,
+      "full_text": "I discussed with Grok today !\nhttps://t.co/v55JVdUSt7",
+      "id_str": "2109403816038666716",
+      "is_quote_status": false,
+      "lang": "en",
+      "possibly_sensitive": false,
+      "possibly_sensitive_editable": true,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "retweeted": false,
+      "user_id_str": "2095909295913103360"
+     },
+     "rest_id": "2109403816038666716",
+     "unmention_data": {},
+     "views": {
+      "state": "Enabled"
+     }
+    }
+   }
+  }
+ }
+}
