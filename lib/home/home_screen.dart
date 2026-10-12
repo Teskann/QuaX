@@ -174,9 +174,19 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
     super.initState();
     _currentPage = widget.initialPage;
     _pageController = PageController(initialPage: widget.initialPage);
-    for (int i = 0; i < widget.pages.length; i++) {
-      _scrollControllers[i] = ScrollController();
-      _focusNodes[i] = FocusNode();
+    _fitControllersToPages();
+  }
+
+  void _fitControllersToPages() {
+    _fitToPageCount(_scrollControllers, ScrollController.new);
+    _fitToPageCount(_focusNodes, FocusNode.new);
+  }
+
+  void _fitToPageCount<T extends ChangeNotifier>(Map<int, T> byPage, T Function() create) {
+    final count = widget.pages.length;
+    byPage.keys.where((k) => k >= count).toList().forEach((k) => byPage.remove(k)!.dispose());
+    for (int i = 0; i < count; i++) {
+      byPage.putIfAbsent(i, create);
     }
   }
 
@@ -184,17 +194,7 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
   void didUpdateWidget(covariant ScaffoldWithBottomNavigation oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.pages.length != oldWidget.pages.length) {
-      // Dispose controllers that are no longer needed.
-      _scrollControllers.keys.where((k) => k >= widget.pages.length).toList().forEach((k) {
-        _scrollControllers[k]?.dispose();
-        _scrollControllers.remove(k);
-      });
-      // Create controllers for new pages.
-      for (int i = 0; i < widget.pages.length; i++) {
-        if (!_scrollControllers.containsKey(i)) {
-          _scrollControllers[i] = ScrollController();
-        }
-      }
+      _fitControllersToPages();
     }
   }
 
@@ -277,6 +277,10 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
           }
           unfocusOtherPages();
           _pageController.jumpToPage(index);
+          // A PageView that just got more pages reports a wrong page after the jump
+          setState(() {
+            _currentPage = index;
+          });
         },
       ),
     );
@@ -285,7 +289,7 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
   @override
   void dispose() {
     _pageController.dispose();
-    for (final controller in _scrollControllers.values) {
+    for (final controller in [..._scrollControllers.values, ..._focusNodes.values]) {
       controller.dispose();
     }
     super.dispose();
