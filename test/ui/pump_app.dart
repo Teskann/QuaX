@@ -1,9 +1,9 @@
-import 'package:flutter_localizations/flutter_localizations.dart' as flutter_l10n;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:pref/pref.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/generated/l10n.dart';
+import 'package:quax/ui/locale_fallback.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 /// Pumps [body] in a localized app with the preferences the widgets read, overridden by [prefs].
@@ -11,7 +11,10 @@ import 'package:visibility_detector/visibility_detector.dart';
 /// while images, which never finish loading in tests, keep spinning.
 /// [aboveApp] wraps the whole app, for what overlays such as drag proxies must read.
 Future<void> pumpInApp(WidgetTester tester, Widget body,
-    {bool settle = true, Map<String, dynamic> prefs = const {}, Widget Function(Widget app)? aboveApp}) async {
+    {bool settle = true,
+    Map<String, dynamic> prefs = const {},
+    Widget Function(Widget app)? aboveApp,
+    Locale? locale}) async {
   // Videos wait for their visibility to be reported, which is otherwise
   // debounced by a timer left pending when the test ends.
   VisibilityDetectorController.instance.updateInterval = Duration.zero;
@@ -35,13 +38,9 @@ Future<void> pumpInApp(WidgetTester tester, Widget body,
       ...prefs,
     }),
     child: (aboveApp ?? (app) => app)(MaterialApp(
-      localizationsDelegates: const [
-        L10n.delegate,
-        ...GlobalMaterialLocalizations.delegates,
-        flutter_l10n.GlobalMaterialLocalizations.delegate,
-        flutter_l10n.GlobalCupertinoLocalizations.delegate,
-      ],
+      localizationsDelegates: appLocalizationsDelegates,
       supportedLocales: L10n.delegate.supportedLocales,
+      locale: locale,
       home: Scaffold(body: body),
     )),
   ));

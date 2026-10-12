@@ -27,6 +27,7 @@ import 'package:quax/utils/rich_text.dart';
 import 'package:quax/utils/urls.dart';
 import 'package:quax/utils/translation.dart';
 import 'package:intl/intl.dart';
+import 'package:quax/ui/locale_fallback.dart';
 import 'package:logging/logging.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
@@ -466,7 +467,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
         currentUsername != null && tweet.user != null && currentUsername == tweet.user!.screenName;
     final hideAuthorInformation = !isTweetOnSameProfile && prefs.get(optionNonConfirmationBiasMode);
 
-    var numberFormat = NumberFormat.compact();
+    var numberFormat = NumberFormat.compact(locale: formattingLocale());
     var theme = Theme.of(context);
 
     if (tweet.isTombstone ?? false) {

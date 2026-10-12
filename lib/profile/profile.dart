@@ -19,6 +19,7 @@ import 'package:quax/user.dart';
 import 'package:quax/utils/urls.dart';
 import 'package:quax/utils/rich_text.dart';
 import 'package:intl/intl.dart';
+import 'package:quax/ui/locale_fallback.dart';
 import 'package:measure_size/measure_size.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
@@ -128,7 +129,7 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
   double headerHeight = defaultHeight;
   bool headerResized = false;
 
-  NumberFormat numberFormat = NumberFormat.compact();
+  NumberFormat numberFormat = NumberFormat.compact(locale: formattingLocale());
 
   @override
   void initState() {
@@ -487,7 +488,7 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
                                                                             : Colors.black),
                                                                     const SizedBox(width: 4),
                                                                     Text(
-                                                                        L10n.of(context).joined(DateFormat('MMMM yyyy')
+                                                                        L10n.of(context).joined(DateFormat('MMMM yyyy', formattingLocale())
                                                                             .format(user.createdAt!)),
                                                                         style: metadataTextStyle),
                                                                   ],

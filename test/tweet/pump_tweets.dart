@@ -38,7 +38,7 @@ Widget withAppModels(Widget child) => MultiProvider(
 
 /// Renders every chain the way a timeline does, all built at once so that
 /// tweets far down the list can be inspected too.
-Future<void> pumpChains(WidgetTester tester, List<TweetChain> chains) => pumpInApp(
+Future<void> pumpChains(WidgetTester tester, List<TweetChain> chains, {Locale? locale}) => pumpInApp(
       tester,
       withAppModels(SingleChildScrollView(
         child: Column(
@@ -49,6 +49,7 @@ Future<void> pumpChains(WidgetTester tester, List<TweetChain> chains) => pumpInA
         ),
       )),
       settle: false,
+      locale: locale,
     );
 
 /// The tile of the tweet [id]. A tweet both shown and quoted has two tiles, the

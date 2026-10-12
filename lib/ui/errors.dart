@@ -8,6 +8,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:flutter/rendering.dart' show RenderParagraph;
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:quax/ui/locale_fallback.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:quax/catcher/exceptions.dart';
 
@@ -334,7 +335,7 @@ class ErrorCard extends StatelessWidget {
     };
   }
 
-  String _time(DateTime dateTime) => DateFormat.jm().format(dateTime.toLocal());
+  String _time(DateTime dateTime) => DateFormat.jm(formattingLocale()).format(dateTime.toLocal());
 
   @override
   Widget build(BuildContext context) {
