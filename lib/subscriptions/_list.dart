@@ -99,6 +99,7 @@ class _SubscriptionUsersState extends State<SubscriptionUsers> {
 
     return SliverReorderableList(
       itemCount: subLst.length,
+      proxyDecorator: (child, _, _) => Material(type: MaterialType.transparency, child: child),
       itemBuilder: (context, i) => ReorderableDelayedDragStartListener(
         key: ValueKey(subLst[i].screenName),
         index: i,
