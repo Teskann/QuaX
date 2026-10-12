@@ -104,8 +104,8 @@ List<TweetWithCard> tweetsOf(List<TweetChain> chains) => chains.expand((chain) =
 /// Opens [screen] as a route carrying [arguments], answering its requests with
 /// [fixtures] keyed by GraphQL operation, then lets the pages load.
 Future<void> pumpScreen(WidgetTester tester, Widget screen,
-    {required Object arguments, required Map<String, Fixture> fixtures}) async {
-  Twitter.client = FixtureTwitterClient(fixtures);
+    {required Object arguments, required Map<String, Fixture> fixtures, List<String>? requested}) async {
+  Twitter.client = FixtureTwitterClient(fixtures, requested: requested);
   tester.view
     ..physicalSize = const Size(1080, 2400)
     ..devicePixelRatio = 2.625;

@@ -61,7 +61,7 @@ UserWithExtra userOf(String screenName) =>
 /// parts and overflows by a pixel with the test font: layout is not what these
 /// tests check, so overflow reports are dropped while the profile is drawn.
 Future<void> openProfile(WidgetTester tester, String fixtureName, String screenName, String timeline,
-    {Map<String, Fixture> more = const {}, bool unstable = false}) async {
+    {Map<String, Fixture> more = const {}, bool unstable = false, Fixture? profile, List<String>? requested}) async {
   final onError = FlutterError.onError;
   FlutterError.onError = (details) {
     if (!details.exceptionAsString().contains('overflowed')) onError?.call(details);
@@ -72,10 +72,11 @@ Future<void> openProfile(WidgetTester tester, String fixtureName, String screenN
       const ProfileScreen(),
       arguments: ProfileScreenArguments.fromScreenName(screenName, null),
       fixtures: {
-        'UserByScreenName': fixture('UserByScreenName', fixtureName, unstable: unstable),
+        'UserByScreenName': profile ?? fixture('UserByScreenName', fixtureName, unstable: unstable),
         'UserOriginalsTimeline': fixture('UserOriginalsTimeline', timeline, unstable: unstable),
         ...more,
       },
+      requested: requested,
     );
   } finally {
     FlutterError.onError = onError;
@@ -159,6 +160,54 @@ void main() {
       expect(find.byType(ErrorCard), findsOneWidget,
           reason: 'X answers {"data": {}} without errors, which should still end in an error');
       expect(find.textContaining('User not found'), findsWidgets, reason: 'The error should say the user does not exist');
+    });
+  });
+
+  group('Protected profile', () {
+    /// @quax_tests_2 as X sends it for a protected account, which no capture holds.
+    Fixture protectedQuaxTests2({required bool followed}) {
+      final recorded = fixture('UserByScreenName', 'quax-tests-2');
+      final user = recorded.body['data']['user']['result'] as Map<String, dynamic>;
+      return Fixture(recorded.path, {
+        'body': {
+          'data': {
+            'user': {
+              'result': {
+                ...user,
+                'privacy': {'protected': true},
+                'relationship_perspectives': {...user['relationship_perspectives'] as Map, 'following': followed},
+              }
+            }
+          }
+        }
+      });
+    }
+
+    Future<List<String>> openProtected(WidgetTester tester, {required bool followed}) async {
+      final requested = <String>[];
+      await openProfile(tester, 'quax-tests-2', 'quax_tests_2', quaxTests2Id,
+          profile: protectedQuaxTests2(followed: followed), requested: requested);
+      return requested;
+    }
+
+    testWidgets('Should say the posts are protected without asking X for them', (tester) async {
+      final requested = await openProtected(tester, followed: false);
+
+      expect(requested, ['UserByScreenName'],
+          reason: 'X sends no timeline of a protected account to a non-follower, so none should be asked for');
+      expect(find.text('Only approved followers can see @quax_tests_2’s posts.'), findsOneWidget,
+          reason: 'The posts tab should say why it is empty');
+      expect(find.byType(ErrorCard), findsNothing, reason: 'A protected account is not an error');
+      expect(tester.widget<StatusCard>(find.byType(StatusCard)).level, StatusLevel.info,
+          reason: 'The card should only inform, with the accent color rather than the error red');
+      expect(headerText(find.text('@quax_tests_2')), findsOneWidget, reason: 'The profile header should still be shown');
+    });
+
+    testWidgets('Should show the posts of a protected account the viewer follows', (tester) async {
+      final requested = await openProtected(tester, followed: true);
+
+      expect(requested, contains('UserOriginalsTimeline'), reason: 'A follower can see the timeline, so it should be loaded');
+      expect(find.byType(TweetTile), findsWidgets, reason: 'The posts tab should list the posts of the profile');
     });
   });
 

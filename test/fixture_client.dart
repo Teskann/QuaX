@@ -9,12 +9,16 @@ import 'fixtures.dart';
 /// operation, the last segment of the path, so a widget that loads its own
 /// data renders the recorded response.
 class FixtureTwitterClient extends AbstractTwitterClient {
-  const FixtureTwitterClient(this.fixtures);
+  const FixtureTwitterClient(this.fixtures, {this.requested});
 
   final Map<String, Fixture> fixtures;
 
+  /// Collects the operation of every request, answered or not.
+  final List<String>? requested;
+
   @override
   Future<Response> get(Uri uri, {Map<String, String>? headers, Duration? timeout}) async {
+    requested?.add(uri.pathSegments.last);
     final fixture = fixtures[uri.pathSegments.last];
     if (fixture == null) {
       throw StateError('No fixture to answer ${uri.path}');

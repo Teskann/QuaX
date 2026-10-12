@@ -232,6 +232,17 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
     nestedScrollViewKey.currentState?.outerController.jumpTo(0);
   }
 
+  /// X sends no post of a protected account to someone who does not follow it.
+  Widget _postsOrProtected(Widget posts) => widget.profile.postsHidden
+      ? SingleChildScrollView(
+          child: StatusCard(
+              icon: Icons.lock_outline,
+              title: L10n.current.protected_posts_title,
+              details: L10n.current.protected_posts_message(widget.profile.user.screenName ?? ''),
+              actions: const [],
+              level: StatusLevel.info))
+      : posts;
+
   @override
   Widget build(BuildContext context) {
     // TODO: This shouldn't happen before the profile is loaded
@@ -628,19 +639,19 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
             child: TabBarView(
               controller: _tabController,
               children: [
-                ProfileTweets(
+                _postsOrProtected(ProfileTweets(
                     user: user,
                     type: 'profile',
                     includeReplies: false,
                     pinnedTweets: widget.profile.pinnedTweets,
-                    pref: prefs),
-                ProfileTweets(
+                    pref: prefs)),
+                _postsOrProtected(ProfileTweets(
                     user: user,
                     type: 'profile',
                     includeReplies: true,
                     pinnedTweets: widget.profile.pinnedTweets,
-                    pref: prefs),
-                ProfileMediaGrid(user: user, pref: prefs, kind: _mediaKind),
+                    pref: prefs)),
+                _postsOrProtected(ProfileMediaGrid(user: user, pref: prefs, kind: _mediaKind)),
                 ProfileSaved(user: user),
               ],
             ),
