@@ -34,7 +34,7 @@ async (html, nowMs, requests) => {
 
 /// What the page needs to sign requests, by the name X gives each file. Kept
 /// loose on purpose: recording must not fail because X renamed something.
-final _recordedScripts = RegExp(r'/(entry-client[\w-]*|client-transaction-id-plugin-[\w-]+|sign\.o-[\w-]+)\.js$');
+final _recordedScripts = RegExp(r'/(entry-client[\w-]*|client-transaction-id-plugin-[\w-]+|startup-dynamic-[\w-]+|sign\.o-[\w-]+)\.js$');
 
 const _port = 9334;
 const _loadTimeout = Duration(seconds: 20);
@@ -127,7 +127,7 @@ Future<void> _recordSignedIds(String homePageHtml, String signFileText) async {
 }
 
 Future<List<String>> _signInChrome(String html, String signModule, int nowMs) async {
-  final browser = await puppeteer.launch();
+  final browser = await puppeteer.launch(executablePath: installedChrome());
   try {
     final page = await browser.newPage();
     await page.setRequestInterception(true);
