@@ -1,3 +1,9 @@
+## QuaX v4.18.1
+
+What's new in QuaX v4.18.1:
+  - Long Grok questions can be expanded and no blank is left above a Grok conversation (fixed #210) <sup>[[view modified code]](https://github.com/teskann/quax/commit/1bcfbe6cc94c81ae335e270461e8d62580eed5d7)</sup>
+  - Fixed requests failing because X changed how it loads the transaction id sign module (Fixed #272) <sup>[[view modified code]](https://github.com/teskann/quax/commit/bd867a10ad006716679f0d6d702e4a602e4e12bb)</sup>
+
 ## QuaX v4.18.0
 
 What's new in QuaX v4.18.0:

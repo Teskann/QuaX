@@ -1,18 +1,8 @@
-## QuaX v4.18.0
+## QuaX v4.18.1
 
-What's new in QuaX v4.18.0:
-  - New version workflow now bumps major/minor/patch from the latest tag <sup>[[view modified code]](https://github.com/teskann/quax/commit/d84a103c9444f9bca3e7277bbc6bc4bf1b6dee81)</sup>
-  - Errors about the X client transaction id are now fixed automatically by an AI, within the hour <sup>[[view modified code]](https://github.com/teskann/quax/commit/4b1595f48a259d8ef0b45c654d238a8f758a5850)</sup>
-  - Added a way to use QuaX with a mocked X server that serves what was recorded for test suite. This will allow CI QA testing. <sup>[[view modified code]](https://github.com/teskann/quax/commit/d66297f8c01b26f27a91f37d6f902e967b2ed9b4)</sup>
-  - Added support for polls with images (fixed #216) <sup>[[view modified code]](https://github.com/teskann/quax/commit/b5c1fd7c654294af39b5e4222080b376fbcb0ebc)</sup>
-  - Fixed the poll text display on light themes <sup>[[view modified code]](https://github.com/teskann/quax/commit/530cc5cee2d07869caf80ffe3ba73a1e430f9136)</sup>
-  - Setup QuaX to run Maestro tests including in Github Action runners. Cloud AI agents can now do QA testing easily and record videos of their work as a proof. <sup>[[view modified code]](https://github.com/teskann/quax/commit/dfe22e527cd7cb502dccdef6fe9ae9d46e33f315)</sup>
-  - Protected profiles say their posts are protected instead of showing an error (fixed #253) (by @quax-bot) <sup>[[view modified code]](https://github.com/teskann/quax/commit/57393f0e193b4f36fd990eea7dff38fd71f31a01)</sup>
-  - Enabling the Search tab in the home settings no longer crashes the home screen (fixed #213) <sup>[[view modified code]](https://github.com/teskann/quax/commit/0fbc04e727f6068bc8f210f2275f10c8e7eeaefe)</sup>
-  - Fixed error when dragging a subscription to reorder it (fixed #163) (by @evandrodevbr) <sup>[[view modified code]](https://github.com/teskann/quax/commit/d3997ed84c3c696ce6796fd30349ec75b2f12c10)</sup>
-  - Fixed the crash when the language is Esperanto (fixed #217) <sup>[[view modified code]](https://github.com/teskann/quax/commit/e0b919a084baeb02a231ca8ede36ad2f63d43561)</sup>
-  - The screen no longer turns off while a video plays (fixed #178) <sup>[[view modified code]](https://github.com/teskann/quax/commit/d310651edc72587f305af14d522973c75a5cf71f)</sup>
-  - Importing a backup now restores the home tabs, group tabs included (fixed #209) <sup>[[view modified code]](https://github.com/teskann/quax/commit/657ba269f7a5709e650aa01d42c0295d2fdad713)</sup>
+What's new in QuaX v4.18.1:
+  - Long Grok questions can be expanded and no blank is left above a Grok conversation (fixed #210) <sup>[[view modified code]](https://github.com/teskann/quax/commit/1bcfbe6cc94c81ae335e270461e8d62580eed5d7)</sup>
+  - Fixed requests failing because X changed how it loads the transaction id sign module (Fixed #272) <sup>[[view modified code]](https://github.com/teskann/quax/commit/bd867a10ad006716679f0d6d702e4a602e4e12bb)</sup>
 
 
 ---
