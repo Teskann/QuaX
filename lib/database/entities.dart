@@ -254,8 +254,10 @@ class SubscriptionGroupGet {
   final String name;
   final String icon;
   final List<Subscription> subscriptions;
+  final Set<String> groupMemberIds;
   bool includeReplies;
   bool includeRetweets;
+  bool includeGroupMembers;
 
   SubscriptionGroupGet(
       {required this.id,
@@ -263,7 +265,15 @@ class SubscriptionGroupGet {
       required this.icon,
       required this.subscriptions,
       required this.includeReplies,
-      required this.includeRetweets});
+      required this.includeRetweets,
+      this.includeGroupMembers = true,
+      this.groupMemberIds = const {}});
+
+  bool get isMainFeed => id == '-1';
+
+  Iterable<Subscription> get feedSubscriptions => isMainFeed
+      ? subscriptions.where((s) => s.inFeed && (includeGroupMembers || !groupMemberIds.contains(s.id)))
+      : subscriptions;
 }
 
 class SubscriptionGroupEdit {

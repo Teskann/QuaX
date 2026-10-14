@@ -47,6 +47,9 @@ class GroupModel extends Store<SubscriptionGroupGet> {
       if (id == '-1') {
         var subscriptions =
             (await database.query(tableSubscription)).map((e) => UserSubscription.fromMap(e)).toList(growable: false);
+        var groupMemberIds = (await database.query(tableSubscriptionGroupMember, columns: ['profile_id']))
+            .map((e) => e['profile_id'] as String)
+            .toSet();
 
         return SubscriptionGroupGet(
             id: '-1',
@@ -54,7 +57,9 @@ class GroupModel extends Store<SubscriptionGroupGet> {
             icon: group['icon'] as String,
             subscriptions: subscriptions,
             includeReplies: group['include_replies'] == 1,
-            includeRetweets: group['include_retweets'] == 1);
+            includeRetweets: group['include_retweets'] == 1,
+            includeGroupMembers: group['include_group_members'] == 1,
+            groupMemberIds: groupMemberIds);
       }
 
       var searchSubscriptions = (await database.rawQuery(
@@ -80,20 +85,20 @@ class GroupModel extends Store<SubscriptionGroupGet> {
     });
   }
 
-  Future<void> toggleSubscriptionGroupIncludeReplies(bool value) async {
-    await execute(() async {
-      (await Repository.writable())
-          .rawUpdate('UPDATE $tableSubscriptionGroup SET include_replies = ? WHERE id = ?', [value, state.id]);
-      state.includeReplies = value;
-      return state;
-    });
-  }
+  Future<void> toggleSubscriptionGroupIncludeReplies(bool value) =>
+      _saveFilter('include_replies', value, () => state.includeReplies = value);
 
-  Future<void> toggleSubscriptionGroupIncludeRetweets(bool value) async {
+  Future<void> toggleSubscriptionGroupIncludeRetweets(bool value) =>
+      _saveFilter('include_retweets', value, () => state.includeRetweets = value);
+
+  Future<void> toggleMainFeedIncludeGroupMembers(bool value) =>
+      _saveFilter('include_group_members', value, () => state.includeGroupMembers = value);
+
+  Future<void> _saveFilter(String column, bool value, void Function() applyToState) async {
     await execute(() async {
       (await Repository.writable())
-          .rawUpdate('UPDATE $tableSubscriptionGroup SET include_retweets = ? WHERE id = ?', [value, state.id]);
-      state.includeRetweets = value;
+          .rawUpdate('UPDATE $tableSubscriptionGroup SET $column = ? WHERE id = ?', [value, state.id]);
+      applyToState();
       return state;
     });
   }

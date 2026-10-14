@@ -120,8 +120,7 @@ class _SubscriptionGroupScreenContentState extends State<SubscriptionGroupScreen
           return _loadingView();
         }
         // Split the users into chunks, oldest first, to prevent thrashing of all groups when a new user is added
-        final filteredUsers = group.id == '-1' ? group.subscriptions.where((elm) => elm.inFeed) : group.subscriptions;
-        final users = filteredUsers.sorted((a, b) => a.createdAt.compareTo(b.createdAt)).toList();
+        final users = group.feedSubscriptions.sorted((a, b) => a.createdAt.compareTo(b.createdAt)).toList();
 
         var chunks = partition(users, subscriptionsPerSearch)
             .map((e) => SubscriptionGroupFeedChunk(e, group.includeReplies, group.includeRetweets))
