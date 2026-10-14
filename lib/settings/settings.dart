@@ -98,13 +98,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(fontStyle: FontStyle.italic),
             ),
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => SettingsAccountFragment(
-                        key: key,
-                      )),
-            ),
+            onTap: () => openAccountSettings(context, key: key),
           ),
           ListTile(
             title: Text(L10n.of(context).home),
