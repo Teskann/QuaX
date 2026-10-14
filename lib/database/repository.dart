@@ -23,6 +23,8 @@ const String tableSubscriptionGroupMember = 'subscription_group_member';
 
 const String tableAccounts = 'accounts';
 
+const int databaseVersion = 28;
+
 class Repository {
   static final log = Logger('Repository');
 
@@ -34,8 +36,8 @@ class Repository {
     return openDatabase(databaseName);
   }
 
-  Future<bool> migrate() async {
-    MigrationPlan myMigrationPlan = MigrationPlan({
+  static MigrationPlan migrationPlan() {
+    return MigrationPlan({
       2: [
         SqlMigration(
             'CREATE TABLE IF NOT EXISTS following (id INTEGER PRIMARY KEY, screen_name VARCHAR, name VARCHAR, profile_image_url_https VARCHAR, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)'),
@@ -268,13 +270,20 @@ class Repository {
             'INSERT INTO $tableAccounts (id, auth_header, screen_name) SELECT id, auth_header, screen_name FROM ${tableAccounts}_old'),
         SqlMigration('DROP TABLE ${tableAccounts}_old'),
       ],
+      28: [
+        SqlMigration('ALTER TABLE $tableSubscriptionGroup ADD COLUMN include_group_members BOOLEAN DEFAULT true'),
+      ],
     });
+  }
+
+  Future<bool> migrate() async {
+    final plan = migrationPlan();
     await openDatabase(
       databaseName,
-      version: 27,
-      onUpgrade: myMigrationPlan.call,
-      onCreate: myMigrationPlan.call,
-      onDowngrade: myMigrationPlan.call,
+      version: databaseVersion,
+      onUpgrade: plan.call,
+      onCreate: plan.call,
+      onDowngrade: plan.call,
     );
 
     // Clean up any old feed chunks and cursors
