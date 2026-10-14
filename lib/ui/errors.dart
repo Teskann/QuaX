@@ -382,7 +382,7 @@ enum StatusLevel {
 
   Color iconColor(ColorScheme colors) => switch (this) {
         error => Colors.red.harmonizeWith(colors.primary),
-        warning => Colors.orange.harmonizeWith(colors.primary),
+        warning => Colors.amber.harmonizeWith(colors.primary),
         info => colors.primary,
       };
 }
