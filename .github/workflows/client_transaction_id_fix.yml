@@ -18,18 +18,33 @@ env:
 
 jobs:
   trigger:
-    name: Start the routine unless a fix is under way
+    name: Start the routine unless the report is outdated or a fix is under way
     if: contains(github.event.issue.body, '<!-- quax:client-transaction-id -->')
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
-      contents: none
+      contents: read
       issues: write
       pull-requests: read
 
     steps:
+      - name: Check that the report comes from the latest release
+        id: version
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          BODY: ${{ github.event.issue.body }}
+        run: |
+          reported=$(printf '%s\n' "$BODY" | sed -n 's/^Version: *\([0-9][0-9.]*\).*$/\1/p' | head -n1)
+          latest=$(gh release view --json tagName --jq '.tagName | ltrimstr("v")')
+          if [ -z "$reported" ] || [ "$(printf '%s\n%s\n' "$reported" "$latest" | sort -V | head -n1)" != "$latest" ]; then
+            echo "Reported on version '${reported:-unknown}', older than the latest release $latest"
+            echo "outdated=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Look for a fix under way
         id: guard
+        if: steps.version.outputs.outdated != 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
@@ -45,7 +60,7 @@ jobs:
           fi
 
       - name: Start the routine
-        if: steps.guard.outputs.skip != 'true'
+        if: steps.version.outputs.outdated != 'true' && steps.guard.outputs.skip != 'true'
         env:
           FIRE_URL: ${{ secrets.CLAUDE_X_TRANSACTION_ROUTINE_FIRE_URL }}
           FIRE_TOKEN: ${{ secrets.CLAUDE_X_TRANSACTION_ROUTINE_TRIGGER_TOKEN }}
@@ -59,7 +74,7 @@ jobs:
             -d "$payload"
 
       - name: Mark the issue as the one that started the routine
-        if: steps.guard.outputs.skip != 'true'
+        if: steps.version.outputs.outdated != 'true' && steps.guard.outputs.skip != 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
