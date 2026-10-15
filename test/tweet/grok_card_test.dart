@@ -6,6 +6,7 @@ import 'package:quax/tweet/_carousel_card.dart';
 import 'package:quax/tweet/_expandable_tweet_text.dart';
 import 'package:quax/tweet/_grok_avatar.dart';
 import 'package:quax/tweet/_grok_card.dart';
+import 'package:quax/ui/locale_fallback.dart';
 
 import '../ui/pump_app.dart';
 import 'card_fixtures.dart';
@@ -78,6 +79,7 @@ void main() {
     testWidgets('Should open the profile of the account the card names when tapped', (tester) async {
       Object? opened;
       await tester.pumpWidget(MaterialApp(
+        localizationsDelegates: appLocalizationsDelegates,
         onGenerateRoute: (settings) {
           if (settings.name == routeProfile) opened = settings.arguments;
           return MaterialPageRoute(

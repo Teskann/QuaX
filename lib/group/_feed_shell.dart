@@ -2,6 +2,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
 import 'package:quax/constants.dart';
+import 'package:quax/generated/l10n.dart';
 import 'package:quax/group/_settings.dart';
 import 'package:quax/group/feed_refresh_controller.dart';
 import 'package:quax/group/group_model.dart';
@@ -130,10 +131,12 @@ List<Widget> defaultGroupActions(
 }) {
   return [
     if (showMore)
-      IconButton(icon: const Icon(Icons.more_vert), onPressed: () => showFeedSettings(context, model)),
+      IconButton(
+          icon: Icon(Icons.more_vert, semanticLabel: L10n.of(context).more_options),
+          onPressed: () => showFeedSettings(context, model)),
     if (scrollToTopController != null)
       IconButton(
-          icon: const Icon(Icons.arrow_upward),
+          icon: Icon(Icons.arrow_upward, semanticLabel: L10n.of(context).scroll_to_top),
           onPressed: () async {
             final disableAnimations = PrefService.of(context).get(optionDisableAnimations) == true;
             await scrollToTopController.animateTo(0,
@@ -142,10 +145,11 @@ List<Widget> defaultGroupActions(
           }),
     if (showRefresh)
       IconButton(
-          icon: const Icon(Icons.refresh),
+          icon: Icon(Icons.refresh, semanticLabel: L10n.of(context).refresh),
           onPressed: onRefresh ?? () async => await context.read<FeedRefreshController>().refresh()),
     IconButton(
-        icon: const Icon(Icons.settings), onPressed: () => Navigator.pushNamed(context, routeSettings)),
+        icon: Icon(Icons.settings, semanticLabel: L10n.of(context).settings),
+        onPressed: () => Navigator.pushNamed(context, routeSettings)),
     ...extra,
   ];
 }

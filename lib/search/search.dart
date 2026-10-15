@@ -128,7 +128,9 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
           controller: _queryController,
           focusNode: _focusNode,
           textInputAction: TextInputAction.search,
-          leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () => Navigator.pop(context)),
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back, semanticLabel: L10n.of(context).back),
+              onPressed: () => Navigator.pop(context)),
           trailing: [
             FollowButton(user: SearchSubscription(id: _queryController.text, createdAt: DateTime.now())),
           ],

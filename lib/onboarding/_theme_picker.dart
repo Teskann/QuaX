@@ -31,7 +31,8 @@ class ThemePicker extends StatelessWidget {
     void pick(String color) => prefs.set(optionThemeColor, color);
     final swatches = [
       _SystemSwatch(selected: current == 'accent', onTap: () => pick('accent')),
-      ...selectableThemeColors.map((e) => _Swatch(color: e.value, selected: current == e.key, onTap: () => pick(e.key))),
+      ...selectableThemeColors.map((e) => _Swatch(
+          color: e.value, label: themeColorName(e.key), selected: current == e.key, onTap: () => pick(e.key))),
     ];
     // All the colors on one row, as large as the width allows
     return LayoutBuilder(builder: (context, constraints) {
@@ -88,6 +89,7 @@ class _SystemSwatch extends StatelessWidget {
     return DynamicColorBuilder(
       builder: (light, darkScheme) => _Swatch(
         color: (dark ? darkScheme : light)?.primary,
+        label: themeColorName('accent'),
         icon: Icons.wallpaper,
         selected: selected,
         onTap: onTap,
@@ -99,11 +101,12 @@ class _SystemSwatch extends StatelessWidget {
 /// A color to pick, with an [icon] telling what it is, if any. Without a [color], it is drawn as a neutral one.
 class _Swatch extends StatelessWidget {
   final Color? color;
+  final String label;
   final IconData? icon;
   final bool selected;
   final VoidCallback onTap;
 
-  const _Swatch({this.color, this.icon, required this.selected, required this.onTap});
+  const _Swatch({this.color, required this.label, this.icon, required this.selected, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -116,6 +119,7 @@ class _Swatch extends StatelessWidget {
     return Semantics(
       button: true,
       selected: selected,
+      label: label,
       child: InkWell(
         customBorder: const CircleBorder(),
         onTap: onTap,

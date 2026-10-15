@@ -25,7 +25,7 @@ class _SettingsAccountFragment extends State<SettingsAccountFragment> {
         actions: [
           IconButton(
               onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const TwitterLoginWebview())),
-              icon: const Icon(Icons.add))
+              icon: Icon(Icons.add, semanticLabel: L10n.of(context).add_account))
         ],
       ),
       body: FutureBuilder(

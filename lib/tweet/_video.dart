@@ -572,6 +572,7 @@ class _TweetVideoState extends State<TweetVideo> with WidgetsBindingObserver {
   Widget _buildTapToPlay() {
     return GestureDetector(
       onTap: _requestPlay,
+      excludeFromSemantics: true,
       child: AspectRatio(
         aspectRatio: widget.metadata.aspectRatio,
         child: Stack(

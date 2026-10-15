@@ -51,16 +51,18 @@ class _DiscordInviteDialogState extends State<_DiscordInviteDialog> {
         children: [
           Text(L10n.of(context).discord_popup_message),
           const SizedBox(height: 8),
-          InkWell(
-            onTap: () => setState(() => _dontShowAgain = !_dontShowAgain),
-            child: Row(
-              children: [
-                Checkbox(
-                  value: _dontShowAgain,
-                  onChanged: (value) => setState(() => _dontShowAgain = value ?? false),
-                ),
-                Flexible(child: Text(L10n.of(context).discord_popup_dont_show_again)),
-              ],
+          MergeSemantics(
+            child: InkWell(
+              onTap: () => setState(() => _dontShowAgain = !_dontShowAgain),
+              child: Row(
+                children: [
+                  Checkbox(
+                    value: _dontShowAgain,
+                    onChanged: (value) => setState(() => _dontShowAgain = value ?? false),
+                  ),
+                  Flexible(child: Text(L10n.of(context).discord_popup_dont_show_again)),
+                ],
+              ),
             ),
           ),
         ],

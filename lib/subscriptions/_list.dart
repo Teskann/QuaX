@@ -65,7 +65,7 @@ class _SubscriptionUsersState extends State<SubscriptionUsers> {
         trailing: hasQuery
             ? [
                 IconButton(
-                  icon: const Icon(Icons.clear),
+                  icon: Icon(Icons.clear, semanticLabel: L10n.of(context).clear),
                   onPressed: () {
                     _searchController.clear();
                     setState(() {});
