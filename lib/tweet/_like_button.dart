@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'dart:ui' show lerpDouble;
 
 import 'package:material_ui/material_ui.dart';
+import 'package:quax/generated/l10n.dart';
 import 'package:quax/tweet/tweet.dart';
 
 /// The footer "like" heart, with the full X-style burst: a ring expands out of
@@ -73,7 +74,10 @@ class _LikeButtonState extends State<LikeButton> with SingleTickerProviderStateM
             ),
             ScaleTransition(
               scale: _scale,
-              child: Icon(widget.isLiked ? Icons.favorite : Icons.favorite_border, size: _iconSize, color: widget.color),
+              child: Icon(widget.isLiked ? Icons.favorite : Icons.favorite_border,
+                  size: _iconSize,
+                  color: widget.color,
+                  semanticLabel: widget.isLiked ? L10n.of(context).unlike : L10n.of(context).like),
             ),
           ],
         ),

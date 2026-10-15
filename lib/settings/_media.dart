@@ -3,6 +3,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:pref/pref.dart';
+import 'package:quax/ui/labeled_pref.dart';
 
 class SettingsMediaFragment extends StatelessWidget {
   const SettingsMediaFragment({super.key});
@@ -23,10 +24,12 @@ class SettingsMediaFragment extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8),
         child: ListView(children: [
-          PrefSwitch(
-            pref: optionMediaDisableAutoload,
-            title: Text(L10n.of(context).load_media_manually),
-            subtitle: Text(L10n.of(context).load_media_manually_description),
+          LabeledPref(
+            child: PrefSwitch(
+              pref: optionMediaDisableAutoload,
+              title: Text(L10n.of(context).load_media_manually),
+              subtitle: Text(L10n.of(context).load_media_manually_description),
+            ),
           ),
           PrefDropdown(
               fullWidth: false,
@@ -52,20 +55,26 @@ class SettingsMediaFragment extends StatelessWidget {
                     child: Text('$count'),
                   ),
               ]),
-          PrefSwitch(
-            pref: optionMediaDefaultMute,
-            title: Text(L10n.of(context).mute_videos),
-            subtitle: Text(L10n.of(context).mute_video_description),
+          LabeledPref(
+            child: PrefSwitch(
+              pref: optionMediaDefaultMute,
+              title: Text(L10n.of(context).mute_videos),
+              subtitle: Text(L10n.of(context).mute_video_description),
+            ),
           ),
-          PrefSwitch(
-            pref: optionMediaDefaultLoop,
-            title: Text(L10n.of(context).loop_videos),
-            subtitle: Text(L10n.of(context).loop_videos_description),
+          LabeledPref(
+            child: PrefSwitch(
+              pref: optionMediaDefaultLoop,
+              title: Text(L10n.of(context).loop_videos),
+              subtitle: Text(L10n.of(context).loop_videos_description),
+            ),
           ),
-          PrefSwitch(
-            pref: optionMediaDefaultAutoPlay,
-            title: Text(L10n.of(context).autoplay_videos),
-            subtitle: Text(L10n.of(context).autoplay_videos_description),
+          LabeledPref(
+            child: PrefSwitch(
+              pref: optionMediaDefaultAutoPlay,
+              title: Text(L10n.of(context).autoplay_videos),
+              subtitle: Text(L10n.of(context).autoplay_videos_description),
+            ),
           ),
           PrefDropdown(
               fullWidth: false,
@@ -83,15 +92,19 @@ class SettingsMediaFragment extends StatelessWidget {
                     child: Text(L10n.of(context).video_prefetch_seconds(seconds)),
                   ),
               ]),
-          PrefSwitch(
-            pref: optionMediaBackgroundPlayback,
-            title: Text(L10n.of(context).allow_background_play),
-            subtitle: Text(L10n.of(context).allow_background_play_description),
+          LabeledPref(
+            child: PrefSwitch(
+              pref: optionMediaBackgroundPlayback,
+              title: Text(L10n.of(context).allow_background_play),
+              subtitle: Text(L10n.of(context).allow_background_play_description),
+            ),
           ),
-          PrefSwitch(
-            pref: optionMediaAllowBackgroundPlayOtherApps,
-            title: Text(L10n.of(context).allow_background_play_other_apps),
-            subtitle: Text(L10n.of(context).allow_background_play_other_apps_description),
+          LabeledPref(
+            child: PrefSwitch(
+              pref: optionMediaAllowBackgroundPlayOtherApps,
+              title: Text(L10n.of(context).allow_background_play_other_apps),
+              subtitle: Text(L10n.of(context).allow_background_play_other_apps_description),
+            ),
           ),
           DownloadTypeSetting(
             prefs: prefs,

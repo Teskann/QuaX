@@ -224,7 +224,7 @@ class _SubscriptionGroupEditDialogState extends State<SubscriptionGroupEditDialo
                     ),
                   ),
                   IconButton(
-                    icon: Icon(Icons.palette, color: color),
+                    icon: Icon(Icons.palette, color: color, semanticLabel: L10n.of(context).pick_a_color),
                     onPressed: () {
                       showDialog(
                           context: context,
@@ -263,7 +263,7 @@ class _SubscriptionGroupEditDialogState extends State<SubscriptionGroupEditDialo
                     },
                   ),
                   IconButton(
-                    icon: Icon(deserializeIconData(icon)),
+                    icon: Icon(deserializeIconData(icon), semanticLabel: L10n.of(context).pick_an_icon),
                     onPressed: () async {
                       var selectedIcon = await showIconPicker(
                         context,

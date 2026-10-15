@@ -2,6 +2,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:pref/pref.dart';
+import 'package:quax/ui/labeled_pref.dart';
 
 class SettingsAccessibilityFragment extends StatelessWidget {
   const SettingsAccessibilityFragment({super.key});
@@ -21,11 +22,13 @@ class SettingsAccessibilityFragment extends StatelessWidget {
             max: 1.5,
             divisions: 10,
           ),
-          PrefSwitch(
-            title: Text(L10n.of(context).disable_animations),
-            pref: optionDisableAnimations,
-            subtitle: Text(
-              L10n.of(context).disable_animations_description,
+          LabeledPref(
+            child: PrefSwitch(
+              title: Text(L10n.of(context).disable_animations),
+              pref: optionDisableAnimations,
+              subtitle: Text(
+                L10n.of(context).disable_animations_description,
+              ),
             ),
           )
         ]),

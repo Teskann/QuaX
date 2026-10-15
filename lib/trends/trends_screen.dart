@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:quax/constants.dart';
+import 'package:quax/generated/l10n.dart';
 import 'package:quax/search/search.dart';
 import 'package:quax/trends/_list.dart';
 import 'package:quax/trends/_settings.dart';
@@ -33,7 +34,7 @@ class _TrendsScreenState extends State<TrendsScreen> with AutomaticKeepAliveClie
           controller: _queryController,
           focusNode: widget.focusNode,
           textInputAction: TextInputAction.search,
-          leading: IconButton(icon: const Icon(Icons.search), onPressed: () => {}),
+          leading: const Padding(padding: EdgeInsets.symmetric(horizontal: 12), child: Icon(Icons.search)),
           onSubmitted: (query) {
             Navigator.pushNamed(
               context,
@@ -49,7 +50,7 @@ class _TrendsScreenState extends State<TrendsScreen> with AutomaticKeepAliveClie
         bottom: TrendsTabBar(),
       ),
       floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.add),
+          child: Icon(Icons.add, semanticLabel: L10n.of(context).add_location),
           onPressed: () async => showModalBottomSheet(
                 context: context,
                 builder: (context) => const TrendsSettings(),

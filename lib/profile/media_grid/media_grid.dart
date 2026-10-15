@@ -136,6 +136,14 @@ class _MediaGridTileState extends State<_MediaGridTile> {
     };
   }
 
+  String _semanticLabel(MediaGridItem item) {
+    return switch (item) {
+      GifGridItem() => 'GIF',
+      PhotoGridItem() => L10n.of(context).image,
+      VideoGridItem() => L10n.of(context).video,
+    };
+  }
+
   void _openTweet() {
     Navigator.pushNamed(
       context,
@@ -155,12 +163,16 @@ class _MediaGridTileState extends State<_MediaGridTile> {
 
     Widget body;
     if (_showMedia) {
-      body = GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: _openTweet,
-        child: item is GifGridItem
-            ? _GifGridCell(item: item, gate: widget.gifGate)
-            : item.toWidget(context),
+      body = Semantics(
+        button: true,
+        label: _semanticLabel(item),
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: _openTweet,
+          child: item is GifGridItem
+              ? _GifGridCell(item: item, gate: widget.gifGate)
+              : item.toWidget(context),
+        ),
       );
     } else {
       body = GestureDetector(

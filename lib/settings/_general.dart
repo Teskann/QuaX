@@ -8,6 +8,7 @@ import 'package:quax/profile/profile.dart';
 import 'package:quax/utils/iterables.dart';
 import 'package:logging/logging.dart';
 import 'package:pref/pref.dart';
+import 'package:quax/ui/labeled_pref.dart';
 
 class SettingLocale {
   final String code;
@@ -83,25 +84,33 @@ class SettingsGeneralFragment extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 8),
         child: ListView(children: [
           languagePicker(),
-          PrefSwitch(
-            title: Text(L10n.of(context).should_check_for_updates_label),
-            pref: optionShouldCheckForUpdates,
-            subtitle: Text(L10n.of(context).should_check_for_updates_description),
+          LabeledPref(
+            child: PrefSwitch(
+              title: Text(L10n.of(context).should_check_for_updates_label),
+              pref: optionShouldCheckForUpdates,
+              subtitle: Text(L10n.of(context).should_check_for_updates_description),
+            ),
           ),
-          PrefSwitch(
-            title: Text(L10n.of(context).option_confirm_close_label),
-            subtitle: Text(L10n.of(context).option_confirm_close_description),
-            pref: optionConfirmClose,
+          LabeledPref(
+            child: PrefSwitch(
+              title: Text(L10n.of(context).option_confirm_close_label),
+              subtitle: Text(L10n.of(context).option_confirm_close_description),
+              pref: optionConfirmClose,
+            ),
           ),
-          PrefSwitch(
-            title: Text(L10n.of(context).option_open_links_in_embedded_browser_label),
-            subtitle: Text(L10n.of(context).option_open_links_in_embedded_browser_description),
-            pref: optionOpenLinksInEmbeddedBrowser,
+          LabeledPref(
+            child: PrefSwitch(
+              title: Text(L10n.of(context).option_open_links_in_embedded_browser_label),
+              subtitle: Text(L10n.of(context).option_open_links_in_embedded_browser_description),
+              pref: optionOpenLinksInEmbeddedBrowser,
+            ),
           ),
-          PrefSwitch(
-            title: Text(L10n.of(context).disable_screenshots),
-            subtitle: Text(L10n.of(context).disable_screenshots_hint),
-            pref: optionDisableScreenshots,
+          LabeledPref(
+            child: PrefSwitch(
+              title: Text(L10n.of(context).disable_screenshots),
+              subtitle: Text(L10n.of(context).disable_screenshots_hint),
+              pref: optionDisableScreenshots,
+            ),
           ),
           PrefDropdown(
               fullWidth: false,

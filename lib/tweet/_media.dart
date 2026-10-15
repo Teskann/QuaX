@@ -196,7 +196,7 @@ class _TweetMediaState extends State<TweetMedia> {
               // fullscreen media viewer. Photos and GIFs still open it.
               final isVideo = item.type == 'video';
 
-              return GestureDetector(
+              final tile = GestureDetector(
                 onTap: isVideo
                     ? null
                     : () => Navigator.push(
@@ -215,6 +215,7 @@ class _TweetMediaState extends State<TweetMedia> {
                     username: widget.username,
                     tweetId: widget.tweetId),
               );
+              return isVideo ? tile : Semantics(button: true, label: L10n.of(context).image, child: tile);
             },
           ),
         ),
@@ -286,7 +287,7 @@ class _TweetMediaViewState extends State<TweetMediaView> {
           AsyncButtonBuilder(
             child: const Icon(Icons.download),
             builder: (context, child, callback, buttonState) {
-              return IconButton(onPressed: callback, icon: child);
+              return IconButton(onPressed: callback, icon: Semantics(label: L10n.of(context).download, child: child));
             },
             onPressed: () async {
               if (_media.type == 'animated_gif') {
@@ -323,7 +324,7 @@ class _TweetMediaViewState extends State<TweetMediaView> {
           AsyncButtonBuilder(
             showSuccess: false,
             builder: (context, child, callback, buttonState) {
-              return IconButton(onPressed: callback, icon: child);
+              return IconButton(onPressed: callback, icon: Semantics(label: L10n.of(context).share, child: child));
             },
             onPressed: () async {
               var uri = Uri.parse(originalMediaUrl());

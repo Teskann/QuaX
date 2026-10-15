@@ -20,7 +20,7 @@ class SubscriptionsScreen extends StatelessWidget {
         title: Text(L10n.current.subscriptions),
         actions: [
           IconButton(
-            icon: const Icon(Icons.settings),
+            icon: Icon(Icons.settings, semanticLabel: L10n.of(context).settings),
             onPressed: () async {
               Navigator.pushNamed(context, routeSettings);
             },
@@ -52,6 +52,7 @@ class SubscriptionsScreen extends StatelessWidget {
                           icon: Icon(
                             Icons.add,
                             color: Theme.of(context).iconTheme.color,
+                            semanticLabel: L10n.of(context).new_group,
                           ),
                           onPressed: () => openSubscriptionGroupDialog(
                             context,
@@ -65,6 +66,7 @@ class SubscriptionsScreen extends StatelessWidget {
                             Icons.sort,
                             color: Theme.of(context).iconTheme.color,
                           ),
+                          tooltip: L10n.of(context).sort_by,
                           itemBuilder: (context) => [
                             PopupMenuItem(
                               value: 'name',
@@ -83,6 +85,7 @@ class SubscriptionsScreen extends StatelessWidget {
                           icon: Icon(
                             Icons.sort_by_alpha,
                             color: Theme.of(context).iconTheme.color,
+                            semanticLabel: L10n.of(context).reverse_order,
                           ),
                           onPressed: () => context
                               .read<GroupsModel>()
@@ -112,6 +115,7 @@ class SubscriptionsScreen extends StatelessWidget {
                           icon: Icon(
                             Icons.cloud_download,
                             color: Theme.of(context).iconTheme.color,
+                            semanticLabel: L10n.of(context).import_subscriptions,
                           ),
                           onPressed: () => Navigator.push(
                             context,
@@ -125,6 +129,7 @@ class SubscriptionsScreen extends StatelessWidget {
                             Icons.sort,
                             color: Theme.of(context).iconTheme.color,
                           ),
+                          tooltip: L10n.of(context).sort_by,
                           itemBuilder: (context) => [
                             PopupMenuItem(
                               value: 'name',
@@ -147,6 +152,7 @@ class SubscriptionsScreen extends StatelessWidget {
                           icon: Icon(
                             Icons.sort_by_alpha,
                             color: Theme.of(context).iconTheme.color,
+                            semanticLabel: L10n.of(context).reverse_order,
                           ),
                           onPressed: () => context
                               .read<SubscriptionsModel>()

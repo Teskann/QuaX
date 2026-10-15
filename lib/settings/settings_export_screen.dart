@@ -113,7 +113,7 @@ class _SettingsExportScreenState extends State<SettingsExportScreen> {
       floatingActionButton: noExportOptionSelected()
           ? null
           : FloatingActionButton(
-              child: const Icon(Icons.save),
+              child: Icon(Icons.save, semanticLabel: L10n.of(context).export),
               onPressed: () async {
                 var groupModel = context.read<GroupsModel>();
                 var savedTweetFolderModel = context.read<SavedTweetFolderModel>();

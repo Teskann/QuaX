@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:quax/constants.dart';
+import 'package:quax/generated/l10n.dart';
 import 'package:quax/profile/profile.dart';
 import 'package:quax/user.dart';
 
@@ -16,16 +17,20 @@ class GrokAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     final imageUrl = this.imageUrl;
-    return InkResponse(
-      onTap: () => Navigator.pushNamed(context, routeProfile,
-          arguments: ProfileScreenArguments.fromScreenName(screenName, null)),
-      child: imageUrl == null
-          ? CircleAvatar(
-              radius: _size / 2,
-              backgroundColor: colors.tertiaryContainer,
-              child: Icon(Icons.auto_awesome, size: 18, color: colors.onTertiaryContainer),
-            )
-          : UserAvatar(uri: imageUrl, size: _size),
+    return Semantics(
+      button: true,
+      label: L10n.of(context).profile_picture,
+      child: InkResponse(
+        onTap: () => Navigator.pushNamed(context, routeProfile,
+            arguments: ProfileScreenArguments.fromScreenName(screenName, null)),
+        child: imageUrl == null
+            ? CircleAvatar(
+                radius: _size / 2,
+                backgroundColor: colors.tertiaryContainer,
+                child: Icon(Icons.auto_awesome, size: 18, color: colors.onTertiaryContainer),
+              )
+            : UserAvatar(uri: imageUrl, size: _size),
+      ),
     );
   }
 }

@@ -267,22 +267,26 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
     var banner = user.profileBannerUrl;
     var bannerImage = banner == null
         ? Container(height: bannerHeight, color: Colors.white)
-        : GestureDetector(
-      child: ExtendedImage.network(banner, fit: BoxFit.cover, width: deviceSize.width, height: bannerHeight),
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                TweetMediaView(
-                    initialIndex: 0,
-                    media: [createMediaFromUrl(user.profileBannerUrl, bannerHeight)],
-                    username: user.screenName ?? "Unknown",
-                    tweetMedia: false),
-          ),
-        );
-      },
-    );
+        : Semantics(
+            button: true,
+            label: L10n.of(context).profile_banner,
+            child: GestureDetector(
+              child: ExtendedImage.network(banner, fit: BoxFit.cover, width: deviceSize.width, height: bannerHeight),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        TweetMediaView(
+                            initialIndex: 0,
+                            media: [createMediaFromUrl(user.profileBannerUrl, bannerHeight)],
+                            username: user.screenName ?? "Unknown",
+                            tweetMedia: false),
+                  ),
+                );
+              },
+            ),
+          );
 
     // The expanded app bar must hold the header and the tab bar; SliverAppBar adds the status bar height itself
     var appBarHeight = profileStuffTop + 16 + headerHeight + kToolbarHeight - mediaQuery.padding.top;
@@ -587,7 +591,7 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
                               color: theme.colorScheme.primary,
                             ),
                             IconButton(
-                              icon: const Icon(Icons.search),
+                              icon: Icon(Icons.search, semanticLabel: L10n.of(context).search),
                               color: theme.colorScheme.primary,
                               onPressed: () => Navigator.pushNamed(context, routeSearch,
                                   arguments: SearchArguments(1,
@@ -597,6 +601,7 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
                               icon: Icon(
                                 Icons.share,
                                 color: theme.colorScheme.primary,
+                                semanticLabel: L10n.of(context).share,
                               ),
                               onPressed: () =>
                                   SharePlus.instance.share(ShareParams(text: "$shareBaseUrl/${user.screenName}")),
@@ -609,21 +614,25 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
                           child: CircleAvatar(
                             radius: 50,
                             backgroundColor: Colors.white,
-                            child: GestureDetector(
-                              child: UserAvatar(uri: user.profileImageUrlHttps, size: 96),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        TweetMediaView(
-                                            initialIndex: 0,
-                                            media: [createMediaFromUrl(user.profileImageUrlHttps?.replaceAll("_normal", "_400x400"), null)],
-                                            username: user.screenName ?? "Unknown",
-                                            tweetMedia: false),
-                                  ),
-                                );
-                              },
+                            child: Semantics(
+                              button: true,
+                              label: L10n.of(context).profile_picture,
+                              child: GestureDetector(
+                                child: UserAvatar(uri: user.profileImageUrlHttps, size: 96),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          TweetMediaView(
+                                              initialIndex: 0,
+                                              media: [createMediaFromUrl(user.profileImageUrlHttps?.replaceAll("_normal", "_400x400"), null)],
+                                              username: user.screenName ?? "Unknown",
+                                              tweetMedia: false),
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
                           ),
                         )
@@ -676,7 +685,7 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
           ? null
           : FloatingActionButton(
               onPressed: _scrollToTop,
-              child: const Icon(Icons.arrow_upward),
+              child: Icon(Icons.arrow_upward, semanticLabel: L10n.of(context).scroll_to_top),
             ),
     );
   }

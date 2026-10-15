@@ -283,6 +283,12 @@ class _BottomBar extends StatelessWidget {
   }
 }
 
+String _playbackLabel(BuildContext context, {required bool playing, required bool finished}) {
+  final l10n = L10n.of(context);
+  if (finished) return l10n.replay;
+  return playing ? l10n.pause : l10n.play;
+}
+
 class _PlayPauseButton extends StatefulWidget {
   final BetterPlayerController controller;
 
@@ -361,16 +367,20 @@ class _PlayPauseButtonState extends State<_PlayPauseButton> {
   Widget build(BuildContext context) {
     // While buffering, yield the center to the spinner instead of overlapping it.
     if (_buffering) return const SizedBox(width: 64, height: 64);
-    return GestureDetector(
-      onTap: _onTap,
-      child: Container(
-        width: 64,
-        height: 64,
-        decoration: const BoxDecoration(color: Colors.black54, shape: BoxShape.circle),
-        child: Center(
-          child: _completed
-              ? const Icon(Icons.replay, color: Colors.white, size: 32)
-              : AnimatedPlayPause(playing: _playing, color: Colors.white, size: 32),
+    return Semantics(
+      button: true,
+      label: _playbackLabel(context, playing: _playing, finished: _completed),
+      child: GestureDetector(
+        onTap: _onTap,
+        child: Container(
+          width: 64,
+          height: 64,
+          decoration: const BoxDecoration(color: Colors.black54, shape: BoxShape.circle),
+          child: Center(
+            child: _completed
+                ? const Icon(Icons.replay, color: Colors.white, size: 32)
+                : AnimatedPlayPause(playing: _playing, color: Colors.white, size: 32),
+          ),
         ),
       ),
     );
@@ -636,7 +646,8 @@ class _MuteButton extends StatelessWidget {
         return IconButton(
           iconSize: 24.0,
           color: Colors.white,
-          icon: Icon(muted ? Icons.volume_off : Icons.volume_up),
+          icon: Icon(muted ? Icons.volume_off : Icons.volume_up,
+              semanticLabel: muted ? L10n.of(context).unmute : L10n.of(context).mute),
           onPressed: () => controller.setVolume(muted ? 1.0 : 0.0),
         );
       },
@@ -656,7 +667,8 @@ class _FullscreenButton extends StatelessWidget {
       builder: (context, _) => IconButton(
         iconSize: 24.0,
         color: Colors.white,
-        icon: Icon(controller.isFullScreen ? Icons.fullscreen_exit : Icons.fullscreen),
+        icon: Icon(controller.isFullScreen ? Icons.fullscreen_exit : Icons.fullscreen,
+            semanticLabel: controller.isFullScreen ? L10n.of(context).exit_full_screen : L10n.of(context).full_screen),
         onPressed: controller.toggleFullScreen,
       ),
     );
@@ -705,7 +717,7 @@ class _MoreButtonState extends State<_MoreButton> {
     return IconButton(
       iconSize: 24.0,
       color: Colors.white,
-      icon: const Icon(Icons.more_vert),
+      icon: Icon(Icons.more_vert, semanticLabel: L10n.of(context).more_options),
       onPressed: () => _openMenu(context),
     );
   }
@@ -983,6 +995,7 @@ class FritterCenterPlayButton extends StatelessWidget {
           duration: const Duration(milliseconds: 300),
           child: GestureDetector(
             onTap: onPressed,
+            excludeFromSemantics: true,
             child: Container(
               width: size,
               height: size,
@@ -992,9 +1005,13 @@ class FritterCenterPlayButton extends StatelessWidget {
               ),
               child: IconButton(
                 iconSize: size / 2,
-                icon: isFinished
-                    ? Icon(Icons.replay, color: iconColor)
-                    : AnimatedPlayPause(playing: isPlaying, color: iconColor, size: size / 2),
+                icon: Semantics(
+                  // A disabled button, as in the media grid, opens the post instead and has nothing to say
+                  label: onPressed == null ? null : _playbackLabel(context, playing: isPlaying, finished: isFinished),
+                  child: isFinished
+                      ? Icon(Icons.replay, color: iconColor)
+                      : AnimatedPlayPause(playing: isPlaying, color: iconColor, size: size / 2),
+                ),
                 onPressed: onPressed,
               ),
             ),

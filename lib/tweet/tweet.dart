@@ -195,11 +195,12 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
             id: tweet.idStr!, username: tweet.user!.screenName!, tweetOpened: true, initialTweet: tweet));
   }
 
-  IconButton _createFooterIconButton(IconData icon, [Color? color, double? fill, Function()? onPressed]) {
+  IconButton _createFooterIconButton(IconData icon, String label, [Color? color, double? fill, Function()? onPressed]) {
     return IconButton(
       icon: Icon(
         icon,
         fill: fill,
+        semanticLabel: label,
       ),
       color: color ?? Theme.of(context).colorScheme.primary,
       iconSize: 20,
@@ -233,9 +234,9 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     ));
   }
 
-  TextButton _createFooterTextButton(IconData icon, String label, [Color? color, Function()? onPressed]) {
+  TextButton _createFooterTextButton(IconData icon, String name, String label, [Color? color, Function()? onPressed]) {
     return TextButton.icon(
-      icon: Icon(icon, size: 20, color: color),
+      icon: Icon(icon, size: 20, color: color, semanticLabel: name),
       onPressed: onPressed,
       label: Text(label, style: TextStyle(color: color, fontSize: 14)),
       style: footerButtonStyle,
@@ -245,7 +246,8 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
   Widget _buildTranslateButton(Locale locale) {
     switch (_translationStatus) {
       case TranslationStatus.original:
-        return _createFooterIconButton(Icons.translate, buttonsColor(context), null, () async => onClickTranslate(context, locale));
+        return _createFooterIconButton(Icons.translate, L10n.of(context).translate, buttonsColor(context), null,
+            () async => onClickTranslate(context, locale));
       case TranslationStatus.translating:
         return const Padding(
           padding: EdgeInsets.symmetric(horizontal: 24),
@@ -254,12 +256,13 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
       case TranslationStatus.translationFailed:
         return _createFooterIconButton(
             Icons.translate,
+            L10n.of(context).translate,
             Colors.red.harmonizeWith(Theme.of(context).colorScheme.primary),
             null,
             () async => onClickTranslate(context, locale));
       case TranslationStatus.translated:
-        return _createFooterIconButton(
-            Icons.translate, Theme.of(context).colorScheme.primary, null, () async => onClickShowOriginal());
+        return _createFooterIconButton(Icons.translate, L10n.of(context).show_original,
+            Theme.of(context).colorScheme.primary, null, () async => onClickShowOriginal());
     }
   }
 
@@ -274,12 +277,14 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
             children: [
               _createFooterTextButton(
                   Icons.mode_comment_outlined,
+                  L10n.of(context).replies,
                   tweet.replyCount != null ? numberFormat.format(tweet.replyCount) : '',
                   buttonsColor(context),
                   () => onClickOpenTweet(tweet)),
               if (tweet.retweetCount != null && tweet.quoteCount != null)
                 _createFooterTextButton(
                     Icons.repeat,
+                    L10n.of(context).reposts,
                     numberFormat.format((tweet.retweetCount! + tweet.quoteCount!)),
                     buttonsColor(context)),
               Consumer<LikedTweetModel>(builder: (context, likedModel, child) {
@@ -309,6 +314,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
               if (tweet.viewCount != null)
                 _createFooterTextButton(
                     Icons.bar_chart,
+                    L10n.of(context).views,
                     numberFormat.format(tweet.viewCount),
                     buttonsColor(context)),
               const SizedBox(
@@ -317,11 +323,12 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
               Consumer<SavedTweetModel>(builder: (context, model, child) {
                 var isSaved = model.isSaved(tweet.idStr!);
                 var button = isSaved
-                    ? _createFooterIconButton(Icons.bookmark, Theme.of(context).colorScheme.primary, 1, () async {
+                    ? _createFooterIconButton(
+                        Icons.bookmark, L10n.of(context).remove_from_saved, Theme.of(context).colorScheme.primary, 1, () async {
                         await model.deleteSavedTweet(tweet.idStr!);
                         setState(() {});
                       })
-                    : _createFooterIconButton(Icons.bookmark_border, buttonsColor(context), 0, () async {
+                    : _createFooterIconButton(Icons.bookmark_border, L10n.of(context).save, buttonsColor(context), 0, () async {
                         await model.saveTweet(tweet.idStr!, tweet.user?.idStr, tweet.toJson());
                         setState(() {});
                         if (context.mounted) {
@@ -329,19 +336,22 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
                         }
                       });
 
-                return GestureDetector(
-                  onLongPress: () async {
-                    await showSaveToFolderSheet(context,
-                        tweetId: tweet.idStr!, userId: tweet.user?.idStr, content: tweet.toJson());
-                    if (mounted) {
-                      setState(() {});
-                    }
-                  },
-                  child: button,
+                return MergeSemantics(
+                  child: GestureDetector(
+                    onLongPress: () async {
+                      await showSaveToFolderSheet(context,
+                          tweetId: tweet.idStr!, userId: tweet.user?.idStr, content: tweet.toJson());
+                      if (mounted) {
+                        setState(() {});
+                      }
+                    },
+                    child: button,
+                  ),
                 );
               }),
               _createFooterIconButton(
                 Icons.share,
+                L10n.of(context).share,
                 buttonsColor(context),
                 null,
                 () async {
@@ -850,8 +860,11 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
                     SizedBox(
                       width: avatarSize,
                       height: avatarSize,
-                      child: GestureDetector(
-                          behavior: HitTestBehavior.opaque, onTap: onTapProfile, child: avatar),
+                      child: Semantics(
+                        button: true,
+                        label: L10n.of(context).profile_picture,
+                        child: GestureDetector(behavior: HitTestBehavior.opaque, onTap: onTapProfile, child: avatar),
+                      ),
                     ),
                   ],
                 ),

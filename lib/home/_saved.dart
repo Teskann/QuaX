@@ -321,7 +321,7 @@ class _SavedScreenState extends State<SavedScreen> with AutomaticKeepAliveClient
                       }
                     }),
                 IconButton(
-                    icon: const Icon(Icons.settings),
+                    icon: Icon(Icons.settings, semanticLabel: L10n.current.settings),
                     onPressed: () async {
                       Navigator.pushNamed(context, routeSettings);
                     })

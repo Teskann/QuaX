@@ -211,9 +211,13 @@ class TweetCard extends StatelessWidget {
       final thumbnail = thumbnails[index];
       return thumbnail == null
           ? null
-          : GestureDetector(
-              onTap: () => _openImages(context, gallery, thumbnails.take(index).nonNulls.length),
-              child: ExtendedImage.network(thumbnail, cache: true, fit: BoxFit.cover),
+          : Semantics(
+              button: true,
+              label: L10n.of(context).image,
+              child: GestureDetector(
+                onTap: () => _openImages(context, gallery, thumbnails.take(index).nonNulls.length),
+                child: ExtendedImage.network(thumbnail, cache: true, fit: BoxFit.cover),
+              ),
             );
     });
   }
