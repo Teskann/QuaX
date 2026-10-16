@@ -129,12 +129,68 @@ void main() {
   });
 
   group('buildFeedSearchQuery() length limit', () {
-    test('Should trip its own guard when one subscription fills the whole query', () {
-      expect(() => buildFeedSearchQuery([search('x' * 600)], includeReplies: true, includeRetweets: true),
+    test('Should trip its own guard when a packed chunk builds a query X would reject', () {
+      final overflowing = List.generate(20, (i) => user('handle${i.toString().padLeft(9, '0')}'));
+
+      expect(() => buildFeedSearchQuery(overflowing, includeReplies: false, includeRetweets: true),
           throwsA(isA<AssertionError>()),
-          reason: 'The builder assumes a chunk fits in the ~512 character query, which holds for the 16 '
-              'accounts a chunk carries but not for a very long search subscription. The guard says so in '
-              'debug rather than silently dropping the subscriptions read before it');
+          reason: 'Twenty of the longest handles join to 476 characters, under the limit, but build a 517 '
+              'character query once the brackets and filters are added, so the guard has to measure the '
+              'finished query rather than the terms alone');
+    });
+
+    test('Should stay silent for a single subscription too long to ever fit', () {
+      expect(() => buildFeedSearchQuery([search('x' * 600)], includeReplies: true, includeRetweets: true),
+          returnsNormally,
+          reason: 'No packing can make one oversized subscription fit, so it is left to fail against X as a '
+              'retryable error rather than crashing the app in debug');
+    });
+  });
+
+  group('packFeedChunks()', () {
+    List<List<Subscription>> pack(List<Subscription> subscriptions) =>
+        packFeedChunks(subscriptions, includeReplies: false, includeRetweets: true);
+
+    test('Should never build a query longer than the limit', () {
+      final chunks = pack(List.generate(50, (i) => user('h${i.toString().padLeft(14, '0')}')));
+
+      expect(
+          chunks.map((chunk) =>
+              buildFeedSearchQuery(chunk, includeReplies: false, includeRetweets: true).length <= maxQueryLength),
+          everyElement(isTrue),
+          reason: 'The packer exists to keep every chunk under the length X accepts, so no chunk it produces '
+              'may build a query over it');
+    });
+
+    test('Should pack the mix of handles and search phrases that a fixed chunk size overflows', () {
+      final subscriptions = [
+        ...List.generate(8, (i) => user('handle$i')),
+        ...List.generate(8, (i) => search('a' * 40)),
+      ];
+
+      expect(pack(subscriptions).length, greaterThan(1),
+          reason: 'Search phrases have no length bound, so sixteen of these subscriptions overflow one query '
+              'even though the old fixed chunk size of 16 sent them as one for X to reject');
+    });
+
+    test('Should give a subscription too long to fit a chunk of its own', () {
+      final chunks = pack([user('a'), search('x' * 600), user('b')]);
+
+      expect(chunks.map((chunk) => chunk.length), [1, 1, 1],
+          reason: 'An unpackable subscription is isolated so it fails on its own request, leaving the '
+              'subscriptions around it to load normally');
+    });
+
+    test('Should keep the order it is given', () {
+      final subscriptions = List.generate(40, (i) => user('h${i.toString().padLeft(14, '0')}'));
+
+      expect(pack(subscriptions).expand((chunk) => chunk), subscriptions,
+          reason: 'Chunks are packed oldest first so adding a subscription only disturbs the last chunk and '
+              'the cached preview of the others stays warm');
+    });
+
+    test('Should produce no chunks for no subscriptions', () {
+      expect(pack([]), isEmpty, reason: 'An empty group has nothing to search for, so it should ask X nothing');
     });
   });
 }
