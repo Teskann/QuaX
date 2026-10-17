@@ -1,10 +1,10 @@
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'dart:io' show Platform;
 import 'package:auto_direction/auto_direction.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:quax/client/client.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/generated/l10n.dart';
@@ -18,12 +18,16 @@ import 'package:quax/status.dart';
 import 'package:quax/tweet/_expandable_tweet_text.dart';
 import 'package:quax/tweet/_card.dart';
 import 'package:quax/tweet/_media.dart';
+import 'package:quax/tweet/_more_actions_sheet.dart';
+import 'package:quax/tweet/tweet_action_display.dart';
+import 'package:quax/tweet/tweet_actions.dart';
 import 'package:quax/tweet/unavailable_tweet.dart';
 import 'package:quax/article/article.dart';
 import 'package:quax/ui/dates.dart';
 import 'package:quax/ui/errors.dart';
 import 'package:quax/user.dart';
 import 'package:quax/utils/rich_text.dart';
+import 'package:quax/utils/clipboard.dart';
 import 'package:quax/utils/urls.dart';
 import 'package:quax/utils/translation.dart';
 import 'package:intl/intl.dart';
@@ -97,6 +101,8 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
   bool _isInitialized = false;
 
   final GlobalKey _globalKey = GlobalKey(); // needed for "share tweet as image"
+
+  late int _mediaIndex = widget.initialMediaIndex;
 
   @override
   void initState() {
@@ -266,164 +272,206 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     }
   }
 
-  Widget _buildFooterBar(TweetWithCard tweet, String tweetText, String shareBaseUrl, Locale locale, NumberFormat numberFormat, {bool isArticle = false}) {
+  Widget _buildFooterBar(_FooterData data) {
+    final config = parseTweetActions(PrefService.of(context).get<String>(optionTweetActions));
+    final menuActions = config.disabled.where(data.fitsMenu).toList();
+    final actions = config.enabled.where(data.isAvailable).where((a) => a != TweetAction.more || menuActions.isNotEmpty);
+
     return Container(
       alignment: Alignment.center,
-      margin: isArticle ? EdgeInsets.zero : const EdgeInsets.symmetric(horizontal: 8),
+      margin: data.isArticle ? EdgeInsets.zero : const EdgeInsets.symmetric(horizontal: 8),
       child: Scrollbar(
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              _createFooterTextButton(
-                  Icons.mode_comment_outlined,
-                  L10n.of(context).replies,
-                  tweet.replyCount != null ? numberFormat.format(tweet.replyCount) : '',
-                  buttonsColor(context),
-                  () => onClickOpenTweet(tweet)),
-              if (tweet.retweetCount != null && tweet.quoteCount != null)
-                _createFooterTextButton(
-                    Icons.repeat,
-                    L10n.of(context).reposts,
-                    numberFormat.format((tweet.retweetCount! + tweet.quoteCount!)),
-                    buttonsColor(context)),
-              Consumer<LikedTweetModel>(builder: (context, likedModel, child) {
-                var isLiked = likedModel.isLiked(tweet.idStr!);
-                var label = tweet.favoriteCount != null ? numberFormat.format(tweet.favoriteCount) : '';
-
-                return LikeButton(
-                  isLiked: isLiked,
-                  label: label,
-                  color: isLiked ? Theme.of(context).colorScheme.primary : buttonsColor(context),
-                  onPressed: () async {
-                    if (isLiked) {
-                      await likedModel.unlikeTweet(tweet.idStr!);
-                    } else {
-                      await likedModel.likeTweet(tweet.idStr!, tweet.user?.idStr, tweet.toJson());
-                    }
-                    if (!mounted) {
-                      return;
-                    }
-                    setState(() {});
-                    if (!isLiked) {
-                      _maybeShowLikeToast(this.context);
-                    }
-                  },
-                );
-              }),
-              if (tweet.viewCount != null)
-                _createFooterTextButton(
-                    Icons.bar_chart,
-                    L10n.of(context).views,
-                    numberFormat.format(tweet.viewCount),
-                    buttonsColor(context)),
-              const SizedBox(
-                width: 8.0,
-              ),
-              Consumer<SavedTweetModel>(builder: (context, model, child) {
-                var isSaved = model.isSaved(tweet.idStr!);
-                var button = isSaved
-                    ? _createFooterIconButton(
-                        Icons.bookmark, L10n.of(context).remove_from_saved, Theme.of(context).colorScheme.primary, 1, () async {
-                        await model.deleteSavedTweet(tweet.idStr!);
-                        setState(() {});
-                      })
-                    : _createFooterIconButton(Icons.bookmark_border, L10n.of(context).save, buttonsColor(context), 0, () async {
-                        await model.saveTweet(tweet.idStr!, tweet.user?.idStr, tweet.toJson());
-                        setState(() {});
-                        if (context.mounted) {
-                          _maybeShowFolderHint(context);
-                        }
-                      });
-
-                return MergeSemantics(
-                  child: GestureDetector(
-                    onLongPress: () async {
-                      await showSaveToFolderSheet(context,
-                          tweetId: tweet.idStr!, userId: tweet.user?.idStr, content: tweet.toJson());
-                      if (mounted) {
-                        setState(() {});
-                      }
-                    },
-                    child: button,
-                  ),
-                );
-              }),
-              _createFooterIconButton(
-                Icons.share,
-                L10n.of(context).share,
-                buttonsColor(context),
-                null,
-                () async {
-                  createSheetButton(title, icon, onTap) => ListTile(
-                        onTap: onTap,
-                        leading: Icon(icon),
-                        title: Text(title),
-                      );
-
-                  showModalBottomSheet(
-                      context: context,
-                      builder: (context) {
-                        return SafeArea(
-                            child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            if (!isArticle)
-                              createSheetButton(
-                                L10n.of(context).share_tweet_content,
-                                Icons.text_snippet,
-                                      () async {
-                                    SharePlus.instance.share(ShareParams(text: tweetText));
-                                    Navigator.pop(context);
-                                  },
-                              ),
-                            createSheetButton(isArticle ? L10n.of(context).share_article_link : L10n.of(context).share_tweet_link, Icons.link,
-                                () async {
-                              SharePlus.instance.share(
-                                  ShareParams(text: '$shareBaseUrl/${tweet.user!.screenName}/status/${tweet.idStr}'));
-                              Navigator.pop(context);
-                            }),
-                            if (!isArticle)
-                              createSheetButton(
-                                  L10n.of(context).share_tweet_content_and_link, Icons.add_link,
-                                      () async {
-                                        SharePlus.instance.share(ShareParams(
-                                            text:
-                                                '$tweetText\n\n$shareBaseUrl/${tweet.user!.screenName}/status/${tweet.idStr}'));
-                                        Navigator.pop(context);
-                                      }),
-                            createSheetButton(isArticle ? L10n.of(context).share_article_as_image : L10n.of(context).share_tweet_as_image, Icons.screenshot, () async {
-                              Uint8List? imgBytes = await captureWidget();
-                              if (imgBytes != null) {
-                                SharePlus.instance.share(
-                                    ShareParams(files: [XFile.fromData(imgBytes, mimeType: 'image/png')]));
-                              }
-                              if (context.mounted) {
-                                Navigator.pop(context);
-                              }
-                            }),
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 16),
-                              child: Divider(
-                                thickness: 1.0,
-                              ),
-                            ),
-                            createSheetButton(
-                              L10n.of(context).cancel,
-                              Icons.close,
-                              () => Navigator.pop(context),
-                            )
-                          ],
-                        ));
-                      });
-                },
-              ),
-              if (!isArticle) _buildTranslateButton(locale),
-            ],
-          ),
+          child: Row(children: actions.map((a) => _buildFooterAction(a, data, menuActions)).toList()),
         ),
       ),
     );
+  }
+
+  Widget _buildFooterAction(TweetAction action, _FooterData data, List<TweetAction> menuActions) {
+    final color = buttonsColor(context);
+    final icon = tweetActionIcon(action);
+    final label = tweetActionLabel(context, action);
+
+    return switch (action) {
+      TweetAction.reply || TweetAction.retweet || TweetAction.views =>
+        _createFooterTextButton(icon, label, data.count(action) ?? '', color, _actionCallback(action, data)),
+      TweetAction.like => _buildLikeButton(data),
+      TweetAction.bookmark => _buildBookmarkButton(data.tweet),
+      TweetAction.translate => _buildTranslateButton(data.locale),
+      TweetAction.more => _createFooterIconButton(icon, label, color, null, () => _showMoreActions(data, menuActions)),
+      _ => _createFooterIconButton(icon, label, color, null, _actionCallback(action, data)),
+    };
+  }
+
+  VoidCallback? _actionCallback(TweetAction action, _FooterData data) => switch (action) {
+        TweetAction.reply => () => onClickOpenTweet(data.tweet),
+        TweetAction.retweet || TweetAction.views || TweetAction.more => null,
+        TweetAction.like => () => _toggleLike(data.tweet),
+        TweetAction.bookmark => () => _toggleSave(data.tweet),
+        TweetAction.share => () => _showShareSheet(data),
+        TweetAction.translate => () => _translationStatus == TranslationStatus.translated
+            ? onClickShowOriginal()
+            : onClickTranslate(context, data.locale),
+        TweetAction.copyLink => () => copyToClipboard(context, data.link, L10n.of(context).link_copied),
+        TweetAction.copyText => () => copyToClipboard(context, data.tweetText, L10n.of(context).text_copied),
+        TweetAction.download => () => _downloadCurrentMedia(data.tweet),
+      };
+
+  IconData _menuIcon(TweetAction action, TweetWithCard tweet) => switch (action) {
+        TweetAction.like when context.read<LikedTweetModel>().isLiked(tweet.idStr!) => Icons.favorite,
+        TweetAction.bookmark when context.read<SavedTweetModel>().isSaved(tweet.idStr!) => Icons.bookmark,
+        _ => tweetActionIcon(action),
+      };
+
+  void _showMoreActions(_FooterData data, List<TweetAction> actions) {
+    showMoreActionsSheet(
+        context,
+        actions
+            .map((a) => MoreActionsEntry(
+                icon: _menuIcon(a, data.tweet),
+                label: tweetActionLabel(context, a),
+                count: data.count(a),
+                onTap: _actionCallback(a, data)))
+            .toList());
+  }
+
+  Widget _buildLikeButton(_FooterData data) {
+    return Consumer<LikedTweetModel>(builder: (context, likedModel, child) {
+      var isLiked = likedModel.isLiked(data.tweet.idStr!);
+
+      return LikeButton(
+        isLiked: isLiked,
+        label: data.count(TweetAction.like) ?? '',
+        color: isLiked ? Theme.of(context).colorScheme.primary : buttonsColor(context),
+        onPressed: () => _toggleLike(data.tweet),
+      );
+    });
+  }
+
+  Future<void> _toggleLike(TweetWithCard tweet) async {
+    final likedModel = context.read<LikedTweetModel>();
+    final isLiked = likedModel.isLiked(tweet.idStr!);
+    if (isLiked) {
+      await likedModel.unlikeTweet(tweet.idStr!);
+    } else {
+      await likedModel.likeTweet(tweet.idStr!, tweet.user?.idStr, tweet.toJson());
+    }
+    if (!mounted) {
+      return;
+    }
+    setState(() {});
+    if (!isLiked) {
+      _maybeShowLikeToast(context);
+    }
+  }
+
+  Widget _buildBookmarkButton(TweetWithCard tweet) {
+    return Consumer<SavedTweetModel>(builder: (context, model, child) {
+      var isSaved = model.isSaved(tweet.idStr!);
+      var button = isSaved
+          ? _createFooterIconButton(Icons.bookmark, L10n.of(context).remove_from_saved,
+              Theme.of(context).colorScheme.primary, 1, () => _toggleSave(tweet))
+          : _createFooterIconButton(
+              Icons.bookmark_border, L10n.of(context).save, buttonsColor(context), 0, () => _toggleSave(tweet));
+
+      return MergeSemantics(
+        child: GestureDetector(
+          onLongPress: () async {
+            await showSaveToFolderSheet(context,
+                tweetId: tweet.idStr!, userId: tweet.user?.idStr, content: tweet.toJson());
+            if (mounted) {
+              setState(() {});
+            }
+          },
+          child: button,
+        ),
+      );
+    });
+  }
+
+  Future<void> _toggleSave(TweetWithCard tweet) async {
+    final model = context.read<SavedTweetModel>();
+    final isSaved = model.isSaved(tweet.idStr!);
+    if (isSaved) {
+      await model.deleteSavedTweet(tweet.idStr!);
+    } else {
+      await model.saveTweet(tweet.idStr!, tweet.user?.idStr, tweet.toJson());
+    }
+    if (!mounted) {
+      return;
+    }
+    setState(() {});
+    if (!isSaved) {
+      _maybeShowFolderHint(context);
+    }
+  }
+
+  Future<void> _downloadCurrentMedia(TweetWithCard tweet) {
+    final media = tweet.extendedEntities!.media!;
+    return downloadTweetMedia(context, media[_mediaIndex.clamp(0, media.length - 1)], tweet.user!.screenName!);
+  }
+
+  void _showShareSheet(_FooterData data) {
+    createSheetButton(title, icon, onTap) => ListTile(
+          onTap: onTap,
+          leading: Icon(icon),
+          title: Text(title),
+        );
+
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return SafeArea(
+              child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (!data.isArticle)
+                createSheetButton(
+                  L10n.of(context).share_tweet_content,
+                  Icons.text_snippet,
+                  () async {
+                    SharePlus.instance.share(ShareParams(text: data.tweetText));
+                    Navigator.pop(context);
+                  },
+                ),
+              createSheetButton(
+                  data.isArticle ? L10n.of(context).share_article_link : L10n.of(context).share_tweet_link, Icons.link,
+                  () async {
+                SharePlus.instance.share(ShareParams(text: data.link));
+                Navigator.pop(context);
+              }),
+              if (!data.isArticle)
+                createSheetButton(L10n.of(context).share_tweet_content_and_link, Icons.add_link, () async {
+                  SharePlus.instance.share(ShareParams(text: '${data.tweetText}\n\n${data.link}'));
+                  Navigator.pop(context);
+                }),
+              createSheetButton(
+                  data.isArticle ? L10n.of(context).share_article_as_image : L10n.of(context).share_tweet_as_image,
+                  Icons.screenshot, () async {
+                Uint8List? imgBytes = await captureWidget();
+                if (imgBytes != null) {
+                  SharePlus.instance.share(ShareParams(files: [XFile.fromData(imgBytes, mimeType: 'image/png')]));
+                }
+                if (context.mounted) {
+                  Navigator.pop(context);
+                }
+              }),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: Divider(
+                  thickness: 1.0,
+                ),
+              ),
+              createSheetButton(
+                L10n.of(context).cancel,
+                Icons.close,
+                () => Navigator.pop(context),
+              )
+            ],
+          ));
+        });
   }
 
   Color? buttonsColor(BuildContext c) {
@@ -494,6 +542,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
         username: tweet.user!.screenName!,
         initialMediaIndex: widget.initialMediaIndex,
         tweetId: tweet.idStr,
+        onPageChanged: (index) => _mediaIndex = index,
       );
     }
 
@@ -663,7 +712,13 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
       locale = Locale(splitLocale[0], splitLocale[1]);
     }
 
-    final footerBar = _buildFooterBar(tweet, tweetText, shareBaseUrl, locale, numberFormat, isArticle: tweet.article != null);
+    final footerBar = _buildFooterBar(_FooterData(
+        tweet: tweet,
+        tweetText: tweetText,
+        shareBaseUrl: shareBaseUrl,
+        locale: locale,
+        numberFormat: numberFormat,
+        isArticle: tweet.article != null));
 
     Widget article = Container();
     if (tweet.article != null) {
@@ -961,3 +1016,45 @@ class _TweetTileLeading extends StatelessWidget {
 }
 
 enum TranslationStatus { original, translating, translationFailed, translated }
+
+class _FooterData {
+  final TweetWithCard tweet;
+  final String tweetText;
+  final String shareBaseUrl;
+  final Locale locale;
+  final NumberFormat numberFormat;
+  final bool isArticle;
+
+  const _FooterData(
+      {required this.tweet,
+      required this.tweetText,
+      required this.shareBaseUrl,
+      required this.locale,
+      required this.numberFormat,
+      required this.isArticle});
+
+  String get link => '$shareBaseUrl/${tweet.user!.screenName}/status/${tweet.idStr}';
+
+  bool get hasMedia => tweet.extendedEntities?.media?.isNotEmpty ?? false;
+
+  bool isAvailable(TweetAction action) => switch (action) {
+        TweetAction.retweet => tweet.retweetCount != null && tweet.quoteCount != null,
+        TweetAction.views => tweet.viewCount != null,
+        TweetAction.translate || TweetAction.copyText => !isArticle,
+        TweetAction.download => hasMedia,
+        _ => true,
+      };
+
+  bool fitsMenu(TweetAction action) => action != TweetAction.more && isAvailable(action);
+
+  String? count(TweetAction action) {
+    final value = switch (action) {
+      TweetAction.reply => tweet.replyCount,
+      TweetAction.retweet => isAvailable(action) ? tweet.retweetCount! + tweet.quoteCount! : null,
+      TweetAction.like => tweet.favoriteCount,
+      TweetAction.views => tweet.viewCount,
+      _ => null,
+    };
+    return value == null ? null : numberFormat.format(value);
+  }
+}

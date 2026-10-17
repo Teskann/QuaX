@@ -14,6 +14,7 @@ import 'package:quax/database/repository.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/ui/locale_fallback.dart';
 import 'package:quax/group/feed_session_cache.dart';
+import 'package:quax/tweet/tweet_actions.dart';
 import 'package:quax/tweet/video_controller_pool.dart';
 import 'package:quax/tweet/video_player_budget.dart';
 import 'package:quax/group/group_model.dart';
@@ -170,6 +171,16 @@ Future<void> _migrateMediaQualityPrefs(BasePrefService prefs) async {
   await prefs.set(optionMediaQualitySplitMigrated, true);
 }
 
+// Runs before _decideOnboarding: a stored onboarding means an install upgraded from the fixed bar.
+Future<void> _migrateTweetActionsPrefs(BasePrefService prefs) async {
+  if ((prefs.get<String>(optionTweetActions) ?? '').isNotEmpty) {
+    return;
+  }
+
+  final upgrading = prefs.get<bool>(optionOnboardingDone) != null;
+  await prefs.set(optionTweetActions, initialTweetActions(upgrading: upgrading).encode());
+}
+
 // Decided on the first launch only, so that a newcomer who logs in, then leaves, gets the onboarding back
 Future<void> _decideOnboarding(BasePrefService prefs, SubscriptionsModel subscriptionsModel) async {
   if (prefs.get<bool>(optionOnboardingDone) != null) {
@@ -232,6 +243,7 @@ Future<void> main() async {
     optionThemeTrueBlackTweetCards: false,
     optionShowNavigationLabels: false,
     optionTweetsHideSensitive: true,
+    optionTweetActions: '',
     optionSavedShowAllTab: true,
     optionSavedShowUnfiledTab: true,
     optionSavedShowFavoritesTab: true,
@@ -249,6 +261,7 @@ Future<void> main() async {
   });
 
   await _migrateMediaQualityPrefs(prefService);
+  await _migrateTweetActionsPrefs(prefService);
 
   try {
     // Run the migrations early, so models work. We also do this later on so we can display errors to the user

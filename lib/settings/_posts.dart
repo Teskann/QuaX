@@ -2,6 +2,8 @@ import 'package:material_ui/material_ui.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:pref/pref.dart';
+import 'package:quax/settings/_tweet_actions.dart';
+import 'package:quax/tweet/tweet_actions.dart';
 import 'package:quax/ui/labeled_pref.dart';
 
 class SettingsPostsFragment extends StatelessWidget {
@@ -14,6 +16,16 @@ class SettingsPostsFragment extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8),
         child: ListView(children: [
+          ListTile(
+            title: Text(L10n.of(context).customize_action_bar),
+            trailing: parseTweetActions(PrefService.of(context).get<String>(optionTweetActions)).newActions.isEmpty
+                ? null
+                : const NewBadge(),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const SettingsTweetActionsFragment()),
+            ),
+          ),
           LabeledPref(
             child: PrefSwitch(
               pref: optionUseAbsoluteTimestamp,

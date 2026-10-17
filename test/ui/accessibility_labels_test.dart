@@ -16,6 +16,7 @@ import 'package:quax/settings/_general.dart';
 import 'package:quax/settings/_media.dart';
 import 'package:quax/settings/_posts.dart';
 import 'package:quax/settings/_theme.dart';
+import 'package:quax/settings/_tweet_actions.dart';
 import 'package:quax/tweet/_media.dart';
 
 import '../fixtures.dart';
@@ -168,6 +169,7 @@ Map<String, Future<void> Function(WidgetTester tester)> _screens() => {
       'the general settings': (tester) => pumpInApp(tester, const SettingsGeneralFragment()),
       'the media settings': (tester) => pumpInApp(tester, const SettingsMediaFragment()),
       'the posts settings': (tester) => pumpInApp(tester, const SettingsPostsFragment()),
+      'the action bar settings': (tester) => pumpInApp(tester, withAppModels(const SettingsTweetActionsFragment())),
       'the theme settings': (tester) => pumpInApp(tester, const SettingsThemeFragment()),
       'the accessibility settings': (tester) => pumpInApp(tester, const SettingsAccessibilityFragment()),
     };

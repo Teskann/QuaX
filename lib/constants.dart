@@ -69,6 +69,7 @@ const themeColors = {
 };
 
 const optionTweetsHideSensitive = 'tweets.hide_sensitive';
+const optionTweetActions = 'tweets.actions';
 
 const optionSavedShowAllTab = 'saved.show_all_tab';
 const optionSavedShowUnfiledTab = 'saved.show_unfiled_tab';

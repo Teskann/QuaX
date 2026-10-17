@@ -65,7 +65,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             title: Text(L10n.of(context).tweets),
             leading: Icon(Icons.article),
             subtitle: Text(
-              "${L10n.of(context).use_absolute_timestamp}, ${L10n.of(context).hide_sensitive_tweets}, ${L10n.of(context).always_show_full_tweet_contents}, ${L10n.of(context).activate_non_confirmation_bias_mode_label}",
+              "${L10n.of(context).use_absolute_timestamp}, ${L10n.of(context).hide_sensitive_tweets}, ${L10n.of(context).always_show_full_tweet_contents}, ${L10n.of(context).activate_non_confirmation_bias_mode_label}, ${L10n.of(context).customize_action_bar}",
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(fontStyle: FontStyle.italic),

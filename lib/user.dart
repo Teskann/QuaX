@@ -16,6 +16,8 @@ import 'package:provider/provider.dart';
 Widget _createUserAvatar(String? uri, double size) {
   if (uri == null) {
     return SizedBox(width: size, height: size);
+  } else if (uri.startsWith('assets/')) {
+    return Image.asset(uri, width: size, height: size);
   } else {
     return ExtendedImage.network(
       // TODO: This can error if the profile image has changed... use SWR-like
