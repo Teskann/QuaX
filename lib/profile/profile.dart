@@ -120,6 +120,7 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
   final GlobalKey<NestedScrollViewState> nestedScrollViewKey = GlobalKey();
 
   late TabController _tabController;
+  bool tabControllerInitialized = false;
 
   final _mediaKind = MediaKindModel();
   final GlobalKey _mediaTabKey = GlobalKey();
@@ -149,10 +150,13 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    ProfileTabs defaultProfileTab = ProfileTabs.values.byName(PrefService.of(context).get(optionDefaultProfileTab));
-    final int initialTabIdx = widget.defaultTabIndex ?? profileTabs.indexWhere((e) => e.id == defaultProfileTab);
+    if (!tabControllerInitialized){
+      ProfileTabs defaultProfileTab = ProfileTabs.values.byName(PrefService.of(context).get(optionDefaultProfileTab));
+      final int initialTabIdx = widget.defaultTabIndex ?? profileTabs.indexWhere((e) => e.id == defaultProfileTab);
 
-    _tabController = TabController(length: 4, vsync: this, initialIndex: initialTabIdx);
+      _tabController = TabController(length: 4, vsync: this, initialIndex: initialTabIdx);
+      tabControllerInitialized = true;
+    }
   }
 
   @override
