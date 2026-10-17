@@ -6,6 +6,7 @@ import 'package:quax/database/entities.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/saved/saved_tweet_folder_model.dart';
 import 'package:quax/saved/saved_tweet_model.dart';
+import 'package:quax/ui/list_sheet.dart';
 
 /// Opens the "save to folder" bottom sheet for a post, saving it first if needed.
 Future<void> showSaveToFolderSheet(BuildContext context,
@@ -21,10 +22,9 @@ Future<void> showSaveToFolderSheet(BuildContext context,
     return;
   }
 
-  await showModalBottomSheet(
-    context: context,
-    showDragHandle: true,
-    builder: (_) => _SaveToFolderSheet(
+  await showListSheet(
+    context,
+    (_) => _SaveToFolderSheet(
         tweetId: tweetId,
         userId: userId,
         content: content,
@@ -74,53 +74,30 @@ class _SaveToFolderSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: ScopedBuilder<SavedTweetFolderModel, List<SavedTweetFolder>>(
-        store: folderModel,
-        onState: (context, folders) {
-          var current = savedModel.folderOf(tweetId);
+    return ScopedBuilder<SavedTweetFolderModel, List<SavedTweetFolder>>(
+      store: folderModel,
+      onState: (context, folders) {
+        var current = savedModel.folderOf(tweetId);
 
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(24, 4, 24, 12),
-                child: Row(
-                  children: [
-                    Icon(Icons.bookmark_add_outlined),
-                    const SizedBox(width: 12),
-                    Text(L10n.of(context).save_to_folder, style: Theme.of(context).textTheme.titleMedium),
-                  ],
-                ),
-              ),
-              Flexible(
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _FolderTile(
-                          label: L10n.of(context).unfiled,
-                          selected: current == null,
-                          onTap: () => _file(context, null, L10n.of(context).unfiled)),
-                      ...folders.map((f) => _FolderTile(
-                          label: f.name, selected: current == f.id, onTap: () => _file(context, f.id, f.name))),
-                    ],
-                  ),
-                ),
-              ),
-              const Divider(),
-              ListTile(
-                contentPadding: const EdgeInsets.symmetric(horizontal: 24),
-                leading: const Icon(Icons.create_new_folder_outlined),
-                title: Text(L10n.of(context).create_new_folder),
-                onTap: () => _createAndFile(context),
-              ),
-            ],
-          );
-        },
-      ),
+        return ListSheet(
+          icon: Icons.bookmark_add_outlined,
+          title: L10n.of(context).save_to_folder,
+          footer: ListTile(
+            contentPadding: listSheetTilePadding,
+            leading: const Icon(Icons.create_new_folder_outlined),
+            title: Text(L10n.of(context).create_new_folder),
+            onTap: () => _createAndFile(context),
+          ),
+          children: [
+            _FolderTile(
+                label: L10n.of(context).unfiled,
+                selected: current == null,
+                onTap: () => _file(context, null, L10n.of(context).unfiled)),
+            ...folders.map((f) =>
+                _FolderTile(label: f.name, selected: current == f.id, onTap: () => _file(context, f.id, f.name))),
+          ],
+        );
+      },
     );
   }
 }
@@ -135,7 +112,7 @@ class _FolderTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 24),
+      contentPadding: listSheetTilePadding,
       title: Text(label),
       trailing: selected ? Icon(Icons.check, color: Theme.of(context).colorScheme.primary) : null,
       onTap: onTap,

@@ -139,6 +139,7 @@ class TweetMedia extends StatefulWidget {
   // Used (with the media index) to cache/reuse video controllers across screens.
   final String? tweetId;
   final EdgeInsetsGeometry margin;
+  final ValueChanged<int>? onPageChanged;
 
   const TweetMedia(
       {super.key,
@@ -147,7 +148,8 @@ class TweetMedia extends StatefulWidget {
       required this.username,
       this.initialMediaIndex = 0,
       this.tweetId,
-      this.margin = const EdgeInsets.only(top: 8, left: 16, right: 16)});
+      this.margin = const EdgeInsets.only(top: 8, left: 16, right: 16),
+      this.onPageChanged});
 
   @override
   State<TweetMedia> createState() => _TweetMediaState();
@@ -188,6 +190,7 @@ class _TweetMediaState extends State<TweetMedia> {
           child: PageView.builder(
             controller: _controller,
             scrollDirection: Axis.horizontal,
+            onPageChanged: widget.onPageChanged,
             itemCount: widget.media.length,
             itemBuilder: (context, index) {
               var item = widget.media[index];
@@ -256,6 +259,40 @@ Media createMediaFromUrl(String? url, double? height) {
   return media;
 }
 
+String _originalMediaUrl(Media media, {required bool tweetMedia}) =>
+    (tweetMedia ? '${media.mediaUrlHttps}:orig' : media.mediaUrlHttps) ?? '';
+
+Future<void> downloadTweetMedia(BuildContext context, Media media, String username, {bool tweetMedia = true}) async {
+  if (media.type == 'animated_gif' || media.type == 'video') {
+    var urls = await TweetVideoMetadata.fromMedia(media).streamUrlsBuilder();
+    if (context.mounted) {
+      await downloadTweetVideo(context, username, urls.downloadUrl);
+    }
+    return;
+  }
+
+  var fileName = '$username-${path.basename(media.mediaUrlHttps!)}';
+  var uri = Uri.parse(_originalMediaUrl(media, tweetMedia: tweetMedia));
+
+  await downloadUriToPickedFile(
+    context,
+    uri,
+    fileName,
+    prefs: PrefService.of(context, listen: false),
+    onStart: () {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(L10n.of(context).downloading_media),
+      ));
+    },
+    onSuccess: () {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar(reason: SnackBarClosedReason.hide);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(L10n.of(context).successfully_saved_the_media),
+      ));
+    },
+  );
+}
+
 class _TweetMediaViewState extends State<TweetMediaView> {
   late Media _media;
 
@@ -264,10 +301,6 @@ class _TweetMediaViewState extends State<TweetMediaView> {
     super.initState();
 
     _media = widget.media[widget.initialIndex];
-  }
-
-  String originalMediaUrl() {
-    return (widget.tweetMedia ? '${_media.mediaUrlHttps}:orig' : _media.mediaUrlHttps) ?? "";
   }
 
   @override
@@ -289,37 +322,7 @@ class _TweetMediaViewState extends State<TweetMediaView> {
             builder: (context, child, callback, buttonState) {
               return IconButton(onPressed: callback, icon: Semantics(label: L10n.of(context).download, child: child));
             },
-            onPressed: () async {
-              if (_media.type == 'animated_gif') {
-                var urls = await TweetVideoMetadata.fromMedia(_media).streamUrlsBuilder();
-                if (context.mounted) {
-                  await downloadTweetVideo(context, widget.username, urls.downloadUrl);
-                }
-                return;
-              }
-
-              var url = path.basename(_media.mediaUrlHttps!);
-              var fileName = '${widget.username}-$url';
-              var uri = Uri.parse(originalMediaUrl());
-
-              await downloadUriToPickedFile(
-                context,
-                uri,
-                fileName,
-                prefs: prefs,
-                onStart: () {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text(L10n.of(context).downloading_media),
-                  ));
-                },
-                onSuccess: () {
-                  ScaffoldMessenger.of(context).hideCurrentSnackBar(reason: SnackBarClosedReason.hide);
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text(L10n.of(context).successfully_saved_the_media),
-                  ));
-                },
-              );
-            },
+            onPressed: () => downloadTweetMedia(context, _media, widget.username, tweetMedia: widget.tweetMedia),
           ),
           AsyncButtonBuilder(
             showSuccess: false,
@@ -327,7 +330,7 @@ class _TweetMediaViewState extends State<TweetMediaView> {
               return IconButton(onPressed: callback, icon: Semantics(label: L10n.of(context).share, child: child));
             },
             onPressed: () async {
-              var uri = Uri.parse(originalMediaUrl());
+              var uri = Uri.parse(_originalMediaUrl(_media, tweetMedia: widget.tweetMedia));
 
               var fileBytes = await downloadFile(context, uri);
 
