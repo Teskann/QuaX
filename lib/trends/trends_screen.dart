@@ -34,6 +34,7 @@ class _TrendsScreenState extends State<TrendsScreen> with AutomaticKeepAliveClie
           controller: _queryController,
           focusNode: widget.focusNode,
           textInputAction: TextInputAction.search,
+          hintText: L10n.of(context).search,
           leading: const Padding(padding: EdgeInsets.symmetric(horizontal: 12), child: Icon(Icons.search)),
           onSubmitted: (query) {
             Navigator.pushNamed(

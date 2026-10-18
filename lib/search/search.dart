@@ -6,8 +6,13 @@ import 'package:quax/constants.dart';
 import 'package:quax/database/entities.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/profile/profile.dart';
+import 'package:quax/search/search_filter_chips.dart';
+import 'package:quax/search/search_filter_labels.dart';
+import 'package:quax/search/search_filters.dart';
+import 'package:quax/search/search_filters_screen.dart';
 import 'package:quax/search/search_media_grid.dart';
 import 'package:quax/search/search_model.dart';
+import 'package:quax/search/search_query.dart';
 import 'package:quax/tweet/_video.dart';
 import 'package:quax/tweet/paginated_tweet_list.dart';
 import 'package:quax/ui/errors.dart';
@@ -49,12 +54,14 @@ class _ResultsScreen extends StatefulWidget {
 class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProviderStateMixin {
   final TextEditingController _queryController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
+  final String _appLanguage = appSearchLanguage();
 
   late final TabController _tabController;
   late final SearchTweetsPagination _topTweets;
   late final SearchTweetsPagination _latestTweets;
   late final SearchMediaPagination _mediaResults;
   late final SearchUsersModel _searchUsersModel;
+  late final SearchFiltersModel _filters;
 
   Timer? _debounce;
   String? _lastDispatchedQuery;
@@ -65,13 +72,15 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
 
     _tabController = TabController(length: 4, vsync: this, initialIndex: widget.initialTab);
 
-    final initialQuery = widget.query ?? '';
+    final opened = SearchQuery.parse(widget.query ?? '', _appLanguage);
+    final initialQuery = opened.compose(_appLanguage);
+    _filters = SearchFiltersModel(opened.filters);
     _topTweets = SearchTweetsPagination(product: 'Top', initialQuery: initialQuery);
     _latestTweets = SearchTweetsPagination(product: 'Latest', initialQuery: initialQuery);
     _mediaResults = SearchMediaPagination(initialQuery: initialQuery);
     _searchUsersModel = SearchUsersModel();
 
-    _queryController.text = initialQuery;
+    _queryController.text = opened.text;
     _lastDispatchedQuery = initialQuery;
     _queryController.addListener(_onQueryChanged);
 
@@ -94,23 +103,95 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
     _topTweets.dispose();
     _latestTweets.dispose();
     _mediaResults.dispose();
+    _filters.destroy();
     super.dispose();
   }
 
+  /// What is sent to X: the bar text, with the operators typed in it, and the filters.
+  String _effectiveQuery() {
+    final typed = SearchQuery.parse(_queryController.text, _appLanguage);
+    return SearchQuery(typed.text, _filters.state.merge(typed.filters)).compose(_appLanguage);
+  }
+
   void _onQueryChanged() {
-    if (_queryController.text == _lastDispatchedQuery) return;
+    if (_effectiveQuery() == _lastDispatchedQuery) return;
     _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 750), _dispatchQuery);
   }
 
   void _dispatchQuery() {
+    _debounce?.cancel();
     if (!mounted) return;
-    final query = _queryController.text;
+    final query = _effectiveQuery();
+    if (query == _lastDispatchedQuery) return;
     _lastDispatchedQuery = query;
     _topTweets.updateQuery(query);
     _latestTweets.updateQuery(query);
     _mediaResults.updateQuery(query);
     _searchUsersModel.searchUsers(query, context);
+  }
+
+  /// Moves the operators typed in the bar to the filters, so only the words stay in the bar.
+  void _moveTypedFilters() {
+    final typed = SearchQuery.parse(_queryController.text, _appLanguage);
+    if (typed.filters.active.isNotEmpty) {
+      _filters.set(_filters.state.merge(typed.filters));
+      _queryController.text = typed.text;
+    }
+    _dispatchQuery();
+  }
+
+  Future<void> _openFilters() async {
+    _moveTypedFilters();
+    final edited = await SearchFiltersScreen.open(context, _filters.state);
+    if (edited != null) {
+      _filters.set(edited);
+      _dispatchQuery();
+    }
+  }
+
+  void _removeFilter(ActiveFilter filter) {
+    _filters.remove(filter);
+    _dispatchQuery();
+  }
+
+  Widget _filtersButton() {
+    return ScopedBuilder<SearchFiltersModel, SearchFilters>(
+      store: _filters,
+      onState: (context, filters) {
+        final count = filters.active.length;
+        return IconButton(
+          tooltip: L10n.of(context).search_filters_button(count),
+          onPressed: _openFilters,
+          icon: Badge(
+            isLabelVisible: count > 0,
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            textColor: Theme.of(context).colorScheme.onPrimary,
+            label: ExcludeSemantics(child: Text('$count')),
+            child: const Icon(Icons.tune),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _followButton() {
+    return ValueListenableBuilder(
+      valueListenable: _queryController,
+      builder: (context, _, _) => ScopedBuilder<SearchFiltersModel, SearchFilters>(
+        store: _filters,
+        onState: (_, _) => FollowButton(user: SearchSubscription(id: _effectiveQuery(), createdAt: DateTime.now())),
+      ),
+    );
+  }
+
+  Widget _filterChips() {
+    return ScopedBuilder<SearchFiltersModel, SearchFilters>(
+      store: _filters,
+      onState: (context, filters) => filters.active.isEmpty
+          ? const SizedBox.shrink()
+          : SearchFilterChips(filters: filters, onRemoved: _removeFilter, onTap: _openFilters),
+    );
   }
 
   @override
@@ -128,20 +209,20 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
           controller: _queryController,
           focusNode: _focusNode,
           textInputAction: TextInputAction.search,
+          hintText: L10n.of(context).search,
+          onSubmitted: (_) => _moveTypedFilters(),
           leading: IconButton(
               icon: Icon(Icons.arrow_back, semanticLabel: L10n.of(context).back),
               onPressed: () => Navigator.pop(context)),
-          trailing: [
-            FollowButton(user: SearchSubscription(id: _queryController.text, createdAt: DateTime.now())),
-          ],
+          trailing: [_filtersButton(), _followButton()],
         ),
         bottom: TabBar(
           controller: _tabController,
-          tabs: const [
-            Tab(icon: Icon(Icons.trending_up)),
-            Tab(icon: Icon(Icons.access_time_outlined)),
-            Tab(icon: Icon(Icons.image)),
-            Tab(icon: Icon(Icons.person_search)),
+          tabs: [
+            Tab(icon: Icon(Icons.trending_up, semanticLabel: L10n.of(context).search_tab_top)),
+            Tab(icon: Icon(Icons.access_time_outlined, semanticLabel: L10n.of(context).search_tab_latest)),
+            Tab(icon: Icon(Icons.image, semanticLabel: L10n.of(context).media)),
+            Tab(icon: Icon(Icons.person_search, semanticLabel: L10n.of(context).search_tab_people)),
           ],
           labelColor: Theme.of(context).appBarTheme.foregroundColor,
           indicatorColor: Theme.of(context).appBarTheme.foregroundColor,
@@ -155,29 +236,34 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
           ChangeNotifierProvider<VideoContextState>(
               create: (_) => VideoContextState(prefs.get(optionMediaDefaultMute))),
         ],
-        child: TabBarView(
-          controller: _tabController,
-          children: [
-            PaginatedTweetList(
-              feed: _topTweets.feed,
-              loadPage: _topTweets.loadPage,
-              username: null,
-              firstPageErrorPrefix: (l10n) => l10n.unable_to_load_the_search_results,
-              newPageErrorPrefix: (l10n) => l10n.unable_to_load_the_next_page_of_tweets,
-              emptyMessage: L10n.of(context).no_results,
+        child: Column(children: [
+          _filterChips(),
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                PaginatedTweetList(
+                  feed: _topTweets.feed,
+                  loadPage: _topTweets.loadPage,
+                  username: null,
+                  firstPageErrorPrefix: (l10n) => l10n.unable_to_load_the_search_results,
+                  newPageErrorPrefix: (l10n) => l10n.unable_to_load_the_next_page_of_tweets,
+                  emptyMessage: L10n.of(context).no_results,
+                ),
+                PaginatedTweetList(
+                  feed: _latestTweets.feed,
+                  loadPage: _latestTweets.loadPage,
+                  username: null,
+                  firstPageErrorPrefix: (l10n) => l10n.unable_to_load_the_search_results,
+                  newPageErrorPrefix: (l10n) => l10n.unable_to_load_the_next_page_of_tweets,
+                  emptyMessage: L10n.of(context).no_results,
+                ),
+                SearchMediaGrid(model: _mediaResults),
+                _UserSearchResultList(store: _searchUsersModel, onRetry: _dispatchQuery),
+              ],
             ),
-            PaginatedTweetList(
-              feed: _latestTweets.feed,
-              loadPage: _latestTweets.loadPage,
-              username: null,
-              firstPageErrorPrefix: (l10n) => l10n.unable_to_load_the_search_results,
-              newPageErrorPrefix: (l10n) => l10n.unable_to_load_the_next_page_of_tweets,
-              emptyMessage: L10n.of(context).no_results,
-            ),
-            SearchMediaGrid(model: _mediaResults),
-            _UserSearchResultList(store: _searchUsersModel, onRetry: _dispatchQuery),
-          ],
-        ),
+          ),
+        ]),
       ),
     );
   }

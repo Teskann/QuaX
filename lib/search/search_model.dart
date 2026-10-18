@@ -3,6 +3,7 @@ import 'package:flutter_triple/flutter_triple.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:quax/client/client.dart';
 import 'package:quax/profile/media_grid/media_grid_items/media_grid_item.dart';
+import 'package:quax/search/search_filters.dart';
 import 'package:quax/tweet/paginated_tweet_list.dart';
 import 'package:quax/user.dart';
 import 'package:quax/utils/paging.dart';
@@ -75,4 +76,12 @@ class SearchUsersModel extends Store<List<UserWithExtra>> {
       }
     });
   }
+}
+
+class SearchFiltersModel extends Store<SearchFilters> {
+  SearchFiltersModel([super.initialState = SearchFilters.none]);
+
+  void set(SearchFilters filters) => update(filters);
+
+  void remove(ActiveFilter filter) => update(state.without(filter));
 }

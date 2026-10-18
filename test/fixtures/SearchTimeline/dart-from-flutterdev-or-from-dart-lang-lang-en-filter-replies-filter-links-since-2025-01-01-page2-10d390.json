@@ -1,0 +1,107 @@
+{
+ "scenario": "Search filters combined, in the order the app writes them",
+ "sourceUrl": "https://x.com/search?q=dart%20%28from%3AFlutterDev%20OR%20from%3Adart_lang%29%20lang%3Aen%20-filter%3Areplies%20filter%3Alinks%20since%3A2025-01-01&src=typed_query&f=live",
+ "unstable": true,
+ "operation": "SearchTimeline",
+ "host": "x.com",
+ "queryId": "irezafrnzav4Ulf1vDkEBg",
+ "features": {
+  "rweb_video_screen_enabled": false,
+  "rweb_cashtags_enabled": true,
+  "profile_label_improvements_pcf_label_in_post_enabled": true,
+  "responsive_web_profile_redirect_enabled": true,
+  "rweb_tipjar_consumption_enabled": false,
+  "verified_phone_label_enabled": false,
+  "creator_subscriptions_tweet_preview_api_enabled": true,
+  "responsive_web_graphql_timeline_navigation_enabled": true,
+  "premium_content_api_read_enabled": false,
+  "communities_web_enable_tweet_community_results_fetch": true,
+  "c9s_tweet_anatomy_moderator_badge_enabled": true,
+  "responsive_web_grok_analyze_button_fetch_trends_enabled": false,
+  "responsive_web_grok_analyze_post_followups_enabled": true,
+  "rweb_cashtags_composer_attachment_enabled": true,
+  "responsive_web_jetfuel_frame": true,
+  "rweb_sports_post_context_enabled": true,
+  "responsive_web_grok_share_attachment_enabled": true,
+  "responsive_web_grok_annotations_enabled": true,
+  "articles_preview_enabled": true,
+  "responsive_web_edit_tweet_api_enabled": true,
+  "rweb_conversational_replies_downvote_enabled": false,
+  "graphql_is_translatable_rweb_tweet_is_translatable_enabled": true,
+  "view_counts_everywhere_api_enabled": true,
+  "longform_notetweets_consumption_enabled": true,
+  "responsive_web_twitter_article_tweet_consumption_enabled": true,
+  "content_disclosure_indicator_enabled": true,
+  "content_disclosure_ai_generated_indicator_enabled": true,
+  "responsive_web_grok_show_grok_translated_post": true,
+  "responsive_web_grok_analysis_button_from_backend": true,
+  "post_ctas_fetch_enabled": false,
+  "freedom_of_speech_not_reach_fetch_enabled": true,
+  "standardized_nudges_misinfo": true,
+  "tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled": true,
+  "longform_notetweets_rich_text_read_enabled": true,
+  "longform_notetweets_inline_media_enabled": false,
+  "responsive_web_nested_quote_preview_enabled": true,
+  "responsive_web_grok_image_annotation_enabled": true,
+  "responsive_web_grok_imagine_annotation_enabled": true,
+  "responsive_web_grok_community_note_auto_translation_is_enabled": true,
+  "responsive_web_enhance_cards_enabled": false
+ },
+ "fieldToggles": null,
+ "variables": {
+  "rawQuery": "dart (from:FlutterDev OR from:dart_lang) lang:en -filter:replies filter:links since:2025-01-01",
+  "count": 20,
+  "cursor": "DAADDAABCgABHUrxMjiW8IgKAAIa2os4OFZRewAIAAIAAAACCAADAAAAAAgABAAAAAEKAAUdTcZliYAnEAoABh1NxmWJf7HgCwAHAAAByEVtUEM2d0FBQWZRL2dHSk4wdkdwL0FBQUFDZ2JtOUx2SHhmUjlCdFBzK1Q1MWpIK0d6Tm55RGpXUUFrZFNGd0VrMVpBQXh1OEZ6eWpsdENqRzhQZWdqbFhZZndjUnUyZmxGY1JnUnV6SWRma0Z2Rk1IVWRTUXB6YlFIY2JFS1RiUmxlZ1FoeU1nZUdKbG5BRUhMQndwc3phTVZZY0txK2FDUnBSelJ6NHpIMFFtZ0NrRzNla0N4aldNRFFieG1yVEtKWUJSUnVFZGpWejF1RW5ISU4xNW9GWFVMRWJxeU9qbjVjUkF4d09hSW1MMjdCN0czTzV1MGZYTVI4YmZRT251dHB4Smh1cDJneVFGakRDSFJ5a0RKbFdRZFVkQkRaWjIxdFJNUndOUi8vRTF4QW9HeVZTN2svWE1EUWRTdkV5T0pid2lCdHIrU1VBRm1HVEhHNzNvU2VYWWQ4ZExYRGhKRm9ndFJ6Z1NhYmwyekZMSENsZExKSFdRT1FjcmZqdWF4ZWdhaHg2amZ0WWx6QVBHOFpJaVhiYjBPUWRHNmIyajVweC9CczRnR20wVnBCV0d0cUxPRGhXVVhzY2QrMGpaQmNBN0E9PQAA",
+  "querySource": "typed_query",
+  "product": "Latest",
+  "withGrokTranslatedBio": false,
+  "withQuickPromoteEligibilityTweetFields": false
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "50",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "39",
+  "x-rate-limit-reset": "1792270858"
+ },
+ "body": {
+  "data": {
+   "search_by_raw_query": {
+    "search_timeline": {
+     "timeline": {
+      "instructions": [
+       {
+        "entry": {
+         "content": {
+          "__typename": "TimelineTimelineCursor",
+          "cursorType": "Top",
+          "entryType": "TimelineTimelineCursor",
+          "value": "DAADDAABCgABHUrxMjiW8IgKAAIa2os4OFZRewAIAAIAAAABCAADAAAAAAgABAAAAAIKAAUdTcZliYAnEAoABh1NxmWJf4rQCwAHAAAByEVtUEM2d0FBQWZRL2dHSk4wdkdwL0FBQUFDZ2JtOUx2SHhmUjlCdFBzK1Q1MWpIK0d6Tm55RGpXUUFrZFNGd0VrMVpBQXh1OEZ6eWpsdENqRzhQZWdqbFhZZndjUnUyZmxGY1JnUnV6SWRma0Z2Rk1IVWRTUXB6YlFIY2JFS1RiUmxlZ1FoeU1nZUdKbG5BRUhMQndwc3phTVZZY0txK2FDUnBSelJ6NHpIMFFtZ0NrRzNla0N4aldNRFFieG1yVEtKWUJSUnVFZGpWejF1RW5ISU4xNW9GWFVMRWJxeU9qbjVjUkF4d09hSW1MMjdCN0czTzV1MGZYTVI4YmZRT251dHB4Smh1cDJneVFGakRDSFJ5a0RKbFdRZFVjRFVmL3hOY1FLQjBFTmxuYlcxRXhHeVZTN2svWE1EUWRTdkV5T0pid2lCdHIrU1VBRm1HVEc4WklpWGJiME9RZExYRGhKRm9ndFJ6Z1NhYmwyekZMSENsZExKSFdRT1FjcmZqdWF4ZWdhaHg2amZ0WWx6QVBIRzczb1NlWFlkOGRHNmIyajVweC9CczRnR20wVnBCV0d0cUxPRGhXVVhzY2QrMGpaQmNBN0E9PQAA"
+         },
+         "entryId": "cursor-top-9223372036854775807",
+         "sortIndex": "9223372036854775807"
+        },
+        "entry_id_to_replace": "cursor-top-9223372036854775807",
+        "type": "TimelineReplaceEntry"
+       },
+       {
+        "entry": {
+         "content": {
+          "__typename": "TimelineTimelineCursor",
+          "cursorType": "Bottom",
+          "entryType": "TimelineTimelineCursor",
+          "value": "DAADDAABCgABHUrxMjiW8IgKAAIa2os4OFZRewAIAAIAAAACCAADAAAAAAgABAAAAAIKAAUdTcZliYAnEAoABh1NxmWJf4rQCwAHAAAByEVtUEM2d0FBQWZRL2dHSk4wdkdwL0FBQUFDZ2JtOUx2SHhmUjlCdFBzK1Q1MWpIK0d6Tm55RGpXUUFrZFNGd0VrMVpBQXh1OEZ6eWpsdENqRzhQZWdqbFhZZndjUnUyZmxGY1JnUnV6SWRma0Z2Rk1IVWRTUXB6YlFIY2JFS1RiUmxlZ1FoeU1nZUdKbG5BRUhMQndwc3phTVZZY0txK2FDUnBSelJ6NHpIMFFtZ0NrRzNla0N4aldNRFFieG1yVEtKWUJSUnVFZGpWejF1RW5ISU4xNW9GWFVMRWJxeU9qbjVjUkF4d09hSW1MMjdCN0czTzV1MGZYTVI4YmZRT251dHB4Smh1cDJneVFGakRDSFJ5a0RKbFdRZFVjRFVmL3hOY1FLQjBFTmxuYlcxRXhHeVZTN2svWE1EUWRTdkV5T0pid2lCdHIrU1VBRm1HVEc4WklpWGJiME9RZExYRGhKRm9ndFJ6Z1NhYmwyekZMSENsZExKSFdRT1FjcmZqdWF4ZWdhaHg2amZ0WWx6QVBIRzczb1NlWFlkOGRHNmIyajVweC9CczRnR20wVnBCV0d0cUxPRGhXVVhzY2QrMGpaQmNBN0E9PQAA"
+         },
+         "entryId": "cursor-bottom-0",
+         "sortIndex": "0"
+        },
+        "entry_id_to_replace": "cursor-bottom-0",
+        "type": "TimelineReplaceEntry"
+       }
+      ]
+     }
+    }
+   }
+  }
+ }
+}
