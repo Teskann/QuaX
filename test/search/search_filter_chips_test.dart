@@ -22,7 +22,6 @@ void main() {
 
     test('Should give each filter a label of its own', () {
       final labels = {
-        const ExactPhraseFilter('hot reload'): '“hot reload”',
         const AnyWordsFilter(['flutter', 'dart']): 'Any of: flutter, dart',
         const NoneWordFilter('kotlin'): 'Without “kotlin”',
         const HashtagFilter('Flutter'): '#Flutter',
@@ -114,6 +113,16 @@ void main() {
         reason: 'Closing a chip should remove its own filter only',
       );
       expect(calls.taps, isEmpty, reason: 'Closing a chip should not open the filters');
+    });
+
+    testWidgets('Should keep the chips small, so they do not take room from the results', (tester) async {
+      await pumpChips(tester, const SearchFilters(fromAccounts: ['a']));
+
+      expect(
+        tester.getSize(find.byType(InputChip)).height,
+        lessThanOrEqualTo(32),
+        reason: 'A chip should be compact',
+      );
     });
 
     testWidgets('Should open the filters when a chip is tapped', (tester) async {

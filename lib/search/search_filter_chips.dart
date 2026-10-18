@@ -20,12 +20,15 @@ class SearchFilterChips extends StatelessWidget {
       alignment: AlignmentDirectional.centerStart,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         child: Row(
           spacing: 8,
           children: active
               .map(
                 (filter) => InputChip(
+                  visualDensity: VisualDensity.compact,
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  labelStyle: Theme.of(context).textTheme.labelMedium,
                   label: Text(activeFilterLabel(l10n, filter)),
                   onPressed: onTap,
                   onDeleted: () => onRemoved(filter),

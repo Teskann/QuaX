@@ -12,7 +12,8 @@ class SearchQuery {
       [if (text.trim().isNotEmpty) text.trim(), ...filters.toOperators(appLanguage)].join(' ');
 
   /// Splits [raw] into the text to keep in the bar and the filters the filters page knows.
-  /// Whatever it does not recognise stays in the text, in its original order.
+  /// A quoted phrase, such as a trend of several words, is what the user searches for: it stays in the text,
+  /// like whatever it does not recognise, in its original order.
   static SearchQuery parse(String raw, String appLanguage) {
     final (text, filters) = _tokenize(raw).fold(
       (<String>[], SearchFilters.none),
@@ -35,9 +36,6 @@ final _datePattern = RegExp(r'^(\d{4})-(\d{2})-(\d{2})$');
 List<String> _tokenize(String raw) => _tokenPattern.allMatches(raw).map((match) => match.group(0)!).toList();
 
 SearchFilters? _readToken(String token, SearchFilters filters, String appLanguage) {
-  if (token.length > 2 && token.startsWith('"') && token.endsWith('"')) {
-    return filters.exactPhrase.isEmpty ? filters.copyWith(exactPhrase: token.substring(1, token.length - 1)) : null;
-  }
   if (token.startsWith('(') && token.endsWith(')')) {
     return _readGroup(token.substring(1, token.length - 1), filters);
   }

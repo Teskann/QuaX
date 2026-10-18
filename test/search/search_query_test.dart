@@ -19,7 +19,6 @@ void main() {
 
     test('Should write every filter in the order of X advanced search', () {
       final filters = SearchFilters(
-        exactPhrase: 'hot reload',
         anyWords: const ['flutter', 'dart'],
         noneWords: const ['kotlin', 'java'],
         hashtags: const ['Flutter', 'Dart'],
@@ -41,7 +40,7 @@ void main() {
 
       expect(
         SearchQuery('news', filters).compose(_appLanguage),
-        'news "hot reload" (flutter OR dart) -kotlin -java (#Flutter OR #Dart) (from:FlutterDev OR from:dart_lang) '
+        'news (flutter OR dart) -kotlin -java (#Flutter OR #Dart) (from:FlutterDev OR from:dart_lang) '
         'to:quax_tests @quax_tests_2 lang:en -filter:replies filter:links filter:images include:nativeretweets '
         'min_replies:5 min_faves:50 min_retweets:10 since:2025-01-01 until:2025-07-01',
         reason: 'Each filter should become the operator X documents for it',
@@ -115,11 +114,13 @@ void main() {
       expect(query.filters.active, isEmpty, reason: 'Nothing should be moved to the filters');
     });
 
-    test('Should keep a second exact phrase in the bar', () {
-      final query = SearchQuery.parse('"first one" "second one"', _appLanguage);
+    test('Should keep a quoted phrase in the bar, as a trend of several words sends it', () {
+      final query = SearchQuery.parse('"Champions League" (goal OR but) -replay from:UEFA', _appLanguage);
 
-      expect(query.filters.exactPhrase, 'first one', reason: 'The filters page holds one exact phrase');
-      expect(query.text, '"second one"', reason: 'The other phrase should still be searched');
+      expect(query.text, '"Champions League"', reason: 'A phrase is what the user searches for, not a filter');
+      expect(query.filters.anyWords, ['goal', 'but'], reason: 'A group of words should still be a filter');
+      expect(query.filters.noneWords, ['replay'], reason: 'An excluded word should still be a filter');
+      expect(query.filters.fromAccounts, ['UEFA'], reason: 'An operator should still be a filter');
     });
 
     test('Should give back the query it read', () {
@@ -170,7 +171,6 @@ void main() {
 
   group('every filter', () {
     final all = SearchFilters(
-      exactPhrase: 'hot reload',
       anyWords: const ['a', 'b'],
       noneWords: const ['c'],
       hashtags: const ['d', 'dd'],
@@ -192,7 +192,7 @@ void main() {
 
     test('Should remove each filter alone', () {
       final active = all.active;
-      expect(active, hasLength(19), reason: 'Every value set should have its chip');
+      expect(active, hasLength(18), reason: 'Every value set should have its chip');
       for (final filter in active) {
         final left = all.without(filter).active;
         expect(left, hasLength(active.length - 1), reason: 'Removing ${filter.runtimeType} should remove one chip');

@@ -24,7 +24,6 @@ String activeFilterLabel(L10n l10n, ActiveFilter filter) {
   String date(DateTime value) => DateFormat.yMMMd(formattingLocale()).format(value);
 
   return switch (filter) {
-    ExactPhraseFilter(:final phrase) => l10n.search_filters_chip_exact_phrase(phrase),
     AnyWordsFilter(:final words) => l10n.search_filters_chip_any_words(words.join(', ')),
     NoneWordFilter(:final word) => l10n.search_filters_chip_none_word(word),
     HashtagFilter(:final tag) => '#$tag',

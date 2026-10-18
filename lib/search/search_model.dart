@@ -1,3 +1,4 @@
+import 'package:flutter/rendering.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -84,4 +85,15 @@ class SearchFiltersModel extends Store<SearchFilters> {
   void set(SearchFilters filters) => update(filters);
 
   void remove(ActiveFilter filter) => update(state.without(filter));
+}
+
+/// Whether the filter chips show above the results: they hide while the results scroll down and come back up with them.
+class SearchChipsVisibilityModel extends Store<bool> {
+  SearchChipsVisibilityModel() : super(true);
+
+  void follow(ScrollDirection direction) => switch (direction) {
+    ScrollDirection.reverse => update(false),
+    ScrollDirection.forward => update(true),
+    ScrollDirection.idle => null,
+  };
 }

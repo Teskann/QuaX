@@ -20,15 +20,12 @@ import 'package:quax/settings/_media.dart';
 import 'package:quax/settings/_posts.dart';
 import 'package:quax/settings/_theme.dart';
 import 'package:quax/settings/_tweet_actions.dart';
-import 'package:quax/trends/trends_model.dart';
-import 'package:quax/trends/trends_screen.dart';
 import 'package:quax/tweet/_media.dart';
-import 'package:pref/pref.dart';
-import 'package:provider/provider.dart';
 
 import '../fixture_client.dart';
 import '../fixtures.dart';
 import '../profile/profile_content_test.dart' show openProfile, quaxTestsId;
+import '../trends/pump_trends.dart';
 import '../tweet/pump_tweets.dart';
 import 'fake_images.dart';
 import 'pump_app.dart';
@@ -185,15 +182,7 @@ Map<String, Future<void> Function(WidgetTester tester)> _screens() => {
           fixtures: {'SearchTimeline': fixture('SearchTimeline', 'from-flutterdev-filter-images', unstable: true)}),
       'the search bar of the trends': (tester) {
         Twitter.client = const FixtureTwitterClient({});
-        return pumpInApp(
-            tester,
-            Builder(
-                builder: (context) => MultiProvider(providers: [
-                      Provider(create: (_) => UserTrendLocationModel(PrefService.of(context, listen: false))),
-                      Provider(create: (context) => TrendsModel(context.read<UserTrendLocationModel>())),
-                      Provider(create: (_) => TrendLocationsModel()),
-                    ], child: TrendsScreen(scrollController: ScrollController(), focusNode: FocusNode()))),
-            settle: false);
+        return pumpInApp(tester, trendsScreenWithModels(), settle: false);
       },
       'the search filters': (tester) => pumpInApp(
           tester,
