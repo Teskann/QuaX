@@ -1,3 +1,8 @@
+## QuaX v4.19.1
+
+What's new in QuaX v4.19.1:
+  - Fixed some UX/UI issues from previous version (by @quax-bot) <sup>[[view modified code]](https://github.com/teskann/quax/commit/9f2bb93007f6d9e51b2b547515705649e4c3bf0e)</sup>
+
 ## QuaX v4.19.0
 
 What's new in QuaX v4.19.0:
