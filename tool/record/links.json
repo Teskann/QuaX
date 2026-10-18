@@ -191,8 +191,10 @@
       "url": "https://x.com/quax_tests_2/status/2095934584533680451",
       "description": "Quote of a deleted tweet: the quoted result comes back unavailable"
     },
-    { "url": "https://x.com/quax_tests/status/2095934459606376826",
-      "description": "Deleted post opened directly" },
+    {
+      "url": "https://x.com/quax_tests/status/2095934459606376826",
+      "description": "Deleted post opened directly"
+    },
     {
       "url": "https://x.com/quax_tests_2/status/2095951992489152745",
       "description": "Quote of a tweet with limited replies: TweetWithVisibilityResults, unwrapped twice"
@@ -355,6 +357,71 @@
     {
       "url": "https://x.com/explore/tabs/trending",
       "description": "Trends",
+      "unstable": true
+    },
+    {
+      "url": "https://x.com/search?q=from%3AFlutterDev%20filter%3Aimages&src=typed_query&f=live",
+      "description": "Search filter: posts with images only",
+      "unstable": true
+    },
+    {
+      "url": "https://x.com/search?q=from%3AFlutterDev%20filter%3Avideos&src=typed_query&f=live",
+      "description": "Search filter: posts with videos only",
+      "unstable": true
+    },
+    {
+      "url": "https://x.com/search?q=from%3AFlutterDev%20filter%3Areplies&src=typed_query&f=live",
+      "description": "Search filter: replies only",
+      "unstable": true
+    },
+    {
+      "url": "https://x.com/search?q=from%3AFlutterDev%20filter%3Alinks&src=typed_query&f=live",
+      "description": "Search filter: posts with links only",
+      "unstable": true
+    },
+    {
+      "url": "https://x.com/search?q=from%3AFlutterDev%20-filter%3Alinks&src=typed_query&f=live",
+      "description": "Search filter: posts without links",
+      "unstable": true
+    },
+    {
+      "url": "https://x.com/search?q=flutter%20lang%3Afr&src=typed_query&f=live",
+      "description": "Search filter: posts in French",
+      "unstable": true
+    },
+    {
+      "url": "https://x.com/search?q=from%3AFlutterDev%20since%3A2025-01-01%20until%3A2025-07-01&src=typed_query&f=live",
+      "description": "Search filter: posts between two dates",
+      "unstable": true
+    },
+    {
+      "url": "https://x.com/search?q=from%3AFlutterDev%20min_replies%3A5%20min_faves%3A50%20min_retweets%3A10&src=typed_query&f=live",
+      "description": "Search filter: minimum replies, likes and reposts",
+      "unstable": true
+    },
+    {
+      "url": "https://x.com/search?q=to%3AFlutterDev&src=typed_query&f=live",
+      "description": "Search filter: replies to an account",
+      "unstable": true
+    },
+    {
+      "url": "https://x.com/search?q=%40FlutterDev&src=typed_query&f=live",
+      "description": "Search filter: posts mentioning an account",
+      "unstable": true
+    },
+    {
+      "url": "https://x.com/search?q=%22hot%20reload%22%20%28flutter%20OR%20dart%29%20-kotlin&src=typed_query&f=live",
+      "description": "Search filter: exact phrase, any of these words and none of these words",
+      "unstable": true
+    },
+    {
+      "url": "https://x.com/search?q=%28%23Flutter%20OR%20%23Dart%29%20from%3AFlutterDev&src=typed_query&f=live",
+      "description": "Search filter: any of these hashtags",
+      "unstable": true
+    },
+    {
+      "url": "https://x.com/search?q=dart%20%28from%3AFlutterDev%20OR%20from%3Adart_lang%29%20lang%3Aen%20-filter%3Areplies%20filter%3Alinks%20since%3A2025-01-01&src=typed_query&f=live",
+      "description": "Search filters combined, in the order the app writes them",
       "unstable": true
     }
   ],

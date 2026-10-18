@@ -90,6 +90,10 @@ Any other error response is surfaced as-is via `HttpException`, and the card the
 
 Group feeds cache each chunk's tweets in `feed_group_chunk`: the first page (on open or refresh) shows the cache, reloads every chunk from scratch and replaces a chunk's cache only once X answered, so offline or rate-limited chunks keep theirs; later pages follow the stored `cursor_bottom`. They send one search per chunk in parallel, and a failing chunk must not block the others: `_listTweets()` (`group/_feed.dart`) keeps what X answered and the stored tweets of the failed chunks, and the error goes to `TweetFeedController.partialError`, shown above the tweets. When part of the feed loaded, a rate limit there becomes a `FeedRateLimitedException`, whose card says the whole feed could not be loaded, when to retry, and how many subscriptions loaded out of the total. When nothing loaded, the plain `RateLimitedException` is shown. The page only fails when every chunk did.
 
+### Search filters (`lib/search/`)
+
+A search is a `SearchQuery`: the words left in the bar plus `SearchFilters`, written in X's advanced search syntax by `compose()` in the order of X's own advanced search, so the request matches what the website sends for the same filters. `SearchQuery.parse()` reads a raw query back (a saved search, a link, what the user typed) and moves to the filters only the operators the filters page can show; anything else stays in the bar as typed. Typed operators move to the filters when the search is sent. `test/search/search_filters_x_test.dart` checks on recorded searches that X really applies each operator.
+
 ### Database (`lib/database/`)
 
 `repository.dart` is the single access point for SQLite (via `sqflite`). Schema changes must go through `sqflite_migration_plan` migrations — never alter the schema outside of a migration. Key entities: `Subscription`, `SubscriptionGroup`, `SavedTweet`, `Account`.

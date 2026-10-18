@@ -11,14 +11,22 @@ import 'package:quax/client/client.dart';
 import 'package:quax/group/_feed_shell.dart';
 import 'package:quax/group/group_model.dart';
 import 'package:quax/onboarding/_theme_picker.dart';
+import 'package:quax/search/search.dart';
+import 'package:quax/search/search_filters.dart';
+import 'package:quax/search/search_filters_screen.dart';
 import 'package:quax/settings/_accessibility.dart';
 import 'package:quax/settings/_general.dart';
 import 'package:quax/settings/_media.dart';
 import 'package:quax/settings/_posts.dart';
 import 'package:quax/settings/_theme.dart';
 import 'package:quax/settings/_tweet_actions.dart';
+import 'package:quax/trends/trends_model.dart';
+import 'package:quax/trends/trends_screen.dart';
 import 'package:quax/tweet/_media.dart';
+import 'package:pref/pref.dart';
+import 'package:provider/provider.dart';
 
+import '../fixture_client.dart';
 import '../fixtures.dart';
 import '../profile/profile_content_test.dart' show openProfile, quaxTestsId;
 import '../tweet/pump_tweets.dart';
@@ -138,8 +146,8 @@ class _SpokenTapTargetGuideline extends AccessibilityGuideline {
     });
     final data = node.getSemanticsData();
     final tappable = data.hasAction(SemanticsAction.tap) || data.hasAction(SemanticsAction.longPress);
-    final textField = node.flagsCollection.isTextField || node.flagsCollection.isHidden;
-    if (node.isMergedIntoParent || node.isInvisible || textField || !tappable || _isSpoken(node)) return result;
+    final hidden = node.flagsCollection.isHidden;
+    if (node.isMergedIntoParent || node.isInvisible || hidden || !tappable || _isSpoken(node)) return result;
     return result + Evaluation.fail('$node: a tap target with nothing for a screen reader to read');
   }
 }
@@ -172,6 +180,28 @@ Map<String, Future<void> Function(WidgetTester tester)> _screens() => {
       'the action bar settings': (tester) => pumpInApp(tester, withAppModels(const SettingsTweetActionsFragment())),
       'the theme settings': (tester) => pumpInApp(tester, const SettingsThemeFragment()),
       'the accessibility settings': (tester) => pumpInApp(tester, const SettingsAccessibilityFragment()),
+      'the search results with filters': (tester) => pumpScreen(tester, const ResultsScreen(),
+          arguments: SearchArguments(1, query: 'from:FlutterDev filter:images'),
+          fixtures: {'SearchTimeline': fixture('SearchTimeline', 'from-flutterdev-filter-images', unstable: true)}),
+      'the search bar of the trends': (tester) {
+        Twitter.client = const FixtureTwitterClient({});
+        return pumpInApp(
+            tester,
+            Builder(
+                builder: (context) => MultiProvider(providers: [
+                      Provider(create: (_) => UserTrendLocationModel(PrefService.of(context, listen: false))),
+                      Provider(create: (context) => TrendsModel(context.read<UserTrendLocationModel>())),
+                      Provider(create: (_) => TrendLocationsModel()),
+                    ], child: TrendsScreen(scrollController: ScrollController(), focusNode: FocusNode()))),
+            settle: false);
+      },
+      'the search filters': (tester) => pumpInApp(
+          tester,
+          SearchFiltersScreen(
+              initial: SearchFilters(
+                  language: LanguageChoice.other,
+                  fromAccounts: const ['FlutterDev'],
+                  since: DateTime(2025, 1, 1)))),
     };
 
 void main() {

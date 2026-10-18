@@ -1,0 +1,107 @@
+{
+ "scenario": "Search filter: any of these hashtags",
+ "sourceUrl": "https://x.com/search?q=%28%23Flutter%20OR%20%23Dart%29%20from%3AFlutterDev&src=typed_query&f=live",
+ "unstable": true,
+ "operation": "SearchTimeline",
+ "host": "x.com",
+ "queryId": "irezafrnzav4Ulf1vDkEBg",
+ "features": {
+  "rweb_video_screen_enabled": false,
+  "rweb_cashtags_enabled": true,
+  "profile_label_improvements_pcf_label_in_post_enabled": true,
+  "responsive_web_profile_redirect_enabled": true,
+  "rweb_tipjar_consumption_enabled": false,
+  "verified_phone_label_enabled": false,
+  "creator_subscriptions_tweet_preview_api_enabled": true,
+  "responsive_web_graphql_timeline_navigation_enabled": true,
+  "premium_content_api_read_enabled": false,
+  "communities_web_enable_tweet_community_results_fetch": true,
+  "c9s_tweet_anatomy_moderator_badge_enabled": true,
+  "responsive_web_grok_analyze_button_fetch_trends_enabled": false,
+  "responsive_web_grok_analyze_post_followups_enabled": true,
+  "rweb_cashtags_composer_attachment_enabled": true,
+  "responsive_web_jetfuel_frame": true,
+  "rweb_sports_post_context_enabled": true,
+  "responsive_web_grok_share_attachment_enabled": true,
+  "responsive_web_grok_annotations_enabled": true,
+  "articles_preview_enabled": true,
+  "responsive_web_edit_tweet_api_enabled": true,
+  "rweb_conversational_replies_downvote_enabled": false,
+  "graphql_is_translatable_rweb_tweet_is_translatable_enabled": true,
+  "view_counts_everywhere_api_enabled": true,
+  "longform_notetweets_consumption_enabled": true,
+  "responsive_web_twitter_article_tweet_consumption_enabled": true,
+  "content_disclosure_indicator_enabled": true,
+  "content_disclosure_ai_generated_indicator_enabled": true,
+  "responsive_web_grok_show_grok_translated_post": true,
+  "responsive_web_grok_analysis_button_from_backend": true,
+  "post_ctas_fetch_enabled": false,
+  "freedom_of_speech_not_reach_fetch_enabled": true,
+  "standardized_nudges_misinfo": true,
+  "tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled": true,
+  "longform_notetweets_rich_text_read_enabled": true,
+  "longform_notetweets_inline_media_enabled": false,
+  "responsive_web_nested_quote_preview_enabled": true,
+  "responsive_web_grok_image_annotation_enabled": true,
+  "responsive_web_grok_imagine_annotation_enabled": true,
+  "responsive_web_grok_community_note_auto_translation_is_enabled": true,
+  "responsive_web_enhance_cards_enabled": false
+ },
+ "fieldToggles": null,
+ "variables": {
+  "rawQuery": "(#Flutter OR #Dart) from:FlutterDev",
+  "count": 20,
+  "cursor": "DAADDAABCgABE-IY1SiWUBIKAAIS2O8NphaAAAAIAAIAAAACCAADAAAAAAgABAAAAAAKAAUdTcWXSUAnEAoABh1NxZdJP9jwCwAHAAAA0EVtUEM2d0FBQWZRL2dHSk4wdkdwL0FBQUFCRVMrV3kwVDlSZ0FoTDgrNWYyMW9BS0V3RFlWeFhYTUFFVEF1L2Q1NVpBQUJMOExaekcxaEFFRXhRdkQ5WFc4QUFUNGhqVktKWlFFaEw1VVphb0Z3QUVFeU9OaVFMWElBSVM4QnVzakJkd0FCTDlGeEkvVndBQ0V3VjFsYzZXZ0FJUyt6WmllNWNRQWhMWTd3Mm1Gb0FBRXd5S0hlVFdRQVFTKzgxOWZwY2dBeEw1YUlEZTEyQUIAAA",
+  "querySource": "typed_query",
+  "product": "Latest",
+  "withGrokTranslatedBio": false,
+  "withQuickPromoteEligibilityTweetFields": false
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "50",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "42",
+  "x-rate-limit-reset": "1792270858"
+ },
+ "body": {
+  "data": {
+   "search_by_raw_query": {
+    "search_timeline": {
+     "timeline": {
+      "instructions": [
+       {
+        "entry": {
+         "content": {
+          "__typename": "TimelineTimelineCursor",
+          "cursorType": "Top",
+          "entryType": "TimelineTimelineCursor",
+          "value": "DAADDAABCgABE-IY1SiWUBIKAAIS2O8NphaAAAAIAAIAAAABCAADAAAAAAgABAAAAAEKAAUdTcWXSUAnEAoABh1NxZdJP7HgCwAHAAAA0EVtUEM2d0FBQWZRL2dHSk4wdkdwL0FBQUFCRVMvUHVYOXRhQUNoTDViTFJQMUdBQ0V3THYzZWVXUUFBVEFOaFhGZGN3QVJNVUx3L1YxdkFBRXZ3dG5NYldFQVFUNGhqVktKWlFFaEw1VVphb0Z3QUVFeU9OaVFMWElBSVM4QnVzakJkd0FCTDlGeEkvVndBQ0V3VjFsYzZXZ0FJUyt6WmllNWNRQWhMWTd3Mm1Gb0FBRXd5S0hlVFdRQVFTKzgxOWZwY2dBeEw1YUlEZTEyQUIAAA"
+         },
+         "entryId": "cursor-top-9223372036854775807",
+         "sortIndex": "9223372036854775807"
+        },
+        "entry_id_to_replace": "cursor-top-9223372036854775807",
+        "type": "TimelineReplaceEntry"
+       },
+       {
+        "entry": {
+         "content": {
+          "__typename": "TimelineTimelineCursor",
+          "cursorType": "Bottom",
+          "entryType": "TimelineTimelineCursor",
+          "value": "DAADDAABCgABE-IY1SiWUBIKAAIS2O8NphaAAAAIAAIAAAACCAADAAAAAAgABAAAAAEKAAUdTcWXSUAnEAoABh1NxZdJP7HgCwAHAAAA0EVtUEM2d0FBQWZRL2dHSk4wdkdwL0FBQUFCRVMvUHVYOXRhQUNoTDViTFJQMUdBQ0V3THYzZWVXUUFBVEFOaFhGZGN3QVJNVUx3L1YxdkFBRXZ3dG5NYldFQVFUNGhqVktKWlFFaEw1VVphb0Z3QUVFeU9OaVFMWElBSVM4QnVzakJkd0FCTDlGeEkvVndBQ0V3VjFsYzZXZ0FJUyt6WmllNWNRQWhMWTd3Mm1Gb0FBRXd5S0hlVFdRQVFTKzgxOWZwY2dBeEw1YUlEZTEyQUIAAA"
+         },
+         "entryId": "cursor-bottom-0",
+         "sortIndex": "0"
+        },
+        "entry_id_to_replace": "cursor-bottom-0",
+        "type": "TimelineReplaceEntry"
+       }
+      ]
+     }
+    }
+   }
+  }
+ }
+}

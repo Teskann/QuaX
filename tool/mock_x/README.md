@@ -16,10 +16,11 @@ fixture. The server prints that list and the app shows it in its error card.
 ## Coverage
 
 The fixtures hold the @quax_tests and @quax_tests_2 profiles and posts, the
-searches `from:quax_tests`, `quax` and `quax_tests`, and the subscriptions
-feed. For the feed, subscribe to @FlutterDev, then to @dart_lang: the query
-lists them in subscription order. Long lists end after three pages, as the
-capture records no more.
+searches `from:quax_tests`, `quax` and `quax_tests`, the filtered searches
+of `tool/record/links.json` (Latest tab only), and the subscriptions feed. For
+the feed, subscribe to @FlutterDev, then to @dart_lang: the query lists them in
+subscription order. Long lists end after three pages, as the capture records no
+more.
 
 Trends, translation and live broadcasts always fail. Images and videos come
 from X's public servers, so the device needs internet.
