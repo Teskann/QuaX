@@ -9,6 +9,7 @@ import 'package:quax/profile/profile.dart';
 import 'package:quax/search/search_filter_chips.dart';
 import 'package:quax/search/search_filter_labels.dart';
 import 'package:quax/search/search_filters.dart';
+import 'package:quax/search/search_filters_button.dart';
 import 'package:quax/search/search_filters_screen.dart';
 import 'package:quax/search/search_media_grid.dart';
 import 'package:quax/search/search_model.dart';
@@ -23,9 +24,10 @@ import 'package:provider/provider.dart';
 class SearchArguments {
   final int initialTab;
   final String? query;
+  final SearchFilters filters;
   final bool focusInputOnOpen;
 
-  SearchArguments(this.initialTab, {this.query, this.focusInputOnOpen = false});
+  SearchArguments(this.initialTab, {this.query, this.filters = SearchFilters.none, this.focusInputOnOpen = false});
 }
 
 class ResultsScreen extends StatelessWidget {
@@ -36,16 +38,21 @@ class ResultsScreen extends StatelessWidget {
     final arguments = ModalRoute.of(context)!.settings.arguments as SearchArguments;
 
     return _ResultsScreen(
-        initialTab: arguments.initialTab, query: arguments.query, focusInputOnOpen: arguments.focusInputOnOpen);
+        initialTab: arguments.initialTab,
+        query: arguments.query,
+        filters: arguments.filters,
+        focusInputOnOpen: arguments.focusInputOnOpen);
   }
 }
 
 class _ResultsScreen extends StatefulWidget {
   final int initialTab;
   final String? query;
+  final SearchFilters filters;
   final bool focusInputOnOpen;
 
-  const _ResultsScreen({required this.initialTab, this.query, this.focusInputOnOpen = false});
+  const _ResultsScreen(
+      {required this.initialTab, this.query, this.filters = SearchFilters.none, this.focusInputOnOpen = false});
 
   @override
   State<_ResultsScreen> createState() => _ResultsScreenState();
@@ -62,6 +69,7 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
   late final SearchMediaPagination _mediaResults;
   late final SearchUsersModel _searchUsersModel;
   late final SearchFiltersModel _filters;
+  final SearchChipsVisibilityModel _chipsVisibility = SearchChipsVisibilityModel();
 
   Timer? _debounce;
   String? _lastDispatchedQuery;
@@ -72,7 +80,8 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
 
     _tabController = TabController(length: 4, vsync: this, initialIndex: widget.initialTab);
 
-    final opened = SearchQuery.parse(widget.query ?? '', _appLanguage);
+    final parsed = SearchQuery.parse(widget.query ?? '', _appLanguage);
+    final opened = SearchQuery(parsed.text, widget.filters.merge(parsed.filters));
     final initialQuery = opened.compose(_appLanguage);
     _filters = SearchFiltersModel(opened.filters);
     _topTweets = SearchTweetsPagination(product: 'Top', initialQuery: initialQuery);
@@ -104,6 +113,7 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
     _latestTweets.dispose();
     _mediaResults.dispose();
     _filters.destroy();
+    _chipsVisibility.destroy();
     super.dispose();
   }
 
@@ -158,20 +168,7 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
   Widget _filtersButton() {
     return ScopedBuilder<SearchFiltersModel, SearchFilters>(
       store: _filters,
-      onState: (context, filters) {
-        final count = filters.active.length;
-        return IconButton(
-          tooltip: L10n.of(context).search_filters_button(count),
-          onPressed: _openFilters,
-          icon: Badge(
-            isLabelVisible: count > 0,
-            backgroundColor: Theme.of(context).colorScheme.primary,
-            textColor: Theme.of(context).colorScheme.onPrimary,
-            label: ExcludeSemantics(child: Text('$count')),
-            child: const Icon(Icons.tune),
-          ),
-        );
-      },
+      onState: (_, filters) => SearchFiltersButton(count: filters.active.length, onPressed: _openFilters),
     );
   }
 
@@ -188,10 +185,27 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
   Widget _filterChips() {
     return ScopedBuilder<SearchFiltersModel, SearchFilters>(
       store: _filters,
-      onState: (context, filters) => filters.active.isEmpty
+      onState: (_, filters) => filters.active.isEmpty
           ? const SizedBox.shrink()
-          : SearchFilterChips(filters: filters, onRemoved: _removeFilter, onTap: _openFilters),
+          : ScopedBuilder<SearchChipsVisibilityModel, bool>(
+              store: _chipsVisibility,
+              onState: (_, visible) => ClipRect(
+                child: AnimatedAlign(
+                  alignment: Alignment.bottomCenter,
+                  heightFactor: visible ? 1 : 0,
+                  duration: const Duration(milliseconds: 200),
+                  child: SearchFilterChips(filters: filters, onRemoved: _removeFilter, onTap: _openFilters),
+                ),
+              ),
+            ),
     );
+  }
+
+  bool _followResultsScroll(UserScrollNotification notification) {
+    if (notification.metrics.axis == Axis.vertical) {
+      _chipsVisibility.follow(notification.direction);
+    }
+    return false;
   }
 
   @override
@@ -239,7 +253,9 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
         child: Column(children: [
           _filterChips(),
           Expanded(
-            child: TabBarView(
+            child: NotificationListener<UserScrollNotification>(
+              onNotification: _followResultsScroll,
+              child: TabBarView(
               controller: _tabController,
               children: [
                 PaginatedTweetList(
@@ -261,6 +277,7 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
                 SearchMediaGrid(model: _mediaResults),
                 _UserSearchResultList(store: _searchUsersModel, onRetry: _dispatchQuery),
               ],
+              ),
             ),
           ),
         ]),

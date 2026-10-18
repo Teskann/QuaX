@@ -8,9 +8,9 @@ import 'package:quax/tweet/tweet_actions.dart';
 import '../tweet/pump_tweets.dart';
 import '../ui/pump_app.dart';
 
-/// Tall enough for every row of the list to be built.
-Future<void> pumpSettings(WidgetTester tester, TweetActionsConfig stored) {
-  tester.view.physicalSize = const Size(800, 2000);
+/// Tall enough for every row of the list to be built, unless [size] says otherwise.
+Future<void> pumpSettings(WidgetTester tester, TweetActionsConfig stored, {Size size = const Size(800, 2000)}) {
+  tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   return pumpInApp(
@@ -48,6 +48,22 @@ void main() {
 
     expect(storedConfig(tester).enabled, contains(TweetAction.copyLink), reason: 'The switch should be stored');
     expect(find.byIcon(Icons.link), findsNWidgets(2), reason: 'The preview should now show the button too');
+  });
+
+  testWidgets('Should keep the last row above the navigation bar', (tester) async {
+    const navigationBar = 48.0;
+    tester.view
+      ..padding = const FakeViewPadding(bottom: navigationBar)
+      ..viewPadding = const FakeViewPadding(bottom: navigationBar);
+    await pumpSettings(tester, defaultTweetActions, size: const Size(800, 900));
+    await tester.drag(find.byType(Scrollable).first, const Offset(0, -5000));
+    await tester.pumpAndSettle();
+
+    expect(
+      tester.getBottomLeft(find.byType(ListTile).last).dy,
+      lessThanOrEqualTo(900 - navigationBar),
+      reason: 'The navigation bar should not cover the last action of the list',
+    );
   });
 
   testWidgets('Should reset the bar to its default', (tester) async {

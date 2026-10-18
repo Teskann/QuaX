@@ -92,7 +92,7 @@ Group feeds cache each chunk's tweets in `feed_group_chunk`: the first page (on 
 
 ### Search filters (`lib/search/`)
 
-A search is a `SearchQuery`: the words left in the bar plus `SearchFilters`, written in X's advanced search syntax by `compose()` in the order of X's own advanced search, so the request matches what the website sends for the same filters. `SearchQuery.parse()` reads a raw query back (a saved search, a link, what the user typed) and moves to the filters only the operators the filters page can show; anything else stays in the bar as typed. Typed operators move to the filters when the search is sent. `test/search/search_filters_x_test.dart` checks on recorded searches that X really applies each operator.
+A search is a `SearchQuery`: the words left in the bar plus `SearchFilters`, written in X's advanced search syntax by `compose()` in the order of X's own advanced search, so the request matches what the website sends for the same filters. `SearchQuery.parse()` reads a raw query back (a saved search, a link, what the user typed) and moves to the filters only the operators the filters page can show. A quoted phrase is what the user searches for (a trend of several words comes quoted), so it stays in the bar, like anything else the page cannot show, as typed. The chips of the filters hide while the results scroll down. Typed operators move to the filters when the search is sent. `test/search/search_filters_x_test.dart` checks on recorded searches that X really applies each operator.
 
 ### Database (`lib/database/`)
 

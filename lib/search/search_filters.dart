@@ -8,7 +8,6 @@ enum LanguageChoice { all, mine, other }
 class SearchFilters {
   final LanguageChoice language;
   final String otherLanguage;
-  final String exactPhrase;
   final List<String> anyWords;
   final List<String> noneWords;
   final List<String> hashtags;
@@ -28,7 +27,6 @@ class SearchFilters {
   const SearchFilters({
     this.language = LanguageChoice.all,
     this.otherLanguage = 'en',
-    this.exactPhrase = '',
     this.anyWords = const [],
     this.noneWords = const [],
     this.hashtags = const [],
@@ -51,7 +49,6 @@ class SearchFilters {
   SearchFilters copyWith({
     LanguageChoice? language,
     String? otherLanguage,
-    String? exactPhrase,
     List<String>? anyWords,
     List<String>? noneWords,
     List<String>? hashtags,
@@ -71,7 +68,6 @@ class SearchFilters {
     return SearchFilters(
       language: language ?? this.language,
       otherLanguage: otherLanguage ?? this.otherLanguage,
-      exactPhrase: exactPhrase ?? this.exactPhrase,
       anyWords: anyWords ?? this.anyWords,
       noneWords: noneWords ?? this.noneWords,
       hashtags: hashtags ?? this.hashtags,
@@ -97,7 +93,6 @@ class SearchFilters {
     return SearchFilters(
       language: typed.language != LanguageChoice.all ? typed.language : language,
       otherLanguage: typed.language != LanguageChoice.all ? typed.otherLanguage : otherLanguage,
-      exactPhrase: typed.exactPhrase.isNotEmpty ? typed.exactPhrase : exactPhrase,
       anyWords: typed.anyWords.isNotEmpty ? typed.anyWords : anyWords,
       noneWords: union(noneWords, typed.noneWords),
       hashtags: typed.hashtags.isNotEmpty ? typed.hashtags : hashtags,
@@ -126,7 +121,6 @@ class SearchFilters {
   List<String> toOperators(String appLanguage) {
     final lang = languageCode(appLanguage);
     return [
-      if (exactPhrase.isNotEmpty) '"$exactPhrase"',
       ?_anyOf(anyWords),
       ...noneWords.map((word) => '-$word'),
       ?_anyOf(hashtags.map((tag) => '#$tag').toList()),
@@ -149,7 +143,6 @@ class SearchFilters {
 
   /// One entry per chip shown under the search tabs, in the order of [toOperators].
   List<ActiveFilter> get active => [
-        if (exactPhrase.isNotEmpty) ExactPhraseFilter(exactPhrase),
         if (anyWords.isNotEmpty) AnyWordsFilter(anyWords),
         ...noneWords.map(NoneWordFilter.new),
         ...hashtags.map(HashtagFilter.new),
@@ -169,7 +162,6 @@ class SearchFilters {
       ];
 
   SearchFilters without(ActiveFilter filter) => switch (filter) {
-        ExactPhraseFilter() => copyWith(exactPhrase: ''),
         AnyWordsFilter() => copyWith(anyWords: const []),
         NoneWordFilter(:final word) => copyWith(noneWords: noneWords.where((e) => e != word).toList()),
         HashtagFilter(:final tag) => copyWith(hashtags: hashtags.where((e) => e != tag).toList()),
@@ -206,11 +198,6 @@ String formatSearchDate(DateTime date) =>
 
 sealed class ActiveFilter {
   const ActiveFilter();
-}
-
-class ExactPhraseFilter extends ActiveFilter {
-  final String phrase;
-  const ExactPhraseFilter(this.phrase);
 }
 
 class AnyWordsFilter extends ActiveFilter {

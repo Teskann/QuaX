@@ -49,6 +49,7 @@ class _SettingsTweetActionsFragmentState extends State<SettingsTweetActionsFragm
       ),
       body: ReorderableListView.builder(
         buildDefaultDragHandles: false,
+        padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
         header: const _Preview(),
         itemCount: config.settings.length,
         onReorderItem: (oldIndex, newIndex) => _save(config.withMoved(oldIndex, newIndex)),

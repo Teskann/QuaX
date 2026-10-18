@@ -49,6 +49,11 @@ Future<void> _showResults(WidgetTester tester) async {
   await pumpUntilLoaded(tester);
 }
 
+Future<void> _pumpChipsAnimation(WidgetTester tester) async {
+  await tester.pump();
+  await tester.pump(const Duration(milliseconds: 300));
+}
+
 void main() {
   setUpAll(() {
     HttpOverrides.global = FakeImageHttpOverrides();
@@ -272,6 +277,27 @@ void main() {
     );
   });
 
+  testWidgets('Should keep a trend of several words in the bar, without a filter', (tester) async {
+    final uris = await _openSearch(tester, query: '"Champions League"');
+
+    expect(_barText(tester), '"Champions League"', reason: 'A trend is what the user searches for, not a filter');
+    expect(find.byType(InputChip), findsNothing, reason: 'Opening a trend should not set any filter');
+    expect(_latestQueries(uris).first, '"Champions League"', reason: 'The trend should be searched as X gave it');
+  });
+
+  testWidgets('Should hide the chips while the results scroll down and show them when they scroll up', (tester) async {
+    await _openSearch(tester, query: _imagesQuery);
+    final chip = find.text('Images').hitTestable();
+
+    await tester.drag(find.byType(TabBarView), const Offset(0, -300));
+    await _pumpChipsAnimation(tester);
+    expect(chip, findsNothing, reason: 'The chips should make room for the results scrolled down');
+
+    await tester.drag(find.byType(TabBarView), const Offset(0, 100));
+    await _pumpChipsAnimation(tester);
+    expect(chip, findsOneWidget, reason: 'The chips should come back when the results scroll up');
+  });
+
   testWidgets('Should move every recorded operator typed in the bar to the filters page', (tester) async {
     await _openSearch(tester);
     await tester.enterText(
@@ -282,11 +308,15 @@ void main() {
     await tester.testTextInput.receiveAction(TextInputAction.search);
     await pumpUntilLoaded(tester);
 
-    expect(_barText(tester), isEmpty, reason: 'Every operator typed has a place in the filters page');
+    expect(
+      _barText(tester),
+      '"hot reload"',
+      reason: 'The phrase typed is what the user searches for, it should stay in the bar',
+    );
     await _openFiltersPage(tester);
     final summaries = {
       'Language': 'français',
-      'Words': '“hot reload”, Any of: flutter, dart, Without “kotlin”, #Flutter, #Dart',
+      'Words': 'Any of: flutter, dart, Without “kotlin”, #Flutter, #Dart',
       'Accounts': 'Replying to @FlutterDev',
       'Minimum engagement': 'At least 5 replies, At least 50 likes, At least 10 reposts',
       'Date range': 'Since Jan 1, 2025, Until Jul 1, 2025',

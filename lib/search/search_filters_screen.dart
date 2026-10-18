@@ -39,19 +39,24 @@ class _SearchFiltersScreenState extends State<SearchFiltersScreen> {
         title: Text(l10n.filters),
         actions: [TextButton(onPressed: () => _draft.set(SearchFilters.none), child: Text(l10n.search_filters_clear_all))],
       ),
-      body: ScopedBuilder<SearchFiltersModel, SearchFilters>(
-        store: _draft,
-        onState: (_, filters) => _FilterSections(filters: filters, onChanged: _draft.set),
-      ),
-      bottomNavigationBar: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
-          child: FilledButton(
-            style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(48)),
-            onPressed: () => Navigator.pop(context, _draft.state),
-            child: Text(l10n.search_filters_show_results),
+      // In the body rather than the bottom bar, so the button rises with the keyboard
+      body: SafeArea(
+        child: Column(children: [
+          Expanded(
+            child: ScopedBuilder<SearchFiltersModel, SearchFilters>(
+              store: _draft,
+              onState: (_, filters) => _FilterSections(filters: filters, onChanged: _draft.set),
+            ),
           ),
-        ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+            child: FilledButton(
+              style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(48)),
+              onPressed: () => Navigator.pop(context, _draft.state),
+              child: Text(l10n.search_filters_show_results),
+            ),
+          ),
+        ]),
       ),
     );
   }
@@ -82,7 +87,7 @@ class _FilterSections extends StatelessWidget {
         ),
         _Section(
           title: l10n.search_filters_words,
-          summary: summary((f) => f is ExactPhraseFilter || f is AnyWordsFilter || f is NoneWordFilter || f is HashtagFilter),
+          summary: summary((f) => f is AnyWordsFilter || f is NoneWordFilter || f is HashtagFilter),
           children: _wordFields(l10n),
         ),
         _Section(
@@ -119,10 +124,6 @@ class _FilterSections extends StatelessWidget {
   }
 
   List<Widget> _wordFields(L10n l10n) => [
-        FilterTextField(
-            label: l10n.search_filters_exact_phrase,
-            value: filters.exactPhrase,
-            onChanged: (text) => onChanged(filters.copyWith(exactPhrase: text.replaceAll('"', '').trim()))),
         FilterTextField(
             label: l10n.search_filters_any_words,
             value: filters.anyWords.join(' '),

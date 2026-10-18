@@ -78,6 +78,54 @@ void main() {
   setUpAll(() => WidgetController.hitTestWarningShouldBeFatal = true);
 
   group('page', () {
+    for (final (situation, navigationBar, keyboard) in [
+      ('above the navigation bar', 48.0, 0.0),
+      ('above the keyboard while it is open', 48.0, 300.0),
+      ('above the navigation bar while the keyboard closes', 48.0, 20.0),
+    ]) {
+      testWidgets('Should keep Show results $situation', (tester) async {
+        await _openPage(tester);
+        final ratio = tester.view.devicePixelRatio;
+        tester.view
+          ..viewPadding = FakeViewPadding(bottom: navigationBar * ratio)
+          ..padding = FakeViewPadding(bottom: (navigationBar - keyboard).clamp(0, navigationBar) * ratio)
+          ..viewInsets = FakeViewPadding(bottom: keyboard * ratio);
+        await tester.pumpAndSettle();
+        final screenHeight = tester.view.physicalSize.height / ratio;
+        final hidden = keyboard > navigationBar ? keyboard : navigationBar;
+
+        expect(
+          tester.getBottomLeft(find.widgetWithText(FilledButton, 'Show results')).dy,
+          lessThanOrEqualTo(screenHeight - hidden),
+          reason: 'Neither the keyboard nor the navigation bar should cover the button',
+        );
+      });
+    }
+
+    testWidgets('Should bring a field the keyboard would cover above Show results', (tester) async {
+      await _openPage(tester);
+      await _tap(tester, find.text('Minimum engagement'));
+      final ratio = tester.view.devicePixelRatio;
+      final screenHeight = tester.view.physicalSize.height / ratio;
+      const keyboard = 360.0;
+      final field = _field('Likes');
+      expect(
+        tester.getBottomLeft(field).dy,
+        greaterThan(screenHeight - keyboard),
+        reason: 'The field should start where the keyboard opens, or the test proves nothing',
+      );
+
+      await tester.tap(field);
+      tester.view.viewInsets = const FakeViewPadding(bottom: keyboard * 2.625);
+      await tester.pumpAndSettle();
+
+      expect(
+        tester.getBottomLeft(field).dy,
+        lessThanOrEqualTo(tester.getTopLeft(find.widgetWithText(FilledButton, 'Show results')).dy),
+        reason: 'The field typed in should scroll above the button, which sits on the keyboard',
+      );
+    });
+
     testWidgets('Should give nothing back when closed', (tester) async {
       final page = await _openPage(tester, const SearchFilters(minFaves: 10));
       await _tap(tester, find.text('Clear all'));
@@ -100,8 +148,7 @@ void main() {
         tester,
         SearchFilters(
           language: LanguageChoice.mine,
-          exactPhrase: 'hot reload',
-          anyWords: const ['a', 'b'],
+          anyWords: const ['flutter', 'dart'],
           fromAccounts: const ['FlutterDev'],
           replies: ContentFilter.exclude,
           minFaves: 10,
@@ -111,7 +158,7 @@ void main() {
       await _tap(tester, find.text('Words'));
       await _tap(tester, find.text('Clear all'));
 
-      expect(find.text('hot reload'), findsNothing, reason: 'Clear all should empty the text fields too');
+      expect(find.text('flutter dart'), findsNothing, reason: 'Clear all should empty the text fields too');
       final result = await _showResults(tester, page);
       expect(result.active, isEmpty, reason: 'Clear all should drop every filter');
     });
@@ -120,7 +167,7 @@ void main() {
       await _openPage(tester, const SearchFilters(fromAccounts: ['FlutterDev'], links: ContentFilter.only));
 
       expect(find.text('My language'), findsOneWidget, reason: 'The language section should be open');
-      expect(find.text('Exact phrase'), findsNothing, reason: 'The words section should be folded');
+      expect(find.text('Any of these words'), findsNothing, reason: 'The words section should be folded');
       expect(find.text('From these accounts'), findsNothing, reason: 'The accounts section should be folded');
       expect(_summary('Words', 'No filter'), findsOneWidget, reason: 'A section without filter should say so');
       expect(_summary('Accounts', 'From @FlutterDev'), findsOneWidget, reason: 'A section should sum up its filters');
@@ -131,10 +178,10 @@ void main() {
     testWidgets('Should fold and unfold a section', (tester) async {
       await _openPage(tester);
       await _tap(tester, find.text('Words'));
-      expect(find.text('Exact phrase'), findsOneWidget, reason: 'Tapping a folded section should open it');
+      expect(find.text('Any of these words'), findsOneWidget, reason: 'Tapping a folded section should open it');
 
       await _tap(tester, find.text('Words'));
-      expect(find.text('Exact phrase'), findsNothing, reason: 'Tapping an open section should fold it');
+      expect(find.text('Any of these words'), findsNothing, reason: 'Tapping an open section should fold it');
     });
   });
 
@@ -189,36 +236,33 @@ void main() {
     testWidgets('Should read each field of the words section', (tester) async {
       final page = await _openPage(tester);
       await _tap(tester, find.text('Words'));
-      await _type(tester, 'Exact phrase', '"hot reload"');
       await _type(tester, 'Any of these words', 'flutter  dart');
       await _type(tester, 'None of these words', '-kotlin java');
       await _type(tester, 'Hashtags', '#Flutter Dart');
 
       expect(
-        _summary('Words', '“hot reload”, Any of: flutter, dart, Without “kotlin”, Without “java”, #Flutter, #Dart'),
+        _summary('Words', 'Any of: flutter, dart, Without “kotlin”, Without “java”, #Flutter, #Dart'),
         findsOneWidget,
         reason: 'The summary should list the words typed',
       );
       final result = await _showResults(tester, page);
-      expect(result.exactPhrase, 'hot reload', reason: 'The quotes typed should not end up doubled');
       expect(result.anyWords, ['flutter', 'dart'], reason: 'Words are split on spaces, however many');
       expect(result.noneWords, ['kotlin', 'java'], reason: 'A typed minus should not end up doubled');
       expect(result.hashtags, ['Flutter', 'Dart'], reason: 'A typed hash should not end up doubled');
     });
 
     testWidgets('Should show the words already set', (tester) async {
-      await _openPage(tester, const SearchFilters(exactPhrase: 'hot reload', anyWords: ['a', 'b'], hashtags: ['c']));
+      await _openPage(tester, const SearchFilters(anyWords: ['a', 'b'], hashtags: ['c']));
       await _tap(tester, find.text('Words'));
 
-      expect(find.widgetWithText(TextField, 'hot reload'), findsOneWidget, reason: 'The phrase set should be shown');
       expect(find.widgetWithText(TextField, 'a b'), findsOneWidget, reason: 'The words set should be shown');
       expect(find.widgetWithText(TextField, 'c'), findsOneWidget, reason: 'The hashtags set should be shown');
     });
 
     testWidgets('Should drop a filter whose field is emptied', (tester) async {
-      final page = await _openPage(tester, const SearchFilters(exactPhrase: 'hot reload'));
+      final page = await _openPage(tester, const SearchFilters(anyWords: ['flutter', 'dart']));
       await _tap(tester, find.text('Words'));
-      await _type(tester, 'Exact phrase', '');
+      await _type(tester, 'Any of these words', '');
       final result = await _showResults(tester, page);
 
       expect(result.active, isEmpty, reason: 'An empty field should not filter anything');
