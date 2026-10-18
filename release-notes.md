@@ -1,8 +1,12 @@
-## QuaX v4.18.1
+## QuaX v4.19.0
 
-What's new in QuaX v4.18.1:
-  - Long Grok questions can be expanded and no blank is left above a Grok conversation (fixed #210) <sup>[[view modified code]](https://github.com/teskann/quax/commit/1bcfbe6cc94c81ae335e270461e8d62580eed5d7)</sup>
-  - Fixed requests failing because X changed how it loads the transaction id sign module (Fixed #272) <sup>[[view modified code]](https://github.com/teskann/quax/commit/bd867a10ad006716679f0d6d702e4a602e4e12bb)</sup>
+What's new in QuaX v4.19.0:
+  - The main feed can filter accounts added to a group (fixed #177) (by @quax-bot) <sup>[[view modified code]](https://github.com/teskann/quax/commit/190e71c9e4d86b123c5393e5f62acab903e184bb)</sup>
+  - Skip the client transaction id fix for reports from outdated versions <sup>[[view modified code]](https://github.com/teskann/quax/commit/beadd146ad2097cc341124adf504721e8f4699ac)</sup>
+  - The feed warns about posts from people you don't follow in a card instead of a popup, without false alarms on keywords or renamed accounts (fixed #214) <sup>[[view modified code]](https://github.com/teskann/quax/commit/3476d67d48639234bbffcaaa0841fa1e8ed102ac)</sup>
+  - TalkBack names every icon button, image, video control and settings switch (fixed #125) <sup>[[view modified code]](https://github.com/teskann/quax/commit/ba0ec7fb9defc445516734a15719f4ed4b947400)</sup>
+  - You can now customize the posts action bar in Settings > Posts > Customize action bar (fixed #138) <sup>[[view modified code]](https://github.com/teskann/quax/commit/64788ecbdc6c032b06ce6dc537e2a2c9d3d21876)</sup>
+  - You can now filter a search by language, words, accounts, replies, links, media, likes and dates with the filters button next to the search bar (fixed #288) <sup>[[view modified code]](https://github.com/teskann/quax/commit/bafaa8b14f2f6df1109c49fc5da3ebf05ffb307f)</sup>
 
 
 ---
