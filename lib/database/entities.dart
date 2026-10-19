@@ -127,7 +127,7 @@ class SearchSubscription extends Subscription {
   int get hashCode => id.hashCode;
 
   @override
-  String get searchTerm => '"$id"';
+  String get searchTerm => '($id)';
 
   @override
   Map<String, dynamic> toMap() {

@@ -36,18 +36,18 @@ void main() {
               'in it. An AND would ask for a post written by all three at the same time');
     });
 
-    test('Should quote a search subscription so its words are looked up together', () {
-      expect(buildFeedSearchQuery([search('flutter forever')], includeReplies: true, includeRetweets: true),
-          '("flutter forever") include:nativeretweets',
-          reason: 'Without the quotes X would look for the words apart, so a subscription to a phrase '
-              'would bring back posts that only share one word of it');
+    test('Should search a saved search as it was typed', () {
+      expect(buildFeedSearchQuery([search('list:123 flutter')], includeReplies: true, includeRetweets: true),
+          '((list:123 flutter)) include:nativeretweets',
+          reason: 'Quoted, the saved search was looked up as literal text, so its operators were ignored and '
+              'the group showed old or no posts while the same search opened alone showed the latest');
     });
 
-    test('Should mix user and search subscriptions in the same query', () {
-      expect(buildFeedSearchQuery([user('a'), search('dart')], includeReplies: true, includeRetweets: true),
-          '(from:a OR "dart") include:nativeretweets',
-          reason: 'A group can hold both kinds at once, and both are looked up by the one request that '
-              'loads the chunk');
+    test('Should keep the words of a saved search together when mixed with other subscriptions', () {
+      expect(buildFeedSearchQuery([user('a'), search('flutter dart')], includeReplies: true, includeRetweets: true),
+          '(from:a OR (flutter dart)) include:nativeretweets',
+          reason: 'X binds an implicit AND tighter than OR, so without its brackets the saved search would '
+              'become from:a OR flutter, then AND dart, and the posts of from:a without dart would be lost');
     });
 
     test('Should leave out the brackets when the group has no subscription', () {
