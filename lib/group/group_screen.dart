@@ -1,7 +1,6 @@
 import 'package:crypto/crypto.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_triple/flutter_triple.dart';
-import 'package:quax/constants.dart';
 import 'package:quax/client/client.dart';
 import 'package:quax/database/entities.dart';
 import 'package:quax/database/repository.dart';
@@ -9,12 +8,12 @@ import 'package:quax/group/_feed.dart';
 import 'package:quax/group/_feed_shell.dart';
 import 'package:quax/group/feed_cache.dart';
 import 'package:quax/group/group_model.dart';
+import 'package:quax/group/search_query.dart';
 import 'package:quax/tweet/cached_tweet_list.dart';
 import 'package:quax/tweet/tweet_context_scope.dart';
 import 'package:quax/ui/errors.dart';
 import 'package:provider/provider.dart';
 import 'package:quax/utils/iterables.dart';
-import 'package:quiver/iterables.dart';
 
 class GroupScreenArguments {
   final String id;
@@ -122,7 +121,8 @@ class _SubscriptionGroupScreenContentState extends State<SubscriptionGroupScreen
         // Split the users into chunks, oldest first, to prevent thrashing of all groups when a new user is added
         final users = group.feedSubscriptions.sorted((a, b) => a.createdAt.compareTo(b.createdAt)).toList();
 
-        var chunks = partition(users, subscriptionsPerSearch)
+        var chunks = packFeedChunks(users,
+                includeReplies: group.includeReplies, includeRetweets: group.includeRetweets)
             .map((e) => SubscriptionGroupFeedChunk(e, group.includeReplies, group.includeRetweets))
             .toList();
 
