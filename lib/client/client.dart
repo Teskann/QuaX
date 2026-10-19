@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:dart_twitter_api/src/utils/date_utils.dart';
 import 'package:dart_twitter_api/twitter_api.dart';
 import 'package:ffcache/ffcache.dart';
+import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:quax/catcher/exceptions.dart';
 import 'package:quax/client/account_selector.dart';
 import 'package:quax/client/accounts.dart';
@@ -12,6 +13,7 @@ import 'package:quax/client/client_regular_account.dart';
 import 'package:quax/client/client_unauthenticated.dart';
 import 'package:quax/client/rate_limit_tracker.dart';
 import 'package:quax/constants.dart';
+import 'package:quax/database/entities.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/profile/profile_model.dart';
 import 'package:quax/article/article.dart';
@@ -33,32 +35,30 @@ class _QuackerTwitterClient extends TwitterClient {
     return fetch(uri, headers: headers).timeout(timeout ?? _defaultTimeout).then((response) {
       if (response.statusCode >= 200 && response.statusCode < 300) {
         return response;
+      } else if (response.statusCode == 404) {
+        return Future.error(NotFoundException());
       } else {
         return Future.error(HttpException(response));
       }
     });
   }
 
-  /// Tries accounts (healthy ones first, then flagged ones as a fallback),
-  /// retrying on another account when one returns a 429 (rate-limited for that
-  /// endpoint, tracked in memory) or a 404 (retried once, then surfaced). Rate
-  /// limits are per-endpoint, so a 429 on one endpoint never blocks another.
+  /// Tries accounts with a credit left on the endpoint, retrying on another
+  /// account when one returns a 429 (rate-limited for that endpoint, tracked in
+  /// memory). Rate limits are per-endpoint, so a 429 on one endpoint never
+  /// blocks another. Any other error is surfaced as-is.
   ///
-  /// A real request is always attempted before any error: with accounts, each is
-  /// tried; with none, an unauthenticated (guest) request is sent. Errors surface
-  /// only from actual responses: [RateLimitedException] when every account was
-  /// rate-limited on the endpoint, [NoWorkingAccountException] when they all
-  /// returned 404, and [NoAccountAvailableException] only when there is no account
-  /// and the guest request also failed.
+  /// [RateLimitedException] is thrown when every account is out of credits or
+  /// got a 429, without sending a request once the known credits are spent.
+  /// With no account, an unauthenticated (guest) request is sent, and
+  /// [NoAccountAvailableException] is thrown only if it also fails.
   static Future<http.Response> fetch(Uri uri, {Map<String, String>? headers}) async {
     final endpoint = uri.path;
     final now = DateTime.now();
     final accounts = await getAccounts();
-    final selector = AccountSelector(accounts, now,
-        isRateLimited: (a) => RateLimitTracker.isLimited(a.id, endpoint, now));
+    final selector = AccountSelector(accounts,
+        hasCredit: (a) => RateLimitTracker.hasCredit(AccountEndpoint(accountId: a.id, endpoint: endpoint), now));
     final tried = <String>{};
-    var notFoundAttempts = 0;
-    http.Response? lastError;
 
     while (true) {
       final account = selector.pick(exclude: tried);
@@ -66,34 +66,18 @@ class _QuackerTwitterClient extends TwitterClient {
         break;
       }
       tried.add(account.id);
+      final accountEndpoint = AccountEndpoint(accountId: account.id, endpoint: endpoint);
+      RateLimitTracker.consume(accountEndpoint, now);
 
       final response = await XRegularAccount()
           .fetch(uri, headers: headers, log: log, authHeader: json.decode(account.authHeader));
-      final code = response.statusCode;
-
-      if (code >= 200 && code < 300) {
-        RateLimitTracker.clear(account.id, endpoint);
-        if (!account.isClean) {
-          await recordAccountSuccess(account.id);
-        }
+      _recordQuota(accountEndpoint, response);
+      if (response.statusCode != 429) {
         return response;
       }
-      lastError = response;
-      if (code == 429) {
-        RateLimitTracker.flag(account.id, endpoint, _resetFromHeaders(response));
-        continue;
-      }
-      if (code == 404) {
-        await recordNotFound(account.id);
-        if (++notFoundAttempts >= 2) {
-          break; // tried enough accounts; surface the 404 outcome below
-        }
-        continue;
-      }
-      return response; // other errors surfaced immediately
     }
 
-    if (tried.isEmpty) {
+    if (accounts.isEmpty) {
       // No account at all: still attempt an unauthenticated (guest) request so we
       // never error before sending one. Only invite to add an account if it fails.
       final guest = await fetchUnauthenticated(uri, headers: headers, log: log);
@@ -102,21 +86,27 @@ class _QuackerTwitterClient extends TwitterClient {
       }
       throw NoAccountAvailableException();
     }
-    if (lastError?.statusCode == 429) {
-      throw RateLimitedException(); // every account was rate-limited on this endpoint
-    }
-    if (lastError?.statusCode == 404) {
-      throw NoWorkingAccountException(); // accounts tried all returned 404 (likely broken auth)
-    }
-    return lastError!; // surface the real error
+    // every account was out of credits or rate-limited on this endpoint
+    throw RateLimitedException(_earliestReset(accounts, endpoint));
   }
 
-  static DateTime _resetFromHeaders(http.Response response) {
-    final reset = response.headers['x-rate-limit-reset']; // epoch seconds
-    if (reset != null) {
-      return DateTime.fromMillisecondsSinceEpoch(int.parse(reset) * 1000);
+  static void _recordQuota(AccountEndpoint accountEndpoint, http.Response response) {
+    final limit = RateLimit.fromHeaders(response.headers);
+    if (response.statusCode == 429) {
+      final resetAt = limit?.resetAt ?? DateTime.now().add(rateLimitFallback);
+      RateLimitTracker.record(accountEndpoint, RateLimit(0, resetAt));
+    } else if (limit != null) {
+      RateLimitTracker.record(accountEndpoint, limit);
     }
-    return DateTime.now().add(rateLimitFallback);
+  }
+
+  static DateTime? _earliestReset(List<Account> accounts, String endpoint) {
+    final now = DateTime.now();
+    return accounts
+        .map((a) => RateLimitTracker.of(AccountEndpoint(accountId: a.id, endpoint: endpoint), now)?.resetAt)
+        .nonNulls
+        .sorted((a, b) => a.compareTo(b))
+        .firstOrNull;
   }
 }
 
@@ -146,7 +136,10 @@ class UnknownProfileUnavailableReason with SyntheticException implements Excepti
 }
 
 class Twitter {
-  static final TwitterApi _twitterApi = TwitterApi(client: _QuackerTwitterClient());
+  static TwitterApi _twitterApi = TwitterApi(client: _QuackerTwitterClient());
+
+  @visibleForTesting
+  static set client(AbstractTwitterClient client) => _twitterApi = TwitterApi(client: client);
 
   static final FFCache _cache = FFCache();
 
@@ -415,24 +408,15 @@ class Twitter {
     for (var entry in addEntries) {
       var entryId = entry['entryId'] as String;
       if (entryId.startsWith('tweet-')) {
-        dynamic result;
-        final tweetResults = entry['content']['itemContent']['tweet_results'];
+        final result = entry['content']?['itemContent']?['tweet_results']?['result'];
+        final id = result?['rest_id'] ?? result?['tweet']?['rest_id'];
 
-        // This may happen for tweets that x.com cannot open neither
-        if (!tweetResults.containsKey("result")) continue;
-
-        if (tweetResults['result']["__typename"] == "TweetWithVisibilityResults") {
-          result = tweetResults['result']['tweet'];
+        if (id != null) {
+          replies.add(TweetChain(id: id, tweets: [TweetWithCard.fromGraphqlJson(result)], isPinned: false));
         } else {
-          result = tweetResults['result'];
-        }
-
-        if (result != null && result.containsKey('rest_id')) {
-          replies.add(
-            TweetChain(id: result['rest_id'], tweets: [TweetWithCard.fromGraphqlJson(result)], isPinned: false),
-          );
-        } else {
-          replies.add(TweetChain(id: entryId.substring(6), tweets: [TweetWithCard.tombstone({})], isPinned: false));
+          // Deleted posts come as an empty result, so no reason is given
+          replies.add(TweetChain(
+              id: entryId.substring(6), tweets: [TweetWithCard.tombstone(result?['tombstone'] ?? {})], isPinned: false));
         }
       }
 
@@ -488,29 +472,23 @@ class Twitter {
         // TODO: Use as the "next page" cursor
       }
 
-      if (entryId.startsWith('profile-conversation')) {
+      final conversation = RegExp(r'^profile-(originals-)?conversation-').firstMatch(entryId);
+      if (conversation != null) {
         List<TweetWithCard> tweets = [];
 
         // TODO: This is missing tombstone support
         for (var item in entry['content']['items']) {
           var itemType = item['item']?['itemContent']?['itemType'];
           if (itemType == 'TimelineTweet') {
-            if (item['item']['itemContent']['tweet_results']?['result'] != null) {
-              if (item['item']['itemContent']['tweet_results']['result']['tweet'] == null) {
-                var tweet = TweetWithCard.fromGraphqlJson(item['item']['itemContent']['tweet_results']['result']);
-                tweets.add(tweet);
-              } else {
-                var tweet = TweetWithCard.fromGraphqlJson(
-                  item['item']['itemContent']['tweet_results']['result']['tweet'],
-                );
-                tweets.add(tweet);
-              }
+            final result = item['item']['itemContent']['tweet_results']?['result'];
+            if (result != null) {
+              tweets.add(TweetWithCard.fromGraphqlJson(result));
             }
           }
         }
 
         // TODO: There must be a better way of getting the conversation ID
-        replies.add(TweetChain(id: entryId.replaceFirst('profile-conversation-', ''), tweets: tweets, isPinned: false));
+        replies.add(TweetChain(id: entryId.substring(conversation.end), tweets: tweets, isPinned: false));
       }
     }
     return replies;
@@ -1129,6 +1107,7 @@ class TweetWithCard extends Tweet {
   TweetWithCard? birdwatchQuotedStatus; // Community notes
   Article? article;
   int? viewCount;
+  bool isSubscriberPreview = false;
 
   TweetWithCard();
 
@@ -1144,6 +1123,7 @@ class TweetWithCard extends Tweet {
     json['viewCount'] = viewCount;
     json['noteText'] = noteText;
     json['noteEntities'] = noteEntities?.toJson();
+    json['isSubscriberPreview'] = isSubscriberPreview;
 
     return json;
   }
@@ -1152,9 +1132,10 @@ class TweetWithCard extends Tweet {
     var tweetWithCard = TweetWithCard();
     tweetWithCard.idStr = '';
     tweetWithCard.isTombstone = true;
-    tweetWithCard.text =
-        ((e['richText']?['text'] ?? e['text']?['text'] ?? L10n.current.this_tweet_is_unavailable) as String)
-            .replaceFirst(' Learn more', '');
+    final text = e['text'];
+    tweetWithCard.text = (e['richText']?['text'] ?? (text is Map ? text['text'] : null) as String?)
+            ?.replaceFirst(' Learn more', '') ??
+        (e['reason'] == 'ExclusiveTweet' ? L10n.current.subscribers_only_post_of_author : null);
 
     return tweetWithCard;
   }
@@ -1204,6 +1185,7 @@ class TweetWithCard extends Tweet {
     tweetWithCard.article = e['article'] == null ? null : Article.fromJson(e['article']);
     tweetWithCard.noteText = e['noteText'];
     tweetWithCard.noteEntities = e['noteEntities'] == null ? null : Entities.fromJson(e['noteEntities']);
+    tweetWithCard.isSubscriberPreview = e['isSubscriberPreview'] as bool? ?? false;
 
     return tweetWithCard;
   }
@@ -1213,7 +1195,10 @@ class TweetWithCard extends Tweet {
     dynamic quotedStatus;
     dynamic user;
 
-    if (result['tweet'] != null) {
+    final isSubscriberPreview = result['__typename'] == 'TweetPreviewDisplay';
+    if (isSubscriberPreview && result['tweet'] is Map<String, dynamic>) {
+      result = _withPreviewAsLegacy(result['tweet']);
+    } else if (result['tweet'] != null) {
       result = result['tweet']!;
     } else if (result['legacy']?['retweeted_status_result']?['result'] != null) {
       retweetedStatus = TweetWithCard.fromGraphqlJson(result['legacy']['retweeted_status_result']['result']!);
@@ -1260,6 +1245,8 @@ class TweetWithCard extends Tweet {
         quotedStatus,
         int.tryParse(result['views']?['count'] ?? ''));
 
+    tweet.isSubscriberPreview = isSubscriberPreview;
+
     if (tweet.card == null && result['card']?['legacy'] != null) {
       tweet.card = result['card']['legacy'];
       var bindingValuesList = tweet.card!['binding_values'] as List?;
@@ -1287,6 +1274,29 @@ class TweetWithCard extends Tweet {
     }
 
     return tweet;
+  }
+
+  static Map<String, dynamic> _withPreviewAsLegacy(Map<String, dynamic> preview) {
+    final text = preview['text'] as String? ?? '';
+    final id = preview['rest_id'] as String?;
+    return {
+      ...preview,
+      'views': preview['view_count'],
+      'legacy': {
+        'id_str': id,
+        'conversation_id_str': id,
+        'user_id_str': preview['core']?['user_results']?['result']?['rest_id'],
+        'full_text': text,
+        'display_text_range': [0, text.runes.length],
+        'entities': preview['entities'],
+        'created_at': preview['created_at'],
+        'favorite_count': preview['favorite_count'],
+        'quote_count': preview['quote_count'],
+        'reply_count': preview['reply_count'],
+        'retweet_count': preview['retweet_count'],
+        'in_reply_to_status_id_str': preview['reply_to_results']?['rest_id'],
+      },
+    };
   }
 
   static Map<String, dynamic> rearrangeBirdwatch(Map<String, dynamic> birdwatch) {

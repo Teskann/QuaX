@@ -12,7 +12,7 @@ Uri _issueUri(String title, String header, String error, List<String> stackLines
         .replace(queryParameters: {'title': title, 'body': '$header```\n$error\n${stackLines.join('\n')}\n```'});
 
 Uri bugReportUri(String context, Object? error, StackTrace? stackTrace, {required String version, String? screenName}) {
-  final facts = ['Version: $version', if (screenName != null) 'Profile: @$screenName'];
+  final facts = ['Version: $version', if (screenName != null) 'Profile: ${Uri.https('x.com', screenName)}'];
   final header = '### $context\n\n${facts.join('\n')}\n\n';
   final errorText = _truncate('$error', _maxErrorLength);
   final title = _truncate(errorText.split('\n').first, _maxTitleLength);

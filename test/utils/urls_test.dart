@@ -158,4 +158,27 @@ void main() {
           reason: 'Text that is not a number should give null rather than throw');
     });
   });
+
+  group('parsePostLink()', () {
+    test('Should read the handle and id of a quoted post permalink', () {
+      final post = parsePostLink(Uri.parse('https://twitter.com/quax_tests/status/2095934459606376826'));
+
+      expect(post?.screenName, 'quax_tests',
+          reason: 'The handle is needed to open the post and to search it in the Wayback Machine');
+      expect(post?.id, '2095934459606376826', reason: 'The id should be the path part after /status/');
+    });
+
+    test('Should give null for a link that is not a post', () {
+      expect(parsePostLink(Uri.parse('https://x.com/quax_tests')), isNull,
+          reason: 'A profile link holds no post, so nothing should be read from it');
+    });
+  });
+
+  group('waybackSearchUri()', () {
+    test('Should list the captures of the post under its twitter.com address', () {
+      expect(waybackSearchUri('quax_tests', '2095934459606376826').toString(),
+          'https://web.archive.org/web/*/twitter.com/quax_tests/status/2095934459606376826*',
+          reason: 'Most captures predate x.com, and the trailing star also matches the variants with a query');
+    });
+  });
 }

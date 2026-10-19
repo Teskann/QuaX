@@ -26,6 +26,10 @@ class TweetFeedController {
   /// it is displayed above the tweets and does not block the next pages
   final ValueNotifier<PagingError?> refreshError = ValueNotifier(null);
 
+  /// Error of the part of the last page that could not be loaded while the rest could, shown above the tweets. Set by
+  /// loaders made of several requests, like the group feeds
+  final ValueNotifier<PagingError?> partialError = ValueNotifier(null);
+
   TweetFeedController() {
     _paging = CursorPagingController<String, TweetChain>(_fetch);
   }
@@ -69,6 +73,7 @@ class TweetFeedController {
   void dispose() {
     _paging.dispose();
     refreshError.dispose();
+    partialError.dispose();
   }
 }
 
@@ -125,6 +130,7 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
     // arrive, so listen for that.
     _controller.addListener(_onControllerChanged);
     widget.feed.refreshError.addListener(_onControllerChanged);
+    widget.feed.partialError.addListener(_onControllerChanged);
   }
 
   @override
@@ -153,8 +159,10 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
     if (!identical(oldWidget.feed, widget.feed)) {
       oldWidget.feed.controller.removeListener(_onControllerChanged);
       oldWidget.feed.refreshError.removeListener(_onControllerChanged);
+      oldWidget.feed.partialError.removeListener(_onControllerChanged);
       _controller.addListener(_onControllerChanged);
       widget.feed.refreshError.addListener(_onControllerChanged);
+      widget.feed.partialError.addListener(_onControllerChanged);
       // A fresh feed may need its first page kicked off again from the preview.
       _firstLoadStarted = false;
     }
@@ -164,6 +172,7 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
   void dispose() {
     _controller.removeListener(_onControllerChanged);
     widget.feed.refreshError.removeListener(_onControllerChanged);
+    widget.feed.partialError.removeListener(_onControllerChanged);
     _refreshController?.unregister(_showRefresh);
     super.dispose();
   }
@@ -269,7 +278,8 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
     final list = PagingListener<int, TweetChain>(
       controller: _controller,
       builder: (context, state, fetchNextPage) => CustomScrollView(slivers: [
-        SliverToBoxAdapter(child: _errorAbove(widget.feed.refreshError.value, _showRefresh)),
+        SliverToBoxAdapter(
+            child: _errorAbove(widget.feed.refreshError.value ?? widget.feed.partialError.value, _showRefresh)),
         SliverPadding(
           padding: EdgeInsets.only(top: 4, bottom: MediaQuery.of(context).padding.bottom),
           sliver: _pagedList(state, fetchNextPage),

@@ -73,20 +73,22 @@ final text = result["data"]["text"] as String;
 
 `client.dart` wraps `dart_twitter_api` and adds caching via `FFCache`. `client_unauthenticated.dart` uses a hardcoded bearer token from `constants.dart`; `client_regular_account.dart` uses stored OAuth credentials.
 
-**Account selection strategy.** `_QuackerTwitterClient.fetch()` in `client.dart` does not pick a random account — it asks `AccountSelector` (`account_selector.dart`, a pure/testable policy) for a *healthy* account, then retries on another account on error. Two distinct health signals:
-- **Rate limit (`429`)** is **per-endpoint** (X rate-limits per endpoint, not per account). It is tracked **in memory** by `RateLimitTracker` (`rate_limit_tracker.dart`), keyed by `(accountId, uri.path)`, with the reset time from X's `x-rate-limit-reset` header (else `rateLimitFallback`). Not persisted — windows are short. The selector receives this via an injected `isRateLimited` predicate.
-- **Not-found (`404`)** is **per-account** and **persisted** (auth likely broken): flagged after `notFoundThreshold` consecutive 404s, for `notFoundCooldown`. Helpers `recordNotFound` / `recordAccountSuccess` live in `accounts.dart`; cooldown constants in `constants.dart`.
+**Account selection strategy.** `_QuackerTwitterClient.fetch()` in `client.dart` asks `AccountSelector` (`account_selector.dart`, a pure/testable policy) for an account with credits left, then retries on another account on a 429. Only rate limits count: any other error is surfaced without trying another account.
 
-`AccountSelector.pick()` prefers healthy accounts but **falls back to flagged ones**, so a real request is always attempted while any account exists — the flags only influence ordering, they never short-circuit. Errors therefore surface only from actual responses, all through the single `ErrorCard` in `ui/errors.dart` (wrapped by `FullPageErrorWidget` when it takes the page), which gives each of these its own title and an add-account + retry action:
-- every tried account was rate-limited on the endpoint → `RateLimitedException`;
-- every tried account returned 404 (likely broken auth) → `NoWorkingAccountException`;
+**Rate limit (`429`)** is **per-endpoint** (X rate-limits per endpoint, not per account). It is tracked **in memory** by `RateLimitTracker` (`rate_limit_tracker.dart`), keyed by `AccountEndpoint` (account id + `uri.path`), from the `x-rate-limit-remaining` / `x-rate-limit-reset` headers of **every** response (a `429` without headers falls back to `rateLimitFallback`). `fetch()` counts down one credit locally (`consume`) right when it picks an account, so a parallel batch (e.g. the per-chunk searches of a group feed) never sends more requests than the known quota left; an answer from X never raises the local count within the same window. An unknown quota counts as available. Not persisted — windows are short. The selector receives this via an injected `hasCredit` predicate. `RateLimitedException` carries the earliest reset time, shown in the error card.
+
+`AccountSelector.pick()` draws at random among the untried accounts with a credit left. Rate limits **short-circuit**: an account with no credit left on the endpoint is never picked, and when no untried account has a credit, `RateLimitedException` is thrown without sending anything. Errors surface through the single `ErrorCard` in `ui/errors.dart` (wrapped by `FullPageErrorWidget` when it takes the page), which gives each of these its own title and actions:
+- every account is out of credits, or got a 429, on the endpoint → `RateLimitedException`;
+- X answered 404, which happens now and then in normal use → `NotFoundException` (thrown in `get()`), whose card only offers retry, as its primary action;
 - there is no account at all → an unauthenticated (guest) request is attempted first; `NoAccountAvailableException` is thrown only if that guest request also fails.
 
-Any other error response is surfaced as-is via `HttpException`, and the card then offers to report it as a prefilled GitHub issue. Retry simply re-runs `fetch()`, which always attempts a real request before surfacing any error.
+Any other error response is surfaced as-is via `HttpException`, and the card then offers to report it as a prefilled GitHub issue. Retry simply re-runs `fetch()`.
+
+Group feeds cache each chunk's tweets in `feed_group_chunk`: the first page (on open or refresh) shows the cache, reloads every chunk from scratch and replaces a chunk's cache only once X answered, so offline or rate-limited chunks keep theirs; later pages follow the stored `cursor_bottom`. They send one search per chunk in parallel, and a failing chunk must not block the others: `_listTweets()` (`group/_feed.dart`) keeps what X answered and the stored tweets of the failed chunks, and the error goes to `TweetFeedController.partialError`, shown above the tweets. When part of the feed loaded, a rate limit there becomes a `FeedRateLimitedException`, whose card says the whole feed could not be loaded, when to retry, and how many subscriptions loaded out of the total. When nothing loaded, the plain `RateLimitedException` is shown. The page only fails when every chunk did.
 
 ### Database (`lib/database/`)
 
-`repository.dart` is the single access point for SQLite (via `sqflite`). Schema changes must go through `sqflite_migration_plan` migrations — never alter the schema outside of a migration. Key entities: `Subscription`, `SubscriptionGroup`, `SavedTweet`, `Account` (carries account-health columns for the selection strategy: rate-limit / not-found timestamps stored as ISO-8601 TEXT, mapped to `DateTime?`).
+`repository.dart` is the single access point for SQLite (via `sqflite`). Schema changes must go through `sqflite_migration_plan` migrations — never alter the schema outside of a migration. Key entities: `Subscription`, `SubscriptionGroup`, `SavedTweet`, `Account`.
 
 ### Navigation
 

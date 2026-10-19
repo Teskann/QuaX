@@ -3,7 +3,8 @@ import 'package:flutter/foundation.dart';
 /// Caps how many profile-grid GIFs decode at once.
 ///
 /// Each visible GIF tile reports its visible fraction; the [maxConcurrent]
-/// most-visible tiles are granted a live video player and the rest fall back to
+/// most-visible tiles (the device's video player budget) are granted a live
+/// video player and the rest fall back to
 /// a static thumbnail. Without this a whole grid of GIFs spins up a player each
 /// at once — exhausting the device's hardware decoders and its memory (each
 /// live player instance holds a ~35 MB decoder buffer pool) and lagging hard

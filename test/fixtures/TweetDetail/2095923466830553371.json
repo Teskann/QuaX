@@ -3,7 +3,7 @@
  "sourceUrl": "https://x.com/quax_tests_2/status/2095923466830553371",
  "operation": "TweetDetail",
  "host": "x.com",
- "queryId": "XMOz5h24KAZ86qKffKTLdQ",
+ "queryId": "blErEeZkos5TDrWmrCp7cw",
  "features": {
   "rweb_video_screen_enabled": false,
   "rweb_cashtags_enabled": true,
@@ -20,6 +20,7 @@
   "responsive_web_grok_analyze_post_followups_enabled": true,
   "rweb_cashtags_composer_attachment_enabled": true,
   "responsive_web_jetfuel_frame": true,
+  "rweb_sports_post_context_enabled": true,
   "responsive_web_grok_share_attachment_enabled": true,
   "responsive_web_grok_annotations_enabled": true,
   "articles_preview_enabled": true,
@@ -39,12 +40,14 @@
   "tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled": true,
   "longform_notetweets_rich_text_read_enabled": true,
   "longform_notetweets_inline_media_enabled": false,
+  "responsive_web_nested_quote_preview_enabled": true,
   "responsive_web_grok_image_annotation_enabled": true,
   "responsive_web_grok_imagine_annotation_enabled": true,
   "responsive_web_grok_community_note_auto_translation_is_enabled": true,
   "responsive_web_enhance_cards_enabled": false
  },
  "fieldToggles": {
+  "withPayments": false,
   "withArticleRichContentState": true,
   "withArticlePlainText": false,
   "withArticleSummaryText": true,
@@ -64,10 +67,10 @@
  },
  "status": 200,
  "headers": {
-  "x-rate-limit-limit": "150",
+  "x-rate-limit-limit": "300",
   "content-type": "application/json",
-  "x-rate-limit-remaining": "141",
-  "x-rate-limit-reset": "1788551366"
+  "x-rate-limit-remaining": "290",
+  "x-rate-limit-reset": "1790865406"
  },
  "body": {
   "data": {
@@ -113,11 +116,8 @@
                 "name": "Moluyts",
                 "screen_name": "quax_tests_2"
                },
-               "dm_permissions": {
-                "can_dm": false
-               },
                "follow_request_sent": false,
-               "has_graduated_access": false,
+               "has_graduated_access": true,
                "id": "VXNlcjoyMDk1OTE0MTIzOTA1MTE4MjEx",
                "is_blue_verified": false,
                "location": {
@@ -245,11 +245,8 @@
                   "name": "QuaX Tests",
                   "screen_name": "quax_tests"
                  },
-                 "dm_permissions": {
-                  "can_dm": false
-                 },
                  "follow_request_sent": false,
-                 "has_graduated_access": false,
+                 "has_graduated_access": true,
                  "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                  "is_blue_verified": false,
                  "location": {
@@ -1026,7 +1023,7 @@
               "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
               "unmention_data": {},
               "views": {
-               "count": "18",
+               "count": "37",
                "state": "EnabledWithCount"
               }
              }
@@ -1035,7 +1032,7 @@
             "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
             "unmention_data": {},
             "views": {
-             "count": "9",
+             "count": "19",
              "state": "EnabledWithCount"
             }
            }
@@ -1043,17 +1040,17 @@
          }
         },
         "entryId": "tweet-2095923466830553371",
-        "sortIndex": "2095958776178802688"
+        "sortIndex": "2105664577936031744"
        },
        {
         "content": {
          "__typename": "TimelineTimelineCursor",
          "cursorType": "Bottom",
          "entryType": "TimelineTimelineCursor",
-         "value": "DAAKCgABHRZXZu3___0LAAIAAAAoRW1QQzZ3QUFBZlEvZ0dKTjB2R3AvQUFBQUFFZEZqZEoxTmNoR3c9PQgAAwAAAAILAAQAAAAGQm90dG9tAAA"
+         "value": "DAAKCgABHTjSxv____0LAAIAAAAoRW1QQzZ3QUFBZlEvZ0dKTjB2R3AvQUFBQUFFZEZqZEoxTmNoR3c9PQgAAwAAAAILAAQAAAAGQm90dG9tAAA"
         },
-        "entryId": "cursor-bottom-2095958776178802687",
-        "sortIndex": "2095958776178802687"
+        "entryId": "cursor-bottom-2105664577936031743",
+        "sortIndex": "2105664577936031743"
        }
       ],
       "type": "TimelineAddEntries"

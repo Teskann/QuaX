@@ -1,0 +1,33 @@
+{
+ "scenario": "Full profile: avatar, banner, bio with two links and a mention that has no entity",
+ "sourceUrl": "https://x.com/quax_tests",
+ "operation": "UserSportsProfile",
+ "host": "x.com",
+ "queryId": "MmrVdUwRp_jzwgMqaYdnUA",
+ "features": null,
+ "fieldToggles": null,
+ "variables": {
+  "rest_id": "2095909295913103360",
+  "start_time": "1790173277675",
+  "end_time": "1792074077675"
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "50",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "49",
+  "x-rate-limit-reset": "1790865377"
+ },
+ "body": {
+  "data": {
+   "user_results": {
+    "id": "VXNlclJlc3VsdHM6MjA5NTkwOTI5NTkxMzEwMzM2MA==",
+    "rest_id": "2095909295913103360",
+    "result": {
+     "__typename": "User",
+     "rest_id": "2095909295913103360"
+    }
+   }
+  }
+ }
+}

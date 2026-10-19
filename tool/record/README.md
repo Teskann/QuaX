@@ -39,6 +39,7 @@ profile views have their own URLs: `/`, `/all`, `/with_replies`, `/reposts`,
 Every GraphQL response, no filter: `queryId`, `features`, `variables`, status,
 allow-listed headers, body. Fixtures the run did not reproduce are deleted, so
 the directory always matches `links.json` — skipped when a page failed to load.
+`XClientTransactionId/` is left alone: `transaction_id.dart` writes it.
 
 ## Notes
 

@@ -28,17 +28,32 @@ class NoAccountAvailableException with SyntheticException implements Exception {
 /// endpoint. Surfaced to the user with a dedicated, actionable error widget
 /// rather than reported to the crash catcher.
 class RateLimitedException with SyntheticException implements Exception {
+  final DateTime? availableAt;
+
+  RateLimitedException([this.availableAt]);
+
   @override
-  String toString() => 'Rate limited';
+  String toString() => 'Rate limited until $availableAt';
 }
 
-/// Thrown when every account that was actually tried returned a 404, which on X
-/// usually means the accounts are no longer correctly authenticated. Surfaced
-/// with a dedicated, actionable error widget rather than reported to the crash
-/// catcher.
-class NoWorkingAccountException with SyntheticException implements Exception {
+/// A feed that could only partly load because some of its searches were rate
+/// limited: [loaded] of its [total] subscriptions could be loaded.
+class FeedRateLimitedException extends RateLimitedException {
+  final int loaded;
+  final int total;
+
+  FeedRateLimitedException(super.availableAt, {required this.loaded, required this.total});
+
   @override
-  String toString() => 'No working account';
+  String toString() => 'Feed rate limited until $availableAt, $loaded/$total subscriptions loaded';
+}
+
+/// Thrown when X answers 404, which happens now and then in normal use. Surfaced
+/// with a dedicated error widget offering to retry, rather than reported to the
+/// crash catcher.
+class NotFoundException with SyntheticException implements Exception {
+  @override
+  String toString() => 'Not found';
 }
 
 class ManuallyReportedException {

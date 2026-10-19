@@ -1,9 +1,15 @@
-## QuaX v4.14.0
+## QuaX v4.15.0
 
-What's new in QuaX v4.14.0:
-  - Upgraded Flutter to 3.47.5 and refreshed the dependencies (by @github-actions[bot]) <sup>[[view modified code]](https://github.com/teskann/quax/commit/8db43304983ae3e59b34c273102dc34691cc20ce)</sup>
-  - Improved errors display in the app. Now you can report bugs in one click <sup>[[view modified code]](https://github.com/teskann/quax/commit/525fb68435b89ea6e8c54c7b06ec2d0243c45e9a)</sup>
-  - **Fixed on demand file index issues, caused by a change in X servers (fixed #155)** <sup>[[view modified code]](https://github.com/teskann/quax/commit/d913af18c03da30bbd5181f3c847c497cc4d3e40)</sup>
+What's new in QuaX v4.15.0:
+  - Fixed minor issues in the error reporting widget <sup>[[view modified code]](https://github.com/teskann/quax/commit/19412aaff4fbecf9bc72f7ee9efb1e74a5dd7937)</sup>
+  - Someone deleted their tweet ? You can now open deleted tweets in one click on web.archive.org <sup>[[view modified code]](https://github.com/teskann/quax/commit/119b76f1beffdcdaa6947c777081b21596e1f452)</sup>
+  - Fixed parsing issues when opening tweets reserved for subscribers (fixed #188), improved test coverage <sup>[[view modified code]](https://github.com/teskann/quax/commit/a49059357d734399fac253f1bc1be181a763fac6)</sup>
+  - Bug reports now include links to profiles, not simply the username <sup>[[view modified code]](https://github.com/teskann/quax/commit/ab15bb64e7bf1b3865c772728f0bc2d544630f09)</sup>
+  - Better management of rate limitations <sup>[[view modified code]](https://github.com/teskann/quax/commit/6dca79698b5a9e7d4c779c06920cf2cbf38dd83c)</sup>
+  - Fixed some UI issues (including #183) and redesigned poll results <sup>[[view modified code]](https://github.com/teskann/quax/commit/0cee4489bccfcc781ad2e7c52121331df8a77841)</sup>
+  - Fixed #106, login issues when animations are disabled <sup>[[view modified code]](https://github.com/teskann/quax/commit/a99badcbf582627ec12b9737aa1fe7e6952c32b6)</sup>
+  - GIFs are now downloaded as a MP4 video instead of a JPEG (on X, GIFs are videos) (fixed #182) <sup>[[view modified code]](https://github.com/teskann/quax/commit/3cb280753d294675b239ac359b158f5167b7cbe3)</sup>
+  - Fixed crashes when too many videos are opened with a better memory management system <sup>[[view modified code]](https://github.com/teskann/quax/commit/325eebc6a642958bca8a0fbdf4bc50d2094be031)</sup>
 
 
 ---

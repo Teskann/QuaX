@@ -1,0 +1,156 @@
+{
+ "scenario": "Profile whose posts tab mixes subscriber-only previews (TweetPreviewDisplay) into its threads",
+ "sourceUrl": "https://x.com/Osemka8",
+ "operation": "UserByScreenName",
+ "host": "x.com",
+ "queryId": "KybxDj9RrADIITXlGG8kpw",
+ "features": {
+  "hidden_profile_subscriptions_enabled": true,
+  "profile_label_improvements_pcf_label_in_post_enabled": true,
+  "responsive_web_profile_redirect_enabled": true,
+  "rweb_tipjar_consumption_enabled": false,
+  "verified_phone_label_enabled": false,
+  "subscriptions_verification_info_is_identity_verified_enabled": true,
+  "subscriptions_verification_info_verified_since_enabled": true,
+  "highlights_tweets_tab_ui_enabled": true,
+  "responsive_web_twitter_article_notes_tab_enabled": true,
+  "subscriptions_feature_can_gift_premium": true,
+  "creator_subscriptions_tweet_preview_api_enabled": true,
+  "responsive_web_graphql_timeline_navigation_enabled": true
+ },
+ "fieldToggles": {
+  "withPayments": false,
+  "withAuxiliaryUserLabels": true
+ },
+ "variables": {
+  "screen_name": "osemka8",
+  "withGrokTranslatedBio": true
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "150",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "140",
+  "x-rate-limit-reset": "1790865377"
+ },
+ "body": {
+  "data": {
+   "user": {
+    "result": {
+     "__typename": "User",
+     "action_counts": {
+      "favorites_count": 65174
+     },
+     "affiliates_highlighted_label": {},
+     "avatar": {
+      "image_url": "https://pbs.twimg.com/profile_images/1861752372638171136/0VkHHpXF_normal.jpg"
+     },
+     "banner": {
+      "image_url": "https://pbs.twimg.com/profile_banners/3864149734/1732394190"
+     },
+     "business_account": {},
+     "core": {
+      "created_at": "Sun Oct 04 18:38:49 +0000 2015",
+      "name": "Osemka",
+      "screen_name": "Osemka8"
+     },
+     "creator_subscriptions_count": 0,
+     "follow_request_sent": false,
+     "grok_translated_bio_with_availability": {
+      "is_available": false
+     },
+     "has_graduated_access": true,
+     "has_hidden_subscriptions_on_profile": false,
+     "highlights_info": {
+      "can_highlight_tweets": true,
+      "highlighted_tweets": "11"
+     },
+     "id": "VXNlcjozODY0MTQ5NzM0",
+     "is_blue_verified": true,
+     "is_profile_translatable": false,
+     "legacy_extended_profile": {},
+     "location": {
+      "location": ""
+     },
+     "media_permissions": {
+      "can_media_tag": true
+     },
+     "notifications_settings": {
+      "notifications_enabled": false
+     },
+     "parody_commentary_fan_label": "None",
+     "pinned_items": {
+      "tweet_ids_str": [
+       "2033815601668329786"
+      ]
+     },
+     "possibly_sensitive": false,
+     "premium_gifting_eligible": false,
+     "privacy": {
+      "protected": false
+     },
+     "profile_bio": {
+      "description": "Logic over indicators | 🇸🇮",
+      "entities": {
+       "description": {}
+      }
+     },
+     "profile_image_shape": "Circle",
+     "profile_metadata": {
+      "profile_interstitial_type": ""
+     },
+     "profile_sort_enabled": true,
+     "profile_translation": {
+      "translator_type": "none"
+     },
+     "relationship_counts": {
+      "followers": 20848,
+      "following": 37
+     },
+     "relationship_perspectives": {
+      "blocked_by": false,
+      "blocking": false,
+      "followed_by": false,
+      "following": false,
+      "live_following": false,
+      "muting": false
+     },
+     "rest_id": "3864149734",
+     "super_follow_eligible": true,
+     "super_followed_by": false,
+     "super_following": false,
+     "tweet_counts": {
+      "media_tweets": 9542,
+      "tweets": 40358
+     },
+     "user_seed_tweet_count": 42,
+     "verification": {
+      "verified": false
+     },
+     "verification_info": {
+      "is_identity_verified": true,
+      "reason": {
+       "description": {
+        "entities": [
+         {
+          "from_index": 25,
+          "ref": {
+           "url": "https://help.twitter.com/managing-your-account/about-twitter-verified-accounts",
+           "url_type": "ExternalUrl"
+          },
+          "to_index": 35
+         }
+        ],
+        "text": "This account is Premium. Learn more"
+       },
+       "verified_since_msec": "1734700846711"
+      }
+     },
+     "website": {
+      "url": ""
+     }
+    }
+   }
+  }
+ }
+}

@@ -1,36 +1,23 @@
 import 'dart:math';
 
-import 'package:quax/constants.dart';
 import 'package:quax/database/entities.dart';
 
-/// Health-aware account selection policy.
+/// Account selection policy.
 ///
-/// Pure and clock-injected so it can be unit-tested without a database. An
-/// account is "healthy" when it is not flagged not-found (auth broken) and not
-/// currently rate-limited on the target endpoint. Rate-limit state is supplied
-/// via [isRateLimited] so this class stays free of global/in-memory state.
+/// Pure so it can be unit-tested without a database. Only accounts with a
+/// credit left on the target endpoint can be picked. Credits are supplied via
+/// [hasCredit] so this class stays free of global/in-memory state.
 class AccountSelector {
   final List<Account> accounts;
-  final DateTime now;
-  final bool Function(Account) isRateLimited;
+  final bool Function(Account) hasCredit;
 
-  AccountSelector(this.accounts, this.now, {bool Function(Account)? isRateLimited})
-      : isRateLimited = isRateLimited ?? ((_) => false);
+  AccountSelector(this.accounts, {bool Function(Account)? hasCredit}) : hasCredit = hasCredit ?? ((_) => true);
 
-  bool _notFoundFlagged(Account a) => a.lastNotFoundAt?.add(notFoundCooldown).isAfter(now) ?? false;
-
-  bool _healthy(Account a) => !_notFoundFlagged(a) && !isRateLimited(a);
-
-  /// Picks an account not already tried this request, preferring healthy ones
-  /// but falling back to flagged accounts so a request is always attempted while
-  /// any account remains. Returns null only when every account has been tried.
   Account? pick({required Set<String> exclude}) {
-    final remaining = accounts.where((a) => !exclude.contains(a.id)).toList();
-    if (remaining.isEmpty) {
+    final candidates = accounts.where((a) => !exclude.contains(a.id) && hasCredit(a)).toList();
+    if (candidates.isEmpty) {
       return null;
     }
-    final healthy = remaining.where(_healthy).toList();
-    final pool = healthy.isNotEmpty ? healthy : remaining;
-    return pool[Random().nextInt(pool.length)];
+    return candidates[Random().nextInt(candidates.length)];
   }
 }

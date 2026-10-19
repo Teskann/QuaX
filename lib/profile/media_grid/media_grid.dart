@@ -3,12 +3,14 @@ import 'package:material_ui/material_ui.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:pref/pref.dart';
+import 'package:provider/provider.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/profile/media_grid/gif_playback_gate.dart';
 import 'package:quax/profile/media_grid/media_grid_items/media_grid_item.dart';
 import 'package:quax/status.dart';
 import 'package:quax/tweet/_video_controls.dart';
+import 'package:quax/tweet/video_controller_pool.dart';
 import 'package:quax/ui/errors.dart';
 import 'package:quax/utils/paging.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -38,7 +40,13 @@ class _MediaGridState extends State<MediaGrid> with AutomaticKeepAliveClientMixi
   @override
   bool get wantKeepAlive => true;
 
-  final GifPlaybackGate _gifGate = GifPlaybackGate();
+  late final GifPlaybackGate _gifGate;
+
+  @override
+  void initState() {
+    super.initState();
+    _gifGate = GifPlaybackGate(maxConcurrent: context.read<VideoControllerPool>().maxSize);
+  }
 
   @override
   void dispose() {

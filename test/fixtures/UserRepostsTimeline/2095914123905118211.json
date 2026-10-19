@@ -3,7 +3,7 @@
  "sourceUrl": "https://x.com/quax_tests_2/reposts",
  "operation": "UserRepostsTimeline",
  "host": "x.com",
- "queryId": "bV_DHAIvQ945LAA1-eIIow",
+ "queryId": "hkQQA_PMJfzHlRtnUYYXMg",
  "features": {
   "rweb_video_screen_enabled": false,
   "rweb_cashtags_enabled": true,
@@ -20,6 +20,7 @@
   "responsive_web_grok_analyze_post_followups_enabled": true,
   "rweb_cashtags_composer_attachment_enabled": true,
   "responsive_web_jetfuel_frame": true,
+  "rweb_sports_post_context_enabled": true,
   "responsive_web_grok_share_attachment_enabled": true,
   "responsive_web_grok_annotations_enabled": true,
   "articles_preview_enabled": true,
@@ -39,12 +40,14 @@
   "tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled": true,
   "longform_notetweets_rich_text_read_enabled": true,
   "longform_notetweets_inline_media_enabled": false,
+  "responsive_web_nested_quote_preview_enabled": true,
   "responsive_web_grok_image_annotation_enabled": true,
   "responsive_web_grok_imagine_annotation_enabled": true,
   "responsive_web_grok_community_note_auto_translation_is_enabled": true,
   "responsive_web_enhance_cards_enabled": false
  },
  "fieldToggles": {
+  "withPayments": false,
   "withArticlePlainText": false
  },
  "variables": {
@@ -58,7 +61,7 @@
   "x-rate-limit-limit": "50",
   "content-type": "application/json",
   "x-rate-limit-remaining": "49",
-  "x-rate-limit-reset": "1788551448"
+  "x-rate-limit-reset": "1790865496"
  },
  "body": {
   "data": {
@@ -108,11 +111,8 @@
                    "name": "Moluyts",
                    "screen_name": "quax_tests_2"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTE0MTIzOTA1MTE4MjEx",
                   "is_blue_verified": false,
                   "location": {
@@ -199,112 +199,7 @@
                  "media": [
                   {
                    "additional_media_info": {
-                    "monetizable": false,
-                    "source_user": {
-                     "user_results": {
-                      "result": {
-                       "__typename": "User",
-                       "action_counts": {
-                        "favorites_count": 0
-                       },
-                       "affiliates_highlighted_label": {},
-                       "avatar": {
-                        "image_url": "https://pbs.twimg.com/profile_images/2095923817080295424/YjqaAMdO_normal.jpg"
-                       },
-                       "banner": {
-                        "image_url": "https://pbs.twimg.com/profile_banners/2095909295913103360/1788542164"
-                       },
-                       "core": {
-                        "created_at": "Fri Sep 04 16:19:42 +0000 2026",
-                        "name": "QuaX Tests",
-                        "screen_name": "quax_tests"
-                       },
-                       "dm_permissions": {
-                        "can_dm": false
-                       },
-                       "follow_request_sent": false,
-                       "has_graduated_access": false,
-                       "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
-                       "is_blue_verified": false,
-                       "location": {
-                        "location": "India"
-                       },
-                       "media_permissions": {
-                        "can_media_tag": true
-                       },
-                       "notifications_settings": {
-                        "notifications_enabled": false
-                       },
-                       "parody_commentary_fan_label": "None",
-                       "pinned_items": {},
-                       "possibly_sensitive": false,
-                       "privacy": {
-                        "protected": false
-                       },
-                       "profile_bio": {
-                        "description": "🧪 Throwaway account · QuaX parsing fixtures 🇫🇷\n  Nothing real, every post is a test case.\n  https://t.co/XbzZfYVJIK · https://t.co/Akx2T6uckh\n  Ping @jack",
-                        "entities": {
-                         "description": {
-                          "urls": [
-                           {
-                            "display_url": "github.com/Teskann/QuaX",
-                            "expanded_url": "http://github.com/Teskann/QuaX",
-                            "indices": [
-                             92,
-                             115
-                            ],
-                            "url": "https://t.co/XbzZfYVJIK"
-                           },
-                           {
-                            "display_url": "flutter.dev",
-                            "expanded_url": "https://flutter.dev",
-                            "indices": [
-                             118,
-                             141
-                            ],
-                            "url": "https://t.co/Akx2T6uckh"
-                           }
-                          ]
-                         }
-                        }
-                       },
-                       "profile_description_language": "en",
-                       "profile_image_shape": "Circle",
-                       "profile_metadata": {
-                        "profile_interstitial_type": ""
-                       },
-                       "profile_translation": {
-                        "translator_type": "none"
-                       },
-                       "relationship_counts": {
-                        "followers": 0,
-                        "following": 0
-                       },
-                       "relationship_perspectives": {
-                        "blocked_by": false,
-                        "blocking": false,
-                        "followed_by": false,
-                        "following": false,
-                        "live_following": false,
-                        "muting": false
-                       },
-                       "rest_id": "2095909295913103360",
-                       "super_follow_eligible": false,
-                       "super_followed_by": false,
-                       "super_following": false,
-                       "tweet_counts": {
-                        "media_tweets": 17,
-                        "tweets": 41
-                       },
-                       "verification": {
-                        "verified": false
-                       },
-                       "website": {
-                        "url": ""
-                       }
-                      }
-                     }
-                    }
+                    "monetizable": false
                    },
                    "allow_download_status": {
                     "allow_download": true
@@ -355,6 +250,106 @@
                    },
                    "source_status_id_str": "2095920085445619715",
                    "source_user_id_str": "2095909295913103360",
+                   "source_user_results": {
+                    "result": {
+                     "__typename": "User",
+                     "action_counts": {
+                      "favorites_count": 0
+                     },
+                     "affiliates_highlighted_label": {},
+                     "avatar": {
+                      "image_url": "https://pbs.twimg.com/profile_images/2095923817080295424/YjqaAMdO_normal.jpg"
+                     },
+                     "banner": {
+                      "image_url": "https://pbs.twimg.com/profile_banners/2095909295913103360/1788542164"
+                     },
+                     "core": {
+                      "created_at": "Fri Sep 04 16:19:42 +0000 2026",
+                      "name": "QuaX Tests",
+                      "screen_name": "quax_tests"
+                     },
+                     "follow_request_sent": false,
+                     "has_graduated_access": true,
+                     "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
+                     "is_blue_verified": false,
+                     "location": {
+                      "location": "India"
+                     },
+                     "media_permissions": {
+                      "can_media_tag": true
+                     },
+                     "notifications_settings": {
+                      "notifications_enabled": false
+                     },
+                     "parody_commentary_fan_label": "None",
+                     "pinned_items": {},
+                     "possibly_sensitive": false,
+                     "privacy": {
+                      "protected": false
+                     },
+                     "profile_bio": {
+                      "description": "🧪 Throwaway account · QuaX parsing fixtures 🇫🇷\n  Nothing real, every post is a test case.\n  https://t.co/XbzZfYVJIK · https://t.co/Akx2T6uckh\n  Ping @jack",
+                      "entities": {
+                       "description": {
+                        "urls": [
+                         {
+                          "display_url": "github.com/Teskann/QuaX",
+                          "expanded_url": "http://github.com/Teskann/QuaX",
+                          "indices": [
+                           92,
+                           115
+                          ],
+                          "url": "https://t.co/XbzZfYVJIK"
+                         },
+                         {
+                          "display_url": "flutter.dev",
+                          "expanded_url": "https://flutter.dev",
+                          "indices": [
+                           118,
+                           141
+                          ],
+                          "url": "https://t.co/Akx2T6uckh"
+                         }
+                        ]
+                       }
+                      }
+                     },
+                     "profile_description_language": "en",
+                     "profile_image_shape": "Circle",
+                     "profile_metadata": {
+                      "profile_interstitial_type": ""
+                     },
+                     "profile_translation": {
+                      "translator_type": "none"
+                     },
+                     "relationship_counts": {
+                      "followers": 0,
+                      "following": 0
+                     },
+                     "relationship_perspectives": {
+                      "blocked_by": false,
+                      "blocking": false,
+                      "followed_by": false,
+                      "following": false,
+                      "live_following": false,
+                      "muting": false
+                     },
+                     "rest_id": "2095909295913103360",
+                     "super_follow_eligible": false,
+                     "super_followed_by": false,
+                     "super_following": false,
+                     "tweet_counts": {
+                      "media_tweets": 17,
+                      "tweets": 41
+                     },
+                     "verification": {
+                      "verified": false
+                     },
+                     "website": {
+                      "url": ""
+                     }
+                    }
+                   },
                    "type": "video",
                    "url": "https://t.co/yxvnwiVhWu",
                    "video_info": {
@@ -388,112 +383,7 @@
                   },
                   {
                    "additional_media_info": {
-                    "monetizable": false,
-                    "source_user": {
-                     "user_results": {
-                      "result": {
-                       "__typename": "User",
-                       "action_counts": {
-                        "favorites_count": 0
-                       },
-                       "affiliates_highlighted_label": {},
-                       "avatar": {
-                        "image_url": "https://pbs.twimg.com/profile_images/2095923817080295424/YjqaAMdO_normal.jpg"
-                       },
-                       "banner": {
-                        "image_url": "https://pbs.twimg.com/profile_banners/2095909295913103360/1788542164"
-                       },
-                       "core": {
-                        "created_at": "Fri Sep 04 16:19:42 +0000 2026",
-                        "name": "QuaX Tests",
-                        "screen_name": "quax_tests"
-                       },
-                       "dm_permissions": {
-                        "can_dm": false
-                       },
-                       "follow_request_sent": false,
-                       "has_graduated_access": false,
-                       "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
-                       "is_blue_verified": false,
-                       "location": {
-                        "location": "India"
-                       },
-                       "media_permissions": {
-                        "can_media_tag": true
-                       },
-                       "notifications_settings": {
-                        "notifications_enabled": false
-                       },
-                       "parody_commentary_fan_label": "None",
-                       "pinned_items": {},
-                       "possibly_sensitive": false,
-                       "privacy": {
-                        "protected": false
-                       },
-                       "profile_bio": {
-                        "description": "🧪 Throwaway account · QuaX parsing fixtures 🇫🇷\n  Nothing real, every post is a test case.\n  https://t.co/XbzZfYVJIK · https://t.co/Akx2T6uckh\n  Ping @jack",
-                        "entities": {
-                         "description": {
-                          "urls": [
-                           {
-                            "display_url": "github.com/Teskann/QuaX",
-                            "expanded_url": "http://github.com/Teskann/QuaX",
-                            "indices": [
-                             92,
-                             115
-                            ],
-                            "url": "https://t.co/XbzZfYVJIK"
-                           },
-                           {
-                            "display_url": "flutter.dev",
-                            "expanded_url": "https://flutter.dev",
-                            "indices": [
-                             118,
-                             141
-                            ],
-                            "url": "https://t.co/Akx2T6uckh"
-                           }
-                          ]
-                         }
-                        }
-                       },
-                       "profile_description_language": "en",
-                       "profile_image_shape": "Circle",
-                       "profile_metadata": {
-                        "profile_interstitial_type": ""
-                       },
-                       "profile_translation": {
-                        "translator_type": "none"
-                       },
-                       "relationship_counts": {
-                        "followers": 0,
-                        "following": 0
-                       },
-                       "relationship_perspectives": {
-                        "blocked_by": false,
-                        "blocking": false,
-                        "followed_by": false,
-                        "following": false,
-                        "live_following": false,
-                        "muting": false
-                       },
-                       "rest_id": "2095909295913103360",
-                       "super_follow_eligible": false,
-                       "super_followed_by": false,
-                       "super_following": false,
-                       "tweet_counts": {
-                        "media_tweets": 17,
-                        "tweets": 41
-                       },
-                       "verification": {
-                        "verified": false
-                       },
-                       "website": {
-                        "url": ""
-                       }
-                      }
-                     }
-                    }
+                    "monetizable": false
                    },
                    "allow_download_status": {
                     "allow_download": true
@@ -544,6 +434,106 @@
                    },
                    "source_status_id_str": "2095920085445619715",
                    "source_user_id_str": "2095909295913103360",
+                   "source_user_results": {
+                    "result": {
+                     "__typename": "User",
+                     "action_counts": {
+                      "favorites_count": 0
+                     },
+                     "affiliates_highlighted_label": {},
+                     "avatar": {
+                      "image_url": "https://pbs.twimg.com/profile_images/2095923817080295424/YjqaAMdO_normal.jpg"
+                     },
+                     "banner": {
+                      "image_url": "https://pbs.twimg.com/profile_banners/2095909295913103360/1788542164"
+                     },
+                     "core": {
+                      "created_at": "Fri Sep 04 16:19:42 +0000 2026",
+                      "name": "QuaX Tests",
+                      "screen_name": "quax_tests"
+                     },
+                     "follow_request_sent": false,
+                     "has_graduated_access": true,
+                     "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
+                     "is_blue_verified": false,
+                     "location": {
+                      "location": "India"
+                     },
+                     "media_permissions": {
+                      "can_media_tag": true
+                     },
+                     "notifications_settings": {
+                      "notifications_enabled": false
+                     },
+                     "parody_commentary_fan_label": "None",
+                     "pinned_items": {},
+                     "possibly_sensitive": false,
+                     "privacy": {
+                      "protected": false
+                     },
+                     "profile_bio": {
+                      "description": "🧪 Throwaway account · QuaX parsing fixtures 🇫🇷\n  Nothing real, every post is a test case.\n  https://t.co/XbzZfYVJIK · https://t.co/Akx2T6uckh\n  Ping @jack",
+                      "entities": {
+                       "description": {
+                        "urls": [
+                         {
+                          "display_url": "github.com/Teskann/QuaX",
+                          "expanded_url": "http://github.com/Teskann/QuaX",
+                          "indices": [
+                           92,
+                           115
+                          ],
+                          "url": "https://t.co/XbzZfYVJIK"
+                         },
+                         {
+                          "display_url": "flutter.dev",
+                          "expanded_url": "https://flutter.dev",
+                          "indices": [
+                           118,
+                           141
+                          ],
+                          "url": "https://t.co/Akx2T6uckh"
+                         }
+                        ]
+                       }
+                      }
+                     },
+                     "profile_description_language": "en",
+                     "profile_image_shape": "Circle",
+                     "profile_metadata": {
+                      "profile_interstitial_type": ""
+                     },
+                     "profile_translation": {
+                      "translator_type": "none"
+                     },
+                     "relationship_counts": {
+                      "followers": 0,
+                      "following": 0
+                     },
+                     "relationship_perspectives": {
+                      "blocked_by": false,
+                      "blocking": false,
+                      "followed_by": false,
+                      "following": false,
+                      "live_following": false,
+                      "muting": false
+                     },
+                     "rest_id": "2095909295913103360",
+                     "super_follow_eligible": false,
+                     "super_followed_by": false,
+                     "super_following": false,
+                     "tweet_counts": {
+                      "media_tweets": 17,
+                      "tweets": 41
+                     },
+                     "verification": {
+                      "verified": false
+                     },
+                     "website": {
+                      "url": ""
+                     }
+                    }
+                   },
                    "type": "video",
                    "url": "https://t.co/yxvnwiVhWu",
                    "video_info": {
@@ -592,112 +582,7 @@
                  "media": [
                   {
                    "additional_media_info": {
-                    "monetizable": false,
-                    "source_user": {
-                     "user_results": {
-                      "result": {
-                       "__typename": "User",
-                       "action_counts": {
-                        "favorites_count": 0
-                       },
-                       "affiliates_highlighted_label": {},
-                       "avatar": {
-                        "image_url": "https://pbs.twimg.com/profile_images/2095923817080295424/YjqaAMdO_normal.jpg"
-                       },
-                       "banner": {
-                        "image_url": "https://pbs.twimg.com/profile_banners/2095909295913103360/1788542164"
-                       },
-                       "core": {
-                        "created_at": "Fri Sep 04 16:19:42 +0000 2026",
-                        "name": "QuaX Tests",
-                        "screen_name": "quax_tests"
-                       },
-                       "dm_permissions": {
-                        "can_dm": false
-                       },
-                       "follow_request_sent": false,
-                       "has_graduated_access": false,
-                       "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
-                       "is_blue_verified": false,
-                       "location": {
-                        "location": "India"
-                       },
-                       "media_permissions": {
-                        "can_media_tag": true
-                       },
-                       "notifications_settings": {
-                        "notifications_enabled": false
-                       },
-                       "parody_commentary_fan_label": "None",
-                       "pinned_items": {},
-                       "possibly_sensitive": false,
-                       "privacy": {
-                        "protected": false
-                       },
-                       "profile_bio": {
-                        "description": "🧪 Throwaway account · QuaX parsing fixtures 🇫🇷\n  Nothing real, every post is a test case.\n  https://t.co/XbzZfYVJIK · https://t.co/Akx2T6uckh\n  Ping @jack",
-                        "entities": {
-                         "description": {
-                          "urls": [
-                           {
-                            "display_url": "github.com/Teskann/QuaX",
-                            "expanded_url": "http://github.com/Teskann/QuaX",
-                            "indices": [
-                             92,
-                             115
-                            ],
-                            "url": "https://t.co/XbzZfYVJIK"
-                           },
-                           {
-                            "display_url": "flutter.dev",
-                            "expanded_url": "https://flutter.dev",
-                            "indices": [
-                             118,
-                             141
-                            ],
-                            "url": "https://t.co/Akx2T6uckh"
-                           }
-                          ]
-                         }
-                        }
-                       },
-                       "profile_description_language": "en",
-                       "profile_image_shape": "Circle",
-                       "profile_metadata": {
-                        "profile_interstitial_type": ""
-                       },
-                       "profile_translation": {
-                        "translator_type": "none"
-                       },
-                       "relationship_counts": {
-                        "followers": 0,
-                        "following": 0
-                       },
-                       "relationship_perspectives": {
-                        "blocked_by": false,
-                        "blocking": false,
-                        "followed_by": false,
-                        "following": false,
-                        "live_following": false,
-                        "muting": false
-                       },
-                       "rest_id": "2095909295913103360",
-                       "super_follow_eligible": false,
-                       "super_followed_by": false,
-                       "super_following": false,
-                       "tweet_counts": {
-                        "media_tweets": 17,
-                        "tweets": 41
-                       },
-                       "verification": {
-                        "verified": false
-                       },
-                       "website": {
-                        "url": ""
-                       }
-                      }
-                     }
-                    }
+                    "monetizable": false
                    },
                    "allow_download_status": {
                     "allow_download": true
@@ -748,6 +633,106 @@
                    },
                    "source_status_id_str": "2095920085445619715",
                    "source_user_id_str": "2095909295913103360",
+                   "source_user_results": {
+                    "result": {
+                     "__typename": "User",
+                     "action_counts": {
+                      "favorites_count": 0
+                     },
+                     "affiliates_highlighted_label": {},
+                     "avatar": {
+                      "image_url": "https://pbs.twimg.com/profile_images/2095923817080295424/YjqaAMdO_normal.jpg"
+                     },
+                     "banner": {
+                      "image_url": "https://pbs.twimg.com/profile_banners/2095909295913103360/1788542164"
+                     },
+                     "core": {
+                      "created_at": "Fri Sep 04 16:19:42 +0000 2026",
+                      "name": "QuaX Tests",
+                      "screen_name": "quax_tests"
+                     },
+                     "follow_request_sent": false,
+                     "has_graduated_access": true,
+                     "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
+                     "is_blue_verified": false,
+                     "location": {
+                      "location": "India"
+                     },
+                     "media_permissions": {
+                      "can_media_tag": true
+                     },
+                     "notifications_settings": {
+                      "notifications_enabled": false
+                     },
+                     "parody_commentary_fan_label": "None",
+                     "pinned_items": {},
+                     "possibly_sensitive": false,
+                     "privacy": {
+                      "protected": false
+                     },
+                     "profile_bio": {
+                      "description": "🧪 Throwaway account · QuaX parsing fixtures 🇫🇷\n  Nothing real, every post is a test case.\n  https://t.co/XbzZfYVJIK · https://t.co/Akx2T6uckh\n  Ping @jack",
+                      "entities": {
+                       "description": {
+                        "urls": [
+                         {
+                          "display_url": "github.com/Teskann/QuaX",
+                          "expanded_url": "http://github.com/Teskann/QuaX",
+                          "indices": [
+                           92,
+                           115
+                          ],
+                          "url": "https://t.co/XbzZfYVJIK"
+                         },
+                         {
+                          "display_url": "flutter.dev",
+                          "expanded_url": "https://flutter.dev",
+                          "indices": [
+                           118,
+                           141
+                          ],
+                          "url": "https://t.co/Akx2T6uckh"
+                         }
+                        ]
+                       }
+                      }
+                     },
+                     "profile_description_language": "en",
+                     "profile_image_shape": "Circle",
+                     "profile_metadata": {
+                      "profile_interstitial_type": ""
+                     },
+                     "profile_translation": {
+                      "translator_type": "none"
+                     },
+                     "relationship_counts": {
+                      "followers": 0,
+                      "following": 0
+                     },
+                     "relationship_perspectives": {
+                      "blocked_by": false,
+                      "blocking": false,
+                      "followed_by": false,
+                      "following": false,
+                      "live_following": false,
+                      "muting": false
+                     },
+                     "rest_id": "2095909295913103360",
+                     "super_follow_eligible": false,
+                     "super_followed_by": false,
+                     "super_following": false,
+                     "tweet_counts": {
+                      "media_tweets": 17,
+                      "tweets": 41
+                     },
+                     "verification": {
+                      "verified": false
+                     },
+                     "website": {
+                      "url": ""
+                     }
+                    }
+                   },
                    "type": "video",
                    "url": "https://t.co/yxvnwiVhWu",
                    "video_info": {
@@ -781,112 +766,7 @@
                   },
                   {
                    "additional_media_info": {
-                    "monetizable": false,
-                    "source_user": {
-                     "user_results": {
-                      "result": {
-                       "__typename": "User",
-                       "action_counts": {
-                        "favorites_count": 0
-                       },
-                       "affiliates_highlighted_label": {},
-                       "avatar": {
-                        "image_url": "https://pbs.twimg.com/profile_images/2095923817080295424/YjqaAMdO_normal.jpg"
-                       },
-                       "banner": {
-                        "image_url": "https://pbs.twimg.com/profile_banners/2095909295913103360/1788542164"
-                       },
-                       "core": {
-                        "created_at": "Fri Sep 04 16:19:42 +0000 2026",
-                        "name": "QuaX Tests",
-                        "screen_name": "quax_tests"
-                       },
-                       "dm_permissions": {
-                        "can_dm": false
-                       },
-                       "follow_request_sent": false,
-                       "has_graduated_access": false,
-                       "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
-                       "is_blue_verified": false,
-                       "location": {
-                        "location": "India"
-                       },
-                       "media_permissions": {
-                        "can_media_tag": true
-                       },
-                       "notifications_settings": {
-                        "notifications_enabled": false
-                       },
-                       "parody_commentary_fan_label": "None",
-                       "pinned_items": {},
-                       "possibly_sensitive": false,
-                       "privacy": {
-                        "protected": false
-                       },
-                       "profile_bio": {
-                        "description": "🧪 Throwaway account · QuaX parsing fixtures 🇫🇷\n  Nothing real, every post is a test case.\n  https://t.co/XbzZfYVJIK · https://t.co/Akx2T6uckh\n  Ping @jack",
-                        "entities": {
-                         "description": {
-                          "urls": [
-                           {
-                            "display_url": "github.com/Teskann/QuaX",
-                            "expanded_url": "http://github.com/Teskann/QuaX",
-                            "indices": [
-                             92,
-                             115
-                            ],
-                            "url": "https://t.co/XbzZfYVJIK"
-                           },
-                           {
-                            "display_url": "flutter.dev",
-                            "expanded_url": "https://flutter.dev",
-                            "indices": [
-                             118,
-                             141
-                            ],
-                            "url": "https://t.co/Akx2T6uckh"
-                           }
-                          ]
-                         }
-                        }
-                       },
-                       "profile_description_language": "en",
-                       "profile_image_shape": "Circle",
-                       "profile_metadata": {
-                        "profile_interstitial_type": ""
-                       },
-                       "profile_translation": {
-                        "translator_type": "none"
-                       },
-                       "relationship_counts": {
-                        "followers": 0,
-                        "following": 0
-                       },
-                       "relationship_perspectives": {
-                        "blocked_by": false,
-                        "blocking": false,
-                        "followed_by": false,
-                        "following": false,
-                        "live_following": false,
-                        "muting": false
-                       },
-                       "rest_id": "2095909295913103360",
-                       "super_follow_eligible": false,
-                       "super_followed_by": false,
-                       "super_following": false,
-                       "tweet_counts": {
-                        "media_tweets": 17,
-                        "tweets": 41
-                       },
-                       "verification": {
-                        "verified": false
-                       },
-                       "website": {
-                        "url": ""
-                       }
-                      }
-                     }
-                    }
+                    "monetizable": false
                    },
                    "allow_download_status": {
                     "allow_download": true
@@ -937,6 +817,106 @@
                    },
                    "source_status_id_str": "2095920085445619715",
                    "source_user_id_str": "2095909295913103360",
+                   "source_user_results": {
+                    "result": {
+                     "__typename": "User",
+                     "action_counts": {
+                      "favorites_count": 0
+                     },
+                     "affiliates_highlighted_label": {},
+                     "avatar": {
+                      "image_url": "https://pbs.twimg.com/profile_images/2095923817080295424/YjqaAMdO_normal.jpg"
+                     },
+                     "banner": {
+                      "image_url": "https://pbs.twimg.com/profile_banners/2095909295913103360/1788542164"
+                     },
+                     "core": {
+                      "created_at": "Fri Sep 04 16:19:42 +0000 2026",
+                      "name": "QuaX Tests",
+                      "screen_name": "quax_tests"
+                     },
+                     "follow_request_sent": false,
+                     "has_graduated_access": true,
+                     "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
+                     "is_blue_verified": false,
+                     "location": {
+                      "location": "India"
+                     },
+                     "media_permissions": {
+                      "can_media_tag": true
+                     },
+                     "notifications_settings": {
+                      "notifications_enabled": false
+                     },
+                     "parody_commentary_fan_label": "None",
+                     "pinned_items": {},
+                     "possibly_sensitive": false,
+                     "privacy": {
+                      "protected": false
+                     },
+                     "profile_bio": {
+                      "description": "🧪 Throwaway account · QuaX parsing fixtures 🇫🇷\n  Nothing real, every post is a test case.\n  https://t.co/XbzZfYVJIK · https://t.co/Akx2T6uckh\n  Ping @jack",
+                      "entities": {
+                       "description": {
+                        "urls": [
+                         {
+                          "display_url": "github.com/Teskann/QuaX",
+                          "expanded_url": "http://github.com/Teskann/QuaX",
+                          "indices": [
+                           92,
+                           115
+                          ],
+                          "url": "https://t.co/XbzZfYVJIK"
+                         },
+                         {
+                          "display_url": "flutter.dev",
+                          "expanded_url": "https://flutter.dev",
+                          "indices": [
+                           118,
+                           141
+                          ],
+                          "url": "https://t.co/Akx2T6uckh"
+                         }
+                        ]
+                       }
+                      }
+                     },
+                     "profile_description_language": "en",
+                     "profile_image_shape": "Circle",
+                     "profile_metadata": {
+                      "profile_interstitial_type": ""
+                     },
+                     "profile_translation": {
+                      "translator_type": "none"
+                     },
+                     "relationship_counts": {
+                      "followers": 0,
+                      "following": 0
+                     },
+                     "relationship_perspectives": {
+                      "blocked_by": false,
+                      "blocking": false,
+                      "followed_by": false,
+                      "following": false,
+                      "live_following": false,
+                      "muting": false
+                     },
+                     "rest_id": "2095909295913103360",
+                     "super_follow_eligible": false,
+                     "super_followed_by": false,
+                     "super_following": false,
+                     "tweet_counts": {
+                      "media_tweets": 17,
+                      "tweets": 41
+                     },
+                     "verification": {
+                      "verified": false
+                     },
+                     "website": {
+                      "url": ""
+                     }
+                    }
+                   },
                    "type": "video",
                    "url": "https://t.co/yxvnwiVhWu",
                    "video_info": {
@@ -1005,11 +985,8 @@
                       "name": "QuaX Tests",
                       "screen_name": "quax_tests"
                      },
-                     "dm_permissions": {
-                      "can_dm": false
-                     },
                      "follow_request_sent": false,
-                     "has_graduated_access": false,
+                     "has_graduated_access": true,
                      "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                      "is_blue_verified": false,
                      "location": {
@@ -1467,7 +1444,7 @@
                   "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                   "unmention_data": {},
                   "views": {
-                   "count": "9",
+                   "count": "19",
                    "state": "EnabledWithCount"
                   }
                  }
@@ -1485,7 +1462,7 @@
             }
            },
            "entryId": "tweet-2095923148688359454",
-           "sortIndex": "2095959032291393536"
+           "sortIndex": "2105664849601101824"
           },
           {
            "content": {
@@ -1522,11 +1499,8 @@
                    "name": "Moluyts",
                    "screen_name": "quax_tests_2"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTE0MTIzOTA1MTE4MjEx",
                   "is_blue_verified": false,
                   "location": {
@@ -1613,112 +1587,7 @@
                  "media": [
                   {
                    "additional_media_info": {
-                    "monetizable": false,
-                    "source_user": {
-                     "user_results": {
-                      "result": {
-                       "__typename": "User",
-                       "action_counts": {
-                        "favorites_count": 0
-                       },
-                       "affiliates_highlighted_label": {},
-                       "avatar": {
-                        "image_url": "https://pbs.twimg.com/profile_images/2095923817080295424/YjqaAMdO_normal.jpg"
-                       },
-                       "banner": {
-                        "image_url": "https://pbs.twimg.com/profile_banners/2095909295913103360/1788542164"
-                       },
-                       "core": {
-                        "created_at": "Fri Sep 04 16:19:42 +0000 2026",
-                        "name": "QuaX Tests",
-                        "screen_name": "quax_tests"
-                       },
-                       "dm_permissions": {
-                        "can_dm": false
-                       },
-                       "follow_request_sent": false,
-                       "has_graduated_access": false,
-                       "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
-                       "is_blue_verified": false,
-                       "location": {
-                        "location": "India"
-                       },
-                       "media_permissions": {
-                        "can_media_tag": true
-                       },
-                       "notifications_settings": {
-                        "notifications_enabled": false
-                       },
-                       "parody_commentary_fan_label": "None",
-                       "pinned_items": {},
-                       "possibly_sensitive": false,
-                       "privacy": {
-                        "protected": false
-                       },
-                       "profile_bio": {
-                        "description": "🧪 Throwaway account · QuaX parsing fixtures 🇫🇷\n  Nothing real, every post is a test case.\n  https://t.co/XbzZfYVJIK · https://t.co/Akx2T6uckh\n  Ping @jack",
-                        "entities": {
-                         "description": {
-                          "urls": [
-                           {
-                            "display_url": "github.com/Teskann/QuaX",
-                            "expanded_url": "http://github.com/Teskann/QuaX",
-                            "indices": [
-                             92,
-                             115
-                            ],
-                            "url": "https://t.co/XbzZfYVJIK"
-                           },
-                           {
-                            "display_url": "flutter.dev",
-                            "expanded_url": "https://flutter.dev",
-                            "indices": [
-                             118,
-                             141
-                            ],
-                            "url": "https://t.co/Akx2T6uckh"
-                           }
-                          ]
-                         }
-                        }
-                       },
-                       "profile_description_language": "en",
-                       "profile_image_shape": "Circle",
-                       "profile_metadata": {
-                        "profile_interstitial_type": ""
-                       },
-                       "profile_translation": {
-                        "translator_type": "none"
-                       },
-                       "relationship_counts": {
-                        "followers": 0,
-                        "following": 0
-                       },
-                       "relationship_perspectives": {
-                        "blocked_by": false,
-                        "blocking": false,
-                        "followed_by": false,
-                        "following": false,
-                        "live_following": false,
-                        "muting": false
-                       },
-                       "rest_id": "2095909295913103360",
-                       "super_follow_eligible": false,
-                       "super_followed_by": false,
-                       "super_following": false,
-                       "tweet_counts": {
-                        "media_tweets": 17,
-                        "tweets": 41
-                       },
-                       "verification": {
-                        "verified": false
-                       },
-                       "website": {
-                        "url": ""
-                       }
-                      }
-                     }
-                    }
+                    "monetizable": false
                    },
                    "allow_download_status": {
                     "allow_download": true
@@ -1769,6 +1638,106 @@
                    },
                    "source_status_id_str": "2095920215234138129",
                    "source_user_id_str": "2095909295913103360",
+                   "source_user_results": {
+                    "result": {
+                     "__typename": "User",
+                     "action_counts": {
+                      "favorites_count": 0
+                     },
+                     "affiliates_highlighted_label": {},
+                     "avatar": {
+                      "image_url": "https://pbs.twimg.com/profile_images/2095923817080295424/YjqaAMdO_normal.jpg"
+                     },
+                     "banner": {
+                      "image_url": "https://pbs.twimg.com/profile_banners/2095909295913103360/1788542164"
+                     },
+                     "core": {
+                      "created_at": "Fri Sep 04 16:19:42 +0000 2026",
+                      "name": "QuaX Tests",
+                      "screen_name": "quax_tests"
+                     },
+                     "follow_request_sent": false,
+                     "has_graduated_access": true,
+                     "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
+                     "is_blue_verified": false,
+                     "location": {
+                      "location": "India"
+                     },
+                     "media_permissions": {
+                      "can_media_tag": true
+                     },
+                     "notifications_settings": {
+                      "notifications_enabled": false
+                     },
+                     "parody_commentary_fan_label": "None",
+                     "pinned_items": {},
+                     "possibly_sensitive": false,
+                     "privacy": {
+                      "protected": false
+                     },
+                     "profile_bio": {
+                      "description": "🧪 Throwaway account · QuaX parsing fixtures 🇫🇷\n  Nothing real, every post is a test case.\n  https://t.co/XbzZfYVJIK · https://t.co/Akx2T6uckh\n  Ping @jack",
+                      "entities": {
+                       "description": {
+                        "urls": [
+                         {
+                          "display_url": "github.com/Teskann/QuaX",
+                          "expanded_url": "http://github.com/Teskann/QuaX",
+                          "indices": [
+                           92,
+                           115
+                          ],
+                          "url": "https://t.co/XbzZfYVJIK"
+                         },
+                         {
+                          "display_url": "flutter.dev",
+                          "expanded_url": "https://flutter.dev",
+                          "indices": [
+                           118,
+                           141
+                          ],
+                          "url": "https://t.co/Akx2T6uckh"
+                         }
+                        ]
+                       }
+                      }
+                     },
+                     "profile_description_language": "en",
+                     "profile_image_shape": "Circle",
+                     "profile_metadata": {
+                      "profile_interstitial_type": ""
+                     },
+                     "profile_translation": {
+                      "translator_type": "none"
+                     },
+                     "relationship_counts": {
+                      "followers": 0,
+                      "following": 0
+                     },
+                     "relationship_perspectives": {
+                      "blocked_by": false,
+                      "blocking": false,
+                      "followed_by": false,
+                      "following": false,
+                      "live_following": false,
+                      "muting": false
+                     },
+                     "rest_id": "2095909295913103360",
+                     "super_follow_eligible": false,
+                     "super_followed_by": false,
+                     "super_following": false,
+                     "tweet_counts": {
+                      "media_tweets": 17,
+                      "tweets": 41
+                     },
+                     "verification": {
+                      "verified": false
+                     },
+                     "website": {
+                      "url": ""
+                     }
+                    }
+                   },
                    "type": "video",
                    "url": "https://t.co/MjToMWUtwG",
                    "video_info": {
@@ -1802,112 +1771,7 @@
                   },
                   {
                    "additional_media_info": {
-                    "monetizable": false,
-                    "source_user": {
-                     "user_results": {
-                      "result": {
-                       "__typename": "User",
-                       "action_counts": {
-                        "favorites_count": 0
-                       },
-                       "affiliates_highlighted_label": {},
-                       "avatar": {
-                        "image_url": "https://pbs.twimg.com/profile_images/2095923817080295424/YjqaAMdO_normal.jpg"
-                       },
-                       "banner": {
-                        "image_url": "https://pbs.twimg.com/profile_banners/2095909295913103360/1788542164"
-                       },
-                       "core": {
-                        "created_at": "Fri Sep 04 16:19:42 +0000 2026",
-                        "name": "QuaX Tests",
-                        "screen_name": "quax_tests"
-                       },
-                       "dm_permissions": {
-                        "can_dm": false
-                       },
-                       "follow_request_sent": false,
-                       "has_graduated_access": false,
-                       "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
-                       "is_blue_verified": false,
-                       "location": {
-                        "location": "India"
-                       },
-                       "media_permissions": {
-                        "can_media_tag": true
-                       },
-                       "notifications_settings": {
-                        "notifications_enabled": false
-                       },
-                       "parody_commentary_fan_label": "None",
-                       "pinned_items": {},
-                       "possibly_sensitive": false,
-                       "privacy": {
-                        "protected": false
-                       },
-                       "profile_bio": {
-                        "description": "🧪 Throwaway account · QuaX parsing fixtures 🇫🇷\n  Nothing real, every post is a test case.\n  https://t.co/XbzZfYVJIK · https://t.co/Akx2T6uckh\n  Ping @jack",
-                        "entities": {
-                         "description": {
-                          "urls": [
-                           {
-                            "display_url": "github.com/Teskann/QuaX",
-                            "expanded_url": "http://github.com/Teskann/QuaX",
-                            "indices": [
-                             92,
-                             115
-                            ],
-                            "url": "https://t.co/XbzZfYVJIK"
-                           },
-                           {
-                            "display_url": "flutter.dev",
-                            "expanded_url": "https://flutter.dev",
-                            "indices": [
-                             118,
-                             141
-                            ],
-                            "url": "https://t.co/Akx2T6uckh"
-                           }
-                          ]
-                         }
-                        }
-                       },
-                       "profile_description_language": "en",
-                       "profile_image_shape": "Circle",
-                       "profile_metadata": {
-                        "profile_interstitial_type": ""
-                       },
-                       "profile_translation": {
-                        "translator_type": "none"
-                       },
-                       "relationship_counts": {
-                        "followers": 0,
-                        "following": 0
-                       },
-                       "relationship_perspectives": {
-                        "blocked_by": false,
-                        "blocking": false,
-                        "followed_by": false,
-                        "following": false,
-                        "live_following": false,
-                        "muting": false
-                       },
-                       "rest_id": "2095909295913103360",
-                       "super_follow_eligible": false,
-                       "super_followed_by": false,
-                       "super_following": false,
-                       "tweet_counts": {
-                        "media_tweets": 17,
-                        "tweets": 41
-                       },
-                       "verification": {
-                        "verified": false
-                       },
-                       "website": {
-                        "url": ""
-                       }
-                      }
-                     }
-                    }
+                    "monetizable": false
                    },
                    "allow_download_status": {
                     "allow_download": true
@@ -1958,6 +1822,106 @@
                    },
                    "source_status_id_str": "2095920215234138129",
                    "source_user_id_str": "2095909295913103360",
+                   "source_user_results": {
+                    "result": {
+                     "__typename": "User",
+                     "action_counts": {
+                      "favorites_count": 0
+                     },
+                     "affiliates_highlighted_label": {},
+                     "avatar": {
+                      "image_url": "https://pbs.twimg.com/profile_images/2095923817080295424/YjqaAMdO_normal.jpg"
+                     },
+                     "banner": {
+                      "image_url": "https://pbs.twimg.com/profile_banners/2095909295913103360/1788542164"
+                     },
+                     "core": {
+                      "created_at": "Fri Sep 04 16:19:42 +0000 2026",
+                      "name": "QuaX Tests",
+                      "screen_name": "quax_tests"
+                     },
+                     "follow_request_sent": false,
+                     "has_graduated_access": true,
+                     "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
+                     "is_blue_verified": false,
+                     "location": {
+                      "location": "India"
+                     },
+                     "media_permissions": {
+                      "can_media_tag": true
+                     },
+                     "notifications_settings": {
+                      "notifications_enabled": false
+                     },
+                     "parody_commentary_fan_label": "None",
+                     "pinned_items": {},
+                     "possibly_sensitive": false,
+                     "privacy": {
+                      "protected": false
+                     },
+                     "profile_bio": {
+                      "description": "🧪 Throwaway account · QuaX parsing fixtures 🇫🇷\n  Nothing real, every post is a test case.\n  https://t.co/XbzZfYVJIK · https://t.co/Akx2T6uckh\n  Ping @jack",
+                      "entities": {
+                       "description": {
+                        "urls": [
+                         {
+                          "display_url": "github.com/Teskann/QuaX",
+                          "expanded_url": "http://github.com/Teskann/QuaX",
+                          "indices": [
+                           92,
+                           115
+                          ],
+                          "url": "https://t.co/XbzZfYVJIK"
+                         },
+                         {
+                          "display_url": "flutter.dev",
+                          "expanded_url": "https://flutter.dev",
+                          "indices": [
+                           118,
+                           141
+                          ],
+                          "url": "https://t.co/Akx2T6uckh"
+                         }
+                        ]
+                       }
+                      }
+                     },
+                     "profile_description_language": "en",
+                     "profile_image_shape": "Circle",
+                     "profile_metadata": {
+                      "profile_interstitial_type": ""
+                     },
+                     "profile_translation": {
+                      "translator_type": "none"
+                     },
+                     "relationship_counts": {
+                      "followers": 0,
+                      "following": 0
+                     },
+                     "relationship_perspectives": {
+                      "blocked_by": false,
+                      "blocking": false,
+                      "followed_by": false,
+                      "following": false,
+                      "live_following": false,
+                      "muting": false
+                     },
+                     "rest_id": "2095909295913103360",
+                     "super_follow_eligible": false,
+                     "super_followed_by": false,
+                     "super_following": false,
+                     "tweet_counts": {
+                      "media_tweets": 17,
+                      "tweets": 41
+                     },
+                     "verification": {
+                      "verified": false
+                     },
+                     "website": {
+                      "url": ""
+                     }
+                    }
+                   },
                    "type": "video",
                    "url": "https://t.co/MjToMWUtwG",
                    "video_info": {
@@ -1986,112 +1950,7 @@
                   },
                   {
                    "additional_media_info": {
-                    "monetizable": false,
-                    "source_user": {
-                     "user_results": {
-                      "result": {
-                       "__typename": "User",
-                       "action_counts": {
-                        "favorites_count": 0
-                       },
-                       "affiliates_highlighted_label": {},
-                       "avatar": {
-                        "image_url": "https://pbs.twimg.com/profile_images/2095923817080295424/YjqaAMdO_normal.jpg"
-                       },
-                       "banner": {
-                        "image_url": "https://pbs.twimg.com/profile_banners/2095909295913103360/1788542164"
-                       },
-                       "core": {
-                        "created_at": "Fri Sep 04 16:19:42 +0000 2026",
-                        "name": "QuaX Tests",
-                        "screen_name": "quax_tests"
-                       },
-                       "dm_permissions": {
-                        "can_dm": false
-                       },
-                       "follow_request_sent": false,
-                       "has_graduated_access": false,
-                       "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
-                       "is_blue_verified": false,
-                       "location": {
-                        "location": "India"
-                       },
-                       "media_permissions": {
-                        "can_media_tag": true
-                       },
-                       "notifications_settings": {
-                        "notifications_enabled": false
-                       },
-                       "parody_commentary_fan_label": "None",
-                       "pinned_items": {},
-                       "possibly_sensitive": false,
-                       "privacy": {
-                        "protected": false
-                       },
-                       "profile_bio": {
-                        "description": "🧪 Throwaway account · QuaX parsing fixtures 🇫🇷\n  Nothing real, every post is a test case.\n  https://t.co/XbzZfYVJIK · https://t.co/Akx2T6uckh\n  Ping @jack",
-                        "entities": {
-                         "description": {
-                          "urls": [
-                           {
-                            "display_url": "github.com/Teskann/QuaX",
-                            "expanded_url": "http://github.com/Teskann/QuaX",
-                            "indices": [
-                             92,
-                             115
-                            ],
-                            "url": "https://t.co/XbzZfYVJIK"
-                           },
-                           {
-                            "display_url": "flutter.dev",
-                            "expanded_url": "https://flutter.dev",
-                            "indices": [
-                             118,
-                             141
-                            ],
-                            "url": "https://t.co/Akx2T6uckh"
-                           }
-                          ]
-                         }
-                        }
-                       },
-                       "profile_description_language": "en",
-                       "profile_image_shape": "Circle",
-                       "profile_metadata": {
-                        "profile_interstitial_type": ""
-                       },
-                       "profile_translation": {
-                        "translator_type": "none"
-                       },
-                       "relationship_counts": {
-                        "followers": 0,
-                        "following": 0
-                       },
-                       "relationship_perspectives": {
-                        "blocked_by": false,
-                        "blocking": false,
-                        "followed_by": false,
-                        "following": false,
-                        "live_following": false,
-                        "muting": false
-                       },
-                       "rest_id": "2095909295913103360",
-                       "super_follow_eligible": false,
-                       "super_followed_by": false,
-                       "super_following": false,
-                       "tweet_counts": {
-                        "media_tweets": 17,
-                        "tweets": 41
-                       },
-                       "verification": {
-                        "verified": false
-                       },
-                       "website": {
-                        "url": ""
-                       }
-                      }
-                     }
-                    }
+                    "monetizable": false
                    },
                    "allow_download_status": {
                     "allow_download": true
@@ -2142,6 +2001,106 @@
                    },
                    "source_status_id_str": "2095920215234138129",
                    "source_user_id_str": "2095909295913103360",
+                   "source_user_results": {
+                    "result": {
+                     "__typename": "User",
+                     "action_counts": {
+                      "favorites_count": 0
+                     },
+                     "affiliates_highlighted_label": {},
+                     "avatar": {
+                      "image_url": "https://pbs.twimg.com/profile_images/2095923817080295424/YjqaAMdO_normal.jpg"
+                     },
+                     "banner": {
+                      "image_url": "https://pbs.twimg.com/profile_banners/2095909295913103360/1788542164"
+                     },
+                     "core": {
+                      "created_at": "Fri Sep 04 16:19:42 +0000 2026",
+                      "name": "QuaX Tests",
+                      "screen_name": "quax_tests"
+                     },
+                     "follow_request_sent": false,
+                     "has_graduated_access": true,
+                     "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
+                     "is_blue_verified": false,
+                     "location": {
+                      "location": "India"
+                     },
+                     "media_permissions": {
+                      "can_media_tag": true
+                     },
+                     "notifications_settings": {
+                      "notifications_enabled": false
+                     },
+                     "parody_commentary_fan_label": "None",
+                     "pinned_items": {},
+                     "possibly_sensitive": false,
+                     "privacy": {
+                      "protected": false
+                     },
+                     "profile_bio": {
+                      "description": "🧪 Throwaway account · QuaX parsing fixtures 🇫🇷\n  Nothing real, every post is a test case.\n  https://t.co/XbzZfYVJIK · https://t.co/Akx2T6uckh\n  Ping @jack",
+                      "entities": {
+                       "description": {
+                        "urls": [
+                         {
+                          "display_url": "github.com/Teskann/QuaX",
+                          "expanded_url": "http://github.com/Teskann/QuaX",
+                          "indices": [
+                           92,
+                           115
+                          ],
+                          "url": "https://t.co/XbzZfYVJIK"
+                         },
+                         {
+                          "display_url": "flutter.dev",
+                          "expanded_url": "https://flutter.dev",
+                          "indices": [
+                           118,
+                           141
+                          ],
+                          "url": "https://t.co/Akx2T6uckh"
+                         }
+                        ]
+                       }
+                      }
+                     },
+                     "profile_description_language": "en",
+                     "profile_image_shape": "Circle",
+                     "profile_metadata": {
+                      "profile_interstitial_type": ""
+                     },
+                     "profile_translation": {
+                      "translator_type": "none"
+                     },
+                     "relationship_counts": {
+                      "followers": 0,
+                      "following": 0
+                     },
+                     "relationship_perspectives": {
+                      "blocked_by": false,
+                      "blocking": false,
+                      "followed_by": false,
+                      "following": false,
+                      "live_following": false,
+                      "muting": false
+                     },
+                     "rest_id": "2095909295913103360",
+                     "super_follow_eligible": false,
+                     "super_followed_by": false,
+                     "super_following": false,
+                     "tweet_counts": {
+                      "media_tweets": 17,
+                      "tweets": 41
+                     },
+                     "verification": {
+                      "verified": false
+                     },
+                     "website": {
+                      "url": ""
+                     }
+                    }
+                   },
                    "type": "video",
                    "url": "https://t.co/MjToMWUtwG",
                    "video_info": {
@@ -2175,112 +2134,7 @@
                   },
                   {
                    "additional_media_info": {
-                    "monetizable": false,
-                    "source_user": {
-                     "user_results": {
-                      "result": {
-                       "__typename": "User",
-                       "action_counts": {
-                        "favorites_count": 0
-                       },
-                       "affiliates_highlighted_label": {},
-                       "avatar": {
-                        "image_url": "https://pbs.twimg.com/profile_images/2095923817080295424/YjqaAMdO_normal.jpg"
-                       },
-                       "banner": {
-                        "image_url": "https://pbs.twimg.com/profile_banners/2095909295913103360/1788542164"
-                       },
-                       "core": {
-                        "created_at": "Fri Sep 04 16:19:42 +0000 2026",
-                        "name": "QuaX Tests",
-                        "screen_name": "quax_tests"
-                       },
-                       "dm_permissions": {
-                        "can_dm": false
-                       },
-                       "follow_request_sent": false,
-                       "has_graduated_access": false,
-                       "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
-                       "is_blue_verified": false,
-                       "location": {
-                        "location": "India"
-                       },
-                       "media_permissions": {
-                        "can_media_tag": true
-                       },
-                       "notifications_settings": {
-                        "notifications_enabled": false
-                       },
-                       "parody_commentary_fan_label": "None",
-                       "pinned_items": {},
-                       "possibly_sensitive": false,
-                       "privacy": {
-                        "protected": false
-                       },
-                       "profile_bio": {
-                        "description": "🧪 Throwaway account · QuaX parsing fixtures 🇫🇷\n  Nothing real, every post is a test case.\n  https://t.co/XbzZfYVJIK · https://t.co/Akx2T6uckh\n  Ping @jack",
-                        "entities": {
-                         "description": {
-                          "urls": [
-                           {
-                            "display_url": "github.com/Teskann/QuaX",
-                            "expanded_url": "http://github.com/Teskann/QuaX",
-                            "indices": [
-                             92,
-                             115
-                            ],
-                            "url": "https://t.co/XbzZfYVJIK"
-                           },
-                           {
-                            "display_url": "flutter.dev",
-                            "expanded_url": "https://flutter.dev",
-                            "indices": [
-                             118,
-                             141
-                            ],
-                            "url": "https://t.co/Akx2T6uckh"
-                           }
-                          ]
-                         }
-                        }
-                       },
-                       "profile_description_language": "en",
-                       "profile_image_shape": "Circle",
-                       "profile_metadata": {
-                        "profile_interstitial_type": ""
-                       },
-                       "profile_translation": {
-                        "translator_type": "none"
-                       },
-                       "relationship_counts": {
-                        "followers": 0,
-                        "following": 0
-                       },
-                       "relationship_perspectives": {
-                        "blocked_by": false,
-                        "blocking": false,
-                        "followed_by": false,
-                        "following": false,
-                        "live_following": false,
-                        "muting": false
-                       },
-                       "rest_id": "2095909295913103360",
-                       "super_follow_eligible": false,
-                       "super_followed_by": false,
-                       "super_following": false,
-                       "tweet_counts": {
-                        "media_tweets": 17,
-                        "tweets": 41
-                       },
-                       "verification": {
-                        "verified": false
-                       },
-                       "website": {
-                        "url": ""
-                       }
-                      }
-                     }
-                    }
+                    "monetizable": false
                    },
                    "allow_download_status": {
                     "allow_download": true
@@ -2331,6 +2185,106 @@
                    },
                    "source_status_id_str": "2095920215234138129",
                    "source_user_id_str": "2095909295913103360",
+                   "source_user_results": {
+                    "result": {
+                     "__typename": "User",
+                     "action_counts": {
+                      "favorites_count": 0
+                     },
+                     "affiliates_highlighted_label": {},
+                     "avatar": {
+                      "image_url": "https://pbs.twimg.com/profile_images/2095923817080295424/YjqaAMdO_normal.jpg"
+                     },
+                     "banner": {
+                      "image_url": "https://pbs.twimg.com/profile_banners/2095909295913103360/1788542164"
+                     },
+                     "core": {
+                      "created_at": "Fri Sep 04 16:19:42 +0000 2026",
+                      "name": "QuaX Tests",
+                      "screen_name": "quax_tests"
+                     },
+                     "follow_request_sent": false,
+                     "has_graduated_access": true,
+                     "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
+                     "is_blue_verified": false,
+                     "location": {
+                      "location": "India"
+                     },
+                     "media_permissions": {
+                      "can_media_tag": true
+                     },
+                     "notifications_settings": {
+                      "notifications_enabled": false
+                     },
+                     "parody_commentary_fan_label": "None",
+                     "pinned_items": {},
+                     "possibly_sensitive": false,
+                     "privacy": {
+                      "protected": false
+                     },
+                     "profile_bio": {
+                      "description": "🧪 Throwaway account · QuaX parsing fixtures 🇫🇷\n  Nothing real, every post is a test case.\n  https://t.co/XbzZfYVJIK · https://t.co/Akx2T6uckh\n  Ping @jack",
+                      "entities": {
+                       "description": {
+                        "urls": [
+                         {
+                          "display_url": "github.com/Teskann/QuaX",
+                          "expanded_url": "http://github.com/Teskann/QuaX",
+                          "indices": [
+                           92,
+                           115
+                          ],
+                          "url": "https://t.co/XbzZfYVJIK"
+                         },
+                         {
+                          "display_url": "flutter.dev",
+                          "expanded_url": "https://flutter.dev",
+                          "indices": [
+                           118,
+                           141
+                          ],
+                          "url": "https://t.co/Akx2T6uckh"
+                         }
+                        ]
+                       }
+                      }
+                     },
+                     "profile_description_language": "en",
+                     "profile_image_shape": "Circle",
+                     "profile_metadata": {
+                      "profile_interstitial_type": ""
+                     },
+                     "profile_translation": {
+                      "translator_type": "none"
+                     },
+                     "relationship_counts": {
+                      "followers": 0,
+                      "following": 0
+                     },
+                     "relationship_perspectives": {
+                      "blocked_by": false,
+                      "blocking": false,
+                      "followed_by": false,
+                      "following": false,
+                      "live_following": false,
+                      "muting": false
+                     },
+                     "rest_id": "2095909295913103360",
+                     "super_follow_eligible": false,
+                     "super_followed_by": false,
+                     "super_following": false,
+                     "tweet_counts": {
+                      "media_tweets": 17,
+                      "tweets": 41
+                     },
+                     "verification": {
+                      "verified": false
+                     },
+                     "website": {
+                      "url": ""
+                     }
+                    }
+                   },
                    "type": "video",
                    "url": "https://t.co/MjToMWUtwG",
                    "video_info": {
@@ -2379,112 +2333,7 @@
                  "media": [
                   {
                    "additional_media_info": {
-                    "monetizable": false,
-                    "source_user": {
-                     "user_results": {
-                      "result": {
-                       "__typename": "User",
-                       "action_counts": {
-                        "favorites_count": 0
-                       },
-                       "affiliates_highlighted_label": {},
-                       "avatar": {
-                        "image_url": "https://pbs.twimg.com/profile_images/2095923817080295424/YjqaAMdO_normal.jpg"
-                       },
-                       "banner": {
-                        "image_url": "https://pbs.twimg.com/profile_banners/2095909295913103360/1788542164"
-                       },
-                       "core": {
-                        "created_at": "Fri Sep 04 16:19:42 +0000 2026",
-                        "name": "QuaX Tests",
-                        "screen_name": "quax_tests"
-                       },
-                       "dm_permissions": {
-                        "can_dm": false
-                       },
-                       "follow_request_sent": false,
-                       "has_graduated_access": false,
-                       "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
-                       "is_blue_verified": false,
-                       "location": {
-                        "location": "India"
-                       },
-                       "media_permissions": {
-                        "can_media_tag": true
-                       },
-                       "notifications_settings": {
-                        "notifications_enabled": false
-                       },
-                       "parody_commentary_fan_label": "None",
-                       "pinned_items": {},
-                       "possibly_sensitive": false,
-                       "privacy": {
-                        "protected": false
-                       },
-                       "profile_bio": {
-                        "description": "🧪 Throwaway account · QuaX parsing fixtures 🇫🇷\n  Nothing real, every post is a test case.\n  https://t.co/XbzZfYVJIK · https://t.co/Akx2T6uckh\n  Ping @jack",
-                        "entities": {
-                         "description": {
-                          "urls": [
-                           {
-                            "display_url": "github.com/Teskann/QuaX",
-                            "expanded_url": "http://github.com/Teskann/QuaX",
-                            "indices": [
-                             92,
-                             115
-                            ],
-                            "url": "https://t.co/XbzZfYVJIK"
-                           },
-                           {
-                            "display_url": "flutter.dev",
-                            "expanded_url": "https://flutter.dev",
-                            "indices": [
-                             118,
-                             141
-                            ],
-                            "url": "https://t.co/Akx2T6uckh"
-                           }
-                          ]
-                         }
-                        }
-                       },
-                       "profile_description_language": "en",
-                       "profile_image_shape": "Circle",
-                       "profile_metadata": {
-                        "profile_interstitial_type": ""
-                       },
-                       "profile_translation": {
-                        "translator_type": "none"
-                       },
-                       "relationship_counts": {
-                        "followers": 0,
-                        "following": 0
-                       },
-                       "relationship_perspectives": {
-                        "blocked_by": false,
-                        "blocking": false,
-                        "followed_by": false,
-                        "following": false,
-                        "live_following": false,
-                        "muting": false
-                       },
-                       "rest_id": "2095909295913103360",
-                       "super_follow_eligible": false,
-                       "super_followed_by": false,
-                       "super_following": false,
-                       "tweet_counts": {
-                        "media_tweets": 17,
-                        "tweets": 41
-                       },
-                       "verification": {
-                        "verified": false
-                       },
-                       "website": {
-                        "url": ""
-                       }
-                      }
-                     }
-                    }
+                    "monetizable": false
                    },
                    "allow_download_status": {
                     "allow_download": true
@@ -2535,6 +2384,106 @@
                    },
                    "source_status_id_str": "2095920215234138129",
                    "source_user_id_str": "2095909295913103360",
+                   "source_user_results": {
+                    "result": {
+                     "__typename": "User",
+                     "action_counts": {
+                      "favorites_count": 0
+                     },
+                     "affiliates_highlighted_label": {},
+                     "avatar": {
+                      "image_url": "https://pbs.twimg.com/profile_images/2095923817080295424/YjqaAMdO_normal.jpg"
+                     },
+                     "banner": {
+                      "image_url": "https://pbs.twimg.com/profile_banners/2095909295913103360/1788542164"
+                     },
+                     "core": {
+                      "created_at": "Fri Sep 04 16:19:42 +0000 2026",
+                      "name": "QuaX Tests",
+                      "screen_name": "quax_tests"
+                     },
+                     "follow_request_sent": false,
+                     "has_graduated_access": true,
+                     "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
+                     "is_blue_verified": false,
+                     "location": {
+                      "location": "India"
+                     },
+                     "media_permissions": {
+                      "can_media_tag": true
+                     },
+                     "notifications_settings": {
+                      "notifications_enabled": false
+                     },
+                     "parody_commentary_fan_label": "None",
+                     "pinned_items": {},
+                     "possibly_sensitive": false,
+                     "privacy": {
+                      "protected": false
+                     },
+                     "profile_bio": {
+                      "description": "🧪 Throwaway account · QuaX parsing fixtures 🇫🇷\n  Nothing real, every post is a test case.\n  https://t.co/XbzZfYVJIK · https://t.co/Akx2T6uckh\n  Ping @jack",
+                      "entities": {
+                       "description": {
+                        "urls": [
+                         {
+                          "display_url": "github.com/Teskann/QuaX",
+                          "expanded_url": "http://github.com/Teskann/QuaX",
+                          "indices": [
+                           92,
+                           115
+                          ],
+                          "url": "https://t.co/XbzZfYVJIK"
+                         },
+                         {
+                          "display_url": "flutter.dev",
+                          "expanded_url": "https://flutter.dev",
+                          "indices": [
+                           118,
+                           141
+                          ],
+                          "url": "https://t.co/Akx2T6uckh"
+                         }
+                        ]
+                       }
+                      }
+                     },
+                     "profile_description_language": "en",
+                     "profile_image_shape": "Circle",
+                     "profile_metadata": {
+                      "profile_interstitial_type": ""
+                     },
+                     "profile_translation": {
+                      "translator_type": "none"
+                     },
+                     "relationship_counts": {
+                      "followers": 0,
+                      "following": 0
+                     },
+                     "relationship_perspectives": {
+                      "blocked_by": false,
+                      "blocking": false,
+                      "followed_by": false,
+                      "following": false,
+                      "live_following": false,
+                      "muting": false
+                     },
+                     "rest_id": "2095909295913103360",
+                     "super_follow_eligible": false,
+                     "super_followed_by": false,
+                     "super_following": false,
+                     "tweet_counts": {
+                      "media_tweets": 17,
+                      "tweets": 41
+                     },
+                     "verification": {
+                      "verified": false
+                     },
+                     "website": {
+                      "url": ""
+                     }
+                    }
+                   },
                    "type": "video",
                    "url": "https://t.co/MjToMWUtwG",
                    "video_info": {
@@ -2568,112 +2517,7 @@
                   },
                   {
                    "additional_media_info": {
-                    "monetizable": false,
-                    "source_user": {
-                     "user_results": {
-                      "result": {
-                       "__typename": "User",
-                       "action_counts": {
-                        "favorites_count": 0
-                       },
-                       "affiliates_highlighted_label": {},
-                       "avatar": {
-                        "image_url": "https://pbs.twimg.com/profile_images/2095923817080295424/YjqaAMdO_normal.jpg"
-                       },
-                       "banner": {
-                        "image_url": "https://pbs.twimg.com/profile_banners/2095909295913103360/1788542164"
-                       },
-                       "core": {
-                        "created_at": "Fri Sep 04 16:19:42 +0000 2026",
-                        "name": "QuaX Tests",
-                        "screen_name": "quax_tests"
-                       },
-                       "dm_permissions": {
-                        "can_dm": false
-                       },
-                       "follow_request_sent": false,
-                       "has_graduated_access": false,
-                       "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
-                       "is_blue_verified": false,
-                       "location": {
-                        "location": "India"
-                       },
-                       "media_permissions": {
-                        "can_media_tag": true
-                       },
-                       "notifications_settings": {
-                        "notifications_enabled": false
-                       },
-                       "parody_commentary_fan_label": "None",
-                       "pinned_items": {},
-                       "possibly_sensitive": false,
-                       "privacy": {
-                        "protected": false
-                       },
-                       "profile_bio": {
-                        "description": "🧪 Throwaway account · QuaX parsing fixtures 🇫🇷\n  Nothing real, every post is a test case.\n  https://t.co/XbzZfYVJIK · https://t.co/Akx2T6uckh\n  Ping @jack",
-                        "entities": {
-                         "description": {
-                          "urls": [
-                           {
-                            "display_url": "github.com/Teskann/QuaX",
-                            "expanded_url": "http://github.com/Teskann/QuaX",
-                            "indices": [
-                             92,
-                             115
-                            ],
-                            "url": "https://t.co/XbzZfYVJIK"
-                           },
-                           {
-                            "display_url": "flutter.dev",
-                            "expanded_url": "https://flutter.dev",
-                            "indices": [
-                             118,
-                             141
-                            ],
-                            "url": "https://t.co/Akx2T6uckh"
-                           }
-                          ]
-                         }
-                        }
-                       },
-                       "profile_description_language": "en",
-                       "profile_image_shape": "Circle",
-                       "profile_metadata": {
-                        "profile_interstitial_type": ""
-                       },
-                       "profile_translation": {
-                        "translator_type": "none"
-                       },
-                       "relationship_counts": {
-                        "followers": 0,
-                        "following": 0
-                       },
-                       "relationship_perspectives": {
-                        "blocked_by": false,
-                        "blocking": false,
-                        "followed_by": false,
-                        "following": false,
-                        "live_following": false,
-                        "muting": false
-                       },
-                       "rest_id": "2095909295913103360",
-                       "super_follow_eligible": false,
-                       "super_followed_by": false,
-                       "super_following": false,
-                       "tweet_counts": {
-                        "media_tweets": 17,
-                        "tweets": 41
-                       },
-                       "verification": {
-                        "verified": false
-                       },
-                       "website": {
-                        "url": ""
-                       }
-                      }
-                     }
-                    }
+                    "monetizable": false
                    },
                    "allow_download_status": {
                     "allow_download": true
@@ -2724,6 +2568,106 @@
                    },
                    "source_status_id_str": "2095920215234138129",
                    "source_user_id_str": "2095909295913103360",
+                   "source_user_results": {
+                    "result": {
+                     "__typename": "User",
+                     "action_counts": {
+                      "favorites_count": 0
+                     },
+                     "affiliates_highlighted_label": {},
+                     "avatar": {
+                      "image_url": "https://pbs.twimg.com/profile_images/2095923817080295424/YjqaAMdO_normal.jpg"
+                     },
+                     "banner": {
+                      "image_url": "https://pbs.twimg.com/profile_banners/2095909295913103360/1788542164"
+                     },
+                     "core": {
+                      "created_at": "Fri Sep 04 16:19:42 +0000 2026",
+                      "name": "QuaX Tests",
+                      "screen_name": "quax_tests"
+                     },
+                     "follow_request_sent": false,
+                     "has_graduated_access": true,
+                     "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
+                     "is_blue_verified": false,
+                     "location": {
+                      "location": "India"
+                     },
+                     "media_permissions": {
+                      "can_media_tag": true
+                     },
+                     "notifications_settings": {
+                      "notifications_enabled": false
+                     },
+                     "parody_commentary_fan_label": "None",
+                     "pinned_items": {},
+                     "possibly_sensitive": false,
+                     "privacy": {
+                      "protected": false
+                     },
+                     "profile_bio": {
+                      "description": "🧪 Throwaway account · QuaX parsing fixtures 🇫🇷\n  Nothing real, every post is a test case.\n  https://t.co/XbzZfYVJIK · https://t.co/Akx2T6uckh\n  Ping @jack",
+                      "entities": {
+                       "description": {
+                        "urls": [
+                         {
+                          "display_url": "github.com/Teskann/QuaX",
+                          "expanded_url": "http://github.com/Teskann/QuaX",
+                          "indices": [
+                           92,
+                           115
+                          ],
+                          "url": "https://t.co/XbzZfYVJIK"
+                         },
+                         {
+                          "display_url": "flutter.dev",
+                          "expanded_url": "https://flutter.dev",
+                          "indices": [
+                           118,
+                           141
+                          ],
+                          "url": "https://t.co/Akx2T6uckh"
+                         }
+                        ]
+                       }
+                      }
+                     },
+                     "profile_description_language": "en",
+                     "profile_image_shape": "Circle",
+                     "profile_metadata": {
+                      "profile_interstitial_type": ""
+                     },
+                     "profile_translation": {
+                      "translator_type": "none"
+                     },
+                     "relationship_counts": {
+                      "followers": 0,
+                      "following": 0
+                     },
+                     "relationship_perspectives": {
+                      "blocked_by": false,
+                      "blocking": false,
+                      "followed_by": false,
+                      "following": false,
+                      "live_following": false,
+                      "muting": false
+                     },
+                     "rest_id": "2095909295913103360",
+                     "super_follow_eligible": false,
+                     "super_followed_by": false,
+                     "super_following": false,
+                     "tweet_counts": {
+                      "media_tweets": 17,
+                      "tweets": 41
+                     },
+                     "verification": {
+                      "verified": false
+                     },
+                     "website": {
+                      "url": ""
+                     }
+                    }
+                   },
                    "type": "video",
                    "url": "https://t.co/MjToMWUtwG",
                    "video_info": {
@@ -2752,112 +2696,7 @@
                   },
                   {
                    "additional_media_info": {
-                    "monetizable": false,
-                    "source_user": {
-                     "user_results": {
-                      "result": {
-                       "__typename": "User",
-                       "action_counts": {
-                        "favorites_count": 0
-                       },
-                       "affiliates_highlighted_label": {},
-                       "avatar": {
-                        "image_url": "https://pbs.twimg.com/profile_images/2095923817080295424/YjqaAMdO_normal.jpg"
-                       },
-                       "banner": {
-                        "image_url": "https://pbs.twimg.com/profile_banners/2095909295913103360/1788542164"
-                       },
-                       "core": {
-                        "created_at": "Fri Sep 04 16:19:42 +0000 2026",
-                        "name": "QuaX Tests",
-                        "screen_name": "quax_tests"
-                       },
-                       "dm_permissions": {
-                        "can_dm": false
-                       },
-                       "follow_request_sent": false,
-                       "has_graduated_access": false,
-                       "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
-                       "is_blue_verified": false,
-                       "location": {
-                        "location": "India"
-                       },
-                       "media_permissions": {
-                        "can_media_tag": true
-                       },
-                       "notifications_settings": {
-                        "notifications_enabled": false
-                       },
-                       "parody_commentary_fan_label": "None",
-                       "pinned_items": {},
-                       "possibly_sensitive": false,
-                       "privacy": {
-                        "protected": false
-                       },
-                       "profile_bio": {
-                        "description": "🧪 Throwaway account · QuaX parsing fixtures 🇫🇷\n  Nothing real, every post is a test case.\n  https://t.co/XbzZfYVJIK · https://t.co/Akx2T6uckh\n  Ping @jack",
-                        "entities": {
-                         "description": {
-                          "urls": [
-                           {
-                            "display_url": "github.com/Teskann/QuaX",
-                            "expanded_url": "http://github.com/Teskann/QuaX",
-                            "indices": [
-                             92,
-                             115
-                            ],
-                            "url": "https://t.co/XbzZfYVJIK"
-                           },
-                           {
-                            "display_url": "flutter.dev",
-                            "expanded_url": "https://flutter.dev",
-                            "indices": [
-                             118,
-                             141
-                            ],
-                            "url": "https://t.co/Akx2T6uckh"
-                           }
-                          ]
-                         }
-                        }
-                       },
-                       "profile_description_language": "en",
-                       "profile_image_shape": "Circle",
-                       "profile_metadata": {
-                        "profile_interstitial_type": ""
-                       },
-                       "profile_translation": {
-                        "translator_type": "none"
-                       },
-                       "relationship_counts": {
-                        "followers": 0,
-                        "following": 0
-                       },
-                       "relationship_perspectives": {
-                        "blocked_by": false,
-                        "blocking": false,
-                        "followed_by": false,
-                        "following": false,
-                        "live_following": false,
-                        "muting": false
-                       },
-                       "rest_id": "2095909295913103360",
-                       "super_follow_eligible": false,
-                       "super_followed_by": false,
-                       "super_following": false,
-                       "tweet_counts": {
-                        "media_tweets": 17,
-                        "tweets": 41
-                       },
-                       "verification": {
-                        "verified": false
-                       },
-                       "website": {
-                        "url": ""
-                       }
-                      }
-                     }
-                    }
+                    "monetizable": false
                    },
                    "allow_download_status": {
                     "allow_download": true
@@ -2908,6 +2747,106 @@
                    },
                    "source_status_id_str": "2095920215234138129",
                    "source_user_id_str": "2095909295913103360",
+                   "source_user_results": {
+                    "result": {
+                     "__typename": "User",
+                     "action_counts": {
+                      "favorites_count": 0
+                     },
+                     "affiliates_highlighted_label": {},
+                     "avatar": {
+                      "image_url": "https://pbs.twimg.com/profile_images/2095923817080295424/YjqaAMdO_normal.jpg"
+                     },
+                     "banner": {
+                      "image_url": "https://pbs.twimg.com/profile_banners/2095909295913103360/1788542164"
+                     },
+                     "core": {
+                      "created_at": "Fri Sep 04 16:19:42 +0000 2026",
+                      "name": "QuaX Tests",
+                      "screen_name": "quax_tests"
+                     },
+                     "follow_request_sent": false,
+                     "has_graduated_access": true,
+                     "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
+                     "is_blue_verified": false,
+                     "location": {
+                      "location": "India"
+                     },
+                     "media_permissions": {
+                      "can_media_tag": true
+                     },
+                     "notifications_settings": {
+                      "notifications_enabled": false
+                     },
+                     "parody_commentary_fan_label": "None",
+                     "pinned_items": {},
+                     "possibly_sensitive": false,
+                     "privacy": {
+                      "protected": false
+                     },
+                     "profile_bio": {
+                      "description": "🧪 Throwaway account · QuaX parsing fixtures 🇫🇷\n  Nothing real, every post is a test case.\n  https://t.co/XbzZfYVJIK · https://t.co/Akx2T6uckh\n  Ping @jack",
+                      "entities": {
+                       "description": {
+                        "urls": [
+                         {
+                          "display_url": "github.com/Teskann/QuaX",
+                          "expanded_url": "http://github.com/Teskann/QuaX",
+                          "indices": [
+                           92,
+                           115
+                          ],
+                          "url": "https://t.co/XbzZfYVJIK"
+                         },
+                         {
+                          "display_url": "flutter.dev",
+                          "expanded_url": "https://flutter.dev",
+                          "indices": [
+                           118,
+                           141
+                          ],
+                          "url": "https://t.co/Akx2T6uckh"
+                         }
+                        ]
+                       }
+                      }
+                     },
+                     "profile_description_language": "en",
+                     "profile_image_shape": "Circle",
+                     "profile_metadata": {
+                      "profile_interstitial_type": ""
+                     },
+                     "profile_translation": {
+                      "translator_type": "none"
+                     },
+                     "relationship_counts": {
+                      "followers": 0,
+                      "following": 0
+                     },
+                     "relationship_perspectives": {
+                      "blocked_by": false,
+                      "blocking": false,
+                      "followed_by": false,
+                      "following": false,
+                      "live_following": false,
+                      "muting": false
+                     },
+                     "rest_id": "2095909295913103360",
+                     "super_follow_eligible": false,
+                     "super_followed_by": false,
+                     "super_following": false,
+                     "tweet_counts": {
+                      "media_tweets": 17,
+                      "tweets": 41
+                     },
+                     "verification": {
+                      "verified": false
+                     },
+                     "website": {
+                      "url": ""
+                     }
+                    }
+                   },
                    "type": "video",
                    "url": "https://t.co/MjToMWUtwG",
                    "video_info": {
@@ -2941,112 +2880,7 @@
                   },
                   {
                    "additional_media_info": {
-                    "monetizable": false,
-                    "source_user": {
-                     "user_results": {
-                      "result": {
-                       "__typename": "User",
-                       "action_counts": {
-                        "favorites_count": 0
-                       },
-                       "affiliates_highlighted_label": {},
-                       "avatar": {
-                        "image_url": "https://pbs.twimg.com/profile_images/2095923817080295424/YjqaAMdO_normal.jpg"
-                       },
-                       "banner": {
-                        "image_url": "https://pbs.twimg.com/profile_banners/2095909295913103360/1788542164"
-                       },
-                       "core": {
-                        "created_at": "Fri Sep 04 16:19:42 +0000 2026",
-                        "name": "QuaX Tests",
-                        "screen_name": "quax_tests"
-                       },
-                       "dm_permissions": {
-                        "can_dm": false
-                       },
-                       "follow_request_sent": false,
-                       "has_graduated_access": false,
-                       "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
-                       "is_blue_verified": false,
-                       "location": {
-                        "location": "India"
-                       },
-                       "media_permissions": {
-                        "can_media_tag": true
-                       },
-                       "notifications_settings": {
-                        "notifications_enabled": false
-                       },
-                       "parody_commentary_fan_label": "None",
-                       "pinned_items": {},
-                       "possibly_sensitive": false,
-                       "privacy": {
-                        "protected": false
-                       },
-                       "profile_bio": {
-                        "description": "🧪 Throwaway account · QuaX parsing fixtures 🇫🇷\n  Nothing real, every post is a test case.\n  https://t.co/XbzZfYVJIK · https://t.co/Akx2T6uckh\n  Ping @jack",
-                        "entities": {
-                         "description": {
-                          "urls": [
-                           {
-                            "display_url": "github.com/Teskann/QuaX",
-                            "expanded_url": "http://github.com/Teskann/QuaX",
-                            "indices": [
-                             92,
-                             115
-                            ],
-                            "url": "https://t.co/XbzZfYVJIK"
-                           },
-                           {
-                            "display_url": "flutter.dev",
-                            "expanded_url": "https://flutter.dev",
-                            "indices": [
-                             118,
-                             141
-                            ],
-                            "url": "https://t.co/Akx2T6uckh"
-                           }
-                          ]
-                         }
-                        }
-                       },
-                       "profile_description_language": "en",
-                       "profile_image_shape": "Circle",
-                       "profile_metadata": {
-                        "profile_interstitial_type": ""
-                       },
-                       "profile_translation": {
-                        "translator_type": "none"
-                       },
-                       "relationship_counts": {
-                        "followers": 0,
-                        "following": 0
-                       },
-                       "relationship_perspectives": {
-                        "blocked_by": false,
-                        "blocking": false,
-                        "followed_by": false,
-                        "following": false,
-                        "live_following": false,
-                        "muting": false
-                       },
-                       "rest_id": "2095909295913103360",
-                       "super_follow_eligible": false,
-                       "super_followed_by": false,
-                       "super_following": false,
-                       "tweet_counts": {
-                        "media_tweets": 17,
-                        "tweets": 41
-                       },
-                       "verification": {
-                        "verified": false
-                       },
-                       "website": {
-                        "url": ""
-                       }
-                      }
-                     }
-                    }
+                    "monetizable": false
                    },
                    "allow_download_status": {
                     "allow_download": true
@@ -3097,6 +2931,106 @@
                    },
                    "source_status_id_str": "2095920215234138129",
                    "source_user_id_str": "2095909295913103360",
+                   "source_user_results": {
+                    "result": {
+                     "__typename": "User",
+                     "action_counts": {
+                      "favorites_count": 0
+                     },
+                     "affiliates_highlighted_label": {},
+                     "avatar": {
+                      "image_url": "https://pbs.twimg.com/profile_images/2095923817080295424/YjqaAMdO_normal.jpg"
+                     },
+                     "banner": {
+                      "image_url": "https://pbs.twimg.com/profile_banners/2095909295913103360/1788542164"
+                     },
+                     "core": {
+                      "created_at": "Fri Sep 04 16:19:42 +0000 2026",
+                      "name": "QuaX Tests",
+                      "screen_name": "quax_tests"
+                     },
+                     "follow_request_sent": false,
+                     "has_graduated_access": true,
+                     "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
+                     "is_blue_verified": false,
+                     "location": {
+                      "location": "India"
+                     },
+                     "media_permissions": {
+                      "can_media_tag": true
+                     },
+                     "notifications_settings": {
+                      "notifications_enabled": false
+                     },
+                     "parody_commentary_fan_label": "None",
+                     "pinned_items": {},
+                     "possibly_sensitive": false,
+                     "privacy": {
+                      "protected": false
+                     },
+                     "profile_bio": {
+                      "description": "🧪 Throwaway account · QuaX parsing fixtures 🇫🇷\n  Nothing real, every post is a test case.\n  https://t.co/XbzZfYVJIK · https://t.co/Akx2T6uckh\n  Ping @jack",
+                      "entities": {
+                       "description": {
+                        "urls": [
+                         {
+                          "display_url": "github.com/Teskann/QuaX",
+                          "expanded_url": "http://github.com/Teskann/QuaX",
+                          "indices": [
+                           92,
+                           115
+                          ],
+                          "url": "https://t.co/XbzZfYVJIK"
+                         },
+                         {
+                          "display_url": "flutter.dev",
+                          "expanded_url": "https://flutter.dev",
+                          "indices": [
+                           118,
+                           141
+                          ],
+                          "url": "https://t.co/Akx2T6uckh"
+                         }
+                        ]
+                       }
+                      }
+                     },
+                     "profile_description_language": "en",
+                     "profile_image_shape": "Circle",
+                     "profile_metadata": {
+                      "profile_interstitial_type": ""
+                     },
+                     "profile_translation": {
+                      "translator_type": "none"
+                     },
+                     "relationship_counts": {
+                      "followers": 0,
+                      "following": 0
+                     },
+                     "relationship_perspectives": {
+                      "blocked_by": false,
+                      "blocking": false,
+                      "followed_by": false,
+                      "following": false,
+                      "live_following": false,
+                      "muting": false
+                     },
+                     "rest_id": "2095909295913103360",
+                     "super_follow_eligible": false,
+                     "super_followed_by": false,
+                     "super_following": false,
+                     "tweet_counts": {
+                      "media_tweets": 17,
+                      "tweets": 41
+                     },
+                     "verification": {
+                      "verified": false
+                     },
+                     "website": {
+                      "url": ""
+                     }
+                    }
+                   },
                    "type": "video",
                    "url": "https://t.co/MjToMWUtwG",
                    "video_info": {
@@ -3165,11 +3099,8 @@
                       "name": "QuaX Tests",
                       "screen_name": "quax_tests"
                      },
-                     "dm_permissions": {
-                      "can_dm": false
-                     },
                      "follow_request_sent": false,
-                     "has_graduated_access": false,
+                     "has_graduated_access": true,
                      "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                      "is_blue_verified": false,
                      "location": {
@@ -3945,7 +3876,7 @@
                   "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                   "unmention_data": {},
                   "views": {
-                   "count": "20",
+                   "count": "39",
                    "state": "EnabledWithCount"
                   }
                  }
@@ -3963,7 +3894,7 @@
             }
            },
            "entryId": "tweet-2095923139951698251",
-           "sortIndex": "2095959032291393535"
+           "sortIndex": "2105664849601101823"
           },
           {
            "content": {
@@ -3988,7 +3919,7 @@
                    "value": {
                     "image_value": {
                      "height": 144,
-                     "url": "https://pbs.twimg.com/card_img/2094021520922161153/bObQYDY6?format=png&name=144x144_2",
+                     "url": "https://pbs.twimg.com/card_img/2104532685490106368/EN_MCWKw?format=png&name=144x144_2",
                      "width": 144
                     },
                     "type": "IMAGE"
@@ -4013,7 +3944,7 @@
                    "value": {
                     "image_value": {
                      "height": 420,
-                     "url": "https://pbs.twimg.com/card_img/2094021520922161153/bObQYDY6?format=png&name=420x420_2",
+                     "url": "https://pbs.twimg.com/card_img/2104532685490106368/EN_MCWKw?format=png&name=420x420_2",
                      "width": 420
                     },
                     "type": "IMAGE"
@@ -4024,7 +3955,7 @@
                    "value": {
                     "image_value": {
                      "height": 461,
-                     "url": "https://pbs.twimg.com/card_img/2094021520922161153/bObQYDY6?format=png&name=orig",
+                     "url": "https://pbs.twimg.com/card_img/2104532685490106368/EN_MCWKw?format=png&name=orig",
                      "width": 937
                     },
                     "type": "IMAGE"
@@ -4046,7 +3977,7 @@
                    "value": {
                     "image_value": {
                      "height": 100,
-                     "url": "https://pbs.twimg.com/card_img/2094021520922161153/bObQYDY6?format=png&name=100x100_2",
+                     "url": "https://pbs.twimg.com/card_img/2104532685490106368/EN_MCWKw?format=png&name=100x100_2",
                      "width": 100
                     },
                     "type": "IMAGE"
@@ -4057,7 +3988,7 @@
                    "value": {
                     "image_value": {
                      "height": 461,
-                     "url": "https://pbs.twimg.com/card_img/2094021520922161153/bObQYDY6?format=png&name=2048x2048_2_exp",
+                     "url": "https://pbs.twimg.com/card_img/2104532685490106368/EN_MCWKw?format=png&name=2048x2048_2_exp",
                      "width": 937
                     },
                     "type": "IMAGE"
@@ -4147,7 +4078,7 @@
                    "result": {
                     "__typename": "User",
                     "action_counts": {
-                     "favorites_count": 3224
+                     "favorites_count": 3222
                     },
                     "affiliates_highlighted_label": {},
                     "avatar": {
@@ -4160,9 +4091,6 @@
                      "created_at": "Fri Nov 25 01:07:12 +0000 2011",
                      "name": "Flutter",
                      "screen_name": "FlutterDev"
-                    },
-                    "dm_permissions": {
-                     "can_dm": false
                     },
                     "follow_request_sent": false,
                     "has_graduated_access": true,
@@ -4180,7 +4108,7 @@
                     "parody_commentary_fan_label": "None",
                     "pinned_items": {
                      "tweet_ids_str": [
-                      "2087628861068472718"
+                      "2101012855101218956"
                      ]
                     },
                     "possibly_sensitive": false,
@@ -4215,7 +4143,7 @@
                      "translator_type": "none"
                     },
                     "relationship_counts": {
-                     "followers": 277839,
+                     "followers": 278078,
                      "following": 60
                     },
                     "relationship_perspectives": {
@@ -4231,8 +4159,8 @@
                     "super_followed_by": false,
                     "super_following": false,
                     "tweet_counts": {
-                     "media_tweets": 1956,
-                     "tweets": 3878
+                     "media_tweets": 1973,
+                     "tweets": 3906
                     },
                     "verification": {
                      "verified": false,
@@ -4267,11 +4195,8 @@
                    "name": "Moluyts",
                    "screen_name": "quax_tests_2"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTE0MTIzOTA1MTE4MjEx",
                   "is_blue_verified": false,
                   "location": {
@@ -4419,7 +4344,7 @@
                       "value": {
                        "image_value": {
                         "height": 144,
-                        "url": "https://pbs.twimg.com/card_img/2094021520922161153/bObQYDY6?format=png&name=144x144_2",
+                        "url": "https://pbs.twimg.com/card_img/2104532685490106368/EN_MCWKw?format=png&name=144x144_2",
                         "width": 144
                        },
                        "type": "IMAGE"
@@ -4444,7 +4369,7 @@
                       "value": {
                        "image_value": {
                         "height": 420,
-                        "url": "https://pbs.twimg.com/card_img/2094021520922161153/bObQYDY6?format=png&name=420x420_2",
+                        "url": "https://pbs.twimg.com/card_img/2104532685490106368/EN_MCWKw?format=png&name=420x420_2",
                         "width": 420
                        },
                        "type": "IMAGE"
@@ -4455,7 +4380,7 @@
                       "value": {
                        "image_value": {
                         "height": 461,
-                        "url": "https://pbs.twimg.com/card_img/2094021520922161153/bObQYDY6?format=png&name=orig",
+                        "url": "https://pbs.twimg.com/card_img/2104532685490106368/EN_MCWKw?format=png&name=orig",
                         "width": 937
                        },
                        "type": "IMAGE"
@@ -4477,7 +4402,7 @@
                       "value": {
                        "image_value": {
                         "height": 100,
-                        "url": "https://pbs.twimg.com/card_img/2094021520922161153/bObQYDY6?format=png&name=100x100_2",
+                        "url": "https://pbs.twimg.com/card_img/2104532685490106368/EN_MCWKw?format=png&name=100x100_2",
                         "width": 100
                        },
                        "type": "IMAGE"
@@ -4488,7 +4413,7 @@
                       "value": {
                        "image_value": {
                         "height": 461,
-                        "url": "https://pbs.twimg.com/card_img/2094021520922161153/bObQYDY6?format=png&name=2048x2048_2_exp",
+                        "url": "https://pbs.twimg.com/card_img/2104532685490106368/EN_MCWKw?format=png&name=2048x2048_2_exp",
                         "width": 937
                        },
                        "type": "IMAGE"
@@ -4578,7 +4503,7 @@
                       "result": {
                        "__typename": "User",
                        "action_counts": {
-                        "favorites_count": 3224
+                        "favorites_count": 3222
                        },
                        "affiliates_highlighted_label": {},
                        "avatar": {
@@ -4591,9 +4516,6 @@
                         "created_at": "Fri Nov 25 01:07:12 +0000 2011",
                         "name": "Flutter",
                         "screen_name": "FlutterDev"
-                       },
-                       "dm_permissions": {
-                        "can_dm": false
                        },
                        "follow_request_sent": false,
                        "has_graduated_access": true,
@@ -4611,7 +4533,7 @@
                        "parody_commentary_fan_label": "None",
                        "pinned_items": {
                         "tweet_ids_str": [
-                         "2087628861068472718"
+                         "2101012855101218956"
                         ]
                        },
                        "possibly_sensitive": false,
@@ -4646,7 +4568,7 @@
                         "translator_type": "none"
                        },
                        "relationship_counts": {
-                        "followers": 277839,
+                        "followers": 278078,
                         "following": 60
                        },
                        "relationship_perspectives": {
@@ -4662,8 +4584,8 @@
                        "super_followed_by": false,
                        "super_following": false,
                        "tweet_counts": {
-                        "media_tweets": 1956,
-                        "tweets": 3878
+                        "media_tweets": 1973,
+                        "tweets": 3906
                        },
                        "verification": {
                         "verified": false,
@@ -4698,11 +4620,8 @@
                       "name": "QuaX Tests",
                       "screen_name": "quax_tests"
                      },
-                     "dm_permissions": {
-                      "can_dm": false
-                     },
                      "follow_request_sent": false,
-                     "has_graduated_access": false,
+                     "has_graduated_access": true,
                      "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                      "is_blue_verified": false,
                      "location": {
@@ -4854,10 +4773,9 @@
                    "user_id_str": "2095909295913103360"
                   },
                   "rest_id": "2095921351106146703",
-                  "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                   "unmention_data": {},
                   "views": {
-                   "count": "7",
+                   "count": "12",
                    "state": "EnabledWithCount"
                   }
                  }
@@ -4875,7 +4793,7 @@
             }
            },
            "entryId": "tweet-2095923127305880056",
-           "sortIndex": "2095959032291393534"
+           "sortIndex": "2105664849601101822"
           },
           {
            "content": {
@@ -4912,11 +4830,8 @@
                    "name": "Moluyts",
                    "screen_name": "quax_tests_2"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTE0MTIzOTA1MTE4MjEx",
                   "is_blue_verified": false,
                   "location": {
@@ -5067,11 +4982,8 @@
                       "name": "QuaX Tests",
                       "screen_name": "quax_tests"
                      },
-                     "dm_permissions": {
-                      "can_dm": false
-                     },
                      "follow_request_sent": false,
-                     "has_graduated_access": false,
+                     "has_graduated_access": true,
                      "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                      "is_blue_verified": false,
                      "location": {
@@ -5989,7 +5901,7 @@
                   "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                   "unmention_data": {},
                   "views": {
-                   "count": "20",
+                   "count": "40",
                    "state": "EnabledWithCount"
                   }
                  }
@@ -6007,7 +5919,7 @@
             }
            },
            "entryId": "tweet-2095923088411984000",
-           "sortIndex": "2095959032291393533"
+           "sortIndex": "2105664849601101821"
           },
           {
            "content": {
@@ -6051,7 +5963,7 @@
                   {
                    "key": "counts_are_final",
                    "value": {
-                    "boolean_value": false,
+                    "boolean_value": true,
                     "type": "BOOLEAN"
                    }
                   },
@@ -6072,7 +5984,7 @@
                   {
                    "key": "last_updated_datetime_utc",
                    "value": {
-                    "string_value": "2026-09-04T18:32:57Z",
+                    "string_value": "2026-09-05T16:53:00Z",
                     "type": "STRING"
                    }
                   },
@@ -6136,11 +6048,8 @@
                    "name": "Moluyts",
                    "screen_name": "quax_tests_2"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTE0MTIzOTA1MTE4MjEx",
                   "is_blue_verified": false,
                   "location": {
@@ -6276,7 +6185,7 @@
                      {
                       "key": "counts_are_final",
                       "value": {
-                       "boolean_value": false,
+                       "boolean_value": true,
                        "type": "BOOLEAN"
                       }
                      },
@@ -6297,7 +6206,7 @@
                      {
                       "key": "last_updated_datetime_utc",
                       "value": {
-                       "string_value": "2026-09-04T18:32:57Z",
+                       "string_value": "2026-09-05T16:53:00Z",
                        "type": "STRING"
                       }
                      },
@@ -6361,11 +6270,8 @@
                       "name": "QuaX Tests",
                       "screen_name": "quax_tests"
                      },
-                     "dm_permissions": {
-                      "can_dm": false
-                     },
                      "follow_request_sent": false,
-                     "has_graduated_access": false,
+                     "has_graduated_access": true,
                      "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                      "is_blue_verified": false,
                      "location": {
@@ -6483,10 +6389,9 @@
                    "user_id_str": "2095909295913103360"
                   },
                   "rest_id": "2095918053468848131",
-                  "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                   "unmention_data": {},
                   "views": {
-                   "count": "5",
+                   "count": "9",
                    "state": "EnabledWithCount"
                   }
                  }
@@ -6504,7 +6409,7 @@
             }
            },
            "entryId": "tweet-2095923056153682003",
-           "sortIndex": "2095959032291393532"
+           "sortIndex": "2105664849601101820"
           },
           {
            "content": {
@@ -6548,7 +6453,7 @@
                   {
                    "key": "counts_are_final",
                    "value": {
-                    "boolean_value": false,
+                    "boolean_value": true,
                     "type": "BOOLEAN"
                    }
                   },
@@ -6576,7 +6481,7 @@
                   {
                    "key": "last_updated_datetime_utc",
                    "value": {
-                    "string_value": "2026-09-04T19:14:50Z",
+                    "string_value": "2026-09-05T16:50:14Z",
                     "type": "STRING"
                    }
                   },
@@ -6661,11 +6566,8 @@
                    "name": "Moluyts",
                    "screen_name": "quax_tests_2"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTE0MTIzOTA1MTE4MjEx",
                   "is_blue_verified": false,
                   "location": {
@@ -6801,7 +6703,7 @@
                      {
                       "key": "counts_are_final",
                       "value": {
-                       "boolean_value": false,
+                       "boolean_value": true,
                        "type": "BOOLEAN"
                       }
                      },
@@ -6829,7 +6731,7 @@
                      {
                       "key": "last_updated_datetime_utc",
                       "value": {
-                       "string_value": "2026-09-04T19:14:50Z",
+                       "string_value": "2026-09-05T16:50:14Z",
                        "type": "STRING"
                       }
                      },
@@ -6914,11 +6816,8 @@
                       "name": "QuaX Tests",
                       "screen_name": "quax_tests"
                      },
-                     "dm_permissions": {
-                      "can_dm": false
-                     },
                      "follow_request_sent": false,
-                     "has_graduated_access": false,
+                     "has_graduated_access": true,
                      "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                      "is_blue_verified": false,
                      "location": {
@@ -7039,7 +6938,7 @@
                   "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                   "unmention_data": {},
                   "views": {
-                   "count": "7",
+                   "count": "12",
                    "state": "EnabledWithCount"
                   }
                  }
@@ -7057,7 +6956,7 @@
             }
            },
            "entryId": "tweet-2095917785930993765",
-           "sortIndex": "2095959032291393531"
+           "sortIndex": "2105664849601101819"
           },
           {
            "content": {
@@ -7094,11 +6993,8 @@
                    "name": "Moluyts",
                    "screen_name": "quax_tests_2"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTE0MTIzOTA1MTE4MjEx",
                   "is_blue_verified": false,
                   "location": {
@@ -7227,11 +7123,8 @@
                       "name": "QuaX Tests",
                       "screen_name": "quax_tests"
                      },
-                     "dm_permissions": {
-                      "can_dm": false
-                     },
                      "follow_request_sent": false,
-                     "has_graduated_access": false,
+                     "has_graduated_access": true,
                      "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                      "is_blue_verified": false,
                      "location": {
@@ -7349,10 +7242,9 @@
                    "user_id_str": "2095909295913103360"
                   },
                   "rest_id": "2095916385209651546",
-                  "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                   "unmention_data": {},
                   "views": {
-                   "count": "13",
+                   "count": "22",
                    "state": "EnabledWithCount"
                   }
                  }
@@ -7370,7 +7262,7 @@
             }
            },
            "entryId": "tweet-2095917776011423984",
-           "sortIndex": "2095959032291393530"
+           "sortIndex": "2105664849601101818"
           },
           {
            "content": {
@@ -7407,11 +7299,8 @@
                    "name": "Moluyts",
                    "screen_name": "quax_tests_2"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTE0MTIzOTA1MTE4MjEx",
                   "is_blue_verified": false,
                   "location": {
@@ -7540,11 +7429,8 @@
                       "name": "QuaX Tests",
                       "screen_name": "quax_tests"
                      },
-                     "dm_permissions": {
-                      "can_dm": false
-                     },
                      "follow_request_sent": false,
-                     "has_graduated_access": false,
+                     "has_graduated_access": true,
                      "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                      "is_blue_verified": false,
                      "location": {
@@ -7683,7 +7569,7 @@
             }
            },
            "entryId": "tweet-2095917755316817939",
-           "sortIndex": "2095959032291393529"
+           "sortIndex": "2105664849601101817"
           },
           {
            "content": {
@@ -7720,11 +7606,8 @@
                    "name": "Moluyts",
                    "screen_name": "quax_tests_2"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTE0MTIzOTA1MTE4MjEx",
                   "is_blue_verified": false,
                   "location": {
@@ -7853,11 +7736,8 @@
                       "name": "QuaX Tests",
                       "screen_name": "quax_tests"
                      },
-                     "dm_permissions": {
-                      "can_dm": false
-                     },
                      "follow_request_sent": false,
-                     "has_graduated_access": false,
+                     "has_graduated_access": true,
                      "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                      "is_blue_verified": false,
                      "location": {
@@ -7996,7 +7876,7 @@
             }
            },
            "entryId": "tweet-2095917713201787280",
-           "sortIndex": "2095959032291393528"
+           "sortIndex": "2105664849601101816"
           },
           {
            "content": {
@@ -8033,11 +7913,8 @@
                    "name": "Moluyts",
                    "screen_name": "quax_tests_2"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTE0MTIzOTA1MTE4MjEx",
                   "is_blue_verified": false,
                   "location": {
@@ -8166,11 +8043,8 @@
                       "name": "QuaX Tests",
                       "screen_name": "quax_tests"
                      },
-                     "dm_permissions": {
-                      "can_dm": false
-                     },
                      "follow_request_sent": false,
-                     "has_graduated_access": false,
+                     "has_graduated_access": true,
                      "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                      "is_blue_verified": false,
                      "location": {
@@ -8309,7 +8183,7 @@
             }
            },
            "entryId": "tweet-2095917694163808598",
-           "sortIndex": "2095959032291393527"
+           "sortIndex": "2105664849601101815"
           },
           {
            "content": {
@@ -8346,11 +8220,8 @@
                    "name": "Moluyts",
                    "screen_name": "quax_tests_2"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTE0MTIzOTA1MTE4MjEx",
                   "is_blue_verified": false,
                   "location": {
@@ -8492,11 +8363,8 @@
                       "name": "QuaX Tests",
                       "screen_name": "quax_tests"
                      },
-                     "dm_permissions": {
-                      "can_dm": false
-                     },
                      "follow_request_sent": false,
-                     "has_graduated_access": false,
+                     "has_graduated_access": true,
                      "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                      "is_blue_verified": false,
                      "location": {
@@ -8631,7 +8499,7 @@
                   "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                   "unmention_data": {},
                   "views": {
-                   "count": "8",
+                   "count": "11",
                    "state": "EnabledWithCount"
                   }
                  }
@@ -8649,7 +8517,7 @@
             }
            },
            "entryId": "tweet-2095917687276753213",
-           "sortIndex": "2095959032291393526"
+           "sortIndex": "2105664849601101814"
           },
           {
            "content": {
@@ -8686,11 +8554,8 @@
                    "name": "Moluyts",
                    "screen_name": "quax_tests_2"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTE0MTIzOTA1MTE4MjEx",
                   "is_blue_verified": false,
                   "location": {
@@ -8828,11 +8693,8 @@
                       "name": "QuaX Tests",
                       "screen_name": "quax_tests"
                      },
-                     "dm_permissions": {
-                      "can_dm": false
-                     },
                      "follow_request_sent": false,
-                     "has_graduated_access": false,
+                     "has_graduated_access": true,
                      "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                      "is_blue_verified": false,
                      "location": {
@@ -8965,7 +8827,7 @@
                   "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                   "unmention_data": {},
                   "views": {
-                   "count": "8",
+                   "count": "11",
                    "state": "EnabledWithCount"
                   }
                  }
@@ -8983,7 +8845,7 @@
             }
            },
            "entryId": "tweet-2095917659825037533",
-           "sortIndex": "2095959032291393525"
+           "sortIndex": "2105664849601101813"
           },
           {
            "content": {
@@ -9020,11 +8882,8 @@
                    "name": "Moluyts",
                    "screen_name": "quax_tests_2"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTE0MTIzOTA1MTE4MjEx",
                   "is_blue_verified": false,
                   "location": {
@@ -9153,11 +9012,8 @@
                       "name": "QuaX Tests",
                       "screen_name": "quax_tests"
                      },
-                     "dm_permissions": {
-                      "can_dm": false
-                     },
                      "follow_request_sent": false,
-                     "has_graduated_access": false,
+                     "has_graduated_access": true,
                      "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                      "is_blue_verified": false,
                      "location": {
@@ -9275,10 +9131,9 @@
                    "user_id_str": "2095909295913103360"
                   },
                   "rest_id": "2095912922601975848",
-                  "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                   "unmention_data": {},
                   "views": {
-                   "count": "14",
+                   "count": "30",
                    "state": "EnabledWithCount"
                   }
                  }
@@ -9296,27 +9151,27 @@
             }
            },
            "entryId": "tweet-2095917639323303943",
-           "sortIndex": "2095959032291393524"
+           "sortIndex": "2105664849601101812"
           },
           {
            "content": {
             "__typename": "TimelineTimelineCursor",
             "cursorType": "Top",
             "entryType": "TimelineTimelineCursor",
-            "value": "DAABCgABHRZXoo-AJxEKAAIdFjb_whaAHggAAwAAAAEAAA"
+            "value": "DAABCgABHTjTBkCAJxEKAAIdFjb_whaAHggAAwAAAAEAAA"
            },
-           "entryId": "cursor-top-2095959032291393537",
-           "sortIndex": "2095959032291393537"
+           "entryId": "cursor-top-2105664849601101825",
+           "sortIndex": "2105664849601101825"
           },
           {
            "content": {
             "__typename": "TimelineTimelineCursor",
             "cursorType": "Bottom",
             "entryType": "TimelineTimelineCursor",
-            "value": "DAABCgABHRZXoo9___EKAAIdFjH9AldABggAAwAAAAIAAA"
+            "value": "DAABCgABHTjTBkB___EKAAIdFjH9AldABggAAwAAAAIAAA"
            },
-           "entryId": "cursor-bottom-2095959032291393523",
-           "sortIndex": "2095959032291393523"
+           "entryId": "cursor-bottom-2105664849601101811",
+           "sortIndex": "2105664849601101811"
           }
          ],
          "type": "TimelineAddEntries"

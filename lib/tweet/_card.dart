@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:dart_twitter_api/twitter_api.dart';
 import 'package:extended_image/extended_image.dart';
@@ -100,10 +101,14 @@ class TweetCard extends StatelessWidget {
                 children: [
                   const Icon(Icons.link, size: 12, color: Colors.white),
                   const SizedBox(width: 4),
-                  Text(uri,
-                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                            color: Colors.white,
-                          )),
+                  Flexible(
+                    child: Text(uri,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                              color: Colors.white,
+                            )),
+                  ),
                 ],
               ),
             )
@@ -112,40 +117,41 @@ class TweetCard extends StatelessWidget {
     );
   }
 
-  Container _createVoteBar(BuildContext context, Map<String, dynamic> card, double total, int choiceIndex) {
-    var choiceCount = double.parse(card['binding_values']['choice${choiceIndex}_count']['string_value']);
-    var choicePercent = total == 0 ? 0 : (100 / total) * choiceCount;
+  Widget _createVoteBar(BuildContext context, String label, double count, double total, bool isLeading) {
+    var colorScheme = Theme.of(context).colorScheme;
+    var fillColor = isLeading ? colorScheme.primaryContainer : colorScheme.secondaryContainer;
+    var textStyle = TextStyle(
+      color: isLeading ? colorScheme.onPrimaryContainer : colorScheme.onSurface,
+      fontWeight: isLeading ? FontWeight.w600 : FontWeight.normal,
+    );
 
-    var theme = Theme.of(context);
-    var textColor = theme.brightness == Brightness.light ? Colors.black : Colors.white;
-
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 4),
-      child: Stack(alignment: Alignment.center, children: [
-        SizedBox(
-          height: 24,
-          child: LinearProgressIndicator(
-              value: choicePercent / 100,
-              color: theme.brightness == Brightness.light
-                  ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.3)
-                  : Theme.of(context).colorScheme.primary.withValues(alpha: 0.7)),
-        ),
-        Container(
-            alignment: Alignment.centerLeft,
-            margin: const EdgeInsets.symmetric(horizontal: 8),
-            child: RichText(
-              text: TextSpan(children: [
-                TextSpan(
-                    text: '${choicePercent.toStringAsFixed(1)}% ',
-                    style: TextStyle(color: textColor, fontWeight: FontWeight.bold)),
-                TextSpan(
-                    text: card['binding_values']['choice${choiceIndex}_label']['string_value'],
-                    style: TextStyle(
-                      color: textColor,
-                    ))
-              ]),
-            )),
-      ]),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: Stack(children: [
+          Positioned.fill(
+            child: LinearProgressIndicator(
+              value: total == 0 ? 0 : count / total,
+              color: fillColor,
+              backgroundColor: colorScheme.surfaceContainerHighest,
+            ),
+          ),
+          Container(
+            constraints: const BoxConstraints(minHeight: 40),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            child: Row(children: [
+              if (isLeading) ...[
+                Icon(Icons.check_circle, size: 18, color: colorScheme.onPrimaryContainer),
+                const SizedBox(width: 8),
+              ],
+              Expanded(child: Text(label, style: textStyle)),
+              const SizedBox(width: 8),
+              Text('${(total == 0 ? 0 : 100 * count / total).toStringAsFixed(1)}%', style: textStyle),
+            ]),
+          ),
+        ]),
+      ),
     );
   }
 
@@ -200,9 +206,10 @@ class TweetCard extends StatelessWidget {
   Container _createVoteCard(BuildContext context, Map<String, dynamic> card, int numberOfChoices) {
     var numberFormat = NumberFormat.decimalPattern();
 
-    var total = List.generate(
-            numberOfChoices, (index) => double.parse(card['binding_values']['choice${++index}_count']['string_value']))
-        .reduce((value, element) => value + element);
+    var counts = List.generate(
+        numberOfChoices, (index) => double.parse(card['binding_values']['choice${index + 1}_count']['string_value']));
+    var total = counts.reduce((value, element) => value + element);
+    var maxCount = counts.reduce(max);
 
     String endsAtText;
 
@@ -221,7 +228,14 @@ class TweetCard extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           children: [
-            ...List.generate(numberOfChoices, (index) => _createVoteBar(context, card, total, ++index)),
+            ...List.generate(
+                numberOfChoices,
+                (index) => _createVoteBar(
+                    context,
+                    card['binding_values']['choice${index + 1}_label']['string_value'],
+                    counts[index],
+                    total,
+                    counts[index] > 0 && counts[index] == maxCount)),
             Container(
               alignment: Alignment.centerRight,
               margin: const EdgeInsets.only(top: 8),

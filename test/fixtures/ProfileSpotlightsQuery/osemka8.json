@@ -1,0 +1,48 @@
+{
+ "scenario": "Profile whose posts tab mixes subscriber-only previews (TweetPreviewDisplay) into its threads",
+ "sourceUrl": "https://x.com/Osemka8",
+ "operation": "ProfileSpotlightsQuery",
+ "host": "x.com",
+ "queryId": "mzoqrVGwk-YTSGME1dRfXQ",
+ "features": null,
+ "fieldToggles": null,
+ "variables": {
+  "screen_name": "Osemka8"
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "500",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "493",
+  "x-rate-limit-reset": "1790865377"
+ },
+ "body": {
+  "data": {
+   "user_result_by_screen_name": {
+    "id": "VXNlclJlc3VsdHM6Mzg2NDE0OTczNA==",
+    "result": {
+     "__typename": "User",
+     "core": {
+      "name": "Osemka",
+      "screen_name": "Osemka8"
+     },
+     "id": "VXNlcjozODY0MTQ5NzM0",
+     "is_verified_organization": false,
+     "privacy": {
+      "protected": false
+     },
+     "profilemodules": {
+      "v1": []
+     },
+     "relationship_perspectives": {
+      "blocked_by": false,
+      "blocking": false,
+      "followed_by": false,
+      "following": false
+     },
+     "rest_id": "3864149734"
+    }
+   }
+  }
+ }
+}

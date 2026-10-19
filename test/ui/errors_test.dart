@@ -67,4 +67,16 @@ void main() {
     expect(tester.getTopLeft(find.byType(ErrorCard)).dy, appBarBottom,
         reason: 'Profile tabs sit below a collapsing app bar, which leaves the status bar padding to its body');
   });
+
+  testWidgets('Should fit where a paged list shows its first-page error', (tester) async {
+    await pumpInApp(
+        tester,
+        const CustomScrollView(slivers: [
+          SliverFillRemaining(hasScrollBody: false, child: fullPageError),
+        ]));
+
+    expect(tester.takeException(), isNull,
+        reason: 'The slot asks for the intrinsic height of the error, which the error should be able to give');
+    expect(find.text('boom'), findsOneWidget, reason: 'The error should be shown in place of the list');
+  });
 }

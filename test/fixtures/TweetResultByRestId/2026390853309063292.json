@@ -3,7 +3,7 @@
  "sourceUrl": "https://x.com/UKLabour/status/2026390853309063292",
  "operation": "TweetResultByRestId",
  "host": "x.com",
- "queryId": "GZsN2Pc4knAoit6pXa4HSA",
+ "queryId": "LbQZrAWyKPvExi8di3-EoA",
  "features": {
   "creator_subscriptions_tweet_preview_api_enabled": true,
   "premium_content_api_read_enabled": false,
@@ -13,6 +13,7 @@
   "responsive_web_grok_analyze_post_followups_enabled": true,
   "rweb_cashtags_composer_attachment_enabled": true,
   "responsive_web_jetfuel_frame": true,
+  "rweb_sports_post_context_enabled": true,
   "responsive_web_grok_share_attachment_enabled": true,
   "responsive_web_grok_annotations_enabled": true,
   "articles_preview_enabled": true,
@@ -37,6 +38,7 @@
   "responsive_web_profile_redirect_enabled": true,
   "rweb_tipjar_consumption_enabled": false,
   "verified_phone_label_enabled": false,
+  "responsive_web_nested_quote_preview_enabled": true,
   "responsive_web_grok_image_annotation_enabled": true,
   "responsive_web_grok_imagine_annotation_enabled": true,
   "responsive_web_grok_community_note_auto_translation_is_enabled": true,
@@ -46,7 +48,8 @@
   "withArticleRichContentState": true,
   "withArticlePlainText": false,
   "withArticleSummaryText": true,
-  "withArticleVoiceOver": true
+  "withArticleVoiceOver": true,
+  "withPayments": false
  },
  "variables": {
   "tweetId": "2026390853309063292",
@@ -59,8 +62,8 @@
  "headers": {
   "x-rate-limit-limit": "500",
   "content-type": "application/json",
-  "x-rate-limit-remaining": "470",
-  "x-rate-limit-reset": "1788551366"
+  "x-rate-limit-remaining": "468",
+  "x-rate-limit-reset": "1790865406"
  },
  "body": {
   "data": {
@@ -140,22 +143,19 @@
        "result": {
         "__typename": "User",
         "action_counts": {
-         "favorites_count": 603
+         "favorites_count": 648
         },
         "affiliates_highlighted_label": {},
         "avatar": {
          "image_url": "https://pbs.twimg.com/profile_images/1572133535703605249/Ap0Mz-Qj_normal.jpg"
         },
         "banner": {
-         "image_url": "https://pbs.twimg.com/profile_banners/14291684/1784302286"
+         "image_url": "https://pbs.twimg.com/profile_banners/14291684/1790496271"
         },
         "core": {
          "created_at": "Thu Apr 03 08:57:48 +0000 2008",
          "name": "The Labour Party",
          "screen_name": "UKLabour"
-        },
-        "dm_permissions": {
-         "can_dm": true
         },
         "follow_request_sent": false,
         "has_graduated_access": true,
@@ -171,7 +171,11 @@
          "notifications_enabled": false
         },
         "parody_commentary_fan_label": "None",
-        "pinned_items": {},
+        "pinned_items": {
+         "tweet_ids_str": [
+          "2104904363231813770"
+         ]
+        },
         "possibly_sensitive": false,
         "privacy": {
          "protected": false
@@ -204,8 +208,8 @@
          "translator_type": "none"
         },
         "relationship_counts": {
-         "followers": 989472,
-         "following": 10029
+         "followers": 989256,
+         "following": 10013
         },
         "relationship_perspectives": {
          "blocked_by": false,
@@ -220,8 +224,8 @@
         "super_followed_by": false,
         "super_following": false,
         "tweet_counts": {
-         "media_tweets": 11907,
-         "tweets": 41743
+         "media_tweets": 11963,
+         "tweets": 41940
         },
         "verification": {
          "verified": false
@@ -452,7 +456,7 @@
         }
        ]
       },
-      "favorite_count": 1184,
+      "favorite_count": 1182,
       "favorited": false,
       "full_text": "🚨BREAKING: new poll suggests there is just one point between Labour and Reform in Gorton and Denton.\n\nEvery vote will count on Thursday. Back Labour and choose unity over Reform’s division. https://t.co/q8ocoMqKCP",
       "id_str": "2026390853309063292",
@@ -461,8 +465,8 @@
       "possibly_sensitive": false,
       "possibly_sensitive_editable": true,
       "quote_count": 425,
-      "reply_count": 2006,
-      "retweet_count": 274,
+      "reply_count": 1995,
+      "retweet_count": 271,
       "retweeted": false,
       "user_id_str": "14291684"
      },
@@ -470,7 +474,7 @@
      "source": "<a href=\"https://buffer.com\" rel=\"nofollow\">Buffer</a>",
      "unmention_data": {},
      "views": {
-      "count": "1216935",
+      "count": "1217419",
       "state": "EnabledWithCount"
      }
     }

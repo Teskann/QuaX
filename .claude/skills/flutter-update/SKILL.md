@@ -44,7 +44,7 @@ Never touch the `version:` line, `changelog.md` or `release-notes.md`.
 
 ## Write the summary
 
-Write `/tmp/flutter-update-pr.md`:
+Write `flutter-update-pr.md` at the root of the repository (it is gitignored), not in `/tmp`:
 
 - **First line**: the commit message, reused as the pull request title, e.g.
   `Upgraded Flutter to 3.47.2 and refreshed the dependencies`. It goes into the release notes

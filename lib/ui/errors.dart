@@ -5,6 +5,7 @@ import 'package:async_button_builder/async_button_builder.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 
 import 'package:material_ui/material_ui.dart';
+import 'package:flutter/rendering.dart' show RenderParagraph;
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -257,7 +258,7 @@ Future<void> reportBug(BuildContext context,
   await openUri(context, uri.toString());
 }
 
-enum _PrimaryAction { report, addAccount }
+enum _PrimaryAction { report, addAccount, retry }
 
 typedef _CardContent = ({IconData icon, String title, String details, _PrimaryAction? primary});
 
@@ -297,17 +298,25 @@ class ErrorCard extends StatelessWidget {
           details: l10n.no_account_available_message,
           primary: _PrimaryAction.addAccount,
         ),
-      RateLimitedException() => (
+      FeedRateLimitedException(:final availableAt, :final loaded, :final total) => (
           icon: Icons.hourglass_empty,
-          title: l10n.rate_limited_title,
+          title: l10n.feed_rate_limited_title,
+          details: availableAt == null
+              ? l10n.feed_rate_limited_message(loaded.toString(), total.toString())
+              : l10n.feed_rate_limited_until_message(_time(availableAt), loaded.toString(), total.toString()),
+          primary: _PrimaryAction.addAccount,
+        ),
+      RateLimitedException(:final availableAt) => (
+          icon: Icons.hourglass_empty,
+          title: availableAt == null ? l10n.rate_limited_title : l10n.rate_limited_until_title(_time(availableAt)),
           details: l10n.rate_limited_message,
           primary: _PrimaryAction.addAccount,
         ),
-      NoWorkingAccountException() => (
-          icon: Icons.person_off,
-          title: l10n.no_working_account_title,
-          details: l10n.no_working_account_message,
-          primary: _PrimaryAction.addAccount,
+      NotFoundException() => (
+          icon: Icons.search_off,
+          title: l10n.not_found_title,
+          details: l10n.not_found_message,
+          primary: _PrimaryAction.retry,
         ),
       TwitterError() => (
           icon: Icons.error_outline,
@@ -325,52 +334,22 @@ class ErrorCard extends StatelessWidget {
     };
   }
 
+  String _time(DateTime dateTime) => DateFormat.jm().format(dateTime.toLocal());
+
   @override
   Widget build(BuildContext context) {
     final l10n = L10n.of(context);
     final content = _content(l10n);
     final onRetry = this.onRetry;
+    final primary = content.primary == _PrimaryAction.retry && onRetry == null ? null : content.primary;
 
-    return Card(
-      color: tweetCardColor(context),
-      margin: const EdgeInsets.all(12),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _texts(context, content),
-            const SizedBox(height: 16),
-            OverflowBar(alignment: MainAxisAlignment.end, spacing: 4, children: [
-              if (onRetry != null)
-                TextButton(
-                  onPressed: () => onRetry(),
-                  child: Text(retryText ?? l10n.retry),
-                ),
-              if (content.primary != null) _primaryButton(context, content.primary!),
-            ]),
-          ],
+    return StatusCard(icon: content.icon, title: content.title, details: content.details, actions: [
+      if (onRetry != null && primary != _PrimaryAction.retry)
+        TextButton(
+          onPressed: () => onRetry(),
+          child: Text(retryText ?? l10n.retry),
         ),
-      ),
-    );
-  }
-
-  Widget _texts(BuildContext context, _CardContent content) {
-    final theme = Theme.of(context);
-    final colors = theme.colorScheme;
-    return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Icon(content.icon, size: 32, color: Colors.red.harmonizeWith(colors.primary)),
-      const SizedBox(width: 12),
-      Expanded(
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(content.title, style: theme.textTheme.titleSmall),
-          const SizedBox(height: 6),
-          Text(content.details,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: theme.textTheme.bodySmall?.copyWith(color: colors.onSurfaceVariant)),
-        ]),
-      ),
+      if (primary != null) _primaryButton(context, primary),
     ]);
   }
 
@@ -386,6 +365,113 @@ class ErrorCard extends StatelessWidget {
           onPressed: () => openAddAccount(context),
           child: Text(l10n.add_account),
         ),
+      _PrimaryAction.retry => FilledButton(
+          onPressed: () => onRetry?.call(),
+          child: Text(retryText ?? l10n.retry),
+        ),
     };
+  }
+}
+
+/// Card with a red icon, a title, details and actions, shared by errors and unavailable posts
+class StatusCard extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String details;
+  final List<Widget> actions;
+  final EdgeInsetsGeometry margin;
+
+  const StatusCard(
+      {super.key,
+      required this.icon,
+      required this.title,
+      required this.details,
+      required this.actions,
+      this.margin = const EdgeInsets.all(12)});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: tweetCardColor(context),
+      margin: margin,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _texts(context),
+            if (actions.isNotEmpty) ...[
+              const SizedBox(height: 16),
+              OverflowBar(alignment: MainAxisAlignment.end, spacing: 4, children: actions),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _texts(BuildContext context) {
+    final theme = Theme.of(context);
+    final colors = theme.colorScheme;
+    return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Icon(icon, size: 32, color: Colors.red.harmonizeWith(colors.primary)),
+      const SizedBox(width: 12),
+      Expanded(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(title, style: theme.textTheme.titleMedium),
+          const SizedBox(height: 6),
+          _ExpandableDetails(text: details, style: theme.textTheme.bodySmall?.copyWith(color: colors.onSurfaceVariant)),
+        ]),
+      ),
+    ]);
+  }
+}
+
+/// Error details clamped to a few lines, which unfold with an animation when tapped
+class _ExpandableDetails extends StatefulWidget {
+  final String text;
+  final TextStyle? style;
+
+  const _ExpandableDetails({required this.text, required this.style});
+
+  @override
+  State<_ExpandableDetails> createState() => _ExpandableDetailsState();
+}
+
+class _ExpandableDetailsState extends State<_ExpandableDetails> {
+  static const _collapsedLines = 2;
+
+  final _textKey = GlobalKey();
+  bool _expanded = false;
+  bool _overflows = false;
+
+  void _checkOverflow(Duration _) {
+    final paragraph = _textKey.currentContext?.findRenderObject();
+    if (!mounted || _expanded || paragraph is! RenderParagraph) return;
+    if (paragraph.didExceedMaxLines != _overflows) {
+      setState(() => _overflows = paragraph.didExceedMaxLines);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback(_checkOverflow);
+    final text = Text(widget.text,
+        key: _textKey,
+        maxLines: _expanded ? null : _collapsedLines,
+        overflow: _expanded ? null : TextOverflow.ellipsis,
+        style: widget.style);
+    if (!_overflows) return text;
+
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () => setState(() => _expanded = !_expanded),
+      child: AnimatedSize(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOutCubic,
+        alignment: Alignment.topCenter,
+        child: text,
+      ),
+    );
   }
 }

@@ -150,16 +150,10 @@ class _SavedScreenState extends State<SavedScreen> with AutomaticKeepAliveClient
           }
         }
 
-        return SizedBox(
-          height: 52,
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Row(children: chips),
-            ),
-          ),
+        return SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+          child: Row(children: chips),
         );
       },
     );

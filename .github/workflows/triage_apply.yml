@@ -1,0 +1,39 @@
+name: Apply quax-bot triage
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions: {}
+
+concurrency:
+  group: triage-apply-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    name: Apply the triage quax-bot asked for
+    # 337335176 is quax-bot
+    if: |
+      github.event.comment.user.id == 337335176 &&
+      github.event.issue.pull_request == null &&
+      contains(github.event.comment.body, '<!-- quax-triage')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      issues: write
+
+    steps:
+      - name: Clone the triage scripts
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+          sparse-checkout: .github/triage
+
+      - name: Apply the triage
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          script: |
+            const apply = require('./.github/triage/apply.js')
+            await apply({ github, context, core })

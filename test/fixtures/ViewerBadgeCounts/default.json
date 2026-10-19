@@ -1,0 +1,35 @@
+{
+ "scenario": "Full profile: avatar, banner, bio with two links and a mention that has no entity",
+ "sourceUrl": "https://x.com/quax_tests",
+ "operation": "ViewerBadgeCounts",
+ "host": "x.com",
+ "queryId": "q4Npr1-FYRWyXsRzPckwEA",
+ "features": null,
+ "fieldToggles": null,
+ "variables": {},
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "50",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "48",
+  "x-rate-limit-reset": "1790865375"
+ },
+ "body": {
+  "data": {
+   "viewer_v2": {
+    "user_results": {
+     "result": {
+      "__typename": "User",
+      "badge_counts": {
+       "dm_unread_count": 0,
+       "is_from_urt": true,
+       "ntab_unread_count": 0,
+       "total_unread_count": 0,
+       "xchat_unread_count": 0
+      }
+     }
+    }
+   }
+  }
+ }
+}

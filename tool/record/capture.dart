@@ -23,6 +23,8 @@ import 'dart:io';
 import 'package:collection/collection.dart';
 import 'package:puppeteer/puppeteer.dart';
 
+import 'transaction_id.dart' show transactionIdFixtures;
+
 /// Response headers worth keeping. An allow-list, so a header X adds tomorrow
 /// is dropped by default instead of leaking into a public repository.
 const _keepHeaders = {
@@ -316,7 +318,8 @@ Future<int> _visit(Page page, Scenario scenario) async {
 }
 
 /// Deletes fixtures this run did not produce, so the directory always describes
-/// the current links.json and nothing else.
+/// the current links.json and nothing else. The x-client-transaction-id
+/// fixtures come from transaction_id.dart and are kept.
 ///
 /// Skipped when a page failed to load: a run that lost scenarios would delete
 /// exactly the fixtures it failed to refresh, and the loss would be silent.
@@ -332,6 +335,7 @@ void _prune() {
       .listSync(recursive: true)
       .whereType<File>()
       .where((file) => file.path.endsWith('.json'))
+      .where((file) => !file.path.startsWith(transactionIdFixtures.path))
       .where((file) => !_writtenThisRun.containsKey(file.path))
       .toList();
 

@@ -20,18 +20,18 @@ class ExpandableTweetText extends StatefulWidget {
 class ExpandableTweetTextState extends State<ExpandableTweetText> {
   bool _isExpanded = false;
 
-  bool _textIsTruncated() {
+  bool _textIsTruncated(double maxWidth) {
     if (!mounted) return false;
 
     if (widget.maxLines == null) return false;
 
     final painter = TextPainter(
-      text: TextSpan(children: widget.textSpans),
+      text: TextSpan(style: DefaultTextStyle.of(context).style, children: widget.textSpans),
       textDirection: TextDirection.ltr,
       textScaler: MediaQuery.of(context).textScaler,
     );
 
-    painter.layout(maxWidth: MediaQuery.of(context).size.width);
+    painter.layout(maxWidth: maxWidth);
     final res = painter.computeLineMetrics().length > widget.maxLines!;
     painter.dispose();
 
@@ -40,9 +40,9 @@ class ExpandableTweetTextState extends State<ExpandableTweetText> {
 
   @override
   Widget build(BuildContext context) {
-    final textIsTruncated = _textIsTruncated();
     return LayoutBuilder(
       builder: (context, constraints) {
+        final textIsTruncated = _textIsTruncated(constraints.maxWidth);
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

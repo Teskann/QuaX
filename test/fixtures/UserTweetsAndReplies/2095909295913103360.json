@@ -1,9 +1,9 @@
 {
  "scenario": "All view of the busier account, with the four-video and mixed-media posts",
  "sourceUrl": "https://x.com/quax_tests/all",
- "operation": "UserTweets",
+ "operation": "UserTweetsAndReplies",
  "host": "x.com",
- "queryId": "eviprbEPLvNG88V3smUngQ",
+ "queryId": "Z1m9j8S1leAzQp6yZXuaSg",
  "features": {
   "rweb_video_screen_enabled": false,
   "rweb_cashtags_enabled": true,
@@ -20,6 +20,7 @@
   "responsive_web_grok_analyze_post_followups_enabled": true,
   "rweb_cashtags_composer_attachment_enabled": true,
   "responsive_web_jetfuel_frame": true,
+  "rweb_sports_post_context_enabled": true,
   "responsive_web_grok_share_attachment_enabled": true,
   "responsive_web_grok_annotations_enabled": true,
   "articles_preview_enabled": true,
@@ -39,27 +40,30 @@
   "tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled": true,
   "longform_notetweets_rich_text_read_enabled": true,
   "longform_notetweets_inline_media_enabled": false,
+  "responsive_web_nested_quote_preview_enabled": true,
   "responsive_web_grok_image_annotation_enabled": true,
   "responsive_web_grok_imagine_annotation_enabled": true,
   "responsive_web_grok_community_note_auto_translation_is_enabled": true,
   "responsive_web_enhance_cards_enabled": false
  },
  "fieldToggles": {
+  "withPayments": false,
   "withArticlePlainText": false
  },
  "variables": {
   "userId": "2095909295913103360",
   "count": 20,
   "includePromotedContent": true,
+  "withCommunity": true,
   "withQuickPromoteEligibilityTweetFields": true,
   "withVoice": true
  },
  "status": 200,
  "headers": {
-  "x-rate-limit-limit": "50",
+  "x-rate-limit-limit": "500",
   "content-type": "application/json",
-  "x-rate-limit-remaining": "47",
-  "x-rate-limit-reset": "1788551455"
+  "x-rate-limit-remaining": "497",
+  "x-rate-limit-reset": "1790865501"
  },
  "body": {
   "data": {
@@ -81,7 +85,7 @@
              "component": "tweet",
              "details": {
               "timelinesDetails": {
-               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaBt67LHAAAAAA==",
+               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaD32T5fAAAAAA==",
                "injectionType": "RankedOrganicTweet"
               }
              },
@@ -135,11 +139,8 @@
                     "name": "QuaX Tests",
                     "screen_name": "quax_tests"
                    },
-                   "dm_permissions": {
-                    "can_dm": false
-                   },
                    "follow_request_sent": false,
-                   "has_graduated_access": false,
+                   "has_graduated_access": true,
                    "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                    "is_blue_verified": false,
                    "location": {
@@ -287,7 +288,7 @@
                 "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                 "unmention_data": {},
                 "views": {
-                 "count": "14",
+                 "count": "41",
                  "state": "EnabledWithCount"
                 }
                }
@@ -296,7 +297,7 @@
             }
            },
            "entryId": "tweet-2095951850990133591",
-           "sortIndex": "2095959072074366976"
+           "sortIndex": "2105664885906997248"
           },
           {
            "content": {
@@ -305,7 +306,7 @@
              "component": "tweet",
              "details": {
               "timelinesDetails": {
-               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaBt67LHAAAAAA==",
+               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaD32T5fAAAAAA==",
                "injectionType": "RankedOrganicTweet"
               }
              },
@@ -339,11 +340,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -1265,7 +1263,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "20",
+                "count": "41",
                 "state": "EnabledWithCount"
                }
               }
@@ -1273,7 +1271,7 @@
             }
            },
            "entryId": "tweet-2095922394959421815",
-           "sortIndex": "2095959072074366975"
+           "sortIndex": "2105664885906997247"
           },
           {
            "content": {
@@ -1282,7 +1280,7 @@
              "component": "tweet",
              "details": {
               "timelinesDetails": {
-               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaBt67LHAAAAAA==",
+               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaD32T5fAAAAAA==",
                "injectionType": "RankedOrganicTweet"
               }
              },
@@ -1316,11 +1314,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -1455,7 +1450,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "11",
+                "count": "15",
                 "state": "EnabledWithCount"
                }
               }
@@ -1463,7 +1458,7 @@
             }
            },
            "entryId": "tweet-2095922103644028999",
-           "sortIndex": "2095959072074366974"
+           "sortIndex": "2105664885906997246"
           },
           {
            "content": {
@@ -1472,7 +1467,7 @@
              "component": "tweet",
              "details": {
               "timelinesDetails": {
-               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaBt67LHAAAAAA==",
+               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaD32T5fAAAAAA==",
                "injectionType": "RankedOrganicTweet"
               }
              },
@@ -1506,11 +1501,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -1656,7 +1648,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "9",
+                "count": "14",
                 "state": "EnabledWithCount"
                }
               }
@@ -1664,7 +1656,7 @@
             }
            },
            "entryId": "tweet-2095921998094331981",
-           "sortIndex": "2095959072074366973"
+           "sortIndex": "2105664885906997245"
           },
           {
            "content": {
@@ -1673,7 +1665,7 @@
              "component": "tweet",
              "details": {
               "timelinesDetails": {
-               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaBt67LHAAAAAA==",
+               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaD32T5fAAAAAA==",
                "injectionType": "RankedOrganicTweet"
               }
              },
@@ -1707,11 +1699,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -1857,7 +1846,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "7",
+                "count": "12",
                 "state": "EnabledWithCount"
                }
               }
@@ -1865,7 +1854,7 @@
             }
            },
            "entryId": "tweet-2095921800731345271",
-           "sortIndex": "2095959072074366972"
+           "sortIndex": "2105664885906997244"
           },
           {
            "content": {
@@ -1876,7 +1865,7 @@
               "timelinesDetails": {
                "controllerData": "DAACDAACDAABCgABAAAAAAAAAAgAAAAA",
                "injectionType": "WhoToFollow",
-               "sourceData": "DAABCgABAY5Y11qEPGYKAAIAAAAAAAAAAAAIAAIAAAB1CAADAAAAAgwABQwAAgwAAgwAAQoAAQAAAAAAAAAIAAAAAAA="
+               "sourceData": "DAABCgABn/l2EDj/JXYKAAIAAAAAAAAAAAAIAAIAAAB1CAADAAAAAgwABQwAAgwAAgwAAQoAAQAAAAAAAAAIAAAAAAA="
               }
              }
             },
@@ -1897,7 +1886,7 @@
             },
             "items": [
              {
-              "entryId": "who-to-follow-2095959072074366981-user-2333988375",
+              "entryId": "who-to-follow-2105664885906997253-user-2333988375",
               "item": {
                "clientEventInfo": {
                 "component": "suggest_who_to_follow",
@@ -1905,7 +1894,7 @@
                  "timelinesDetails": {
                   "controllerData": "DAACDAACDAABCgABAAAAAAAAAAgAAAAA",
                   "injectionType": "WhoToFollow",
-                  "sourceData": "DAABCgABAY5Y11qEPGYKAAIAAAAAAAAAAAAIAAIAAAB1CAADAAAAAgwABQwAAgwAAgwAAQoAAQAAAAAAAAAIAAAAAAA="
+                  "sourceData": "DAABCgABn/l2EDj/JXYKAAIAAAAAAAAAAAAIAAIAAAB1CAADAAAAAgwABQwAAgwAAgwAAQoAAQAAAAAAAAAIAAAAAAA="
                  }
                 },
                 "element": "user"
@@ -1918,7 +1907,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 12543
+                   "favorites_count": 12561
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -1931,9 +1920,6 @@
                    "created_at": "Sun Feb 09 16:16:44 +0000 2014",
                    "name": "Instant Foot ⚽️",
                    "screen_name": "lnstantFoot"
-                  },
-                  "dm_permissions": {
-                   "can_dm": true
                   },
                   "follow_request_sent": false,
                   "has_graduated_access": true,
@@ -1992,8 +1978,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 2451127,
-                   "following": 13911
+                   "followers": 2454527,
+                   "following": 13907
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -2008,8 +1994,8 @@
                   "super_followed_by": false,
                   "super_following": false,
                   "tweet_counts": {
-                   "media_tweets": 175524,
-                   "tweets": 255025
+                   "media_tweets": 177408,
+                   "tweets": 257168
                   },
                   "verification": {
                    "verified": false
@@ -2023,7 +2009,7 @@
               }
              },
              {
-              "entryId": "who-to-follow-2095959072074366981-user-1417096868530638851",
+              "entryId": "who-to-follow-2105664885906997253-user-886725813139369986",
               "item": {
                "clientEventInfo": {
                 "component": "suggest_who_to_follow",
@@ -2031,7 +2017,7 @@
                  "timelinesDetails": {
                   "controllerData": "DAACDAACDAABCgABAAAAAAAAAAgAAAAA",
                   "injectionType": "WhoToFollow",
-                  "sourceData": "DAABCgABAY5Y11qEPGYKAAIAAAAAAAAAAAAIAAIAAAB1CAADAAAAAgwABQwAAgwAAgwAAQoAAQAAAAAAAAAIAAAAAAA="
+                  "sourceData": "DAABCgABn/l2EDj/JXYKAAIAAAAAAAAAAAAIAAIAAAB1CAADAAAAAgwABQwAAgwAAgwAAQoAAQAAAAAAAAAIAAAAAAA="
                  }
                 },
                 "element": "user"
@@ -2044,29 +2030,26 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 5645
+                   "favorites_count": 66156
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
-                   "image_url": "https://pbs.twimg.com/profile_images/2091429843707604993/QLJ6d28o_normal.jpg"
+                   "image_url": "https://pbs.twimg.com/profile_images/1762185764295585792/xyo_NzoA_normal.jpg"
                   },
                   "banner": {
-                   "image_url": "https://pbs.twimg.com/profile_banners/1417096868530638851/1787820092"
+                   "image_url": "https://pbs.twimg.com/profile_banners/886725813139369986/1753169670"
                   },
                   "core": {
-                   "created_at": "Mon Jul 19 12:20:04 +0000 2021",
-                   "name": "Actu Ligue 1",
-                   "screen_name": "ActuL1_"
-                  },
-                  "dm_permissions": {
-                   "can_dm": true
+                   "created_at": "Sun Jul 16 23:14:43 +0000 2017",
+                   "name": "Zone Presse📰",
+                   "screen_name": "ZonePresse_"
                   },
                   "follow_request_sent": false,
                   "has_graduated_access": true,
-                  "id": "VXNlcjoxNDE3MDk2ODY4NTMwNjM4ODUx",
+                  "id": "VXNlcjo4ODY3MjU4MTMxMzkzNjk5ODY=",
                   "is_blue_verified": true,
                   "location": {
-                   "location": ""
+                   "location": "Côte d'Ivoire"
                   },
                   "media_permissions": {
                    "can_media_tag": true
@@ -2075,7 +2058,11 @@
                    "notifications_enabled": false
                   },
                   "parody_commentary_fan_label": "None",
-                  "pinned_items": {},
+                  "pinned_items": {
+                   "tweet_ids_str": [
+                    "2010048208249204824"
+                   ]
+                  },
                   "possibly_sensitive": false,
                   "privacy": {
                    "protected": false
@@ -2084,27 +2071,27 @@
                    "category": [
                     {
                      "icon_name": "IconBriefcaseStroke",
-                     "id": 579,
-                     "name": "Media & News"
+                     "id": 580,
+                     "name": "Media & News Company"
                     }
                    ],
                    "professional_type": "Creator",
-                   "rest_id": "2081438660956672271"
+                   "rest_id": "1455833891693019137"
                   },
                   "profile_bio": {
-                   "description": "Toute l'actualité du football français, ici en temps réel. 🏆🇫🇷 • proactul1@gmail.com • 📲 Ligue 2 : @L2Actu_",
+                   "description": "Média indépendant",
                    "entities": {
                     "description": {},
                     "url": {
                      "urls": [
                       {
-                       "display_url": "linktr.ee/Actu_Ligue_1",
-                       "expanded_url": "https://linktr.ee/Actu_Ligue_1",
+                       "display_url": "tiktok.com/@zone_presse_?…",
+                       "expanded_url": "https://www.tiktok.com/@zone_presse_?_t=8rOtV0XIdqj&_r=1",
                        "indices": [
                         0,
                         23
                        ],
-                       "url": "https://t.co/AUeMopFGD3"
+                       "url": "https://t.co/P0flYJtEj9"
                       }
                      ]
                     }
@@ -2119,8 +2106,8 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 151752,
-                   "following": 94
+                   "followers": 726149,
+                   "following": 331
                   },
                   "relationship_perspectives": {
                    "blocked_by": false,
@@ -2130,19 +2117,19 @@
                    "live_following": false,
                    "muting": false
                   },
-                  "rest_id": "1417096868530638851",
+                  "rest_id": "886725813139369986",
                   "super_follow_eligible": false,
                   "super_followed_by": false,
                   "super_following": false,
                   "tweet_counts": {
-                   "media_tweets": 57087,
-                   "tweets": 88801
+                   "media_tweets": 39046,
+                   "tweets": 67305
                   },
                   "verification": {
                    "verified": false
                   },
                   "website": {
-                   "url": "https://t.co/AUeMopFGD3"
+                   "url": "https://t.co/P0flYJtEj9"
                   }
                  }
                 }
@@ -2150,7 +2137,7 @@
               }
              },
              {
-              "entryId": "who-to-follow-2095959072074366981-user-1230762202807689217",
+              "entryId": "who-to-follow-2105664885906997253-user-1230762202807689217",
               "item": {
                "clientEventInfo": {
                 "component": "suggest_who_to_follow",
@@ -2158,7 +2145,7 @@
                  "timelinesDetails": {
                   "controllerData": "DAACDAACDAABCgABAAAAAAAAAAgAAAAA",
                   "injectionType": "WhoToFollow",
-                  "sourceData": "DAABCgABAY5Y11qEPGYKAAIAAAAAAAAAAAAIAAIAAAB1CAADAAAAAgwABQwAAgwAAgwAAQoAAQAAAAAAAAAIAAAAAAA="
+                  "sourceData": "DAABCgABn/l2EDj/JXYKAAIAAAAAAAAAAAAIAAIAAAB1CAADAAAAAgwABQwAAgwAAgwAAQoAAQAAAAAAAAAIAAAAAAA="
                  }
                 },
                 "element": "user"
@@ -2171,7 +2158,7 @@
                  "result": {
                   "__typename": "User",
                   "action_counts": {
-                   "favorites_count": 5453
+                   "favorites_count": 5456
                   },
                   "affiliates_highlighted_label": {},
                   "avatar": {
@@ -2184,9 +2171,6 @@
                    "created_at": "Fri Feb 21 07:54:11 +0000 2020",
                    "name": "Barça Home 🇫🇷",
                    "screen_name": "Actu_Barcelona"
-                  },
-                  "dm_permissions": {
-                   "can_dm": true
                   },
                   "follow_request_sent": false,
                   "has_graduated_access": true,
@@ -2249,7 +2233,7 @@
                    "translator_type": "none"
                   },
                   "relationship_counts": {
-                   "followers": 393555,
+                   "followers": 393648,
                    "following": 1625
                   },
                   "relationship_perspectives": {
@@ -2265,8 +2249,8 @@
                   "super_followed_by": false,
                   "super_following": false,
                   "tweet_counts": {
-                   "media_tweets": 10605,
-                   "tweets": 19656
+                   "media_tweets": 10636,
+                   "tweets": 19692
                   },
                   "verification": {
                    "verified": false
@@ -2281,8 +2265,8 @@
              }
             ]
            },
-           "entryId": "who-to-follow-2095959072074366981",
-           "sortIndex": "2095959072074366971"
+           "entryId": "who-to-follow-2105664885906997253",
+           "sortIndex": "2105664885906997243"
           },
           {
            "content": {
@@ -2291,7 +2275,7 @@
              "component": "tweet",
              "details": {
               "timelinesDetails": {
-               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaBt67LHAAAAAA==",
+               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaD32T5fAAAAAA==",
                "injectionType": "RankedOrganicTweet"
               }
              },
@@ -2325,11 +2309,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -2475,7 +2456,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "7",
+                "count": "11",
                 "state": "EnabledWithCount"
                }
               }
@@ -2483,7 +2464,7 @@
             }
            },
            "entryId": "tweet-2095921599056658635",
-           "sortIndex": "2095959072074366970"
+           "sortIndex": "2105664885906997242"
           },
           {
            "content": {
@@ -2492,7 +2473,7 @@
              "component": "tweet",
              "details": {
               "timelinesDetails": {
-               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaBt67LHAAAAAA==",
+               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaD32T5fAAAAAA==",
                "injectionType": "RankedOrganicTweet"
               }
              },
@@ -2514,7 +2495,7 @@
                    "value": {
                     "image_value": {
                      "height": 144,
-                     "url": "https://pbs.twimg.com/card_img/2094021520922161153/bObQYDY6?format=png&name=144x144_2",
+                     "url": "https://pbs.twimg.com/card_img/2104532685490106368/EN_MCWKw?format=png&name=144x144_2",
                      "width": 144
                     },
                     "type": "IMAGE"
@@ -2539,7 +2520,7 @@
                    "value": {
                     "image_value": {
                      "height": 420,
-                     "url": "https://pbs.twimg.com/card_img/2094021520922161153/bObQYDY6?format=png&name=420x420_2",
+                     "url": "https://pbs.twimg.com/card_img/2104532685490106368/EN_MCWKw?format=png&name=420x420_2",
                      "width": 420
                     },
                     "type": "IMAGE"
@@ -2550,7 +2531,7 @@
                    "value": {
                     "image_value": {
                      "height": 461,
-                     "url": "https://pbs.twimg.com/card_img/2094021520922161153/bObQYDY6?format=png&name=orig",
+                     "url": "https://pbs.twimg.com/card_img/2104532685490106368/EN_MCWKw?format=png&name=orig",
                      "width": 937
                     },
                     "type": "IMAGE"
@@ -2572,7 +2553,7 @@
                    "value": {
                     "image_value": {
                      "height": 100,
-                     "url": "https://pbs.twimg.com/card_img/2094021520922161153/bObQYDY6?format=png&name=100x100_2",
+                     "url": "https://pbs.twimg.com/card_img/2104532685490106368/EN_MCWKw?format=png&name=100x100_2",
                      "width": 100
                     },
                     "type": "IMAGE"
@@ -2583,7 +2564,7 @@
                    "value": {
                     "image_value": {
                      "height": 461,
-                     "url": "https://pbs.twimg.com/card_img/2094021520922161153/bObQYDY6?format=png&name=2048x2048_2_exp",
+                     "url": "https://pbs.twimg.com/card_img/2104532685490106368/EN_MCWKw?format=png&name=2048x2048_2_exp",
                      "width": 937
                     },
                     "type": "IMAGE"
@@ -2673,7 +2654,7 @@
                    "result": {
                     "__typename": "User",
                     "action_counts": {
-                     "favorites_count": 3224
+                     "favorites_count": 3222
                     },
                     "affiliates_highlighted_label": {},
                     "avatar": {
@@ -2686,9 +2667,6 @@
                      "created_at": "Fri Nov 25 01:07:12 +0000 2011",
                      "name": "Flutter",
                      "screen_name": "FlutterDev"
-                    },
-                    "dm_permissions": {
-                     "can_dm": false
                     },
                     "follow_request_sent": false,
                     "has_graduated_access": true,
@@ -2706,7 +2684,7 @@
                     "parody_commentary_fan_label": "None",
                     "pinned_items": {
                      "tweet_ids_str": [
-                      "2087628861068472718"
+                      "2101012855101218956"
                      ]
                     },
                     "possibly_sensitive": false,
@@ -2741,7 +2719,7 @@
                      "translator_type": "none"
                     },
                     "relationship_counts": {
-                     "followers": 277840,
+                     "followers": 278078,
                      "following": 60
                     },
                     "relationship_perspectives": {
@@ -2757,8 +2735,8 @@
                     "super_followed_by": false,
                     "super_following": false,
                     "tweet_counts": {
-                     "media_tweets": 1956,
-                     "tweets": 3878
+                     "media_tweets": 1973,
+                     "tweets": 3906
                     },
                     "verification": {
                      "verified": false,
@@ -2793,11 +2771,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -2956,7 +2931,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "7",
+                "count": "12",
                 "state": "EnabledWithCount"
                }
               }
@@ -2964,7 +2939,7 @@
             }
            },
            "entryId": "tweet-2095921351106146703",
-           "sortIndex": "2095959072074366969"
+           "sortIndex": "2105664885906997241"
           },
           {
            "content": {
@@ -2973,7 +2948,7 @@
              "component": "tweet",
              "details": {
               "timelinesDetails": {
-               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaBt67LHAAAAAA==",
+               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaD32T5fAAAAAA==",
                "injectionType": "RankedOrganicTweet"
               }
              },
@@ -3007,11 +2982,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -3857,7 +3829,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "7",
+                "count": "13",
                 "state": "EnabledWithCount"
                }
               }
@@ -3865,7 +3837,7 @@
             }
            },
            "entryId": "tweet-2095920289687150903",
-           "sortIndex": "2095959072074366968"
+           "sortIndex": "2105664885906997240"
           },
           {
            "content": {
@@ -3874,7 +3846,7 @@
              "component": "tweet",
              "details": {
               "timelinesDetails": {
-               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaBt67LHAAAAAA==",
+               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaD32T5fAAAAAA==",
                "injectionType": "RankedOrganicTweet"
               }
              },
@@ -3908,11 +3880,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -4692,7 +4661,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "20",
+                "count": "39",
                 "state": "EnabledWithCount"
                }
               }
@@ -4700,7 +4669,7 @@
             }
            },
            "entryId": "tweet-2095920215234138129",
-           "sortIndex": "2095959072074366967"
+           "sortIndex": "2105664885906997239"
           },
           {
            "content": {
@@ -4709,7 +4678,7 @@
              "component": "tweet",
              "details": {
               "timelinesDetails": {
-               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaBt67LHAAAAAA==",
+               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaD32T5fAAAAAA==",
                "injectionType": "RankedOrganicTweet"
               }
              },
@@ -4743,11 +4712,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -5363,7 +5329,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "8",
+                "count": "13",
                 "state": "EnabledWithCount"
                }
               }
@@ -5371,7 +5337,7 @@
             }
            },
            "entryId": "tweet-2095920135890506153",
-           "sortIndex": "2095959072074366966"
+           "sortIndex": "2105664885906997238"
           },
           {
            "content": {
@@ -5380,7 +5346,7 @@
              "component": "tweet",
              "details": {
               "timelinesDetails": {
-               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaBt67LHAAAAAA==",
+               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaD32T5fAAAAAA==",
                "injectionType": "RankedOrganicTweet"
               }
              },
@@ -5414,11 +5380,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -5880,7 +5843,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "10",
+                "count": "19",
                 "state": "EnabledWithCount"
                }
               }
@@ -5888,7 +5851,7 @@
             }
            },
            "entryId": "tweet-2095920085445619715",
-           "sortIndex": "2095959072074366965"
+           "sortIndex": "2105664885906997237"
           },
           {
            "content": {
@@ -5897,7 +5860,7 @@
              "component": "tweet",
              "details": {
               "timelinesDetails": {
-               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaBt67LHAAAAAA==",
+               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaD32T5fAAAAAA==",
                "injectionType": "RankedOrganicTweet"
               }
              },
@@ -5931,11 +5894,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -6233,7 +6193,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "12",
+                "count": "21",
                 "state": "EnabledWithCount"
                }
               }
@@ -6241,7 +6201,7 @@
             }
            },
            "entryId": "tweet-2095920036523172091",
-           "sortIndex": "2095959072074366964"
+           "sortIndex": "2105664885906997236"
           },
           {
            "content": {
@@ -6250,7 +6210,7 @@
              "component": "tweet",
              "details": {
               "timelinesDetails": {
-               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaBt67LHAAAAAA==",
+               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaD32T5fAAAAAA==",
                "injectionType": "RankedOrganicTweet"
               }
              },
@@ -6284,11 +6244,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -6576,7 +6533,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "12",
+                "count": "21",
                 "state": "EnabledWithCount"
                }
               }
@@ -6584,7 +6541,7 @@
             }
            },
            "entryId": "tweet-2095919982970282273",
-           "sortIndex": "2095959072074366963"
+           "sortIndex": "2105664885906997235"
           },
           {
            "content": {
@@ -6593,7 +6550,7 @@
              "component": "tweet",
              "details": {
               "timelinesDetails": {
-               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaBt67LHAAAAAA==",
+               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaD32T5fAAAAAA==",
                "injectionType": "RankedOrganicTweet"
               }
              },
@@ -6627,11 +6584,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -6929,7 +6883,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "9",
+                "count": "14",
                 "state": "EnabledWithCount"
                }
               }
@@ -6937,7 +6891,7 @@
             }
            },
            "entryId": "tweet-2095919923553775839",
-           "sortIndex": "2095959072074366962"
+           "sortIndex": "2105664885906997234"
           },
           {
            "content": {
@@ -6946,7 +6900,7 @@
              "component": "tweet",
              "details": {
               "timelinesDetails": {
-               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaBt67LHAAAAAA==",
+               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaD32T5fAAAAAA==",
                "injectionType": "RankedOrganicTweet"
               }
              },
@@ -6980,11 +6934,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -7282,7 +7233,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "10",
+                "count": "19",
                 "state": "EnabledWithCount"
                }
               }
@@ -7290,7 +7241,7 @@
             }
            },
            "entryId": "tweet-2095919166830084474",
-           "sortIndex": "2095959072074366961"
+           "sortIndex": "2105664885906997233"
           },
           {
            "content": {
@@ -7299,7 +7250,7 @@
              "component": "tweet",
              "details": {
               "timelinesDetails": {
-               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaBt67LHAAAAAA==",
+               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaD32T5fAAAAAA==",
                "injectionType": "RankedOrganicTweet"
               }
              },
@@ -7333,11 +7284,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -8239,7 +8187,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "8",
+                "count": "13",
                 "state": "EnabledWithCount"
                }
               }
@@ -8247,7 +8195,7 @@
             }
            },
            "entryId": "tweet-2095919075536826410",
-           "sortIndex": "2095959072074366960"
+           "sortIndex": "2105664885906997232"
           },
           {
            "content": {
@@ -8256,7 +8204,7 @@
              "component": "tweet",
              "details": {
               "timelinesDetails": {
-               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaBt67LHAAAAAA==",
+               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaD32T5fAAAAAA==",
                "injectionType": "RankedOrganicTweet"
               }
              },
@@ -8290,11 +8238,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -9004,7 +8949,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "8",
+                "count": "13",
                 "state": "EnabledWithCount"
                }
               }
@@ -9012,7 +8957,7 @@
             }
            },
            "entryId": "tweet-2095919007438139510",
-           "sortIndex": "2095959072074366959"
+           "sortIndex": "2105664885906997231"
           },
           {
            "content": {
@@ -9021,7 +8966,7 @@
              "component": "tweet",
              "details": {
               "timelinesDetails": {
-               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaBt67LHAAAAAA==",
+               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaD32T5fAAAAAA==",
                "injectionType": "RankedOrganicTweet"
               }
              },
@@ -9055,11 +9000,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -9577,7 +9519,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "8",
+                "count": "14",
                 "state": "EnabledWithCount"
                }
               }
@@ -9585,7 +9527,7 @@
             }
            },
            "entryId": "tweet-2095918939641356306",
-           "sortIndex": "2095959072074366958"
+           "sortIndex": "2105664885906997230"
           },
           {
            "content": {
@@ -9594,7 +9536,7 @@
              "component": "tweet",
              "details": {
               "timelinesDetails": {
-               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaBt67LHAAAAAA==",
+               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaD32T5fAAAAAA==",
                "injectionType": "RankedOrganicTweet"
               }
              },
@@ -9628,11 +9570,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -9958,7 +9897,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "9",
+                "count": "29",
                 "state": "EnabledWithCount"
                }
               }
@@ -9966,7 +9905,7 @@
             }
            },
            "entryId": "tweet-2095918861925163239",
-           "sortIndex": "2095959072074366957"
+           "sortIndex": "2105664885906997229"
           },
           {
            "content": {
@@ -9975,7 +9914,7 @@
              "component": "tweet",
              "details": {
               "timelinesDetails": {
-               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaBt67LHAAAAAA==",
+               "controllerData": "DAACDAABDAABCgABAAAAAAAAAAAKAAkYb3Ch/BdAAAoACgAAAaD32T5fAAAAAA==",
                "injectionType": "RankedOrganicTweet"
               }
              },
@@ -10009,11 +9948,8 @@
                    "name": "QuaX Tests",
                    "screen_name": "quax_tests"
                   },
-                  "dm_permissions": {
-                   "can_dm": false
-                  },
                   "follow_request_sent": false,
-                  "has_graduated_access": false,
+                  "has_graduated_access": true,
                   "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
                   "is_blue_verified": false,
                   "location": {
@@ -10339,7 +10275,7 @@
                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                "unmention_data": {},
                "views": {
-                "count": "10",
+                "count": "29",
                 "state": "EnabledWithCount"
                }
               }
@@ -10347,27 +10283,27 @@
             }
            },
            "entryId": "tweet-2095918809576091964",
-           "sortIndex": "2095959072074366956"
+           "sortIndex": "2105664885906997228"
           },
           {
            "content": {
             "__typename": "TimelineTimelineCursor",
             "cursorType": "Top",
             "entryType": "TimelineTimelineCursor",
-            "value": "DAAHCgABHRZXq9LAJxELAAIAAAATMjA5NTk1MTg1MDk5MDEzMzU5MQgAAwAAAAEAAA"
+            "value": "DAAHCgABHTjTDrSAJxELAAIAAAATMjA5NTk1MTg1MDk5MDEzMzU5MQgAAwAAAAEAAA"
            },
-           "entryId": "cursor-top-2095959072074366977",
-           "sortIndex": "2095959072074366977"
+           "entryId": "cursor-top-2105664885906997249",
+           "sortIndex": "2105664885906997249"
           },
           {
            "content": {
             "__typename": "TimelineTimelineCursor",
             "cursorType": "Bottom",
             "entryType": "TimelineTimelineCursor",
-            "value": "DAAHCgABHRZXq9K__-sLAAIAAAATMjA5NTkxODgwOTU3NjA5MTk2NAgAAwAAAAIAAA"
+            "value": "DAAHCgABHTjTDrR__-sLAAIAAAATMjA5NTkxODgwOTU3NjA5MTk2NAgAAwAAAAIAAA"
            },
-           "entryId": "cursor-bottom-2095959072074366955",
-           "sortIndex": "2095959072074366955"
+           "entryId": "cursor-bottom-2105664885906997227",
+           "sortIndex": "2105664885906997227"
           }
          ],
          "type": "TimelineAddEntries"
@@ -10375,7 +10311,7 @@
        ],
        "metadata": {
         "scribeConfig": {
-         "page": "profileBest"
+         "page": "profileAll"
         }
        }
       }

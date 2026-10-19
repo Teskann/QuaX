@@ -17,9 +17,13 @@ class TwitterLoginWebview extends StatefulWidget {
 }
 
 class _TwitterLoginWebviewState extends State<TwitterLoginWebview> {
+  final _webviewCookieManager = WebviewCookieManager();
+  final _webviewController = WebViewController();
+
   @override
   void initState() {
     super.initState();
+    _setUpWebview();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       showDialog(
         context: context,
@@ -39,20 +43,16 @@ class _TwitterLoginWebviewState extends State<TwitterLoginWebview> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    WebViewPlatform.instance;
-    final webviewCookieManager = WebviewCookieManager();
-    final webviewController = WebViewController();
-    webviewController.setJavaScriptMode(JavaScriptMode.unrestricted);
-    webviewController.loadRequest(Uri.https("x.com", "i/flow/login"));
-    webviewController.setUserAgent(userAgentHeader.toString());
-    webviewController.setNavigationDelegate(
+  void _setUpWebview() {
+    _webviewController.setJavaScriptMode(JavaScriptMode.unrestricted);
+    _webviewController.loadRequest(Uri.https("x.com", "i/flow/login"));
+    _webviewController.setUserAgent(userAgentHeader.toString());
+    _webviewController.setNavigationDelegate(
       NavigationDelegate(
         onUrlChange: (change) async {
           if (change.url == "https://x.com/home") {
-            final cookies = await webviewCookieManager.getCookies("https://x.com/i/flow/login");
-            String screenName = (await webviewController.runJavaScriptReturningResult(
+            final cookies = await _webviewCookieManager.getCookies("https://x.com/i/flow/login");
+            String screenName = (await _webviewController.runJavaScriptReturningResult(
               "document.documentElement.outerHTML.match(/\"screen_name\":\"([^\"]+)\"/)?.[1] ?? '';",
             )).toString();
             screenName = screenName.replaceAll('"', '');
@@ -86,7 +86,7 @@ class _TwitterLoginWebviewState extends State<TwitterLoginWebview> {
                 );
                 database.close();
               }
-              if (context.mounted) {
+              if (mounted) {
                 Navigator.pop(context);
                 await showDialog(
                   context: context,
@@ -98,7 +98,8 @@ class _TwitterLoginWebviewState extends State<TwitterLoginWebview> {
                       TextButton(
                         onPressed: () {
                           Navigator.pop(context);
-                          Navigator.push(context, MaterialPageRoute(builder: (_) => const SubscriptionImportScreen()));
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) => SubscriptionImportScreen(screenName: screenName)));
                         },
                         child: Text(L10n.of(context).yes),
                       ),
@@ -113,9 +114,13 @@ class _TwitterLoginWebviewState extends State<TwitterLoginWebview> {
         },
       ),
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(toolbarHeight: 50),
-      body: WebViewWidget(controller: webviewController),
+      body: WebViewWidget(controller: _webviewController),
     );
   }
 }

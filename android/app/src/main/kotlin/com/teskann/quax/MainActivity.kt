@@ -1,8 +1,11 @@
 package com.teskann.quax
 
+import android.app.ActivityManager
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.media.MediaCodecList
 import android.media.MediaScannerConnection
+import android.os.Build
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -37,7 +40,19 @@ class MainActivity : FlutterActivity() {
                     } else {
                         result.success(null)
                     }
+                } else if (call.method == "getVideoHardware") {
+                    val activityManager = getSystemService(ACTIVITY_SERVICE) as ActivityManager
+                    result.success(mapOf(
+                        "heapLimitMb" to activityManager.memoryClass,
+                        "maxHardwareDecoders" to maxHardwareDecoders("video/avc"),
+                    ))
                 }
             }
     }
+
+    private fun maxHardwareDecoders(mime: String): Int =
+        MediaCodecList(MediaCodecList.REGULAR_CODECS).codecInfos
+            .filter { !it.isEncoder && it.supportedTypes.any { type -> type.equals(mime, ignoreCase = true) } }
+            .filter { Build.VERSION.SDK_INT < Build.VERSION_CODES.Q || it.isHardwareAccelerated }
+            .maxOfOrNull { it.getCapabilitiesForType(mime).maxSupportedInstances } ?: 0
 }

@@ -1,0 +1,33 @@
+{
+ "scenario": "Profile timeline sorted by Popular instead of Most recent",
+ "sourceUrl": "https://x.com/quax_tests?sort=popular",
+ "operation": "UserSportsProfile",
+ "host": "x.com",
+ "queryId": "MmrVdUwRp_jzwgMqaYdnUA",
+ "features": null,
+ "fieldToggles": null,
+ "variables": {
+  "rest_id": "2095909295913103360",
+  "start_time": "1790173407307",
+  "end_time": "1792074207307"
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "50",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "37",
+  "x-rate-limit-reset": "1790865377"
+ },
+ "body": {
+  "data": {
+   "user_results": {
+    "id": "VXNlclJlc3VsdHM6MjA5NTkwOTI5NTkxMzEwMzM2MA==",
+    "rest_id": "2095909295913103360",
+    "result": {
+     "__typename": "User",
+     "rest_id": "2095909295913103360"
+    }
+   }
+  }
+ }
+}
