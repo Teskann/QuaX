@@ -1,5 +1,6 @@
 import 'package:quax/client/x_client_transaction_id/client_transaction.dart';
 import 'package:quax/constants.dart';
+import 'package:quax/utils/success_cache.dart';
 
 class TwitterHeaders {
   static final Map<String, String> _baseHeaders = {
@@ -16,15 +17,14 @@ class TwitterHeaders {
     'x-twitter-client-language': 'en',
   };
 
-  static Future<ClientTransaction>? _initFuture;
+  static final _clientTransaction = SuccessCache(ClientTransaction.initialize);
 
   static Future<Map<String, String>?> getXClientTransactionIdHeader(Uri? uri) async {
     if (uri == null) {
       return null;
     }
 
-    _initFuture ??= ClientTransaction.initialize();
-    final ct = await _initFuture!;
+    final ct = await _clientTransaction();
     return {'x-client-transaction-id': ct.generateTransactionId('GET', uri.path)};
   }
 

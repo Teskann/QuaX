@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/testing.dart';
+import 'package:quax/catcher/exceptions.dart';
 import 'package:quax/client/x_client_transaction_id/client_transaction.dart';
 import 'package:quax/client/x_client_transaction_id/client_transaction_id_exception.dart';
 
@@ -49,6 +52,16 @@ void main() {
       ),
       throwsA(isA<ClientTransactionIdException>()),
       reason: 'A RangeError would not carry the marker that starts the fix, although X changed the page',
+    );
+  });
+
+  test('Should raise an HttpException, not a ClientTransactionIdException, when x.com answers an error page', () async {
+    final unavailable = MockClient((request) async => http.Response('<html>Something went wrong</html>', 503));
+
+    await expectLater(
+      http.runWithClient(ClientTransaction.fetchSources, () => unavailable),
+      throwsA(isA<HttpException>().having((error) => error.statusCode, 'statusCode', 503)),
+      reason: 'A 503 says nothing about how X signs requests: it must not be reported as a transaction id bug',
     );
   });
 

@@ -6,6 +6,7 @@ import 'package:crypto/crypto.dart';
 import 'package:html/dom.dart' as html_dom;
 import 'package:html/parser.dart' as html_parser;
 import 'package:http/http.dart' as http;
+import 'package:quax/catcher/exceptions.dart';
 
 import 'client_transaction_id_exception.dart';
 import 'constants.dart';
@@ -143,8 +144,13 @@ class ClientTransaction {
 
   static List<int> _getKeyBytes(String key) => base64.decode(key).toList();
 
-  static Future<String> _fetchText(Uri uri) async =>
-      (await http.get(uri, headers: _browserHeaders)).body;
+  /// An error page (e.g. a 503) is not a change in how X signs requests, so it
+  /// must not end up as a [ClientTransactionIdException].
+  static Future<String> _fetchText(Uri uri) async {
+    final response = await http.get(uri, headers: _browserHeaders);
+    if (response.statusCode < 200 || response.statusCode >= 300) throw HttpException(response);
+    return response.body;
+  }
 
   static Future<Uri> _findSignFileUrl(String homePageHtml, TextFetcher fetch) async {
     final entryUrl = _resolveImport(Uri.https('x.com', '/'), homePageHtml, entryScriptRegex, 'entry script');
