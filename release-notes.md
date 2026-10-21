@@ -1,7 +1,10 @@
-## QuaX v4.19.1
+## QuaX v4.19.2
 
-What's new in QuaX v4.19.1:
-  - Fixed some UX/UI issues from previous version (by @quax-bot) <sup>[[view modified code]](https://github.com/teskann/quax/commit/9f2bb93007f6d9e51b2b547515705649e4c3bf0e)</sup>
+What's new in QuaX v4.19.2:
+  - Groups now show the latest posts of a saved search that uses operators like list: or from: (fixed #136) <sup>[[view modified code]](https://github.com/teskann/quax/commit/9f6540543f1dbf5696e83682891f3497a4b36965)</sup>
+  - Increased the number of subscriptions before reaching rate limitations in the feed by about 35% (by @uptivuptiz) <sup>[[view modified code]](https://github.com/teskann/quax/commit/6da67b7bd7f2206cbc8357311f2f3d64a919ec0e)</sup>
+  - Requests no longer keep failing with an x-client-transaction-id error after x.com was briefly unavailable (Fixed #295) <sup>[[view modified code]](https://github.com/teskann/quax/commit/f4845129024b928d086baee0df6076509b1e4f1a)</sup>
+  - Requests no longer fail with an x-client-transaction-id error after x.com changed how it loads its scripts (Fixed #298) <sup>[[view modified code]](https://github.com/teskann/quax/commit/a7568312a2b5cdc05687c02f182d57db919c3162)</sup>
 
 
 ---
