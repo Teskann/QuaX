@@ -44,6 +44,7 @@ import 'package:logging/logging.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
 import 'package:quax/utils/urls.dart';
+import 'package:quax/utils/math_font.dart';
 import 'package:secure_content/secure_content.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -201,6 +202,7 @@ Future<void> main() async {
   }
 
   WidgetsFlutterBinding.ensureInitialized();
+  registerMathFontLicense();
 
   setTimeagoLocales();
 
@@ -471,6 +473,7 @@ class _FritterAppState extends State<FritterApp> {
                                 .harmonizeWith(lightDynamic?.primary ?? Colors.transparent),
                             brightness: Brightness.light),
                     pageTransitionsTheme: _disableAnimations == true ? _noAnimationPageTransitionsTheme : null,
+                    fontFamilyFallback: appFontFamilyFallback,
                     useMaterial3: true,
                   ),
                   darkTheme: ThemeData(
@@ -493,6 +496,7 @@ class _FritterAppState extends State<FritterApp> {
                     scaffoldBackgroundColor: (_trueBlack == true ? Colors.black : null),
                     appBarTheme: (_trueBlack == true ? AppBarThemeData(backgroundColor: Colors.black) : null),
                     pageTransitionsTheme: _disableAnimations == true ? _noAnimationPageTransitionsTheme : null,
+                    fontFamilyFallback: appFontFamilyFallback,
                     useMaterial3: true,
                   ),
                   themeMode: themeMode,
