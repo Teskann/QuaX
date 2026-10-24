@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:quax/client/client.dart';
 import 'package:quax/community/_header.dart';
+import 'package:quax/community/community_model.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/tweet/_media.dart';
 import 'package:quax/tweet/tweet.dart';
@@ -34,6 +35,28 @@ void main() {
     expect(find.textContaining('$members Members', findRichText: true), findsOneWidget,
         reason: 'The header shows how many members the community has');
     expect(find.byType(CommunityBanner), findsOneWidget, reason: 'The recorded community has a banner');
+  });
+
+  testWidgets('Should wait for the community before asking for its posts', (tester) async {
+    final requested = <String>[];
+    await openCommunity(tester,
+        client: FixtureTwitterClient({
+          'CommunityQuery': recordedCommunity,
+          'CommunityTweetsTimeline': recordedPosts(),
+        }, requested: requested));
+
+    expect(requested, ['CommunityQuery', 'CommunityTweetsTimeline'],
+        reason: 'An empty page shown while the community loads would ask for the posts once more');
+  });
+
+  test('Should be loading as soon as the community is asked for', () async {
+    Twitter.client = mockOfX();
+    final model = CommunityModel(community.id);
+    final loading = model.load();
+
+    expect(model.isLoading, isTrue, reason: 'The screen shows a progress indicator, not an empty community, meanwhile');
+    await loading;
+    model.destroy();
   });
 
   testWidgets('Should list the Top posts of the community, without a community badge', (tester) async {

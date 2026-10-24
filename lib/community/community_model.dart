@@ -8,7 +8,11 @@ class CommunityModel extends Store<Community> {
 
   CommunityModel(this.id) : super(Community(id: id, name: ''));
 
-  Future<void> load() => execute(() => Twitter.getCommunity(id));
+  // execute() waits a moment before it says it is loading, which would show the empty community meanwhile
+  Future<void> load() {
+    setLoading(true);
+    return execute(() => Twitter.getCommunity(id));
+  }
 }
 
 class CommunityTweetsPagination {
