@@ -169,8 +169,9 @@ class UserSubscription extends Subscription {
         screenName: user.screenName!,
         name: user.name!,
         profileImageUrlHttps: user.profileImageUrlHttps,
-        verified: user.verified!,
-        createdAt: user.createdAt!,
+        verified: user.verified ?? false,
+        // Some lists, like the members of a community, send no account creation date
+        createdAt: user.createdAt ?? DateTime.now(),
         inFeed: true
     );
   }

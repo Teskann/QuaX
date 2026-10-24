@@ -202,7 +202,7 @@ Widget buildSubscriptionTile(BuildContext context, Subscription user) {
       Navigator.pushNamed(
         context,
         routeSearch,
-        arguments: SearchArguments(0, focusInputOnOpen: false, query: user.id),
+        arguments: SearchArguments(SearchTab.top, focusInputOnOpen: false, query: user.id),
       );
     },
   );

@@ -178,7 +178,7 @@ Map<String, Future<void> Function(WidgetTester tester)> _screens() => {
       'the theme settings': (tester) => pumpInApp(tester, const SettingsThemeFragment()),
       'the accessibility settings': (tester) => pumpInApp(tester, const SettingsAccessibilityFragment()),
       'the search results with filters': (tester) => pumpScreen(tester, const ResultsScreen(),
-          arguments: SearchArguments(1, query: 'from:FlutterDev filter:images'),
+          arguments: SearchArguments(SearchTab.latest, query: 'from:FlutterDev filter:images'),
           fixtures: {'SearchTimeline': fixture('SearchTimeline', 'from-flutterdev-filter-images', unstable: true)}),
       'the search bar of the trends': (tester) {
         Twitter.client = const FixtureTwitterClient({});

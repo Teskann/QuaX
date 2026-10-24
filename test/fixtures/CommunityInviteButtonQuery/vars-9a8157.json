@@ -1,0 +1,35 @@
+{
+ "scenario": "Members of a community, over several pages",
+ "sourceUrl": "https://x.com/i/communities/1472249315724771329/members",
+ "unstable": true,
+ "operation": "CommunityInviteButtonQuery",
+ "host": "x.com",
+ "queryId": "8s4H3Tf6VXViIQuaHMJE1Q",
+ "features": null,
+ "fieldToggles": null,
+ "variables": {
+  "communityId": "1472249315724771329"
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "500",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "499",
+  "x-rate-limit-reset": "1792486631"
+ },
+ "body": {
+  "data": {
+   "communityResults": {
+    "id": "Q29tbXVuaXR5UmVzdWx0czoxNDcyMjQ5MzE1NzI0NzcxMzI5",
+    "result": {
+     "__typename": "Community",
+     "id": "Q29tbXVuaXR5OjE0NzIyNDkzMTU3MjQ3NzEzMjk=",
+     "invites_result": {
+      "__typename": "CommunityInvitesUnavailable"
+     },
+     "rest_id": "1472249315724771329"
+    }
+   }
+  }
+ }
+}

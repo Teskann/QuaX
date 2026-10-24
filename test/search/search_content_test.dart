@@ -1,16 +1,16 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:quax/client/client.dart';
 import 'package:quax/search/search.dart';
+import 'package:quax/search/search_filters_button.dart';
 import 'package:quax/ui/errors.dart';
 import 'package:quax/user.dart';
 
 import '../fixtures.dart';
 import '../tweet/pump_tweets.dart';
 import '../ui/fake_images.dart';
-
-const _peopleTab = 3;
 
 /// The first account X found, read from the recording: who it is changes with every capture.
 ({String screenName, String name}) _firstAccount(Map<String, dynamic> body) {
@@ -36,7 +36,7 @@ void main() {
     final people = fixture('SearchTimeline', 'quax-605beb', unstable: true);
     final first = _firstAccount(people.body);
     await pumpScreen(tester, const ResultsScreen(),
-        arguments: SearchArguments(_peopleTab, query: 'quax'), fixtures: {'SearchTimeline': people});
+        arguments: SearchArguments(SearchTab.people, query: 'quax'), fixtures: {'SearchTimeline': people});
 
     expect(find.byType(ErrorCard), findsNothing, reason: 'The People tab should load without error');
     final tiles = tester.widgetList<UserTile>(find.byType(UserTile)).toList();
@@ -44,5 +44,20 @@ void main() {
     expect(tiles.first.user.screenName, first.screenName, reason: 'The accounts should keep the order X gives');
     expect(find.text(first.name), findsWidgets, reason: 'Each account should show its display name');
     expect(find.text('@${first.screenName}'), findsOneWidget, reason: 'Each account should show its handle');
+  });
+
+  testWidgets('Should search people with the words only, and hide the filters', (tester) async {
+    final uris = <Uri>[];
+    await pumpScreen(tester, const ResultsScreen(),
+        arguments: SearchArguments(SearchTab.people, query: 'quax lang:en min_faves:10'),
+        fixtures: {'SearchTimeline': fixture('SearchTimeline', 'quax-605beb', unstable: true)},
+        requestedUris: uris);
+    final sent = uris
+        .where((uri) => uri.pathSegments.last == 'SearchTimeline')
+        .map((uri) => jsonDecode(uri.queryParameters['variables']!) as Map);
+
+    expect(sent.where((variables) => variables['product'] == 'People').map((variables) => variables['rawQuery']),
+        ['quax'], reason: 'X ignores the filters when it searches accounts, so only the words are sent');
+    expect(find.byType(SearchFiltersButton), findsNothing, reason: 'The filters would change nothing to the people found');
   });
 }

@@ -12,6 +12,7 @@ import 'package:quax/client/accounts.dart';
 import 'package:quax/client/client_regular_account.dart';
 import 'package:quax/client/client_unauthenticated.dart';
 import 'package:quax/client/rate_limit_tracker.dart';
+import 'package:quax/community/community.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/database/entities.dart';
 import 'package:quax/generated/l10n.dart';
@@ -20,6 +21,7 @@ import 'package:quax/article/article.dart';
 import 'package:quax/user.dart';
 import 'package:quax/utils/cache.dart';
 import 'package:quax/utils/iterables.dart';
+import 'package:quax/utils/paging.dart';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
 
@@ -619,6 +621,89 @@ class Twitter {
     return createUnconversationedChainsGraphql(timeline, 'tweet', [], true);
   }
 
+  static const Map<String, bool> _communityFeatures = {
+    "c9s_list_members_action_api_enabled": false,
+    "c9s_superc9s_indication_enabled": false,
+  };
+
+  static Future<Community> getCommunity(String id) async {
+    final uri = Uri.https('x.com', '/i/api/graphql/-ElI1vg3dYbttVMhBhGdLw/CommunityQuery', {
+      'variables': jsonEncode({'communityId': id}),
+      'features': jsonEncode(_communityFeatures),
+    });
+    final response = await _twitterApi.client.get(uri);
+    return Community.fromGraphql(jsonDecode(response.body) as Map<String, dynamic>) ?? (throw NotFoundException());
+  }
+
+  /// The Top posts of a community, the tab the website opens on.
+  static Future<TweetStatus> getCommunityTweets(String id, {String? cursor}) async {
+    final uri = Uri.https('x.com', '/i/api/graphql/wXey4HQTUdYUlWWXltWMpg/CommunityTweetsTimeline', {
+      'variables': jsonEncode({
+        'communityId': id,
+        'count': 20,
+        'cursor': ?cursor,
+        'displayLocation': 'Community',
+        'rankingMode': 'Relevance',
+        'withCommunity': true,
+      }),
+      'features': jsonEncode(_timelineFeatures),
+    });
+    final response = await _twitterApi.client.get(uri);
+    return parseCommunityTimeline(jsonDecode(response.body) as Map<String, dynamic>);
+  }
+
+  static Future<CursorPage<String, UserWithExtra>> getCommunityMembers(String id, {String? cursor}) async {
+    final uri = Uri.https('x.com', '/i/api/graphql/woAp_YdzAdqnWDrqLTNpAw/membersSliceTimeline_Query', {
+      'variables': jsonEncode({'communityId': id, 'cursor': cursor}),
+    });
+    final response = await _twitterApi.client.get(uri);
+    return parseCommunityMembers(jsonDecode(response.body) as Map<String, dynamic>);
+  }
+
+  static CursorPage<String, UserWithExtra> parseCommunityMembers(Map<String, dynamic> body) {
+    final slice = body['data']?['communityResults']?['result']?['members_slice'];
+    final items = slice?['items_results'];
+    return (
+      items: (items is List ? items : const [])
+          .map((item) => item is Map ? item['result'] : null)
+          .whereType<Map<String, dynamic>>()
+          // A member is opened from the handle and shown with the name
+          .where((user) => user['rest_id'] != null && user['core']?['screen_name'] != null)
+          .where((user) => user['core']?['name'] != null)
+          .map(UserWithExtra.fromNonLegacyJson)
+          .toList(growable: false),
+      nextCursor: slice?['slice_info']?['next_cursor'] as String?,
+    );
+  }
+
+  static Future<CursorPage<String, Community>> searchCommunities(String query, {String? cursor}) async {
+    final uri = Uri.https('x.com', '/i/api/graphql/HKgnJbw10TZW41Na4ToaSw/CommunitiesSearchQuery', {
+      'variables': jsonEncode({'query': query, 'cursor': cursor}),
+    });
+    final response = await _twitterApi.client.get(uri);
+    return parseCommunitiesSearch(jsonDecode(response.body) as Map<String, dynamic>);
+  }
+
+  static CursorPage<String, Community> parseCommunitiesSearch(Map<String, dynamic> body) {
+    final slice = body['data']?['communities_search_slice'];
+    final items = slice?['items_results'];
+    return (
+      items: (items is List ? items : const [])
+          .map((item) => Community.fromResult(item is Map ? item['result'] : null))
+          .nonNulls
+          .toList(growable: false),
+      nextCursor: slice?['slice_info']?['next_cursor'] as String?,
+    );
+  }
+
+  static TweetStatus parseCommunityTimeline(Map<String, dynamic> body) {
+    final timeline = body['data']?['communityResults']?['result']?['ranked_community_timeline'];
+    if (timeline is! Map<String, dynamic> || timeline['timeline']?['instructions'] is! List) {
+      return TweetStatus(chains: [], cursorBottom: null, cursorTop: null);
+    }
+    return createUnconversationedChainsGraphql(timeline, 'tweet', [], true);
+  }
+
   static TweetStatus _createChainsFromGridModule(Map<String, dynamic> timeline) {
     var instructions = List.from(timeline['timeline']?['instructions'] ?? []);
     var addEntries = List.from(
@@ -1103,6 +1188,7 @@ class TweetWithCard extends Tweet {
   Article? article;
   int? viewCount;
   bool isSubscriberPreview = false;
+  String? communityId;
 
   TweetWithCard();
 
@@ -1119,6 +1205,7 @@ class TweetWithCard extends Tweet {
     json['noteText'] = noteText;
     json['noteEntities'] = noteEntities?.toJson();
     json['isSubscriberPreview'] = isSubscriberPreview;
+    json['communityId'] = communityId;
 
     return json;
   }
@@ -1181,6 +1268,7 @@ class TweetWithCard extends Tweet {
     tweetWithCard.noteText = e['noteText'];
     tweetWithCard.noteEntities = e['noteEntities'] == null ? null : Entities.fromJson(e['noteEntities']);
     tweetWithCard.isSubscriberPreview = e['isSubscriberPreview'] as bool? ?? false;
+    tweetWithCard.communityId = e['communityId'] as String?;
 
     return tweetWithCard;
   }
@@ -1241,6 +1329,7 @@ class TweetWithCard extends Tweet {
         int.tryParse(result['views']?['count'] ?? ''));
 
     tweet.isSubscriberPreview = isSubscriberPreview;
+    tweet.communityId = result['community_results']?['result']?['id_str'] as String?;
 
     if (tweet.card == null && result['card']?['legacy'] != null) {
       tweet.card = result['card']['legacy'];

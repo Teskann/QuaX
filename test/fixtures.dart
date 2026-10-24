@@ -9,6 +9,7 @@ class Fixture {
         queryId = json['queryId'] as String? ?? '',
         unstable = json['unstable'] as bool? ?? false,
         status = json['status'] as int? ?? 200,
+        variables = json['variables'] is Map<String, dynamic> ? json['variables'] : const {},
         // An error X answered (a 503 and its empty body) is recorded as it came
         body = json['body'] is Map<String, dynamic> ? json['body'] : const {};
 
@@ -20,6 +21,9 @@ class Fixture {
   /// Its content changes from one capture to the next, see tool/record/README.md.
   final bool unstable;
   final int status;
+
+  /// The variables of the request the website sent, such as the cursor of a next page.
+  final Map<String, dynamic> variables;
   final Map<String, dynamic> body;
 
   @override

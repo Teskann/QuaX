@@ -30,7 +30,7 @@ class _TrendsScreenState extends State<TrendsScreen> with AutomaticKeepAliveClie
     Navigator.pushNamed(
       context,
       routeSearch,
-      arguments: SearchArguments(0, focusInputOnOpen: false, query: query, filters: filters),
+      arguments: SearchArguments(SearchTab.top, focusInputOnOpen: false, query: query, filters: filters),
     );
   }
 

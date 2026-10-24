@@ -14,7 +14,6 @@ import '../fixtures.dart';
 import '../tweet/pump_tweets.dart';
 import '../ui/fake_images.dart';
 
-const _latestTab = 1;
 const _imagesQuery = 'from:FlutterDev filter:images';
 
 /// The queries of the Latest tab, in the order they were sent.
@@ -31,7 +30,7 @@ Future<List<Uri>> _openSearch(WidgetTester tester, {String query = ''}) async {
   await pumpScreen(
     tester,
     const ResultsScreen(),
-    arguments: SearchArguments(_latestTab, query: query),
+    arguments: SearchArguments(SearchTab.latest, query: query),
     fixtures: {'SearchTimeline': fixture('SearchTimeline', 'from-flutterdev-filter-images', unstable: true)},
     requestedUris: uris,
   );
@@ -394,7 +393,7 @@ void main() {
     );
   });
 
-  testWidgets('Should apply the filters to every tab of the results', (tester) async {
+  testWidgets('Should apply the filters to every tab of posts, and search people with the words only', (tester) async {
     final semantics = tester.ensureSemantics();
     final uris = await _openSearch(tester, query: 'flutter $_imagesQuery');
     for (final tab in ['Top', 'Media', 'People']) {
@@ -407,9 +406,10 @@ void main() {
         variables['product']: variables['rawQuery'],
     };
 
-    for (final product in ['Top', 'Latest', 'Media', 'People']) {
+    for (final product in ['Top', 'Latest', 'Media']) {
       expect(queries[product], 'flutter $_imagesQuery', reason: 'The $product tab should search with the filters');
     }
+    expect(queries['People'], 'flutter', reason: 'X ignores the filters when it searches accounts');
     semantics.dispose();
   });
 
