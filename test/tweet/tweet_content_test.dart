@@ -52,6 +52,12 @@ Future<List<String>> videoQualities(WidgetTester tester, String id) async {
   return urls.qualities.map((quality) => quality.label).toList();
 }
 
+BorderRadiusGeometry? mediaCorners(WidgetTester tester, String id) {
+  final media = find.descendant(of: tweetTile(id), matching: find.byType(TweetMedia));
+  final box = tester.widget<Container>(find.descendant(of: media, matching: find.byType(Container)).first);
+  return box.clipBehavior == Clip.none ? null : (box.decoration as BoxDecoration?)?.borderRadius;
+}
+
 void main() {
   setUpAll(() => HttpOverrides.global = FakeImageHttpOverrides());
 
@@ -212,6 +218,20 @@ void main() {
     }
   });
 
+  group('Media corners', () {
+    for (final (id, scenario) in [
+      ('2095918742400082069', 'photo'),
+      ('2095919166830084474', 'video'),
+      ('2095919075536826410', 'photos'),
+    ]) {
+      testWidgets('Should round the corners of the $scenario', (tester) async {
+        await openPost(tester, id);
+
+        expect(mediaCorners(tester, id), cardRadius, reason: 'The media should be rounded like the cards');
+      });
+    }
+  });
+
   group('Videos', () {
     testWidgets('Should show a 16:9 video with its three MP4 qualities', (tester) async {
       const id = '2095919166830084474';
@@ -320,6 +340,8 @@ void main() {
       final card = find.descendant(of: find.descendant(of: tweetTile(id), matching: find.byType(CardFrame)), matching: find.byType(InkWell));
       expect(tester.getSize(media).width, tester.getSize(card).width,
           reason: 'The images should fill the width of the card, inside its outline');
+      expect(mediaCorners(tester, id), BorderRadius.zero,
+          reason: 'The outline of the card already rounds the images, so they should keep square corners');
     });
   });
 

@@ -1,6 +1,8 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:quax/utils/urls.dart';
 
+const cardRadius = BorderRadius.all(Radius.circular(8));
+
 /// Outlined frame shared by the cards of a tweet, opening [url] when tapped
 class CardFrame extends StatelessWidget {
   final String? url;
@@ -20,7 +22,7 @@ class CardFrame extends StatelessWidget {
         color: Colors.transparent,
         shape: RoundedRectangleBorder(
           side: BorderSide(color: Theme.of(context).colorScheme.surfaceBright.withAlpha(180)),
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: cardRadius,
         ),
         child: InkWell(onTap: url == null ? null : () => openUri(context, url), child: child),
       ),
