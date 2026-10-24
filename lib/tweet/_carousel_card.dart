@@ -42,7 +42,8 @@ class ImageCarouselCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return WebsiteCard(
       uri: uri,
-      media: TweetMedia(media: media, username: username, sensitive: false, margin: EdgeInsets.zero),
+      media: TweetMedia(
+          media: media, username: username, sensitive: false, margin: EdgeInsets.zero, borderRadius: BorderRadius.zero),
       title: title,
       subtitle: subtitle,
     );

@@ -7,6 +7,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/profile/profile.dart';
+import 'package:quax/tweet/_card_frame.dart';
 import 'package:quax/tweet/_photo.dart';
 import 'package:quax/tweet/_video.dart';
 import 'package:quax/tweet/_video_controls.dart';
@@ -139,6 +140,7 @@ class TweetMedia extends StatefulWidget {
   // Used (with the media index) to cache/reuse video controllers across screens.
   final String? tweetId;
   final EdgeInsetsGeometry margin;
+  final BorderRadius borderRadius;
   final ValueChanged<int>? onPageChanged;
 
   const TweetMedia(
@@ -149,6 +151,7 @@ class TweetMedia extends StatefulWidget {
       this.initialMediaIndex = 0,
       this.tweetId,
       this.margin = const EdgeInsets.only(top: 8, left: 16, right: 16),
+      this.borderRadius = cardRadius,
       this.onPageChanged});
 
   @override
@@ -185,6 +188,8 @@ class _TweetMediaState extends State<TweetMedia> {
 
       return Container(
         margin: widget.margin,
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(borderRadius: widget.borderRadius),
         child: AspectRatio(
           aspectRatio: largestAspectRatio,
           child: PageView.builder(
