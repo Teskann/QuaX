@@ -210,7 +210,7 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
               leading: const Icon(Icons.search),
               title: Text(l10n.search),
               onTap: () =>
-                  Navigator.pushNamed(context, routeSearch, arguments: SearchArguments(0, focusInputOnOpen: true)),
+                  Navigator.pushNamed(context, routeSearch, arguments: SearchArguments(SearchTab.top, focusInputOnOpen: true)),
             ),
             ListTile(
               leading: const Icon(Icons.settings),

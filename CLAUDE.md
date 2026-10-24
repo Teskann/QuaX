@@ -48,6 +48,7 @@ Each feature folder contains its screen(s) and its model:
 | `database/` | SQLite repository, entity classes, schema migrations |
 | `home/` | Home screen with tab navigation |
 | `profile/` | User profile view |
+| `community/` | X communities: their page, members and search results |
 | `tweet/` | Tweet card rendering, threads, video playback |
 | `search/` | Search for tweets and users |
 | `trends/` | Trending topics |
@@ -100,7 +101,7 @@ A search is a `SearchQuery`: the words left in the bar plus `SearchFilters`, wri
 
 ### Navigation
 
-Routes are defined as constants in `constants.dart` (`routeHome`, `routeProfile`, etc.) and registered in `main.dart`. Deep links from x.com URLs are parsed in `utils/urls.dart` into sealed `ProfileUriInfo` / `PostUriInfo` classes, then navigated in `main.dart`.
+Routes are defined as constants in `constants.dart` (`routeHome`, `routeProfile`, etc.) and registered in `main.dart`. Deep links from x.com URLs are parsed in `utils/urls.dart` into sealed `ProfileUriInfo` / `PostUriInfo` / `CommunityUriInfo` classes, then navigated in `main.dart`.
 
 ### Localization
 

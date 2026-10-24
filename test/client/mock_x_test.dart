@@ -1,38 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dart_twitter_api/twitter_api.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart';
 import 'package:quax/client/client.dart';
 import 'package:quax/generated/l10n.dart';
 
 import '../../tool/mock_x/fixture_map.dart';
-
-/// Sends the app's requests through the mock, keeping what it answered.
-class _MockXClient extends AbstractTwitterClient {
-  _MockXClient(this.fixtures);
-
-  final FixtureMap fixtures;
-  final answers = <MockAnswer>[];
-
-  @override
-  Future<Response> get(Uri uri, {Map<String, String>? headers, Duration? timeout}) async {
-    final answer = fixtures.answer(uri);
-    answers.add(answer);
-    return Response.bytes(utf8.encode(answer.body), answer.status);
-  }
-
-  @override
-  Future<Response> post(Uri uri, {Map<String, String>? headers, dynamic body, Encoding? encoding, Duration? timeout}) =>
-      throw UnsupportedError('The mock only answers GET requests');
-
-  @override
-  Future<Response> multipartRequest(Uri uri,
-          {List<MultipartFile>? files, Map<String, String>? headers, Duration? timeout}) =>
-      throw UnsupportedError('The mock only answers GET requests');
-}
+import '../mock_x_client.dart';
 
 RecordedRequest _recorded(Map<String, dynamic> variables, {Map<String, dynamic>? features}) =>
     RecordedRequest('test/fixtures/TweetDetail/1.json', {
@@ -78,6 +53,10 @@ Future<void> Function(String? cursor)? _appPages(RecordedRequest recorded) {
     'UserOriginalsTimeline' when variables['sortByMostLiked'] == true => null,
     'UserOriginalsTimeline' => (cursor) => timeline('profile', cursor),
     'UserTweetsAndReplies' => (cursor) => timeline('profile', cursor, includeReplies: true),
+    'CommunityQuery' => (_) => Twitter.getCommunity(variables['communityId']),
+    'CommunityTweetsTimeline' => (cursor) => Twitter.getCommunityTweets(variables['communityId'], cursor: cursor),
+    'CommunitiesSearchQuery' => (cursor) => Twitter.searchCommunities(variables['query'], cursor: cursor),
+    'membersSliceTimeline_Query' => (cursor) => Twitter.getCommunityMembers(variables['communityId'], cursor: cursor),
     'UserVideoTimeline' => (cursor) => timeline('media', cursor),
     'UserPhotoTimeline' => (cursor) => timeline('photos', cursor),
     _ => null,
@@ -133,7 +112,7 @@ void main() {
 
   group('App requests match the fixtures', () {
     final fixtures = FixtureMap.load(Directory('test/fixtures'));
-    final client = _MockXClient(fixtures);
+    final client = MockXClient(fixtures);
 
     setUpAll(() async {
       TestWidgetsFlutterBinding.ensureInitialized();

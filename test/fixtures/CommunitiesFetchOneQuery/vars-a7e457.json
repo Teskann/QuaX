@@ -1,0 +1,979 @@
+{
+ "scenario": "Community page: header with banner, members and rules, then its Top posts",
+ "sourceUrl": "https://x.com/i/communities/1472249315724771329",
+ "unstable": true,
+ "operation": "CommunitiesFetchOneQuery",
+ "host": "x.com",
+ "queryId": "WP5rIK_ORn3JzCDlDzC1Cg",
+ "features": {
+  "profile_label_improvements_pcf_label_in_post_enabled": true,
+  "responsive_web_graphql_timeline_navigation_enabled": true,
+  "responsive_web_profile_redirect_enabled": true,
+  "rweb_tipjar_consumption_enabled": false,
+  "verified_phone_label_enabled": false
+ },
+ "fieldToggles": null,
+ "variables": {
+  "communityId": "1472249315724771329",
+  "withDmMuting": false,
+  "withGrokTranslatedBio": false,
+  "includeProfessionalCategory": true
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "500",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "499",
+  "x-rate-limit-reset": "1792486279"
+ },
+ "body": {
+  "data": {
+   "communityResults": {
+    "id": "Q29tbXVuaXR5UmVzdWx0czoxNDcyMjQ5MzE1NzI0NzcxMzI5",
+    "result": {
+     "__typename": "Community",
+     "actions": {
+      "delete_action_result": {
+       "__isCommunityDeleteActionResult": "CommunityDeleteActionUnavailable",
+       "__typename": "CommunityDeleteActionUnavailable",
+       "reason": "Unavailable"
+      },
+      "id": "Q29tbXVuaXR5QWN0aW9uczoxNDcyMjQ5MzE1NzI0NzcxMzI5",
+      "join_action_result": {
+       "__isCommunityJoinActionResult": "CommunityJoinAction",
+       "__typename": "CommunityJoinAction"
+      },
+      "leave_action_result": {
+       "__isCommunityLeaveActionResult": "CommunityLeaveActionUnavailable",
+       "__typename": "CommunityLeaveActionUnavailable",
+       "message": "Not a member.",
+       "reason": "ViewerNotMember"
+      },
+      "pin_action_result": {
+       "__isCommunityTweetPinActionResult": "CommunityTweetPinActionUnavailable",
+       "__typename": "CommunityTweetPinActionUnavailable"
+      }
+     },
+     "admin_results": {
+      "id": "VXNlclJlc3VsdHM6MTIxNjQ5MDI3MTc1NzgwNzYxNw==",
+      "result": {
+       "__typename": "User",
+       "action_counts": {
+        "favorites_count": 48307
+       },
+       "affiliates_highlighted_label": {
+        "label": {
+         "badge": {
+          "url": "https://pbs.twimg.com/profile_images/2110017247381274625/UlZuSZjC_bigger.png"
+         },
+         "description": "ElevenLabs",
+         "url": {
+          "url": "https://twitter.com/ElevenLabs",
+          "urlType": "DeepLink"
+         },
+         "userLabelDisplayType": "Badge",
+         "userLabelType": "BusinessLabel"
+        }
+       },
+       "avatar": {
+        "image_url": "https://pbs.twimg.com/profile_images/2089346712057884672/shSyc6Zt_normal.jpg"
+       },
+       "banner": {
+        "image_url": "https://pbs.twimg.com/profile_banners/1216490271757807617/1769712756"
+       },
+       "core": {
+        "created_at": "Sun Jan 12 22:41:08 +0000 2020",
+        "name": "Tadas Petra",
+        "screen_name": "tadaspetra"
+       },
+       "follow_request_sent": false,
+       "has_graduated_access": true,
+       "id": "VXNlcjoxMjE2NDkwMjcxNzU3ODA3NjE3",
+       "is_blue_verified": true,
+       "location": {
+        "location": "Chicago"
+       },
+       "media_permissions": {
+        "can_media_tag": true
+       },
+       "notifications_settings": {
+        "notifications_enabled": false
+       },
+       "parody_commentary_fan_label": "None",
+       "pinned_items": {},
+       "possibly_sensitive": false,
+       "privacy": {
+        "protected": false
+       },
+       "professional": {
+        "category": [],
+        "id": "UHJvZmVzc2lvbmFsOjE0NTU2MjU1NzI0NjIzMDkzNzY=",
+        "professional_type": "Creator",
+        "rest_id": "1455625572462309376"
+       },
+       "profile_bio": {
+        "description": "Growth @ElevenLabs",
+        "entities": {
+         "description": {},
+         "url": {
+          "urls": [
+           {
+            "display_url": "tadaspetra.com",
+            "expanded_url": "http://tadaspetra.com",
+            "indices": [
+             0,
+             23
+            ],
+            "url": "https://t.co/ItLaixrt8E"
+           }
+          ]
+         }
+        }
+       },
+       "profile_description_language": "en",
+       "profile_image_shape": "Circle",
+       "profile_metadata": {
+        "profile_interstitial_type": ""
+       },
+       "profile_translation": {
+        "translator_type": "none"
+       },
+       "relationship_counts": {
+        "followers": 19259,
+        "following": 1131
+       },
+       "relationship_perspectives": {
+        "blocked_by": false,
+        "blocking": false,
+        "followed_by": false,
+        "following": false,
+        "live_following": false,
+        "muting": false
+       },
+       "rest_id": "1216490271757807617",
+       "super_follow_eligible": true,
+       "super_followed_by": false,
+       "super_following": false,
+       "tweet_counts": {
+        "media_tweets": 1496,
+        "tweets": 17150
+       },
+       "verification": {
+        "verified": false
+       },
+       "website": {
+        "url": "https://t.co/ItLaixrt8E"
+       }
+      }
+     },
+     "created_at": 1639846564596,
+     "creator_results": {
+      "id": "VXNlclJlc3VsdHM6MTIxNjQ5MDI3MTc1NzgwNzYxNw==",
+      "result": {
+       "__typename": "User",
+       "action_counts": {
+        "favorites_count": 48307
+       },
+       "affiliates_highlighted_label": {
+        "label": {
+         "badge": {
+          "url": "https://pbs.twimg.com/profile_images/2110017247381274625/UlZuSZjC_bigger.png"
+         },
+         "description": "ElevenLabs",
+         "url": {
+          "url": "https://twitter.com/ElevenLabs",
+          "urlType": "DeepLink"
+         },
+         "userLabelDisplayType": "Badge",
+         "userLabelType": "BusinessLabel"
+        }
+       },
+       "avatar": {
+        "image_url": "https://pbs.twimg.com/profile_images/2089346712057884672/shSyc6Zt_normal.jpg"
+       },
+       "banner": {
+        "image_url": "https://pbs.twimg.com/profile_banners/1216490271757807617/1769712756"
+       },
+       "core": {
+        "created_at": "Sun Jan 12 22:41:08 +0000 2020",
+        "name": "Tadas Petra",
+        "screen_name": "tadaspetra"
+       },
+       "follow_request_sent": false,
+       "has_graduated_access": true,
+       "id": "VXNlcjoxMjE2NDkwMjcxNzU3ODA3NjE3",
+       "is_blue_verified": true,
+       "location": {
+        "location": "Chicago"
+       },
+       "media_permissions": {
+        "can_media_tag": true
+       },
+       "notifications_settings": {
+        "notifications_enabled": false
+       },
+       "parody_commentary_fan_label": "None",
+       "pinned_items": {},
+       "possibly_sensitive": false,
+       "privacy": {
+        "protected": false
+       },
+       "professional": {
+        "category": [],
+        "id": "UHJvZmVzc2lvbmFsOjE0NTU2MjU1NzI0NjIzMDkzNzY=",
+        "professional_type": "Creator",
+        "rest_id": "1455625572462309376"
+       },
+       "profile_bio": {
+        "description": "Growth @ElevenLabs",
+        "entities": {
+         "description": {},
+         "url": {
+          "urls": [
+           {
+            "display_url": "tadaspetra.com",
+            "expanded_url": "http://tadaspetra.com",
+            "indices": [
+             0,
+             23
+            ],
+            "url": "https://t.co/ItLaixrt8E"
+           }
+          ]
+         }
+        }
+       },
+       "profile_description_language": "en",
+       "profile_image_shape": "Circle",
+       "profile_metadata": {
+        "profile_interstitial_type": ""
+       },
+       "profile_translation": {
+        "translator_type": "none"
+       },
+       "relationship_counts": {
+        "followers": 19259,
+        "following": 1131
+       },
+       "relationship_perspectives": {
+        "blocked_by": false,
+        "blocking": false,
+        "followed_by": false,
+        "following": false,
+        "live_following": false,
+        "muting": false
+       },
+       "rest_id": "1216490271757807617",
+       "super_follow_eligible": true,
+       "super_followed_by": false,
+       "super_following": false,
+       "tweet_counts": {
+        "media_tweets": 1496,
+        "tweets": 17150
+       },
+       "verification": {
+        "verified": false
+       },
+       "website": {
+        "url": "https://t.co/ItLaixrt8E"
+       }
+      }
+     },
+     "custom_banner_media": {
+      "id": "QXBpTWVkaWE6DAATCgABFG57L87XMAEAAA==",
+      "media_info": {
+       "__typename": "ApiImage",
+       "color_info": {
+        "palette": [
+         {
+          "percentage": 96.25,
+          "rgb": {
+           "blue": 255,
+           "green": 255,
+           "red": 255
+          }
+         },
+         {
+          "percentage": 1.82,
+          "rgb": {
+           "blue": 253,
+           "green": 209,
+           "red": 69
+          }
+         },
+         {
+          "percentage": 1.56,
+          "rgb": {
+           "blue": 131,
+           "green": 131,
+           "red": 131
+          }
+         },
+         {
+          "percentage": 0.31,
+          "rgb": {
+           "blue": 161,
+           "green": 95,
+           "red": 18
+          }
+         }
+        ]
+       },
+       "original_img_height": 375,
+       "original_img_url": "https://pbs.twimg.com/community_banner_img/1472249573460619265/9sWI3PGT?format=jpg&name=orig",
+       "original_img_width": 937,
+       "salient_rect": {
+        "height": 1,
+        "left": 237,
+        "top": 121,
+        "width": 1
+       }
+      }
+     },
+     "default_banner_media": {
+      "id": "QXBpTWVkaWE6DAABCgABFECTM+lVIAMKAAITiFWq8lUQBAAA",
+      "media_info": {
+       "__typename": "ApiImage",
+       "color_info": {
+        "palette": [
+         {
+          "percentage": 45.56,
+          "rgb": {
+           "blue": 63,
+           "green": 206,
+           "red": 255
+          }
+         },
+         {
+          "percentage": 32.34,
+          "rgb": {
+           "blue": 233,
+           "green": 217,
+           "red": 255
+          }
+         },
+         {
+          "percentage": 8.01,
+          "rgb": {
+           "blue": 38,
+           "green": 180,
+           "red": 255
+          }
+         },
+         {
+          "percentage": 7.22,
+          "rgb": {
+           "blue": 160,
+           "green": 214,
+           "red": 254
+          }
+         },
+         {
+          "percentage": 6.76,
+          "rgb": {
+           "blue": 123,
+           "green": 213,
+           "red": 255
+          }
+         }
+        ]
+       },
+       "original_img_height": 480,
+       "original_img_url": "https://pbs.twimg.com/media/FECTM-lVIAMfwd1.jpg",
+       "original_img_width": 1200
+      }
+     },
+     "description": "This is the unofficial Flutter community run by hungrimind.com. If you are a Flutter Developer, this community is for you.",
+     "id": "Q29tbXVuaXR5OjE0NzIyNDkzMTU3MjQ3NzEzMjk=",
+     "id_str": "1472249315724771329",
+     "invites_policy": "MemberInvitesAllowed",
+     "invites_result": {
+      "__isCommunityInvitesResult": "CommunityInvitesUnavailable",
+      "__typename": "CommunityInvitesUnavailable",
+      "message": "Must be a member of the Community to invite others.",
+      "reason": "Unavailable"
+     },
+     "is_nsfw": false,
+     "is_pinned": false,
+     "join_policy": "Open",
+     "join_requests_result": {
+      "__typename": "CommunityJoinRequestsUnavailable"
+     },
+     "member_count": 20730,
+     "members_facepile_results": [
+      {
+       "id": "VXNlclJlc3VsdHM6MTIxNjQ5MDI3MTc1NzgwNzYxNw==",
+       "result": {
+        "__typename": "User",
+        "action_counts": {
+         "favorites_count": 48307
+        },
+        "affiliates_highlighted_label": {
+         "label": {
+          "badge": {
+           "url": "https://pbs.twimg.com/profile_images/2110017247381274625/UlZuSZjC_bigger.png"
+          },
+          "description": "ElevenLabs",
+          "url": {
+           "url": "https://twitter.com/ElevenLabs",
+           "urlType": "DeepLink"
+          },
+          "userLabelDisplayType": "Badge",
+          "userLabelType": "BusinessLabel"
+         }
+        },
+        "avatar": {
+         "image_url": "https://pbs.twimg.com/profile_images/2089346712057884672/shSyc6Zt_normal.jpg"
+        },
+        "banner": {
+         "image_url": "https://pbs.twimg.com/profile_banners/1216490271757807617/1769712756"
+        },
+        "core": {
+         "created_at": "Sun Jan 12 22:41:08 +0000 2020",
+         "name": "Tadas Petra",
+         "screen_name": "tadaspetra"
+        },
+        "follow_request_sent": false,
+        "has_graduated_access": true,
+        "id": "VXNlcjoxMjE2NDkwMjcxNzU3ODA3NjE3",
+        "is_blue_verified": true,
+        "location": {
+         "location": "Chicago"
+        },
+        "media_permissions": {
+         "can_media_tag": true
+        },
+        "notifications_settings": {
+         "notifications_enabled": false
+        },
+        "parody_commentary_fan_label": "None",
+        "pinned_items": {},
+        "possibly_sensitive": false,
+        "privacy": {
+         "protected": false
+        },
+        "professional": {
+         "category": [],
+         "id": "UHJvZmVzc2lvbmFsOjE0NTU2MjU1NzI0NjIzMDkzNzY=",
+         "professional_type": "Creator",
+         "rest_id": "1455625572462309376"
+        },
+        "profile_bio": {
+         "description": "Growth @ElevenLabs",
+         "entities": {
+          "description": {},
+          "url": {
+           "urls": [
+            {
+             "display_url": "tadaspetra.com",
+             "expanded_url": "http://tadaspetra.com",
+             "indices": [
+              0,
+              23
+             ],
+             "url": "https://t.co/ItLaixrt8E"
+            }
+           ]
+          }
+         }
+        },
+        "profile_description_language": "en",
+        "profile_image_shape": "Circle",
+        "profile_metadata": {
+         "profile_interstitial_type": ""
+        },
+        "profile_translation": {
+         "translator_type": "none"
+        },
+        "relationship_counts": {
+         "followers": 19259,
+         "following": 1131
+        },
+        "relationship_perspectives": {
+         "blocked_by": false,
+         "blocking": false,
+         "followed_by": false,
+         "following": false,
+         "live_following": false,
+         "muting": false
+        },
+        "rest_id": "1216490271757807617",
+        "super_follow_eligible": true,
+        "super_followed_by": false,
+        "super_following": false,
+        "tweet_counts": {
+         "media_tweets": 1496,
+         "tweets": 17150
+        },
+        "verification": {
+         "verified": false
+        },
+        "website": {
+         "url": "https://t.co/ItLaixrt8E"
+        }
+       }
+      },
+      {
+       "id": "VXNlclJlc3VsdHM6MTA2MTEwNzc1",
+       "result": {
+        "__typename": "User",
+        "action_counts": {
+         "favorites_count": 47255
+        },
+        "affiliates_highlighted_label": {},
+        "avatar": {
+         "image_url": "https://pbs.twimg.com/profile_images/1951319192990355456/uIIaRtMX_normal.jpg"
+        },
+        "banner": {
+         "image_url": "https://pbs.twimg.com/profile_banners/106110775/1695924664"
+        },
+        "core": {
+         "created_at": "Mon Jan 18 14:50:15 +0000 2010",
+         "name": "Majid Hajian 💙",
+         "screen_name": "mhadaily"
+        },
+        "follow_request_sent": false,
+        "has_graduated_access": true,
+        "id": "VXNlcjoxMDYxMTA3NzU=",
+        "is_blue_verified": false,
+        "location": {
+         "location": "Oslo, Norway"
+        },
+        "media_permissions": {
+         "can_media_tag": true
+        },
+        "notifications_settings": {
+         "notifications_enabled": false
+        },
+        "parody_commentary_fan_label": "None",
+        "pinned_items": {},
+        "possibly_sensitive": false,
+        "privacy": {
+         "protected": false
+        },
+        "professional": {
+         "category": [
+          {
+           "icon_name": "IconBriefcaseStroke",
+           "id": 1009,
+           "name": "Community"
+          }
+         ],
+         "id": "UHJvZmVzc2lvbmFsOjE0NzYzMDE4MTQ1NjgwMzQzMTY=",
+         "professional_type": "Creator",
+         "rest_id": "1476301814568034316"
+        },
+        "profile_bio": {
+         "description": "Dart & @FlutterDev community leader ✨ Organizer @FlutterVikings 📘 https://t.co/fwFKQDx8S9 book author ✨ Cloud & AI advocate @Microsoft",
+         "entities": {
+          "description": {
+           "urls": [
+            {
+             "display_url": "flutterengineering.io",
+             "expanded_url": "http://flutterengineering.io",
+             "indices": [
+              66,
+              89
+             ],
+             "url": "https://t.co/fwFKQDx8S9"
+            }
+           ]
+          },
+          "url": {
+           "urls": [
+            {
+             "display_url": "youtube.com/mhadaily",
+             "expanded_url": "https://youtube.com/mhadaily",
+             "indices": [
+              0,
+              23
+             ],
+             "url": "https://t.co/TlKPif0jNo"
+            }
+           ]
+          }
+         }
+        },
+        "profile_description_language": "en",
+        "profile_image_shape": "Circle",
+        "profile_metadata": {
+         "profile_interstitial_type": ""
+        },
+        "profile_translation": {
+         "translator_type": "none"
+        },
+        "relationship_counts": {
+         "followers": 22795,
+         "following": 1673
+        },
+        "relationship_perspectives": {
+         "blocked_by": false,
+         "blocking": false,
+         "followed_by": false,
+         "following": false,
+         "live_following": false,
+         "muting": false
+        },
+        "rest_id": "106110775",
+        "super_follow_eligible": false,
+        "super_followed_by": false,
+        "super_following": false,
+        "tweet_counts": {
+         "media_tweets": 767,
+         "tweets": 8774
+        },
+        "verification": {
+         "verified": false
+        },
+        "website": {
+         "url": "https://t.co/TlKPif0jNo"
+        }
+       }
+      },
+      {
+       "id": "VXNlclJlc3VsdHM6Nzc3MDQxMTU1OTA5NDUxNzc2",
+       "result": {
+        "__typename": "User",
+        "action_counts": {
+         "favorites_count": 11171
+        },
+        "affiliates_highlighted_label": {},
+        "avatar": {
+         "image_url": "https://pbs.twimg.com/profile_images/1364915715350888449/5LMWEACf_normal.jpg"
+        },
+        "banner": {
+         "image_url": "https://pbs.twimg.com/profile_banners/777041155909451776/1791826867"
+        },
+        "core": {
+         "created_at": "Sat Sep 17 07:07:03 +0000 2016",
+         "name": "Robert Brunhage",
+         "screen_name": "RobertBrunhage"
+        },
+        "follow_request_sent": false,
+        "has_graduated_access": true,
+        "id": "VXNlcjo3NzcwNDExNTU5MDk0NTE3NzY=",
+        "is_blue_verified": true,
+        "location": {
+         "location": "Sweden"
+        },
+        "media_permissions": {
+         "can_media_tag": true
+        },
+        "notifications_settings": {
+         "notifications_enabled": false
+        },
+        "parody_commentary_fan_label": "None",
+        "pinned_items": {},
+        "possibly_sensitive": false,
+        "privacy": {
+         "protected": false
+        },
+        "professional": {
+         "category": [],
+         "id": "UHJvZmVzc2lvbmFsOjE2NTk4MDExMDAyMDE5MTQzNjg=",
+         "professional_type": "Creator",
+         "rest_id": "1659801100201914368"
+        },
+        "profile_bio": {
+         "description": "CTO @hungrimind | ex-GDE at @Google | prev Mobile lead at @Peggy\n\n- https://t.co/kThE3jM7zx\n- https://t.co/9ZrrqdBACF",
+         "entities": {
+          "description": {
+           "urls": [
+            {
+             "display_url": "bitsmith.app",
+             "expanded_url": "https://bitsmith.app/",
+             "indices": [
+              68,
+              91
+             ],
+             "url": "https://t.co/kThE3jM7zx"
+            },
+            {
+             "display_url": "hungrimind.com",
+             "expanded_url": "https://hungrimind.com",
+             "indices": [
+              94,
+              117
+             ],
+             "url": "https://t.co/9ZrrqdBACF"
+            }
+           ]
+          },
+          "url": {
+           "urls": [
+            {
+             "display_url": "bitsmith.app",
+             "expanded_url": "https://bitsmith.app/",
+             "indices": [
+              0,
+              23
+             ],
+             "url": "https://t.co/kThE3jM7zx"
+            }
+           ]
+          }
+         }
+        },
+        "profile_image_shape": "Circle",
+        "profile_metadata": {
+         "profile_interstitial_type": ""
+        },
+        "profile_translation": {
+         "translator_type": "none"
+        },
+        "relationship_counts": {
+         "followers": 7379,
+         "following": 363
+        },
+        "relationship_perspectives": {
+         "blocked_by": false,
+         "blocking": false,
+         "followed_by": false,
+         "following": false,
+         "live_following": false,
+         "muting": false
+        },
+        "rest_id": "777041155909451776",
+        "super_follow_eligible": false,
+        "super_followed_by": false,
+        "super_following": false,
+        "tweet_counts": {
+         "media_tweets": 1190,
+         "tweets": 6155
+        },
+        "verification": {
+         "verified": false
+        },
+        "website": {
+         "url": "https://t.co/kThE3jM7zx"
+        }
+       }
+      },
+      {
+       "id": "VXNlclJlc3VsdHM6MTI0NzIzNjQ3NjY3MDE4MTM4Mg==",
+       "result": {
+        "__typename": "User",
+        "action_counts": {
+         "favorites_count": 1006
+        },
+        "affiliates_highlighted_label": {},
+        "avatar": {
+         "image_url": "https://pbs.twimg.com/profile_images/1247237654556618752/EKgQROZ4_normal.jpg"
+        },
+        "banner": {
+         "image_url": "https://pbs.twimg.com/profile_banners/1247236476670181382/1586204374"
+        },
+        "core": {
+         "created_at": "Mon Apr 06 18:56:06 +0000 2020",
+         "name": "Volodymyr Buberenko🇺🇦",
+         "screen_name": "vbuberen"
+        },
+        "follow_request_sent": false,
+        "has_graduated_access": true,
+        "id": "VXNlcjoxMjQ3MjM2NDc2NjcwMTgxMzgy",
+        "is_blue_verified": false,
+        "location": {
+         "location": ""
+        },
+        "media_permissions": {
+         "can_media_tag": false
+        },
+        "notifications_settings": {
+         "notifications_enabled": false
+        },
+        "parody_commentary_fan_label": "None",
+        "pinned_items": {
+         "tweet_ids_str": [
+          "1744095265114464560"
+         ]
+        },
+        "possibly_sensitive": false,
+        "privacy": {
+         "protected": false
+        },
+        "profile_bio": {
+         "description": "Flutter/Android developer, open source maintainer",
+         "entities": {
+          "description": {}
+         }
+        },
+        "profile_image_shape": "Circle",
+        "profile_metadata": {
+         "profile_interstitial_type": ""
+        },
+        "profile_translation": {
+         "translator_type": "none"
+        },
+        "relationship_counts": {
+         "followers": 519,
+         "following": 107
+        },
+        "relationship_perspectives": {
+         "blocked_by": false,
+         "blocking": false,
+         "followed_by": false,
+         "following": false,
+         "live_following": false,
+         "muting": false
+        },
+        "rest_id": "1247236476670181382",
+        "super_follow_eligible": false,
+        "super_followed_by": false,
+        "super_following": false,
+        "tweet_counts": {
+         "media_tweets": 249,
+         "tweets": 2140
+        },
+        "verification": {
+         "verified": false
+        },
+        "website": {
+         "url": ""
+        }
+       }
+      },
+      {
+       "id": "VXNlclJlc3VsdHM6MTUzMTQxNjk5MQ==",
+       "result": {
+        "__typename": "User",
+        "action_counts": {
+         "favorites_count": 20712
+        },
+        "affiliates_highlighted_label": {},
+        "avatar": {
+         "image_url": "https://pbs.twimg.com/profile_images/1017532253394624513/LgFqlJ4U_normal.jpg"
+        },
+        "banner": {
+         "image_url": "https://pbs.twimg.com/profile_banners/1531416991/1531445172"
+        },
+        "core": {
+         "created_at": "Wed Jun 19 16:58:42 +0000 2013",
+         "name": "Simon Lightfoot 🥇💙",
+         "screen_name": "devangelslondon"
+        },
+        "follow_request_sent": false,
+        "has_graduated_access": true,
+        "id": "VXNlcjoxNTMxNDE2OTkx",
+        "is_blue_verified": false,
+        "location": {
+         "location": "London, UK"
+        },
+        "media_permissions": {
+         "can_media_tag": false
+        },
+        "notifications_settings": {
+         "notifications_enabled": false
+        },
+        "parody_commentary_fan_label": "None",
+        "pinned_items": {
+         "tweet_ids_str": [
+          "1536866265599553536"
+         ]
+        },
+        "possibly_sensitive": false,
+        "privacy": {
+         "protected": false
+        },
+        "professional": {
+         "category": [],
+         "id": "UHJvZmVzc2lvbmFsOjE0NjUzNjkyMDA1MjQ5OTI1MTU=",
+         "professional_type": "Creator",
+         "rest_id": "1465369200524992515"
+        },
+        "profile_bio": {
+         "description": "💙 Flutter Community Lead •💙 Flutter Study Group •👨‍💻 Coding for 20+ years •🏢 CTO DevAngels, London •👍🏻 #Flutter #Android #GoLang • he/him • 🏳️‍🌈 🇬🇧",
+         "entities": {
+          "description": {},
+          "url": {
+           "urls": [
+            {
+             "display_url": "slightfoot.dev",
+             "expanded_url": "https://slightfoot.dev",
+             "indices": [
+              0,
+              23
+             ],
+             "url": "https://t.co/rYHCuMxo6r"
+            }
+           ]
+          }
+         }
+        },
+        "profile_description_language": "en",
+        "profile_image_shape": "Circle",
+        "profile_metadata": {
+         "profile_interstitial_type": ""
+        },
+        "profile_translation": {
+         "translator_type": "none"
+        },
+        "relationship_counts": {
+         "followers": 16921,
+         "following": 1327
+        },
+        "relationship_perspectives": {
+         "blocked_by": false,
+         "blocking": false,
+         "followed_by": false,
+         "following": false,
+         "live_following": false,
+         "muting": false
+        },
+        "rest_id": "1531416991",
+        "super_follow_eligible": false,
+        "super_followed_by": false,
+        "super_following": false,
+        "tweet_counts": {
+         "media_tweets": 401,
+         "tweets": 5300
+        },
+        "verification": {
+         "verified": false
+        },
+        "website": {
+         "url": "https://t.co/rYHCuMxo6r"
+        }
+       }
+      }
+     ],
+     "moderator_count": 5,
+     "name": "Flutter",
+     "primary_community_topic": {
+      "topic_id": "303",
+      "topic_name": "Software"
+     },
+     "role": "NonMember",
+     "rules": [
+      {
+       "id": "Q29tbXVuaXR5UnVsZToxNDcyMjQ5MzE1OTA1MjE2NTE0",
+       "name": "Be kind and respectful.",
+       "rest_id": "1472249315905216514"
+      },
+      {
+       "id": "Q29tbXVuaXR5UnVsZToxNDcyMjQ5MzE1OTA1MTgzNzQ0",
+       "name": "Keep Tweets on topic.",
+       "rest_id": "1472249315905183744"
+      },
+      {
+       "id": "Q29tbXVuaXR5UnVsZToxNDcyMjQ5MzE1ODk2NzQxODk3",
+       "name": "Explore and share.",
+       "rest_id": "1472249315896741897"
+      },
+      {
+       "id": "Q29tbXVuaXR5UnVsZToxNzI3MzYxMTAwNTQxNTE0MTc0",
+       "name": "Don't spam or advertise",
+       "rest_id": "1727361100541514174"
+      }
+     ],
+     "search_tags": [],
+     "viewer_relationship": {
+      "id": "VXNlckNvbW11bml0eVJlbGF0aW9uc2hpcDoKAAEYb3Ch/BdAAAoAAhRuevPMlkABAA==",
+      "moderation_state": {
+       "__typename": "CommunityUserDefaultModerationState"
+      }
+     }
+    }
+   }
+  }
+ }
+}

@@ -104,7 +104,7 @@ List _parseMentionsAndHashtags(BuildContext context, String content) {
       onTap = () async {
         Navigator.pushNamed(context, routeSearch,
             arguments:
-                SearchArguments(1, focusInputOnOpen: false, query: full));
+                SearchArguments(SearchTab.latest, focusInputOnOpen: false, query: full));
       };
     }
     if (type == '@') {
@@ -162,7 +162,7 @@ List<Entity> _parseEntities(BuildContext context, dynamic newEntities, {bool hid
       entities.add(HashtagEntity(
           hashtag,
           () => Navigator.pushNamed(context, routeSearch,
-              arguments: SearchArguments(1,
+              arguments: SearchArguments(SearchTab.latest,
                   focusInputOnOpen: false, query: '#${hashtag.text}'))));
     }
 

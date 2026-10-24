@@ -19,8 +19,10 @@ The fixtures hold the @quax_tests and @quax_tests_2 profiles and posts, the
 searches `from:quax_tests`, `quax` and `quax_tests`, the filtered searches
 of `tool/record/links.json` (Latest tab only), and the subscriptions feed. For
 the feed, subscribe to @FlutterDev, then to @dart_lang: the query lists them in
-subscription order. Long lists end after three pages, as the capture records no
-more.
+subscription order. They also hold the Flutter community
+(`x.com/i/communities/1472249315724771329`: its header, Top posts and members)
+and the community search `flutter`. Long lists end after three pages, as the
+capture records no more.
 
 Trends, translation and live broadcasts always fail. Images and videos come
 from X's public servers, so the device needs internet.

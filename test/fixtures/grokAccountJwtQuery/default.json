@@ -1,0 +1,25 @@
+{
+ "scenario": "Community page: header with banner, members and rules, then its Top posts",
+ "sourceUrl": "https://x.com/i/communities/1472249315724771329",
+ "unstable": true,
+ "operation": "grokAccountJwtQuery",
+ "host": "x.com",
+ "queryId": "DIW0leeI6-dvMzdOMJki4w",
+ "features": null,
+ "fieldToggles": null,
+ "variables": {},
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "100",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "99",
+  "x-rate-limit-reset": "1792486277"
+ },
+ "body": {
+  "data": {
+   "grok_account_jwt": {
+    "status": "NOT_LINKED"
+   }
+  }
+ }
+}
