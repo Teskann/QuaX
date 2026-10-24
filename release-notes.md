@@ -1,10 +1,11 @@
-## QuaX v4.19.2
+## QuaX v4.20.0
 
-What's new in QuaX v4.19.2:
-  - Groups now show the latest posts of a saved search that uses operators like list: or from: (fixed #136) <sup>[[view modified code]](https://github.com/teskann/quax/commit/9f6540543f1dbf5696e83682891f3497a4b36965)</sup>
-  - Increased the number of subscriptions before reaching rate limitations in the feed by about 35% (by @uptivuptiz) <sup>[[view modified code]](https://github.com/teskann/quax/commit/6da67b7bd7f2206cbc8357311f2f3d64a919ec0e)</sup>
-  - Requests no longer keep failing with an x-client-transaction-id error after x.com was briefly unavailable (Fixed #295) <sup>[[view modified code]](https://github.com/teskann/quax/commit/f4845129024b928d086baee0df6076509b1e4f1a)</sup>
-  - Requests no longer fail with an x-client-transaction-id error after x.com changed how it loads its scripts (Fixed #298) <sup>[[view modified code]](https://github.com/teskann/quax/commit/a7568312a2b5cdc05687c02f182d57db919c3162)</sup>
+What's new in QuaX v4.20.0:
+  - QuaX has a new icon: a cleaner ℚ that fits every launcher shape <sup>[[view modified code]](https://github.com/teskann/quax/commit/eec42b793aae676af1b8475781f0226d1411a790)</sup>
+  - Accents on bold or italic Unicode letters no longer show as boxes (fixed #305) <sup>[[view modified code]](https://github.com/teskann/quax/commit/c2ced5728539b19f38a5b0c3d24cfbbde991004f)</sup>
+  - Upgraded Flutter to 3.47.8 and refreshed the dependencies (by @github-actions[bot]) <sup>[[view modified code]](https://github.com/teskann/quax/commit/cca8460b124be3d818656f152cb1b9d33b361cb3)</sup>
+  - Added support for communities. You can now search and browse communities <sup>[[view modified code]](https://github.com/teskann/quax/commit/03d01f9c1cd4b0c438c553d6b0baa95932d0cb9b)</sup>
+  - Photos and videos in tweets now have rounded corners, like the cards <sup>[[view modified code]](https://github.com/teskann/quax/commit/3fcdf4d8e611273734adb0559f9fbe907c0ef06e)</sup>
 
 
 ---
