@@ -87,7 +87,6 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
   late final SearchCommunitiesPagination _communities;
   late final SearchUsersModel _searchUsersModel;
   late final SearchFiltersModel _filters;
-  final SearchChipsVisibilityModel _chipsVisibility = SearchChipsVisibilityModel();
 
   Timer? _debounce;
   String? _lastDispatchedQuery;
@@ -133,7 +132,6 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
     _mediaResults.dispose();
     _communities.dispose();
     _filters.destroy();
-    _chipsVisibility.destroy();
     super.dispose();
   }
 
@@ -215,25 +213,8 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
       store: _filters,
       onState: (_, filters) => filters.active.isEmpty
           ? const SizedBox.shrink()
-          : ScopedBuilder<SearchChipsVisibilityModel, bool>(
-              store: _chipsVisibility,
-              onState: (_, visible) => ClipRect(
-                child: AnimatedAlign(
-                  alignment: Alignment.bottomCenter,
-                  heightFactor: visible ? 1 : 0,
-                  duration: const Duration(milliseconds: 200),
-                  child: SearchFilterChips(filters: filters, onRemoved: _removeFilter, onTap: _openFilters),
-                ),
-              ),
-            ),
+          : SearchFilterChips(filters: filters, onRemoved: _removeFilter, onTap: _openFilters),
     );
-  }
-
-  bool _followResultsScroll(UserScrollNotification notification) {
-    if (notification.metrics.axis == Axis.vertical) {
-      _chipsVisibility.follow(notification.direction);
-    }
-    return false;
   }
 
   Tab _tab(SearchTab tab) {
@@ -302,18 +283,18 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
           ChangeNotifierProvider<VideoContextState>(
               create: (_) => VideoContextState(prefs.get(optionMediaDefaultMute))),
         ],
-        child: Column(children: [
-          _whenFilterable(_filterChips()),
-          Expanded(
-            child: NotificationListener<UserScrollNotification>(
-              onNotification: _followResultsScroll,
-              child: TabBarView(
-              controller: _tabController,
-              children: SearchTab.values.map(_results).toList(),
-              ),
-            ),
+        // The chips scroll away with the results, so hiding them does not resize the list under the finger
+        child: NestedScrollView(
+          floatHeaderSlivers: true,
+          headerSliverBuilder: (context, _) => [
+            // The header asserts when its render child changes, as when the first chip appears
+            SliverFloatingHeader(child: SizedBox(width: double.infinity, child: _whenFilterable(_filterChips()))),
+          ],
+          body: TabBarView(
+            controller: _tabController,
+            children: SearchTab.values.map(_results).toList(),
           ),
-        ]),
+        ),
       ),
     );
   }

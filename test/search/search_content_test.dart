@@ -4,7 +4,9 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:quax/client/client.dart';
 import 'package:quax/search/search.dart';
+import 'package:quax/search/search_filter_chips.dart';
 import 'package:quax/search/search_filters_button.dart';
+import 'package:quax/tweet/conversation.dart';
 import 'package:quax/ui/errors.dart';
 import 'package:quax/user.dart';
 
@@ -20,6 +22,9 @@ import '../ui/fake_images.dart';
       ['user_results']['result']['core'];
   return (screenName: user['screen_name'] as String, name: user['name'] as String);
 }
+
+/// Where the first tweet listed is on screen.
+double _firstTweetTop(WidgetTester tester) => tester.getTopLeft(find.byType(TweetConversation).first).dy;
 
 void main() {
   setUpAll(() => HttpOverrides.global = FakeImageHttpOverrides());
@@ -59,5 +64,25 @@ void main() {
     expect(sent.where((variables) => variables['product'] == 'People').map((variables) => variables['rawQuery']),
         ['quax'], reason: 'X ignores the filters when it searches accounts, so only the words are sent');
     expect(find.byType(SearchFiltersButton), findsNothing, reason: 'The filters would change nothing to the people found');
+  });
+
+  testWidgets('Should scroll the results at the speed of the finger while the filter chips hide', (tester) async {
+    await pumpScreen(tester, const ResultsScreen(),
+        arguments: SearchArguments(SearchTab.latest, query: 'from:FlutterDev filter:links'),
+        fixtures: {'SearchTimeline': fixture('SearchTimeline', 'from-flutterdev-filter-links', unstable: true)});
+    final chipsHeight = tester.getSize(find.byType(SearchFilterChips)).height;
+    final gesture = await tester.startGesture(tester.getCenter(find.byType(TweetConversation).first));
+    await gesture.moveBy(const Offset(0, -20));
+    await tester.pump();
+    final before = _firstTweetTop(tester);
+
+    for (var i = 0; i < 10; i++) {
+      await gesture.moveBy(Offset(0, -chipsHeight / 5));
+      await tester.pump(const Duration(milliseconds: 50));
+    }
+
+    expect(before - _firstTweetTop(tester), moreOrLessEquals(2 * chipsHeight),
+        reason: 'The tweets should follow the finger, not jump by the height of the chips hiding');
+    await gesture.up();
   });
 }
