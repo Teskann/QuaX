@@ -19,8 +19,8 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 4.19.2+400001055
 
 environment:
-  sdk: "3.13.5"
-  flutter: 3.47.7
+  sdk: "3.13.7"
+  flutter: 3.47.8
 
 dependency_overrides:
   # auto_direction pins an old intl (^0.17/^0.18) that conflicts with
@@ -53,7 +53,7 @@ dependencies:
   # "sdk: <3.0.0" upper bound, which pub treats as auto-widened to any 3.x
   # SDK for packages published before Dart 3 shipped. 0.0.7 was published
   # after Dart 3 shipped, so its explicit "sdk: <3.13.0" bound is enforced
-  # literally and excludes our pinned 3.13.5 SDK.
+  # literally and excludes our pinned 3.13.7 SDK.
   auto_direction: ^0.0.6
   extended_image: ^10.0.0
   extended_nested_scroll_view: ^6.0.0
@@ -88,6 +88,9 @@ dependencies:
   path: ^1.8.2
   permission_handler: ^13.0.1
   scroll_to_index: ^3.0.1
+  # Stuck on 2.x: 3.0.0 strictly pins androidx.core:core to 1.17.0 (for
+  # fingerprint auth on API 23-27), which conflicts with android_file_picker's
+  # androidx.core:core-ktx ^1.18.0 and fails the Gradle build.
   secure_content: ^2.0.0
   share_plus: ^13.1.0
   sqflite: ^2.2.2
