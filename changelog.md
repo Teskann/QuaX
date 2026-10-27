@@ -1,3 +1,11 @@
+## QuaX v4.20.1
+
+What's new in QuaX v4.20.1:
+  - Opening a community shows a progress indicator instead of an empty page <sup>[[view modified code]](https://github.com/teskann/quax/commit/afa32d3c96fe61dd123d01796d2239a3117de189)</sup>
+  - Search results scroll smoothly again while the filter chips hide (fixed #311) <sup>[[view modified code]](https://github.com/teskann/quax/commit/e981164a29cf4105a2246cb9b1cae20ae942d5af)</sup>
+  - Updated API calls to match X website version (by @quax-bot) <sup>[[view modified code]](https://github.com/teskann/quax/commit/45648849cb85f3a016adf7ab6d6262839440f0c7)</sup>
+  - Tapping the repost button of a post opens its quotes <sup>[[view modified code]](https://github.com/teskann/quax/commit/748be4f4f30d2b6f23e00674661db4a50d7453b9)</sup>
+
 ## QuaX v4.20.0
 
 What's new in QuaX v4.20.0:
