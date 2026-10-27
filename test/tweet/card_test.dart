@@ -285,6 +285,18 @@ void main() {
     });
   });
 
+  group('Ads', () {
+    testWidgets('Should hide an ad to install an app without any error', (tester) async {
+      final card = withUnified(cardOf(carousel), (unified) => unified['type'] = 'video_app');
+      await _pumpCard(tester, carousel, card: card);
+
+      expect(find.textContaining("isn't supported yet"), findsNothing,
+          reason: 'An ad of X should be hidden, not reported as an unsupported card');
+      expect(find.byType(TweetMedia), findsNothing, reason: 'Nothing of the ad should be drawn');
+      expect(find.text('uefa.com'), findsNothing, reason: 'The ad should not lead anywhere');
+    });
+  });
+
   group('Unsupported cards', () {
     testWidgets('Should say a card of an unknown name is not supported', (tester) async {
       await _pumpCard(tester, grok, card: {...cardOf(grok), 'name': 'brand_new_card'});
