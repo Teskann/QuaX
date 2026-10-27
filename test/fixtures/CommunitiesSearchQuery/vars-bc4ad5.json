@@ -1,0 +1,925 @@
+{
+ "scenario": "Communities found by a search, over several pages",
+ "sourceUrl": "https://x.com/i/communities/suggested?q=flutter",
+ "unstable": true,
+ "operation": "CommunitiesSearchQuery",
+ "host": "x.com",
+ "queryId": "HKgnJbw10TZW41Na4ToaSw",
+ "features": null,
+ "fieldToggles": null,
+ "variables": {
+  "query": "flutter",
+  "cursor": "WzQyLjA1MDg0MiwxNTA0ODIwODIxMTEzNjg4MDY0XQ=="
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "500",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "494",
+  "x-rate-limit-reset": "1793072106"
+ },
+ "body": {
+  "data": {
+   "communities_search_slice": {
+    "items_results": [
+     {
+      "id": "Q29tbXVuaXR5UmVzdWx0czoxNDkzNjE5OTY0NTA2NDgwNjQ4",
+      "result": {
+       "__typename": "Community",
+       "custom_banner_media": {
+        "id": "QXBpTWVkaWE6DAATCgABFLqcWxBXEAQAAA==",
+        "media_info": {
+         "__typename": "ApiImage",
+         "color_info": {
+          "palette": [
+           {
+            "percentage": 86,
+            "rgb": {
+             "blue": 0,
+             "green": 0,
+             "red": 0
+            }
+           },
+           {
+            "percentage": 10.88,
+            "rgb": {
+             "blue": 234,
+             "green": 234,
+             "red": 234
+            }
+           },
+           {
+            "percentage": 4.14,
+            "rgb": {
+             "blue": 115,
+             "green": 115,
+             "red": 115
+            }
+           }
+          ]
+         },
+         "original_img_height": 500,
+         "original_img_url": "https://pbs.twimg.com/community_banner_img/1493678141356838916/DAORCDdx?format=jpg&name=orig",
+         "original_img_width": 1250,
+         "salient_rect": {
+          "height": 1,
+          "left": 997,
+          "top": 176,
+          "width": 1
+         }
+        }
+       },
+       "default_banner_media": {
+        "id": "QXBpTWVkaWE6DAABCgABFECP77VVgAUKAAITiFWq8lUQBAAA",
+        "media_info": {
+         "__typename": "ApiImage",
+         "color_info": {
+          "palette": [
+           {
+            "percentage": 41.45,
+            "rgb": {
+             "blue": 1,
+             "green": 141,
+             "red": 255
+            }
+           },
+           {
+            "percentage": 29.76,
+            "rgb": {
+             "blue": 2,
+             "green": 181,
+             "red": 255
+            }
+           },
+           {
+            "percentage": 13.19,
+            "rgb": {
+             "blue": 254,
+             "green": 224,
+             "red": 145
+            }
+           },
+           {
+            "percentage": 7.58,
+            "rgb": {
+             "blue": 0,
+             "green": 115,
+             "red": 255
+            }
+           },
+           {
+            "percentage": 2.9,
+            "rgb": {
+             "blue": 196,
+             "green": 214,
+             "red": 177
+            }
+           }
+          ]
+         },
+         "original_img_height": 480,
+         "original_img_url": "https://pbs.twimg.com/media/FECP77VVgAURxGe.jpg",
+         "original_img_width": 1200
+        }
+       },
+       "id": "Q29tbXVuaXR5OjE0OTM2MTk5NjQ1MDY0ODA2NDg=",
+       "is_nsfw": false,
+       "member_count": 3,
+       "members_facepile_results": [
+        {
+         "id": "VXNlclJlc3VsdHM6MTM4MTI5NzI4NjYzOTIwMjMwNg==",
+         "result": {
+          "__typename": "User",
+          "avatar": {
+           "image_url": "https://pbs.twimg.com/profile_images/2102779619594088448/gOP5n9Xo_normal.jpg"
+          },
+          "id": "VXNlcjoxMzgxMjk3Mjg2NjM5MjAyMzA2"
+         }
+        },
+        {
+         "id": "VXNlclJlc3VsdHM6Mjg3ODY4Mzc3NA==",
+         "result": {
+          "__typename": "User",
+          "avatar": {
+           "image_url": "https://pbs.twimg.com/profile_images/2007119754260000768/vZNOSNRN_normal.jpg"
+          },
+          "id": "VXNlcjoyODc4NjgzNzc0"
+         }
+        }
+       ],
+       "name": "Flutter Students Club",
+       "rest_id": "1493619964506480648"
+      }
+     },
+     {
+      "id": "Q29tbXVuaXR5UmVzdWx0czoxNTg5MzI3MzU2NjEwNjMzNzMx",
+      "result": {
+       "__typename": "Community",
+       "default_banner_media": {
+        "id": "QXBpTWVkaWE6DAABCgABFECTAh6UUAMKAAITiFWq8lUQBAAA",
+        "media_info": {
+         "__typename": "ApiImage",
+         "color_info": {
+          "palette": [
+           {
+            "percentage": 52.77,
+            "rgb": {
+             "blue": 132,
+             "green": 91,
+             "red": 249
+            }
+           },
+           {
+            "percentage": 32.83,
+            "rgb": {
+             "blue": 193,
+             "green": 147,
+             "red": 251
+            }
+           },
+           {
+            "percentage": 4.87,
+            "rgb": {
+             "blue": 216,
+             "green": 192,
+             "red": 253
+            }
+           },
+           {
+            "percentage": 4.56,
+            "rgb": {
+             "blue": 139,
+             "green": 123,
+             "red": 250
+            }
+           },
+           {
+            "percentage": 3.23,
+            "rgb": {
+             "blue": 111,
+             "green": 93,
+             "red": 247
+            }
+           }
+          ]
+         },
+         "original_img_height": 480,
+         "original_img_url": "https://pbs.twimg.com/media/FECTAh6UUAMjQMg.jpg",
+         "original_img_width": 1200
+        }
+       },
+       "id": "Q29tbXVuaXR5OjE1ODkzMjczNTY2MTA2MzM3MzE=",
+       "is_nsfw": false,
+       "member_count": 1,
+       "members_facepile_results": [
+        {
+         "id": "VXNlclJlc3VsdHM6MTIxNTQzMjM5Ng==",
+         "result": {
+          "__typename": "User",
+          "avatar": {
+           "image_url": "https://pbs.twimg.com/profile_images/1227001702122811392/p8CyqBpT_normal.png"
+          },
+          "id": "VXNlcjoxMjE1NDMyMzk2"
+         }
+        }
+       ],
+       "name": "Flutter & Dart",
+       "rest_id": "1589327356610633731"
+      }
+     },
+     {
+      "id": "Q29tbXVuaXR5UmVzdWx0czoxODEwMTMyNzAwMDg0MjYxMjMz",
+      "result": {
+       "__typename": "Community",
+       "default_banner_media": {
+        "id": "QXBpTWVkaWE6DAABCgABFECQ6xrUUAQKAAITiFWq8lUQBAAA",
+        "media_info": {
+         "__typename": "ApiImage",
+         "color_info": {
+          "palette": [
+           {
+            "percentage": 29.58,
+            "rgb": {
+             "blue": 254,
+             "green": 224,
+             "red": 148
+            }
+           },
+           {
+            "percentage": 26.24,
+            "rgb": {
+             "blue": 0,
+             "green": 154,
+             "red": 252
+            }
+           },
+           {
+            "percentage": 17.11,
+            "rgb": {
+             "blue": 6,
+             "green": 191,
+             "red": 252
+            }
+           },
+           {
+            "percentage": 7.49,
+            "rgb": {
+             "blue": 192,
+             "green": 213,
+             "red": 177
+            }
+           },
+           {
+            "percentage": 7.44,
+            "rgb": {
+             "blue": 0,
+             "green": 129,
+             "red": 252
+            }
+           }
+          ]
+         },
+         "original_img_height": 480,
+         "original_img_url": "https://pbs.twimg.com/media/FECQ6xrUUAQP6u9.jpg",
+         "original_img_width": 1200
+        }
+       },
+       "id": "Q29tbXVuaXR5OjE4MTAxMzI3MDAwODQyNjEyMzM=",
+       "is_nsfw": false,
+       "member_count": 1,
+       "members_facepile_results": [
+        {
+         "id": "VXNlclJlc3VsdHM6NDE0MzkxNTYyMw==",
+         "result": {
+          "__typename": "User",
+          "avatar": {
+           "image_url": "https://pbs.twimg.com/profile_images/2031861954751430656/Zrj1Vu21_normal.jpg"
+          },
+          "id": "VXNlcjo0MTQzOTE1NjIz"
+         }
+        }
+       ],
+       "name": "Flutter Developers",
+       "rest_id": "1810132700084261233"
+      }
+     },
+     {
+      "id": "Q29tbXVuaXR5UmVzdWx0czoxODQ1NjcwNTY2MTkzMTc2NzQ2",
+      "result": {
+       "__typename": "Community",
+       "default_banner_media": {
+        "id": "QXBpTWVkaWE6DAABCgABFECQBhUVIAAKAAITiFWq8lUQBAAA",
+        "media_info": {
+         "__typename": "ApiImage",
+         "color_info": {
+          "palette": [
+           {
+            "percentage": 69.53,
+            "rgb": {
+             "blue": 229,
+             "green": 127,
+             "red": 205
+            }
+           },
+           {
+            "percentage": 13.47,
+            "rgb": {
+             "blue": 189,
+             "green": 225,
+             "red": 141
+            }
+           },
+           {
+            "percentage": 6.08,
+            "rgb": {
+             "blue": 237,
+             "green": 153,
+             "red": 209
+            }
+           },
+           {
+            "percentage": 4.75,
+            "rgb": {
+             "blue": 227,
+             "green": 105,
+             "red": 180
+            }
+           },
+           {
+            "percentage": 3.23,
+            "rgb": {
+             "blue": 216,
+             "green": 208,
+             "red": 182
+            }
+           }
+          ]
+         },
+         "original_img_height": 480,
+         "original_img_url": "https://pbs.twimg.com/media/FECQBhUVIAAmMdc.jpg",
+         "original_img_width": 1200
+        }
+       },
+       "id": "Q29tbXVuaXR5OjE4NDU2NzA1NjYxOTMxNzY3NDY=",
+       "is_nsfw": false,
+       "member_count": 1,
+       "members_facepile_results": [
+        {
+         "id": "VXNlclJlc3VsdHM6MTgxODcyMTAzNzEyNDU3OTMyOA==",
+         "result": {
+          "__typename": "User",
+          "avatar": {
+           "image_url": "https://pbs.twimg.com/profile_images/1818721371565797376/LxCBkbZt_normal.jpg"
+          },
+          "id": "VXNlcjoxODE4NzIxMDM3MTI0NTc5MzI4"
+         }
+        }
+       ],
+       "name": "Flutter Engineers",
+       "rest_id": "1845670566193176746"
+      }
+     },
+     {
+      "id": "Q29tbXVuaXR5UmVzdWx0czoxNzIxMDYyNzU5ODMwMzY0NjM3",
+      "result": {
+       "__typename": "Community",
+       "default_banner_media": {
+        "id": "QXBpTWVkaWE6DAABCgABFECRHJRVkAEKAAITiFWq8lUQBAAA",
+        "media_info": {
+         "__typename": "ApiImage",
+         "color_info": {
+          "palette": [
+           {
+            "percentage": 41.99,
+            "rgb": {
+             "blue": 232,
+             "green": 83,
+             "red": 117
+            }
+           },
+           {
+            "percentage": 27.07,
+            "rgb": {
+             "blue": 170,
+             "green": 104,
+             "red": 250
+            }
+           },
+           {
+            "percentage": 10.6,
+            "rgb": {
+             "blue": 234,
+             "green": 122,
+             "red": 154
+            }
+           },
+           {
+            "percentage": 6.95,
+            "rgb": {
+             "blue": 190,
+             "green": 139,
+             "red": 243
+            }
+           },
+           {
+            "percentage": 4.58,
+            "rgb": {
+             "blue": 177,
+             "green": 77,
+             "red": 183
+            }
+           }
+          ]
+         },
+         "original_img_height": 480,
+         "original_img_url": "https://pbs.twimg.com/media/FECRHJRVkAEB9n7.jpg",
+         "original_img_width": 1200
+        }
+       },
+       "id": "Q29tbXVuaXR5OjE3MjEwNjI3NTk4MzAzNjQ2Mzc=",
+       "is_nsfw": false,
+       "member_count": 1,
+       "members_facepile_results": [
+        {
+         "id": "VXNlclJlc3VsdHM6MTQzOTU5NDA5MzUwODcxMDQwMg==",
+         "result": {
+          "__typename": "User",
+          "avatar": {
+           "image_url": "https://pbs.twimg.com/profile_images/2099885406686773248/5kQRLMKY_normal.jpg"
+          },
+          "id": "VXNlcjoxNDM5NTk0MDkzNTA4NzEwNDAy"
+         }
+        }
+       ],
+       "name": "Flutter captions",
+       "rest_id": "1721062759830364637"
+      }
+     },
+     {
+      "id": "Q29tbXVuaXR5UmVzdWx0czoxNTYwOTcwNTkxNzMzMjcyNTc3",
+      "result": {
+       "__typename": "Community",
+       "default_banner_media": {
+        "id": "QXBpTWVkaWE6DAABCgABFECS1tvVUAEKAAITiFWq8lUQBAAA",
+        "media_info": {
+         "__typename": "ApiImage",
+         "color_info": {
+          "palette": [
+           {
+            "percentage": 46.69,
+            "rgb": {
+             "blue": 230,
+             "green": 132,
+             "red": 203
+            }
+           },
+           {
+            "percentage": 27.85,
+            "rgb": {
+             "blue": 186,
+             "green": 223,
+             "red": 139
+            }
+           },
+           {
+            "percentage": 7.9,
+            "rgb": {
+             "blue": 214,
+             "green": 208,
+             "red": 184
+            }
+           },
+           {
+            "percentage": 7.34,
+            "rgb": {
+             "blue": 225,
+             "green": 173,
+             "red": 200
+            }
+           },
+           {
+            "percentage": 4.53,
+            "rgb": {
+             "blue": 226,
+             "green": 104,
+             "red": 180
+            }
+           }
+          ]
+         },
+         "original_img_height": 480,
+         "original_img_url": "https://pbs.twimg.com/media/FECS1tvVUAEk_AI.jpg",
+         "original_img_width": 1200
+        }
+       },
+       "id": "Q29tbXVuaXR5OjE1NjA5NzA1OTE3MzMyNzI1Nzc=",
+       "is_nsfw": false,
+       "member_count": 1,
+       "members_facepile_results": [
+        {
+         "id": "VXNlclJlc3VsdHM6MzI3NTU0NDAw",
+         "result": {
+          "__typename": "User",
+          "avatar": {
+           "image_url": "https://pbs.twimg.com/profile_images/1876611069109551104/lHzj-Dab_normal.jpg"
+          },
+          "id": "VXNlcjozMjc1NTQ0MDA="
+         }
+        }
+       ],
+       "name": "Flutter Türkiye",
+       "rest_id": "1560970591733272577"
+      }
+     },
+     {
+      "id": "Q29tbXVuaXR5UmVzdWx0czoxNTAzMDc4MDc2NzI0NDM2OTk3",
+      "result": {
+       "__typename": "Community",
+       "custom_banner_media": {
+        "id": "QXBpTWVkaWE6DAATCgABFNwCSmAX0AQAAA==",
+        "media_info": {
+         "__typename": "ApiImage",
+         "color_info": {
+          "palette": [
+           {
+            "percentage": 93.41,
+            "rgb": {
+             "blue": 64,
+             "green": 121,
+             "red": 0
+            }
+           },
+           {
+            "percentage": 2.22,
+            "rgb": {
+             "blue": 70,
+             "green": 203,
+             "red": 158
+            }
+           },
+           {
+            "percentage": 2.13,
+            "rgb": {
+             "blue": 243,
+             "green": 246,
+             "red": 241
+            }
+           },
+           {
+            "percentage": 1.75,
+            "rgb": {
+             "blue": 154,
+             "green": 184,
+             "red": 125
+            }
+           },
+           {
+            "percentage": 0.23,
+            "rgb": {
+             "blue": 47,
+             "green": 84,
+             "red": 29
+            }
+           }
+          ]
+         },
+         "original_img_height": 319,
+         "original_img_url": "https://pbs.twimg.com/community_banner_img/1503078894097911812/RdTqYD9i?format=jpg&name=orig",
+         "original_img_width": 799,
+         "salient_rect": {
+          "height": 1,
+          "left": 487,
+          "top": 159,
+          "width": 1
+         }
+        }
+       },
+       "default_banner_media": {
+        "id": "QXBpTWVkaWE6DAABCgABFECQY8MVEAEKAAITiFWq8lUQBAAA",
+        "media_info": {
+         "__typename": "ApiImage",
+         "color_info": {
+          "palette": [
+           {
+            "percentage": 79.35,
+            "rgb": {
+             "blue": 155,
+             "green": 161,
+             "red": 1
+            }
+           },
+           {
+            "percentage": 11.83,
+            "rgb": {
+             "blue": 132,
+             "green": 120,
+             "red": 248
+            }
+           },
+           {
+            "percentage": 2.97,
+            "rgb": {
+             "blue": 146,
+             "green": 133,
+             "red": 212
+            }
+           },
+           {
+            "percentage": 1.95,
+            "rgb": {
+             "blue": 168,
+             "green": 175,
+             "red": 129
+            }
+           },
+           {
+            "percentage": 0.81,
+            "rgb": {
+             "blue": 97,
+             "green": 84,
+             "red": 244
+            }
+           }
+          ]
+         },
+         "original_img_height": 480,
+         "original_img_url": "https://pbs.twimg.com/media/FECQY8MVEAEnZBg.jpg",
+         "original_img_width": 1200
+        }
+       },
+       "id": "Q29tbXVuaXR5OjE1MDMwNzgwNzY3MjQ0MzY5OTc=",
+       "is_nsfw": false,
+       "member_count": 1,
+       "members_facepile_results": [
+        {
+         "id": "VXNlclJlc3VsdHM6MjY0MDg2NDU0",
+         "result": {
+          "__typename": "User",
+          "avatar": {
+           "image_url": "https://pbs.twimg.com/profile_images/1406571012217466882/zSTnRSZ5_normal.jpg"
+          },
+          "id": "VXNlcjoyNjQwODY0NTQ="
+         }
+        }
+       ],
+       "name": "Flutter Pakistan",
+       "rest_id": "1503078076724436997"
+      }
+     },
+     {
+      "id": "Q29tbXVuaXR5UmVzdWx0czoxNTAxNDc5NjY2Njg2ODI4NTQ4",
+      "result": {
+       "__typename": "Community",
+       "custom_banner_media": {
+        "id": "QXBpTWVkaWE6DAATCgABFNZUubeWQAEAAA==",
+        "media_info": {
+         "__typename": "ApiImage",
+         "color_info": {
+          "palette": [
+           {
+            "percentage": 99.26,
+            "rgb": {
+             "blue": 247,
+             "green": 247,
+             "red": 247
+            }
+           },
+           {
+            "percentage": 0.55,
+            "rgb": {
+             "blue": 247,
+             "green": 203,
+             "red": 107
+            }
+           },
+           {
+            "percentage": 0.14,
+            "rgb": {
+             "blue": 143,
+             "green": 143,
+             "red": 143
+            }
+           }
+          ]
+         },
+         "original_img_height": 499,
+         "original_img_url": "https://pbs.twimg.com/community_banner_img/1501480682400399361/hvWUB3IR?format=jpg&name=orig",
+         "original_img_width": 1248,
+         "salient_rect": {
+          "height": 1,
+          "left": 623,
+          "top": 249,
+          "width": 1
+         }
+        }
+       },
+       "default_banner_media": {
+        "id": "QXBpTWVkaWE6DAABCgABFECSqInVQAIKAAITiFWq8lUQBAAA",
+        "media_info": {
+         "__typename": "ApiImage",
+         "color_info": {
+          "palette": [
+           {
+            "percentage": 44.72,
+            "rgb": {
+             "blue": 161,
+             "green": 91,
+             "red": 250
+            }
+           },
+           {
+            "percentage": 28.39,
+            "rgb": {
+             "blue": 234,
+             "green": 144,
+             "red": 31
+            }
+           },
+           {
+            "percentage": 6.1,
+            "rgb": {
+             "blue": 188,
+             "green": 124,
+             "red": 223
+            }
+           },
+           {
+            "percentage": 5.38,
+            "rgb": {
+             "blue": 183,
+             "green": 92,
+             "red": 69
+            }
+           },
+           {
+            "percentage": 4.92,
+            "rgb": {
+             "blue": 236,
+             "green": 185,
+             "red": 145
+            }
+           }
+          ]
+         },
+         "original_img_height": 480,
+         "original_img_url": "https://pbs.twimg.com/media/FECSqInVQAIMy4o.jpg",
+         "original_img_width": 1200
+        }
+       },
+       "id": "Q29tbXVuaXR5OjE1MDE0Nzk2NjY2ODY4Mjg1NDg=",
+       "is_nsfw": false,
+       "member_count": 1,
+       "members_facepile_results": [
+        {
+         "id": "VXNlclJlc3VsdHM6NTUxMzg0MDU1",
+         "result": {
+          "__typename": "User",
+          "avatar": {
+           "image_url": "https://pbs.twimg.com/profile_images/1706173756975075328/6ik4I98o_normal.jpg"
+          },
+          "id": "VXNlcjo1NTEzODQwNTU="
+         }
+        }
+       ],
+       "name": "Flutter & Dart بالعربي",
+       "rest_id": "1501479666686828548"
+      }
+     },
+     {
+      "id": "Q29tbXVuaXR5UmVzdWx0czoxNzY3NTM1NDAyMTQxODEwNzE1",
+      "result": {
+       "__typename": "Community",
+       "custom_banner_media": {
+        "id": "QXBpTWVkaWE6DAATCgABGIeM76GXsAEAAA==",
+        "media_info": {
+         "__typename": "ApiImage",
+         "color_info": {
+          "palette": [
+           {
+            "percentage": 95.14,
+            "rgb": {
+             "blue": 49,
+             "green": 33,
+             "red": 21
+            }
+           },
+           {
+            "percentage": 2.48,
+            "rgb": {
+             "blue": 168,
+             "green": 162,
+             "red": 157
+            }
+           },
+           {
+            "percentage": 1.5,
+            "rgb": {
+             "blue": 241,
+             "green": 179,
+             "red": 42
+            }
+           },
+           {
+            "percentage": 0.7,
+            "rgb": {
+             "blue": 154,
+             "green": 87,
+             "red": 6
+            }
+           }
+          ]
+         },
+         "original_img_height": 512,
+         "original_img_url": "https://pbs.twimg.com/community_banner_img/1767536339602354177/2IIPSGTA?format=jpg&name=orig",
+         "original_img_width": 1280,
+         "salient_rect": {
+          "height": 1,
+          "left": 640,
+          "top": 256,
+          "width": 1
+         }
+        }
+       },
+       "default_banner_media": {
+        "id": "QXBpTWVkaWE6DAABCgABFECRNk0VIAcKAAITiFWq8lUQBAAA",
+        "media_info": {
+         "__typename": "ApiImage",
+         "color_info": {
+          "palette": [
+           {
+            "percentage": 49.53,
+            "rgb": {
+             "blue": 119,
+             "green": 85,
+             "red": 246
+            }
+           },
+           {
+            "percentage": 34.53,
+            "rgb": {
+             "blue": 193,
+             "green": 153,
+             "red": 252
+            }
+           },
+           {
+            "percentage": 6.4,
+            "rgb": {
+             "blue": 171,
+             "green": 118,
+             "red": 251
+            }
+           },
+           {
+            "percentage": 5.7,
+            "rgb": {
+             "blue": 135,
+             "green": 124,
+             "red": 248
+            }
+           },
+           {
+            "percentage": 3.58,
+            "rgb": {
+             "blue": 207,
+             "green": 188,
+             "red": 252
+            }
+           }
+          ]
+         },
+         "original_img_height": 480,
+         "original_img_url": "https://pbs.twimg.com/media/FECRNk0VIAckNa6.jpg",
+         "original_img_width": 1200
+        }
+       },
+       "id": "Q29tbXVuaXR5OjE3Njc1MzU0MDIxNDE4MTA3MTU=",
+       "is_nsfw": false,
+       "member_count": 1,
+       "members_facepile_results": [
+        {
+         "id": "VXNlclJlc3VsdHM6NjAyNjcwNTY3",
+         "result": {
+          "__typename": "User",
+          "avatar": {
+           "image_url": "https://pbs.twimg.com/profile_images/2066851228580007936/jxJof-sN_normal.jpg"
+          },
+          "id": "VXNlcjo2MDI2NzA1Njc="
+         }
+        }
+       ],
+       "name": "Flutter & Dart Francophone",
+       "primary_community_topic": {
+        "topic_name": "Technology"
+       },
+       "rest_id": "1767535402141810715"
+      }
+     }
+    ],
+    "slice_info": {
+     "next_cursor": "WzM2LjIxNTYyMiwxNzY3NTM1NDAyMTQxODEwNzE1XQ=="
+    }
+   }
+  }
+ }
+}

@@ -3,7 +3,7 @@
  "sourceUrl": "https://x.com/UKLabour/status/2026390853309063292",
  "operation": "TweetResultByRestId",
  "host": "x.com",
- "queryId": "xZfFqfOmKQu_OXekGI59mg",
+ "queryId": "a-Xpq8PjX9K6U5cmc1f05A",
  "features": {
   "creator_subscriptions_tweet_preview_api_enabled": true,
   "premium_content_api_read_enabled": false,
@@ -41,6 +41,7 @@
   "responsive_web_nested_quote_preview_enabled": true,
   "responsive_web_grok_image_annotation_enabled": true,
   "responsive_web_grok_imagine_annotation_enabled": true,
+  "responsive_web_made_on_x_label_enabled": false,
   "responsive_web_grok_community_note_auto_translation_is_enabled": true,
   "responsive_web_graphql_timeline_navigation_enabled": true
  },
@@ -62,8 +63,8 @@
  "headers": {
   "x-rate-limit-limit": "500",
   "content-type": "application/json",
-  "x-rate-limit-remaining": "469",
-  "x-rate-limit-reset": "1791732019"
+  "x-rate-limit-remaining": "467",
+  "x-rate-limit-reset": "1793070215"
  },
  "body": {
   "data": {
@@ -72,11 +73,11 @@
      "__typename": "Tweet",
      "birdwatch_pivot": {
       "callToAction": {
-       "destinationUrl": "https://twitter.com/i/birdwatch/n/2026433888222904557",
+       "destinationUrl": "https://twitter.com/i/birdwatch/n/2026499345198293272",
        "prompt": "Do you find this helpful?",
        "title": "Rate it"
       },
-      "destinationUrl": "https://twitter.com/i/birdwatch/n/2026433888222904557",
+      "destinationUrl": "https://twitter.com/i/birdwatch/n/2026499345198293272",
       "footer": {
        "entities": [
         {
@@ -92,40 +93,49 @@
        "text": "Context is written by people who use X, and appears when rated helpful by others.  Find out more."
       },
       "footerIconType": "BirdwatchEyeOff",
-      "iconType": "BirdwatchPhoto",
+      "iconType": "BirdwatchV1Icon",
       "note": {
        "grok_translated_community_note_with_availability": {
         "is_available": false
        },
        "is_community_note_translatable": false,
-       "language": "en",
-       "rest_id": "2026433888222904557"
+       "language": "",
+       "rest_id": "2026499345198293272"
       },
       "shorttitle": "Readers added context",
       "subtitle": {
        "entities": [
         {
-         "fromIndex": 226,
+         "fromIndex": 216,
          "ref": {
           "type": "TimelineUrl",
-          "url": "https://t.co/XwyWUwTQLu",
+          "url": "https://t.co/S2l95QlDsc",
           "urlType": "ExternalUrl"
          },
-         "toIndex": 257
+         "toIndex": 237
         },
         {
-         "fromIndex": 259,
+         "fromIndex": 238,
          "ref": {
           "type": "TimelineUrl",
-          "url": "https://t.co/bW5zepHT5W",
+          "url": "https://t.co/0jzScQ20ky",
           "urlType": "ExternalUrl"
          },
-         "toIndex": 287
+         "toIndex": 269
+        },
+        {
+         "fromIndex": 270,
+         "ref": {
+          "type": "TimelineUrl",
+          "url": "https://t.co/F85M48rm5X",
+          "urlType": "ExternalUrl"
+         },
+         "toIndex": 298
         }
        ],
-       "text": "The Opinium/Byline Times poll (fieldwork 16-24 Feb 2026) shows Greens tied with Labour at 28%, Reform 27% among voters stating intention; among likely voters, Greens lead at 30%, Labour/Reform 28% each. Graphic omits Greens.\n\nbylinetimes.com/2026/02/24/exc…\n\nfullfact.org/politics/gorto…"
+       "text": "Opinium poll shows Greens tied with Labour at 28%, Reform at 27% among voters; Greens at 30%, Labour/Reform at 28% among likely voters. Post's graphic omits Greens. Sample of 401; high uncertainty due to small size. x.com/OpiniumResearc… bylinetimes.com/2026/02/24/exc… fullfact.org/politics/gorto…"
       },
-      "title": "Readers added context to this image",
+      "title": "Readers added context they thought people might want to know",
       "visualStyle": "Default"
      },
      "cashtag_attachments": [],
@@ -134,7 +144,7 @@
        "result": {
         "__typename": "User",
         "action_counts": {
-         "favorites_count": 656
+         "favorites_count": 673
         },
         "affiliates_highlighted_label": {},
         "avatar": {
@@ -195,8 +205,8 @@
          "translator_type": "none"
         },
         "relationship_counts": {
-         "followers": 988889,
-         "following": 10008
+         "followers": 988328,
+         "following": 9997
         },
         "relationship_perspectives": {
          "blocked_by": false,
@@ -211,8 +221,8 @@
         "super_followed_by": false,
         "super_following": false,
         "tweet_counts": {
-         "media_tweets": 11981,
-         "tweets": 42006
+         "media_tweets": 12019,
+         "tweets": 42087
         },
         "verification": {
          "verified": false
@@ -452,7 +462,7 @@
       "possibly_sensitive": false,
       "possibly_sensitive_editable": true,
       "quote_count": 425,
-      "reply_count": 1991,
+      "reply_count": 1986,
       "retweet_count": 271,
       "retweeted": false,
       "user_id_str": "14291684"
@@ -460,7 +470,7 @@
      "rest_id": "2026390853309063292",
      "unmention_data": {},
      "views": {
-      "count": "1217505",
+      "count": "1217608",
       "state": "EnabledWithCount"
      }
     }

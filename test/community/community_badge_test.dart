@@ -11,10 +11,14 @@ import '../fixtures.dart';
 import '../ui/fake_images.dart';
 import 'pump_community.dart';
 
-// A search of @FlutterDev and @dart_lang, one of whose reposts was posted in a community
-List<TweetChain> _searchWithACommunityPost() => Twitter.parseSearchTimeline(
-        fixture('SearchTimeline', 'from-flutterdev-or-from-dart-lang-include-nativeretweets', unstable: true).body)
-    .chains;
+// Every recorded page of a search of @FlutterDev and @dart_lang, one of whose reposts was posted in a community
+List<TweetChain> _searchWithACommunityPost() {
+  final search = fixture('SearchTimeline', 'from-flutterdev-or-from-dart-lang-include-nativeretweets', unstable: true);
+  return fixturesOf('SearchTimeline')
+      .where((page) => page.sourceUrl == search.sourceUrl)
+      .expand((page) => Twitter.parseSearchTimeline(page.body).chains)
+      .toList();
+}
 
 TweetWithCard _shown(TweetWithCard tweet) => tweet.retweetedStatusWithCard ?? tweet;
 

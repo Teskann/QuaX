@@ -1,0 +1,63 @@
+{
+ "scenario": "Reposts view of an account that has none",
+ "sourceUrl": "https://x.com/quax_tests/reposts",
+ "operation": "AboutAccountQuery",
+ "host": "x.com",
+ "queryId": "TzOG2twZEfhr9KmClvVVqA",
+ "features": null,
+ "fieldToggles": null,
+ "variables": {
+  "screenName": "quax_tests"
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "50",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "49",
+  "x-rate-limit-reset": "1793074830"
+ },
+ "body": {
+  "data": {
+   "user_result_by_screen_name": {
+    "id": "VXNlclJlc3VsdHM6MjA5NTkwOTI5NTkxMzEwMzM2MA==",
+    "result": {
+     "__typename": "User",
+     "about_profile": {
+      "account_based_in": "France",
+      "created_country_accurate": true,
+      "learn_more_url": "https://help.twitter.com/rules-and-policies/profile-labels",
+      "location_accurate": true,
+      "source": "Web",
+      "username_changes": {
+       "count": "0"
+      }
+     },
+     "affiliates_highlighted_label": {},
+     "avatar": {
+      "image_url": "https://pbs.twimg.com/profile_images/2095923817080295424/YjqaAMdO_normal.jpg"
+     },
+     "core": {
+      "created_at": "Fri Sep 04 16:19:42 +0000 2026",
+      "name": "QuaX Tests",
+      "screen_name": "quax_tests"
+     },
+     "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
+     "identity_profile_labels_highlighted_label": {},
+     "is_blue_verified": false,
+     "privacy": {
+      "protected": false
+     },
+     "profile_image_shape": "Circle",
+     "rest_id": "2095909295913103360",
+     "verification": {
+      "verified": false
+     },
+     "verification_info": {
+      "id": "VXNlclZlcmlmaWNhdGlvbkluZm86MjA5NTkwOTI5NTkxMzEwMzM2MA==",
+      "is_identity_verified": false
+     }
+    }
+   }
+  }
+ }
+}
