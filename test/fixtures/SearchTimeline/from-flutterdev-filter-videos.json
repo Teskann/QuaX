@@ -4,7 +4,7 @@
  "unstable": true,
  "operation": "SearchTimeline",
  "host": "x.com",
- "queryId": "irezafrnzav4Ulf1vDkEBg",
+ "queryId": "f7SuGIm11eLbQs7c0K9X9w",
  "features": {
   "rweb_video_screen_enabled": false,
   "rweb_cashtags_enabled": true,
@@ -44,6 +44,7 @@
   "responsive_web_nested_quote_preview_enabled": true,
   "responsive_web_grok_image_annotation_enabled": true,
   "responsive_web_grok_imagine_annotation_enabled": true,
+  "responsive_web_made_on_x_label_enabled": false,
   "responsive_web_grok_community_note_auto_translation_is_enabled": true,
   "responsive_web_enhance_cards_enabled": false
  },
@@ -60,8 +61,8 @@
  "headers": {
   "x-rate-limit-limit": "50",
   "content-type": "application/json",
-  "x-rate-limit-remaining": "46",
-  "x-rate-limit-reset": "1792268778"
+  "x-rate-limit-remaining": "18",
+  "x-rate-limit-reset": "1793070934"
  },
  "body": {
   "data": {
@@ -78,7 +79,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACuW2U2Mrf1H0KAAVR3Reh9WpkGQgABgAAAAEKAAdLVi/lP055gQoACAAAAaFLgfIOAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACaECL0yuUGD0KAAVR3Reh9WpkGQgABgAAAAEKAAd6GqRpsiq8VAoACAAAAaF7VsAQAAAAAAA="
              }
             },
             "element": "tweet"
@@ -103,7 +104,7 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3222
+                  "favorites_count": 3220
                  },
                  "affiliates_highlighted_label": {},
                  "avatar": {
@@ -168,7 +169,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 277911,
+                  "followers": 278003,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -184,8 +185,706 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1983,
-                  "tweets": 3929
+                  "media_tweets": 1988,
+                  "tweets": 3938
+                 },
+                 "verification": {
+                  "verified": false,
+                  "verified_type": "Business"
+                 },
+                 "website": {
+                  "url": "https://t.co/bVj6OdNADd"
+                 }
+                }
+               }
+              },
+              "edit_control": {
+               "edit_tweet_ids": [
+                "2113295209953951803"
+               ],
+               "editable_until_msecs": "1792687415000",
+               "edits_remaining": "5",
+               "is_edit_eligible": true
+              },
+              "grok_analysis_button": true,
+              "grok_annotations": {
+               "is_image_editable_by_grok": false
+              },
+              "grok_translated_post_with_availability": {
+               "is_available": false
+              },
+              "is_translatable": false,
+              "legacy": {
+               "bookmark_count": 38,
+               "bookmarked": false,
+               "conversation_id_str": "2113295209953951803",
+               "created_at": "Thu Oct 22 15:43:35 +0000 2026",
+               "display_text_range": [
+                0,
+                239
+               ],
+               "entities": {
+                "media": [
+                 {
+                  "additional_media_info": {
+                   "monetizable": false
+                  },
+                  "display_url": "pic.x.com/KUodMDPVxQ",
+                  "expanded_url": "https://x.com/FlutterDev/status/2113295209953951803/video/1",
+                  "ext_media_availability": {
+                   "status": "Available"
+                  },
+                  "id_str": "2113295159139999744",
+                  "indices": [
+                   240,
+                   263
+                  ],
+                  "media_key": "13_2113295159139999744",
+                  "media_results": {
+                   "result": {
+                    "media_key": "13_2113295159139999744"
+                   }
+                  },
+                  "media_url_https": "https://pbs.twimg.com/media/HVPuyx5W0AA05R7.png",
+                  "original_info": {
+                   "focus_rects": [],
+                   "height": 405,
+                   "width": 720
+                  },
+                  "sizes": {
+                   "large": {
+                    "h": 405,
+                    "resize": "fit",
+                    "w": 720
+                   },
+                   "medium": {
+                    "h": 405,
+                    "resize": "fit",
+                    "w": 720
+                   },
+                   "small": {
+                    "h": 383,
+                    "resize": "fit",
+                    "w": 680
+                   },
+                   "thumb": {
+                    "h": 150,
+                    "resize": "crop",
+                    "w": 150
+                   }
+                  },
+                  "type": "video",
+                  "url": "https://t.co/KUodMDPVxQ",
+                  "video_info": {
+                   "aspect_ratio": [
+                    16,
+                    9
+                   ],
+                   "duration_millis": 87834,
+                   "variants": [
+                    {
+                     "content_type": "application/x-mpegURL",
+                     "url": "https://video.twimg.com/amplify_video/2113295159139999744/pl/CEtGUwWr3Taqkt0B.m3u8?tag=16&v=dbc"
+                    },
+                    {
+                     "bitrate": 288000,
+                     "content_type": "video/mp4",
+                     "url": "https://video.twimg.com/amplify_video/2113295159139999744/vid/avc1/480x270/GdZyVMR_tnGIm1Tj.mp4?tag=16"
+                    },
+                    {
+                     "bitrate": 832000,
+                     "content_type": "video/mp4",
+                     "url": "https://video.twimg.com/amplify_video/2113295159139999744/vid/avc1/640x360/nGiSBGD7bi4US-vQ.mp4?tag=16"
+                    },
+                    {
+                     "bitrate": 2176000,
+                     "content_type": "video/mp4",
+                     "url": "https://video.twimg.com/amplify_video/2113295159139999744/vid/avc1/1280x720/1ALCPVlbflhB3Gon.mp4?tag=16"
+                    },
+                    {
+                     "bitrate": 10368000,
+                     "content_type": "video/mp4",
+                     "url": "https://video.twimg.com/amplify_video/2113295159139999744/vid/avc1/1920x1080/Mjq97QLXzK4mytrg.mp4?tag=16"
+                    }
+                   ]
+                  }
+                 }
+                ]
+               },
+               "extended_entities": {
+                "media": [
+                 {
+                  "additional_media_info": {
+                   "monetizable": false
+                  },
+                  "display_url": "pic.x.com/KUodMDPVxQ",
+                  "expanded_url": "https://x.com/FlutterDev/status/2113295209953951803/video/1",
+                  "ext_media_availability": {
+                   "status": "Available"
+                  },
+                  "id_str": "2113295159139999744",
+                  "indices": [
+                   240,
+                   263
+                  ],
+                  "media_key": "13_2113295159139999744",
+                  "media_results": {
+                   "result": {
+                    "media_key": "13_2113295159139999744"
+                   }
+                  },
+                  "media_url_https": "https://pbs.twimg.com/media/HVPuyx5W0AA05R7.png",
+                  "original_info": {
+                   "focus_rects": [],
+                   "height": 405,
+                   "width": 720
+                  },
+                  "sizes": {
+                   "large": {
+                    "h": 405,
+                    "resize": "fit",
+                    "w": 720
+                   },
+                   "medium": {
+                    "h": 405,
+                    "resize": "fit",
+                    "w": 720
+                   },
+                   "small": {
+                    "h": 383,
+                    "resize": "fit",
+                    "w": 680
+                   },
+                   "thumb": {
+                    "h": 150,
+                    "resize": "crop",
+                    "w": 150
+                   }
+                  },
+                  "type": "video",
+                  "url": "https://t.co/KUodMDPVxQ",
+                  "video_info": {
+                   "aspect_ratio": [
+                    16,
+                    9
+                   ],
+                   "duration_millis": 87834,
+                   "variants": [
+                    {
+                     "content_type": "application/x-mpegURL",
+                     "url": "https://video.twimg.com/amplify_video/2113295159139999744/pl/CEtGUwWr3Taqkt0B.m3u8?tag=16&v=dbc"
+                    },
+                    {
+                     "bitrate": 288000,
+                     "content_type": "video/mp4",
+                     "url": "https://video.twimg.com/amplify_video/2113295159139999744/vid/avc1/480x270/GdZyVMR_tnGIm1Tj.mp4?tag=16"
+                    },
+                    {
+                     "bitrate": 832000,
+                     "content_type": "video/mp4",
+                     "url": "https://video.twimg.com/amplify_video/2113295159139999744/vid/avc1/640x360/nGiSBGD7bi4US-vQ.mp4?tag=16"
+                    },
+                    {
+                     "bitrate": 2176000,
+                     "content_type": "video/mp4",
+                     "url": "https://video.twimg.com/amplify_video/2113295159139999744/vid/avc1/1280x720/1ALCPVlbflhB3Gon.mp4?tag=16"
+                    },
+                    {
+                     "bitrate": 10368000,
+                     "content_type": "video/mp4",
+                     "url": "https://video.twimg.com/amplify_video/2113295159139999744/vid/avc1/1920x1080/Mjq97QLXzK4mytrg.mp4?tag=16"
+                    }
+                   ]
+                  }
+                 }
+                ]
+               },
+               "favorite_count": 193,
+               "favorited": false,
+               "full_text": "👎 Manually checking types, keys, and casting elements creates unnecessary boilerplate. \n\n👍 Dart if-case statements let you match a pattern and destructure data directly inside an if-condition.\n\nLearn how to write cleaner conditional logic. https://t.co/KUodMDPVxQ",
+               "id_str": "2113295209953951803",
+               "is_quote_status": false,
+               "lang": "en",
+               "possibly_sensitive": false,
+               "possibly_sensitive_editable": true,
+               "quote_count": 4,
+               "reply_count": 6,
+               "retweet_count": 16,
+               "retweeted": false,
+               "user_id_str": "420730316"
+              },
+              "rest_id": "2113295209953951803",
+              "unmention_data": {},
+              "views": {
+               "count": "10328",
+               "state": "EnabledWithCount"
+              }
+             }
+            }
+           }
+          },
+          "entryId": "tweet-2113295209953951803",
+          "sortIndex": "2114917691453079552"
+         },
+         {
+          "content": {
+           "__typename": "TimelineTimelineItem",
+           "clientEventInfo": {
+            "component": "latest_nightowl_recency",
+            "details": {
+             "timelinesDetails": {
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACaECL0yuUGD0KAAVR3Reh9WpkGQgABgAAAAEKAAd6GqRpsiq8VAoACAAAAaF7VsAQAAAAAAA="
+             }
+            },
+            "element": "tweet"
+           },
+           "entryType": "TimelineTimelineItem",
+           "itemContent": {
+            "__typename": "TimelineTweet",
+            "itemType": "TimelineTweet",
+            "tweetDisplayType": "Tweet",
+            "tweet_results": {
+             "result": {
+              "__typename": "Tweet",
+              "cashtag_attachments": [],
+              "content_disclosure": {
+               "ai_generated_disclosure": {
+                "can_edit": true,
+                "has_ai_generated_media": false
+               }
+              },
+              "core": {
+               "user_results": {
+                "result": {
+                 "__typename": "User",
+                 "action_counts": {
+                  "favorites_count": 3220
+                 },
+                 "affiliates_highlighted_label": {},
+                 "avatar": {
+                  "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
+                 },
+                 "banner": {
+                  "image_url": "https://pbs.twimg.com/profile_banners/420730316/1785427735"
+                 },
+                 "core": {
+                  "created_at": "Fri Nov 25 01:07:12 +0000 2011",
+                  "name": "Flutter",
+                  "screen_name": "FlutterDev"
+                 },
+                 "follow_request_sent": false,
+                 "has_graduated_access": true,
+                 "id": "VXNlcjo0MjA3MzAzMTY=",
+                 "is_blue_verified": false,
+                 "location": {
+                  "location": ""
+                 },
+                 "media_permissions": {
+                  "can_media_tag": true
+                 },
+                 "notifications_settings": {
+                  "notifications_enabled": false
+                 },
+                 "parody_commentary_fan_label": "None",
+                 "pinned_items": {
+                  "tweet_ids_str": [
+                   "2101012855101218956"
+                  ]
+                 },
+                 "possibly_sensitive": false,
+                 "privacy": {
+                  "protected": false
+                 },
+                 "profile_bio": {
+                  "description": "Google’s UI toolkit to build apps for mobile, web, & desktop from a single codebase",
+                  "entities": {
+                   "description": {},
+                   "url": {
+                    "urls": [
+                     {
+                      "display_url": "flutter.dev",
+                      "expanded_url": "https://flutter.dev",
+                      "indices": [
+                       0,
+                       23
+                      ],
+                      "url": "https://t.co/bVj6OdNADd"
+                     }
+                    ]
+                   }
+                  }
+                 },
+                 "profile_description_language": "en",
+                 "profile_image_shape": "Square",
+                 "profile_metadata": {
+                  "profile_interstitial_type": ""
+                 },
+                 "profile_translation": {
+                  "translator_type": "none"
+                 },
+                 "relationship_counts": {
+                  "followers": 278003,
+                  "following": 61
+                 },
+                 "relationship_perspectives": {
+                  "blocked_by": false,
+                  "blocking": false,
+                  "followed_by": false,
+                  "following": false,
+                  "live_following": false,
+                  "muting": false
+                 },
+                 "rest_id": "420730316",
+                 "super_follow_eligible": false,
+                 "super_followed_by": false,
+                 "super_following": false,
+                 "tweet_counts": {
+                  "media_tweets": 1988,
+                  "tweets": 3938
+                 },
+                 "verification": {
+                  "verified": false,
+                  "verified_type": "Business"
+                 },
+                 "website": {
+                  "url": "https://t.co/bVj6OdNADd"
+                 }
+                }
+               }
+              },
+              "edit_control": {
+               "edit_tweet_ids": [
+                "2112671536532345249"
+               ],
+               "editable_until_msecs": "1792538720000",
+               "edits_remaining": "5",
+               "is_edit_eligible": true
+              },
+              "grok_analysis_button": true,
+              "grok_annotations": {
+               "is_image_editable_by_grok": true
+              },
+              "grok_translated_post_with_availability": {
+               "is_available": false
+              },
+              "is_translatable": false,
+              "legacy": {
+               "bookmark_count": 39,
+               "bookmarked": false,
+               "conversation_id_str": "2112671536532345249",
+               "created_at": "Tue Oct 20 22:25:20 +0000 2026",
+               "display_text_range": [
+                0,
+                275
+               ],
+               "entities": {
+                "media": [
+                 {
+                  "additional_media_info": {
+                   "monetizable": false
+                  },
+                  "display_url": "pic.x.com/EahrkOppd9",
+                  "expanded_url": "https://x.com/FlutterDev/status/2112671536532345249/video/1",
+                  "ext_media_availability": {
+                   "status": "Available"
+                  },
+                  "id_str": "2112671467250827264",
+                  "indices": [
+                   276,
+                   299
+                  ],
+                  "media_key": "13_2112671467250827264",
+                  "media_results": {
+                   "result": {
+                    "media_key": "13_2112671467250827264"
+                   }
+                  },
+                  "media_url_https": "https://pbs.twimg.com/media/HVG3kSDXgAAKwAH.jpg",
+                  "original_info": {
+                   "focus_rects": [],
+                   "height": 405,
+                   "width": 720
+                  },
+                  "sizes": {
+                   "large": {
+                    "h": 405,
+                    "resize": "fit",
+                    "w": 720
+                   },
+                   "medium": {
+                    "h": 405,
+                    "resize": "fit",
+                    "w": 720
+                   },
+                   "small": {
+                    "h": 383,
+                    "resize": "fit",
+                    "w": 680
+                   },
+                   "thumb": {
+                    "h": 150,
+                    "resize": "crop",
+                    "w": 150
+                   }
+                  },
+                  "type": "video",
+                  "url": "https://t.co/EahrkOppd9",
+                  "video_info": {
+                   "aspect_ratio": [
+                    16,
+                    9
+                   ],
+                   "duration_millis": 198266,
+                   "variants": [
+                    {
+                     "content_type": "application/x-mpegURL",
+                     "url": "https://video.twimg.com/amplify_video/2112671467250827264/pl/BfFG8AcqBLbATGnT.m3u8?tag=16"
+                    },
+                    {
+                     "bitrate": 288000,
+                     "content_type": "video/mp4",
+                     "url": "https://video.twimg.com/amplify_video/2112671467250827264/vid/avc1/480x270/8bAt4GXfMWT4-kj8.mp4?tag=16"
+                    },
+                    {
+                     "bitrate": 832000,
+                     "content_type": "video/mp4",
+                     "url": "https://video.twimg.com/amplify_video/2112671467250827264/vid/avc1/640x360/vTcywVtiIAQ5vSta.mp4?tag=16"
+                    },
+                    {
+                     "bitrate": 2176000,
+                     "content_type": "video/mp4",
+                     "url": "https://video.twimg.com/amplify_video/2112671467250827264/vid/avc1/1280x720/TVaEl1moUCj1jTiO.mp4?tag=16"
+                    }
+                   ]
+                  }
+                 }
+                ]
+               },
+               "extended_entities": {
+                "media": [
+                 {
+                  "additional_media_info": {
+                   "monetizable": false
+                  },
+                  "display_url": "pic.x.com/EahrkOppd9",
+                  "expanded_url": "https://x.com/FlutterDev/status/2112671536532345249/video/1",
+                  "ext_media_availability": {
+                   "status": "Available"
+                  },
+                  "id_str": "2112671467250827264",
+                  "indices": [
+                   276,
+                   299
+                  ],
+                  "media_key": "13_2112671467250827264",
+                  "media_results": {
+                   "result": {
+                    "media_key": "13_2112671467250827264"
+                   }
+                  },
+                  "media_url_https": "https://pbs.twimg.com/media/HVG3kSDXgAAKwAH.jpg",
+                  "original_info": {
+                   "focus_rects": [],
+                   "height": 405,
+                   "width": 720
+                  },
+                  "sizes": {
+                   "large": {
+                    "h": 405,
+                    "resize": "fit",
+                    "w": 720
+                   },
+                   "medium": {
+                    "h": 405,
+                    "resize": "fit",
+                    "w": 720
+                   },
+                   "small": {
+                    "h": 383,
+                    "resize": "fit",
+                    "w": 680
+                   },
+                   "thumb": {
+                    "h": 150,
+                    "resize": "crop",
+                    "w": 150
+                   }
+                  },
+                  "type": "video",
+                  "url": "https://t.co/EahrkOppd9",
+                  "video_info": {
+                   "aspect_ratio": [
+                    16,
+                    9
+                   ],
+                   "duration_millis": 198266,
+                   "variants": [
+                    {
+                     "content_type": "application/x-mpegURL",
+                     "url": "https://video.twimg.com/amplify_video/2112671467250827264/pl/BfFG8AcqBLbATGnT.m3u8?tag=16"
+                    },
+                    {
+                     "bitrate": 288000,
+                     "content_type": "video/mp4",
+                     "url": "https://video.twimg.com/amplify_video/2112671467250827264/vid/avc1/480x270/8bAt4GXfMWT4-kj8.mp4?tag=16"
+                    },
+                    {
+                     "bitrate": 832000,
+                     "content_type": "video/mp4",
+                     "url": "https://video.twimg.com/amplify_video/2112671467250827264/vid/avc1/640x360/vTcywVtiIAQ5vSta.mp4?tag=16"
+                    },
+                    {
+                     "bitrate": 2176000,
+                     "content_type": "video/mp4",
+                     "url": "https://video.twimg.com/amplify_video/2112671467250827264/vid/avc1/1280x720/TVaEl1moUCj1jTiO.mp4?tag=16"
+                    }
+                   ]
+                  }
+                 }
+                ]
+               },
+               "favorite_count": 162,
+               "favorited": false,
+               "full_text": "Learn how combining Dart’s efficiency with Flutter’s comprehensive UI toolkit allows you to build incredible apps. We're highlighting their individual strengths and how they work together to deliver natively compiled, high-performance applications on a wide range of devices. https://t.co/EahrkOppd9",
+               "id_str": "2112671536532345249",
+               "is_quote_status": false,
+               "lang": "en",
+               "possibly_sensitive": false,
+               "possibly_sensitive_editable": true,
+               "quote_count": 1,
+               "reply_count": 3,
+               "retweet_count": 16,
+               "retweeted": false,
+               "user_id_str": "420730316"
+              },
+              "rest_id": "2112671536532345249",
+              "unmention_data": {},
+              "views": {
+               "count": "11317",
+               "state": "EnabledWithCount"
+              }
+             }
+            }
+           }
+          },
+          "entryId": "tweet-2112671536532345249",
+          "sortIndex": "2114917691453079551"
+         },
+         {
+          "content": {
+           "__typename": "TimelineTimelineItem",
+           "clientEventInfo": {
+            "component": "latest_nightowl_recency",
+            "details": {
+             "timelinesDetails": {
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACaECL0yuUGD0KAAVR3Reh9WpkGQgABgAAAAEKAAd6GqRpsiq8VAoACAAAAaF7VsAQAAAAAAA="
+             }
+            },
+            "element": "tweet"
+           },
+           "entryType": "TimelineTimelineItem",
+           "itemContent": {
+            "__typename": "TimelineTweet",
+            "itemType": "TimelineTweet",
+            "tweetDisplayType": "Tweet",
+            "tweet_results": {
+             "result": {
+              "__typename": "Tweet",
+              "cashtag_attachments": [],
+              "content_disclosure": {
+               "ai_generated_disclosure": {
+                "can_edit": true,
+                "has_ai_generated_media": false
+               }
+              },
+              "core": {
+               "user_results": {
+                "result": {
+                 "__typename": "User",
+                 "action_counts": {
+                  "favorites_count": 3220
+                 },
+                 "affiliates_highlighted_label": {},
+                 "avatar": {
+                  "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
+                 },
+                 "banner": {
+                  "image_url": "https://pbs.twimg.com/profile_banners/420730316/1785427735"
+                 },
+                 "core": {
+                  "created_at": "Fri Nov 25 01:07:12 +0000 2011",
+                  "name": "Flutter",
+                  "screen_name": "FlutterDev"
+                 },
+                 "follow_request_sent": false,
+                 "has_graduated_access": true,
+                 "id": "VXNlcjo0MjA3MzAzMTY=",
+                 "is_blue_verified": false,
+                 "location": {
+                  "location": ""
+                 },
+                 "media_permissions": {
+                  "can_media_tag": true
+                 },
+                 "notifications_settings": {
+                  "notifications_enabled": false
+                 },
+                 "parody_commentary_fan_label": "None",
+                 "pinned_items": {
+                  "tweet_ids_str": [
+                   "2101012855101218956"
+                  ]
+                 },
+                 "possibly_sensitive": false,
+                 "privacy": {
+                  "protected": false
+                 },
+                 "profile_bio": {
+                  "description": "Google’s UI toolkit to build apps for mobile, web, & desktop from a single codebase",
+                  "entities": {
+                   "description": {},
+                   "url": {
+                    "urls": [
+                     {
+                      "display_url": "flutter.dev",
+                      "expanded_url": "https://flutter.dev",
+                      "indices": [
+                       0,
+                       23
+                      ],
+                      "url": "https://t.co/bVj6OdNADd"
+                     }
+                    ]
+                   }
+                  }
+                 },
+                 "profile_description_language": "en",
+                 "profile_image_shape": "Square",
+                 "profile_metadata": {
+                  "profile_interstitial_type": ""
+                 },
+                 "profile_translation": {
+                  "translator_type": "none"
+                 },
+                 "relationship_counts": {
+                  "followers": 278003,
+                  "following": 61
+                 },
+                 "relationship_perspectives": {
+                  "blocked_by": false,
+                  "blocking": false,
+                  "followed_by": false,
+                  "following": false,
+                  "live_following": false,
+                  "muting": false
+                 },
+                 "rest_id": "420730316",
+                 "super_follow_eligible": false,
+                 "super_followed_by": false,
+                 "super_following": false,
+                 "tweet_counts": {
+                  "media_tweets": 1988,
+                  "tweets": 3938
                  },
                  "verification": {
                   "verified": false,
@@ -418,7 +1117,7 @@
                  }
                 ]
                },
-               "favorite_count": 90,
+               "favorite_count": 92,
                "favorited": false,
                "full_text": "Sound processing tricks in Flutter that you MUST TRY 🔊❗\n\n@LIONJA_KOLBASA, software engineer at @Dynatrace and former physics student, breaks down the mechanics of audio processing in Flutter and shares tips for post-processing audio effects in mobile apps. https://t.co/riA4i7hXjA",
                "id_str": "2110405635766473210",
@@ -427,15 +1126,15 @@
                "possibly_sensitive": false,
                "possibly_sensitive_editable": true,
                "quote_count": 0,
-               "reply_count": 3,
-               "retweet_count": 13,
+               "reply_count": 4,
+               "retweet_count": 14,
                "retweeted": false,
                "user_id_str": "420730316"
               },
               "rest_id": "2110405635766473210",
               "unmention_data": {},
               "views": {
-               "count": "9290",
+               "count": "9844",
                "state": "EnabledWithCount"
               }
              }
@@ -443,7 +1142,7 @@
            }
           },
           "entryId": "tweet-2110405635766473210",
-          "sortIndex": "2111551865291276288"
+          "sortIndex": "2114917691453079550"
          },
          {
           "content": {
@@ -452,7 +1151,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACuW2U2Mrf1H0KAAVR3Reh9WpkGQgABgAAAAEKAAdLVi/lP055gQoACAAAAaFLgfIOAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACaECL0yuUGD0KAAVR3Reh9WpkGQgABgAAAAEKAAd6GqRpsiq8VAoACAAAAaF7VsAQAAAAAAA="
              }
             },
             "element": "tweet"
@@ -477,7 +1176,7 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3222
+                  "favorites_count": 3220
                  },
                  "affiliates_highlighted_label": {},
                  "avatar": {
@@ -542,7 +1241,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 277911,
+                  "followers": 278003,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -558,8 +1257,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1983,
-                  "tweets": 3929
+                  "media_tweets": 1988,
+                  "tweets": 3938
                  },
                  "verification": {
                   "verified": false,
@@ -588,7 +1287,7 @@
               },
               "is_translatable": false,
               "legacy": {
-               "bookmark_count": 13,
+               "bookmark_count": 14,
                "bookmarked": false,
                "conversation_id_str": "2109703365852594401",
                "created_at": "Mon Oct 12 17:50:53 +0000 2026",
@@ -789,7 +1488,7 @@
               "rest_id": "2109703365852594401",
               "unmention_data": {},
               "views": {
-               "count": "9564",
+               "count": "9815",
                "state": "EnabledWithCount"
               }
              }
@@ -797,7 +1496,7 @@
            }
           },
           "entryId": "tweet-2109703365852594401",
-          "sortIndex": "2111551865291276287"
+          "sortIndex": "2114917691453079549"
          },
          {
           "content": {
@@ -806,7 +1505,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACuW2U2Mrf1H0KAAVR3Reh9WpkGQgABgAAAAEKAAdLVi/lP055gQoACAAAAaFLgfIOAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACaECL0yuUGD0KAAVR3Reh9WpkGQgABgAAAAEKAAd6GqRpsiq8VAoACAAAAaF7VsAQAAAAAAA="
              }
             },
             "element": "tweet"
@@ -831,7 +1530,7 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3222
+                  "favorites_count": 3220
                  },
                  "affiliates_highlighted_label": {},
                  "avatar": {
@@ -896,7 +1595,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 277911,
+                  "followers": 278003,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -912,8 +1611,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1983,
-                  "tweets": 3929
+                  "media_tweets": 1988,
+                  "tweets": 3938
                  },
                  "verification": {
                   "verified": false,
@@ -1126,7 +1825,7 @@
                  }
                 ]
                },
-               "favorite_count": 148,
+               "favorite_count": 151,
                "favorited": false,
                "full_text": "When your non-dev friend doesn't get it... 🙃 https://t.co/WKjWAKopg0",
                "id_str": "2108636145294639442",
@@ -1143,7 +1842,7 @@
               "rest_id": "2108636145294639442",
               "unmention_data": {},
               "views": {
-               "count": "10920",
+               "count": "11071",
                "state": "EnabledWithCount"
               }
              }
@@ -1151,7 +1850,7 @@
            }
           },
           "entryId": "tweet-2108636145294639442",
-          "sortIndex": "2111551865291276286"
+          "sortIndex": "2114917691453079548"
          },
          {
           "content": {
@@ -1160,7 +1859,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACuW2U2Mrf1H0KAAVR3Reh9WpkGQgABgAAAAEKAAdLVi/lP055gQoACAAAAaFLgfIOAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACaECL0yuUGD0KAAVR3Reh9WpkGQgABgAAAAEKAAd6GqRpsiq8VAoACAAAAaF7VsAQAAAAAAA="
              }
             },
             "element": "tweet"
@@ -1185,7 +1884,7 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3222
+                  "favorites_count": 3220
                  },
                  "affiliates_highlighted_label": {},
                  "avatar": {
@@ -1250,7 +1949,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 277911,
+                  "followers": 278003,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -1266,8 +1965,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1983,
-                  "tweets": 3929
+                  "media_tweets": 1988,
+                  "tweets": 3938
                  },
                  "verification": {
                   "verified": false,
@@ -1296,7 +1995,7 @@
               },
               "is_translatable": false,
               "legacy": {
-               "bookmark_count": 14,
+               "bookmark_count": 13,
                "bookmarked": false,
                "conversation_id_str": "2108253504150102347",
                "created_at": "Thu Oct 08 17:49:39 +0000 2026",
@@ -1469,7 +2168,7 @@
                  }
                 ]
                },
-               "favorite_count": 134,
+               "favorite_count": 135,
                "favorited": false,
                "full_text": "💂 Use guard clauses with the \"when\" keyword in Dart to add extra constraints to pattern matching in switches.\n\n#TechniqueOfTheWeek https://t.co/DIfso9UKLl",
                "id_str": "2108253504150102347",
@@ -1486,7 +2185,7 @@
               "rest_id": "2108253504150102347",
               "unmention_data": {},
               "views": {
-               "count": "10016",
+               "count": "10138",
                "state": "EnabledWithCount"
               }
              }
@@ -1494,7 +2193,7 @@
            }
           },
           "entryId": "tweet-2108253504150102347",
-          "sortIndex": "2111551865291276285"
+          "sortIndex": "2114917691453079547"
          },
          {
           "content": {
@@ -1503,7 +2202,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACuW2U2Mrf1H0KAAVR3Reh9WpkGQgABgAAAAEKAAdLVi/lP055gQoACAAAAaFLgfIOAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACaECL0yuUGD0KAAVR3Reh9WpkGQgABgAAAAEKAAd6GqRpsiq8VAoACAAAAaF7VsAQAAAAAAA="
              }
             },
             "element": "tweet"
@@ -1522,7 +2221,7 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3222
+                  "favorites_count": 3220
                  },
                  "affiliates_highlighted_label": {},
                  "avatar": {
@@ -1587,7 +2286,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 277911,
+                  "followers": 278003,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -1603,8 +2302,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1983,
-                  "tweets": 3929
+                  "media_tweets": 1988,
+                  "tweets": 3938
                  },
                  "verification": {
                   "verified": false,
@@ -1633,7 +2332,7 @@
               },
               "is_translatable": false,
               "legacy": {
-               "bookmark_count": 47,
+               "bookmark_count": 45,
                "bookmarked": false,
                "conversation_id_str": "2107893115206168717",
                "created_at": "Wed Oct 07 17:57:36 +0000 2026",
@@ -1834,7 +2533,7 @@
               "rest_id": "2107893115206168717",
               "unmention_data": {},
               "views": {
-               "count": "13191",
+               "count": "13360",
                "state": "EnabledWithCount"
               }
              }
@@ -1842,7 +2541,7 @@
            }
           },
           "entryId": "tweet-2107893115206168717",
-          "sortIndex": "2111551865291276284"
+          "sortIndex": "2114917691453079546"
          },
          {
           "content": {
@@ -1851,7 +2550,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACuW2U2Mrf1H0KAAVR3Reh9WpkGQgABgAAAAEKAAdLVi/lP055gQoACAAAAaFLgfIOAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACaECL0yuUGD0KAAVR3Reh9WpkGQgABgAAAAEKAAd6GqRpsiq8VAoACAAAAaF7VsAQAAAAAAA="
              }
             },
             "element": "tweet"
@@ -1870,7 +2569,7 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3222
+                  "favorites_count": 3220
                  },
                  "affiliates_highlighted_label": {},
                  "avatar": {
@@ -1935,7 +2634,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 277911,
+                  "followers": 278003,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -1951,8 +2650,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1983,
-                  "tweets": 3929
+                  "media_tweets": 1988,
+                  "tweets": 3938
                  },
                  "verification": {
                   "verified": false,
@@ -1981,7 +2680,7 @@
               },
               "is_translatable": false,
               "legacy": {
-               "bookmark_count": 18,
+               "bookmark_count": 19,
                "bookmarked": false,
                "conversation_id_str": "2107214546972659946",
                "created_at": "Mon Oct 05 21:01:12 +0000 2026",
@@ -2176,7 +2875,7 @@
                  }
                 ]
                },
-               "favorite_count": 109,
+               "favorite_count": 110,
                "favorited": false,
                "full_text": "Building offline, enterprise maps 🗺\n\nHear from @martinoyovo, Product Engineer at Esri on how their ArcGIS SDK brings enterprise-grade GIS (Geographic Information Systems) power directly into the Flutter ecosystem. https://t.co/Sx8rbxQtII",
                "id_str": "2107214546972659946",
@@ -2193,7 +2892,7 @@
               "rest_id": "2107214546972659946",
               "unmention_data": {},
               "views": {
-               "count": "10777",
+               "count": "10865",
                "state": "EnabledWithCount"
               }
              }
@@ -2201,7 +2900,7 @@
            }
           },
           "entryId": "tweet-2107214546972659946",
-          "sortIndex": "2111551865291276283"
+          "sortIndex": "2114917691453079545"
          },
          {
           "content": {
@@ -2210,7 +2909,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACuW2U2Mrf1H0KAAVR3Reh9WpkGQgABgAAAAEKAAdLVi/lP055gQoACAAAAaFLgfIOAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACaECL0yuUGD0KAAVR3Reh9WpkGQgABgAAAAEKAAd6GqRpsiq8VAoACAAAAaF7VsAQAAAAAAA="
              }
             },
             "element": "tweet"
@@ -2229,7 +2928,7 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3222
+                  "favorites_count": 3220
                  },
                  "affiliates_highlighted_label": {},
                  "avatar": {
@@ -2294,7 +2993,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 277911,
+                  "followers": 278003,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -2310,8 +3009,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1983,
-                  "tweets": 3929
+                  "media_tweets": 1988,
+                  "tweets": 3938
                  },
                  "verification": {
                   "verified": false,
@@ -2524,7 +3223,7 @@
                  }
                 ]
                },
-               "favorite_count": 123,
+               "favorite_count": 124,
                "favorited": false,
                "full_text": "Discover how Holafly manages massive enterprise scale with Flutter. https://t.co/w8nkkes0Bx",
                "id_str": "2106097693932114038",
@@ -2541,7 +3240,7 @@
               "rest_id": "2106097693932114038",
               "unmention_data": {},
               "views": {
-               "count": "11605",
+               "count": "11676",
                "state": "EnabledWithCount"
               }
              }
@@ -2549,7 +3248,7 @@
            }
           },
           "entryId": "tweet-2106097693932114038",
-          "sortIndex": "2111551865291276282"
+          "sortIndex": "2114917691453079544"
          },
          {
           "content": {
@@ -2558,7 +3257,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACuW2U2Mrf1H0KAAVR3Reh9WpkGQgABgAAAAEKAAdLVi/lP055gQoACAAAAaFLgfIOAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACaECL0yuUGD0KAAVR3Reh9WpkGQgABgAAAAEKAAd6GqRpsiq8VAoACAAAAaF7VsAQAAAAAAA="
              }
             },
             "element": "tweet"
@@ -2577,7 +3276,7 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3222
+                  "favorites_count": 3220
                  },
                  "affiliates_highlighted_label": {},
                  "avatar": {
@@ -2642,7 +3341,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 277911,
+                  "followers": 278003,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -2658,8 +3357,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1983,
-                  "tweets": 3929
+                  "media_tweets": 1988,
+                  "tweets": 3938
                  },
                  "verification": {
                   "verified": false,
@@ -2889,7 +3588,7 @@
               "rest_id": "2105375532502196271",
               "unmention_data": {},
               "views": {
-               "count": "10175",
+               "count": "10232",
                "state": "EnabledWithCount"
               }
              }
@@ -2897,7 +3596,7 @@
            }
           },
           "entryId": "tweet-2105375532502196271",
-          "sortIndex": "2111551865291276281"
+          "sortIndex": "2114917691453079543"
          },
          {
           "content": {
@@ -2906,7 +3605,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACuW2U2Mrf1H0KAAVR3Reh9WpkGQgABgAAAAEKAAdLVi/lP055gQoACAAAAaFLgfIOAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACaECL0yuUGD0KAAVR3Reh9WpkGQgABgAAAAEKAAd6GqRpsiq8VAoACAAAAaF7VsAQAAAAAAA="
              }
             },
             "element": "tweet"
@@ -2925,7 +3624,7 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3222
+                  "favorites_count": 3220
                  },
                  "affiliates_highlighted_label": {},
                  "avatar": {
@@ -2990,7 +3689,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 277911,
+                  "followers": 278003,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -3006,8 +3705,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1983,
-                  "tweets": 3929
+                  "media_tweets": 1988,
+                  "tweets": 3938
                  },
                  "verification": {
                   "verified": false,
@@ -3237,7 +3936,7 @@
               "rest_id": "2105032420571668847",
               "unmention_data": {},
               "views": {
-               "count": "9856",
+               "count": "9906",
                "state": "EnabledWithCount"
               }
              }
@@ -3245,7 +3944,7 @@
            }
           },
           "entryId": "tweet-2105032420571668847",
-          "sortIndex": "2111551865291276280"
+          "sortIndex": "2114917691453079542"
          },
          {
           "content": {
@@ -3254,7 +3953,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACuW2U2Mrf1H0KAAVR3Reh9WpkGQgABgAAAAEKAAdLVi/lP055gQoACAAAAaFLgfIOAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACaECL0yuUGD0KAAVR3Reh9WpkGQgABgAAAAEKAAd6GqRpsiq8VAoACAAAAaF7VsAQAAAAAAA="
              }
             },
             "element": "tweet"
@@ -3273,7 +3972,7 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3222
+                  "favorites_count": 3220
                  },
                  "affiliates_highlighted_label": {},
                  "avatar": {
@@ -3338,7 +4037,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 277911,
+                  "followers": 278003,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -3354,8 +4053,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1983,
-                  "tweets": 3929
+                  "media_tweets": 1988,
+                  "tweets": 3938
                  },
                  "verification": {
                   "verified": false,
@@ -3384,7 +4083,7 @@
               },
               "is_translatable": false,
               "legacy": {
-               "bookmark_count": 252,
+               "bookmark_count": 250,
                "bookmarked": false,
                "conversation_id_str": "2103597923057775078",
                "created_at": "Fri Sep 25 21:30:02 +0000 2026",
@@ -3568,7 +4267,7 @@
                  }
                 ]
                },
-               "favorite_count": 1852,
+               "favorite_count": 1858,
                "favorited": false,
                "full_text": "We just checked, Flutter still runs everywhere 🤷 https://t.co/ToYsYuubRZ",
                "id_str": "2103597923057775078",
@@ -3578,14 +4277,14 @@
                "possibly_sensitive_editable": true,
                "quote_count": 40,
                "reply_count": 47,
-               "retweet_count": 176,
+               "retweet_count": 178,
                "retweeted": false,
                "user_id_str": "420730316"
               },
               "rest_id": "2103597923057775078",
               "unmention_data": {},
               "views": {
-               "count": "105746",
+               "count": "106265",
                "state": "EnabledWithCount"
               }
              }
@@ -3593,7 +4292,7 @@
            }
           },
           "entryId": "tweet-2103597923057775078",
-          "sortIndex": "2111551865291276279"
+          "sortIndex": "2114917691453079541"
          },
          {
           "content": {
@@ -3602,7 +4301,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACuW2U2Mrf1H0KAAVR3Reh9WpkGQgABgAAAAEKAAdLVi/lP055gQoACAAAAaFLgfIOAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACaECL0yuUGD0KAAVR3Reh9WpkGQgABgAAAAEKAAd6GqRpsiq8VAoACAAAAaF7VsAQAAAAAAA="
              }
             },
             "element": "tweet"
@@ -3621,7 +4320,7 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3222
+                  "favorites_count": 3220
                  },
                  "affiliates_highlighted_label": {},
                  "avatar": {
@@ -3686,7 +4385,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 277911,
+                  "followers": 278003,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -3702,8 +4401,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1983,
-                  "tweets": 3929
+                  "media_tweets": 1988,
+                  "tweets": 3938
                  },
                  "verification": {
                   "verified": false,
@@ -3916,7 +4615,7 @@
                  }
                 ]
                },
-               "favorite_count": 250,
+               "favorite_count": 251,
                "favorited": false,
                "full_text": "Impeller hits desktop by default in Flutter 3.47!  🖥️ More Flutter web updates ↓ https://t.co/uJ6MUsleJt",
                "id_str": "2103176508382888233",
@@ -3933,7 +4632,7 @@
               "rest_id": "2103176508382888233",
               "unmention_data": {},
               "views": {
-               "count": "15808",
+               "count": "15871",
                "state": "EnabledWithCount"
               }
              }
@@ -3941,7 +4640,7 @@
            }
           },
           "entryId": "tweet-2103176508382888233",
-          "sortIndex": "2111551865291276278"
+          "sortIndex": "2114917691453079540"
          },
          {
           "content": {
@@ -3950,7 +4649,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACuW2U2Mrf1H0KAAVR3Reh9WpkGQgABgAAAAEKAAdLVi/lP055gQoACAAAAaFLgfIOAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACaECL0yuUGD0KAAVR3Reh9WpkGQgABgAAAAEKAAd6GqRpsiq8VAoACAAAAaF7VsAQAAAAAAA="
              }
             },
             "element": "tweet"
@@ -3975,7 +4674,7 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3222
+                  "favorites_count": 3220
                  },
                  "affiliates_highlighted_label": {},
                  "avatar": {
@@ -4040,7 +4739,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 277911,
+                  "followers": 278003,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -4056,8 +4755,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1983,
-                  "tweets": 3929
+                  "media_tweets": 1988,
+                  "tweets": 3938
                  },
                  "verification": {
                   "verified": false,
@@ -4287,7 +4986,7 @@
               "rest_id": "2102805245361357188",
               "unmention_data": {},
               "views": {
-               "count": "11757",
+               "count": "11802",
                "state": "EnabledWithCount"
               }
              }
@@ -4295,7 +4994,7 @@
            }
           },
           "entryId": "tweet-2102805245361357188",
-          "sortIndex": "2111551865291276277"
+          "sortIndex": "2114917691453079539"
          },
          {
           "content": {
@@ -4304,7 +5003,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACuW2U2Mrf1H0KAAVR3Reh9WpkGQgABgAAAAEKAAdLVi/lP055gQoACAAAAaFLgfIOAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACaECL0yuUGD0KAAVR3Reh9WpkGQgABgAAAAEKAAd6GqRpsiq8VAoACAAAAaF7VsAQAAAAAAA="
              }
             },
             "element": "tweet"
@@ -4323,7 +5022,7 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3222
+                  "favorites_count": 3220
                  },
                  "affiliates_highlighted_label": {},
                  "avatar": {
@@ -4388,7 +5087,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 277911,
+                  "followers": 278003,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -4404,8 +5103,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1983,
-                  "tweets": 3929
+                  "media_tweets": 1988,
+                  "tweets": 3938
                  },
                  "verification": {
                   "verified": false,
@@ -4629,7 +5328,7 @@
                  }
                 ]
                },
-               "favorite_count": 173,
+               "favorite_count": 174,
                "favorited": false,
                "full_text": "Build your next website with Dart and Jaspr 🌐\n\nCraig catches up with @ArkangelB, Senior Staff Engineer at Aplazo to discuss how Jaspr compares to Flutter Web and how easily AI coding agents integrate into your web workflow. https://t.co/uULEOy3V6N",
                "id_str": "2102446351778803805",
@@ -4646,7 +5345,7 @@
               "rest_id": "2102446351778803805",
               "unmention_data": {},
               "views": {
-               "count": "12139",
+               "count": "12186",
                "state": "EnabledWithCount"
               }
              }
@@ -4654,7 +5353,7 @@
            }
           },
           "entryId": "tweet-2102446351778803805",
-          "sortIndex": "2111551865291276276"
+          "sortIndex": "2114917691453079538"
          },
          {
           "content": {
@@ -4663,7 +5362,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACuW2U2Mrf1H0KAAVR3Reh9WpkGQgABgAAAAEKAAdLVi/lP055gQoACAAAAaFLgfIOAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACaECL0yuUGD0KAAVR3Reh9WpkGQgABgAAAAEKAAd6GqRpsiq8VAoACAAAAaF7VsAQAAAAAAA="
              }
             },
             "element": "tweet"
@@ -4682,7 +5381,7 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3222
+                  "favorites_count": 3220
                  },
                  "affiliates_highlighted_label": {},
                  "avatar": {
@@ -4747,7 +5446,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 277911,
+                  "followers": 278003,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -4763,8 +5462,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1983,
-                  "tweets": 3929
+                  "media_tweets": 1988,
+                  "tweets": 3938
                  },
                  "verification": {
                   "verified": false,
@@ -4988,7 +5687,7 @@
                  }
                 ]
                },
-               "favorite_count": 179,
+               "favorite_count": 180,
                "favorited": false,
                "full_text": "🔁 Automate interactive Flutter tests with marionette_mcp!\n\nLeanCode’s @matiwojt dives into the open-source tool that gives AI coding agents \"eyes and hands\" to interactively test Flutter apps. https://t.co/WFs1v2LOnn",
                "id_str": "2101026619095666766",
@@ -5005,7 +5704,7 @@
               "rest_id": "2101026619095666766",
               "unmention_data": {},
               "views": {
-               "count": "14995",
+               "count": "15045",
                "state": "EnabledWithCount"
               }
              }
@@ -5013,7 +5712,7 @@
            }
           },
           "entryId": "tweet-2101026619095666766",
-          "sortIndex": "2111551865291276275"
+          "sortIndex": "2114917691453079537"
          },
          {
           "content": {
@@ -5022,7 +5721,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACuW2U2Mrf1H0KAAVR3Reh9WpkGQgABgAAAAEKAAdLVi/lP055gQoACAAAAaFLgfIOAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACaECL0yuUGD0KAAVR3Reh9WpkGQgABgAAAAEKAAd6GqRpsiq8VAoACAAAAaF7VsAQAAAAAAA="
              }
             },
             "element": "tweet"
@@ -5041,7 +5740,7 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3222
+                  "favorites_count": 3220
                  },
                  "affiliates_highlighted_label": {},
                  "avatar": {
@@ -5106,7 +5805,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 277911,
+                  "followers": 278003,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -5122,8 +5821,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1983,
-                  "tweets": 3929
+                  "media_tweets": 1988,
+                  "tweets": 3938
                  },
                  "verification": {
                   "verified": false,
@@ -5336,7 +6035,7 @@
                  }
                 ]
                },
-               "favorite_count": 343,
+               "favorite_count": 344,
                "favorited": false,
                "full_text": "Say goodbye to redundant constructor boilerplate starting with Dart 3.12! 👋\n\nCraig breaks down two massive developer-experience upgrades: primary constructors and private named parameters. https://t.co/4cKBGAF1FZ",
                "id_str": "2100645846702252296",
@@ -5353,7 +6052,7 @@
               "rest_id": "2100645846702252296",
               "unmention_data": {},
               "views": {
-               "count": "26952",
+               "count": "27030",
                "state": "EnabledWithCount"
               }
              }
@@ -5361,7 +6060,7 @@
            }
           },
           "entryId": "tweet-2100645846702252296",
-          "sortIndex": "2111551865291276274"
+          "sortIndex": "2114917691453079536"
          },
          {
           "content": {
@@ -5370,7 +6069,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACuW2U2Mrf1H0KAAVR3Reh9WpkGQgABgAAAAEKAAdLVi/lP055gQoACAAAAaFLgfIOAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACaECL0yuUGD0KAAVR3Reh9WpkGQgABgAAAAEKAAd6GqRpsiq8VAoACAAAAaF7VsAQAAAAAAA="
              }
             },
             "element": "tweet"
@@ -5389,7 +6088,7 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3222
+                  "favorites_count": 3220
                  },
                  "affiliates_highlighted_label": {},
                  "avatar": {
@@ -5454,7 +6153,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 277911,
+                  "followers": 278003,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -5470,8 +6169,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1983,
-                  "tweets": 3929
+                  "media_tweets": 1988,
+                  "tweets": 3938
                  },
                  "verification": {
                   "verified": false,
@@ -5500,7 +6199,7 @@
               },
               "is_translatable": false,
               "legacy": {
-               "bookmark_count": 51,
+               "bookmark_count": 50,
                "bookmarked": false,
                "conversation_id_str": "2100278190472077395",
                "created_at": "Wed Sep 16 17:38:36 +0000 2026",
@@ -5684,7 +6383,7 @@
                  }
                 ]
                },
-               "favorite_count": 339,
+               "favorite_count": 342,
                "favorited": false,
                "full_text": "Buckle up! It’s time to take a look inside Toyota’s infotainment system powered by Flutter 👀 https://t.co/y1dOMo1IXW",
                "id_str": "2100278190472077395",
@@ -5701,7 +6400,7 @@
               "rest_id": "2100278190472077395",
               "unmention_data": {},
               "views": {
-               "count": "16038",
+               "count": "16081",
                "state": "EnabledWithCount"
               }
              }
@@ -5709,7 +6408,7 @@
            }
           },
           "entryId": "tweet-2100278190472077395",
-          "sortIndex": "2111551865291276273"
+          "sortIndex": "2114917691453079535"
          },
          {
           "content": {
@@ -5718,7 +6417,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACuW2U2Mrf1H0KAAVR3Reh9WpkGQgABgAAAAEKAAdLVi/lP055gQoACAAAAaFLgfIOAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACaECL0yuUGD0KAAVR3Reh9WpkGQgABgAAAAEKAAd6GqRpsiq8VAoACAAAAaF7VsAQAAAAAAA="
              }
             },
             "element": "tweet"
@@ -5737,7 +6436,7 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3222
+                  "favorites_count": 3220
                  },
                  "affiliates_highlighted_label": {},
                  "avatar": {
@@ -5802,7 +6501,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 277911,
+                  "followers": 278003,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -5818,8 +6517,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1983,
-                  "tweets": 3929
+                  "media_tweets": 1988,
+                  "tweets": 3938
                  },
                  "verification": {
                   "verified": false,
@@ -6041,7 +6740,7 @@
                  }
                 ]
                },
-               "favorite_count": 186,
+               "favorite_count": 187,
                "favorited": false,
                "full_text": "await for is a specialized loop used to asynchronously iterate over a Stream. \n\nWatch the #TechniqueOfTheWeek  ↓ https://t.co/KYCWyIQQlm",
                "id_str": "2099962809970786434",
@@ -6058,7 +6757,7 @@
               "rest_id": "2099962809970786434",
               "unmention_data": {},
               "views": {
-               "count": "12607",
+               "count": "12642",
                "state": "EnabledWithCount"
               }
              }
@@ -6066,7 +6765,7 @@
            }
           },
           "entryId": "tweet-2099962809970786434",
-          "sortIndex": "2111551865291276272"
+          "sortIndex": "2114917691453079534"
          },
          {
           "content": {
@@ -6075,7 +6774,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACuW2U2Mrf1H0KAAVR3Reh9WpkGQgABgAAAAEKAAdLVi/lP055gQoACAAAAaFLgfIOAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACaECL0yuUGD0KAAVR3Reh9WpkGQgABgAAAAEKAAd6GqRpsiq8VAoACAAAAaF7VsAQAAAAAAA="
              }
             },
             "element": "tweet"
@@ -6094,7 +6793,7 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3222
+                  "favorites_count": 3220
                  },
                  "affiliates_highlighted_label": {},
                  "avatar": {
@@ -6159,7 +6858,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 277911,
+                  "followers": 278003,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -6175,8 +6874,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1983,
-                  "tweets": 3929
+                  "media_tweets": 1988,
+                  "tweets": 3938
                  },
                  "verification": {
                   "verified": false,
@@ -6389,7 +7088,7 @@
                  }
                 ]
                },
-               "favorite_count": 225,
+               "favorite_count": 224,
                "favorited": false,
                "full_text": "Dart 3.13 is officially here and brings impactful features such as Primary Constructors! Learn more ↓ https://t.co/UyjXiH2RMv",
                "id_str": "2098162589075222894",
@@ -6406,7 +7105,7 @@
               "rest_id": "2098162589075222894",
               "unmention_data": {},
               "views": {
-               "count": "20227",
+               "count": "20284",
                "state": "EnabledWithCount"
               }
              }
@@ -6414,721 +7113,14 @@
            }
           },
           "entryId": "tweet-2098162589075222894",
-          "sortIndex": "2111551865291276271"
-         },
-         {
-          "content": {
-           "__typename": "TimelineTimelineItem",
-           "clientEventInfo": {
-            "component": "latest_nightowl_recency",
-            "details": {
-             "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACuW2U2Mrf1H0KAAVR3Reh9WpkGQgABgAAAAEKAAdLVi/lP055gQoACAAAAaFLgfIOAAAAAAA="
-             }
-            },
-            "element": "tweet"
-           },
-           "entryType": "TimelineTimelineItem",
-           "itemContent": {
-            "__typename": "TimelineTweet",
-            "itemType": "TimelineTweet",
-            "tweetDisplayType": "Tweet",
-            "tweet_results": {
-             "result": {
-              "__typename": "Tweet",
-              "cashtag_attachments": [],
-              "core": {
-               "user_results": {
-                "result": {
-                 "__typename": "User",
-                 "action_counts": {
-                  "favorites_count": 3222
-                 },
-                 "affiliates_highlighted_label": {},
-                 "avatar": {
-                  "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
-                 },
-                 "banner": {
-                  "image_url": "https://pbs.twimg.com/profile_banners/420730316/1785427735"
-                 },
-                 "core": {
-                  "created_at": "Fri Nov 25 01:07:12 +0000 2011",
-                  "name": "Flutter",
-                  "screen_name": "FlutterDev"
-                 },
-                 "follow_request_sent": false,
-                 "has_graduated_access": true,
-                 "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
-                 "location": {
-                  "location": ""
-                 },
-                 "media_permissions": {
-                  "can_media_tag": true
-                 },
-                 "notifications_settings": {
-                  "notifications_enabled": false
-                 },
-                 "parody_commentary_fan_label": "None",
-                 "pinned_items": {
-                  "tweet_ids_str": [
-                   "2101012855101218956"
-                  ]
-                 },
-                 "possibly_sensitive": false,
-                 "privacy": {
-                  "protected": false
-                 },
-                 "profile_bio": {
-                  "description": "Google’s UI toolkit to build apps for mobile, web, & desktop from a single codebase",
-                  "entities": {
-                   "description": {},
-                   "url": {
-                    "urls": [
-                     {
-                      "display_url": "flutter.dev",
-                      "expanded_url": "https://flutter.dev",
-                      "indices": [
-                       0,
-                       23
-                      ],
-                      "url": "https://t.co/bVj6OdNADd"
-                     }
-                    ]
-                   }
-                  }
-                 },
-                 "profile_description_language": "en",
-                 "profile_image_shape": "Square",
-                 "profile_metadata": {
-                  "profile_interstitial_type": ""
-                 },
-                 "profile_translation": {
-                  "translator_type": "none"
-                 },
-                 "relationship_counts": {
-                  "followers": 277911,
-                  "following": 61
-                 },
-                 "relationship_perspectives": {
-                  "blocked_by": false,
-                  "blocking": false,
-                  "followed_by": false,
-                  "following": false,
-                  "live_following": false,
-                  "muting": false
-                 },
-                 "rest_id": "420730316",
-                 "super_follow_eligible": false,
-                 "super_followed_by": false,
-                 "super_following": false,
-                 "tweet_counts": {
-                  "media_tweets": 1983,
-                  "tweets": 3929
-                 },
-                 "verification": {
-                  "verified": false,
-                  "verified_type": "Business"
-                 },
-                 "website": {
-                  "url": "https://t.co/bVj6OdNADd"
-                 }
-                }
-               }
-              },
-              "edit_control": {
-               "edit_tweet_ids": [
-                "2097705341442015534"
-               ],
-               "editable_until_msecs": "1788970501000",
-               "edits_remaining": "5",
-               "is_edit_eligible": true
-              },
-              "grok_analysis_button": true,
-              "grok_annotations": {
-               "is_image_editable_by_grok": true
-              },
-              "grok_translated_post_with_availability": {
-               "is_available": false
-              },
-              "is_translatable": false,
-              "legacy": {
-               "bookmark_count": 10,
-               "bookmarked": false,
-               "conversation_id_str": "2097705341442015534",
-               "created_at": "Wed Sep 09 15:15:01 +0000 2026",
-               "display_text_range": [
-                0,
-                50
-               ],
-               "entities": {
-                "media": [
-                 {
-                  "additional_media_info": {
-                   "monetizable": false
-                  },
-                  "display_url": "pic.x.com/TngNcm3NAU",
-                  "expanded_url": "https://x.com/FlutterDev/status/2097705341442015534/video/1",
-                  "ext_media_availability": {
-                   "status": "Available"
-                  },
-                  "id_str": "2097704793083174912",
-                  "indices": [
-                   51,
-                   74
-                  ],
-                  "media_key": "13_2097704793083174912",
-                  "media_results": {
-                   "result": {
-                    "media_key": "13_2097704793083174912"
-                   }
-                  },
-                  "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2097704793083174912/img/AiXaMRSpjvevPlAd.jpg",
-                  "original_info": {
-                   "focus_rects": [],
-                   "height": 1920,
-                   "width": 1080
-                  },
-                  "sizes": {
-                   "large": {
-                    "h": 1920,
-                    "resize": "fit",
-                    "w": 1080
-                   },
-                   "medium": {
-                    "h": 1200,
-                    "resize": "fit",
-                    "w": 675
-                   },
-                   "small": {
-                    "h": 680,
-                    "resize": "fit",
-                    "w": 383
-                   },
-                   "thumb": {
-                    "h": 150,
-                    "resize": "crop",
-                    "w": 150
-                   }
-                  },
-                  "type": "video",
-                  "url": "https://t.co/TngNcm3NAU",
-                  "video_info": {
-                   "aspect_ratio": [
-                    9,
-                    16
-                   ],
-                   "duration_millis": 30250,
-                   "variants": [
-                    {
-                     "content_type": "application/x-mpegURL",
-                     "url": "https://video.twimg.com/amplify_video/2097704793083174912/pl/r9NOPpJaf009rKyd.m3u8?tag=16&v=2de"
-                    },
-                    {
-                     "bitrate": 632000,
-                     "content_type": "video/mp4",
-                     "url": "https://video.twimg.com/amplify_video/2097704793083174912/vid/avc1/320x568/IS11sfClbtEZenAj.mp4?tag=16"
-                    },
-                    {
-                     "bitrate": 950000,
-                     "content_type": "video/mp4",
-                     "url": "https://video.twimg.com/amplify_video/2097704793083174912/vid/avc1/480x852/5C7LamOWxD5u7vQ1.mp4?tag=16"
-                    },
-                    {
-                     "bitrate": 2176000,
-                     "content_type": "video/mp4",
-                     "url": "https://video.twimg.com/amplify_video/2097704793083174912/vid/avc1/720x1280/WWO42vtFoiCHWJa3.mp4?tag=16"
-                    },
-                    {
-                     "bitrate": 10368000,
-                     "content_type": "video/mp4",
-                     "url": "https://video.twimg.com/amplify_video/2097704793083174912/vid/avc1/1080x1920/BzMyTAOjvkOJBxmC.mp4?tag=16"
-                    }
-                   ]
-                  }
-                 }
-                ]
-               },
-               "extended_entities": {
-                "media": [
-                 {
-                  "additional_media_info": {
-                   "monetizable": false
-                  },
-                  "display_url": "pic.x.com/TngNcm3NAU",
-                  "expanded_url": "https://x.com/FlutterDev/status/2097705341442015534/video/1",
-                  "ext_media_availability": {
-                   "status": "Available"
-                  },
-                  "id_str": "2097704793083174912",
-                  "indices": [
-                   51,
-                   74
-                  ],
-                  "media_key": "13_2097704793083174912",
-                  "media_results": {
-                   "result": {
-                    "media_key": "13_2097704793083174912"
-                   }
-                  },
-                  "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2097704793083174912/img/AiXaMRSpjvevPlAd.jpg",
-                  "original_info": {
-                   "focus_rects": [],
-                   "height": 1920,
-                   "width": 1080
-                  },
-                  "sizes": {
-                   "large": {
-                    "h": 1920,
-                    "resize": "fit",
-                    "w": 1080
-                   },
-                   "medium": {
-                    "h": 1200,
-                    "resize": "fit",
-                    "w": 675
-                   },
-                   "small": {
-                    "h": 680,
-                    "resize": "fit",
-                    "w": 383
-                   },
-                   "thumb": {
-                    "h": 150,
-                    "resize": "crop",
-                    "w": 150
-                   }
-                  },
-                  "type": "video",
-                  "url": "https://t.co/TngNcm3NAU",
-                  "video_info": {
-                   "aspect_ratio": [
-                    9,
-                    16
-                   ],
-                   "duration_millis": 30250,
-                   "variants": [
-                    {
-                     "content_type": "application/x-mpegURL",
-                     "url": "https://video.twimg.com/amplify_video/2097704793083174912/pl/r9NOPpJaf009rKyd.m3u8?tag=16&v=2de"
-                    },
-                    {
-                     "bitrate": 632000,
-                     "content_type": "video/mp4",
-                     "url": "https://video.twimg.com/amplify_video/2097704793083174912/vid/avc1/320x568/IS11sfClbtEZenAj.mp4?tag=16"
-                    },
-                    {
-                     "bitrate": 950000,
-                     "content_type": "video/mp4",
-                     "url": "https://video.twimg.com/amplify_video/2097704793083174912/vid/avc1/480x852/5C7LamOWxD5u7vQ1.mp4?tag=16"
-                    },
-                    {
-                     "bitrate": 2176000,
-                     "content_type": "video/mp4",
-                     "url": "https://video.twimg.com/amplify_video/2097704793083174912/vid/avc1/720x1280/WWO42vtFoiCHWJa3.mp4?tag=16"
-                    },
-                    {
-                     "bitrate": 10368000,
-                     "content_type": "video/mp4",
-                     "url": "https://video.twimg.com/amplify_video/2097704793083174912/vid/avc1/1080x1920/BzMyTAOjvkOJBxmC.mp4?tag=16"
-                    }
-                   ]
-                  }
-                 }
-                ]
-               },
-               "favorite_count": 73,
-               "favorited": false,
-               "full_text": "Learn how Flutter and Google Cloud power Holafly 💫 https://t.co/TngNcm3NAU",
-               "id_str": "2097705341442015534",
-               "is_quote_status": false,
-               "lang": "en",
-               "possibly_sensitive": false,
-               "possibly_sensitive_editable": true,
-               "quote_count": 0,
-               "reply_count": 1,
-               "retweet_count": 3,
-               "retweeted": false,
-               "user_id_str": "420730316"
-              },
-              "rest_id": "2097705341442015534",
-              "unmention_data": {},
-              "views": {
-               "count": "9839",
-               "state": "EnabledWithCount"
-              }
-             }
-            }
-           }
-          },
-          "entryId": "tweet-2097705341442015534",
-          "sortIndex": "2111551865291276270"
-         },
-         {
-          "content": {
-           "__typename": "TimelineTimelineItem",
-           "clientEventInfo": {
-            "component": "latest_nightowl_recency",
-            "details": {
-             "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACuW2U2Mrf1H0KAAVR3Reh9WpkGQgABgAAAAEKAAdLVi/lP055gQoACAAAAaFLgfIOAAAAAAA="
-             }
-            },
-            "element": "tweet"
-           },
-           "entryType": "TimelineTimelineItem",
-           "itemContent": {
-            "__typename": "TimelineTweet",
-            "itemType": "TimelineTweet",
-            "tweetDisplayType": "Tweet",
-            "tweet_results": {
-             "result": {
-              "__typename": "Tweet",
-              "cashtag_attachments": [],
-              "core": {
-               "user_results": {
-                "result": {
-                 "__typename": "User",
-                 "action_counts": {
-                  "favorites_count": 3222
-                 },
-                 "affiliates_highlighted_label": {},
-                 "avatar": {
-                  "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
-                 },
-                 "banner": {
-                  "image_url": "https://pbs.twimg.com/profile_banners/420730316/1785427735"
-                 },
-                 "core": {
-                  "created_at": "Fri Nov 25 01:07:12 +0000 2011",
-                  "name": "Flutter",
-                  "screen_name": "FlutterDev"
-                 },
-                 "follow_request_sent": false,
-                 "has_graduated_access": true,
-                 "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
-                 "location": {
-                  "location": ""
-                 },
-                 "media_permissions": {
-                  "can_media_tag": true
-                 },
-                 "notifications_settings": {
-                  "notifications_enabled": false
-                 },
-                 "parody_commentary_fan_label": "None",
-                 "pinned_items": {
-                  "tweet_ids_str": [
-                   "2101012855101218956"
-                  ]
-                 },
-                 "possibly_sensitive": false,
-                 "privacy": {
-                  "protected": false
-                 },
-                 "profile_bio": {
-                  "description": "Google’s UI toolkit to build apps for mobile, web, & desktop from a single codebase",
-                  "entities": {
-                   "description": {},
-                   "url": {
-                    "urls": [
-                     {
-                      "display_url": "flutter.dev",
-                      "expanded_url": "https://flutter.dev",
-                      "indices": [
-                       0,
-                       23
-                      ],
-                      "url": "https://t.co/bVj6OdNADd"
-                     }
-                    ]
-                   }
-                  }
-                 },
-                 "profile_description_language": "en",
-                 "profile_image_shape": "Square",
-                 "profile_metadata": {
-                  "profile_interstitial_type": ""
-                 },
-                 "profile_translation": {
-                  "translator_type": "none"
-                 },
-                 "relationship_counts": {
-                  "followers": 277911,
-                  "following": 61
-                 },
-                 "relationship_perspectives": {
-                  "blocked_by": false,
-                  "blocking": false,
-                  "followed_by": false,
-                  "following": false,
-                  "live_following": false,
-                  "muting": false
-                 },
-                 "rest_id": "420730316",
-                 "super_follow_eligible": false,
-                 "super_followed_by": false,
-                 "super_following": false,
-                 "tweet_counts": {
-                  "media_tweets": 1983,
-                  "tweets": 3929
-                 },
-                 "verification": {
-                  "verified": false,
-                  "verified_type": "Business"
-                 },
-                 "website": {
-                  "url": "https://t.co/bVj6OdNADd"
-                 }
-                }
-               }
-              },
-              "edit_control": {
-               "edit_tweet_ids": [
-                "2095624463584788486"
-               ],
-               "editable_until_msecs": "1788474381000",
-               "edits_remaining": "5",
-               "is_edit_eligible": true
-              },
-              "grok_analysis_button": true,
-              "grok_annotations": {
-               "is_image_editable_by_grok": false
-              },
-              "grok_translated_post_with_availability": {
-               "is_available": false
-              },
-              "is_translatable": false,
-              "legacy": {
-               "bookmark_count": 32,
-               "bookmarked": false,
-               "conversation_id_str": "2095624463584788486",
-               "created_at": "Thu Sep 03 21:26:21 +0000 2026",
-               "display_text_range": [
-                0,
-                178
-               ],
-               "entities": {
-                "media": [
-                 {
-                  "additional_media_info": {
-                   "monetizable": false
-                  },
-                  "display_url": "pic.x.com/SDKIfJ63hS",
-                  "expanded_url": "https://x.com/FlutterDev/status/2095624463584788486/video/1",
-                  "ext_media_availability": {
-                   "status": "Available"
-                  },
-                  "id_str": "2095624066111840256",
-                  "indices": [
-                   179,
-                   202
-                  ],
-                  "media_key": "13_2095624066111840256",
-                  "media_results": {
-                   "result": {
-                    "media_key": "13_2095624066111840256"
-                   }
-                  },
-                  "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2095624066111840256/img/WNEQ-6w9Qfd9hBYI.jpg",
-                  "original_info": {
-                   "focus_rects": [],
-                   "height": 1920,
-                   "width": 1080
-                  },
-                  "sizes": {
-                   "large": {
-                    "h": 1920,
-                    "resize": "fit",
-                    "w": 1080
-                   },
-                   "medium": {
-                    "h": 1200,
-                    "resize": "fit",
-                    "w": 675
-                   },
-                   "small": {
-                    "h": 680,
-                    "resize": "fit",
-                    "w": 383
-                   },
-                   "thumb": {
-                    "h": 150,
-                    "resize": "crop",
-                    "w": 150
-                   }
-                  },
-                  "type": "video",
-                  "url": "https://t.co/SDKIfJ63hS",
-                  "video_info": {
-                   "aspect_ratio": [
-                    9,
-                    16
-                   ],
-                   "duration_millis": 53013,
-                   "variants": [
-                    {
-                     "content_type": "application/x-mpegURL",
-                     "url": "https://video.twimg.com/amplify_video/2095624066111840256/pl/Jm_Zt6KXb5KVNKwm.m3u8?tag=16"
-                    },
-                    {
-                     "bitrate": 632000,
-                     "content_type": "video/mp4",
-                     "url": "https://video.twimg.com/amplify_video/2095624066111840256/vid/avc1/320x568/MitwF_EibPAYJopz.mp4?tag=16"
-                    },
-                    {
-                     "bitrate": 950000,
-                     "content_type": "video/mp4",
-                     "url": "https://video.twimg.com/amplify_video/2095624066111840256/vid/avc1/480x852/zu1l9bIUVn-HsAIZ.mp4?tag=16"
-                    },
-                    {
-                     "bitrate": 2176000,
-                     "content_type": "video/mp4",
-                     "url": "https://video.twimg.com/amplify_video/2095624066111840256/vid/avc1/720x1280/Br0Q3bkt7FUVKfWI.mp4?tag=16"
-                    },
-                    {
-                     "bitrate": 10368000,
-                     "content_type": "video/mp4",
-                     "url": "https://video.twimg.com/amplify_video/2095624066111840256/vid/avc1/1080x1920/jlMuTzGR75zhRvVh.mp4?tag=16"
-                    }
-                   ]
-                  }
-                 }
-                ],
-                "urls": [
-                 {
-                  "display_url": "pub.dev",
-                  "expanded_url": "https://pub.dev",
-                  "indices": [
-                   136,
-                   159
-                  ],
-                  "url": "https://t.co/lRimfkopcI"
-                 }
-                ]
-               },
-               "extended_entities": {
-                "media": [
-                 {
-                  "additional_media_info": {
-                   "monetizable": false
-                  },
-                  "display_url": "pic.x.com/SDKIfJ63hS",
-                  "expanded_url": "https://x.com/FlutterDev/status/2095624463584788486/video/1",
-                  "ext_media_availability": {
-                   "status": "Available"
-                  },
-                  "id_str": "2095624066111840256",
-                  "indices": [
-                   179,
-                   202
-                  ],
-                  "media_key": "13_2095624066111840256",
-                  "media_results": {
-                   "result": {
-                    "media_key": "13_2095624066111840256"
-                   }
-                  },
-                  "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2095624066111840256/img/WNEQ-6w9Qfd9hBYI.jpg",
-                  "original_info": {
-                   "focus_rects": [],
-                   "height": 1920,
-                   "width": 1080
-                  },
-                  "sizes": {
-                   "large": {
-                    "h": 1920,
-                    "resize": "fit",
-                    "w": 1080
-                   },
-                   "medium": {
-                    "h": 1200,
-                    "resize": "fit",
-                    "w": 675
-                   },
-                   "small": {
-                    "h": 680,
-                    "resize": "fit",
-                    "w": 383
-                   },
-                   "thumb": {
-                    "h": 150,
-                    "resize": "crop",
-                    "w": 150
-                   }
-                  },
-                  "type": "video",
-                  "url": "https://t.co/SDKIfJ63hS",
-                  "video_info": {
-                   "aspect_ratio": [
-                    9,
-                    16
-                   ],
-                   "duration_millis": 53013,
-                   "variants": [
-                    {
-                     "content_type": "application/x-mpegURL",
-                     "url": "https://video.twimg.com/amplify_video/2095624066111840256/pl/Jm_Zt6KXb5KVNKwm.m3u8?tag=16"
-                    },
-                    {
-                     "bitrate": 632000,
-                     "content_type": "video/mp4",
-                     "url": "https://video.twimg.com/amplify_video/2095624066111840256/vid/avc1/320x568/MitwF_EibPAYJopz.mp4?tag=16"
-                    },
-                    {
-                     "bitrate": 950000,
-                     "content_type": "video/mp4",
-                     "url": "https://video.twimg.com/amplify_video/2095624066111840256/vid/avc1/480x852/zu1l9bIUVn-HsAIZ.mp4?tag=16"
-                    },
-                    {
-                     "bitrate": 2176000,
-                     "content_type": "video/mp4",
-                     "url": "https://video.twimg.com/amplify_video/2095624066111840256/vid/avc1/720x1280/Br0Q3bkt7FUVKfWI.mp4?tag=16"
-                    },
-                    {
-                     "bitrate": 10368000,
-                     "content_type": "video/mp4",
-                     "url": "https://video.twimg.com/amplify_video/2095624066111840256/vid/avc1/1080x1920/jlMuTzGR75zhRvVh.mp4?tag=16"
-                    }
-                   ]
-                  }
-                 }
-                ]
-               },
-               "favorite_count": 254,
-               "favorited": false,
-               "full_text": "Starting in Flutter 3.47, the material_ui and cupertino_ui packages are officially decoupled from the core SDK and have reached v1.0 on https://t.co/lRimfkopcI! Get the details ↓ https://t.co/SDKIfJ63hS",
-               "id_str": "2095624463584788486",
-               "is_quote_status": false,
-               "lang": "en",
-               "possibly_sensitive": false,
-               "possibly_sensitive_editable": true,
-               "quote_count": 5,
-               "reply_count": 5,
-               "retweet_count": 33,
-               "retweeted": false,
-               "user_id_str": "420730316"
-              },
-              "rest_id": "2095624463584788486",
-              "unmention_data": {},
-              "views": {
-               "count": "19301",
-               "state": "EnabledWithCount"
-              }
-             }
-            }
-           }
-          },
-          "entryId": "tweet-2095624463584788486",
-          "sortIndex": "2111551865291276269"
+          "sortIndex": "2114917691453079533"
          },
          {
           "content": {
            "__typename": "TimelineTimelineCursor",
            "cursorType": "Top",
            "entryType": "TimelineTimelineCursor",
-           "value": "DAADDAABCgABHUmqvovX0foKAAIdFSdYtpcABgAIAAIAAAABCAADAAAAAAgABAAAAAAKAAUdTb0754AnEAoABh1NvTvnf9jwCwAHAAAA8EVtUEM2d0FBQWZRL2dHSk4wdkdwL0FBQUFCUWRRZ1ZrVzFiaFN4MDN5K1JkbDZBdkhTNnFPc0dYZ1lRZE9seXhyUmZRZGgwVkoxaTJsd0FHSFI0cndoclhzVzRkSnY1RWs1WmhDQjFEWVdidzFnRlNIUzFqMFZVWGNGMGRISXZrMkJkQkxoMHYrK1FxRzhFcEhTU1JETEhYQUlJZEtGaVVEdFpRVGgweGV5cHFHN0htSFRhVDFXVGE0VzhkSmEvaThKYWdVeDArVkhkSjExRHFIVWNzQ0pjWEFPRWRTYXEraTlmUitoMUF2WjdFV3ZDTgAA"
+           "value": "DAADDAABCgABHVPuy_bXADsKAAIdHivCGtexbgAIAAIAAAABCAADAAAAAAgABAAAAAAKAAUdWbJvYEAnEAoABh1Zsm9gP9jwCwAHAAAA8EVtUEM2d0FBQWZRL2dHSk4wdkdwL0FBQUFCUWRRZ1ZrVzFiaFN4MDN5K1JkbDZBdkhTNnFPc0dYZ1lRZE9seXhyUmZRZGgwZUs4SWExN0Z1SFNiK1JKT1dZUWdkTFdQUlZSZHdYUjFEWVdidzFnRlNIVlB1eS9iWEFEc2RVYmVScmhiUm9SMHYrK1FxRzhFcEhTU1JETEhYQUlJZEtGaVVEdFpRVGgweGV5cHFHN0htSFRhVDFXVGE0VzhkSmEvaThKYWdVeDArVkhkSjExRHFIVWNzQ0pjWEFPRWRTYXEraTlmUitoMUF2WjdFV3ZDTgAA"
           },
           "entryId": "cursor-top-9223372036854775807",
           "sortIndex": "9223372036854775807"
@@ -7138,7 +7130,7 @@
            "__typename": "TimelineTimelineCursor",
            "cursorType": "Bottom",
            "entryType": "TimelineTimelineCursor",
-           "value": "DAADDAABCgABHUmqvovX0foKAAIdFSdYtpcABgAIAAIAAAACCAADAAAAAAgABAAAAAAKAAUdTb0754AnEAoABh1NvTvnf9jwCwAHAAAA8EVtUEM2d0FBQWZRL2dHSk4wdkdwL0FBQUFCUWRRZ1ZrVzFiaFN4MDN5K1JkbDZBdkhTNnFPc0dYZ1lRZE9seXhyUmZRZGgwVkoxaTJsd0FHSFI0cndoclhzVzRkSnY1RWs1WmhDQjFEWVdidzFnRlNIUzFqMFZVWGNGMGRISXZrMkJkQkxoMHYrK1FxRzhFcEhTU1JETEhYQUlJZEtGaVVEdFpRVGgweGV5cHFHN0htSFRhVDFXVGE0VzhkSmEvaThKYWdVeDArVkhkSjExRHFIVWNzQ0pjWEFPRWRTYXEraTlmUitoMUF2WjdFV3ZDTgAA"
+           "value": "DAADDAABCgABHVPuy_bXADsKAAIdHivCGtexbgAIAAIAAAACCAADAAAAAAgABAAAAAAKAAUdWbJvYEAnEAoABh1Zsm9gP9jwCwAHAAAA8EVtUEM2d0FBQWZRL2dHSk4wdkdwL0FBQUFCUWRRZ1ZrVzFiaFN4MDN5K1JkbDZBdkhTNnFPc0dYZ1lRZE9seXhyUmZRZGgwZUs4SWExN0Z1SFNiK1JKT1dZUWdkTFdQUlZSZHdYUjFEWVdidzFnRlNIVlB1eS9iWEFEc2RVYmVScmhiUm9SMHYrK1FxRzhFcEhTU1JETEhYQUlJZEtGaVVEdFpRVGgweGV5cHFHN0htSFRhVDFXVGE0VzhkSmEvaThKYWdVeDArVkhkSjExRHFIVWNzQ0pjWEFPRWRTYXEraTlmUitoMUF2WjdFV3ZDTgAA"
           },
           "entryId": "cursor-bottom-0",
           "sortIndex": "0"

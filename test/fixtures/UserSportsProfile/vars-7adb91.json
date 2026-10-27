@@ -1,0 +1,34 @@
+{
+ "scenario": "Second profile to subscribe to, for the subscriptions feed",
+ "sourceUrl": "https://x.com/dart_lang",
+ "unstable": true,
+ "operation": "UserSportsProfile",
+ "host": "x.com",
+ "queryId": "59Zl1Tu5_LVZDmIw6GYO8A",
+ "features": null,
+ "fieldToggles": null,
+ "variables": {
+  "rest_id": "376585411",
+  "start_time": "1792381933756",
+  "end_time": "1794282733756"
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "1500",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "1498",
+  "x-rate-limit-reset": "1793073834"
+ },
+ "body": {
+  "data": {
+   "user_results": {
+    "id": "VXNlclJlc3VsdHM6Mzc2NTg1NDEx",
+    "rest_id": "376585411",
+    "result": {
+     "__typename": "User",
+     "rest_id": "376585411"
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,34 @@
+{
+ "scenario": "Photos filter of @grok, a busy account with many photos",
+ "sourceUrl": "https://x.com/grok/media?filter=photo",
+ "unstable": true,
+ "operation": "UserSportsProfile",
+ "host": "x.com",
+ "queryId": "59Zl1Tu5_LVZDmIw6GYO8A",
+ "features": null,
+ "fieldToggles": null,
+ "variables": {
+  "rest_id": "1720665183188922368",
+  "start_time": "1792379091500",
+  "end_time": "1794279891500"
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "1500",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "1490",
+  "x-rate-limit-reset": "1793070868"
+ },
+ "body": {
+  "data": {
+   "user_results": {
+    "id": "VXNlclJlc3VsdHM6MTcyMDY2NTE4MzE4ODkyMjM2OA==",
+    "rest_id": "1720665183188922368",
+    "result": {
+     "__typename": "User",
+     "rest_id": "1720665183188922368"
+    }
+   }
+  }
+ }
+}

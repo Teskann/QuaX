@@ -3,7 +3,7 @@
  "sourceUrl": "https://x.com/quax_tests/status/2109301223363064091",
  "operation": "TweetResultByRestId",
  "host": "x.com",
- "queryId": "xZfFqfOmKQu_OXekGI59mg",
+ "queryId": "a-Xpq8PjX9K6U5cmc1f05A",
  "features": {
   "creator_subscriptions_tweet_preview_api_enabled": true,
   "premium_content_api_read_enabled": false,
@@ -41,6 +41,7 @@
   "responsive_web_nested_quote_preview_enabled": true,
   "responsive_web_grok_image_annotation_enabled": true,
   "responsive_web_grok_imagine_annotation_enabled": true,
+  "responsive_web_made_on_x_label_enabled": false,
   "responsive_web_grok_community_note_auto_translation_is_enabled": true,
   "responsive_web_graphql_timeline_navigation_enabled": true
  },
@@ -62,8 +63,8 @@
  "headers": {
   "x-rate-limit-limit": "500",
   "content-type": "application/json",
-  "x-rate-limit-remaining": "499",
-  "x-rate-limit-reset": "1791736558"
+  "x-rate-limit-remaining": "469",
+  "x-rate-limit-reset": "1793074174"
  },
  "body": {
   "data": {
@@ -187,7 +188,7 @@
         {
          "key": "counts_are_final",
          "value": {
-          "boolean_value": false,
+          "boolean_value": true,
           "type": "BOOLEAN"
          }
         },
@@ -274,7 +275,7 @@
         {
          "key": "last_updated_datetime_utc",
          "value": {
-          "string_value": "2026-10-11T16:20:02Z",
+          "string_value": "2026-10-12T15:12:59Z",
           "type": "STRING"
          }
         },
@@ -597,7 +598,7 @@
         "super_following": false,
         "tweet_counts": {
          "media_tweets": 17,
-         "tweets": 42
+         "tweets": 45
         },
         "verification": {
          "verified": false
@@ -658,7 +659,8 @@
      "rest_id": "2109301223363064091",
      "unmention_data": {},
      "views": {
-      "state": "Enabled"
+      "count": "4",
+      "state": "EnabledWithCount"
      }
     }
    }
