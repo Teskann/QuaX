@@ -23,6 +23,7 @@ import 'package:quax/ui/locale_fallback.dart';
 import 'package:measure_size/measure_size.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
+import 'package:quax/subscriptions/users_model.dart';
 import 'package:share_plus/share_plus.dart';
 
 typedef TabTitleBuilder = String Function(BuildContext context);
@@ -66,7 +67,10 @@ class ProfileScreen extends StatelessWidget {
 
     return Provider(
         create: (context) {
-          return ProfileModel()..loadProfileByScreenName(args.screenName!);
+          final subscriptions = context.read<SubscriptionsModel>();
+          return ProfileModel()
+            ..observer(onState: (profile) => subscriptions.refreshSubscriptions([profile.user]))
+            ..loadProfileByScreenName(args.screenName!);
         },
         child: _ProfileScreen(id: args.id, screenName: args.screenName, tabIndex: args.tabIndex));
   }

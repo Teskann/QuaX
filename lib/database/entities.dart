@@ -176,6 +176,17 @@ class UserSubscription extends Subscription {
     );
   }
 
+  UserSubscription copyWith({String? name, String? profileImageUrlHttps}) {
+    return UserSubscription(
+        id: id,
+        screenName: screenName,
+        name: name ?? this.name,
+        profileImageUrlHttps: profileImageUrlHttps ?? this.profileImageUrlHttps,
+        verified: verified,
+        createdAt: createdAt,
+        inFeed: inFeed);
+  }
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) || other is UserSubscription && runtimeType == other.runtimeType && id == other.id;
