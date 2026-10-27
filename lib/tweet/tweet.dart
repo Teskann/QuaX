@@ -12,6 +12,8 @@ import 'package:quax/generated/l10n.dart';
 import 'package:quax/import_data_model.dart';
 import 'package:quax/profile/profile.dart';
 import 'package:quax/saved/folder_picker.dart';
+import 'package:quax/search/search.dart';
+import 'package:quax/search/search_filters.dart';
 import 'package:quax/saved/liked_tweet_model.dart';
 import 'package:quax/tweet/_like_button.dart';
 import 'package:quax/saved/saved_tweet_model.dart';
@@ -202,6 +204,11 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
             id: tweet.idStr!, username: tweet.user!.screenName!, tweetOpened: true, initialTweet: tweet));
   }
 
+  void _openQuotes(TweetWithCard tweet) {
+    Navigator.pushNamed(context, routeSearch,
+        arguments: SearchArguments(SearchTab.top, filters: SearchFilters(quotedTweetId: tweet.idStr)));
+  }
+
   IconButton _createFooterIconButton(IconData icon, String label, [Color? color, double? fill, Function()? onPressed]) {
     return IconButton(
       icon: Icon(
@@ -308,7 +315,8 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
 
   VoidCallback? _actionCallback(TweetAction action, _FooterData data) => switch (action) {
         TweetAction.reply => () => onClickOpenTweet(data.tweet),
-        TweetAction.retweet || TweetAction.views || TweetAction.more => null,
+        TweetAction.retweet => () => _openQuotes(data.tweet),
+        TweetAction.views || TweetAction.more => null,
         TweetAction.like => () => _toggleLike(data.tweet),
         TweetAction.bookmark => () => _toggleSave(data.tweet),
         TweetAction.share => () => _showShareSheet(data),

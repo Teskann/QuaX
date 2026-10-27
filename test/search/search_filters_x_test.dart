@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:quax/client/client.dart';
+import 'package:quax/search/search_filters.dart';
 import 'package:quax/search/search_query.dart';
 
 import '../fixtures.dart';
@@ -145,5 +146,13 @@ void main() {
           _hasLink(tweet) &&
           !tweet.createdAt!.toUtc().isBefore(DateTime.utc(2025, 1, 1));
     });
+  });
+
+  test('Should only find quotes of the post for the quotes filter', () {
+    const tweetId = '2026390853309063292';
+    final raw = SearchQuery('', SearchFilters(quotedTweetId: tweetId)).compose('fr');
+
+    expect(_found(raw).length, greaterThan(40), reason: 'Each of the three recorded pages should bring quotes');
+    _expectEvery(raw, 'a quote of $tweetId', (tweet) => tweet.quotedStatusIdStr == tweetId);
   });
 }

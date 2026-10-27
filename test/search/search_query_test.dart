@@ -258,4 +258,46 @@ void main() {
     expect(query.text, '#Flutter @FlutterDev', reason: 'A single hashtag or mention is what the user searches for');
     expect(query.filters.active, isEmpty, reason: 'Only a group of them is a filter');
   });
+
+  group('quotes', () {
+    const tweetId = '2095912922601975848';
+    const quotesOperator = '(quoted_tweet_id:$tweetId OR url:"status/$tweetId/video" OR url:"status/$tweetId/photo")';
+
+    test('Should search the quotes of a post as x.com does', () {
+      expect(
+        const SearchQuery('', SearchFilters(quotedTweetId: tweetId)).compose(_appLanguage),
+        quotesOperator,
+        reason: 'The terms must be those of the rawQuery x.com sends on the quotes page',
+      );
+    });
+
+    test('Should keep the quotes group apart from the words of the bar', () {
+      expect(
+        const SearchQuery('flutter', SearchFilters(quotedTweetId: tweetId)).compose(_appLanguage),
+        'flutter $quotesOperator',
+        reason: 'Without parentheses, X would read the words as one more alternative of the OR',
+      );
+    });
+
+    test('Should read the quotes group back as a filter', () {
+      final query = SearchQuery.parse(quotesOperator, _appLanguage);
+
+      expect(query.text, isEmpty, reason: 'The quotes group should leave the bar empty');
+      expect(query.filters.quotedTweetId, tweetId, reason: 'The quoted post should be read from the group');
+    });
+
+    test('Should leave a group of other urls in the bar', () {
+      const raw = '(quoted_tweet_id:$tweetId OR url:"status/$tweetId/photo")';
+
+      expect(SearchQuery.parse(raw, _appLanguage).text, raw, reason: 'Only the exact quotes group is the filter');
+    });
+
+    test('Should show the quotes as a chip that can be removed', () {
+      const filters = SearchFilters(quotedTweetId: tweetId);
+      final chip = filters.active.single;
+
+      expect(chip, isA<QuotesFilter>(), reason: 'The quoted post should get its own chip');
+      expect(filters.without(chip).quotedTweetId, isNull, reason: 'Removing the chip should drop the quoted post');
+    });
+  });
 }

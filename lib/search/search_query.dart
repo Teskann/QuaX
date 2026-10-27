@@ -31,6 +31,7 @@ final _operatorPattern = RegExp(r'^(-?)([a-z_]+):(\S+)$');
 final _plainWordPattern = RegExp(r'''^[^\s:"()#@-][^\s:"()]*$''');
 final _accountPattern = RegExp(r'^@?(\w{1,50})$');
 final _languagePattern = RegExp(r'^[a-z]{2,3}(-[a-z]{2,4})?$');
+final _quotesGroupPattern = RegExp(r'^quoted_tweet_id:(\d+) OR url:"status/\1/video" OR url:"status/\1/photo"$');
 final _datePattern = RegExp(r'^(\d{4})-(\d{2})-(\d{2})$');
 
 List<String> _tokenize(String raw) => _tokenPattern.allMatches(raw).map((match) => match.group(0)!).toList();
@@ -49,8 +50,11 @@ SearchFilters? _readToken(String token, SearchFilters filters, String appLanguag
   return _readOperator(operator.group(1) == '-', operator.group(2)!, operator.group(3)!, filters, appLanguage);
 }
 
-/// Reads `(a OR b OR …)` when every term is of the same kind: words, hashtags or accounts.
+/// Reads `(a OR b OR …)` when every term is of the same kind: words, hashtags or accounts, or the quotes of a post.
 SearchFilters? _readGroup(String inner, SearchFilters filters) {
+  if (_quotesGroupPattern.firstMatch(inner.trim())?.group(1) case final tweetId?) {
+    return filters.copyWith(quotedTweetId: () => tweetId);
+  }
   final parts = inner.trim().split(RegExp(r'\s+'));
   final terms = [for (var i = 0; i < parts.length; i += 2) parts[i]];
   final separators = [for (var i = 1; i < parts.length; i += 2) parts[i]];
