@@ -6,11 +6,17 @@ import 'package:quax/user.dart';
 
 import '../fixtures.dart';
 
-/// A page of the subscriptions feed of @FlutterDev and @dart_lang, where every post comes from one of them
-TweetStatus _feedPage() => Twitter.parseSearchTimeline(
-    fixture('SearchTimeline', 'from-flutterdev-or-from-dart-lang-filter-replies-filter-retweets', unstable: true).body);
-
 Iterable<TweetWithCard> _tweetsOf(TweetStatus page) => page.chains.expand((chain) => chain.tweets);
+
+/// A page of the subscriptions feed of @FlutterDev and @dart_lang holding posts of both
+TweetStatus _feedPage() {
+  final feed =
+      fixture('SearchTimeline', 'from-flutterdev-or-from-dart-lang-filter-replies-filter-retweets', unstable: true);
+  return fixturesOf('SearchTimeline')
+      .where((page) => page.sourceUrl == feed.sourceUrl)
+      .map((page) => Twitter.parseSearchTimeline(page.body))
+      .firstWhere((page) => _tweetsOf(page).map((tweet) => tweet.user?.idStr).toSet().length > 1);
+}
 
 UserSubscription _subscription(String id, String screenName) => UserSubscription(
     id: id,

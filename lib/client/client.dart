@@ -211,6 +211,7 @@ class Twitter {
     "responsive_web_grok_share_attachment_enabled": true,
     "responsive_web_grok_show_grok_translated_post": true,
     "responsive_web_jetfuel_frame": true,
+    "responsive_web_made_on_x_label_enabled": false,
     "responsive_web_nested_quote_preview_enabled": true,
     "responsive_web_profile_redirect_enabled": true,
     "responsive_web_twitter_article_tweet_consumption_enabled": true,
@@ -319,7 +320,7 @@ class Twitter {
         userId,
         count,
         cursor: cursor,
-        queryId: 'ath0FIohYC_c3Hj3SsxoCg',
+        queryId: 'nxiL6UwEf7B1K1JNGPx-Jw',
         operation: 'Following',
       );
 
@@ -328,7 +329,7 @@ class Twitter {
         userId,
         count,
         cursor: cursor,
-        queryId: 'stpzFPAIZ2qv8s2lRzPOnQ',
+        queryId: 'KLLQR3852iPAj8J32VMdXQ',
         operation: 'Followers',
       );
 
@@ -539,7 +540,7 @@ class Twitter {
     defaultParam["variables"] = json.encode(variables);
 
     var response = await _twitterApi.client.get(
-      Uri.https('x.com', '/i/api/graphql/3BlMtudy4N-d78ch7zTLZQ/TweetDetail', defaultParam),
+      Uri.https('x.com', '/i/api/graphql/gJoREC4Bspo4kJ0ax9C3sQ/TweetDetail', defaultParam),
     );
 
     return parseTweetDetail(json.decode(response.body) as Map<String, dynamic>);
@@ -576,7 +577,7 @@ class Twitter {
 
   /// What the website sends for a typed search, tab by tab.
   static Uri _searchUri(String query, String product, int count, String? cursor) {
-    return Uri.https('x.com', '/i/api/graphql/irezafrnzav4Ulf1vDkEBg/SearchTimeline', {
+    return Uri.https('x.com', '/i/api/graphql/f7SuGIm11eLbQs7c0K9X9w/SearchTimeline', {
       'variables': jsonEncode({
         "rawQuery": query,
         "count": count,
@@ -637,7 +638,7 @@ class Twitter {
 
   /// The Top posts of a community, the tab the website opens on.
   static Future<TweetStatus> getCommunityTweets(String id, {String? cursor}) async {
-    final uri = Uri.https('x.com', '/i/api/graphql/wXey4HQTUdYUlWWXltWMpg/CommunityTweetsTimeline', {
+    final uri = Uri.https('x.com', '/i/api/graphql/hCOraernAPut--lAHDdBtw/CommunityTweetsTimeline', {
       'variables': jsonEncode({
         'communityId': id,
         'count': 20,
@@ -814,7 +815,7 @@ class Twitter {
     };
 
     var response = await _twitterApi.client.get(
-      Uri.https('x.com', '/i/api/graphql/svLglq6U2wlTyZMGDDcLYQ/HomeTimeline', defaultUserTweetsParam),
+      Uri.https('x.com', '/i/api/graphql/0toR0MxC06yY3Fc57GXBpA/HomeTimeline', defaultUserTweetsParam),
     );
     var result = json.decode(response.body);
     //if this page is not first one on the profile page, dont add pinned tweet
@@ -847,13 +848,13 @@ class Twitter {
   /// The web's Media tab is split in two requests: videos (`media`) and photos.
   static ({String path, Map<String, Object> variables}) _userTimeline(String type, bool includeReplies) {
     return switch (type) {
-      "media" => (path: "/i/api/graphql/oAFGPinlLUFMoa3u70mnAw/UserVideoTimeline", variables: _mediaVariables),
-      "photos" => (path: "/i/api/graphql/sa-ZQ0jW0FT_VnNKT1PtYg/UserPhotoTimeline", variables: _mediaVariables),
+      "media" => (path: "/i/api/graphql/kt4pT9MO7MSCJdizksKJkA/UserVideoTimeline", variables: _mediaVariables),
+      "photos" => (path: "/i/api/graphql/kc23mh5ZZHOao1q8hzZ1LQ/UserPhotoTimeline", variables: _mediaVariables),
       _ when includeReplies => (
-          path: "/i/api/graphql/bnsYxFljT6y98rFwiGr3fw/UserTweetsAndReplies",
+          path: "/i/api/graphql/MbxTcSWPt8RWRFMwenOtyQ/UserTweetsAndReplies",
           variables: {..._postsVariables, "withCommunity": true},
         ),
-      _ => (path: "/i/api/graphql/QLGv_wL7wziqsHhU0K100w/UserOriginalsTimeline", variables: _postsVariables),
+      _ => (path: "/i/api/graphql/GMxl7_rXoC4G0o-kiH0oLA/UserOriginalsTimeline", variables: _postsVariables),
     };
   }
 
