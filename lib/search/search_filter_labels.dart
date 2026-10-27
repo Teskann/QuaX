@@ -44,5 +44,6 @@ String activeFilterLabel(L10n l10n, ActiveFilter filter) {
     MinRetweetsFilter(:final count) => l10n.search_filters_chip_min_reposts(count),
     SinceFilter(date: final value) => l10n.search_filters_chip_since(date(value)),
     UntilFilter(date: final value) => l10n.search_filters_chip_until(date(value)),
+    QuotesFilter() => l10n.search_filters_chip_quotes,
   };
 }

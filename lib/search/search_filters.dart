@@ -23,6 +23,7 @@ class SearchFilters {
   final int? minRetweets;
   final DateTime? since;
   final DateTime? until;
+  final String? quotedTweetId;
 
   const SearchFilters({
     this.language = LanguageChoice.all,
@@ -42,6 +43,7 @@ class SearchFilters {
     this.minRetweets,
     this.since,
     this.until,
+    this.quotedTweetId,
   });
 
   static const none = SearchFilters();
@@ -64,6 +66,7 @@ class SearchFilters {
     int? Function()? minRetweets,
     DateTime? Function()? since,
     DateTime? Function()? until,
+    String? Function()? quotedTweetId,
   }) {
     return SearchFilters(
       language: language ?? this.language,
@@ -83,6 +86,7 @@ class SearchFilters {
       minRetweets: minRetweets != null ? minRetweets() : this.minRetweets,
       since: since != null ? since() : this.since,
       until: until != null ? until() : this.until,
+      quotedTweetId: quotedTweetId != null ? quotedTweetId() : this.quotedTweetId,
     );
   }
 
@@ -108,6 +112,7 @@ class SearchFilters {
       minRetweets: typed.minRetweets ?? minRetweets,
       since: typed.since ?? since,
       until: typed.until ?? until,
+      quotedTweetId: typed.quotedTweetId ?? quotedTweetId,
     );
   }
 
@@ -138,6 +143,7 @@ class SearchFilters {
       if (minRetweets != null) 'min_retweets:$minRetweets',
       if (since != null) 'since:${formatSearchDate(since!)}',
       if (until != null) 'until:${formatSearchDate(until!)}',
+      if (quotedTweetId != null) ?_anyOf(quotesTerms(quotedTweetId!)),
     ];
   }
 
@@ -159,6 +165,7 @@ class SearchFilters {
         if (minRetweets != null) MinRetweetsFilter(minRetweets!),
         if (since != null) SinceFilter(since!),
         if (until != null) UntilFilter(until!),
+        if (quotedTweetId != null) QuotesFilter(quotedTweetId!),
       ];
 
   SearchFilters without(ActiveFilter filter) => switch (filter) {
@@ -178,6 +185,7 @@ class SearchFilters {
         MinRetweetsFilter() => copyWith(minRetweets: () => null),
         SinceFilter() => copyWith(since: () => null),
         UntilFilter() => copyWith(until: () => null),
+        QuotesFilter() => copyWith(quotedTweetId: () => null),
       };
 
   static String? _anyOf(List<String> terms) => switch (terms.length) {
@@ -192,6 +200,10 @@ class SearchFilters {
         ContentFilter.exclude => '-filter:$name',
       };
 }
+
+/// What x.com searches for on the quotes page of a post: the links to its photos and videos count as quotes too.
+List<String> quotesTerms(String tweetId) =>
+    ['quoted_tweet_id:$tweetId', 'url:"status/$tweetId/video"', 'url:"status/$tweetId/photo"'];
 
 String formatSearchDate(DateTime date) =>
     '${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
@@ -278,4 +290,9 @@ class SinceFilter extends ActiveFilter {
 class UntilFilter extends ActiveFilter {
   final DateTime date;
   const UntilFilter(this.date);
+}
+
+class QuotesFilter extends ActiveFilter {
+  final String tweetId;
+  const QuotesFilter(this.tweetId);
 }
