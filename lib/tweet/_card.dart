@@ -169,6 +169,9 @@ class TweetCard extends StatelessWidget {
 
         var child = TweetMedia(media: [Media.fromJson(media)], username: tweet.user!.screenName!, sensitive: false);
         return _createWebsiteCard(unifiedCard, uri, child);
+      case 'video_app':
+        // ad to install the Grok app, eg https://x.com/grok/status/2114225197637070993
+        return const SizedBox.shrink();
       case 'image_carousel_website':
         return ImageCarouselCard.fromUnifiedCard(unifiedCard, tweet.user!.screenName!) ??
             _createUnsupportedCard(context);
