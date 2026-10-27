@@ -5,6 +5,8 @@ import 'package:quax/constants.dart';
 import 'package:quax/database/entities.dart';
 import 'package:quax/database/repository.dart';
 import 'package:quax/group/group_model.dart';
+import 'package:quax/subscriptions/refreshed_profiles.dart';
+import 'package:quax/user.dart';
 import 'package:quax/utils/iterables.dart';
 import 'package:logging/logging.dart';
 import 'package:pref/pref.dart';
@@ -99,6 +101,27 @@ class SubscriptionsModel extends Store<List<Subscription>> {
 
       return state;
     });
+  }
+
+  /// Saves the new name and picture of the subscriptions among [users], fresh from X
+  Future<void> refreshSubscriptions(Iterable<UserWithExtra> users) async {
+    final refreshed = refreshedSubscriptions(state, users);
+    if (refreshed.isEmpty) {
+      return;
+    }
+    log.info('Refreshing ${refreshed.length} subscriptions');
+
+    final database = await Repository.writable();
+    final batch = database.batch();
+    for (final subscription in refreshed.values) {
+      batch.update(tableSubscription,
+          {'name': subscription.name, 'profile_image_url_https': subscription.profileImageUrlHttps},
+          where: 'id = ?', whereArgs: [subscription.id]);
+    }
+    await batch.commit(noResult: true);
+
+    // Not reloadSubscriptions(): its listeners would drop the feeds kept in memory
+    update(state.map((subscription) => refreshed[subscription.id] ?? subscription).toList());
   }
 
   Future<void> _toggleUserSubscribe(UserSubscription user, bool currentlyFollowed) async {

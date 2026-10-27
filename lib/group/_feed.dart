@@ -14,6 +14,8 @@ import 'package:quax/group/feed_session_cache.dart';
 import 'package:quax/group/group_screen.dart';
 import 'package:quax/group/search_query.dart';
 import 'package:quax/group/unrelated_tweets.dart';
+import 'package:quax/subscriptions/refreshed_profiles.dart';
+import 'package:quax/subscriptions/users_model.dart';
 import 'package:quax/tweet/paginated_tweet_list.dart';
 import 'package:quax/tweet/tweet_context_scope.dart';
 import 'package:quax/ui/errors.dart';
@@ -171,12 +173,14 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
   /// sets at the same time, allowing us to create a feed made up of individual search queries.
   Future<TweetPageResult> _listTweets(String? cursorKey) async {
     List<Future<List<TweetChain>>> futures = [];
+    final subscriptions = context.read<SubscriptionsModel>();
 
     var repository = await Repository.writable();
     var nextCursor = await createCursor(repository);
     var foundUnrelatedTweets = false;
     var errors = <PagingError>[];
     var failedSubscriptions = 0;
+    var answeredChains = <TweetChain>[];
 
     for (var chunk in widget.chunks) {
       var hash = chunk.hash;
@@ -214,6 +218,7 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
           return tweets;
         }
         foundUnrelatedTweets |= feedContainsUnrelatedTweets(result, chunk.users);
+        answeredChains.addAll(result.chains);
 
         if (cursorKey == null) {
           // X answered, so its fresh page replaces what was stored for this chunk
@@ -244,6 +249,7 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
       Error.throwWithStackTrace(errors.first.error, errors.first.stackTrace);
     }
     _feedController.partialError.value = _partialError(errors, failedSubscriptions);
+    await subscriptions.refreshSubscriptions(authorsOf(answeredChains));
     var threads = sortChainsNewestFirst(result.expand((element) => element).toList());
 
     if (!mounted) {
