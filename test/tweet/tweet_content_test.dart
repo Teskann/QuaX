@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:material_ui/material_ui.dart';
@@ -445,4 +446,37 @@ void main() {
         reason: 'The note text, read from birdwatch_pivot.subtitle, should be shown');
     expect(note, isNotEmpty, reason: 'The note should be read from birdwatch_pivot.subtitle');
   });
+
+  testWidgets('Should show a community note that holds a hashtag, with the hashtag as a link', (tester) async {
+    const id = '2026390853309063292';
+    final chains = Twitter.parseTweetDetail(_withHashtagInNote(fixture('TweetDetail', id).body, 'Polls')).chains;
+    await pumpChains(tester, chains);
+
+    expect(chains.first.tweets.first.birdwatchQuotedStatus?.text, startsWith('#Polls '),
+        reason: 'A note holding a hashtag, which has no url, should still be read');
+    expect(find.descendant(of: tweetTile(id), matching: find.textContaining('Users added context', findRichText: true)),
+        findsOneWidget, reason: 'The community note should be shown under its tweet');
+    expect(noteLinks(), contains('#Polls'), reason: 'The hashtag of the note should be tappable, as in a tweet');
+  });
 }
+
+/// A copy of [body] whose first community note starts with `#tag `, the way X sends a hashtag in a note.
+Map<String, dynamic> _withHashtagInNote(Map<String, dynamic> body, String tag) {
+  final copy = jsonDecode(jsonEncode(body)) as Map<String, dynamic>;
+  Map<String, dynamic>? noteOf(Object? node) => switch (node) {
+        Map<String, dynamic>() when node['birdwatch_pivot']?['subtitle'] != null => node['birdwatch_pivot']['subtitle'],
+        Map<String, dynamic>() => node.values.map(noteOf).nonNulls.firstOrNull,
+        List() => node.map(noteOf).nonNulls.firstOrNull,
+        _ => null,
+      };
+  final note = noteOf(copy)!;
+  final shift = tag.length + 2;
+  note['text'] = '#$tag ${note['text']}';
+  note['entities'] = [
+    {'fromIndex': 0, 'toIndex': shift - 1, 'ref': {'text': tag, 'type': 'TimelineRichTextHashtag'}},
+    for (final entity in note['entities'] as List)
+      {...entity, 'fromIndex': entity['fromIndex'] + shift, 'toIndex': entity['toIndex'] + shift},
+  ];
+  return jsonDecode(jsonEncode(copy)) as Map<String, dynamic>;
+}
+
