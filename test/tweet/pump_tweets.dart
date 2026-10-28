@@ -76,9 +76,18 @@ List<InlineSpan> _textSpans(String id) {
 String visibleText(String id) => TextSpan(children: _textSpans(id)).toPlainText().trimRight();
 
 /// The parts of the tweet [id] that react to a tap: hashtags, mentions and links.
-List<String> links(String id) {
+List<String> links(String id) => _tappable(_textSpans(id));
+
+/// The parts of the community note shown under a tweet that react to a tap.
+List<String> noteLinks() {
+  final note = find.byWidgetPredicate((w) => w is TweetTile && w.isBirdwatchQuote);
+  final text = find.descendant(of: note, matching: find.byType(SelectableText)).evaluate().first;
+  return _tappable([(text.widget as SelectableText).textSpan!]);
+}
+
+List<String> _tappable(List<InlineSpan> spans) {
   final tappable = <String>[];
-  for (final span in _textSpans(id)) {
+  for (final span in spans) {
     span.visitChildren((child) {
       if (child is TextSpan && child.recognizer is TapGestureRecognizer) {
         tappable.add(child.text ?? '');
