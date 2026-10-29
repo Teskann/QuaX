@@ -15,7 +15,7 @@ Use `fvm flutter` instead of raw `flutter` to enforce the pinned SDK version (3.
 fvm install
 fvm use
 
-# Generate launcher icon assets
+# Generate the PNG icons from the logo drawable
 python -mvenv .venv
 bash -c '
   source ./.venv/bin/activate
@@ -25,7 +25,6 @@ bash -c '
 
 # Run all build steps through fvm so the pinned SDK is used
 fvm flutter pub get
-fvm dart run flutter_launcher_icons
 fvm dart run dart_pubspec_licenses:generate
 fvm dart run intl_utils:generate
 fvm dart run flutter_iconpicker:generate_packs --packs material
