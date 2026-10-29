@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:quax/catcher/exceptions.dart';
 import 'package:quax/client/client.dart';
 import 'package:quax/community/community.dart';
 import 'package:quax/profile/media_grid/media_grid_items/media_grid_item.dart';
@@ -23,7 +24,13 @@ class SearchTweetsPagination {
     if (_query.isEmpty) {
       return (chains: <TweetChain>[], nextCursor: null);
     }
-    final result = await Twitter.searchTweets(_query, product: product, cursor: cursor);
+    final result = await _searchTyped(_query, product: product, cursor: cursor);
+    final error = result.error;
+    if (error != null) {
+      feed.partialError.value = PagingError(_typedSearchError(error), StackTrace.current);
+    } else if (cursor == null) {
+      feed.partialError.value = null;
+    }
     return (chains: result.chains, nextCursor: result.cursorBottom);
   }
 
@@ -72,10 +79,21 @@ class SearchMediaPagination extends SearchPagination<MediaGridItem> {
   SearchMediaPagination({super.initialQuery}) : super(_loadMedia);
 
   static Future<CursorPage<String, MediaGridItem>> _loadMedia(String query, String? cursor) async {
-    final result = await Twitter.searchTweets(query, product: 'Media', cursor: cursor);
+    final result = await _searchTyped(query, product: 'Media', cursor: cursor);
     return mediaPageFromStatus(result, cursor);
   }
 }
+
+/// Searches [query] as the user typed it: when X refuses to run it, the query is at fault, not QuaX.
+Future<TweetStatus> _searchTyped(String query, {required String product, String? cursor}) async {
+  try {
+    return await Twitter.searchTweets(query, product: product, cursor: cursor);
+  } on XApiError catch (error, stackTrace) {
+    Error.throwWithStackTrace(_typedSearchError(error), stackTrace);
+  }
+}
+
+Object _typedSearchError(XApiError error) => error.isRejectedSearch ? RejectedSearchException(error) : error;
 
 class SearchCommunitiesPagination extends SearchPagination<Community> {
   SearchCommunitiesPagination({super.initialQuery})

@@ -56,6 +56,27 @@ void main() {
     expect(find.text('Report'), findsNothing, reason: 'A 404 is expected from X, not a bug of the app');
   });
 
+  testWidgets('Should show what X answered and offer to report it when X returns an error', (tester) async {
+    await pumpCard(tester, XApiError('Dependency: Internal error'));
+
+    expect(find.text('𝕏 returned an error'), findsOneWidget, reason: 'The title should say the error comes from X');
+    expect(find.text('Dependency: Internal error'), findsOneWidget,
+        reason: 'The message of X should be shown, it is what a bug report needs');
+    expect(find.widgetWithText(FilledButton, 'Report'), findsOneWidget,
+        reason: 'X may answer an error because QuaX sent a wrong request, so it should be reported');
+  });
+
+  testWidgets('Should explain a search X refused, without offering to report it', (tester) async {
+    await pumpCard(tester, RejectedSearchException(XApiError('InvalidArgument: BadRequest', kind: 'Validation')));
+
+    expect(find.text('𝕏 rejected this search'), findsOneWidget, reason: 'The title should say X refused the search');
+    expect(find.text("𝕏 doesn't accept some combinations of words and filters. Try again with another search."),
+        findsOneWidget, reason: 'The user should know the search itself has to change');
+    expect(find.text('InvalidArgument: BadRequest'), findsNothing,
+        reason: 'The technical message of X means nothing to the user who typed the search');
+    expect(find.text('Report'), findsNothing, reason: 'The search typed is at fault, not QuaX');
+  });
+
   testWidgets('Should tell when a rate limit ends, if X told us', (tester) async {
     await pumpCard(tester, RateLimitedException(DateTime.now().add(const Duration(minutes: 10))));
 

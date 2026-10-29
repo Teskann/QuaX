@@ -56,3 +56,25 @@ Fixture fixture(String operation, String name, {bool unstable = false}) {
   }
   return read;
 }
+
+/// A copy of [body] where X also listed [error], as it can along with the data it still sends.
+Map<String, dynamic> withXError(Map<String, dynamic> body, Map<String, dynamic> error) =>
+    jsonDecode(jsonEncode({...body, 'errors': [error]})) as Map<String, dynamic>;
+
+/// An error of X that says nothing about the request, so QuaX has no way to know it is not its fault.
+const internalXError = {
+  'message': 'Dependency: Unspecified',
+  'kind': 'Operational',
+  'path': ['search_by_raw_query', 'search_timeline', 'timeline'],
+};
+
+/// [recorded] as if X had answered [body] to the same request.
+Fixture answering(Fixture recorded, Map<String, dynamic> body) => Fixture(recorded.path, {
+      'scenario': recorded.scenario,
+      'sourceUrl': recorded.sourceUrl,
+      'queryId': recorded.queryId,
+      'unstable': recorded.unstable,
+      'status': recorded.status,
+      'variables': recorded.variables,
+      'body': body,
+    });

@@ -37,6 +37,29 @@ void main() {
     expectEveryTweetRendered(chains);
   });
 
+  testWidgets('Should say X refused the search, without offering to report it, when X will not run it', (tester) async {
+    await pumpScreen(tester, const ResultsScreen(),
+        arguments: SearchArguments(SearchTab.top, query: 'min_faves:10000'),
+        fixtures: {'SearchTimeline': fixture('SearchTimeline', 'min-faves-10000', unstable: true)});
+
+    expect(find.text('𝕏 rejected this search'), findsOneWidget,
+        reason: 'X refused to rank a filter alone on the Top tab, which the user should be told');
+    expect(find.text('No results'), findsNothing, reason: 'X did not say there was nothing to find');
+    expect(find.text('Report'), findsNothing, reason: 'The search typed is at fault, not QuaX');
+  });
+
+  testWidgets('Should show the tweets X sent along with an error, and the error above them', (tester) async {
+    final recorded = fixture('SearchTimeline', 'from-flutterdev-filter-links', unstable: true);
+    await pumpScreen(tester, const ResultsScreen(),
+        arguments: SearchArguments(SearchTab.latest, query: 'from:FlutterDev filter:links'),
+        fixtures: {'SearchTimeline': answering(recorded, withXError(recorded.body, internalXError))});
+
+    expect(find.byType(TweetConversation), findsWidgets, reason: 'The tweets X sent should still be listed');
+    expect(find.text('𝕏 returned an error'), findsOneWidget, reason: 'What X reported wrong should not be hidden');
+    expect(find.text('Report'), findsOneWidget,
+        reason: 'QuaX cannot tell this error is not its fault, so it can be reported');
+  });
+
   testWidgets('Should list the accounts of the People tab with their name and handle', (tester) async {
     final people = fixture('SearchTimeline', 'quax-605beb', unstable: true);
     final first = _firstAccount(people.body);
