@@ -611,15 +611,15 @@ class Twitter {
     String product = "Latest",
   }) {
     var timeline = result['data']?['search_by_raw_query']?['search_timeline'];
-    if (timeline == null) {
-      return TweetStatus(chains: [], cursorBottom: null, cursorTop: null);
+    final error = XApiError.fromBody(result);
+    if (timeline?['timeline'] == null) {
+      return error == null ? TweetStatus(chains: [], cursorBottom: null, cursorTop: null) : throw error;
     }
 
-    if (product == "Media") {
-      return _createChainsFromGridModule(timeline);
-    }
-
-    return createUnconversationedChainsGraphql(timeline, 'tweet', [], true);
+    final status = product == "Media"
+        ? _createChainsFromGridModule(timeline)
+        : createUnconversationedChainsGraphql(timeline, 'tweet', [], true);
+    return status.withError(error);
   }
 
   static const Map<String, bool> _communityFeatures = {
@@ -1542,7 +1542,13 @@ class TweetStatus {
   final String? cursorTop;
   final List<TweetChain> chains;
 
-  TweetStatus({required this.chains, required this.cursorBottom, required this.cursorTop});
+  /// What X reported wrong along with the tweets it still sent
+  final XApiError? error;
+
+  TweetStatus({required this.chains, required this.cursorBottom, required this.cursorTop, this.error});
+
+  TweetStatus withError(XApiError? error) =>
+      TweetStatus(chains: chains, cursorBottom: cursorBottom, cursorTop: cursorTop, error: error);
 }
 
 class TwitterError {

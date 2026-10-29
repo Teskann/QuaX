@@ -179,6 +179,7 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
     var nextCursor = await createCursor(repository);
     var foundUnrelatedTweets = false;
     var errors = <PagingError>[];
+    var failedChunks = 0;
     var failedSubscriptions = 0;
     var answeredChains = <TweetChain>[];
 
@@ -214,8 +215,13 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
           result = await Twitter.searchTweets(query, cursor: searchCursor);
         } catch (e, stackTrace) {
           errors.add(PagingError(e, stackTrace));
+          failedChunks++;
           failedSubscriptions += chunk.users.length;
           return tweets;
+        }
+        final answeredError = result.error;
+        if (answeredError != null) {
+          errors.add(PagingError(answeredError, StackTrace.current));
         }
         foundUnrelatedTweets |= feedContainsUnrelatedTweets(result, chunk.users);
         answeredChains.addAll(result.chains);
@@ -245,7 +251,7 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
 
     // Wait for all our searches to complete, then build our list of tweet conversations
     var result = (await Future.wait(futures));
-    if (errors.isNotEmpty && errors.length == widget.chunks.length) {
+    if (failedChunks > 0 && failedChunks == widget.chunks.length) {
       Error.throwWithStackTrace(errors.first.error, errors.first.stackTrace);
     }
     _feedController.partialError.value = _partialError(errors, failedSubscriptions);

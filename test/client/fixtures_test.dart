@@ -142,7 +142,8 @@ void main() {
   }
 
   group('SearchTimeline', () {
-    for (final fixture in fixturesOf('SearchTimeline')) {
+    // An error X answered instead of a timeline is checked in x_api_error_test.dart
+    for (final fixture in fixturesOf('SearchTimeline').where((fixture) => fixture.body['errors'] == null)) {
       test(fixture.scenario, () {
         // The People tab answers under another root, and the parser returns an
         // empty status rather than throwing. That is the behaviour under test.

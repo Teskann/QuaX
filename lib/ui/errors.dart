@@ -319,6 +319,18 @@ class ErrorCard extends StatelessWidget {
           details: l10n.not_found_message,
           primary: _PrimaryAction.retry,
         ),
+      RejectedSearchException() => (
+          icon: Icons.search_off,
+          title: l10n.search_rejected_title,
+          details: l10n.search_rejected_message,
+          primary: null,
+        ),
+      XApiError(:final message) => (
+          icon: Icons.error_outline,
+          title: l10n.x_returned_an_error,
+          details: message,
+          primary: _PrimaryAction.report,
+        ),
       TwitterError() => (
           icon: Icons.error_outline,
           title: twitterErrorMessage(error),

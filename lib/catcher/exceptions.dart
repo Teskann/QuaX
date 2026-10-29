@@ -63,3 +63,41 @@ class ManuallyReportedException {
 }
 
 mixin SyntheticException {}
+
+/// Errors X listed in the body of a GraphQL response, with or without the data that was asked for.
+class XApiError implements Exception {
+  final String message;
+  final String? kind;
+  final List<String> path;
+
+  XApiError(this.message, {this.kind, this.path = const []});
+
+  /// The errors of [body], or null when X listed none.
+  static XApiError? fromBody(Map<String, dynamic> body) {
+    final errors = List<Map<String, dynamic>>.from(body['errors'] as List? ?? const []);
+    if (errors.isEmpty) {
+      return null;
+    }
+    return XApiError(
+      errors.map((e) => e['message'] as String? ?? '').join('\n'),
+      kind: errors.first['kind'] as String?,
+      path: List<String>.from((errors.first['path'] as List? ?? const []).whereType<String>()),
+    );
+  }
+
+  /// X rejected the user search request
+  bool get isRejectedSearch => kind == 'Validation' && path.contains('search_by_raw_query');
+
+  @override
+  String toString() => 'X returned an error: $message';
+}
+
+/// A search typed by the user that X refused to run. Not a bug of QuaX, so it is not offered for reporting.
+class RejectedSearchException with SyntheticException implements Exception {
+  final XApiError cause;
+
+  RejectedSearchException(this.cause);
+
+  @override
+  String toString() => 'Search rejected by X: ${cause.message}';
+}
