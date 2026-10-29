@@ -1,7 +1,8 @@
 name: Generate icons
 description: >
-  Generates the icons drawn from assets/icon.svg, which git does not track: the launcher icons, and
-  the monochrome one that the app also shows. The repository must be checked out first.
+  Generates the PNG icons drawn from the logo of android/app/src/main/res/drawable/ic_logo.xml.
+  Git does not track the monochrome one, which the app shows. The repository must be checked out
+  first.
 
 runs:
   using: composite
