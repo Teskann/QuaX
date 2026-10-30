@@ -55,7 +55,7 @@ bool _isChildOfLabeledPref(Expression widget) {
     InstanceCreationExpression(:final constructorName) => constructorName.type.name.lexeme,
     _ => null,
   };
-  return argument is NamedExpression && argument.name.label.name == 'child' && callee == 'LabeledPref';
+  return argument is NamedArgument && argument.name.lexeme == 'child' && callee == 'LabeledPref';
 }
 
 /// Finds a `tooltip:`, a `semanticLabel:` or a `Semantics(label: ...)` anywhere in the arguments of a widget.
@@ -63,15 +63,15 @@ class _NameVisitor extends RecursiveAstVisitor<void> {
   var found = false;
 
   @override
-  void visitNamedExpression(NamedExpression node) {
-    final name = node.name.label.name;
+  void visitNamedArgument(NamedArgument node) {
+    final name = node.name.lexeme;
     final callee = switch (node.parent?.parent) {
       MethodInvocation(:final methodName) => methodName.name,
       InstanceCreationExpression(:final constructorName) => constructorName.type.name.lexeme,
       _ => null,
     };
     found = found || name == 'tooltip' || name == 'semanticLabel' || (name == 'label' && callee == 'Semantics');
-    super.visitNamedExpression(node);
+    super.visitNamedArgument(node);
   }
 }
 
