@@ -17,6 +17,7 @@ import 'package:quax/constants.dart';
 import 'package:quax/database/entities.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/profile/profile_model.dart';
+import 'package:quax/space/space.dart';
 import 'package:quax/article/article.dart';
 import 'package:quax/user.dart';
 import 'package:quax/utils/cache.dart';
@@ -1174,6 +1175,64 @@ class Twitter {
     var response = await _twitterApi.client.get(Uri.https('twitter.com', '/i/api/1.1/live_video_stream/status/$key'));
 
     return json.decode(response.body);
+  }
+
+  static const Map<String, bool> _spaceFeatures = {
+    "spaces_2022_h2_spaces_communities": true,
+    "spaces_2022_h2_clipping": true,
+    "creator_subscriptions_tweet_preview_api_enabled": true,
+    "profile_label_improvements_pcf_label_in_post_enabled": true,
+    "responsive_web_profile_redirect_enabled": true,
+    "rweb_tipjar_consumption_enabled": false,
+    "verified_phone_label_enabled": false,
+    "premium_content_api_read_enabled": false,
+    "communities_web_enable_tweet_community_results_fetch": true,
+    "c9s_tweet_anatomy_moderator_badge_enabled": true,
+    "responsive_web_grok_analyze_button_fetch_trends_enabled": false,
+    "responsive_web_grok_analyze_post_followups_enabled": true,
+    "rweb_cashtags_composer_attachment_enabled": true,
+    "responsive_web_jetfuel_frame": true,
+    "rweb_sports_post_context_enabled": true,
+    "responsive_web_grok_share_attachment_enabled": true,
+    "responsive_web_grok_annotations_enabled": true,
+    "articles_preview_enabled": true,
+    "responsive_web_edit_tweet_api_enabled": true,
+    "rweb_conversational_replies_downvote_enabled": false,
+    "graphql_is_translatable_rweb_tweet_is_translatable_enabled": true,
+    "view_counts_everywhere_api_enabled": true,
+    "longform_notetweets_consumption_enabled": true,
+    "responsive_web_twitter_article_tweet_consumption_enabled": true,
+    "content_disclosure_indicator_enabled": true,
+    "content_disclosure_ai_generated_indicator_enabled": true,
+    "responsive_web_grok_show_grok_translated_post": true,
+    "responsive_web_grok_analysis_button_from_backend": true,
+    "post_ctas_fetch_enabled": false,
+    "rweb_cashtags_enabled": true,
+    "freedom_of_speech_not_reach_fetch_enabled": true,
+    "standardized_nudges_misinfo": true,
+    "tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled": true,
+    "longform_notetweets_rich_text_read_enabled": true,
+    "longform_notetweets_inline_media_enabled": false,
+    "responsive_web_nested_quote_preview_enabled": true,
+    "responsive_web_grok_image_annotation_enabled": true,
+    "responsive_web_grok_imagine_annotation_enabled": true,
+    "responsive_web_made_on_x_label_enabled": false,
+    "responsive_web_graphql_timeline_navigation_enabled": true,
+    "responsive_web_grok_community_note_auto_translation_is_enabled": true,
+  };
+
+  static Future<Space> getSpace(String id) async {
+    final uri = Uri.https('x.com', '/i/api/graphql/Zi-Z2ucwAJGWcFmtsj4cvw/AudioSpaceById', {
+      'variables': jsonEncode({'id': id, 'isMetatagsQuery': false, 'withReplays': true, 'withListeners': true}),
+      'features': jsonEncode(_spaceFeatures),
+    });
+    final response = await _twitterApi.client.get(uri);
+    return Space.fromGraphql(jsonDecode(response.body) as Map<String, dynamic>) ?? (throw NotFoundException());
+  }
+
+  static Future<String> getSpacePlaylist(String mediaKey) async {
+    final source = (await getBroadcastDetails(mediaKey))['source'];
+    return source?['noRedirectPlaybackUrl'] as String? ?? source?['location'] as String? ?? (throw NotFoundException());
   }
 }
 

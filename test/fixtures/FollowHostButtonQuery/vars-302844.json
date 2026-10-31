@@ -1,0 +1,39 @@
+{
+ "scenario": "Posts sharing X Spaces, live, ended with or without a recording, and scheduled, each Space loaded with AudioSpaceById",
+ "sourceUrl": "https://x.com/search?q=x.com%2Fi%2Fspaces&src=typed_query",
+ "unstable": true,
+ "operation": "FollowHostButtonQuery",
+ "host": "x.com",
+ "queryId": "bpY370mwoHjimSkkcTSk4A",
+ "features": null,
+ "fieldToggles": null,
+ "variables": {
+  "restId": "1511476682267537411"
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "500",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "498",
+  "x-rate-limit-reset": "1793182244"
+ },
+ "body": {
+  "data": {
+   "user": {
+    "id": "VXNlclJlc3VsdHM6MTUxMTQ3NjY4MjI2NzUzNzQxMQ==",
+    "result": {
+     "__typename": "User",
+     "core": {
+      "name": "ابو شاكر | Trading Bots 🤖 🇺🇸",
+      "screen_name": "k4zozq"
+     },
+     "id": "VXNlcjoxNTExNDc2NjgyMjY3NTM3NDEx",
+     "relationship_perspectives": {
+      "following": false
+     },
+     "rest_id": "1511476682267537411"
+    }
+   }
+  }
+ }
+}

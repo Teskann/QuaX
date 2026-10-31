@@ -1,0 +1,1574 @@
+{
+ "scenario": "Posts sharing X Spaces, live, ended with or without a recording, and scheduled, each Space loaded with AudioSpaceById",
+ "sourceUrl": "https://x.com/search?q=x.com%2Fi%2Fspaces&src=typed_query",
+ "unstable": true,
+ "operation": "AudioSpaceById",
+ "host": "x.com",
+ "queryId": "Zi-Z2ucwAJGWcFmtsj4cvw",
+ "features": {
+  "spaces_2022_h2_spaces_communities": true,
+  "spaces_2022_h2_clipping": true,
+  "creator_subscriptions_tweet_preview_api_enabled": true,
+  "profile_label_improvements_pcf_label_in_post_enabled": true,
+  "responsive_web_profile_redirect_enabled": true,
+  "rweb_tipjar_consumption_enabled": false,
+  "verified_phone_label_enabled": false,
+  "premium_content_api_read_enabled": false,
+  "communities_web_enable_tweet_community_results_fetch": true,
+  "c9s_tweet_anatomy_moderator_badge_enabled": true,
+  "responsive_web_grok_analyze_button_fetch_trends_enabled": false,
+  "responsive_web_grok_analyze_post_followups_enabled": true,
+  "rweb_cashtags_composer_attachment_enabled": true,
+  "responsive_web_jetfuel_frame": true,
+  "rweb_sports_post_context_enabled": true,
+  "responsive_web_grok_share_attachment_enabled": true,
+  "responsive_web_grok_annotations_enabled": true,
+  "articles_preview_enabled": true,
+  "responsive_web_edit_tweet_api_enabled": true,
+  "rweb_conversational_replies_downvote_enabled": false,
+  "graphql_is_translatable_rweb_tweet_is_translatable_enabled": true,
+  "view_counts_everywhere_api_enabled": true,
+  "longform_notetweets_consumption_enabled": true,
+  "responsive_web_twitter_article_tweet_consumption_enabled": true,
+  "content_disclosure_indicator_enabled": true,
+  "content_disclosure_ai_generated_indicator_enabled": true,
+  "responsive_web_grok_show_grok_translated_post": true,
+  "responsive_web_grok_analysis_button_from_backend": true,
+  "post_ctas_fetch_enabled": false,
+  "rweb_cashtags_enabled": true,
+  "freedom_of_speech_not_reach_fetch_enabled": true,
+  "standardized_nudges_misinfo": true,
+  "tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled": true,
+  "longform_notetweets_rich_text_read_enabled": true,
+  "longform_notetweets_inline_media_enabled": false,
+  "responsive_web_nested_quote_preview_enabled": true,
+  "responsive_web_grok_image_annotation_enabled": true,
+  "responsive_web_grok_imagine_annotation_enabled": true,
+  "responsive_web_made_on_x_label_enabled": false,
+  "responsive_web_graphql_timeline_navigation_enabled": true,
+  "responsive_web_grok_community_note_auto_translation_is_enabled": true
+ },
+ "fieldToggles": null,
+ "variables": {
+  "id": "1oKMvNPQvNwGQ",
+  "isMetatagsQuery": false,
+  "withReplays": true,
+  "withListeners": true
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "500",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "496",
+  "x-rate-limit-reset": "1793182243"
+ },
+ "body": {
+  "data": {
+   "audioSpace": {
+    "is_subscribed": false,
+    "metadata": {
+     "content_type": "visual_audio",
+     "conversation_controls": 0,
+     "created_at": 1793174011978,
+     "creator_results": {
+      "result": {
+       "__typename": "User",
+       "action_counts": {
+        "favorites_count": 3414
+       },
+       "affiliates_highlighted_label": {},
+       "avatar": {
+        "image_url": "https://pbs.twimg.com/profile_images/2114479925147111424/oLhU8LNc_normal.jpg"
+       },
+       "banner": {
+        "image_url": "https://pbs.twimg.com/profile_banners/1511476682267537411/1790916772"
+       },
+       "core": {
+        "created_at": "Tue Apr 05 22:51:49 +0000 2022",
+        "name": "ابو شاكر | Trading Bots 🤖 🇺🇸",
+        "screen_name": "k4zozq"
+       },
+       "follow_request_sent": false,
+       "has_graduated_access": true,
+       "id": "VXNlcjoxNTExNDc2NjgyMjY3NTM3NDEx",
+       "is_blue_verified": true,
+       "location": {
+        "location": ""
+       },
+       "media_permissions": {
+        "can_media_tag": false
+       },
+       "notifications_settings": {
+        "notifications_enabled": false
+       },
+       "parody_commentary_fan_label": "None",
+       "pinned_items": {},
+       "possibly_sensitive": false,
+       "privacy": {
+        "protected": false
+       },
+       "professional": {
+        "category": [
+         {
+          "icon_name": "IconBriefcaseStroke",
+          "id": 986,
+          "name": "Software Application"
+         }
+        ],
+        "professional_type": "Business",
+        "rest_id": "2075517527661105472"
+       },
+       "profile_bio": {
+        "description": "للتسجيل في منصة دراية بالضغط على الرابط : https://t.co/Z4dP6gUPc7",
+        "entities": {
+         "description": {
+          "urls": [
+           {
+            "display_url": "onboarding.derayah.com/?sourceId=443#/",
+            "expanded_url": "https://onboarding.derayah.com/?sourceId=443#/",
+            "indices": [
+             42,
+             65
+            ],
+            "url": "https://t.co/Z4dP6gUPc7"
+           }
+          ]
+         },
+         "url": {
+          "urls": [
+           {
+            "display_url": "t.me/aboshaker2013",
+            "expanded_url": "https://t.me/aboshaker2013",
+            "indices": [
+             0,
+             23
+            ],
+            "url": "https://t.co/1LHokAs90d"
+           }
+          ]
+         }
+        }
+       },
+       "profile_description_language": "ar",
+       "profile_image_shape": "Circle",
+       "profile_metadata": {
+        "profile_interstitial_type": ""
+       },
+       "profile_translation": {
+        "translator_type": "none"
+       },
+       "relationship_counts": {
+        "followers": 30746,
+        "following": 2
+       },
+       "relationship_perspectives": {
+        "blocked_by": false,
+        "blocking": false,
+        "followed_by": false,
+        "following": false,
+        "live_following": false,
+        "muting": false
+       },
+       "rest_id": "1511476682267537411",
+       "super_follow_eligible": true,
+       "super_followed_by": false,
+       "super_following": false,
+       "tweet_counts": {
+        "media_tweets": 522,
+        "tweets": 5992
+       },
+       "verification": {
+        "verified": false
+       },
+       "website": {
+        "url": "https://t.co/1LHokAs90d"
+       }
+      }
+     },
+     "disallow_join": false,
+     "is_employee_only": false,
+     "is_locked": false,
+     "is_muted": false,
+     "is_space_available_for_clipping": false,
+     "is_space_available_for_replay": false,
+     "max_admin_capacity": 3,
+     "max_guest_sessions": 10,
+     "media_key": "28_2115351241673052160",
+     "narrow_cast_space_type": 0,
+     "no_incognito": false,
+     "rest_id": "1oKMvNPQvNwGQ",
+     "started_at": 1793174014398,
+     "state": "Running",
+     "total_live_listeners": 1909,
+     "total_replay_watched": 0,
+     "tweet_results": {
+      "result": {
+       "__typename": "Tweet",
+       "card": {
+        "legacy": {
+         "binding_values": [
+          {
+           "key": "tweet_id",
+           "value": {
+            "string_value": "2115351256801722515",
+            "type": "STRING"
+           }
+          },
+          {
+           "key": "narrow_cast_space_type",
+           "value": {
+            "string_value": "0",
+            "type": "STRING"
+           }
+          },
+          {
+           "key": "id",
+           "value": {
+            "string_value": "1oKMvNPQvNwGQ",
+            "type": "STRING"
+           }
+          },
+          {
+           "key": "card_url",
+           "value": {
+            "scribe_key": "card_url",
+            "string_value": "https://t.co/f4mIHRcTZS",
+            "type": "STRING"
+           }
+          }
+         ],
+         "card_platform": {
+          "platform": {
+           "audience": {
+            "name": "production"
+           },
+           "device": {
+            "name": "Swift",
+            "version": "12"
+           }
+          }
+         },
+         "name": "3691233323:audiospace",
+         "url": "https://t.co/f4mIHRcTZS",
+         "user_refs_results": []
+        },
+        "rest_id": "https://t.co/f4mIHRcTZS"
+       },
+       "cashtag_attachments": [],
+       "core": {
+        "user_results": {
+         "result": {
+          "__typename": "User",
+          "action_counts": {
+           "favorites_count": 3414
+          },
+          "affiliates_highlighted_label": {},
+          "avatar": {
+           "image_url": "https://pbs.twimg.com/profile_images/2114479925147111424/oLhU8LNc_normal.jpg"
+          },
+          "banner": {
+           "image_url": "https://pbs.twimg.com/profile_banners/1511476682267537411/1790916772"
+          },
+          "core": {
+           "created_at": "Tue Apr 05 22:51:49 +0000 2022",
+           "name": "ابو شاكر | Trading Bots 🤖 🇺🇸",
+           "screen_name": "k4zozq"
+          },
+          "follow_request_sent": false,
+          "has_graduated_access": true,
+          "id": "VXNlcjoxNTExNDc2NjgyMjY3NTM3NDEx",
+          "is_blue_verified": true,
+          "location": {
+           "location": ""
+          },
+          "media_permissions": {
+           "can_media_tag": false
+          },
+          "notifications_settings": {
+           "notifications_enabled": false
+          },
+          "parody_commentary_fan_label": "None",
+          "pinned_items": {},
+          "possibly_sensitive": false,
+          "privacy": {
+           "protected": false
+          },
+          "professional": {
+           "category": [
+            {
+             "icon_name": "IconBriefcaseStroke",
+             "id": 986,
+             "name": "Software Application"
+            }
+           ],
+           "professional_type": "Business",
+           "rest_id": "2075517527661105472"
+          },
+          "profile_bio": {
+           "description": "للتسجيل في منصة دراية بالضغط على الرابط : https://t.co/Z4dP6gUPc7",
+           "entities": {
+            "description": {
+             "urls": [
+              {
+               "display_url": "onboarding.derayah.com/?sourceId=443#/",
+               "expanded_url": "https://onboarding.derayah.com/?sourceId=443#/",
+               "indices": [
+                42,
+                65
+               ],
+               "url": "https://t.co/Z4dP6gUPc7"
+              }
+             ]
+            },
+            "url": {
+             "urls": [
+              {
+               "display_url": "t.me/aboshaker2013",
+               "expanded_url": "https://t.me/aboshaker2013",
+               "indices": [
+                0,
+                23
+               ],
+               "url": "https://t.co/1LHokAs90d"
+              }
+             ]
+            }
+           }
+          },
+          "profile_description_language": "ar",
+          "profile_image_shape": "Circle",
+          "profile_metadata": {
+           "profile_interstitial_type": ""
+          },
+          "profile_translation": {
+           "translator_type": "none"
+          },
+          "relationship_counts": {
+           "followers": 30746,
+           "following": 2
+          },
+          "relationship_perspectives": {
+           "blocked_by": false,
+           "blocking": false,
+           "followed_by": false,
+           "following": false,
+           "live_following": false,
+           "muting": false
+          },
+          "rest_id": "1511476682267537411",
+          "super_follow_eligible": true,
+          "super_followed_by": false,
+          "super_following": false,
+          "tweet_counts": {
+           "media_tweets": 522,
+           "tweets": 5992
+          },
+          "verification": {
+           "verified": false
+          },
+          "website": {
+           "url": "https://t.co/1LHokAs90d"
+          }
+         }
+        }
+       },
+       "edit_control": {
+        "edit_tweet_ids": [
+         "2115351256801722515"
+        ],
+        "editable_until_msecs": "1793177615000",
+        "edits_remaining": "5",
+        "is_edit_eligible": false
+       },
+       "grok_analysis_button": true,
+       "grok_annotations": {
+        "is_image_editable_by_grok": false
+       },
+       "grok_translated_post_with_availability": {
+        "is_available": false
+       },
+       "is_translatable": false,
+       "legacy": {
+        "bookmark_count": 3,
+        "bookmarked": false,
+        "conversation_id_str": "2115351256801722515",
+        "created_at": "Wed Oct 28 07:53:35 +0000 2026",
+        "display_text_range": [
+         0,
+         23
+        ],
+        "entities": {
+         "urls": [
+          {
+           "display_url": "x.com/i/spaces/1oKMv…",
+           "expanded_url": "https://x.com/i/spaces/1oKMvNPQvNwGQ",
+           "indices": [
+            0,
+            23
+           ],
+           "url": "https://t.co/f4mIHRcTZS"
+          }
+         ]
+        },
+        "favorite_count": 99,
+        "favorited": false,
+        "full_text": "https://t.co/f4mIHRcTZS",
+        "id_str": "2115351256801722515",
+        "is_quote_status": false,
+        "lang": "zxx",
+        "possibly_sensitive": false,
+        "possibly_sensitive_editable": true,
+        "quote_count": 1,
+        "reply_count": 27,
+        "retweet_count": 155,
+        "retweeted": false,
+        "user_id_str": "1511476682267537411"
+       },
+       "rest_id": "2115351256801722515",
+       "unmention_data": {},
+       "views": {
+        "count": "4483",
+        "state": "EnabledWithCount"
+       }
+      }
+     },
+     "updated_at": 1793181341897
+    },
+    "participants": {
+     "admins": [
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2114479925147111424/oLhU8LNc_normal.jpg",
+       "display_name": "ابو شاكر | Trading Bots 🤖 🇺🇸",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": true,
+       "periscope_user_id": "1zvENBvaPgPEe",
+       "start": 1793174014535,
+       "twitter_screen_name": "k4zozq",
+       "user_results": {
+        "rest_id": "1511476682267537411",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2064457344054853632/d6LkEJUD_normal.jpg",
+       "display_name": "عبدالرحمن بن محمد",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": true,
+       "periscope_user_id": "1PXEdRzyMkJKe",
+       "start": 1793174466624,
+       "twitter_screen_name": "ash72889133",
+       "user_results": {
+        "rest_id": "801828502597144576",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2081662038695202817/rVdmi-qz_normal.jpg",
+       "display_name": "عدنان المدني",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "tw-845077977578770432",
+       "start": 1793176835923,
+       "twitter_screen_name": "wzbTeH75nPqY5Py",
+       "user_results": {
+        "rest_id": "845077977578770432",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      }
+     ],
+     "listeners": [
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1937630604322918400/Mg3ZJS6Z_normal.jpg",
+       "display_name": "FalcoFi",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": true,
+       "periscope_user_id": "1DZEoBzLemmja",
+       "start": 1793180602000,
+       "twitter_screen_name": "realFalcoFi",
+       "user_results": {
+        "rest_id": "1881713915878387712",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2094495807349153792/34YHi3bz_normal.jpg",
+       "display_name": "علي 🥈",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": true,
+       "periscope_user_id": "1YLEJNDlroPEN",
+       "start": 1793179554000,
+       "twitter_screen_name": "Almjrashi1398",
+       "user_results": {
+        "rest_id": "525907743",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2114044079038251008/ohw9jch9_normal.jpg",
+       "display_name": "🇸🇦 سلمان خزندار",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": true,
+       "periscope_user_id": "1YLKJNVzDkDKN",
+       "start": 1793180957000,
+       "twitter_screen_name": "skhazindar",
+       "user_results": {
+        "rest_id": "499160206",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1701727415725162496/uxIkftmC_normal.jpg",
+       "display_name": "حلم الثراء",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": true,
+       "periscope_user_id": "1oNQlgmYbddEw",
+       "start": 1793181302000,
+       "twitter_screen_name": "alialmlhane",
+       "user_results": {
+        "rest_id": "1439584306679123970",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2103771136672534528/YXWuSxv-_normal.jpg",
+       "display_name": "محمد الغامدي",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": true,
+       "periscope_user_id": "1MWEwdqVxakQb",
+       "start": 1793176580000,
+       "twitter_screen_name": "mm98665318",
+       "user_results": {
+        "rest_id": "802880352360497152",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1478102275981774850/3zBM262u_normal.jpg",
+       "display_name": "خالد الغضباني",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": true,
+       "periscope_user_id": "1xeEWlaZlkVQP",
+       "start": 1793180797000,
+       "twitter_screen_name": "KALGHDBANI",
+       "user_results": {
+        "rest_id": "1303356925384556545",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1516137603623493641/qjhuhpaS_normal.png",
+       "display_name": "ابو متعب",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": true,
+       "periscope_user_id": "1zYEbNpNRJdEe",
+       "start": 1793176522000,
+       "twitter_screen_name": "majed25150",
+       "user_results": {
+        "rest_id": "1516137290510352400",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/378800000237976285/57c05dc328492e1a8454da9874452015_normal.jpeg",
+       "display_name": "سطام العويمري",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": true,
+       "periscope_user_id": "1ayjVgekNJVEp",
+       "start": 1793179542000,
+       "twitter_screen_name": "sattam1977",
+       "user_results": {
+        "rest_id": "445789829",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2101539199216132096/uarBzDKT_normal.jpg",
+       "display_name": "محمد🇸🇦",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": true,
+       "periscope_user_id": "tw-2071481127215226880",
+       "start": 1793178448000,
+       "twitter_screen_name": "TRMW8888",
+       "user_results": {
+        "rest_id": "2071481127215226880",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1762880756861296640/hfpytbw2_normal.jpg",
+       "display_name": "‎❥ٓ•³⁰⁵ Ⴢ̤ȷɹ̤bᓄ˩l",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1eWKygMdrkREA",
+       "start": 1793180177000,
+       "twitter_screen_name": "mshr_305",
+       "user_results": {
+        "rest_id": "1865284488",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2095787864625713155/ASHC9Ev8_normal.jpg",
+       "display_name": "سامي المطيري",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1wBKAkvLOAoEP",
+       "start": 1793180843000,
+       "twitter_screen_name": "i3o5ll_",
+       "user_results": {
+        "rest_id": "739080747043160064",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1854535923511250956/MAvQvGq8_normal.jpg",
+       "display_name": "بندر الهذلي",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "tw-1612257136045658114",
+       "start": 1793181237000,
+       "twitter_screen_name": "Bandar1211112",
+       "user_results": {
+        "rest_id": "1612257136045658114",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1463410829462839298/zjMBJuDg_normal.jpg",
+       "display_name": "fAiSaL 🏆70🏆",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1mMEPRnzxLeKG",
+       "start": 1793176102000,
+       "twitter_screen_name": "alabdly_faisal",
+       "user_results": {
+        "rest_id": "906633316983504896",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2096310743024939009/ltGOsrHd_normal.jpg",
+       "display_name": "سعود",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1MWKwMNlVBlEb",
+       "start": 1793180854000,
+       "twitter_screen_name": "saudd10001",
+       "user_results": {
+        "rest_id": "718348044",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1730981387493105664/SROcf-8w_normal.jpg",
+       "display_name": "💚🇸🇦Abdullah Alharthi",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1DLKBoGoYndjJ",
+       "start": 1793180140000,
+       "twitter_screen_name": "Alharthi66066",
+       "user_results": {
+        "rest_id": "1475985775783202824",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1826920259120414720/YpFtuhd2_normal.jpg",
+       "display_name": "العباس معافا",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1xnQrXZwGkpjY",
+       "start": 1793180943000,
+       "twitter_screen_name": "AlabbasMoafa",
+       "user_results": {
+        "rest_id": "535646430",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1499950909689892865/Ddg6qgyB_normal.jpg",
+       "display_name": "adel",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1drjeZrzVrNEb",
+       "start": 1793179923000,
+       "twitter_screen_name": "adel223344",
+       "user_results": {
+        "rest_id": "243337108",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2088420998471118848/ayv_yGR1_normal.jpg",
+       "display_name": "سعد السبيعي",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1DYEXneBGDKgL",
+       "start": 1793180501000,
+       "twitter_screen_name": "SAAD_ALSUBIEE",
+       "user_results": {
+        "rest_id": "340532465",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/3751837799/e780191b82768ee06ab50dcd3f7e78de_normal.jpeg",
+       "display_name": "حمد",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1eRExJYJlPKwA",
+       "start": 1793179258000,
+       "twitter_screen_name": "hamad148",
+       "user_results": {
+        "rest_id": "309874617",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1606362561175224323/MEZHEX3D_normal.jpg",
+       "display_name": "سهم",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1mMKPRXqzowEG",
+       "start": 1793181015000,
+       "twitter_screen_name": "7135Majed",
+       "user_results": {
+        "rest_id": "875582102",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1537926242611056640/tX2q40o9_normal.jpg",
+       "display_name": "نايف الحربي",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1WgEgaYqvmMKv",
+       "start": 1793180852000,
+       "twitter_screen_name": "NAIFK0",
+       "user_results": {
+        "rest_id": "879817784",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1513636239202783234/oBNcW8ni_normal.jpg",
+       "display_name": "Thamer",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "3282269",
+       "start": 1793181234000,
+       "twitter_screen_name": "Temporaryo0",
+       "user_results": {
+        "rest_id": "335211387",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1490371523542196226/UIrpXY5r_normal.jpg",
+       "display_name": "S",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1DZKoerGVeJEa",
+       "start": 1793180547000,
+       "twitter_screen_name": "AlNasr1369",
+       "user_results": {
+        "rest_id": "473188712",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1651134044757807105/EjP3Fedy_normal.jpg",
+       "display_name": "♉️Medo♉️",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1WLKRakNVyVQb",
+       "start": 1793175888000,
+       "twitter_screen_name": "k_5901",
+       "user_results": {
+        "rest_id": "3225718567",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1069428758233403392/mfb_nAPC_normal.jpg",
+       "display_name": "𝗦𝗥5𝗛𝗔𝗧",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1zvKNpLvNNDEe",
+       "start": 1793180283000,
+       "twitter_screen_name": "Ramai33",
+       "user_results": {
+        "rest_id": "3229192627",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1940295381264334849/cKuwINv-_normal.jpg",
+       "display_name": "hakim",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "tw-2364084008",
+       "start": 1793181003000,
+       "twitter_screen_name": "hakim_saleh1",
+       "user_results": {
+        "rest_id": "2364084008",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1375567504932802568/5S3GlgQV_normal.jpg",
+       "display_name": "ام هتان",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1eVQYOLYOLRjL",
+       "start": 1793180723000,
+       "twitter_screen_name": "umFajr441",
+       "user_results": {
+        "rest_id": "1125511930683252742",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2048341978119622656/wN5LLm7v_normal.jpg",
+       "display_name": "محمد المالكي(سيد القارة وملكها المتوج)",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1XJQkdARddDKL",
+       "start": 1793180047000,
+       "twitter_screen_name": "almalkimo2004",
+       "user_results": {
+        "rest_id": "51354311",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1927319317227479040/tZEZX-Bj_normal.jpg",
+       "display_name": "Z7",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1xkjDlzVPnjzm",
+       "start": 1793180947000,
+       "twitter_screen_name": "lost_f3",
+       "user_results": {
+        "rest_id": "3220980080",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1864908526662918145/hKOFf1ZO_normal.jpg",
+       "display_name": "Ro👒",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1xeEWPkGYgpQP",
+       "start": 1793179778000,
+       "twitter_screen_name": "iNoONEee",
+       "user_results": {
+        "rest_id": "1018271310953308160",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/812251598575509504/CuT7ny9u_normal.jpg",
+       "display_name": "ابومحمد😇",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1raQZRRPrGRQz",
+       "start": 1793179384000,
+       "twitter_screen_name": "azife2017",
+       "user_results": {
+        "rest_id": "812248244524875776",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1830331645724876800/BdNjfQ1U_normal.jpg",
+       "display_name": "عبدالرحمن",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1eRKxOVNXpyQw",
+       "start": 1793179986000,
+       "twitter_screen_name": "WjopFqkQwf1ljn0",
+       "user_results": {
+        "rest_id": "1126270068860563456",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1300185740731707393/Czzwx-F3_normal.jpg",
+       "display_name": "ابوفيصل",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1qLjGqemdnQJZ",
+       "start": 1793181079000,
+       "twitter_screen_name": "11wer",
+       "user_results": {
+        "rest_id": "416411497",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2036227101674893312/Je8ZPCKw_normal.jpg",
+       "display_name": "سلطـان.",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1xNQaYoqaWpQb",
+       "start": 1793180905000,
+       "twitter_screen_name": "s_u97",
+       "user_results": {
+        "rest_id": "722959362",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/501116825766088704/t2SyIqgQ_normal.jpeg",
+       "display_name": "ابـو راكـان .. ›̵",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "tw-2491161032",
+       "start": 1793180951000,
+       "twitter_screen_name": "tooofi9991",
+       "user_results": {
+        "rest_id": "2491161032",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1207605036932567042/QZtDZAaO_normal.jpg",
+       "display_name": "وليد",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1oPKLBOpAJGEd",
+       "start": 1793179265000,
+       "twitter_screen_name": "ksajenan2",
+       "user_results": {
+        "rest_id": "3325019982",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2093250214027014144/BkdEstNy_normal.jpg",
+       "display_name": "مآجد الحربي",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1xkQDBwXMOOjz",
+       "start": 1793178202000,
+       "twitter_screen_name": "1majid72",
+       "user_results": {
+        "rest_id": "703992642674270208",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/574781512601575424/_85OBb_g_normal.jpeg",
+       "display_name": "هلالي مروّق",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1eWEyXOxXJZjA",
+       "start": 1793180711000,
+       "twitter_screen_name": "SALLS2013",
+       "user_results": {
+        "rest_id": "1626119324",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1849578877028347904/e0V0tOY9_normal.jpg",
+       "display_name": "Adnan",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1eVjYdpnLaLKL",
+       "start": 1793180883000,
+       "twitter_screen_name": "adnanmohamd644",
+       "user_results": {
+        "rest_id": "1316891562",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1315926432288251905/cqVQdC1C_normal.jpg",
+       "display_name": "بدر الشهري",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1VGjvoMmpbdEO",
+       "start": 1793180414000,
+       "twitter_screen_name": "b7_cl",
+       "user_results": {
+        "rest_id": "728332453425885184",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/879212766095171584/Yr-gM8YC_normal.jpg",
+       "display_name": "ابوعمر",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1eVjYODdPyAQL",
+       "start": 1793177895000,
+       "twitter_screen_name": "bassam555",
+       "user_results": {
+        "rest_id": "367999369",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/889137738183827458/FKQ1b6iZ_normal.jpg",
+       "display_name": "m..kk",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1oPELBBNkaXKd",
+       "start": 1793174384000,
+       "twitter_screen_name": "iaahssas",
+       "user_results": {
+        "rest_id": "889136523941163009",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/610561057766051841/g1XkyVD8_normal.jpg",
+       "display_name": "للصدق عنوان",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "tw-980262236",
+       "start": 1793180655000,
+       "twitter_screen_name": "Ymken6",
+       "user_results": {
+        "rest_id": "980262236",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png",
+       "display_name": "Sabri",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1edQnGLqmLRKo",
+       "start": 1793178619000,
+       "twitter_screen_name": "Sabrino_sy",
+       "user_results": {
+        "rest_id": "2097939026342780940",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/960432261979103232/lu_fRjxt_normal.jpg",
+       "display_name": "العيون الزرقاء",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1DZKoJARzOnQa",
+       "start": 1793180065000,
+       "twitter_screen_name": "diVkCane4dF6bWr",
+       "user_results": {
+        "rest_id": "960430030127009793",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2077895439362269184/aS9L9aT1_normal.jpg",
+       "display_name": "YQM",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "tw-1742889607908184066",
+       "start": 1793179463000,
+       "twitter_screen_name": "SS525261",
+       "user_results": {
+        "rest_id": "1742889607908184066",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1935359368712671232/9yQKWL95_normal.jpg",
+       "display_name": "هاني",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1eRExVNODenKw",
+       "start": 1793180096000,
+       "twitter_screen_name": "rabw33138",
+       "user_results": {
+        "rest_id": "1935358133615935488",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2055742753103863808/89c7-eSY_normal.jpg",
+       "display_name": "ناصر البقمي",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1wBEAdbdkdWjP",
+       "start": 1793180531000,
+       "twitter_screen_name": "naaser3",
+       "user_results": {
+        "rest_id": "384287384",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2098710157295259660/sCDCZPkt_normal.jpg",
+       "display_name": "samer",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1DLKBDrqGqqEJ",
+       "start": 1793181247000,
+       "twitter_screen_name": "smoo4rr",
+       "user_results": {
+        "rest_id": "739205033976299522",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/648650783789940737/Hxs54b9X_normal.jpg",
+       "display_name": "Alaseri",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "1wBEAZLxRkoQP",
+       "start": 1793176156000,
+       "twitter_screen_name": "AMHYAAG04",
+       "user_results": {
+        "rest_id": "429354921",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      }
+     ],
+     "speakers": [
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2063996271824711680/0Fu98Dku_normal.jpg",
+       "display_name": "Abdullah M",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "1xNQaYJWpqRQb",
+       "start": 1793181167551,
+       "twitter_screen_name": "AbullahM88",
+       "user_results": {
+        "rest_id": "499088706",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2106944533690802176/rgz011bC_normal.jpg",
+       "display_name": "متعب",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "1lZKpgAbDJvQn",
+       "start": 1793181168375,
+       "twitter_screen_name": "org4444",
+       "user_results": {
+        "rest_id": "2586385652",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2411757514/_E2_99_88_CC_B7_CC_B4_20_CB_87_20_C3_90_D0_B8_C6_B4_CF_80_CC_B4_C6_98_20_C6_8A_CF_80_C6_B4_CE_B1_C6_B4_CB_87_E2_99_88_CC_B7_CC_B4_normal.jpg",
+       "display_name": "dr abdullah",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "1lZKpyyNwLljn",
+       "start": 1793179951854,
+       "twitter_screen_name": "abodi_d",
+       "user_results": {
+        "rest_id": "704773700",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2066439958789771264/N_nbIkR5_normal.jpg",
+       "display_name": "أثير القصيمي🕊️",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-2044422976003538944",
+       "start": 1793179766447,
+       "twitter_screen_name": "Atheeri19948",
+       "user_results": {
+        "rest_id": "2044422976003538944",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/826598509008785408/V18IEB_3_normal.jpg",
+       "display_name": "أبو فيصل",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-2969029692",
+       "start": 1793180665625,
+       "twitter_screen_name": "malawaji5",
+       "user_results": {
+        "rest_id": "2969029692",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2102574419876921344/9I3GnTbg_normal.jpg",
+       "display_name": "أستغفر الله",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "1mMKPeMOmqejG",
+       "start": 1793180938784,
+       "twitter_screen_name": "absherbel",
+       "user_results": {
+        "rest_id": "1939744159684075522",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      }
+     ],
+     "total": 266
+    },
+    "sharings": {
+     "items": [],
+     "slice_info": {}
+    }
+   }
+  }
+ }
+}

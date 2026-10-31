@@ -151,6 +151,16 @@ CommunityUriInfo? _parseAsCommunityLink(List<String> parts) {
   return CommunityUriInfo(parts[2], about: parts.length > 3 && parts[3] == "about");
 }
 
+class SpaceUriInfo extends UriParseResult {
+  final String id;
+
+  SpaceUriInfo(this.id);
+}
+
+// https://x.com/i/spaces/1nxeLMgMZVEJX, and its /peek page
+SpaceUriInfo? _parseAsSpaceLink(List<String> parts) =>
+    parts.length < 3 || parts[0] != "i" || parts[1] != "spaces" ? null : SpaceUriInfo(parts[2]);
+
 class UnknownResult extends UriParseResult {}
 
 Future<UriParseResult> parseUri(Uri link) async {
@@ -174,5 +184,5 @@ Future<UriParseResult> parseUri(Uri link) async {
   if (postInfo != null) {
     return postInfo;
   }
-  return _parseAsCommunityLink(parts) ?? UnknownResult();
+  return _parseAsCommunityLink(parts) ?? _parseAsSpaceLink(parts) ?? UnknownResult();
 }

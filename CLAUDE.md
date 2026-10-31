@@ -48,6 +48,7 @@ Each feature folder contains its screen(s) and its model:
 | `home/` | Home screen with tab navigation |
 | `profile/` | User profile view |
 | `community/` | X communities: their page, members and search results |
+| `space/` | X Spaces: the card of a shared Space, its page and its player |
 | `tweet/` | Tweet card rendering, threads, video playback |
 | `search/` | Search for tweets and users |
 | `trends/` | Trending topics |
@@ -114,6 +115,7 @@ Strings live in `lib/l10n/*.arb` files. The `L10n` class in `lib/generated/l10n.
 - NEVER insert raw strings in the code if they are displayed on the UI, always use translated strings in arb files
 - Anytime when you are about to copy/paste code from somewhere, think about refactoring instead. Ask me first what to do in such cases.
 - Go easy on comments. Avoid comments that are obvious or redundant, or that simply describe the code you're about to write.
+- Put a comment right above the line it explains. A comment above a function, a class or a field describes it as a whole, never one detail of how it works.
 
 ## Custom Skills
 

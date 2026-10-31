@@ -106,6 +106,7 @@ const int maxSubscriptionsPerAccount = (maxSearchesPer15min - 2) ~/ 3 * subscrip
 
 const routeHome = '/';
 const routeCommunity = '/community';
+const routeSpace = '/space';
 const routeGroup = '/group';
 const routeProfile = '/profile';
 const routeSearch = '/search';

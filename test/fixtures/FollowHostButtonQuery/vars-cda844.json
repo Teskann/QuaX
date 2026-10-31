@@ -1,0 +1,39 @@
+{
+ "scenario": "Posts sharing X Spaces, live, ended with or without a recording, and scheduled, each Space loaded with AudioSpaceById",
+ "sourceUrl": "https://x.com/search?q=x.com%2Fi%2Fspaces&src=typed_query",
+ "unstable": true,
+ "operation": "FollowHostButtonQuery",
+ "host": "x.com",
+ "queryId": "bpY370mwoHjimSkkcTSk4A",
+ "features": null,
+ "fieldToggles": null,
+ "variables": {
+  "restId": "1264638256479690754"
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "500",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "493",
+  "x-rate-limit-reset": "1793182244"
+ },
+ "body": {
+  "data": {
+   "user": {
+    "id": "VXNlclJlc3VsdHM6MTI2NDYzODI1NjQ3OTY5MDc1NA==",
+    "result": {
+     "__typename": "User",
+     "core": {
+      "name": "Your Tw!tter Banker",
+      "screen_name": "Tweet_Reactor"
+     },
+     "id": "VXNlcjoxMjY0NjM4MjU2NDc5NjkwNzU0",
+     "relationship_perspectives": {
+      "following": false
+     },
+     "rest_id": "1264638256479690754"
+    }
+   }
+  }
+ }
+}

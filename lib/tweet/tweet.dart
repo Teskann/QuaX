@@ -143,7 +143,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     var tweetTextFinal = actualTweet.noteText ?? actualTweet.fullText ?? actualTweet.text!;
     var entitiesFinal = actualTweet.noteEntities ?? actualTweet.entities;
 
-    List<RichTextPart> tweetParts = buildRichText(context, tweetTextFinal, entitiesFinal, hideCardUrls: actualTweet.card != null);
+    List<RichTextPart> tweetParts = buildRichText(context, tweetTextFinal, entitiesFinal, cardUrl: actualTweet.card?['url'] as String?);
     setState(() {
       _displayParts = tweetParts;
       _originalParts = tweetParts;

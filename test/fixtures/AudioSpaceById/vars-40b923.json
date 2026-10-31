@@ -1,0 +1,602 @@
+{
+ "scenario": "Posts sharing X Spaces, live, ended with or without a recording, and scheduled, each Space loaded with AudioSpaceById",
+ "sourceUrl": "https://x.com/search?q=x.com%2Fi%2Fspaces&src=typed_query",
+ "unstable": true,
+ "operation": "AudioSpaceById",
+ "host": "x.com",
+ "queryId": "Zi-Z2ucwAJGWcFmtsj4cvw",
+ "features": {
+  "spaces_2022_h2_spaces_communities": true,
+  "spaces_2022_h2_clipping": true,
+  "creator_subscriptions_tweet_preview_api_enabled": true,
+  "profile_label_improvements_pcf_label_in_post_enabled": true,
+  "responsive_web_profile_redirect_enabled": true,
+  "rweb_tipjar_consumption_enabled": false,
+  "verified_phone_label_enabled": false,
+  "premium_content_api_read_enabled": false,
+  "communities_web_enable_tweet_community_results_fetch": true,
+  "c9s_tweet_anatomy_moderator_badge_enabled": true,
+  "responsive_web_grok_analyze_button_fetch_trends_enabled": false,
+  "responsive_web_grok_analyze_post_followups_enabled": true,
+  "rweb_cashtags_composer_attachment_enabled": true,
+  "responsive_web_jetfuel_frame": true,
+  "rweb_sports_post_context_enabled": true,
+  "responsive_web_grok_share_attachment_enabled": true,
+  "responsive_web_grok_annotations_enabled": true,
+  "articles_preview_enabled": true,
+  "responsive_web_edit_tweet_api_enabled": true,
+  "rweb_conversational_replies_downvote_enabled": false,
+  "graphql_is_translatable_rweb_tweet_is_translatable_enabled": true,
+  "view_counts_everywhere_api_enabled": true,
+  "longform_notetweets_consumption_enabled": true,
+  "responsive_web_twitter_article_tweet_consumption_enabled": true,
+  "content_disclosure_indicator_enabled": true,
+  "content_disclosure_ai_generated_indicator_enabled": true,
+  "responsive_web_grok_show_grok_translated_post": true,
+  "responsive_web_grok_analysis_button_from_backend": true,
+  "post_ctas_fetch_enabled": false,
+  "rweb_cashtags_enabled": true,
+  "freedom_of_speech_not_reach_fetch_enabled": true,
+  "standardized_nudges_misinfo": true,
+  "tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled": true,
+  "longform_notetweets_rich_text_read_enabled": true,
+  "longform_notetweets_inline_media_enabled": false,
+  "responsive_web_nested_quote_preview_enabled": true,
+  "responsive_web_grok_image_annotation_enabled": true,
+  "responsive_web_grok_imagine_annotation_enabled": true,
+  "responsive_web_made_on_x_label_enabled": false,
+  "responsive_web_graphql_timeline_navigation_enabled": true,
+  "responsive_web_grok_community_note_auto_translation_is_enabled": true
+ },
+ "fieldToggles": null,
+ "variables": {
+  "id": "1yGBePXpWlrKN",
+  "isMetatagsQuery": false,
+  "withReplays": true,
+  "withListeners": true
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "500",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "471",
+  "x-rate-limit-reset": "1793182243"
+ },
+ "body": {
+  "data": {
+   "audioSpace": {
+    "is_subscribed": false,
+    "metadata": {
+     "conversation_controls": 0,
+     "created_at": 1793168773830,
+     "creator_results": {
+      "result": {
+       "__typename": "User",
+       "action_counts": {
+        "favorites_count": 34286
+       },
+       "affiliates_highlighted_label": {},
+       "avatar": {
+        "image_url": "https://pbs.twimg.com/profile_images/2080626169108692992/1AcCTaVv_normal.jpg"
+       },
+       "banner": {
+        "image_url": "https://pbs.twimg.com/profile_banners/2901372290/1654518193"
+       },
+       "core": {
+        "created_at": "Sun Nov 16 08:46:37 +0000 2014",
+        "name": "☕️こうき☕️",
+        "screen_name": "Jwpnj3gwpdgtmp"
+       },
+       "follow_request_sent": false,
+       "has_graduated_access": true,
+       "id": "VXNlcjoyOTAxMzcyMjkw",
+       "is_blue_verified": false,
+       "location": {
+        "location": "推しマ→☕️　ﾂｲｷｬｽ 定時配信22:00"
+       },
+       "media_permissions": {
+        "can_media_tag": false
+       },
+       "notifications_settings": {
+        "notifications_enabled": false
+       },
+       "parody_commentary_fan_label": "None",
+       "pinned_items": {
+        "tweet_ids_str": [
+         "2055261690649063719"
+        ]
+       },
+       "possibly_sensitive": false,
+       "privacy": {
+        "protected": false
+       },
+       "profile_bio": {
+        "description": "🎙低音ボイスの深夜ラジオ22時~　🔪マシュマロにガチ回答\n匿名相談・配信はこちら👇\nﾂｲｷｬｽ :https://t.co/evtJMjDMfk\nﾏｼｭﾏﾛ :https://t.co/XKPw2KEFhD\n\nﾀｸﾞ:＃コーヒーにズブズブ",
+        "entities": {
+         "description": {
+          "urls": [
+           {
+            "display_url": "twitcasting.tv/jwpnj3gwpdgtmp/",
+            "expanded_url": "https://twitcasting.tv/jwpnj3gwpdgtmp/",
+            "indices": [
+             49,
+             72
+            ],
+            "url": "https://t.co/evtJMjDMfk"
+           },
+           {
+            "display_url": "marshmallow-qa.com/jwpnj3gwpdgtmp",
+            "expanded_url": "https://marshmallow-qa.com/jwpnj3gwpdgtmp",
+            "indices": [
+             80,
+             103
+            ],
+            "url": "https://t.co/XKPw2KEFhD"
+           }
+          ]
+         },
+         "url": {
+          "urls": [
+           {
+            "display_url": "profu.link/u/kkcoffee89",
+            "expanded_url": "https://profu.link/u/kkcoffee89",
+            "indices": [
+             0,
+             23
+            ],
+            "url": "https://t.co/hqiu8dxvXm"
+           }
+          ]
+         }
+        }
+       },
+       "profile_description_language": "ja",
+       "profile_image_shape": "Circle",
+       "profile_metadata": {
+        "profile_interstitial_type": ""
+       },
+       "profile_translation": {
+        "translator_type": "none"
+       },
+       "relationship_counts": {
+        "followers": 700,
+        "following": 87
+       },
+       "relationship_perspectives": {
+        "blocked_by": false,
+        "blocking": false,
+        "followed_by": false,
+        "following": false,
+        "live_following": false,
+        "muting": false
+       },
+       "rest_id": "2901372290",
+       "super_follow_eligible": false,
+       "super_followed_by": false,
+       "super_following": false,
+       "tweet_counts": {
+        "media_tweets": 119,
+        "tweets": 22611
+       },
+       "verification": {
+        "verified": false
+       },
+       "website": {
+        "url": "https://t.co/hqiu8dxvXm"
+       }
+      }
+     },
+     "disallow_join": false,
+     "ended_at": "1793173406057",
+     "is_employee_only": false,
+     "is_locked": false,
+     "is_muted": false,
+     "is_space_available_for_clipping": false,
+     "is_space_available_for_replay": false,
+     "max_admin_capacity": 3,
+     "max_guest_sessions": 10,
+     "media_key": "28_2115329271279607808",
+     "narrow_cast_space_type": 0,
+     "no_incognito": false,
+     "rest_id": "1yGBePXpWlrKN",
+     "started_at": 1793168774792,
+     "state": "Ended",
+     "title": "初スペース！ツイキャス開けないからこっちではなそ",
+     "total_live_listeners": 25,
+     "total_replay_watched": 0,
+     "tweet_results": {},
+     "updated_at": 1793173406057
+    },
+    "participants": {
+     "admins": [
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2080626169108692992/1AcCTaVv_normal.jpg",
+       "display_name": "☕️こうき☕️",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "1lZKpgXqlglQn",
+       "start": 1793168774947,
+       "twitter_screen_name": "Jwpnj3gwpdgtmp",
+       "user_results": {
+        "rest_id": "2901372290",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      }
+     ],
+     "listeners": [],
+     "speakers": [],
+     "total": 0
+    },
+    "sharings": {
+     "items": [
+      {
+       "created_at_ms": 1793168905769,
+       "shared_item": {
+        "__typename": "AudioSpaceSharedTweet",
+        "tweet_results": {
+         "result": {
+          "__typename": "Tweet",
+          "card": {
+           "legacy": {
+            "binding_values": [
+             {
+              "key": "tweet_id",
+              "value": {
+               "string_value": "2115329277592003044",
+               "type": "STRING"
+              }
+             },
+             {
+              "key": "narrow_cast_space_type",
+              "value": {
+               "string_value": "0",
+               "type": "STRING"
+              }
+             },
+             {
+              "key": "id",
+              "value": {
+               "string_value": "1yGBePXpWlrKN",
+               "type": "STRING"
+              }
+             },
+             {
+              "key": "card_url",
+              "value": {
+               "scribe_key": "card_url",
+               "string_value": "https://t.co/EFiYVs6QSx",
+               "type": "STRING"
+              }
+             }
+            ],
+            "card_platform": {
+             "platform": {
+              "audience": {
+               "name": "production"
+              },
+              "device": {
+               "name": "Swift",
+               "version": "12"
+              }
+             }
+            },
+            "name": "3691233323:audiospace",
+            "url": "https://t.co/EFiYVs6QSx",
+            "user_refs_results": []
+           },
+           "rest_id": "https://t.co/EFiYVs6QSx"
+          },
+          "cashtag_attachments": [],
+          "core": {
+           "user_results": {
+            "result": {
+             "__typename": "User",
+             "action_counts": {
+              "favorites_count": 34286
+             },
+             "affiliates_highlighted_label": {},
+             "avatar": {
+              "image_url": "https://pbs.twimg.com/profile_images/2080626169108692992/1AcCTaVv_normal.jpg"
+             },
+             "banner": {
+              "image_url": "https://pbs.twimg.com/profile_banners/2901372290/1654518193"
+             },
+             "core": {
+              "created_at": "Sun Nov 16 08:46:37 +0000 2014",
+              "name": "☕️こうき☕️",
+              "screen_name": "Jwpnj3gwpdgtmp"
+             },
+             "follow_request_sent": false,
+             "has_graduated_access": true,
+             "id": "VXNlcjoyOTAxMzcyMjkw",
+             "is_blue_verified": false,
+             "location": {
+              "location": "推しマ→☕️　ﾂｲｷｬｽ 定時配信22:00"
+             },
+             "media_permissions": {
+              "can_media_tag": false
+             },
+             "notifications_settings": {
+              "notifications_enabled": false
+             },
+             "parody_commentary_fan_label": "None",
+             "pinned_items": {
+              "tweet_ids_str": [
+               "2055261690649063719"
+              ]
+             },
+             "possibly_sensitive": false,
+             "privacy": {
+              "protected": false
+             },
+             "profile_bio": {
+              "description": "🎙低音ボイスの深夜ラジオ22時~　🔪マシュマロにガチ回答\n匿名相談・配信はこちら👇\nﾂｲｷｬｽ :https://t.co/evtJMjDMfk\nﾏｼｭﾏﾛ :https://t.co/XKPw2KEFhD\n\nﾀｸﾞ:＃コーヒーにズブズブ",
+              "entities": {
+               "description": {
+                "urls": [
+                 {
+                  "display_url": "twitcasting.tv/jwpnj3gwpdgtmp/",
+                  "expanded_url": "https://twitcasting.tv/jwpnj3gwpdgtmp/",
+                  "indices": [
+                   49,
+                   72
+                  ],
+                  "url": "https://t.co/evtJMjDMfk"
+                 },
+                 {
+                  "display_url": "marshmallow-qa.com/jwpnj3gwpdgtmp",
+                  "expanded_url": "https://marshmallow-qa.com/jwpnj3gwpdgtmp",
+                  "indices": [
+                   80,
+                   103
+                  ],
+                  "url": "https://t.co/XKPw2KEFhD"
+                 }
+                ]
+               },
+               "url": {
+                "urls": [
+                 {
+                  "display_url": "profu.link/u/kkcoffee89",
+                  "expanded_url": "https://profu.link/u/kkcoffee89",
+                  "indices": [
+                   0,
+                   23
+                  ],
+                  "url": "https://t.co/hqiu8dxvXm"
+                 }
+                ]
+               }
+              }
+             },
+             "profile_description_language": "ja",
+             "profile_image_shape": "Circle",
+             "profile_metadata": {
+              "profile_interstitial_type": ""
+             },
+             "profile_translation": {
+              "translator_type": "none"
+             },
+             "relationship_counts": {
+              "followers": 700,
+              "following": 87
+             },
+             "relationship_perspectives": {
+              "blocked_by": false,
+              "blocking": false,
+              "followed_by": false,
+              "following": false,
+              "live_following": false,
+              "muting": false
+             },
+             "rest_id": "2901372290",
+             "super_follow_eligible": false,
+             "super_followed_by": false,
+             "super_following": false,
+             "tweet_counts": {
+              "media_tweets": 119,
+              "tweets": 22611
+             },
+             "verification": {
+              "verified": false
+             },
+             "website": {
+              "url": "https://t.co/hqiu8dxvXm"
+             }
+            }
+           }
+          },
+          "edit_control": {
+           "edit_tweet_ids": [
+            "2115329666290704622"
+           ],
+           "editable_until_msecs": "1793172468000",
+           "edits_remaining": "5",
+           "is_edit_eligible": true
+          },
+          "grok_analysis_button": true,
+          "grok_annotations": {
+           "is_image_editable_by_grok": false
+          },
+          "grok_translated_post_with_availability": {
+           "is_available": false
+          },
+          "is_translatable": true,
+          "legacy": {
+           "bookmark_count": 0,
+           "bookmarked": false,
+           "conversation_id_str": "2115329666290704622",
+           "created_at": "Wed Oct 28 06:27:48 +0000 2026",
+           "display_text_range": [
+            0,
+            55
+           ],
+           "entities": {
+            "urls": [
+             {
+              "display_url": "x.com/i/spaces/1yGBe…",
+              "expanded_url": "https://x.com/i/spaces/1yGBePXpWlrKN",
+              "indices": [
+               32,
+               55
+              ],
+              "url": "https://t.co/EFiYVs6QSx"
+             }
+            ]
+           },
+           "favorite_count": 10,
+           "favorited": false,
+           "full_text": "みんなここではなそー！\n\nコメント代わりにここにリプしてー！\n\nhttps://t.co/EFiYVs6QSx",
+           "id_str": "2115329666290704622",
+           "is_quote_status": false,
+           "lang": "ja",
+           "possibly_sensitive": false,
+           "possibly_sensitive_editable": true,
+           "quote_count": 0,
+           "reply_count": 209,
+           "retweet_count": 0,
+           "retweeted": false,
+           "user_id_str": "2901372290"
+          },
+          "rest_id": "2115329666290704622",
+          "unmention_data": {},
+          "views": {
+           "count": "472",
+           "state": "EnabledWithCount"
+          }
+         }
+        }
+       },
+       "sharing_id": "2115329824600584656",
+       "updated_at_ms": 1793168905769,
+       "user_results": {
+        "result": {
+         "__typename": "User",
+         "action_counts": {
+          "favorites_count": 34286
+         },
+         "affiliates_highlighted_label": {},
+         "avatar": {
+          "image_url": "https://pbs.twimg.com/profile_images/2080626169108692992/1AcCTaVv_normal.jpg"
+         },
+         "banner": {
+          "image_url": "https://pbs.twimg.com/profile_banners/2901372290/1654518193"
+         },
+         "core": {
+          "created_at": "Sun Nov 16 08:46:37 +0000 2014",
+          "name": "☕️こうき☕️",
+          "screen_name": "Jwpnj3gwpdgtmp"
+         },
+         "follow_request_sent": false,
+         "has_graduated_access": true,
+         "id": "VXNlcjoyOTAxMzcyMjkw",
+         "is_blue_verified": false,
+         "location": {
+          "location": "推しマ→☕️　ﾂｲｷｬｽ 定時配信22:00"
+         },
+         "media_permissions": {
+          "can_media_tag": false
+         },
+         "notifications_settings": {
+          "notifications_enabled": false
+         },
+         "parody_commentary_fan_label": "None",
+         "pinned_items": {
+          "tweet_ids_str": [
+           "2055261690649063719"
+          ]
+         },
+         "possibly_sensitive": false,
+         "privacy": {
+          "protected": false
+         },
+         "profile_bio": {
+          "description": "🎙低音ボイスの深夜ラジオ22時~　🔪マシュマロにガチ回答\n匿名相談・配信はこちら👇\nﾂｲｷｬｽ :https://t.co/evtJMjDMfk\nﾏｼｭﾏﾛ :https://t.co/XKPw2KEFhD\n\nﾀｸﾞ:＃コーヒーにズブズブ",
+          "entities": {
+           "description": {
+            "urls": [
+             {
+              "display_url": "twitcasting.tv/jwpnj3gwpdgtmp/",
+              "expanded_url": "https://twitcasting.tv/jwpnj3gwpdgtmp/",
+              "indices": [
+               49,
+               72
+              ],
+              "url": "https://t.co/evtJMjDMfk"
+             },
+             {
+              "display_url": "marshmallow-qa.com/jwpnj3gwpdgtmp",
+              "expanded_url": "https://marshmallow-qa.com/jwpnj3gwpdgtmp",
+              "indices": [
+               80,
+               103
+              ],
+              "url": "https://t.co/XKPw2KEFhD"
+             }
+            ]
+           },
+           "url": {
+            "urls": [
+             {
+              "display_url": "profu.link/u/kkcoffee89",
+              "expanded_url": "https://profu.link/u/kkcoffee89",
+              "indices": [
+               0,
+               23
+              ],
+              "url": "https://t.co/hqiu8dxvXm"
+             }
+            ]
+           }
+          }
+         },
+         "profile_description_language": "ja",
+         "profile_image_shape": "Circle",
+         "profile_metadata": {
+          "profile_interstitial_type": ""
+         },
+         "profile_translation": {
+          "translator_type": "none"
+         },
+         "relationship_counts": {
+          "followers": 700,
+          "following": 87
+         },
+         "relationship_perspectives": {
+          "blocked_by": false,
+          "blocking": false,
+          "followed_by": false,
+          "following": false,
+          "live_following": false,
+          "muting": false
+         },
+         "rest_id": "2901372290",
+         "super_follow_eligible": false,
+         "super_followed_by": false,
+         "super_following": false,
+         "tweet_counts": {
+          "media_tweets": 119,
+          "tweets": 22611
+         },
+         "verification": {
+          "verified": false
+         },
+         "website": {
+          "url": "https://t.co/hqiu8dxvXm"
+         }
+        }
+       }
+      }
+     ],
+     "slice_info": {}
+    }
+   }
+  }
+ }
+}
