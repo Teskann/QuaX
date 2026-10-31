@@ -147,6 +147,21 @@ void main() {
       });
     });
 
+    group('space links', () {
+      test('Should read the id of a space link, and of its /peek page', () async {
+        for (final url in ['https://x.com/i/spaces/1nxeLMgMZVEJX', 'https://x.com/i/spaces/1nxeLMgMZVEJX/peek']) {
+          final space = parsedAs<SpaceUriInfo>(await parse(url), '$url is the address of a space');
+
+          expect(space.id, '1nxeLMgMZVEJX', reason: 'The space screen loads the space from this id');
+        }
+      });
+
+      test('Should not read a space link without an id', () async {
+        expect(await parse('https://x.com/i/spaces'), isA<UnknownResult>(),
+            reason: 'The list of spaces is not a space, so it should go to the browser');
+      });
+    });
+
     group('unknown links', () {
       test('Should return UnknownResult for the site root', () async {
         expect(await parse('https://x.com/'), isA<UnknownResult>(),

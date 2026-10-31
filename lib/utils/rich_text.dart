@@ -37,15 +37,15 @@ List<InlineSpan> displayRichText(List<RichTextPart> richText) {
 }
 
 // Generate all the tweet entities (mentions, hashtags, etc.) from the tweet text
-// [hideCardUrls] drops the links to what a card already shows, such as a Grok conversation
-List<RichTextPart> buildRichText(BuildContext context, String rawText, Object? rawEntities,
-    {bool hideCardUrls = false}) {
+// [cardUrl], the link a card was made from, is dropped when the card shows what it leads to, such as a Grok
+// conversation or a space
+List<RichTextPart> buildRichText(BuildContext context, String rawText, Object? rawEntities, {String? cardUrl}) {
   Runes runes = Runes(rawText);
   Iterable<int> runesAsIterable = runes.getRange(0, runes.length);
 
   List<Entity> entities = [];
   if (rawEntities != null) {
-    entities = _parseEntities(context, rawEntities, hideCardUrls: hideCardUrls);
+    entities = _parseEntities(context, rawEntities, cardUrl: cardUrl);
   }
   List<RichTextPart> richTextParts = [];
 
@@ -55,11 +55,7 @@ List<RichTextPart> buildRichText(BuildContext context, String rawText, Object? r
     int end = part.getEntityEnd();
 
     // Add any text between the last entity's end and the start of this one
-    var textPart = _convertRunesToText(runesAsIterable, index, start);
-    if (part is HiddenUrlEntity && _convertRunesToText(runesAsIterable, end)?.trim().isNotEmpty != true) {
-      textPart = textPart?.trimRight();
-    }
-    _handleTextParts(context, textPart, richTextParts);
+    _handleTextParts(context, _convertRunesToText(runesAsIterable, index, start), richTextParts);
 
     // Then add the actual entity
     richTextParts.add(RichTextPart(part.getContent(), null));
@@ -71,7 +67,41 @@ List<RichTextPart> buildRichText(BuildContext context, String rawText, Object? r
   var textPart = _convertRunesToText(runesAsIterable, index);
   _handleTextParts(context, textPart, richTextParts);
 
-  return richTextParts;
+  return _trimEnd(_trimStart(_closeGaps(richTextParts)));
+}
+
+bool _isDropped(RichTextPart part) => part.plainText == null && (part.entity?.toPlainText() ?? '').isEmpty;
+
+// Once a link is dropped, the texts around it meet: they keep the wider of their two gaps, not both
+List<RichTextPart> _closeGaps(List<RichTextPart> parts) =>
+    parts.where((part) => !_isDropped(part)).fold(<RichTextPart>[], (kept, part) {
+      final before = kept.lastOrNull?.plainText;
+      final after = part.plainText;
+      if (before == null || after == null) return [...kept, part];
+      return [...kept.take(kept.length - 1), RichTextPart(null, _joinOverGap(before, after))];
+    });
+
+String _joinOverGap(String before, String after) {
+  final gapBefore = before.substring(before.trimRight().length);
+  final gapAfter = after.substring(0, after.length - after.trimLeft().length);
+  return before.trimRight() + (gapBefore.length >= gapAfter.length ? gapBefore : gapAfter) + after.trimLeft();
+}
+
+bool _isBlank(RichTextPart part) => (part.plainText ?? part.entity?.toPlainText() ?? '').trim().isEmpty;
+
+// The text shown starts and ends with what is visible, whatever was dropped around it
+List<RichTextPart> _trimStart(List<RichTextPart> parts) {
+  final first = parts.indexWhere((part) => !_isBlank(part));
+  if (first == -1) return [];
+  final text = parts[first].plainText;
+  return [text == null ? parts[first] : RichTextPart(null, text.trimLeft()), ...parts.skip(first + 1)];
+}
+
+List<RichTextPart> _trimEnd(List<RichTextPart> parts) {
+  final last = parts.lastIndexWhere((part) => !_isBlank(part));
+  if (last == -1) return [];
+  final text = parts[last].plainText;
+  return [...parts.take(last), text == null ? parts[last] : RichTextPart(null, text.trimRight())];
 }
 
 // In descriptions, the hashtags and mentions are not seen as entities, so we parse them manually
@@ -136,9 +166,9 @@ String? _convertRunesToText(Iterable<int> runes, int start, [int? end]) {
   return HtmlUnescape().convert(string);
 }
 
-final _grokShareUrl = RegExp(r'^https?://(x|twitter)\.com/i/grok/share/');
+final _shownByItsCard = RegExp(r'^https?://(x|twitter)\.com/i/(grok/share|spaces)/');
 
-List<Entity> _parseEntities(BuildContext context, dynamic newEntities, {bool hideCardUrls = false}) {
+List<Entity> _parseEntities(BuildContext context, dynamic newEntities, {String? cardUrl}) {
   List<Entity> entities = [];
   if (newEntities == null) return entities;
 
@@ -176,7 +206,7 @@ List<Entity> _parseEntities(BuildContext context, dynamic newEntities, {bool hid
   }
 
   for (Url url in newEntities.urls ?? []) {
-    if (hideCardUrls && _grokShareUrl.hasMatch(url.expandedUrl ?? '')) {
+    if (url.url == cardUrl && _shownByItsCard.hasMatch(url.expandedUrl ?? '')) {
       entities.add(HiddenUrlEntity(url));
       continue;
     }

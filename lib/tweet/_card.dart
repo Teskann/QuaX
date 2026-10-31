@@ -8,6 +8,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:quax/client/client.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/generated/l10n.dart';
+import 'package:quax/space/space_card.dart';
 import 'package:quax/tweet/_card_frame.dart';
 import 'package:quax/tweet/_carousel_card.dart';
 import 'package:quax/tweet/_grok_card.dart';
@@ -460,6 +461,9 @@ class TweetCard extends StatelessWidget {
                 ),
               ],
             ));
+      case '3691233323:audiospace':
+        final id = card['binding_values']?['id']?['string_value'] as String?;
+        return id == null ? _createUnsupportedCard(context) : SpaceCard(id: id);
       default:
         return _createUnsupportedCard(context);
     }

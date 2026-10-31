@@ -1,0 +1,39 @@
+{
+ "scenario": "Posts sharing X Spaces, live, ended with or without a recording, and scheduled, each Space loaded with AudioSpaceById",
+ "sourceUrl": "https://x.com/search?q=x.com%2Fi%2Fspaces&src=typed_query",
+ "unstable": true,
+ "operation": "FollowHostButtonQuery",
+ "host": "x.com",
+ "queryId": "bpY370mwoHjimSkkcTSk4A",
+ "features": null,
+ "fieldToggles": null,
+ "variables": {
+  "restId": "1895299044983144448"
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "500",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "492",
+  "x-rate-limit-reset": "1793182244"
+ },
+ "body": {
+  "data": {
+   "user": {
+    "id": "VXNlclJlc3VsdHM6MTg5NTI5OTA0NDk4MzE0NDQ0OA==",
+    "result": {
+     "__typename": "User",
+     "core": {
+      "name": "AROMA",
+      "screen_name": "Neuzavasco83535"
+     },
+     "id": "VXNlcjoxODk1Mjk5MDQ0OTgzMTQ0NDQ4",
+     "relationship_perspectives": {
+      "following": false
+     },
+     "rest_id": "1895299044983144448"
+    }
+   }
+  }
+ }
+}
