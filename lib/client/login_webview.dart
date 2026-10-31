@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/database/entities.dart';
-import 'package:quax/database/repository.dart';
+import 'package:quax/client/accounts.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/subscriptions/_import.dart' show SubscriptionImportScreen;
 import 'package:webview_cookie_manager_plus/webview_cookie_manager_plus.dart';
@@ -98,9 +98,7 @@ class _TwitterLoginWebviewState extends State<TwitterLoginWebview> {
                 };
 
                 account = Account(id: csrfToken, screenName: screenName, authHeader: json.encode(authHeader));
-                final database = await Repository.writable();
-                await database.insert(tableAccounts, account.toMap());
-                database.close();
+                await saveAccount(account);
               }
               if (mounted && widget.guided) {
                 Navigator.pop(context, account);

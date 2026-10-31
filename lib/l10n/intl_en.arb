@@ -363,6 +363,8 @@
   "@load_media_manually": {},
   "load_media_manually_description": "Photos and videos won't load until you tap them, to save mobile data.",
   "@load_media_manually_description": {},
+  "log_in_again": "Log in again",
+  "@log_in_again": {},
   "log_out": "Log out",
   "@log_out": {
     "description": "Button removing the X account the user just logged in with from QuaX"
@@ -750,6 +752,17 @@
   "@select": {},
   "send": "Send",
   "@send": {},
+  "session_rejected_message": "Check that the account still works on x.com, then log in again.",
+  "@session_rejected_message": {},
+  "session_rejected_title": "𝕏 logged out {account}",
+  "@session_rejected_title": {
+    "description": "Title of the error shown when 𝕏 answered 401: the session of the account is no longer valid. {account} is its screen name, e.g. \"@alice\"",
+    "placeholders": {
+      "account": {
+        "type": "String"
+      }
+    }
+  },
   "settings": "Settings",
   "@settings": {},
   "share": "Share",

@@ -78,6 +78,9 @@ class _QuackerTwitterClient extends TwitterClient {
       final response = await XRegularAccount()
           .fetch(uri, headers: headers, log: log, authHeader: json.decode(account.authHeader));
       _recordQuota(accountEndpoint, response);
+      if (response.statusCode == 401) {
+        throw SessionRejectedException(account.screenName);
+      }
       if (response.statusCode != 429) {
         return response;
       }

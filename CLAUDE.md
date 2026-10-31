@@ -84,6 +84,7 @@ When requests fail because of the `x-client-transaction-id` header (e.g. `Couldn
 
 `AccountSelector.pick()` draws at random among the untried accounts with a credit left. Rate limits **short-circuit**: an account with no credit left on the endpoint is never picked, and when no untried account has a credit, `RateLimitedException` is thrown without sending anything. Errors surface through the single `ErrorCard` in `ui/errors.dart` (wrapped by `FullPageErrorWidget` when it takes the page), which gives each of these its own title and actions:
 - every account is out of credits, or got a 429, on the endpoint → `RateLimitedException`;
+- X answered 401, i.e. it no longer accepts the session of the account → `SessionRejectedException`, whose card offers to log in again. Logging in with an account already saved replaces it (`saveAccount()` in `accounts.dart`);
 - X answered 404, which happens now and then in normal use → `NotFoundException` (thrown in `get()`), whose card only offers retry, as its primary action;
 - there is no account at all → an unauthenticated (guest) request is attempted first; `NoAccountAvailableException` is thrown only if that guest request also fails.
 
