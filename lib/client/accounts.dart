@@ -20,3 +20,13 @@ Future<Map<dynamic, dynamic>?> pickAuthHeader() async {
   }
   return json.decode(account.authHeader);
 }
+
+/// Saves [account] in place of any account saved before under the same screen name, so logging in again with an
+/// account leaves a single, fresh session for it.
+Future<void> saveAccount(Account account) async {
+  final database = await Repository.writable();
+  await database.transaction((transaction) async {
+    await transaction.delete(tableAccounts, where: 'lower(screen_name) = lower(?)', whereArgs: [account.screenName]);
+    await transaction.insert(tableAccounts, account.toMap());
+  });
+}

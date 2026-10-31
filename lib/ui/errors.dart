@@ -259,7 +259,7 @@ Future<void> reportBug(BuildContext context,
   await openUri(context, uri.toString());
 }
 
-enum _PrimaryAction { report, addAccount, retry }
+enum _PrimaryAction { report, addAccount, logIn, retry }
 
 typedef _CardContent = ({IconData icon, String title, String details, _PrimaryAction? primary});
 
@@ -298,6 +298,12 @@ class ErrorCard extends StatelessWidget {
           title: l10n.no_account_available_title,
           details: l10n.no_account_available_message,
           primary: _PrimaryAction.addAccount,
+        ),
+      SessionRejectedException(:final screenName) => (
+          icon: Icons.key_off,
+          title: l10n.session_rejected_title(screenName == null ? l10n.unknown_username : '@$screenName'),
+          details: l10n.session_rejected_message,
+          primary: _PrimaryAction.logIn,
         ),
       FeedRateLimitedException(:final availableAt, :final loaded, :final total) => (
           icon: Icons.hourglass_empty,
@@ -377,6 +383,10 @@ class ErrorCard extends StatelessWidget {
       _PrimaryAction.addAccount => FilledButton(
           onPressed: () => openAddAccount(context),
           child: Text(l10n.add_account),
+        ),
+      _PrimaryAction.logIn => FilledButton(
+          onPressed: () => openAddAccount(context),
+          child: Text(l10n.log_in_again),
         ),
       _PrimaryAction.retry => FilledButton(
           onPressed: () => onRetry?.call(),

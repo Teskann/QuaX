@@ -45,6 +45,15 @@ void main() {
         reason: 'Another account raises the quota, which is what gets the whole feed loaded');
   });
 
+  testWidgets('Should name the account X logged out and offer to log in again', (tester) async {
+    await pumpCard(tester, SessionRejectedException('alice'));
+
+    expect(find.text('𝕏 logged out @alice'), findsOneWidget, reason: 'The user should know which account to log in');
+    expect(find.widgetWithText(FilledButton, 'Log in again'), findsOneWidget,
+        reason: 'Logging in again replaces the session X ended, which is the only fix');
+    expect(find.text('Report'), findsNothing, reason: 'A session ended by X is not a bug of QuaX');
+  });
+
   testWidgets('Should only offer to retry when X answers 404', (tester) async {
     await pumpCard(tester, NotFoundException());
 

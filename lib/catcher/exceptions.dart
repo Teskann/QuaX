@@ -48,6 +48,16 @@ class FeedRateLimitedException extends RateLimitedException {
   String toString() => 'Feed rate limited until $availableAt, $loaded/$total subscriptions loaded';
 }
 
+/// Thrown when X answers 401: it no longer accepts the session of the account, e.g. after a logout on x.com.
+class SessionRejectedException with SyntheticException implements Exception {
+  final String? screenName;
+
+  SessionRejectedException(this.screenName);
+
+  @override
+  String toString() => 'X rejected the session of $screenName';
+}
+
 /// Thrown when X answers 404, which happens now and then in normal use. Surfaced
 /// with a dedicated error widget offering to retry, rather than reported to the
 /// crash catcher.
