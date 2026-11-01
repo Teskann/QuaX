@@ -41,6 +41,7 @@ const optionDiscordPopupDismissed = 'discord_popup.dismissed';
 const optionOnboardingDone = 'onboarding.done';
 
 const optionDisableWarningsForUnrelatedPostsInFeed = 'disable_warnings_for_unrelated_posts_in_feed';
+const optionKeepFeedOffset = 'keep_feed_offset';
 
 const alwaysShowFullTweetContents = 'always_show_full_tweet_contents';
 

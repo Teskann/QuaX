@@ -6,6 +6,7 @@ import 'package:quax/home/_for_you.dart';
 import 'package:quax/tweet/paginated_tweet_list.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/group/_feed_shell.dart';
+import 'package:quax/group/feed_scroll_controller.dart';
 import 'package:quax/group/group_model.dart';
 import 'package:quax/group/group_screen.dart';
 
@@ -29,7 +30,7 @@ FeedTab feedTabFromId(String? id) =>
     FeedTab.values.firstWhere((e) => e.name == id, orElse: () => FeedTab.following);
 
 class FeedScreen extends StatefulWidget {
-  final ScrollController scrollController;
+  final FeedScrollController scrollController;
   final String id;
   final String name;
 

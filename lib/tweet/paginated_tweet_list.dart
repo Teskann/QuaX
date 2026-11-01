@@ -1,15 +1,18 @@
+import 'dart:math';
+
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
 import 'package:quax/client/client.dart';
 import 'package:quax/group/feed_refresh_controller.dart';
+import 'package:quax/group/feed_scroll_controller.dart';
 import 'package:quax/group/unrelated_tweets_warning.dart';
 import 'package:quax/release_notes/release_notes.dart';
 import 'package:quax/release_notes/release_notes_model.dart';
 import 'package:quax/release_notes/release_notes_card.dart';
-import 'package:quax/tweet/cached_tweet_list.dart';
 import 'package:quax/tweet/conversation.dart';
+import 'package:quax/tweet/top_item.dart';
 import 'package:quax/ui/errors.dart';
 import 'package:quax/utils/paging.dart';
 
@@ -20,9 +23,8 @@ typedef TweetPageLoader = Future<TweetPageResult> Function(String? cursor);
 /// it onto the app's `(chains, nextCursor)` loaders.
 ///
 /// v5 bakes the fetch callback into the controller at construction, yet several
-/// feeds create the controller away from the loader (and cache it across widget
-/// remounts — see [FeedSessionCache]). So the loader lives in a rebindable field
-/// that [PaginatedTweetList] sets on mount.
+/// feeds create the controller away from the loader. So the loader lives in a
+/// rebindable field that [PaginatedTweetList] sets on mount.
 class TweetFeedController {
   late final CursorPagingController<String, TweetChain> _paging;
   TweetPageLoader? _loader;
@@ -48,6 +50,11 @@ class TweetFeedController {
 
   bool get hasItems => _paging.items != null;
 
+  List<TweetChain> get items => _paging.items ?? const [];
+
+  /// Shows [chains] without loading anything.
+  void seed(List<TweetChain> chains, String? nextCursor) => _paging.replaceFirstPage(chains, nextCursor);
+
   Future<CursorPage<String, TweetChain>> _fetch(String? cursor) async {
     final result = await _loader!(cursor);
     final next = result.nextCursor;
@@ -63,13 +70,16 @@ class TweetFeedController {
   /// to the first-page spinner the way [PagingController.refresh] does. Used by
   /// pull-to-refresh so the existing tweets stay visible under the indicator.
   Future<void> softRefresh() async {
+    final hadNextPage = controller.value.hasNextPage;
+    // A next page loaded during the refresh would follow the old first page
+    controller.value = controller.value.copyWith(hasNextPage: false);
     try {
       final result = await _loader!(null);
       final next = result.nextCursor;
-      final isLast = _isLastPage(result.chains, next, null);
-      _paging.replaceFirstPage(result.chains, isLast ? null : next);
+      _paging.replaceFirstPage(result.chains, _isLastPage(result.chains, next, null) ? null : next);
       refreshError.value = null;
     } catch (e, stackTrace) {
+      controller.value = controller.value.copyWith(hasNextPage: hadNextPage);
       if (hasItems) {
         refreshError.value = PagingError(e, stackTrace);
       } else {
@@ -91,8 +101,7 @@ class TweetFeedController {
 /// through the standard `PagedListView` shell with error / empty widgets.
 ///
 /// The controller's lifecycle (creation, disposal, cross-mount caching) stays
-/// at the call site — this widget only binds the loader and, while a cached
-/// preview is shown, kicks off the first page itself.
+/// at the call site — this widget only binds the loader.
 class PaginatedTweetList extends StatefulWidget {
   final TweetFeedController feed;
   final TweetPageLoader loadPage;
@@ -101,10 +110,12 @@ class PaginatedTweetList extends StatefulWidget {
   final ErrorPrefix firstPageErrorPrefix;
   final ErrorPrefix newPageErrorPrefix;
   final String emptyMessage;
-  // Cached tweets shown in place of the first-page spinner while the initial
-  // load is in flight, so a feed reveals its cached content instead of a
-  // full-screen progress indicator.
-  final List<TweetChain>? firstPagePreview;
+
+  /// Reloads the cached tweets from X when the feed opens.
+  final bool refreshOnOpen;
+
+  final String? initialTopItem;
+  final ValueChanged<String>? onTopItemChanged;
 
   const PaginatedTweetList({
     super.key,
@@ -115,7 +126,9 @@ class PaginatedTweetList extends StatefulWidget {
     required this.newPageErrorPrefix,
     required this.emptyMessage,
     this.onRefresh,
-    this.firstPagePreview,
+    this.refreshOnOpen = false,
+    this.initialTopItem,
+    this.onTopItemChanged,
   });
 
   @override
@@ -124,9 +137,15 @@ class PaginatedTweetList extends StatefulWidget {
 
 class _PaginatedTweetListState extends State<PaginatedTweetList> {
   final GlobalKey<RefreshIndicatorState> _refreshKey = GlobalKey<RefreshIndicatorState>();
+  final GlobalKey _aboveKey = GlobalKey();
+  final GlobalKey _belowKey = GlobalKey();
+  final Key _centerKey = UniqueKey();
   FeedRefreshController? _refreshController;
-  bool _firstLoadStarted = false;
+  FeedScrollController? _scrollController;
   bool _pendingInitialLoad = false;
+
+  /// Index of the tweet shown at the top when the feed opens.
+  int _anchor = 0;
 
   PagingController<int, TweetChain> get _controller => widget.feed.controller;
 
@@ -134,31 +153,73 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
   void initState() {
     super.initState();
     widget.feed.loader = widget.loadPage;
-    // While we show the cached preview the PagedListView isn't mounted, so it
-    // can't trigger the first page itself — we rebuild to swap it in once items
-    // arrive, so listen for that.
     _controller.addListener(_onControllerChanged);
     widget.feed.refreshError.addListener(_onControllerChanged);
     widget.feed.partialError.addListener(_onControllerChanged);
     widget.feed.containsUnrelatedTweets.addListener(_onControllerChanged);
+    if (widget.refreshOnOpen && widget.feed.hasItems) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _refreshOnOpen());
+    }
+    _anchor = max(0, widget.feed.items.indexWhere((chain) => chain.id == widget.initialTopItem));
+  }
+
+  void _refreshOnOpen() {
+    final refreshState = _refreshKey.currentState;
+    if (!mounted || refreshState == null) return;
+    _pendingInitialLoad = true;
+    refreshState.show();
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // Only feeds that support pull-to-refresh expose their refresh to the
-    // app-bar button. Outside a GroupFeedShell there is no controller to bind.
-    if (widget.onRefresh == null) return;
-    FeedRefreshController? controller;
-    try {
-      controller = context.read<FeedRefreshController>();
-    } on ProviderNotFoundException {
-      controller = null;
+    final scrollController = _readOrNull<FeedScrollController>();
+    if (!identical(scrollController, _scrollController)) {
+      _scrollController?.unregister(_moveAnchorToTop);
+      _scrollController = scrollController?..register(_moveAnchorToTop);
     }
-    if (!identical(controller, _refreshController)) {
+    // Only feeds that support pull-to-refresh expose their refresh to the app-bar button
+    if (widget.onRefresh == null) return;
+    final refreshController = _readOrNull<FeedRefreshController>();
+    if (!identical(refreshController, _refreshController)) {
       _refreshController?.unregister(_showRefresh);
-      _refreshController = controller;
-      _refreshController?.register(_showRefresh);
+      _refreshController = refreshController?..register(_showRefresh);
+    }
+  }
+
+  T? _readOrNull<T>() {
+    try {
+      return context.read<T>();
+    } on ProviderNotFoundException {
+      return null;
+    }
+  }
+
+  Future<void> _moveAnchorToTop() async {
+    if (_anchor == 0) return;
+    setState(() => _anchor = 0);
+    await WidgetsBinding.instance.endOfFrame;
+  }
+
+  bool _onScrollEnd(ScrollEndNotification notification) {
+    final viewport = notification.context?.findRenderObject();
+    if (notification.depth != 0 || widget.onTopItemChanged == null || viewport is! RenderBox) return false;
+    // Waits for the layout of the last scroll
+    WidgetsBinding.instance.addPostFrameCallback((_) => _reportTopItem(viewport));
+    WidgetsBinding.instance.ensureVisualUpdate();
+    return false;
+  }
+
+  void _reportTopItem(RenderBox viewport) {
+    if (!mounted || !viewport.attached) return;
+    final index = topItemIndex(
+        viewport: viewport,
+        anchor: _anchor,
+        above: _aboveKey.currentContext?.findRenderObject(),
+        below: _belowKey.currentContext?.findRenderObject());
+    final items = widget.feed.items;
+    if (index != null && index < items.length) {
+      widget.onTopItemChanged?.call(items[index].id);
     }
   }
 
@@ -175,8 +236,6 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
       widget.feed.refreshError.addListener(_onControllerChanged);
       widget.feed.partialError.addListener(_onControllerChanged);
       widget.feed.containsUnrelatedTweets.addListener(_onControllerChanged);
-      // A fresh feed may need its first page kicked off again from the preview.
-      _firstLoadStarted = false;
     }
   }
 
@@ -187,11 +246,15 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
     widget.feed.partialError.removeListener(_onControllerChanged);
     widget.feed.containsUnrelatedTweets.removeListener(_onControllerChanged);
     _refreshController?.unregister(_showRefresh);
+    _scrollController?.unregister(_moveAnchorToTop);
     super.dispose();
   }
 
   void _onControllerChanged() {
-    if (mounted) setState(() {});
+    if (!mounted) return;
+    setState(() {
+      if (_anchor >= widget.feed.items.length) _anchor = 0;
+    });
   }
 
   // Drives the same RefreshIndicator the user pulls down, so the app-bar refresh
@@ -222,50 +285,6 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
     }
   }
 
-  // True while we should display the cached preview: the first page hasn't
-  // loaded yet, and we actually have cached tweets. A first page error is shown
-  // above them rather than in their place.
-  bool get _showingPreview {
-    final preview = widget.firstPagePreview;
-    return preview != null && preview.isNotEmpty && _controller.value.items == null;
-  }
-
-  // The PagedListView normally kicks off the first page when it mounts. While
-  // the preview replaces it, nothing does — so trigger the load ourselves once.
-  void _maybeStartFirstLoad() {
-    if (_firstLoadStarted) return;
-    final state = _controller.value;
-    if (state.items != null || state.error != null) return;
-    _firstLoadStarted = true;
-    // Deferred: we're called from build() and fetchNextPage() mutates the
-    // controller synchronously, which would setState() mid-build via our listener.
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted) return;
-      if (widget.onRefresh == null) {
-        _controller.fetchNextPage();
-        return;
-      }
-      final refreshState = _refreshKey.currentState;
-      if (refreshState != null) {
-        _pendingInitialLoad = true;
-        refreshState.show();
-      } else {
-        _controller.fetchNextPage();
-      }
-    });
-  }
-
-  // Runs the first load again, without the side effects of a pull-to-refresh
-  void _retryFirstLoad() {
-    final refreshState = _refreshKey.currentState;
-    if (refreshState == null) {
-      _controller.fetchNextPage();
-      return;
-    }
-    _pendingInitialLoad = true;
-    refreshState.show();
-  }
-
   Widget? _errorAbove(PagingError? error, VoidCallback onRetry) => error == null
       ? null
       : ErrorCard(
@@ -286,9 +305,11 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
     if (_pendingInitialLoad) {
       _pendingInitialLoad = false;
       await widget.feed.softRefresh();
-      return;
+    } else {
+      await _handleRefresh();
     }
-    await _handleRefresh();
+    // After a refresh, the anchored tweet may no longer exist
+    if (mounted) await _moveAnchorToTop();
   }
 
   Widget _wrapWithRefresh(Widget child) {
@@ -298,31 +319,45 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
 
   @override
   Widget build(BuildContext context) {
-    if (_showingPreview) {
-      _maybeStartFirstLoad();
-      return _wrapWithRefresh(CachedTweetList(widget.firstPagePreview!,
-          username: widget.username, header: _errorAbove(pagingErrorOf(_controller.value), _retryFirstLoad)));
-    }
-
     final list = PagingListener<int, TweetChain>(
       controller: _controller,
-      builder: (context, state, fetchNextPage) => CustomScrollView(slivers: [
-        SliverToBoxAdapter(
-            child: _errorAbove(widget.feed.refreshError.value ?? widget.feed.partialError.value, _showRefresh)),
-        if (widget.feed.containsUnrelatedTweets.value) const SliverToBoxAdapter(child: UnrelatedTweetsWarning()),
-        SliverToBoxAdapter(child: _releaseNotes()),
-        SliverPadding(
-          padding: EdgeInsets.only(top: 4, bottom: MediaQuery.of(context).padding.bottom),
-          sliver: _pagedList(state, fetchNextPage),
-        ),
-      ]),
+      builder: (context, state, fetchNextPage) => NotificationListener<ScrollEndNotification>(
+        onNotification: _onScrollEnd,
+        child: _scrollView(state, fetchNextPage),
+      ),
     );
 
     return _wrapWithRefresh(list);
   }
 
+  Widget _scrollView(PagingState<int, TweetChain> state, NextPageCallback fetchNextPage) {
+    final items = state.items ?? const [];
+    // The list can shrink before the anchor is reset
+    final anchor = _anchor < items.length ? _anchor : 0;
+    return CustomScrollView(center: anchor > 0 ? _centerKey : null, slivers: [
+      SliverToBoxAdapter(
+          child: _errorAbove(widget.feed.refreshError.value ?? widget.feed.partialError.value, _showRefresh)),
+      if (widget.feed.containsUnrelatedTweets.value) const SliverToBoxAdapter(child: UnrelatedTweetsWarning()),
+      SliverToBoxAdapter(child: _releaseNotes()),
+      if (anchor > 0)
+        SliverList.builder(
+          key: _aboveKey,
+          itemCount: anchor,
+          itemBuilder: (context, index) => _buildChain(context, items[anchor - 1 - index]),
+        ),
+      SliverPadding(
+        key: _centerKey,
+        padding: EdgeInsets.only(top: 4, bottom: MediaQuery.of(context).padding.bottom),
+        sliver: _pagedList(
+            anchor == 0 ? state : state.copyWith(pages: [items.sublist(anchor)], keys: [state.keys!.last]),
+            fetchNextPage),
+      ),
+    ]);
+  }
+
   Widget _pagedList(PagingState<int, TweetChain> state, NextPageCallback fetchNextPage) =>
       PagedSliverList<int, TweetChain>(
+        key: _belowKey,
         state: state,
         fetchNextPage: fetchNextPage,
         addAutomaticKeepAlives: false,

@@ -15,10 +15,10 @@ import 'package:quax/generated/l10n.dart';
 import 'package:quax/ui/locale_fallback.dart';
 import 'package:quax/community/community_screen.dart';
 import 'package:quax/space/space_screen.dart';
-import 'package:quax/group/feed_session_cache.dart';
 import 'package:quax/tweet/tweet_actions.dart';
 import 'package:quax/tweet/video_controller_pool.dart';
 import 'package:quax/tweet/video_player_budget.dart';
+import 'package:quax/group/feed_cache.dart';
 import 'package:quax/group/group_model.dart';
 import 'package:quax/group/group_screen.dart';
 import 'package:quax/home/_feed.dart';
@@ -237,6 +237,7 @@ Future<void> main() async {
     optionDiscordPopupDismissed: false,
     optionSubscriptionGroupsOrderByAscending: true,
     optionDisableWarningsForUnrelatedPostsInFeed: false,
+    optionKeepFeedOffset: false,
     alwaysShowFullTweetContents: false,
     optionSubscriptionGroupsOrderByField: 'name',
     optionSubscriptionOrderByAscending: true,
@@ -286,20 +287,12 @@ Future<void> main() async {
 
     var subscriptionsModel = SubscriptionsModel(prefService, groupsModel);
     await subscriptionsModel.reloadSubscriptions();
+    unawaited(Repository.writable().then(purgeOrphanFeedChunks));
 
     await _decideOnboarding(prefService, subscriptionsModel);
 
     var releaseNotesModel = ReleaseNotesModel((await PackageInfo.fromPlatform()).version);
     await releaseNotesModel.load();
-
-    var feedSessionCache = FeedSessionCache();
-    // Registration order matters: invalidateAll must run before any
-    // GroupFeedShell reload listener, so by the time the shell remounts the
-    // body via KeyedSubtree, the inner feed reads fresh controllers from the
-    // cache. LinkedHashMap iterates in insertion order, and registering here
-    // (before any shell exists) guarantees we win.
-    groupsModel.addReloadListener('FeedSessionCache', feedSessionCache.invalidateAll);
-    subscriptionsModel.addReloadListener('FeedSessionCache', feedSessionCache.invalidateAll);
 
     var trendLocationModel = UserTrendLocationModel(prefService);
 
@@ -310,7 +303,6 @@ Future<void> main() async {
         child: MultiProvider(
           providers: [
             Provider(create: (context) => groupsModel),
-            Provider(create: (context) => feedSessionCache),
             Provider(create: (context) => releaseNotesModel),
             Provider(create: (context) => VideoControllerPool(maxSize: videoPlayerBudget)),
             Provider(create: (context) => homeModel),

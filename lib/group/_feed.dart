@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:material_ui/material_ui.dart';
 
 import 'package:quax/catcher/exceptions.dart';
@@ -10,10 +8,8 @@ import 'package:quax/database/entities.dart';
 import 'package:quax/database/repository.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/group/feed_cache.dart';
-import 'package:quax/group/feed_session_cache.dart';
+import 'package:quax/group/feed_chunk_page.dart';
 import 'package:quax/group/group_screen.dart';
-import 'package:quax/group/search_query.dart';
-import 'package:quax/group/unrelated_tweets.dart';
 import 'package:quax/subscriptions/refreshed_profiles.dart';
 import 'package:quax/subscriptions/users_model.dart';
 import 'package:quax/tweet/paginated_tweet_list.dart';
@@ -23,123 +19,60 @@ import 'package:quax/utils/iterables.dart';
 import 'package:quax/utils/paging.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
-import 'package:sqflite/sqflite.dart';
 
 class SubscriptionGroupFeed extends StatefulWidget {
   final SubscriptionGroupGet group;
   final List<SubscriptionGroupFeedChunk> chunks;
   final bool includeReplies;
   final bool includeRetweets;
-  // When non-null, the PagingController and scroll offset are stored in the
-  // app-scoped FeedSessionCache under this key, so pop+push of the same route
-  // restores tweets and scroll position. When null, state is local to this
-  // State and disposed normally — used by home-tab usages, which are kept
-  // alive by AutomaticKeepAliveClientMixin in the shell.
-  final String? cacheKey;
-  // Cached tweets to show immediately while the first page loads, seeded by the
-  // caller (e.g. the All/Following feed reuses the preview it already read while
-  // its subscriptions were loading). Refined to this feed's own chunks once read.
-  final List<TweetChain>? initialPreview;
 
   const SubscriptionGroupFeed(
       {super.key,
       required this.group,
       required this.chunks,
       required this.includeReplies,
-      required this.includeRetweets,
-      this.cacheKey,
-      this.initialPreview});
+      required this.includeRetweets});
 
   @override
   State<SubscriptionGroupFeed> createState() => _SubscriptionGroupFeedState();
 }
 
 class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
-  late final TweetFeedController _feedController;
-  FeedSessionCache? _cache;
-  ScrollController? _innerScrollController;
-  bool _scrollRestoreScheduled = false;
-  // Cached tweets shown while the first page loads, so opening the feed reveals
-  // its previously-loaded content instead of a full-screen spinner.
-  List<TweetChain>? _cachedPreview;
-
-  bool get _usesCache => widget.cacheKey != null;
+  final TweetFeedController _feedController = TweetFeedController();
+  bool _openedFromCache = false;
+  String? _position;
+  bool _ready = false;
 
   @override
   void initState() {
     super.initState();
-    if (_usesCache) {
-      _cache = context.read<FeedSessionCache>();
-      _feedController = _cache!.getOrCreateController(widget.cacheKey!);
-    } else {
-      _feedController = TweetFeedController();
-    }
-    // Cached (pop/push-restored) controllers already hold their tweets; only a
-    // fresh controller needs the preview while it loads the first page.
-    _cachedPreview = widget.initialPreview;
-    if (!_feedController.hasItems) {
-      _loadPreview();
-    }
+    _openFromCache();
   }
 
-  Future<void> _loadPreview() async {
+  Future<void> _openFromCache() async {
+    var keepPosition = PrefService.of(context, listen: false).get<bool>(optionKeepFeedOffset) ?? false;
     var repository = await Repository.readOnly();
-    var cached = await readCachedChainsForHashes(repository, widget.chunks.map((e) => e.hash));
+    var hashes = widget.chunks.map((e) => e.hash);
+    var cached = await readCachedChainsForHashes(repository, hashes);
+    var cursors = await Future.wait(hashes.map((hash) => readChunkCursor(repository, hash)));
+    var position = keepPosition ? await readFeedPosition(repository, widget.group.id) : null;
     if (!mounted) return;
-    setState(() => _cachedPreview = cached);
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (!_usesCache) return;
-    // Inside NestedScrollView's body, PrimaryScrollController is the inner
-    // controller PagedListView attaches to, and the one we need for jumpTo().
-    _innerScrollController = PrimaryScrollController.maybeOf(context);
-    _maybeRestoreScrollOffset();
-  }
-
-  bool _onScrollNotification(ScrollNotification notification) {
-    if (_usesCache && notification is ScrollEndNotification) {
-      final metrics = notification.metrics;
-      if (metrics.hasPixels) {
-        _cache!.saveOffset(widget.cacheKey!, metrics.pixels);
-      }
+    if (cached.isNotEmpty) {
+      _feedController.seed(cached, feedCursorOf(cursors));
     }
-    return false;
-  }
-
-  void _maybeRestoreScrollOffset() {
-    if (_scrollRestoreScheduled) return;
-    _scrollRestoreScheduled = true;
-    final saved = _cache!.readOffset(widget.cacheKey!);
-    if (saved == null || saved <= 0) return;
-    _scheduleRestore(saved);
-  }
-
-  // The cached items render and lay out across the first few frames, so the
-  // ScrollPosition may not be attached yet on the very first post-frame.
-  // Keep scheduling post-frame callbacks until the scrollable reports stable
-  // dimensions, then jump. Terminates via `mounted` when the widget unmounts.
-  void _scheduleRestore(double offset) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted) return;
-      final c = _innerScrollController;
-      if (c == null || !c.hasClients || !c.position.haveDimensions) {
-        _scheduleRestore(offset);
-        return;
-      }
-      c.jumpTo(offset.clamp(0.0, c.position.maxScrollExtent));
+    setState(() {
+      _openedFromCache = cached.isNotEmpty;
+      _position = position;
+      _ready = true;
     });
   }
 
+  Future<void> _storePosition(String chainId) async =>
+      storeFeedPosition(await Repository.writable(), widget.group.id, chainId);
+
   @override
   void dispose() {
-    if (!_usesCache) {
-      _feedController.dispose();
-    }
-    // When cached, the FeedSessionCache owns the controller's lifecycle across
-    // pop/push; PaginatedTweetList has already detached its own listener.
+    _feedController.dispose();
     super.dispose();
   }
 
@@ -162,109 +95,30 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
     return true;
   }
 
-  Future<String> createCursor(Database repository) async {
-    return (await repository.insert(tableFeedGroupCursor, {}, nullColumnHack: 'id')).toString();
-  }
-
-  /// Search for our next "page" of tweets.
-  ///
-  /// Here, each page is actually a set of mappings, where the ID of each set is the hash of all the user IDs in that
-  /// set. We store this along with the top and bottom pagination cursors, which we use to perform pagination for all
-  /// sets at the same time, allowing us to create a feed made up of individual search queries.
-  Future<TweetPageResult> _listTweets(String? cursorKey) async {
-    List<Future<List<TweetChain>>> futures = [];
+  /// Loads the first page when [cursor] is null.
+  Future<TweetPageResult> _listTweets(String? cursor) async {
     final subscriptions = context.read<SubscriptionsModel>();
+    final repository = await Repository.writable();
+    final firstPage = cursor == null;
+    final pages =
+        await Future.wait(widget.chunks.map((chunk) => loadChunkPage(repository, chunk, firstPage: firstPage)));
 
-    var repository = await Repository.writable();
-    var nextCursor = await createCursor(repository);
-    var foundUnrelatedTweets = false;
-    var errors = <PagingError>[];
-    var failedChunks = 0;
-    var failedSubscriptions = 0;
-    var answeredChains = <TweetChain>[];
-
-    for (var chunk in widget.chunks) {
-      var hash = chunk.hash;
-
-      futures.add(Future(() async {
-        var tweets = <TweetChain>[];
-
-        String? searchCursor;
-
-        if (cursorKey == null) {
-          // First page: keep the stored tweets of the chunk, shown if X can't be reached, and load it from scratch
-          var storedChunks = await repository.query(tableFeedGroupChunk,
-              where: 'hash = ?', whereArgs: [hash], orderBy: 'created_at DESC');
-          tweets.addAll(chainsFromStoredChunks(storedChunks));
-        } else {
-          // We're currently at the end of our current feed, so load the oldest chunk and use its cursor to load more
-          var storedChunks = await repository.query(tableFeedGroupChunk,
-              where: 'cursor_id = ? AND hash = ?', whereArgs: [int.parse(cursorKey), hash]);
-          if (storedChunks.isNotEmpty) {
-            searchCursor = storedChunks.first['cursor_bottom'] as String;
-          } else {
-            searchCursor = null;
-          }
-        }
-
-        // Perform our search for the next page of results for this chunk, and add those tweets to our collection
-        var query = buildFeedSearchQuery(chunk.users,
-            includeReplies: widget.includeReplies, includeRetweets: widget.includeRetweets);
-        TweetStatus result;
-        try {
-          result = await Twitter.searchTweets(query, cursor: searchCursor);
-        } catch (e, stackTrace) {
-          errors.add(PagingError(e, stackTrace));
-          failedChunks++;
-          failedSubscriptions += chunk.users.length;
-          return tweets;
-        }
-        final answeredError = result.error;
-        if (answeredError != null) {
-          errors.add(PagingError(answeredError, StackTrace.current));
-        }
-        foundUnrelatedTweets |= feedContainsUnrelatedTweets(result, chunk.users);
-        answeredChains.addAll(result.chains);
-
-        if (cursorKey == null) {
-          // X answered, so its fresh page replaces what was stored for this chunk
-          await repository.delete(tableFeedGroupChunk, where: 'hash = ?', whereArgs: [hash]);
-          tweets.clear();
-        }
-
-        if (result.chains.isNotEmpty) {
-          tweets.addAll(result.chains);
-
-          // Make sure we insert the set of cursors for this latest chunk, ready for the next time we paginate
-          await repository.insert(tableFeedGroupChunk, {
-            'cursor_id': int.parse(nextCursor),
-            'hash': hash,
-            'cursor_top': result.cursorTop,
-            'cursor_bottom': result.cursorBottom,
-            'response': jsonEncode(result.chains.map((e) => e.toJson()).toList())
-          });
-        }
-
-        return tweets;
-      }));
+    final failed = pages.where((page) => page.failed).toList();
+    if (failed.length == pages.length) {
+      final error = failed.first.error!;
+      Error.throwWithStackTrace(error.error, error.stackTrace);
     }
-
-    // Wait for all our searches to complete, then build our list of tweet conversations
-    var result = (await Future.wait(futures));
-    if (failedChunks > 0 && failedChunks == widget.chunks.length) {
-      Error.throwWithStackTrace(errors.first.error, errors.first.stackTrace);
-    }
-    _feedController.partialError.value = _partialError(errors, failedSubscriptions);
-    await subscriptions.refreshSubscriptions(authorsOf(answeredChains));
-    var threads = sortChainsNewestFirst(result.expand((element) => element).toList());
+    _feedController.partialError.value = _partialError(pages);
+    await subscriptions.refreshSubscriptions(authorsOf(pages.expand((page) => page.answered)));
 
     if (!mounted) {
       return (chains: <TweetChain>[], nextCursor: null);
     }
 
-    _updateUnrelatedTweetsWarning(foundUnrelatedTweets, firstPage: cursorKey == null);
-
-    return (chains: threads, nextCursor: nextCursor);
+    _updateUnrelatedTweetsWarning(pages.any((page) => page.unrelated), firstPage: firstPage);
+    final shown = firstPage ? const <TweetChain>[] : _feedController.items;
+    final chains = sortChainsNewestFirst(unseenChains(pages.expand((page) => page.tweets), shown));
+    return (chains: chains, nextCursor: feedCursorOf(pages.map((page) => page.cursor)));
   }
 
   // The warning stays until the next refresh, even when the next pages are fine
@@ -275,12 +129,16 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
   }
 
   /// The error to show above the tweets for the chunks that failed. A rate limit tells how much of the feed could load
-  PagingError? _partialError(List<PagingError> errors, int failedSubscriptions) {
+  PagingError? _partialError(List<ChunkPage> pages) {
+    var errors = pages.map((page) => page.error).nonNulls;
     var rateLimit = errors.map((e) => e.error).whereType<RateLimitedException>().firstOrNull;
     if (rateLimit == null) {
       return errors.firstOrNull;
     }
     var total = widget.chunks.fold(0, (sum, chunk) => sum + chunk.users.length);
+    var failedSubscriptions = widget.chunks.indexed
+        .where((chunk) => pages[chunk.$1].failed)
+        .fold(0, (sum, chunk) => sum + chunk.$2.users.length);
     var feedError = FeedRateLimitedException(rateLimit.availableAt, loaded: total - failedSubscriptions, total: total);
     return PagingError(feedError, StackTrace.current);
   }
@@ -290,21 +148,24 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
     if (widget.chunks.isEmpty) {
       return const Scaffold(body: EmptyGroupFeed());
     }
+    if (!_ready) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+    final keepPosition = PrefService.of(context).get<bool>(optionKeepFeedOffset) ?? false;
 
     return Scaffold(
       body: TweetContextScope(
-        child: NotificationListener<ScrollNotification>(
-          onNotification: _onScrollNotification,
-          child: PaginatedTweetList(
-            feed: _feedController,
-            loadPage: _listTweets,
-            username: null,
-            firstPagePreview: _cachedPreview,
-            onRefresh: () async {},
-            firstPageErrorPrefix: (l10n) => l10n.unable_to_load_the_tweets_for_the_feed,
-            newPageErrorPrefix: (l10n) => l10n.unable_to_load_the_next_page_of_tweets,
-            emptyMessage: L10n.of(context).could_not_find_any_tweets_from_the_last_7_days,
-          ),
+        child: PaginatedTweetList(
+          feed: _feedController,
+          loadPage: _listTweets,
+          username: null,
+          refreshOnOpen: _openedFromCache && !keepPosition,
+          initialTopItem: _position,
+          onTopItemChanged: keepPosition ? _storePosition : null,
+          onRefresh: () async {},
+          firstPageErrorPrefix: (l10n) => l10n.unable_to_load_the_tweets_for_the_feed,
+          newPageErrorPrefix: (l10n) => l10n.unable_to_load_the_next_page_of_tweets,
+          emptyMessage: L10n.of(context).could_not_find_any_tweets_from_the_last_7_days,
         ),
       ),
     );

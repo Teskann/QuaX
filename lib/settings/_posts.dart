@@ -61,6 +61,13 @@ class SettingsPostsFragment extends StatelessWidget {
               pref: optionDisableWarningsForUnrelatedPostsInFeed,
             ),
           ),
+          LabeledPref(
+            child: PrefSwitch(
+              title: Text(L10n.of(context).keep_feed_position),
+              subtitle: Text(L10n.of(context).keep_feed_position_description),
+              pref: optionKeepFeedOffset,
+            ),
+          ),
         ]),
       ),
     );

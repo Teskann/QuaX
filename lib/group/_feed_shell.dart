@@ -5,11 +5,12 @@ import 'package:quax/constants.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/group/_settings.dart';
 import 'package:quax/group/feed_refresh_controller.dart';
+import 'package:quax/group/feed_scroll_controller.dart';
 import 'package:quax/group/group_model.dart';
 import 'package:quax/subscriptions/users_model.dart';
 
 class GroupFeedShell extends StatefulWidget {
-  final ScrollController scrollController;
+  final FeedScrollController scrollController;
   final String groupId;
   final WidgetBuilder titleBuilder;
   final WidgetBuilder bodyBuilder;
@@ -65,9 +66,7 @@ class _GroupFeedShellState extends State<GroupFeedShell> with AutomaticKeepAlive
   }
 
   // Triggered when subscriptions or group memberships change. Refresh the group
-  // state and bump the counter to remount the body — for pushed-route feeds
-  // this drops the stale (cached, just-invalidated) PagingController so the
-  // inner state re-fetches a fresh one from the cache.
+  // state and bump the counter to remount the body on its new chunks.
   void _onReload() {
     if (!mounted) return;
     setState(() {
@@ -89,8 +88,11 @@ class _GroupFeedShellState extends State<GroupFeedShell> with AutomaticKeepAlive
     return Provider<GroupModel>.value(
       value: _groupModel,
       builder: (context, child) {
-        return Provider<FeedRefreshController>.value(
-          value: _feedRefreshController,
+        return MultiProvider(
+          providers: [
+            Provider<FeedRefreshController>.value(value: _feedRefreshController),
+            InheritedProvider<FeedScrollController>.value(value: widget.scrollController),
+          ],
           child: NestedScrollView(
             controller: widget.scrollController,
             floatHeaderSlivers: true,
@@ -123,7 +125,7 @@ class _GroupFeedShellState extends State<GroupFeedShell> with AutomaticKeepAlive
 List<Widget> defaultGroupActions(
   BuildContext context, {
   required GroupModel model,
-  ScrollController? scrollToTopController,
+  FeedScrollController? scrollToTopController,
   bool showMore = true,
   bool showRefresh = true,
   VoidCallback? onRefresh,
@@ -139,9 +141,7 @@ List<Widget> defaultGroupActions(
           icon: Icon(Icons.arrow_upward, semanticLabel: L10n.of(context).scroll_to_top),
           onPressed: () async {
             final disableAnimations = PrefService.of(context).get(optionDisableAnimations) == true;
-            await scrollToTopController.animateTo(0,
-                duration: disableAnimations ? Duration.zero : const Duration(seconds: 1),
-                curve: Curves.easeInOut);
+            await scrollToTopController.scrollToTop(animate: !disableAnimations);
           }),
     if (showRefresh)
       IconButton(

@@ -9,6 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:quax/client/client.dart';
 import 'package:quax/group/_feed_shell.dart';
+import 'package:quax/group/feed_scroll_controller.dart';
 import 'package:quax/group/group_model.dart';
 import 'package:quax/onboarding/_theme_picker.dart';
 import 'package:quax/search/search.dart';
@@ -160,7 +161,7 @@ Map<String, Future<void> Function(WidgetTester tester)> _screens() => {
           Builder(
               builder: (context) => AppBar(
                   actions: defaultGroupActions(context,
-                      model: GroupModel('group'), scrollToTopController: ScrollController(), onRefresh: () {})))),
+                      model: GroupModel('group'), scrollToTopController: FeedScrollController(), onRefresh: () {})))),
       'the profile header': (tester) => openProfile(tester, 'quax-tests', 'quax_tests', quaxTestsId),
       'the media viewer': (tester) => pumpInApp(
           tester,

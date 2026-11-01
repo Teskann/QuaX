@@ -8,6 +8,7 @@ import 'package:quax/database/entities.dart';
 import 'package:quax/database/repository.dart';
 import 'package:logging/logging.dart';
 import 'package:pref/pref.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:uuid/uuid.dart';
 
 var defaultGroupIcon = '{"pack":"custom","key":"rss_feed"}';
@@ -26,6 +27,52 @@ IconData deserializeIconData(String iconData) {
   return Icons.rss_feed;
 }
 
+Future<SubscriptionGroupGet> readSubscriptionGroup(Database database, String id) async {
+  var group = (await database.query(tableSubscriptionGroup, where: 'id = ?', whereArgs: [id])).first;
+  if (id == '-1') {
+    return _readMainFeed(database, group);
+  }
+
+  var searchSubscriptions = (await database.rawQuery(
+          'SELECT s.* FROM $tableSearchSubscription s LEFT JOIN $tableSubscriptionGroupMember sgm ON sgm.profile_id = s.id WHERE sgm.group_id = ?',
+          [id]))
+      .map((e) => SearchSubscription.fromMap(e))
+      .toList(growable: false);
+
+  var userSubscriptions = (await database.rawQuery(
+          'SELECT s.* FROM $tableSubscription s LEFT JOIN $tableSubscriptionGroupMember sgm ON sgm.profile_id = s.id WHERE sgm.group_id = ?',
+          [id]))
+      .map((e) => UserSubscription.fromMap(e))
+      .toList(growable: false);
+
+  // TODO: Factory
+  return SubscriptionGroupGet(
+      id: group['id'] as String,
+      name: group['name'] as String,
+      icon: group['icon'] as String,
+      subscriptions: [...userSubscriptions, ...searchSubscriptions],
+      includeReplies: group['include_replies'] == 1,
+      includeRetweets: group['include_retweets'] == 1);
+}
+
+Future<SubscriptionGroupGet> _readMainFeed(Database database, Map<String, Object?> group) async {
+  var subscriptions =
+      (await database.query(tableSubscription)).map((e) => UserSubscription.fromMap(e)).toList(growable: false);
+  var groupMemberIds = (await database.query(tableSubscriptionGroupMember, columns: ['profile_id']))
+      .map((e) => e['profile_id'] as String)
+      .toSet();
+
+  return SubscriptionGroupGet(
+      id: '-1',
+      name: 'All',
+      icon: group['icon'] as String,
+      subscriptions: subscriptions,
+      includeReplies: group['include_replies'] == 1,
+      includeRetweets: group['include_retweets'] == 1,
+      includeGroupMembers: group['include_group_members'] == 1,
+      groupMemberIds: groupMemberIds);
+}
+
 class GroupModel extends Store<SubscriptionGroupGet> {
   final String id;
 
@@ -39,50 +86,7 @@ class GroupModel extends Store<SubscriptionGroupGet> {
             includeReplies: false));
 
   Future<void> loadGroup() async {
-    await execute(() async {
-      var database = await Repository.readOnly();
-
-      var group = (await database.query(tableSubscriptionGroup, where: 'id = ?', whereArgs: [id])).first;
-
-      if (id == '-1') {
-        var subscriptions =
-            (await database.query(tableSubscription)).map((e) => UserSubscription.fromMap(e)).toList(growable: false);
-        var groupMemberIds = (await database.query(tableSubscriptionGroupMember, columns: ['profile_id']))
-            .map((e) => e['profile_id'] as String)
-            .toSet();
-
-        return SubscriptionGroupGet(
-            id: '-1',
-            name: 'All',
-            icon: group['icon'] as String,
-            subscriptions: subscriptions,
-            includeReplies: group['include_replies'] == 1,
-            includeRetweets: group['include_retweets'] == 1,
-            includeGroupMembers: group['include_group_members'] == 1,
-            groupMemberIds: groupMemberIds);
-      }
-
-      var searchSubscriptions = (await database.rawQuery(
-              'SELECT s.* FROM $tableSearchSubscription s LEFT JOIN $tableSubscriptionGroupMember sgm ON sgm.profile_id = s.id WHERE sgm.group_id = ?',
-              [id]))
-          .map((e) => SearchSubscription.fromMap(e))
-          .toList(growable: false);
-
-      var userSubscriptions = (await database.rawQuery(
-              'SELECT s.* FROM $tableSubscription s LEFT JOIN $tableSubscriptionGroupMember sgm ON sgm.profile_id = s.id WHERE sgm.group_id = ?',
-              [id]))
-          .map((e) => UserSubscription.fromMap(e))
-          .toList(growable: false);
-
-      // TODO: Factory
-      return SubscriptionGroupGet(
-          id: group['id'] as String,
-          name: group['name'] as String,
-          icon: group['icon'] as String,
-          subscriptions: [...userSubscriptions, ...searchSubscriptions],
-          includeReplies: group['include_replies'] == 1,
-          includeRetweets: group['include_retweets'] == 1);
-    });
+    await execute(() async => readSubscriptionGroup(await Repository.readOnly(), id));
   }
 
   Future<void> toggleSubscriptionGroupIncludeReplies(bool value) =>
