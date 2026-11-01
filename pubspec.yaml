@@ -87,6 +87,7 @@ dependencies:
   package_info_plus: ^10.1.0
   path: ^1.8.2
   permission_handler: ^13.0.1
+  pub_semver: ^2.2.1
   scroll_to_index: ^3.0.1
   # Stuck on 2.x: 3.0.0 strictly pins androidx.core:core to 1.17.0 (for
   # fingerprint auth on API 23-27), which conflicts with android_file_picker's
@@ -138,6 +139,7 @@ flutter:
 
   assets:
     - assets/icon.png
+    - assets/release_notes.json
     - assets/icon-monochrome-432x432.png
     - assets/fonts/OFL.txt
 

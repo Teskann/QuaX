@@ -23,7 +23,9 @@ const String tableSubscriptionGroupMember = 'subscription_group_member';
 
 const String tableAccounts = 'accounts';
 
-const int databaseVersion = 28;
+const String tableInstalledVersion = 'installed_version';
+
+const int databaseVersion = 29;
 
 class Repository {
   static final log = Logger('Repository');
@@ -272,6 +274,11 @@ class Repository {
       ],
       28: [
         SqlMigration('ALTER TABLE $tableSubscriptionGroup ADD COLUMN include_group_members BOOLEAN DEFAULT true'),
+      ],
+      29: [
+        // The version of the last release notes the user hid
+        SqlMigration('CREATE TABLE IF NOT EXISTS $tableInstalledVersion (version VARCHAR NOT NULL)',
+            reverseSql: 'DROP TABLE $tableInstalledVersion'),
       ],
     });
   }

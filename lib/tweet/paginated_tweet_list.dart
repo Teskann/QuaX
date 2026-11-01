@@ -1,9 +1,13 @@
+import 'package:flutter_triple/flutter_triple.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
 import 'package:quax/client/client.dart';
 import 'package:quax/group/feed_refresh_controller.dart';
 import 'package:quax/group/unrelated_tweets_warning.dart';
+import 'package:quax/release_notes/release_notes.dart';
+import 'package:quax/release_notes/release_notes_model.dart';
+import 'package:quax/release_notes/release_notes_card.dart';
 import 'package:quax/tweet/cached_tweet_list.dart';
 import 'package:quax/tweet/conversation.dart';
 import 'package:quax/ui/errors.dart';
@@ -208,9 +212,14 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
   /// current tweets visible (the RefreshIndicator shows its own small spinner on
   /// top). Awaited so the spinner stays until done.
   Future<void> _handleRefresh() async {
+    final releaseNotes = context.read<ReleaseNotesModel?>();
     await widget.onRefresh?.call();
     if (!mounted) return;
     await widget.feed.softRefresh();
+    // A successful refresh hides the release notes
+    if (widget.feed.refreshError.value == null) {
+      releaseNotes?.hide();
+    }
   }
 
   // True while we should display the cached preview: the first page hasn't
@@ -262,6 +271,17 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
       : ErrorCard(
           error: error.error, stackTrace: error.stackTrace, prefix: widget.firstPageErrorPrefix, onRetry: onRetry);
 
+  // Search results can't be refreshed, so they don't show the release notes
+  Widget _releaseNotes() {
+    final model = context.read<ReleaseNotesModel?>();
+    if (model == null || widget.onRefresh == null) return const SizedBox.shrink();
+    return ScopedBuilder<ReleaseNotesModel, List<ReleaseNote>>(
+      store: model,
+      onState: (_, releases) =>
+          releases.isEmpty ? const SizedBox.shrink() : ReleaseNotesCard(releases: releases, onHide: model.hide),
+    );
+  }
+
   Future<void> _onRefreshTriggered() async {
     if (_pendingInitialLoad) {
       _pendingInitialLoad = false;
@@ -290,6 +310,7 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
         SliverToBoxAdapter(
             child: _errorAbove(widget.feed.refreshError.value ?? widget.feed.partialError.value, _showRefresh)),
         if (widget.feed.containsUnrelatedTweets.value) const SliverToBoxAdapter(child: UnrelatedTweetsWarning()),
+        SliverToBoxAdapter(child: _releaseNotes()),
         SliverPadding(
           padding: EdgeInsets.only(top: 4, bottom: MediaQuery.of(context).padding.bottom),
           sliver: _pagedList(state, fetchNextPage),
