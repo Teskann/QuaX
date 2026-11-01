@@ -3,6 +3,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:quax/article/article_parser.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/profile/profile.dart';
+import 'package:quax/ui/link_style.dart';
 import 'package:quax/utils/urls.dart';
 
 class Article {
@@ -84,12 +85,12 @@ class ArticleWidget extends StatelessWidget {
     required VoidCallback onTap,
     bool underline = true,
   }) {
+    final link = linkStyle(context);
     return TextSpan(
       text: text,
-      style: style?.copyWith(
-        color: Theme.of(context).colorScheme.primary,
+      style: (style ?? const TextStyle()).merge(link).copyWith(
         decoration: underline ? TextDecoration.underline : TextDecoration.none,
-        decorationColor: underline ? Theme.of(context).colorScheme.primary : null,
+        decorationColor: underline ? link.color : null,
       ),
       recognizer: TapGestureRecognizer()..onTap = onTap,
     );

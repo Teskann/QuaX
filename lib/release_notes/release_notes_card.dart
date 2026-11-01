@@ -5,6 +5,7 @@ import 'package:quax/constants.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/release_notes/release_notes.dart';
 import 'package:quax/tweet/tweet.dart';
+import 'package:quax/ui/link_style.dart';
 import 'package:quax/user.dart';
 import 'package:quax/utils/urls.dart';
 
@@ -108,12 +109,11 @@ class _Note extends StatelessWidget {
       );
 
   List<InlineSpan> _linked(BuildContext context) {
-    final linkStyle = TextStyle(color: Theme.of(context).colorScheme.primary);
     final spans = <InlineSpan>[];
     note.splitMapJoin(_githubReference, onMatch: (match) {
       spans.add(TextSpan(
           text: match[0],
-          style: linkStyle,
+          style: linkStyle(context),
           recognizer: TapGestureRecognizer()..onTap = () => openUri(context, _githubLink(match))));
       return '';
     }, onNonMatch: (plain) {

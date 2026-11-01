@@ -9,7 +9,7 @@ class LinkEntity extends EntityValue {
   Widget toWidget(BuildContext context) {
     return Text(
       url,
-      style: const TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
+      style: linkStyle(context).copyWith(decoration: TextDecoration.underline),
     );
   }
 }
