@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 
 import 'package:quax/tweet/_media.dart';
 import 'package:quax/tweet/_video.dart';
+import 'package:quax/ui/link_style.dart';
 import 'package:quax/generated/l10n.dart';
 
 part 'markdown_entity.dart';

@@ -6,6 +6,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/profile/profile.dart';
 import 'package:quax/search/search.dart';
+import 'package:quax/ui/link_style.dart';
 import 'package:quax/utils/urls.dart';
 import 'package:quax/utils/iterables.dart';
 import 'package:quax/utils/_entities.dart';
@@ -58,7 +59,7 @@ List<RichTextPart> buildRichText(BuildContext context, String rawText, Object? r
     _handleTextParts(context, _convertRunesToText(runesAsIterable, index, start), richTextParts);
 
     // Then add the actual entity
-    richTextParts.add(RichTextPart(part.getContent(), null));
+    richTextParts.add(RichTextPart(part.getContent(linkStyle(context)), null));
 
     // Then set our index in the tweet text as the end of our entity
     index = end;
@@ -146,7 +147,7 @@ List _parseMentionsAndHashtags(BuildContext context, String content) {
     }
     contentWidgets.add(TextSpan(
         text: full,
-        style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+        style: linkStyle(context),
         recognizer: TapGestureRecognizer()..onTap = onTap));
     return type;
   }, onNonMatch: (text) {
