@@ -86,14 +86,14 @@ class TweetTile extends StatefulWidget {
 class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixin {
   static final log = Logger('TweetTile');
 
-  late final bool clickable;
-  late final String? currentUsername;
-  late final TweetWithCard tweet;
-  late final bool isPinned;
-  late final bool isThread;
-  late final bool isQuotedTweet;
-  late final bool addSeparator;
-  late final bool isBirdwatchQuote;
+  bool get clickable => widget.clickable;
+  String? get currentUsername => widget.currentUsername;
+  TweetWithCard get tweet => widget.tweet;
+  bool get isPinned => widget.isPinned;
+  bool get isThread => widget.isThread;
+  bool get isQuotedTweet => widget.isQuotedTweet;
+  bool get addSeparator => widget.addSeparator;
+  bool get isBirdwatchQuote => widget.isBirdwatchQuote;
 
   TranslationStatus _translationStatus = TranslationStatus.original;
 
@@ -108,17 +108,15 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
   late int _mediaIndex = widget.initialMediaIndex;
 
   @override
-  void initState() {
-    super.initState();
-
-    clickable = widget.clickable;
-    currentUsername = widget.currentUsername;
-    tweet = widget.tweet;
-    isPinned = widget.isPinned;
-    isThread = widget.isThread;
-    isQuotedTweet = widget.isQuotedTweet;
-    addSeparator = widget.addSeparator;
-    isBirdwatchQuote = widget.isBirdwatchQuote;
+  void didUpdateWidget(TweetTile oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // A list can give this tile another tweet when it reuses it
+    if (oldWidget.tweet.idStr != widget.tweet.idStr) {
+      _translationStatus = TranslationStatus.original;
+      _translatedParts = [];
+      _mediaIndex = widget.initialMediaIndex;
+      _originalParts = _displayParts = _tweetParts();
+    }
   }
 
   @override
@@ -126,15 +124,15 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     super.didChangeDependencies();
 
     if (!_isInitialized) {
-      _initializeTweetParts();
+      _originalParts = _displayParts = _tweetParts();
       _isInitialized = true;
     }
   }
 
-  void _initializeTweetParts() {
+  List<RichTextPart> _tweetParts() {
     // An unavailable post is drawn as such, often without any text to prepare
     if (tweet.isTombstone ?? false) {
-      return;
+      return [];
     }
 
     // Get the text to display from the actual tweet, i.e. the retweet if there is one, otherwise we end up with "RT @" crap in our text
@@ -143,11 +141,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     var tweetTextFinal = actualTweet.noteText ?? actualTweet.fullText ?? actualTweet.text!;
     var entitiesFinal = actualTweet.noteEntities ?? actualTweet.entities;
 
-    List<RichTextPart> tweetParts = buildRichText(context, tweetTextFinal, entitiesFinal, cardUrl: actualTweet.card?['url'] as String?);
-    setState(() {
-      _displayParts = tweetParts;
-      _originalParts = tweetParts;
-    });
+    return buildRichText(context, tweetTextFinal, entitiesFinal, cardUrl: actualTweet.card?['url'] as String?);
   }
 
   Future<void> onClickTranslate(BuildContext context, Locale locale) async {

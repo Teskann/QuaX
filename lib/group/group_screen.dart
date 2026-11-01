@@ -1,16 +1,12 @@
 import 'package:crypto/crypto.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_triple/flutter_triple.dart';
-import 'package:quax/client/client.dart';
 import 'package:quax/database/entities.dart';
-import 'package:quax/database/repository.dart';
 import 'package:quax/group/_feed.dart';
 import 'package:quax/group/_feed_shell.dart';
-import 'package:quax/group/feed_cache.dart';
+import 'package:quax/group/feed_scroll_controller.dart';
 import 'package:quax/group/group_model.dart';
 import 'package:quax/group/search_query.dart';
-import 'package:quax/tweet/cached_tweet_list.dart';
-import 'package:quax/tweet/tweet_context_scope.dart';
 import 'package:quax/ui/errors.dart';
 import 'package:provider/provider.dart';
 import 'package:quax/utils/iterables.dart';
@@ -35,12 +31,12 @@ class GroupScreen extends StatefulWidget {
 }
 
 class _GroupScreenState extends State<GroupScreen> {
-  late final ScrollController _scrollController;
+  late final FeedScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
-    _scrollController = ScrollController();
+    _scrollController = FeedScrollController();
   }
 
   @override
@@ -56,87 +52,45 @@ class _GroupScreenState extends State<GroupScreen> {
       scrollController: _scrollController,
       id: args.id,
       name: args.name,
-      // Pushed routes persist their feed state across pop/push via the cache.
-      // The cache key matches the groupId so re-pushing the same group restores
-      // the previous tweets and scroll offset.
-      cacheKey: args.id,
       actions: const [],
     );
   }
 }
 
-class SubscriptionGroupScreenContent extends StatefulWidget {
+class SubscriptionGroupScreenContent extends StatelessWidget {
   final String id;
-  final String? cacheKey;
 
-  const SubscriptionGroupScreenContent({super.key, required this.id, this.cacheKey});
-
-  @override
-  State<SubscriptionGroupScreenContent> createState() => _SubscriptionGroupScreenContentState();
-}
-
-class _SubscriptionGroupScreenContentState extends State<SubscriptionGroupScreenContent> {
-  // Cached tweets shown while the group's subscriptions load, so the feed
-  // reveals its content instead of a full-screen spinner on cold start.
-  List<TweetChain>? _preview;
-
-  @override
-  void initState() {
-    super.initState();
-    // Only the combined "All"/Following feed (id '-1') can preview every cached
-    // chunk up front; a specific group needs its own chunk hashes (unknown until
-    // loadGroup finishes) to avoid showing tweets from other groups.
-    if (widget.id == '-1') {
-      _loadPreview();
-    }
-  }
-
-  Future<void> _loadPreview() async {
-    var repository = await Repository.readOnly();
-    var chains = await readAllCachedChains(repository);
-    if (!mounted) return;
-    setState(() => _preview = chains);
-  }
-
-  Widget _loadingView() {
-    var preview = _preview;
-    if (preview != null && preview.isNotEmpty) {
-      return TweetContextScope(child: CachedTweetList(preview));
-    }
-    return const Center(child: CircularProgressIndicator());
-  }
+  const SubscriptionGroupScreenContent({super.key, required this.id});
 
   @override
   Widget build(BuildContext context) {
     return ScopedBuilder<GroupModel, SubscriptionGroupGet>.transition(
       store: context.read<GroupModel>(),
-      onLoading: (_) => _loadingView(),
+      onLoading: (_) => const Center(child: CircularProgressIndicator()),
       onError: (_, error) =>
           ScaffoldErrorWidget(error: error, stackTrace: null, prefix: (l10n) => l10n.unable_to_load_the_group),
       onState: (_, group) {
         // TODO: This is pretty gross. Figure out how to have a "no data" state
         if (group.id.isEmpty) {
-          return _loadingView();
+          return const Center(child: CircularProgressIndicator());
         }
-        // Split the users into chunks, oldest first, to prevent thrashing of all groups when a new user is added
-        final users = group.feedSubscriptions.sorted((a, b) => a.createdAt.compareTo(b.createdAt)).toList();
-
-        var chunks = packFeedChunks(users,
-                includeReplies: group.includeReplies, includeRetweets: group.includeRetweets)
-            .map((e) => SubscriptionGroupFeedChunk(e, group.includeReplies, group.includeRetweets))
-            .toList();
-
         return SubscriptionGroupFeed(
           group: group,
-          chunks: chunks,
+          chunks: feedChunksOf(group),
           includeReplies: group.includeReplies,
           includeRetweets: group.includeRetweets,
-          cacheKey: widget.cacheKey,
-          initialPreview: _preview,
         );
       },
     );
   }
+}
+
+// Split the users into chunks, oldest first, to prevent thrashing of all groups when a new user is added
+List<SubscriptionGroupFeedChunk> feedChunksOf(SubscriptionGroupGet group) {
+  final users = group.feedSubscriptions.sorted((a, b) => a.createdAt.compareTo(b.createdAt)).toList();
+  return packFeedChunks(users, includeReplies: group.includeReplies, includeRetweets: group.includeRetweets)
+      .map((e) => SubscriptionGroupFeedChunk(e, group.includeReplies, group.includeRetweets))
+      .toList();
 }
 
 class SubscriptionGroupFeedChunk {
@@ -154,20 +108,17 @@ class SubscriptionGroupFeedChunk {
 }
 
 class SubscriptionGroupScreen extends StatelessWidget {
-  final ScrollController scrollController;
+  final FeedScrollController scrollController;
   final String id;
   final String name;
   final List<Widget>? actions;
-  // Forwarded to SubscriptionGroupFeed — see its docs. Null disables caching.
-  final String? cacheKey;
 
   const SubscriptionGroupScreen(
       {super.key,
       required this.scrollController,
       required this.id,
       required this.name,
-      this.actions,
-      this.cacheKey});
+      this.actions});
 
   @override
   Widget build(BuildContext context) {
@@ -175,7 +126,7 @@ class SubscriptionGroupScreen extends StatelessWidget {
       scrollController: scrollController,
       groupId: id,
       titleBuilder: (context) => Text(name),
-      bodyBuilder: (context) => SubscriptionGroupScreenContent(id: id, cacheKey: cacheKey),
+      bodyBuilder: (context) => SubscriptionGroupScreenContent(id: id),
       actionsBuilder: (context) => defaultGroupActions(
         context,
         model: context.read<GroupModel>(),

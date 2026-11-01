@@ -61,4 +61,38 @@ void main() {
       expect(rows.single['version'], '4.20.1', reason: 'The release notes are computed from this version');
     });
   });
+
+  group('Version 30', () {
+    test('Should keep the cached pages of the feeds in their order', () async {
+      final database = await databaseAt(29);
+      for (final (cursorId, cursor) in [(2, 'second'), (1, 'first')]) {
+        await database.insert(tableFeedGroupChunk,
+            {'cursor_id': cursorId, 'hash': 'chunk', 'cursor_bottom': cursor, 'response': '[]'});
+      }
+
+      await migrate(database, 29, 30);
+
+      final pages =
+          await database.query(tableFeedGroupChunk, where: 'hash = ?', whereArgs: ['chunk'], orderBy: 'rowid');
+      expect(pages.map((e) => e['cursor_bottom']), ['first', 'second'],
+          reason: 'The last page of a chunk gives the cursor its next page starts from');
+    });
+
+    test('Should drop the numbers the pages of a feed used to share', () async {
+      final database = await databaseAt(30);
+
+      final tables = await database.query('sqlite_master', where: 'name = ?', whereArgs: [tableFeedGroupCursor]);
+      expect(tables, isEmpty, reason: 'Each chunk follows its own cursor, so the shared page numbers are useless');
+    });
+
+    test('Should open the feeds that existed before at their top', () async {
+      final database = await databaseAt(29);
+
+      await migrate(database, 29, 30);
+
+      final feeds = await database.query(tableSubscriptionGroup, columns: ['feed_position']);
+      expect(feeds.map((e) => e['feed_position']), everyElement(isNull),
+          reason: 'No tweet was remembered yet, so the feeds should open on their newest tweet');
+    });
+  });
 }

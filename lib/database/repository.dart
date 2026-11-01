@@ -10,6 +10,7 @@ import 'package:uuid/uuid.dart';
 const String databaseName = 'quax.db';
 
 const String tableFeedGroupChunk = 'feed_group_chunk';
+// Dropped in version 30
 const String tableFeedGroupCursor = 'feed_group_cursor';
 
 const String tableSavedTweet = 'saved_tweet';
@@ -25,7 +26,7 @@ const String tableAccounts = 'accounts';
 
 const String tableInstalledVersion = 'installed_version';
 
-const int databaseVersion = 29;
+const int databaseVersion = 30;
 
 class Repository {
   static final log = Logger('Repository');
@@ -280,6 +281,17 @@ class Repository {
         SqlMigration('CREATE TABLE IF NOT EXISTS $tableInstalledVersion (version VARCHAR NOT NULL)',
             reverseSql: 'DROP TABLE $tableInstalledVersion'),
       ],
+      30: [
+        // Older SQLite versions on Android cannot drop a column, so the table is rebuilt
+        SqlMigration('ALTER TABLE $tableFeedGroupChunk RENAME TO ${tableFeedGroupChunk}_old'),
+        SqlMigration(
+            'CREATE TABLE $tableFeedGroupChunk (hash VARCHAR NOT NULL, cursor_bottom VARCHAR, response VARCHAR, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)'),
+        SqlMigration(
+            'INSERT INTO $tableFeedGroupChunk (hash, cursor_bottom, response, created_at) SELECT hash, cursor_bottom, response, created_at FROM ${tableFeedGroupChunk}_old ORDER BY cursor_id, rowid'),
+        SqlMigration('DROP TABLE ${tableFeedGroupChunk}_old'),
+        SqlMigration('DROP TABLE IF EXISTS $tableFeedGroupCursor'),
+        SqlMigration('ALTER TABLE $tableSubscriptionGroup ADD COLUMN feed_position VARCHAR DEFAULT NULL'),
+      ],
     });
   }
 
@@ -292,11 +304,6 @@ class Repository {
       onCreate: plan.call,
       onDowngrade: plan.call,
     );
-
-    // Clean up any old feed chunks and cursors
-    var repository = await writable();
-    await repository.delete(tableFeedGroupChunk, where: "created_at <= date('now', '-7 day')");
-    await repository.delete(tableFeedGroupCursor, where: "created_at <= date('now', '-7 day')");
 
     log.info('Finished migrating database');
 

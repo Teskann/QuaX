@@ -4,6 +4,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
+import 'package:quax/group/feed_scroll_controller.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/group/group_screen.dart';
@@ -146,7 +147,7 @@ class ScaffoldWithBottomNavigation extends StatefulWidget {
   final List<NavigationPage> pages;
   final BasePrefService prefs;
   final int initialPage;
-  final List<Widget> Function(Map<int, ScrollController> scrollControllers, Map<int, FocusNode> focusNodes) builder; // changed here
+  final List<Widget> Function(Map<int, FeedScrollController> scrollControllers, Map<int, FocusNode> focusNodes) builder; // changed here
 
   const ScaffoldWithBottomNavigation(
       {super.key, required this.pages, required this.prefs, required this.initialPage, required this.builder});
@@ -158,7 +159,7 @@ class ScaffoldWithBottomNavigation extends StatefulWidget {
 class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigation> {
   late PageController _pageController;
   late int _currentPage;
-  final Map<int, ScrollController> _scrollControllers = {};
+  final Map<int, FeedScrollController> _scrollControllers = {};
   final Map<int, FocusNode> _focusNodes = {};
 
   void unfocusOtherPages(){
@@ -178,7 +179,7 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
   }
 
   void _fitControllersToPages() {
-    _fitToPageCount(_scrollControllers, ScrollController.new);
+    _fitToPageCount(_scrollControllers, FeedScrollController.new);
     _fitToPageCount(_focusNodes, FocusNode.new);
   }
 
@@ -268,7 +269,7 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
             if (tappedId == "feed" || tappedId.startsWith("group-")) {
               final scrollController = _scrollControllers[_currentPage];
               if (scrollController != null) {
-                await scrollController.animateTo(0, duration: const Duration(seconds: 1), curve: Curves.easeInOut);
+                await scrollController.scrollToTop(animate: true);
               }
             }
             if (tappedId == "trending") {

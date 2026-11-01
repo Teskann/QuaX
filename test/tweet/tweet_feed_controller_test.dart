@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:quax/client/client.dart';
@@ -49,5 +51,29 @@ void main() {
 
       expect(feed.refreshError.value, isNull, reason: 'The error card should go away once the tweets are fresh');
     });
+  });
+
+  test('Should not load a next page during a refresh, and follow the refreshed page afterwards', () async {
+    final feed = TweetFeedController();
+    addTearDown(feed.dispose);
+    final refreshed = Completer<TweetPageResult>();
+    final cursors = <String?>[];
+    feed.loader = (cursor) {
+      cursors.add(cursor);
+      return cursor == null ? refreshed.future : Future.value((chains: [chain('next')], nextCursor: 'after'));
+    };
+    feed.seed([chain('cached')], 'cached');
+
+    final refresh = feed.softRefresh();
+    feed.controller.fetchNextPage();
+    await pumpEventQueue();
+    refreshed.complete((chains: [chain('fresh')], nextCursor: 'fresh'));
+    await refresh;
+    feed.controller.fetchNextPage();
+    await pumpEventQueue();
+
+    expect(cursors, [null, 'fresh'],
+        reason: 'A next page loaded during the refresh would follow the cached tweets and mix with the fresh ones');
+    expect(feed.items.map((e) => e.id), ['fresh', 'next'], reason: 'The cached tweets should be replaced, not mixed in');
   });
 }
