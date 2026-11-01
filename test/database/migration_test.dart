@@ -49,4 +49,16 @@ void main() {
           reason: 'A feed created without the column set must get the default, as the code reads it with == 1');
     });
   });
+
+  group('Version 29', () {
+    test('Should store a single installed version', () async {
+      final database = await databaseAt(28);
+
+      await migrate(database, 28, 29);
+      await database.insert(tableInstalledVersion, {'version': '4.20.1'});
+
+      final rows = await database.query(tableInstalledVersion);
+      expect(rows.single['version'], '4.20.1', reason: 'The release notes are computed from this version');
+    });
+  });
 }

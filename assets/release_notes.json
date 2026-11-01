@@ -1,0 +1,417 @@
+[
+  {
+    "version": "4.20.1",
+    "notes": [
+      "Opening a community shows a progress indicator instead of an empty page",
+      "Search results scroll smoothly again while the filter chips hide (fixed #311)",
+      "Updated API calls to match X website version (by @quax-bot)",
+      "Tapping the repost button of a post opens its quotes"
+    ]
+  },
+  {
+    "version": "4.20.0",
+    "notes": [
+      "QuaX has a new icon: a cleaner ℚ that fits every launcher shape",
+      "Accents on bold or italic Unicode letters no longer show as boxes (fixed #305)",
+      "Upgraded Flutter to 3.47.8 and refreshed the dependencies (by @github-actions[bot])",
+      "Added support for communities. You can now search and browse communities",
+      "Photos and videos in tweets now have rounded corners, like the cards"
+    ]
+  },
+  {
+    "version": "4.19.2",
+    "notes": [
+      "Groups now show the latest posts of a saved search that uses operators like list: or from: (fixed #136)",
+      "Increased the number of subscriptions before reaching rate limitations in the feed by about 35% (by @uptivuptiz)",
+      "Requests no longer keep failing with an x-client-transaction-id error after x.com was briefly unavailable (Fixed #295)",
+      "Requests no longer fail with an x-client-transaction-id error after x.com changed how it loads its scripts (Fixed #298)"
+    ]
+  },
+  {
+    "version": "4.19.1",
+    "notes": [
+      "Fixed some UX/UI issues from previous version (by @quax-bot)"
+    ]
+  },
+  {
+    "version": "4.19.0",
+    "notes": [
+      "The main feed can filter accounts added to a group (fixed #177) (by @quax-bot)",
+      "Skip the client transaction id fix for reports from outdated versions",
+      "The feed warns about posts from people you don't follow in a card instead of a popup, without false alarms on keywords or renamed accounts (fixed #214)",
+      "TalkBack names every icon button, image, video control and settings switch (fixed #125)",
+      "You can now customize the posts action bar in Settings > Posts > Customize action bar (fixed #138)",
+      "You can now filter a search by language, words, accounts, replies, links, media, likes and dates with the filters button next to the search bar (fixed #288)"
+    ]
+  },
+  {
+    "version": "4.18.1",
+    "notes": [
+      "Long Grok questions can be expanded and no blank is left above a Grok conversation (fixed #210)",
+      "Fixed requests failing because X changed how it loads the transaction id sign module (Fixed #272)"
+    ]
+  },
+  {
+    "version": "4.18.0",
+    "notes": [
+      "New version workflow now bumps major/minor/patch from the latest tag",
+      "Errors about the X client transaction id are now fixed automatically by an AI, within the hour",
+      "Added a way to use QuaX with a mocked X server that serves what was recorded for test suite. This will allow CI QA testing.",
+      "Added support for polls with images (fixed #216)",
+      "Fixed the poll text display on light themes",
+      "Setup QuaX to run Maestro tests including in Github Action runners. Cloud AI agents can now do QA testing easily and record videos of their work as a proof.",
+      "Protected profiles say their posts are protected instead of showing an error (fixed #253) (by @quax-bot)",
+      "Enabling the Search tab in the home settings no longer crashes the home screen (fixed #213)",
+      "Fixed error when dragging a subscription to reorder it (fixed #163) (by @evandrodevbr)",
+      "Fixed the crash when the language is Esperanto (fixed #217)",
+      "The screen no longer turns off while a video plays (fixed #178)",
+      "Importing a backup now restores the home tabs, group tabs included (fixed #209)"
+    ]
+  },
+  {
+    "version": "4.17.0",
+    "notes": [
+      "Fixed #219 \"Couldn't find the sign module\" issues",
+      "Upgraded Flutter to 3.47.7 and refreshed the dependencies (#218) (by @github-actions[bot])",
+      "Fixed broken fullscreen on some videos"
+    ]
+  },
+  {
+    "version": "4.16.0",
+    "notes": [
+      "Fixed \"Get it on Obtainium\" button link",
+      "Improved CI automation",
+      "Setup an automated workflow for bug triage and support",
+      "Added an onboarding wizard for new users",
+      "Refactored Github Actions",
+      "Fixed login with Google and other login issues",
+      "Upgraded Flutter to 3.47.6 and refreshed the dependencies (by @github-actions[bot])",
+      "Added support for image carousel websites and grok share (#186) (by @AdNenio)",
+      "Increased the default text size a bit (for fresh installs)",
+      "Introduced @quax-bot to manage issues",
+      "Made QuaX use the latest X APIs (fixed #204). As a consequence, the *Media* tab is now split into videos / photos.",
+      "QuaX now appears in the Android share menu (fixed #84)",
+      "Downloading a video now saves the quality you are watching (fixed #135)"
+    ]
+  },
+  {
+    "version": "4.15.0",
+    "notes": [
+      "Fixed minor issues in the error reporting widget",
+      "Someone deleted their tweet ? You can now open deleted tweets in one click on web.archive.org",
+      "Fixed parsing issues when opening tweets reserved for subscribers (fixed #188), improved test coverage",
+      "Bug reports now include links to profiles, not simply the username",
+      "Better management of rate limitations",
+      "Fixed some UI issues (including #183) and redesigned poll results",
+      "Fixed #106, login issues when animations are disabled",
+      "GIFs are now downloaded as a MP4 video instead of a JPEG (on X, GIFs are videos) (fixed #182)",
+      "Fixed crashes when too many videos are opened with a better memory management system"
+    ]
+  },
+  {
+    "version": "4.14.0",
+    "notes": [
+      "Upgraded Flutter to 3.47.5 and refreshed the dependencies (by @github-actions[bot])",
+      "Improved errors display in the app. Now you can report bugs in one click",
+      "**Fixed on demand file index issues, caused by a change in X servers (fixed #155)**"
+    ]
+  },
+  {
+    "version": "4.13.4",
+    "notes": [
+      "Upgraded Flutter to 3.47.4 and refreshed the dependencies (by @github-actions[bot])"
+    ]
+  },
+  {
+    "version": "4.13.3",
+    "notes": [
+      "Fixed dart issues and some minor bugs",
+      "Fixed #187 - Adding new account to group will throw error",
+      "QuaX now opens links in its own task (fixed #184)",
+      "Improved CI automation and safety"
+    ]
+  },
+  {
+    "version": "4.13.2",
+    "notes": [
+      "Fixed display of some deleted tweets that lead to errors"
+    ]
+  },
+  {
+    "version": "4.13.1",
+    "notes": [
+      "Migrated to Flutter 3.47.2, migrated dependencies, migrated to Java 25, Gradle 9.3.1",
+      "Added automated tests to improve QuaX stability over time.",
+      "Added tests for X API response parsing, with data that is automatically extracted from a regular x.com browsing session. This will improve a lot the maintainability and reduce the time needed to release an update in case X breaks their APIs, which happens often. This will also help us a lot to provide a reliable solution for the **feed issues** that have been reported lately.",
+      "Fixed #178 - Keep screen awake while a video is playing",
+      "Fixed #173 - Hide retweets and replies if asked in the feed/groups",
+      "Fixed UI issues that have been introduced by the migration to `material_ui`",
+      "Hot fixed a crash at startup on release builds"
+    ]
+  },
+  {
+    "version": "4.13.0",
+    "notes": [
+      "Migrated the video player to `better_player_plus`. Previous implementation with `media_kit`, introduced in 4.10.0, lead to several regressions on the video player. It also produced memory corruption issues that often lead to the app crashing and lowered the app's security. You're welcome to provide feedback on Discord",
+      "Added an invitation to join the QuaX Discord at startup and updated the Discord link"
+    ]
+  },
+  {
+    "version": "4.12.1",
+    "notes": [
+      "📁 Made the \"save to folder\" list scrollable so it no longer overflows when you have many folders",
+      "👥 Fixed group popup buttons overflowing off-screen in some languages; \"toggle all\" is now a discreet button above the list (fixed #167)",
+      "🔗 Added an option to open links inside the app instead of your default browser. Enable it in Settings → General → \"Open links in the app\". Off by default. (fixed #42)",
+      "💬 Introducing the QuaX Discord community ! 🎉 It has never been easier to get support, discuss features, and give feedback ! → [https://discord.gg/K7UHuywPWD](https://discord.gg/K7UHuywPWD)",
+      "Upgraded Flutter to 3.44.8"
+    ]
+  },
+  {
+    "version": "4.12.0",
+    "notes": [
+      "🔗 Added intent filters for fixupx.com URLs (#164) (by @uptivuptiz)",
+      "📶🎬 You can now save data by customizing the video pre-fetching duration. ➡️ `Settings` > `Medias` > `Video prefetch duration`",
+      "🎬 Improved video player stability and limited the number of GIFs that can be played simultaneously on a media grid to avoid lags and freezes",
+      "🔖📁 Introducing folders for saved posts ! Long press on the \"save\" button of a post to select a folder.",
+      "❤️ You can now like posts ! Likes stay on your device. X cannot know what you like. You can find liked posts in the \"Likes\" folder of the *Saved* tab. (Fixed #143)",
+      "⚙️ Split options to select the media quality for images and videos. Now they are independent"
+    ]
+  },
+  {
+    "version": "4.11.0",
+    "notes": [
+      "👤 You can now **import more than 70 subscriptions** per account (fixed #153, #109, #37). ⚠️ Be careful that too many subscriptions might lead to rate limitations !",
+      "📜 Infinite scroll is now supported for *Followers* / *Following* lists (fixed #150)",
+      "⚙️ Added an option to select the default tab for the home feed (*Following* / *For You*). Defaults to *Following*",
+      "📱 Fixed UI components being hidden behind the Android navigation bar (fixed #161)",
+      "⚙️ You can now customize the number of columns in the media grids (for both search & profile medias) ➡️ `Settings` > `Media` > `Media grid columns` (addressed #151)",
+      "🎬 Fixed an issue in GIFs that introduced a small lag before looping (regression from 4.10.0)"
+    ]
+  },
+  {
+    "version": "4.10.0",
+    "notes": [
+      "🎬 Fully reimplemented the **video player**. This should address most of video-related issues, especially the unability to replay videos. This should also fix video playback on some devices without system codecs (#140, #126) as now ffmpeg is embedded in the apk. This implements subtitles support, an option to select video quality, better stability for background playing and double tap to go forward/backward. Technically, it now depends on",
+      "Fixed an issue when some tweets are sometimes truncated",
+      "🧵 Redesigned how threads look. The thick-colored band on the left is gone. Tweets of a thread now sit in a single card, linked by a subtle connector line between profile pictures (like on X). Threads are much cleaner to read,   and two threads following each other in the timeline are no longer mistaken for one.",
+      "Added a **\"Media\"** tab to search",
+      "⚙️ Reorganized and classified settings more precisely"
+    ]
+  },
+  {
+    "version": "4.9.3",
+    "notes": [
+      "Upgraded Flutter to 3.44.4, upgraded dependencies and fixed Dart issues",
+      "Added health-aware account selection to mitigate 404/429 errors. Replaced the random per-request account selection with a strategy that tracks each account's health and retries on another account when X returns an error. This addresses #147, #148, #149, #156 and #154",
+      "Fixed #154 - `\"type 'Null' is not a subtype of type 'Map<String, dynamic>'\"`"
+    ]
+  },
+  {
+    "version": "4.9.2",
+    "notes": [
+      "Fixed on demand file issues regarding x-client-transaction-id (many thanks you @clintonalee for the solution) (#155)"
+    ]
+  },
+  {
+    "version": "4.9.1",
+    "notes": [
+      "Upgraded Flutter to 3.44.1 and updated dependencies. Migrated to infinite_scroll_pagination v5. This is a major change in terms of implementation. Please report any issue with infinite scroll you could face with this release."
+    ]
+  },
+  {
+    "version": "4.9.0",
+    "notes": [
+      "Fixed #141 - Some tweets don't appear in feeds and search results",
+      "Feeds now stay visible while they are being refreshed",
+      "Seamless tweet opening: show opened tweet instantly while loading replies",
+      "Fixed content being hidden behind the Android Navigation Bar when opening a tweet",
+      "Added video support for seamless tweet opening"
+    ]
+  },
+  {
+    "version": "4.8.2",
+    "notes": [
+      "Fixed #144 - Can't load posts on 4.8.1"
+    ]
+  },
+  {
+    "version": "4.8.1",
+    "notes": [
+      "Display impressions count on posts (by @lebakassemmerl)"
+    ]
+  },
+  {
+    "version": "4.8.0",
+    "notes": [
+      "Search results in the *Top* and *Latest* tabs **now support infinite scroll**, instead of stopping after the first results (implemented #44)"
+    ]
+  },
+  {
+    "version": "4.7.1",
+    "notes": [
+      "Removed all unused strings from translation files. Translation files are now sorted by key and are fully covered.",
+      "Implemented #17 - Keep position in group feeds after actions",
+      "Upgraded Flutter to 3.41.9, updated dependencies",
+      "Fixed posts not being shown on some profiles (Tweets / Tweets & Replies tabs)",
+      "Added a search bar to the subscriptions list, making it easier to find a followed account when you have many of them"
+    ]
+  },
+  {
+    "version": "4.7.0",
+    "notes": [
+      "Cleaned repository, removed unused files",
+      "Prepare reproducible build for future F-Droid publication. QuaX now recommends using `fvm` instead of raw `flutter` to force a specific flutter version for the build. Removed flavor-based behavior that led to differences between GitHub builds and F-Droid builds.",
+      "Fixed #92 - Media tab stops loading new posts at one point - Inspired by @j-fbriere's fix on Squawker",
+      "[UI Improvement] Brand new view for the \"Media\" tab on profiles ! Now, medias are displayed in a staggered grid. This fully completed #20. <br/> <img width=\"360\" height=\"800\" alt=\"image\" src=\"https://github.com/user-attachments/assets/2fe7ba1f-2306-4369-a90c-f5fd3dd137e6\" />"
+    ]
+  },
+  {
+    "version": "4.6.1",
+    "notes": [
+      "Updated readme and documentation",
+      "Upgraded Android SDK to 37 (Android 17) and upgraded android NDK to 29.0.14206865.",
+      "Upgraded Flutter to 3.41.7, upgraded dependencies",
+      "Fixed medias not appearing in the gallery after download",
+      "QuaX is now fully translated in the following languages: 🇸🇦 Arabic, 🇧🇾 Belarusian, 🇧🇾 Belarusian Latin, 🇪🇸 Catalan, 🇨🇿 Czech, 🇩🇪 German, 🇬🇧 English, Esperanto, 🇪🇸 Spanish, 🇪🇪 Estonian, 🇪🇸 Basque, 🇫🇷 French, 🇮🇳 Hindi, 🇮🇩 Indonesian, 🇮🇹 Italian, 🇯🇵 Japanese, 🇰🇷 Korean, 🇮🇳 Malayalam, 🇳🇴 Norwegian Bokmål, 🇳🇱 Dutch, 🇵🇱 Polish, 🇵🇹 Portuguese, 🇧🇷 Portuguese (Brazil), 🇷🇴 Romanian, 🇷🇺 Russian, 🇹🇷 Turkish, 🇺🇦 Ukrainian, 🇻🇳 Vietnamese, 🇨🇳 Chinese (Simplified), 🇹🇼 Chinese (Traditional). The missing translations have been generated with AI, feel free to fix them if they are inaccurate."
+    ]
+  },
+  {
+    "version": "4.6.0",
+    "notes": [
+      "[PRIVACY IMPROVEMENT] Removed dependency on external [x-client-transaction-id generator](https://github.com/Teskann/x-client-transaction-id-generator) to compute `x-client-transaction-id` HTTPS headers. Now, everything is computed locally, inside QuaX itself. Done porting [XClientTransaction](https://github.com/iSarabjitDhiman/XClientTransaction/) to Dart.",
+      "Fixed #134 - \"Oops! Something went wrong 🥲\" when opening some profiles",
+      "Fixed #95 - Prevented fetching videos automatically before playing if autoplay is disabled"
+    ]
+  },
+  {
+    "version": "4.5.0",
+    "notes": [
+      "Upgraded Flutter and packages",
+      "Added support for articles. Supported article content: text, images, videos, code blocks, quotes, links, mentions, titles, ordered lists, unordered lists, bold text, italic text, dividers. Translation is not supported in articles, so \"Translate\" button is removed on tweets that contain an article. The same way, \"Share tweet content\" options are not available for articles (text remains selectable). Articles are displayed as a preview when the tweet is not opened. Open the tweet to see the full content. Articles can be saved, but for complexity reasons, only the preview is saved for offline access, network is required to read the full content of a saved article. Please report any issue related to this new feature. It has been implemented by reverse-engineering x.com's APIs based on examples I had access to, some contents might not be parsed correctly. (#53)",
+      "Updated Vietnamese translation (#124) (by @chemchetchagio)"
+    ]
+  },
+  {
+    "version": "4.4.1",
+    "notes": [
+      "Fixed #115 replies being included when they shouldn't (by @AdNenio)"
+    ]
+  },
+  {
+    "version": "4.4.0",
+    "notes": [
+      "Ported \"share tweet as image\" feature from Squawker with higher quality rendering (implemented #64) (#118) (by @AdNenio)",
+      "Improved the \"share\" menu (when sharing a tweet)",
+      "Rolled back `webview_flutter` version to fix login issues on some devices (fixed #106)",
+      "Added an option to hide subscriptions from main feed (implemented #54)"
+    ]
+  },
+  {
+    "version": "4.3.0",
+    "notes": [
+      "Added support of community notes (#114)"
+    ]
+  },
+  {
+    "version": "4.2.8",
+    "notes": [
+      "Added the possibility to view and save user profile picture and banner (fixed #94)"
+    ]
+  },
+  {
+    "version": "4.2.7",
+    "notes": [
+      "Fixed a bug leading to stack traces appearing in app and improved display of quoted tweets (PR #108) (by @AdNenio)",
+      "Enabled text selection within tweets (fixed #107)"
+    ]
+  },
+  {
+    "version": "4.2.6",
+    "notes": [
+      "Re-enabled Impeller, as Flutter 3.41.1 [fixed the /e/OS issue with the WebView](https://github.com/flutter/flutter/issues/172622) (see #45)",
+      "Added an option to open the link in the default browser in case it could not be opened by QuaX",
+      "Fixed issues with event posts (fixed #105)",
+      "Fixed support of `t.co` links"
+    ]
+  },
+  {
+    "version": "4.2.5",
+    "notes": [
+      "Updated Vietnamese (#97) (by @chemchetchagio)",
+      "Fixed #103 - Broadcast posts errors",
+      "Removed \"refresh subscriptions\" button, as it relied on an X API that is not accessible without authentification, closing #14 and #102",
+      "Added popups to explain why logging in is required. Inform users that this does not enable interacting with posts, which is misleading for newcomers (see #99 and forum posts)",
+      "Updated Flutter to 3.41.1 and updated dependencies",
+      "Fixed and improved changelog and release notes generation"
+    ]
+  },
+  {
+    "version": "4.2.4",
+    "notes": [
+      "Fixed #91 - Opening the x.com post/profile link with QuaX redirects to main menu"
+    ]
+  },
+  {
+    "version": "4.2.3",
+    "notes": [
+      "Updated dependencies",
+      "Improved link handling (fixed #89 and fixed #67) and added an option to set the default tab for profiles (fixed #62)",
+      "Implemented a more robust way to tag contributors in release notes"
+    ]
+  },
+  {
+    "version": "4.2.2",
+    "notes": [
+      "Untracked files that could be generated, updated the documentation",
+      "Untracked files that could be generated, updated the documentation",
+      "Added an option to always show full tweet content (#85) (by @micahmo)",
+      "Fixed a bug with how entities are handled that was sometimes deleting text in the middle of a tweet (#87) (by @AdNenio)"
+    ]
+  },
+  {
+    "version": "4.2.1",
+    "notes": [
+      "Added APK certificate fingerprints to repository and to release notes. (Fixed #83)",
+      "Fixed a bug preventing translation of tweet replies (#82) (by @AdNenio)"
+    ]
+  },
+  {
+    "version": "4.2.0",
+    "notes": [
+      "Fixed #20 - Re-implemented basic support for the media tab (#78) (by @lebakassemmerl)",
+      "Removed dependencies from git repositories that don't exist",
+      "Fixed error when tweets are hidden due to local laws and age estimation",
+      "Simplified release notes",
+      "Updated vietnamese and fixed some typos (#79) (by @giua1nganvisaoanhchithayminhemtrongbongdem)",
+      "Made links in bio clickable (fixed #23) (#56) (by @AdNenio)",
+      "Added settings button on groups, subscriptions and saved tabs (fixed #70)",
+      "Fixed issues when loading some tweets",
+      "Upgraded Flutter to 3.38.5"
+    ]
+  },
+  {
+    "version": "4.1.0",
+    "notes": [
+      "Updated Japanese translation (#76) (by @ScratchBuild)",
+      "Fixed #74 - Display absolute timestamp of tweets in local timezone (#77) (by @lebakassemmerl)",
+      "Usernames are now available in the \"Accounts\" page in settings, instead of account ID. You need to log in again to see your username.",
+      "Better management of \"Show more\" for long posts (fixed #39)",
+      "Subscriptions are now reorderable (ported from Squawker) - Fixed #63",
+      "Added a badge to install QuaX with Obtainium"
+    ]
+  },
+  {
+    "version": "4.0.20",
+    "notes": [
+      "Fixed opening a link in QuaX if QuaX is not running (#75) (by @micahmo)"
+    ]
+  },
+  {
+    "version": "4.0.19",
+    "notes": [
+      "Fix link handling (by @micahmo)",
+      "Added an option to display the absolute timestamp of all tweets (#73) (by @lebakassemmerl)",
+      "Automatic generation of release notes for new releases"
+    ]
+  }
+]

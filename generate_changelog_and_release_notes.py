@@ -1,3 +1,4 @@
+import json
 import os
 import sys
 from pathlib import Path
@@ -37,8 +38,11 @@ class Commit:
             return ""
         return f" (by {self.author})"
 
+    def note(self) -> str:
+        return f"{self.message}{self._get_credits()}"
+
     def __repr__(self) -> str:
-        return f"  - {self.message}{self._get_credits()} <sup>[[view modified code]](https://github.com/teskann/quax/commit/{self.sha})</sup>"
+        return f"  - {self.note()} <sup>[[view modified code]](https://github.com/teskann/quax/commit/{self.sha})</sup>"
 
 
 def generate_changelog_content(commits: list[Commit]) -> str:
@@ -58,6 +62,13 @@ def prepend_to_changelog_file(changelog_content: str) -> None:
 def update_changelog(commits: list[Commit]) -> None:
     changelog_content = generate_changelog_content(commits)
     prepend_to_changelog_file(changelog_content)
+
+
+def prepend_to_release_notes_json(commits: list[Commit]) -> None:
+    json_path = Path("./assets/release_notes.json")
+    versions = json.loads(json_path.read_text()) if json_path.exists() else []
+    new_version = {"version": sys.argv[1], "notes": [commit.note() for commit in commits]}
+    json_path.write_text(json.dumps([new_version, *versions], indent=2, ensure_ascii=False) + "\n")
 
 
 def get_custom_message_block() -> str:
@@ -111,4 +122,5 @@ def parse_commits() -> list[Commit]:
 if __name__ == "__main__":
     new_commits = parse_commits()
     update_changelog(new_commits)
+    prepend_to_release_notes_json(new_commits)
     create_release_notes_file(new_commits)

@@ -27,6 +27,7 @@ import 'package:quax/home/home_screen.dart';
 import 'package:quax/import_data_model.dart';
 import 'package:quax/onboarding/onboarding_screen.dart';
 import 'package:quax/profile/profile.dart';
+import 'package:quax/release_notes/release_notes_model.dart';
 import 'package:quax/saved/liked_tweet_model.dart';
 import 'package:quax/saved/saved_folders_screen.dart';
 import 'package:quax/saved/saved_tweet_folder_model.dart';
@@ -288,6 +289,9 @@ Future<void> main() async {
 
     await _decideOnboarding(prefService, subscriptionsModel);
 
+    var releaseNotesModel = ReleaseNotesModel((await PackageInfo.fromPlatform()).version);
+    await releaseNotesModel.load();
+
     var feedSessionCache = FeedSessionCache();
     // Registration order matters: invalidateAll must run before any
     // GroupFeedShell reload listener, so by the time the shell remounts the
@@ -307,6 +311,7 @@ Future<void> main() async {
           providers: [
             Provider(create: (context) => groupsModel),
             Provider(create: (context) => feedSessionCache),
+            Provider(create: (context) => releaseNotesModel),
             Provider(create: (context) => VideoControllerPool(maxSize: videoPlayerBudget)),
             Provider(create: (context) => homeModel),
             ChangeNotifierProvider(create: (context) => importDataModel),
