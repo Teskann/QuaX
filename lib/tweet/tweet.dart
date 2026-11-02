@@ -29,6 +29,7 @@ import 'package:quax/article/article.dart';
 import 'package:quax/ui/dates.dart';
 import 'package:quax/ui/errors.dart';
 import 'package:quax/user.dart';
+import 'package:quax/ui/link_style.dart';
 import 'package:quax/utils/rich_text.dart';
 import 'package:quax/utils/clipboard.dart';
 import 'package:quax/utils/urls.dart';
@@ -190,7 +191,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     });
   }
 
-  bool _hasVisibleText() => TextSpan(children: displayRichText(_displayParts)).toPlainText().trim().isNotEmpty;
+  bool _hasVisibleText() => _displayParts.any((part) => (part.plainText ?? part.entity!.toPlainText()).trim().isNotEmpty);
 
   void onClickOpenTweet(TweetWithCard tweet) {
     Navigator.pushNamed(context, routeStatus,
@@ -641,16 +642,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
                     AutoDirection(
                         text: tweetText,
                         child: SelectableText.rich(
-                          TextSpan(children: [
-                            ..._displayParts.map((e) {
-                              if (e.plainText != null) {
-                                return TextSpan(text: e.plainText);
-                              }
-                              else {
-                                return e.entity!;
-                              }
-                            })
-                          ]),
+                          TextSpan(children: displayRichText(_displayParts, linkStyle(context))),
                         )
                     ),
                   ]
@@ -705,7 +697,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
           child: AutoDirection(
             text: tweetText,
             child: ExpandableTweetText(
-              textSpans: displayRichText(_displayParts),
+              textSpans: displayRichText(_displayParts, linkStyle(context)),
               onTap: () => !widget.tweetOpened ? onClickOpenTweet(tweet) : null,
               maxLines: PrefService.of(context).get(alwaysShowFullTweetContents) ? null : 8,
             ),

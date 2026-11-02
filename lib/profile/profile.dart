@@ -17,6 +17,7 @@ import 'package:quax/tweet/_media.dart';
 import 'package:quax/ui/errors.dart';
 import 'package:quax/user.dart';
 import 'package:quax/utils/urls.dart';
+import 'package:quax/ui/link_style.dart';
 import 'package:quax/utils/rich_text.dart';
 import 'package:intl/intl.dart';
 import 'package:quax/ui/locale_fallback.dart';
@@ -403,7 +404,7 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
                                                           color: theme.brightness == Brightness.dark
                                                               ? Colors.white
                                                               : Colors.black),
-                                                      children: displayRichText(descParts)
+                                                      children: displayRichText(descParts, linkStyle(context))
                                                   ))),
                                       Padding(
                                             padding: const EdgeInsets.only(bottom: 8.0),

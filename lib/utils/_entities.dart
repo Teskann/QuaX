@@ -7,7 +7,7 @@ abstract class Entity {
   
   Entity(this.indices);
   
-  InlineSpan getContent(TextStyle linkStyle);
+  InlineSpan getContent();
   
   int getEntityStart() {
     return indices![0];
@@ -25,10 +25,9 @@ class HashtagEntity extends Entity {
   HashtagEntity(this.hashtag, this.onTap) : super(hashtag.indices);
 
   @override
-  InlineSpan getContent(TextStyle linkStyle) {
+  InlineSpan getContent() {
     return TextSpan(
         text: '#${hashtag.text}',
-        style: linkStyle,
         recognizer: TapGestureRecognizer()
           ..onTap = () {
             onTap();
@@ -43,10 +42,9 @@ class UserMentionEntity extends Entity {
   UserMentionEntity(this.mention, this.onTap) : super(mention.indices);
 
   @override
-  InlineSpan getContent(TextStyle linkStyle) {
+  InlineSpan getContent() {
     return TextSpan(
         text: '@${mention.screenName}',
-        style: linkStyle,
         recognizer: TapGestureRecognizer()
           ..onTap = () {
             onTap();
@@ -61,10 +59,9 @@ class UrlEntity extends Entity {
   UrlEntity(this.url, this.onTap) : super(url.indices);
 
   @override
-  InlineSpan getContent(TextStyle linkStyle) {
+  InlineSpan getContent() {
     return TextSpan(
         text: url.displayUrl,
-        style: linkStyle,
         recognizer: TapGestureRecognizer()
           ..onTap = () {
             onTap();
@@ -76,7 +73,7 @@ class HiddenUrlEntity extends Entity {
   HiddenUrlEntity(Url url) : super(url.indices);
 
   @override
-  InlineSpan getContent(TextStyle linkStyle) {
+  InlineSpan getContent() {
     return const TextSpan(text: "");
   }
 }
@@ -87,7 +84,7 @@ class MediaEntity extends Entity {
   MediaEntity(this.media) : super(media.indices);
 
   @override
-  InlineSpan getContent(TextStyle linkStyle) {
+  InlineSpan getContent() {
     return TextSpan(text: "");
   }
 }

@@ -22,7 +22,7 @@ Future<String> _shownText(WidgetTester tester, TweetWithCard tweet, {required bo
         cardUrl: hideCardUrls ? (tweet.card?['url'] as String?) : null);
     return const SizedBox();
   }));
-  return TextSpan(children: displayRichText(parts)).toPlainText();
+  return TextSpan(children: displayRichText(parts, const TextStyle())).toPlainText();
 }
 
 void main() {
