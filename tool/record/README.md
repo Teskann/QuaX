@@ -92,8 +92,9 @@ fvm flutter test test/client/x_client_transaction_id/
 ```
 
 The script opens x.com in a real, logged-out Chrome (no account needed) and
-saves what Chrome downloads: the page, the entry script, the plugin and the
-sign module, listed in `sources.json`. It uses none of the app's code, so it
+saves what Chrome downloads: the page, the entry script, the modules it imports
+and the sign module, listed in `sources.json`. X names its modules by a hash, so
+the sign module is told apart by its code. It uses none of the app's code, so it
 works even when the app is broken. Chrome's own sign module then computes a few
 ids, saved in `expected.json`.
 
