@@ -1,3 +1,9 @@
+## QuaX v4.21.1
+
+What's new in QuaX v4.21.1:
+  - Mentions, hashtags and links take the theme color right after a restart or a theme change (fixed #335) <sup>[[view modified code]](https://github.com/teskann/quax/commit/038635b5bd55bcf0e0f33289d73040e126258678)</sup>
+  - Fixed "couldn't find the sign module importer" errors because of changes on X side. Implemented a more robust solution that should avoid recurring failures (Fixed #348) <sup>[[view modified code]](https://github.com/teskann/quax/commit/6bfe9d857f6323ddb075287c36b848247eb19f99)</sup>
+
 ## QuaX v4.21.0
 
 What's new in QuaX v4.21.0:
