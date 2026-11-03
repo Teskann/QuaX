@@ -155,9 +155,18 @@ class ClientTransaction {
   static Future<Uri> _findSignFileUrl(String homePageHtml, TextFetcher fetch) async {
     final entryUrl = _resolveImport(Uri.https('x.com', '/'), homePageHtml, entryScriptRegex, 'entry script');
     final entryText = await fetch(entryUrl);
-    final importerUrl = _resolveImport(entryUrl, entryText, signImporterRegex, 'sign module importer');
-    final importerText = await fetch(importerUrl);
-    return _resolveImport(importerUrl, importerText, signFileRegex, 'sign module');
+    final imports = staticImportRegex.allMatches(entryText).map((match) => entryUrl.resolve(match.group(1)!));
+    return _findSignFileImportedBy(imports, fetch);
+  }
+
+  /// X names its modules by a hash only, so the module importing the sign
+  /// module is the first one, among those of the entry script, that does.
+  static Future<Uri> _findSignFileImportedBy(Iterable<Uri> modules, TextFetcher fetch) async {
+    for (final module in modules) {
+      final match = signFileRegex.firstMatch(await fetch(module));
+      if (match != null) return module.resolve(match.group(1)!);
+    }
+    throw const ClientTransactionIdException("Couldn't find the sign module");
   }
 
   static Uri _resolveImport(Uri base, String text, RegExp regex, String what) {
