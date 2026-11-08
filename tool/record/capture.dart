@@ -96,10 +96,14 @@ const _retryPause = Duration(seconds: 10);
 const _maxRateLimitWait = Duration(minutes: 20);
 
 class Scenario {
-  Scenario(this.url, this.description, {this.unstable = false});
+  Scenario(this.url, this.description, {this.unstable = false, this.tab});
 
   final String url;
   final String description;
+
+  /// The tab of the page to open once it loaded, counted from 1, for a tab with
+  /// no link of its own, such as the Latest posts of a community.
+  final int? tab;
 
   /// What X answers changes from one capture to the next (someone else's
   /// timeline, a search, the home timeline): tests may only check its shape.
@@ -228,7 +232,7 @@ List<Scenario> _readScenarios(Map<String, dynamic> root) =>
     (root['scenarios'] as List<dynamic>)
         .cast<Map<String, dynamic>>()
         .map((entry) => Scenario(entry['url'] as String, entry['description'] as String? ?? '',
-            unstable: entry['unstable'] as bool? ?? false))
+            unstable: entry['unstable'] as bool? ?? false, tab: entry['tab'] as int?))
         .toList();
 
 
@@ -303,6 +307,11 @@ Future<({Map<String, Map<String, dynamic>> captured, List<Map<String, dynamic>> 
   }
 
   await _settle(() => lastSeen);
+  final tab = scenario.tab;
+  if (tab != null) {
+    await _openTab(page, tab);
+    await _settle(() => lastSeen, since: DateTime.now());
+  }
   for (var scroll = 0; scroll < _maxScrolls; scroll++) {
     final before = nextPages;
     print('  v scroll');
@@ -322,6 +331,22 @@ Future<({Map<String, Map<String, dynamic>> captured, List<Map<String, dynamic>> 
   await Future.wait(pending).timeout(_drainTimeout, onTimeout: () => <void>[]);
   await subscription.cancel();
   return (captured: captured, rejected: rejected, loaded: loaded);
+}
+
+/// Clicks the [tab]th tab of the page, counted from 1. A dialog x.com shows on a
+/// first visit, such as the welcome to Communities, would catch the click, so it
+/// is closed first.
+Future<void> _openTab(Page page, int tab) async {
+  print('  > tab $tab');
+  try {
+    await page.keyboard.press(Key.escape);
+    final clicked = await page.evaluate<bool>(
+        '(index) => { const tab = document.querySelectorAll(\'[role="tab"]\')[index]; tab?.click(); return !!tab; }',
+        args: [tab - 1]);
+    if (!clicked) print('  no tab $tab on the page');
+  } on Exception catch (error) {
+    print('  could not open tab $tab: $error');
+  }
 }
 
 /// Deletes the fixtures [isOurs] that this run did not produce: all of them on a

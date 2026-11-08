@@ -38,6 +38,9 @@ it unless the test passes `unstable: true`, to say it checks the shape only
 (tweets are there, each has an author…), never a name, a text or a count. Loops
 over `fixturesOf(...)` and the mock use them like any other.
 
+Add `"tab": 2` to open the second tab of the page once it loaded, counted from 1,
+for a tab with no URL of its own, such as the Latest posts of a community.
+
 A profile URL triggers `UserByScreenName` and the profile timeline at once. The
 profile views have their own URLs: `/`, `/all`, `/with_replies`, `/reposts`,
 `/media`, plus `/highlights` and `?sort=popular`.
