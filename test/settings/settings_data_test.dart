@@ -12,8 +12,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() {
   SettingsData full() => SettingsData(
         settings: {'theme.mode': 'dark'},
-        searchSubscriptions: [SearchSubscription(id: '#flutter', createdAt: DateTime(2026, 9, 4, 9))],
-        userSubscriptions: [
+        subscriptions: [
+          SearchSubscription(id: '#flutter', createdAt: DateTime(2026, 9, 4, 9)),
+          CommunitySubscription(id: 'c1', name: 'Flutter', bannerUrl: null, createdAt: DateTime(2026, 9, 4, 9)),
           UserSubscription(
               id: '1',
               screenName: 'dogs',
@@ -56,10 +57,15 @@ void main() {
       expect(restored.settings, {'theme.mode': 'dark'},
           reason: 'The settings go straight back into PrefService, so they should survive. '
               'Losing them resets every choice the user made');
-      expect(onlyRow(restored.searchSubscriptions, 'search subscription').id, '#flutter',
+      expect(onlyRow(restored.subscriptions?.whereType<SearchSubscription>().toList(), 'search subscription').id,
+          '#flutter',
           reason: 'Search subscriptions and user subscriptions are two different tables, and both '
               'should come back');
-      final subscription = onlyRow(restored.userSubscriptions, 'user subscription');
+      expect(
+          onlyRow(restored.subscriptions?.whereType<CommunitySubscription>().toList(), 'community subscription').name,
+          'Flutter',
+          reason: 'The followed communities should come back, with the name the subscriptions page shows');
+      final subscription = onlyRow(restored.subscriptions?.whereType<UserSubscription>().toList(), 'user subscription');
       expect(subscription.screenName, 'dogs',
           reason: 'The feed searches with this name, so it should survive. Without it the account '
               'comes back with no tweets');
@@ -96,6 +102,13 @@ void main() {
       expect(restored.accounts, isNull,
           reason: 'The same rule should hold for accounts, where erasing the table would log the '
               'user out');
+    });
+
+    test('Should write the subscriptions under the names older versions read', () {
+      final exported = full().toJson();
+
+      expect(exported.keys, containsAll(['subscriptions', 'searchSubscriptions']),
+          reason: 'A backup made now should still bring the accounts and the searches into an older version');
     });
 
     test('Should read a backup made by an older build with no accounts section', () {

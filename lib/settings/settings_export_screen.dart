@@ -152,8 +152,7 @@ class _SettingsExportScreenState extends State<SettingsExportScreen> {
 
                 var data = SettingsData(
                     settings: settings,
-                    searchSubscriptions: subscriptions?.whereType<SearchSubscription>().toList(),
-                    userSubscriptions: subscriptions?.whereType<UserSubscription>().toList(),
+                    subscriptions: subscriptions,
                     subscriptionGroups: subscriptionGroups,
                     subscriptionGroupMembers: subscriptionGroupMembers,
                     tweets: tweets,

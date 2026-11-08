@@ -54,9 +54,9 @@ Future<void> Function(String? cursor)? _appPages(RecordedRequest recorded) {
     'UserOriginalsTimeline' => (cursor) => timeline('profile', cursor),
     'UserTweetsAndReplies' => (cursor) => timeline('profile', cursor, includeReplies: true),
     'CommunityQuery' => (_) => Twitter.getCommunity(variables['communityId']),
-    // The Latest tab of a community, which QuaX does not offer
-    'CommunityTweetsTimeline' when variables['rankingMode'] == 'Recency' => null,
-    'CommunityTweetsTimeline' => (cursor) => Twitter.getCommunityTweets(variables['communityId'], cursor: cursor),
+    'CommunityTweetsTimeline' => (cursor) => Twitter.getCommunityTweets(variables['communityId'],
+        cursor: cursor,
+        ranking: CommunityRanking.values.firstWhere((r) => r.rankingMode == variables['rankingMode'])),
     'CommunitiesSearchQuery' => (cursor) => Twitter.searchCommunities(variables['query'], cursor: cursor),
     'AudioSpaceById' => (_) => Twitter.getSpace(variables['id']),
     'membersSliceTimeline_Query' => (cursor) => Twitter.getCommunityMembers(variables['communityId'], cursor: cursor),

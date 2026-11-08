@@ -66,7 +66,7 @@ class SubscriptionRow extends StatelessWidget {
               ),
               if (groups.isNotEmpty)
                 Padding(
-                  padding: const EdgeInsetsDirectional.only(start: _textStart, end: 16, top: 4, bottom: 8),
+                  padding: const EdgeInsetsDirectional.only(start: _textStart, end: 16, top: 7, bottom: 8),
                   child: GroupTags(groups: groups),
                 ),
             ],

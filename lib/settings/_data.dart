@@ -11,6 +11,7 @@ import 'package:quax/group/group_model.dart';
 import 'package:quax/import_data_model.dart';
 import 'package:quax/saved/liked_tweet_model.dart';
 import 'package:quax/saved/saved_tweet_folder_model.dart';
+import 'package:quax/subscriptions/subscription_filters.dart';
 import 'package:quax/subscriptions/subscription_kind.dart';
 import 'package:quax/subscriptions/users_model.dart';
 import 'package:logging/logging.dart';
@@ -23,8 +24,7 @@ Map<String, dynamic>? _settingsFromJson(Map<String, dynamic>? settings) =>
 
 class SettingsData {
   final Map<String, dynamic>? settings;
-  final List<SearchSubscription>? searchSubscriptions;
-  final List<UserSubscription>? userSubscriptions;
+  final List<Subscription>? subscriptions;
   final List<SubscriptionGroup>? subscriptionGroups;
   final List<SubscriptionGroupMember>? subscriptionGroupMembers;
   final List<SavedTweet>? tweets;
@@ -34,8 +34,7 @@ class SettingsData {
 
   SettingsData(
       {required this.settings,
-      required this.searchSubscriptions,
-      required this.userSubscriptions,
+      required this.subscriptions,
       required this.subscriptionGroups,
       required this.subscriptionGroupMembers,
       required this.tweets,
@@ -46,12 +45,7 @@ class SettingsData {
   factory SettingsData.fromJson(Map<String, dynamic> json) {
     return SettingsData(
         settings: _settingsFromJson(json['settings']),
-        searchSubscriptions: json['searchSubscriptions'] != null
-            ? List.from(json['searchSubscriptions']).map((e) => SearchSubscription.fromMap(e)).toList()
-            : null,
-        userSubscriptions: json['subscriptions'] != null
-            ? List.from(json['subscriptions']).map((e) => UserSubscription.fromMap(e)).toList()
-            : null,
+        subscriptions: _subscriptionsFromJson(json),
         subscriptionGroups: json['subscriptionGroups'] != null
             ? List.from(json['subscriptionGroups']).map((e) => SubscriptionGroup.fromMap(e)).toList()
             : null,
@@ -71,8 +65,8 @@ class SettingsData {
   Map<String, dynamic> toJson() {
     return {
       'settings': settings,
-      'searchSubscriptions': searchSubscriptions?.map((e) => e.toMap()).toList(),
-      'subscriptions': userSubscriptions?.map((e) => e.toMap()).toList(),
+      for (final kind in SubscriptionKind.values)
+        kind.backupKey: _subscriptions(kind)?.map((e) => e.toMap()).toList(),
       'subscriptionGroups': subscriptionGroups?.map((e) => e.toMap()).toList(),
       'subscriptionGroupMembers': subscriptionGroupMembers?.map((e) => e.toMap()).toList(),
       'tweets': tweets?.map((e) => e.toMap()).toList(),
@@ -81,6 +75,20 @@ class SettingsData {
       'accounts': accounts?.map((e) => e.toMap()).toList()
     };
   }
+
+  List<Subscription>? _subscriptions(SubscriptionKind kind) {
+    final all = subscriptions;
+    return all == null ? null : subscriptionsOfKind(all, kind);
+  }
+}
+
+/// Reads the subscriptions of a backup, where each kind has its own list. Null when there is none.
+List<Subscription>? _subscriptionsFromJson(Map<String, dynamic> json) {
+  final kinds = SubscriptionKind.values.where((kind) => json[kind.backupKey] != null).toList();
+  if (kinds.isEmpty) {
+    return null;
+  }
+  return kinds.expand((kind) => List.from(json[kind.backupKey]).map((e) => kind.fromRow(e))).toList();
 }
 
 /// The restored settings can rebuild the page that called it, so it reads all it needs from [context] first.
@@ -106,14 +114,11 @@ Future<void> importFromFile(BuildContext context, File file) async {
 
   var dataToImport = <String, List<ToMappable>>{};
 
-  var searchSubscriptions = data.searchSubscriptions;
-  if (searchSubscriptions != null) {
-    dataToImport[tableSearchSubscription] = searchSubscriptions;
-  }
-
-  var userSubscriptions = data.userSubscriptions;
-  if (userSubscriptions != null) {
-    dataToImport[tableSubscription] = userSubscriptions;
+  var subscriptions = data.subscriptions;
+  if (subscriptions != null) {
+    for (final kind in SubscriptionKind.values) {
+      dataToImport[kind.table] = subscriptionsOfKind(subscriptions, kind);
+    }
   }
 
   var subscriptionGroups = data.subscriptionGroups;
@@ -123,7 +128,7 @@ Future<void> importFromFile(BuildContext context, File file) async {
 
   var subscriptionGroupMembers = data.subscriptionGroupMembers;
   if (subscriptionGroupMembers != null) {
-    dataToImport[tableSubscriptionGroupMember] = membersWithKinds(subscriptionGroupMembers, data.searchSubscriptions ?? []);
+    dataToImport[tableSubscriptionGroupMember] = membersWithKinds(subscriptionGroupMembers, data.subscriptions ?? []);
   }
 
   var tweets = data.tweets;
@@ -194,8 +199,8 @@ class SettingsDataFragment extends StatelessWidget {
 /// The backups of older versions do not say whether a group member is an account or a search: a member is a search
 /// when the backup has a saved search of its id.
 List<SubscriptionGroupMember> membersWithKinds(
-    List<SubscriptionGroupMember> members, List<SearchSubscription> searches) {
-  final searchIds = searches.map((s) => s.id).toSet();
+    List<SubscriptionGroupMember> members, List<Subscription> subscriptions) {
+  final searchIds = subscriptions.whereType<SearchSubscription>().map((s) => s.id).toSet();
   return members
       .map((m) => m.kind.isNotEmpty
           ? m

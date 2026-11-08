@@ -377,7 +377,7 @@ void main() {
   testWidgets('Should follow the whole search, its filters included', (tester) async {
     await _openSearch(tester, query: 'flutter $_imagesQuery');
     expect(
-      tester.widget<FollowButton>(find.byType(FollowButton)).user.id,
+      tester.widget<FollowButton>(find.byType(FollowButton)).subscription.id,
       'flutter $_imagesQuery',
       reason: 'A followed search should keep its filters',
     );
@@ -387,7 +387,7 @@ void main() {
     );
     await pumpUntilLoaded(tester);
     expect(
-      tester.widget<FollowButton>(find.byType(FollowButton)).user.id,
+      tester.widget<FollowButton>(find.byType(FollowButton)).subscription.id,
       'flutter filter:images',
       reason: 'The followed search should follow the filters',
     );

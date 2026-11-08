@@ -641,15 +641,15 @@ class Twitter {
     return Community.fromGraphql(jsonDecode(response.body) as Map<String, dynamic>) ?? (throw NotFoundException());
   }
 
-  /// The Top posts of a community, the tab the website opens on.
-  static Future<TweetStatus> getCommunityTweets(String id, {String? cursor}) async {
+  static Future<TweetStatus> getCommunityTweets(String id,
+      {String? cursor, CommunityRanking ranking = CommunityRanking.top}) async {
     final uri = Uri.https('x.com', '/i/api/graphql/bKYFeT4aNUQDMHx4gyXIoQ/CommunityTweetsTimeline', {
       'variables': jsonEncode({
         'communityId': id,
         'count': 20,
         'cursor': ?cursor,
         'displayLocation': 'Community',
-        'rankingMode': 'Relevance',
+        'rankingMode': ranking.rankingMode,
         'withCommunity': true,
       }),
       'features': jsonEncode(_timelineFeatures),
@@ -1655,4 +1655,14 @@ class UnknownTimelineItemType with SyntheticException implements Exception {
   String toString() {
     return 'Unknown timeline item type: {type: $type, entryId: $entryId}';
   }
+}
+
+/// A tab of posts on a community page.
+enum CommunityRanking {
+  top('Relevance'),
+  latest('Recency');
+
+  const CommunityRanking(this.rankingMode);
+
+  final String rankingMode;
 }

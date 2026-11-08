@@ -28,7 +28,7 @@ UserSubscription _subscription(String id, String screenName) => UserSubscription
     inFeed: true);
 
 /// The subscriptions of the authors of [page], with their handles changed by [handle]
-List<Subscription> _authorsOf(TweetStatus page, {String Function(String screenName)? handle}) {
+List<SearchableSubscription> _authorsOf(TweetStatus page, {String Function(String screenName)? handle}) {
   final authors = {for (final tweet in _tweetsOf(page)) tweet.user!.idStr!: tweet.user!.screenName!};
   return authors.entries.map((author) => _subscription(author.key, (handle ?? (name) => name)(author.value))).toList();
 }

@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:quax/database/repository.dart';
+import 'package:quax/group/feed_chunk.dart';
 import 'package:quax/group/feed_cache.dart';
 import 'package:quax/group/group_model.dart';
-import 'package:quax/group/group_screen.dart';
 
 import 'open_feed.dart';
 

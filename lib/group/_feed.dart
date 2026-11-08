@@ -8,8 +8,8 @@ import 'package:quax/database/entities.dart';
 import 'package:quax/database/repository.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/group/feed_cache.dart';
+import 'package:quax/group/feed_chunk.dart';
 import 'package:quax/group/feed_chunk_page.dart';
-import 'package:quax/group/group_screen.dart';
 import 'package:quax/subscriptions/refreshed_profiles.dart';
 import 'package:quax/subscriptions/users_model.dart';
 import 'package:quax/tweet/paginated_tweet_list.dart';
@@ -22,7 +22,7 @@ import 'package:provider/provider.dart';
 
 class SubscriptionGroupFeed extends StatefulWidget {
   final SubscriptionGroupGet group;
-  final List<SubscriptionGroupFeedChunk> chunks;
+  final List<FeedChunk> chunks;
   final bool includeReplies;
   final bool includeRetweets;
 
@@ -87,7 +87,7 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
     }
   }
 
-  bool _chunksMatch(List<SubscriptionGroupFeedChunk> a, List<SubscriptionGroupFeedChunk> b) {
+  bool _chunksMatch(List<FeedChunk> a, List<FeedChunk> b) {
     if (a.length != b.length) return false;
     for (var i = 0; i < a.length; i++) {
       if (a[i].hash != b[i].hash) return false;
@@ -135,10 +135,10 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
     if (rateLimit == null) {
       return errors.firstOrNull;
     }
-    var total = widget.chunks.fold(0, (sum, chunk) => sum + chunk.users.length);
+    var total = widget.chunks.fold(0, (sum, chunk) => sum + chunk.subscriptionCount);
     var failedSubscriptions = widget.chunks.indexed
         .where((chunk) => pages[chunk.$1].failed)
-        .fold(0, (sum, chunk) => sum + chunk.$2.users.length);
+        .fold(0, (sum, chunk) => sum + chunk.$2.subscriptionCount);
     var feedError = FeedRateLimitedException(rateLimit.availableAt, loaded: total - failedSubscriptions, total: total);
     return PagingError(feedError, StackTrace.current);
   }

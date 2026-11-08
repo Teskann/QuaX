@@ -2,6 +2,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:quax/group/group_model.dart';
 import 'package:quax/user.dart';
 import 'package:intl/intl.dart';
+import 'package:quax/community/community.dart';
 
 final DateFormat sqliteDateFormat = DateFormat('yyyy-MM-dd HH:mm:ss', 'en_US');
 
@@ -106,12 +107,50 @@ sealed class Subscription with ToMappable {
       required this.createdAt,
       required this.inFeed,
       });
+}
+
+/// An account or a saved search. X finds its posts with a search.
+sealed class SearchableSubscription extends Subscription {
+  SearchableSubscription(
+      {required super.id,
+      required super.screenName,
+      required super.name,
+      required super.profileImageUrlHttps,
+      required super.verified,
+      required super.createdAt,
+      required super.inFeed});
 
   /// How X looks this subscription up in a search query.
   String get searchTerm;
 }
 
-class SearchSubscription extends Subscription {
+class CommunitySubscription extends Subscription {
+  final String? bannerUrl;
+
+  CommunitySubscription({required super.id, required super.name, required this.bannerUrl, required super.createdAt})
+      : super(screenName: name, verified: false, profileImageUrlHttps: bannerUrl, inFeed: true);
+
+  factory CommunitySubscription.fromCommunity(Community community) => CommunitySubscription(
+      id: community.id, name: community.name, bannerUrl: community.bannerUrl, createdAt: DateTime.now());
+
+  factory CommunitySubscription.fromMap(Map<String, Object?> map) => CommunitySubscription(
+      id: map['id'] as String,
+      name: map['name'] as String,
+      bannerUrl: map['banner_url'] as String?,
+      createdAt: DateTime.parse(map['created_at'] as String));
+
+  @override
+  bool operator ==(Object other) => identical(this, other) || other is CommunitySubscription && id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
+
+  @override
+  Map<String, dynamic> toMap() =>
+      {'id': id, 'name': name, 'banner_url': bannerUrl, 'created_at': sqliteDateFormat.format(createdAt)};
+}
+
+class SearchSubscription extends SearchableSubscription {
   SearchSubscription({required super.id, required super.createdAt})
       : super(name: id, screenName: id, verified: false, profileImageUrlHttps: null, inFeed: true);
 
@@ -136,7 +175,7 @@ class SearchSubscription extends Subscription {
   }
 }
 
-class UserSubscription extends Subscription {
+class UserSubscription extends SearchableSubscription {
   UserSubscription(
       {required super.id,
       required super.screenName,

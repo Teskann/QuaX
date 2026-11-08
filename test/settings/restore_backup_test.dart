@@ -34,8 +34,7 @@ void main() {
         jsonEncode(
           SettingsData(
             settings: {optionSubscriptionOrderByField: 'created_at'},
-            searchSubscriptions: null,
-            userSubscriptions: [flutterDev, olderAccount],
+            subscriptions: [flutterDev, olderAccount],
             subscriptionGroups: null,
             subscriptionGroupMembers: null,
             tweets: null,
