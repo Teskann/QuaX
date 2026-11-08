@@ -1,4 +1,6 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:quax/community/community_screen.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/database/entities.dart';
 import 'package:quax/generated/l10n.dart';
@@ -12,16 +14,36 @@ extension SubscriptionKindDisplay on SubscriptionKind {
   IconData get icon => switch (this) {
     SubscriptionKind.user => Icons.person,
     SubscriptionKind.search => Icons.saved_search,
+    SubscriptionKind.community => Icons.groups,
   };
 
   String label(L10n l10n) => switch (this) {
     SubscriptionKind.user => l10n.kind_accounts,
     SubscriptionKind.search => l10n.kind_searches,
+    SubscriptionKind.community => l10n.kind_communities,
   };
 
   String count(L10n l10n, int count) => switch (this) {
     SubscriptionKind.user => l10n.n_accounts(count),
     SubscriptionKind.search => l10n.n_searches(count),
+    SubscriptionKind.community => l10n.n_communities(count),
+  };
+
+  IconData get followIcon => switch (this) {
+    SubscriptionKind.user || SubscriptionKind.search => Icons.person_add,
+    SubscriptionKind.community => Icons.group_add,
+  };
+
+  IconData get unfollowIcon => switch (this) {
+    SubscriptionKind.user || SubscriptionKind.search => Icons.person_remove,
+    SubscriptionKind.community => Icons.group_remove,
+  };
+
+  /// The search tab that finds this kind.
+  SearchTab get searchTab => switch (this) {
+    SubscriptionKind.user => SearchTab.people,
+    SubscriptionKind.search => SearchTab.top,
+    SubscriptionKind.community => SearchTab.communities,
   };
 }
 
@@ -35,6 +57,11 @@ void openSubscription(BuildContext context, Subscription subscription) => switch
     context,
     routeSearch,
     arguments: SearchArguments(SearchTab.top, focusInputOnOpen: false, query: subscription.id),
+  ),
+  CommunitySubscription() => Navigator.pushNamed(
+    context,
+    routeCommunity,
+    arguments: CommunityScreenArguments(subscription.id),
   ),
 };
 
@@ -62,18 +89,26 @@ class SubscriptionAvatar extends StatelessWidget {
         uri: profileImageUrlHttps,
         size: subscriptionAvatarSize,
       ),
-      SearchSubscription() => CircleAvatar(
-        radius: subscriptionAvatarSize / 2,
-        backgroundColor: colors.tertiaryContainer,
-        child: Icon(SubscriptionKind.search.icon, color: colors.onTertiaryContainer),
-      ),
+      SearchSubscription() => _kindAvatar(colors, SubscriptionKind.search, null),
+      CommunitySubscription(:final bannerUrl) => _kindAvatar(colors, SubscriptionKind.community, bannerUrl),
     };
+  }
+
+  /// The picture, or the icon of the kind when there is no picture.
+  Widget _kindAvatar(ColorScheme colors, SubscriptionKind kind, String? imageUrl) {
+    return CircleAvatar(
+      radius: subscriptionAvatarSize / 2,
+      backgroundColor: colors.tertiaryContainer,
+      foregroundImage: imageUrl == null ? null : ExtendedNetworkImageProvider(imageUrl),
+      child: Icon(kind.icon, color: colors.onTertiaryContainer),
+    );
   }
 }
 
 String subscriptionHandle(L10n l10n, Subscription subscription) => switch (subscription) {
   UserSubscription() => '@${subscription.screenName}',
   SearchSubscription() => l10n.search_term,
+  CommunitySubscription() => l10n.community,
 };
 
 /// "3 accounts · 1 search"

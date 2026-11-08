@@ -4,7 +4,7 @@ import 'package:quax/database/entities.dart';
 const maxQueryLength = 512;
 
 String _feedSearchQuery(
-  List<Subscription> subscriptions, {
+  List<SearchableSubscription> subscriptions, {
   required bool includeReplies,
   required bool includeRetweets,
 }) {
@@ -19,7 +19,7 @@ String _feedSearchQuery(
 
 /// Builds the X search query used to load one chunk of a feed or group.
 String buildFeedSearchQuery(
-  List<Subscription> subscriptions, {
+  List<SearchableSubscription> subscriptions, {
   required bool includeReplies,
   required bool includeRetweets,
 }) {
@@ -35,15 +35,15 @@ String buildFeedSearchQuery(
 /// Walks the given order, so appending a subscription only disturbs the last chunk. A subscription
 /// too long to fit a query on its own gets a chunk of its own and is left to fail against X, rather
 /// than being silently dropped or truncated.
-List<List<Subscription>> packFeedChunks(
-  List<Subscription> subscriptions, {
+List<List<SearchableSubscription>> packFeedChunks(
+  List<SearchableSubscription> subscriptions, {
   required bool includeReplies,
   required bool includeRetweets,
 }) {
-  int queryLengthOf(List<Subscription> chunk) =>
+  int queryLengthOf(List<SearchableSubscription> chunk) =>
       _feedSearchQuery(chunk, includeReplies: includeReplies, includeRetweets: includeRetweets).length;
 
-  final chunks = <List<Subscription>>[];
+  final chunks = <List<SearchableSubscription>>[];
   for (final subscription in subscriptions) {
     if (chunks.isNotEmpty && queryLengthOf([...chunks.last, subscription]) <= maxQueryLength) {
       chunks.last.add(subscription);

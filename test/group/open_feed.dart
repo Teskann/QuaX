@@ -6,9 +6,9 @@ import 'package:quax/client/client.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/database/entities.dart';
 import 'package:quax/database/repository.dart';
+import 'package:quax/group/feed_chunk.dart';
 import 'package:quax/group/_feed.dart';
 import 'package:quax/group/feed_scroll_controller.dart';
-import 'package:quax/group/group_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
@@ -24,7 +24,7 @@ final flutterDev = UserSubscription(
     createdAt: DateTime(2024),
     inFeed: true);
 
-final flutterDevChunk = SubscriptionGroupFeedChunk([flutterDev], true, true);
+final flutterDevChunk = SearchFeedChunk([flutterDev], includeReplies: true, includeRetweets: true);
 
 /// Opens the main feed, made of [flutterDevChunk], with videos turned off.
 Future<void> openFeed(WidgetTester tester, AbstractTwitterClient client,

@@ -4,6 +4,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:pref/pref.dart';
 import 'package:quax/community/community.dart';
 import 'package:quax/community/community_members_screen.dart';
+import 'package:quax/database/entities.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/tweet/_media.dart';
 import 'package:quax/ui/locale_fallback.dart';
@@ -32,6 +33,10 @@ class CommunityHeader extends StatelessWidget {
                   community.name,
                   style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
                 ),
+              ),
+              FollowButton(
+                subscription: CommunitySubscription.fromCommunity(community),
+                color: theme.colorScheme.primary,
               ),
               _ShareButton(communityId: community.id),
             ],

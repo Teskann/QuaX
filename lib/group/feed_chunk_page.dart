@@ -1,7 +1,6 @@
 import 'package:quax/client/client.dart';
 import 'package:quax/group/feed_cache.dart';
-import 'package:quax/group/group_screen.dart';
-import 'package:quax/group/search_query.dart';
+import 'package:quax/group/feed_chunk.dart';
 import 'package:quax/group/unrelated_tweets.dart';
 import 'package:quax/utils/paging.dart';
 import 'package:sqflite/sqflite.dart';
@@ -28,17 +27,14 @@ class ChunkPage {
 }
 
 /// Each chunk resumes from its own last cursor. A chunk without a cursor has nothing more to load.
-Future<ChunkPage> loadChunkPage(Database repository, SubscriptionGroupFeedChunk chunk,
-    {required bool firstPage}) async {
+Future<ChunkPage> loadChunkPage(Database repository, FeedChunk chunk, {required bool firstPage}) async {
   var storedCursor = await readChunkCursor(repository, chunk.hash);
   if (!firstPage && storedCursor == null) {
     return ChunkPage.ended;
   }
-  var query = buildFeedSearchQuery(chunk.users,
-      includeReplies: chunk.includeReplies, includeRetweets: chunk.includeRetweets);
   TweetStatus result;
   try {
-    result = await Twitter.searchTweets(query, cursor: firstPage ? null : storedCursor);
+    result = await _loadPage(chunk, firstPage ? null : storedCursor);
   } catch (e, stackTrace) {
     var stored = firstPage ? await readStoredChains(repository, chunk.hash) : const <TweetChain>[];
     return ChunkPage(
@@ -57,5 +53,17 @@ Future<ChunkPage> loadChunkPage(Database repository, SubscriptionGroupFeedChunk 
       cursor: await readChunkCursor(repository, chunk.hash),
       error: answeredError == null ? null : PagingError(answeredError, StackTrace.current),
       failed: false,
-      unrelated: feedContainsUnrelatedTweets(result, chunk.users));
+      unrelated: _containsUnrelatedTweets(chunk, result));
 }
+
+Future<TweetStatus> _loadPage(FeedChunk chunk, String? cursor) => switch (chunk) {
+      SearchFeedChunk() => Twitter.searchTweets(chunk.query, cursor: cursor),
+      CommunityFeedChunk(:final community) =>
+        Twitter.getCommunityTweets(community.id, cursor: cursor, ranking: CommunityRanking.latest),
+    };
+
+bool _containsUnrelatedTweets(FeedChunk chunk, TweetStatus page) => switch (chunk) {
+      SearchFeedChunk(:final subscriptions) => feedContainsUnrelatedTweets(page, subscriptions),
+      // Anyone in the community can post there
+      CommunityFeedChunk() => false,
+    };

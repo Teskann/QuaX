@@ -148,7 +148,7 @@ void main() {
   });
 
   group('packFeedChunks()', () {
-    List<List<Subscription>> pack(List<Subscription> subscriptions) =>
+    List<List<SearchableSubscription>> pack(List<SearchableSubscription> subscriptions) =>
         packFeedChunks(subscriptions, includeReplies: false, includeRetweets: true);
 
     test('Should never build a query longer than the limit', () {

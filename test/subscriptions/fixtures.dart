@@ -22,6 +22,9 @@ UserSubscription account(String name, {bool inFeed = true, DateTime? subscribedA
 
 SearchSubscription savedSearch(String query) => SearchSubscription(id: query, createdAt: DateTime(2026));
 
+CommunitySubscription followedCommunity(String name) =>
+    CommunitySubscription(id: 'community-$name', name: name, bannerUrl: null, createdAt: DateTime(2026));
+
 SubscriptionRef refOf(Subscription subscription) => SubscriptionRef.of(subscription);
 
 Future<void> follow(List<Subscription> subscriptions) async {

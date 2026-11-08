@@ -197,7 +197,8 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
       valueListenable: _queryController,
       builder: (context, _, _) => ScopedBuilder<SearchFiltersModel, SearchFilters>(
         store: _filters,
-        onState: (_, _) => FollowButton(user: SearchSubscription(id: _effectiveQuery(), createdAt: DateTime.now())),
+        onState: (_, _) =>
+            FollowButton(subscription: SearchSubscription(id: _effectiveQuery(), createdAt: DateTime.now())),
       ),
     );
   }

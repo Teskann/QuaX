@@ -20,6 +20,7 @@
     "description": "Accessibility label of the button that adds a location to the trends tabs"
   },
   "add_to_groups": "Add to groups",
+  "@add_to_groups": {},
   "all": "All",
   "@all": {},
   "all_the_great_software_used_by_fritter": "All the great software used by QuaX",
@@ -402,6 +403,10 @@
   "@kind_accounts": {
     "description": "Filter chip: show only the followed accounts"
   },
+  "kind_communities": "Communities",
+  "@kind_communities": {
+    "description": "Filter chip: show only the followed communities"
+  },
   "kind_searches": "Searches",
   "@kind_searches": {
     "description": "Filter chip: show only the saved searches"
@@ -490,6 +495,14 @@
   "@mute_videos": {},
   "n_accounts": "{count, plural, one{1 account} other{{count} accounts}}",
   "@n_accounts": {},
+  "n_communities": "{count, plural, one{{count} community} other{{count} communities}}",
+  "@n_communities": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "n_searches": "{count, plural, one{1 search} other{{count} searches}}",
   "@n_searches": {},
   "n_selected": "{count, plural, one{1 selected} other{{count} selected}}",
@@ -512,6 +525,8 @@
   "@no_account_available_message": {},
   "no_account_available_title": "No account available right now",
   "@no_account_available_title": {},
+  "no_followed_communities": "You follow no communities.",
+  "@no_followed_communities": {},
   "no_liked_posts_yet": "You haven't liked any posts yet!",
   "@no_liked_posts_yet": {},
   "no_members_yet": "No members yet",
@@ -1176,6 +1191,5 @@
   "you_have_not_saved_any_tweets_yet": "You haven't saved any posts yet!",
   "@you_have_not_saved_any_tweets_yet": {},
   "you_must_have_at_least_2_home_screen_pages": "You must have at least 2 home screen pages",
-  "@you_must_have_at_least_2_home_screen_pages": {},
-  "@add_to_groups": {}
+  "@you_must_have_at_least_2_home_screen_pages": {}
 }

@@ -17,6 +17,7 @@ const String tableSavedTweet = 'saved_tweet';
 const String tableSavedTweetFolder = 'saved_tweet_folder';
 const String tableLikedTweet = 'liked_tweet';
 const String tableSearchSubscription = 'search_subscription';
+const String tableCommunitySubscription = 'community_subscription';
 const String tableSearchSubscriptionGroupMember = 'search_subscription_group_member';
 const String tableSubscription = 'subscription';
 const String tableSubscriptionGroup = 'subscription_group';
@@ -26,7 +27,7 @@ const String tableAccounts = 'accounts';
 
 const String tableInstalledVersion = 'installed_version';
 
-const int databaseVersion = 31;
+const int databaseVersion = 32;
 
 class Repository {
   static final log = Logger('Repository');
@@ -304,6 +305,11 @@ class Repository {
         SqlMigration('DROP TABLE ${tableSubscriptionGroupMember}_old'),
         // Search members have always been stored with the others: this table stayed empty
         SqlMigration('DROP TABLE IF EXISTS $tableSearchSubscriptionGroupMember'),
+      ],
+      32: [
+        SqlMigration(
+            'CREATE TABLE $tableCommunitySubscription (id VARCHAR PRIMARY KEY, name VARCHAR NOT NULL, banner_url VARCHAR, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)',
+            reverseSql: 'DROP TABLE $tableCommunitySubscription'),
       ],
     });
   }

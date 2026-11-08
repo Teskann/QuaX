@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:quax/client/client.dart';
 import 'package:quax/database/repository.dart';
 import 'package:quax/group/group_model.dart';
-import 'package:quax/group/group_screen.dart';
+import 'package:quax/group/feed_chunk.dart';
 import 'package:quax/utils/iterables.dart';
 import 'package:sqflite/sqflite.dart';
 

@@ -125,4 +125,16 @@ void main() {
           reason: 'Before the update, such a member stood for both, so the group should keep showing both');
     });
   });
+
+  group('Version 32', () {
+    test('Should store the followed communities', () async {
+      final database = await databaseAt(31);
+
+      await migrate(database, 31, 32);
+      await database.insert(tableCommunitySubscription, {'id': 'c1', 'name': 'Flutter'});
+
+      final rows = await database.query(tableCommunitySubscription);
+      expect(rows.single['created_at'], isNotNull, reason: 'The date a community is followed sorts the subscriptions');
+    });
+  });
 }

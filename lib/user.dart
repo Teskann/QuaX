@@ -8,6 +8,8 @@ import 'package:quax/constants.dart';
 import 'package:quax/database/entities.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/subscriptions/add_to_groups_sheet.dart';
+import 'package:quax/subscriptions/subscription_display.dart';
+import 'package:quax/subscriptions/subscription_kind.dart';
 import 'package:quax/profile/profile.dart';
 import 'package:quax/subscriptions/users_model.dart';
 import 'package:provider/provider.dart';
@@ -91,7 +93,7 @@ class UserTile extends StatelessWidget {
         ],
       ),
       subtitle: Text('@${user.screenName}', maxLines: 1, overflow: TextOverflow.ellipsis),
-      trailing: FollowButton(user: user),
+      trailing: FollowButton(subscription: user),
       onTap: () {
         Navigator.pushNamed(context, routeProfile, arguments: ProfileScreenArguments(user.id, user.screenName, null));
       },
@@ -100,10 +102,10 @@ class UserTile extends StatelessWidget {
 }
 
 class FollowButton extends StatelessWidget {
-  final Subscription user;
+  final Subscription subscription;
   final Color? color;
 
-  const FollowButton({super.key, required this.user, this.color});
+  const FollowButton({super.key, required this.subscription, this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -112,13 +114,16 @@ class FollowButton extends StatelessWidget {
     return ScopedBuilder<SubscriptionsModel, List<Subscription>>(
       store: model,
       onState: (_, state) {
-        var followed = state.any((element) => element.id == user.id);
-        var inFeed = followed ? state.any((element) => element.id == user.id && element.inFeed) : false;
+        var ref = SubscriptionRef.of(subscription);
+        var kind = ref.kind;
+        var followed = state.where((element) => SubscriptionRef.of(element) == ref).firstOrNull;
+        var inFeed = followed?.inFeed ?? false;
+        var hidden = followed != null && kind.canHideFromMainFeed && !inFeed;
 
-        var icon = followed
-            ? (inFeed ? Icon(Icons.person_remove, color: color) : Icon(Icons.visibility_off))
-            : Icon(Icons.person_add, color: color);
-        var text = followed ? L10n.of(context).unsubscribe : L10n.of(context).subscribe;
+        var icon = followed == null
+            ? Icon(kind.followIcon, color: color)
+            : (hidden ? Icon(Icons.visibility_off) : Icon(kind.unfollowIcon, color: color));
+        var text = followed != null ? L10n.of(context).unsubscribe : L10n.of(context).subscribe;
 
         return PopupMenuButton<String>(
           icon: icon,
@@ -128,7 +133,7 @@ class FollowButton extends StatelessWidget {
               value: 'add_to_group',
               child: Text(L10n.of(context).add_to_groups),
             ),
-            if (followed)
+            if (followed != null && kind.canHideFromMainFeed)
               PopupMenuItem(
                 value: 'toggle_in_main_feed',
                 child: Text(inFeed ? L10n.of(context).hide_from_main_feed : L10n.of(context).show_in_main_feed),
@@ -137,16 +142,16 @@ class FollowButton extends StatelessWidget {
           onSelected: (value) async {
             switch (value) {
               case 'add_to_group':
-                if (!followed) {
-                  await model.subscribe(user);
+                if (followed == null) {
+                  await model.subscribe(subscription);
                 }
                 if (context.mounted) {
-                  await showGroupsSheet(context, [user], onDone: () {});
+                  await showGroupsSheet(context, [subscription], onDone: () {});
                 }
               case 'toggle_subscribe':
-                await (followed ? model.unsubscribe([user]) : model.subscribe(user));
+                await (followed != null ? model.unsubscribe([followed]) : model.subscribe(subscription));
               case 'toggle_in_main_feed':
-                await model.setShownInMainFeed([user], shown: !inFeed);
+                await model.setShownInMainFeed([subscription], shown: !inFeed);
             }
           },
         );

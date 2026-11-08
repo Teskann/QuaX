@@ -51,6 +51,13 @@ Future<void> _select(WidgetTester tester, List<String> names) async {
   await tester.pump();
 }
 
+/// Selects [names] and opens the sheet to add them to groups.
+Future<void> _addToGroups(WidgetTester tester, List<String> names) async {
+  await _select(tester, names);
+  await tester.tap(find.byTooltip('Add to groups'));
+  await tester.pumpAndSettle();
+}
+
 /// Drags the handle of the row of [name] down by [rows] rows.
 Future<void> _dragDown(WidgetTester tester, String name, {required double rows}) async {
   final handle = find.descendant(of: _row(name), matching: find.byIcon(Icons.drag_indicator));
@@ -176,9 +183,7 @@ void main() {
     });
     await _openPage(tester, 'alice');
     await pumpUntilFound(tester, _tag('alice', 'Friends'));
-    await _select(tester, ['alice', 'bob']);
-    await tester.tap(find.byTooltip('Add to groups'));
-    await tester.pumpAndSettle();
+    await _addToGroups(tester, ['alice', 'bob']);
     final choice = find.widgetWithText(CheckboxListTile, 'Friends');
     bool? ticked() => tester.widget<CheckboxListTile>(choice).value;
     expect(ticked(), isNull, reason: 'A group holding part of the selection should be half ticked');
@@ -245,6 +250,39 @@ void main() {
     expect(_groupTile('Friends'), findsOneWidget, reason: 'The group of the matching account should show');
     expect(_groupTile('Alien films'), findsOneWidget, reason: 'A group whose name matches should show');
     expect(_groupTile('Work'), findsNothing, reason: 'A group without any match should hide');
+  });
+
+  testWidgets('Should list the followed communities under their own filter', (tester) async {
+    await tester.runAsync(() => follow([account('alice'), followedCommunity('Flutter devs')]));
+    await _openPage(tester, 'alice');
+
+    await tester.tap(find.text('Communities 1'));
+    await tester.pumpAndSettle();
+
+    expect(_row('alice'), findsNothing, reason: 'Only the communities should be listed');
+    expect(
+      find.descendant(of: _row('Flutter devs'), matching: find.text('Community')),
+      findsOneWidget,
+      reason: 'The row should say it is a community, where an account shows its @name',
+    );
+  });
+
+  testWidgets('Should put a followed community in a group', (tester) async {
+    final groupId = await tester.runAsync(() async {
+      await follow([followedCommunity('Flutter devs')]);
+      return createGroup('Tech', []);
+    });
+    await _openPage(tester, 'Flutter devs');
+    await _addToGroups(tester, ['Flutter devs']);
+    final choice = find.widgetWithText(CheckboxListTile, 'Tech');
+
+    await tester.tap(choice);
+    await pumpUntil(tester, () => tester.widget<CheckboxListTile>(choice).value == true,
+        reason: 'the group should get ticked');
+
+    expect(await membersOf(tester, groupId!), {
+      refOf(followedCommunity('Flutter devs')),
+    }, reason: 'The community should be a member of the group, so that its posts show in the group feed');
   });
 }
 

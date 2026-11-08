@@ -232,10 +232,7 @@ class _SubscriptionsBody extends StatelessWidget {
     final l10n = L10n.of(context);
     final query = page.query?.trim() ?? '';
     if (query.isNotEmpty) {
-      final tab = switch (page.kind) {
-        SubscriptionKind.user => SearchTab.people,
-        SubscriptionKind.search || null => SearchTab.top,
-      };
+      final tab = page.kind?.searchTab ?? SearchTab.top;
       return EmptySubscriptions(
         icon: Icons.search_off,
         message: l10n.no_subscription_matches(query),
@@ -245,17 +242,8 @@ class _SubscriptionsBody extends StatelessWidget {
       );
     }
     return switch (page.kind) {
-      SubscriptionKind.search => EmptySubscriptions(
-        icon: SubscriptionKind.search.icon,
-        message: l10n.no_saved_searches,
-        actionIcon: Icons.search,
-        actionLabel: l10n.search,
-        onAction: () => Navigator.pushNamed(
-          context,
-          routeSearch,
-          arguments: SearchArguments(SearchTab.top, focusInputOnOpen: true),
-        ),
-      ),
+      SubscriptionKind.search => _searchToFollow(context, SubscriptionKind.search, l10n.no_saved_searches),
+      SubscriptionKind.community => _searchToFollow(context, SubscriptionKind.community, l10n.no_followed_communities),
       SubscriptionKind.user || null => EmptySubscriptions(
         icon: Icons.inbox_outlined,
         message: l10n.no_subscriptions_try_searching_or_importing_some,
@@ -265,6 +253,16 @@ class _SubscriptionsBody extends StatelessWidget {
       ),
     };
   }
+
+  /// Asks to search X for something to follow.
+  Widget _searchToFollow(BuildContext context, SubscriptionKind kind, String message) => EmptySubscriptions(
+    icon: kind.icon,
+    message: message,
+    actionIcon: Icons.search,
+    actionLabel: L10n.of(context).search,
+    onAction: () =>
+        Navigator.pushNamed(context, routeSearch, arguments: SearchArguments(kind.searchTab, focusInputOnOpen: true)),
+  );
 }
 
 void openImport(BuildContext context) =>
