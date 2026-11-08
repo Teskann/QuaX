@@ -1,342 +1,171 @@
-import 'dart:convert';
-import 'package:dynamic_color/dynamic_color.dart';
+import 'package:flutter/semantics.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:flutter_iconpicker/Models/configuration.dart';
-import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
-import 'package:flutter_iconpicker/flutter_iconpicker.dart';
-import 'package:flutter_triple/flutter_triple.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/database/entities.dart';
 import 'package:quax/generated/l10n.dart';
-import 'package:quax/group/group_model.dart';
 import 'package:quax/group/group_screen.dart';
-import 'package:quax/subscriptions/users_model.dart';
-import 'package:quax/user.dart';
-import 'package:provider/provider.dart';
+import 'package:quax/subscriptions/group_appearance.dart';
+import 'package:quax/subscriptions/group_editor.dart';
 
-Future openSubscriptionGroupDialog(BuildContext context, String? id, String name, String icon) {
-  return showDialog(
-      context: context,
-      builder: (context) {
-        return SubscriptionGroupEditDialog(id: id, name: name, icon: icon);
-      });
-}
+class GroupsHeader extends StatelessWidget {
+  final bool collapsed;
+  final VoidCallback onToggleCollapsed;
 
-class SubscriptionGroups extends StatefulWidget {
-  final ScrollController scrollController;
-
-  const SubscriptionGroups({super.key, required this.scrollController});
+  const GroupsHeader({super.key, required this.collapsed, required this.onToggleCollapsed});
 
   @override
-  State<SubscriptionGroups> createState() => _SubscriptionGroupsState();
-}
-
-class _SubscriptionGroupsState extends State<SubscriptionGroups> {
-  Widget _createGroupCard(
-      String id, String name, String icon, Color? color, int? numberOfMembers, void Function()? onLongPress) {
-    var title = numberOfMembers == null ? name : '$name ($numberOfMembers)';
-
-    return Card(
-      color: color?.harmonizeWith(Theme.of(context).colorScheme.primary),
-      child: InkWell(
-        onTap: () {
-          // Open page with the group's feed
-          Navigator.pushNamed(context, routeGroup, arguments: GroupScreenArguments(id: id, name: name));
-        },
-        onLongPress: onLongPress,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(deserializeIconData(icon), size: 24),
-            Text(title,
-                textAlign: TextAlign.center,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
-          ],
-        ),
+  Widget build(BuildContext context) {
+    final l10n = L10n.of(context);
+    return Padding(
+      padding: const EdgeInsetsDirectional.only(start: 16, end: 4),
+      child: Row(
+        children: [
+          Expanded(child: SectionTitle(l10n.groups)),
+          IconButton(
+            onPressed: onToggleCollapsed,
+            tooltip: collapsed ? l10n.show_groups : l10n.hide_groups,
+            icon: AnimatedRotation(
+              turns: collapsed ? 0.5 : 0,
+              duration: const Duration(milliseconds: 200),
+              child: const Icon(Icons.expand_less),
+            ),
+          ),
+        ],
       ),
     );
   }
+}
+
+class SectionTitle extends StatelessWidget {
+  final String title;
+
+  const SectionTitle(this.title, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ScopedBuilder<GroupsModel, List<SubscriptionGroup>>.transition(
-      store: context.read<GroupsModel>(),
-      // TODO: Error
-      onState: (_, state) {
-        return GridView.builder(
-          shrinkWrap: true,
-          controller: widget.scrollController,
-          padding: const EdgeInsets.only(top: 4),
-          gridDelegate:
-              const SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 100, childAspectRatio: 20 / 15),
-          itemCount: state.length + 1,
-          itemBuilder: (context, index) {
-            var actualIndex = index;
+    final theme = Theme.of(context);
+    return Text(title, style: theme.textTheme.titleSmall?.copyWith(color: theme.colorScheme.onSurfaceVariant));
+  }
+}
 
-            if (actualIndex < state.length) {
-              var e = state[actualIndex];
+class GroupsGrid extends StatelessWidget {
+  final List<SubscriptionGroup> groups;
 
-              return _createGroupCard(e.id, e.name, e.icon, e.color, e.numberOfMembers,
-                  () => openSubscriptionGroupDialog(context, e.id, e.name, e.icon));
-            }
+  const GroupsGrid({super.key, required this.groups});
 
-            return null;
-          },
-        );
-      },
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: 100,
+        mainAxisSpacing: 8,
+        crossAxisSpacing: 8,
+      ),
+      itemCount: groups.length + 1,
+      itemBuilder: (context, index) => index < groups.length ? GroupTile(group: groups[index]) : const _NewGroupTile(),
     );
   }
 }
 
-class SubscriptionGroupEditDialog extends StatefulWidget {
-  final String? id;
-  final String name;
-  final String icon;
+/// Opens the feed of the group, or its editor on a long press.
+class GroupTile extends StatelessWidget {
+  final SubscriptionGroup group;
 
-  const SubscriptionGroupEditDialog({super.key, required this.id, required this.name, required this.icon});
-
-  @override
-  State<SubscriptionGroupEditDialog> createState() => _SubscriptionGroupEditDialogState();
-}
-
-class _SubscriptionGroupEditDialogState extends State<SubscriptionGroupEditDialog> {
-  final GlobalKey<FormState> _formKey = GlobalKey();
-
-  SubscriptionGroupEdit? _group;
-
-  late String? id;
-  late String? name;
-  late String icon;
-  Color? color;
-  Set<String> members = <String>{};
-
-  @override
-  void initState() {
-    super.initState();
-
-    setState(() {
-      icon = widget.icon;
-    });
-
-    context.read<GroupsModel>().loadGroupEdit(widget.id).then((group) => setState(() {
-          _group = group;
-
-          id = group.id;
-          name = group.name;
-          icon = group.icon;
-          color = group.color;
-          members = group.members;
-        }));
-  }
-
-  void openDeleteSubscriptionGroupDialog(String id, String name) {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: Text(L10n.of(context).no),
-              ),
-              TextButton(
-                onPressed: () async {
-                  await context.read<GroupsModel>().deleteGroup(id);
-
-                  if (context.mounted) {
-                    Navigator.pop(context);
-                    Navigator.pop(context);
-                  }
-                },
-                child: Text(L10n.of(context).yes),
-              ),
-            ],
-            title: Text(L10n.of(context).are_you_sure),
-            content: Text(
-              L10n.of(context).are_you_sure_you_want_to_delete_the_subscription_group_name_of_group(name),
-            ),
-          );
-        });
-  }
+  const GroupTile({super.key, required this.group});
 
   @override
   Widget build(BuildContext context) {
-    var subscriptionsModel = context.read<SubscriptionsModel>();
-
-    var group = _group;
-    if (group == null) {
-      return const Center(child: CircularProgressIndicator());
-    }
-
-    return AlertDialog(
-      actions: [
-        TextButton(
-          onPressed: id == null ? null : () => openDeleteSubscriptionGroupDialog(id!, name!),
-          child: Text(L10n.of(context).delete),
+    final tone = groupTone(context, group.color);
+    void edit() => openGroupEditor(context, id: group.id);
+    return Semantics(
+      customSemanticsActions: {CustomSemanticsAction(label: L10n.of(context).edit_group): edit},
+      child: _GroupGridTile(
+        icon: group.iconData,
+        label: group.name,
+        background: tone.background,
+        foreground: tone.foreground,
+        onTap: () => Navigator.pushNamed(
+          context,
+          routeGroup,
+          arguments: GroupScreenArguments(id: group.id, name: group.name),
         ),
-        TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: Text(L10n.of(context).cancel),
-        ),
-        TextButton(
-          onPressed: () async {
-            if (_formKey.currentState!.validate()) {
-              await context.read<GroupsModel>().saveGroup(id, name!, icon, color, members);
+        onLongPress: edit,
+      ),
+    );
+  }
+}
 
-              if (context.mounted) {
-                Navigator.pop(context);
-              }
-            }
-          },
-          child: Text(L10n.of(context).ok),
-        ),
-      ],
-      content: Form(
-        key: _formKey,
-        child: SizedBox(
-          width: double.maxFinite,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Expanded(
-                    child: TextFormField(
-                      initialValue: group.name,
-                      decoration: InputDecoration(
-                        border: const UnderlineInputBorder(),
-                        hintText: L10n.of(context).name,
-                      ),
-                      onChanged: (value) => setState(() {
-                        name = value;
-                      }),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return L10n.of(context).please_enter_a_name;
-                        }
+class _NewGroupTile extends StatelessWidget {
+  const _NewGroupTile();
 
-                        return null;
-                      },
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    return _GroupGridTile(
+      icon: Icons.add,
+      label: L10n.of(context).new_group,
+      foreground: colors.primary,
+      border: BorderSide(color: colors.outlineVariant),
+      onTap: () => openGroupEditor(context),
+    );
+  }
+}
+
+class _GroupGridTile extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final Color? background;
+  final Color foreground;
+  final BorderSide border;
+  final VoidCallback onTap;
+  final VoidCallback? onLongPress;
+
+  const _GroupGridTile({
+    required this.icon,
+    required this.label,
+    this.background,
+    required this.foreground,
+    this.border = BorderSide.none,
+    required this.onTap,
+    this.onLongPress,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: background ?? Colors.transparent,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16), side: border),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: onTap,
+        onLongPress: onLongPress,
+        child: Padding(
+          padding: const EdgeInsets.all(6),
+          // With a large system font, the content shrinks so that the tile stays square
+          child: LayoutBuilder(
+            builder: (context, box) => FittedBox(
+              fit: BoxFit.scaleDown,
+              child: SizedBox(
+                width: box.maxWidth,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(icon, size: 22, color: foreground),
+                    const SizedBox(height: 4),
+                    Text(
+                      label,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.labelMedium?.copyWith(color: foreground, height: 1.25),
                     ),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.palette, color: color, semanticLabel: L10n.of(context).pick_a_color),
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            var selectedColor = color;
-
-                            return AlertDialog(
-                              title: Text(L10n.of(context).pick_a_color),
-                              content: SingleChildScrollView(
-                                child: MaterialColorPicker(
-                                  selectedColor: color ?? Colors.grey,
-                                  onColorChange: (value) => setState(() {
-                                    selectedColor = value;
-                                  }),
-                                ),
-                              ),
-                              actions: <Widget>[
-                                TextButton(
-                                  child: Text(L10n.of(context).cancel),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                                TextButton(
-                                  child: Text(L10n.of(context).ok),
-                                  onPressed: () {
-                                    setState(() {
-                                      color = selectedColor;
-                                    });
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                              ],
-                            );
-                          });
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(deserializeIconData(icon), semanticLabel: L10n.of(context).pick_an_icon),
-                    onPressed: () async {
-                      var selectedIcon = await showIconPicker(
-                        context,
-                        configuration: SinglePickerConfiguration(
-                            iconPackModes: [IconPack.material],
-                            title: Text(L10n.of(context).pick_an_icon),
-                            closeChild: Text(L10n.of(context).close),
-                            searchHintText: L10n.of(context).search,
-                            noResultsText: L10n.of(context).no_results_for),
-                      );
-                      if (selectedIcon != null) {
-                        setState(() {
-                          icon = jsonEncode(serializeIcon(selectedIcon));
-                        });
-                      }
-                    },
-                  )
-                ],
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton.icon(
-                  style: TextButton.styleFrom(
-                    foregroundColor: Theme.of(context).textTheme.bodySmall?.color,
-                    textStyle: Theme.of(context).textTheme.bodySmall,
-                    visualDensity: VisualDensity.compact,
-                  ),
-                  icon: const Icon(Icons.checklist, size: 18),
-                  label: Text(L10n.of(context).toggle_all),
-                  onPressed: () {
-                    setState(() {
-                      if (members.isEmpty) {
-                        members = subscriptionsModel.state.map((e) => e.id).toSet();
-                      } else {
-                        members.clear();
-                      }
-                    });
-                  },
+                  ],
                 ),
               ),
-              Expanded(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: subscriptionsModel.state.length,
-                  itemBuilder: (context, index) {
-                    var subscription = subscriptionsModel.state[index];
-
-                    var subtitle =
-                        subscription is SearchSubscription ? L10n.current.search_term : '@${subscription.screenName}';
-
-                    var icon = subscription is SearchSubscription
-                        ? const SizedBox(width: 48, child: Icon(Icons.search))
-                        : UserAvatar(uri: subscription.profileImageUrlHttps);
-
-                    return CheckboxListTile(
-                      dense: true,
-                      secondary: icon,
-                      title: Text(subscription.name),
-                      subtitle: Text(subtitle),
-                      selected: members.contains(subscription.id),
-                      value: members.contains(subscription.id),
-                      onChanged: (v) => setState(() {
-                        if (v == null || v == false) {
-                          members.remove(subscription.id);
-                        } else {
-                          members.add(subscription.id);
-                        }
-                      }),
-                    );
-                  },
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),

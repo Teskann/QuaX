@@ -28,7 +28,7 @@ Widget withAppModels(Widget child) => MultiProvider(
         Provider(create: (_) => LikedTweetModel()),
         Provider(create: (_) => SavedTweetModel()),
         Provider(create: (_) => VideoControllerPool(maxSize: 2)),
-        Provider(create: (context) => GroupsModel(PrefService.of(context, listen: false))),
+        Provider(create: (context) => GroupsModel()),
         Provider(
             create: (context) =>
                 SubscriptionsModel(PrefService.of(context, listen: false), context.read<GroupsModel>())),

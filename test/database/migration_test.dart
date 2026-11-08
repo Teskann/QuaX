@@ -95,4 +95,34 @@ void main() {
           reason: 'No tweet was remembered yet, so the feeds should open on their newest tweet');
     });
   });
+
+  group('Version 31', () {
+    test('Should keep each group member as the account or the saved search it was', () async {
+      final database = await databaseAt(30);
+      await database.insert(tableSubscription, {'id': '42', 'screen_name': 'dev', 'name': 'Dev'});
+      await database.insert(tableSearchSubscription, {'id': 'flutter'});
+      for (final member in ['42', 'flutter', 'unfollowed']) {
+        await database.insert(tableSubscriptionGroupMember, {'group_id': 'group', 'profile_id': member});
+      }
+
+      await migrate(database, 30, 31);
+
+      final members = await database.query(tableSubscriptionGroupMember, orderBy: 'profile_id');
+      expect(members.map((m) => (m['profile_id'], m['kind'])), [('42', 'user'), ('flutter', 'search'), ('unfollowed', 'user')],
+          reason: 'A group must still show its accounts and saved searches after the update');
+    });
+
+    test('Should keep both members when a saved search has the id of an account', () async {
+      final database = await databaseAt(30);
+      await database.insert(tableSubscription, {'id': '42', 'screen_name': 'dev', 'name': 'Dev'});
+      await database.insert(tableSearchSubscription, {'id': '42'});
+      await database.insert(tableSubscriptionGroupMember, {'group_id': 'group', 'profile_id': '42'});
+
+      await migrate(database, 30, 31);
+
+      final kinds = (await database.query(tableSubscriptionGroupMember)).map((m) => m['kind']);
+      expect(kinds, unorderedEquals(['user', 'search']),
+          reason: 'Before the update, such a member stood for both, so the group should keep showing both');
+    });
+  });
 }

@@ -6,6 +6,7 @@ import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
 import 'package:quax/group/feed_scroll_controller.dart';
 import 'package:quax/constants.dart';
+import 'package:quax/ui/back_interceptors.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/group/group_screen.dart';
 import 'package:quax/home/_feed.dart';
@@ -30,7 +31,7 @@ class NavigationPage {
 
 final List<NavigationPage> defaultHomePages = [
   NavigationPage('feed', (c) => L10n.of(c).home, const Icon(Icons.home_outlined), const Icon(Icons.home)),
-  NavigationPage('subscriptions', (c) => L10n.of(c).subscriptions, const Icon(Icons.people_outlined),
+  NavigationPage(subscriptionsPageId, (c) => L10n.of(c).subscriptions, const Icon(Icons.people_outlined),
       const Icon(Icons.people)),
   NavigationPage('trending', (c) => L10n.of(c).search, const Icon(Icons.search_outlined), const Icon(Icons.search)),
   NavigationPage(
@@ -119,7 +120,7 @@ class _HomeScreenState extends State<_HomeScreen> {
                     id: '-1',
                     name: L10n.current.feed,
                   );
-                case 'subscriptions':
+                case subscriptionsPageId:
                   return SubscriptionsScreen(
                     scrollController: scrollControllers[index]!,
                   );
@@ -173,9 +174,14 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
   @override
   void initState() {
     super.initState();
-    _currentPage = widget.initialPage;
+    _showPage(widget.initialPage);
     _pageController = PageController(initialPage: widget.initialPage);
     _fitControllersToPages();
+  }
+
+  void _showPage(int index) {
+    _currentPage = index;
+    context.read<BackInterceptors>().shownPage = widget.pages[index].id;
   }
 
   void _fitControllersToPages() {
@@ -224,9 +230,7 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
       body: PageView(
         controller: _pageController,
         onPageChanged: (page) {
-          setState(() {
-            _currentPage = page;
-          });
+          setState(() => _showPage(page));
         },
         children: widget.builder(_scrollControllers, _focusNodes),
       ),
@@ -279,9 +283,7 @@ class _ScaffoldWithBottomNavigationState extends State<ScaffoldWithBottomNavigat
           unfocusOtherPages();
           _pageController.jumpToPage(index);
           // A PageView that just got more pages reports a wrong page after the jump
-          setState(() {
-            _currentPage = index;
-          });
+          setState(() => _showPage(index));
         },
       ),
     );

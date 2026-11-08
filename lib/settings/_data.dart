@@ -11,6 +11,7 @@ import 'package:quax/group/group_model.dart';
 import 'package:quax/import_data_model.dart';
 import 'package:quax/saved/liked_tweet_model.dart';
 import 'package:quax/saved/saved_tweet_folder_model.dart';
+import 'package:quax/subscriptions/subscription_kind.dart';
 import 'package:quax/subscriptions/users_model.dart';
 import 'package:logging/logging.dart';
 import 'package:pref/pref.dart';
@@ -82,11 +83,18 @@ class SettingsData {
   }
 }
 
-Future<void> _importFromFile(BuildContext context, File file) async {
+/// The restored settings can rebuild the page that called it, so it reads all it needs from [context] first.
+@visibleForTesting
+Future<void> importFromFile(BuildContext context, File file) async {
   var content = jsonDecode(file.readAsStringSync());
 
   var importModel = context.read<ImportDataModel>();
   var groupModel = context.read<GroupsModel>();
+  var subscriptionsModel = context.read<SubscriptionsModel>();
+  var savedTweetFolderModel = context.read<SavedTweetFolderModel>();
+  var likedTweetModel = context.read<LikedTweetModel>();
+  var messenger = ScaffoldMessenger.of(context);
+  var l10n = L10n.of(context);
   var prefs = PrefService.of(context);
 
   var data = SettingsData.fromJson(content);
@@ -115,7 +123,7 @@ Future<void> _importFromFile(BuildContext context, File file) async {
 
   var subscriptionGroupMembers = data.subscriptionGroupMembers;
   if (subscriptionGroupMembers != null) {
-    dataToImport[tableSubscriptionGroupMember] = subscriptionGroupMembers;
+    dataToImport[tableSubscriptionGroupMember] = membersWithKinds(subscriptionGroupMembers, data.searchSubscriptions ?? []);
   }
 
   var tweets = data.tweets;
@@ -140,14 +148,12 @@ Future<void> _importFromFile(BuildContext context, File file) async {
 
   await importModel.importData(dataToImport);
   await groupModel.reloadGroups();
-  context.mounted ? await context.read<SubscriptionsModel>().reloadSubscriptions() : null;
-  context.mounted ? await context.read<SavedTweetFolderModel>().listFolders() : null;
-  context.mounted ? await context.read<LikedTweetModel>().listLikedTweets() : null;
+  await subscriptionsModel.reloadSubscriptions();
+  await savedTweetFolderModel.listFolders();
+  await likedTweetModel.listLikedTweets();
 
-  if (context.mounted) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(L10n.of(context).data_imported_successfully),
-    ));
+  if (messenger.mounted) {
+    messenger.showSnackBar(SnackBar(content: Text(l10n.data_imported_successfully)));
   }
 }
 
@@ -157,7 +163,7 @@ Future<bool> importBackup(BuildContext context) async {
   if (path == null || !context.mounted) {
     return false;
   }
-  await _importFromFile(context, File(path));
+  await importFromFile(context, File(path));
   return true;
 }
 
@@ -183,4 +189,16 @@ class SettingsDataFragment extends StatelessWidget {
       ),
     ]);
   }
+}
+
+/// The backups of older versions do not say whether a group member is an account or a search: a member is a search
+/// when the backup has a saved search of its id.
+List<SubscriptionGroupMember> membersWithKinds(
+    List<SubscriptionGroupMember> members, List<SearchSubscription> searches) {
+  final searchIds = searches.map((s) => s.id).toSet();
+  return members
+      .map((m) => m.kind.isNotEmpty
+          ? m
+          : m.withKind((searchIds.contains(m.profile) ? SubscriptionKind.search : SubscriptionKind.user).name))
+      .toList();
 }
