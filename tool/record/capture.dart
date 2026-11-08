@@ -92,7 +92,8 @@ const _afterScroll = Duration(milliseconds: 2500);
 const _bodyTimeout = Duration(seconds: 10);
 const _drainTimeout = Duration(seconds: 10);
 
-/// A page can stop answering for good, as quax_tests/all does after a scroll: past this, it is replaced.
+/// A page can stop answering for good, as the all views of quax_tests do after a scroll: past this, Chrome is
+/// started again.
 const _browserTimeout = Duration(seconds: 20);
 
 const _attempts = 3;
@@ -127,17 +128,30 @@ Future<void> main(List<String> args) async {
   }
 
   final attach = args.contains('--attach');
-  final chrome = attach ? null : await startChrome(profile: _profileDir, port: _port);
-  final browser = await _connect(attach);
+  var chrome = attach ? null : await startChrome(profile: _profileDir, port: _port);
+  var browser = await _connect(attach);
   var page = (await browser.pages).firstOrNull ?? await browser.newPage();
   await _requireLogin(page);
+
+  /// Once a page stops answering, all of Chrome does, new pages included: it starts again on the same profile, so
+  /// still logged in.
+  Future<Page> restart(Page stuck) async {
+    print('  Chrome stopped answering: starting it again');
+    browser.disconnect();
+    chrome?.kill(ProcessSignal.sigkill);
+    await chrome?.exitCode;
+    chrome = await startChrome(profile: _profileDir, port: _port);
+    browser = await _connect(false);
+    return (await browser.pages).firstOrNull ?? await browser.newPage();
+  }
 
   var written = 0;
   for (final (index, scenario) in scenarios.indexed) {
     print('\n[${index + 1}/${scenarios.length}] ${scenario.description}');
     print('         ${scenario.url}');
     final watch = Stopwatch()..start();
-    final capture = await _capture(browser, page, scenario);
+    // A Chrome started by hand is left alone
+    final capture = await _capture(attach ? (stuck) => _replace(browser, stuck) : restart, page, scenario);
     written += capture.written;
     page = capture.page;
     print('         ${(watch.elapsedMilliseconds / 1000).toStringAsFixed(1)} s');
@@ -242,12 +256,13 @@ List<Scenario> _readScenarios(Map<String, dynamic> root) =>
         .toList();
 
 
-/// Returns the page the next scenarios go on in: a new one when this one stopped answering.
-Future<({int written, Page page})> _capture(Browser browser, Page page, Scenario scenario) async {
+/// Returns the page the next scenarios go on in: the one [reopen] gives when this one stopped answering.
+Future<({int written, Page page})> _capture(
+    Future<Page> Function(Page stuck) reopen, Page page, Scenario scenario) async {
   for (var attempt = 1;; attempt++) {
     final visit = await _visit(page, scenario);
     if (visit.stuck) {
-      page = await _replace(browser, page);
+      page = await reopen(page);
     }
     final problems = [
       if (!visit.loaded) 'the page did not load',
@@ -270,7 +285,7 @@ Future<({int written, Page page})> _capture(Browser browser, Page page, Scenario
 Future<Page> _replace(Browser browser, Page stuck) async {
   print('  the page stopped answering: going on in a new one');
   await stuck.close().timeout(_browserTimeout, onTimeout: () {});
-  return browser.newPage();
+  return browser.newPage().timeout(_browserTimeout);
 }
 
 Duration? _pauseBeforeRetry(List<Map<String, dynamic>> rejected) {
