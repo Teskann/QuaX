@@ -4,7 +4,7 @@
  "unstable": true,
  "operation": "SearchTimeline",
  "host": "x.com",
- "queryId": "f7SuGIm11eLbQs7c0K9X9w",
+ "queryId": "vLHjqbDv7TPFMBkIIO1nOA",
  "features": {
   "rweb_video_screen_enabled": false,
   "rweb_cashtags_enabled": true,
@@ -22,6 +22,7 @@
   "rweb_cashtags_composer_attachment_enabled": true,
   "responsive_web_jetfuel_frame": true,
   "rweb_sports_post_context_enabled": true,
+  "x_elections_post_context_enabled": true,
   "responsive_web_grok_share_attachment_enabled": true,
   "responsive_web_grok_annotations_enabled": true,
   "articles_preview_enabled": true,
@@ -35,7 +36,7 @@
   "content_disclosure_ai_generated_indicator_enabled": true,
   "responsive_web_grok_show_grok_translated_post": true,
   "responsive_web_grok_analysis_button_from_backend": true,
-  "post_ctas_fetch_enabled": false,
+  "post_ctas_fetch_enabled": true,
   "freedom_of_speech_not_reach_fetch_enabled": true,
   "standardized_nudges_misinfo": true,
   "tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled": true,
@@ -61,8 +62,8 @@
  "headers": {
   "x-rate-limit-limit": "50",
   "content-type": "application/json",
-  "x-rate-limit-remaining": "35",
-  "x-rate-limit-reset": "1793071836"
+  "x-rate-limit-reset": "1794174202",
+  "x-rate-limit-remaining": "32"
  },
  "body": {
   "data": {
@@ -79,7 +80,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC+VV0vZeUQ9wKAAUBEWzGKsbkVwgABgAAAAEKAAcYbw5uGNj0mgoACAAAAaF7W/7bAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACZeBwH3I74HsKAAUBEWzGKsbkVwgABgAAAAEKAAfr0EC9M55WHQoACAAAAaG9EOJ1AAAAAAA="
              }
             },
             "element": "tweet"
@@ -116,9 +117,22 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3220
+                  "favorites_count": 3222
                  },
-                 "affiliates_highlighted_label": {},
+                 "affiliates_highlighted_label": {
+                  "label": {
+                   "badge": {
+                    "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                   },
+                   "description": "Google Cloud",
+                   "url": {
+                    "url": "https://twitter.com/googlecloud",
+                    "urlType": "DeepLink"
+                   },
+                   "userLabelDisplayType": "Badge",
+                   "userLabelType": "BusinessLabel"
+                  }
+                 },
                  "avatar": {
                   "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                  },
@@ -133,7 +147,7 @@
                  "follow_request_sent": false,
                  "has_graduated_access": true,
                  "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
+                 "is_blue_verified": true,
                  "location": {
                   "location": ""
                  },
@@ -181,7 +195,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 278003,
+                  "followers": 278116,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -197,8 +211,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1988,
-                  "tweets": 3938
+                  "media_tweets": 1995,
+                  "tweets": 3953
                  },
                  "verification": {
                   "verified": false,
@@ -442,7 +456,7 @@
                  }
                 ]
                },
-               "favorite_count": 124,
+               "favorite_count": 125,
                "favorited": false,
                "full_text": "☕ Slicing server bills with fullstack Dart → https://t.co/w2yXSS1bL8\n\nLearn how replacing Node.js Cloud Run services with a single Dart function brought end-to-end type safety and major cost savings across the stack. https://t.co/2nXjbXUlc0",
                "id_str": "2110764573376573576",
@@ -459,7 +473,7 @@
               "rest_id": "2110764573376573576",
               "unmention_data": {},
               "views": {
-               "count": "10213",
+               "count": "10328",
                "state": "EnabledWithCount"
               }
              }
@@ -467,7 +481,7 @@
            }
           },
           "entryId": "tweet-2110764573376573576",
-          "sortIndex": "2114919132691431424"
+          "sortIndex": "2119542822762708992"
          },
          {
           "content": {
@@ -476,7 +490,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC+VV0vZeUQ9wKAAUBEWzGKsbkVwgABgAAAAEKAAcYbw5uGNj0mgoACAAAAaF7W/7bAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACZeBwH3I74HsKAAUBEWzGKsbkVwgABgAAAAEKAAfr0EC9M55WHQoACAAAAaG9EOJ1AAAAAAA="
              }
             },
             "element": "tweet"
@@ -509,9 +523,22 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3220
+                  "favorites_count": 3222
                  },
-                 "affiliates_highlighted_label": {},
+                 "affiliates_highlighted_label": {
+                  "label": {
+                   "badge": {
+                    "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                   },
+                   "description": "Google Cloud",
+                   "url": {
+                    "url": "https://twitter.com/googlecloud",
+                    "urlType": "DeepLink"
+                   },
+                   "userLabelDisplayType": "Badge",
+                   "userLabelType": "BusinessLabel"
+                  }
+                 },
                  "avatar": {
                   "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                  },
@@ -526,7 +553,7 @@
                  "follow_request_sent": false,
                  "has_graduated_access": true,
                  "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
+                 "is_blue_verified": true,
                  "location": {
                   "location": ""
                  },
@@ -574,7 +601,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 278003,
+                  "followers": 278116,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -590,8 +617,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1988,
-                  "tweets": 3938
+                  "media_tweets": 1995,
+                  "tweets": 3953
                  },
                  "verification": {
                   "verified": false,
@@ -620,7 +647,7 @@
               },
               "is_translatable": false,
               "legacy": {
-               "bookmark_count": 24,
+               "bookmark_count": 23,
                "bookmarked": false,
                "conversation_id_str": "2110037600144605187",
                "created_at": "Tue Oct 13 15:59:01 +0000 2026",
@@ -852,7 +879,7 @@
               "rest_id": "2110037600144605187",
               "unmention_data": {},
               "views": {
-               "count": "10195",
+               "count": "10286",
                "state": "EnabledWithCount"
               }
              }
@@ -860,7 +887,7 @@
            }
           },
           "entryId": "tweet-2110037600144605187",
-          "sortIndex": "2114919132691431423"
+          "sortIndex": "2119542822762708982"
          },
          {
           "content": {
@@ -869,7 +896,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC+VV0vZeUQ9wKAAUBEWzGKsbkVwgABgAAAAEKAAcYbw5uGNj0mgoACAAAAaF7W/7bAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACZeBwH3I74HsKAAUBEWzGKsbkVwgABgAAAAEKAAfr0EC9M55WHQoACAAAAaG9EOJ1AAAAAAA="
              }
             },
             "element": "tweet"
@@ -903,7 +930,7 @@
                    "image_value": {
                     "alt": "Dash stands beside a stack of blocks bearing the Dart and Genkit logos and the version number 1.0.",
                     "height": 419,
-                    "url": "https://pbs.twimg.com/card_img/2113360711678308352/XyB4m6-U?format=jpg&name=800x419",
+                    "url": "https://pbs.twimg.com/card_img/2118435069274550272/6dnf7y6C?format=jpg&name=800x419",
                     "width": 800
                    },
                    "type": "IMAGE"
@@ -915,7 +942,7 @@
                    "image_value": {
                     "alt": "Dash stands beside a stack of blocks bearing the Dart and Genkit logos and the version number 1.0.",
                     "height": 150,
-                    "url": "https://pbs.twimg.com/card_img/2113360711678308352/XyB4m6-U?format=jpg&name=280x150",
+                    "url": "https://pbs.twimg.com/card_img/2118435069274550272/6dnf7y6C?format=jpg&name=280x150",
                     "width": 269
                    },
                    "type": "IMAGE"
@@ -941,7 +968,7 @@
                    "image_value": {
                     "alt": "Dash stands beside a stack of blocks bearing the Dart and Genkit logos and the version number 1.0.",
                     "height": 320,
-                    "url": "https://pbs.twimg.com/card_img/2113360711678308352/XyB4m6-U?format=jpg&name=800x320_1",
+                    "url": "https://pbs.twimg.com/card_img/2118435069274550272/6dnf7y6C?format=jpg&name=800x320_1",
                     "width": 573
                    },
                    "type": "IMAGE"
@@ -953,7 +980,7 @@
                    "image_value": {
                     "alt": "Dash stands beside a stack of blocks bearing the Dart and Genkit logos and the version number 1.0.",
                     "height": 202,
-                    "url": "https://pbs.twimg.com/card_img/2113360711678308352/XyB4m6-U?format=jpg&name=386x202",
+                    "url": "https://pbs.twimg.com/card_img/2118435069274550272/6dnf7y6C?format=jpg&name=386x202",
                     "width": 386
                    },
                    "type": "IMAGE"
@@ -965,7 +992,7 @@
                    "image_value": {
                     "alt": "Dash stands beside a stack of blocks bearing the Dart and Genkit logos and the version number 1.0.",
                     "height": 768,
-                    "url": "https://pbs.twimg.com/card_img/2113360711678308352/XyB4m6-U?format=jpg&name=orig",
+                    "url": "https://pbs.twimg.com/card_img/2118435069274550272/6dnf7y6C?format=jpg&name=orig",
                     "width": 1376
                    },
                    "type": "IMAGE"
@@ -988,7 +1015,7 @@
                    "image_value": {
                     "alt": "Dash stands beside a stack of blocks bearing the Dart and Genkit logos and the version number 1.0.",
                     "height": 202,
-                    "url": "https://pbs.twimg.com/card_img/2113360711678308352/XyB4m6-U?format=jpg&name=386x202",
+                    "url": "https://pbs.twimg.com/card_img/2118435069274550272/6dnf7y6C?format=jpg&name=386x202",
                     "width": 386
                    },
                    "type": "IMAGE"
@@ -1000,7 +1027,7 @@
                    "image_value": {
                     "alt": "Dash stands beside a stack of blocks bearing the Dart and Genkit logos and the version number 1.0.",
                     "height": 419,
-                    "url": "https://pbs.twimg.com/card_img/2113360711678308352/XyB4m6-U?format=jpg&name=800x419",
+                    "url": "https://pbs.twimg.com/card_img/2118435069274550272/6dnf7y6C?format=jpg&name=800x419",
                     "width": 800
                    },
                    "type": "IMAGE"
@@ -1012,7 +1039,7 @@
                    "image_value": {
                     "alt": "Dash stands beside a stack of blocks bearing the Dart and Genkit logos and the version number 1.0.",
                     "height": 80,
-                    "url": "https://pbs.twimg.com/card_img/2113360711678308352/XyB4m6-U?format=jpg&name=144x144",
+                    "url": "https://pbs.twimg.com/card_img/2118435069274550272/6dnf7y6C?format=jpg&name=144x144",
                     "width": 144
                    },
                    "type": "IMAGE"
@@ -1024,7 +1051,7 @@
                    "image_value": {
                     "alt": "Dash stands beside a stack of blocks bearing the Dart and Genkit logos and the version number 1.0.",
                     "height": 768,
-                    "url": "https://pbs.twimg.com/card_img/2113360711678308352/XyB4m6-U?format=png&name=2048x2048_2_exp",
+                    "url": "https://pbs.twimg.com/card_img/2118435069274550272/6dnf7y6C?format=png&name=2048x2048_2_exp",
                     "width": 1376
                    },
                    "type": "IMAGE"
@@ -1036,7 +1063,7 @@
                    "image_value": {
                     "alt": "Dash stands beside a stack of blocks bearing the Dart and Genkit logos and the version number 1.0.",
                     "height": 768,
-                    "url": "https://pbs.twimg.com/card_img/2113360711678308352/XyB4m6-U?format=jpg&name=orig",
+                    "url": "https://pbs.twimg.com/card_img/2118435069274550272/6dnf7y6C?format=jpg&name=orig",
                     "width": 1376
                    },
                    "type": "IMAGE"
@@ -1063,7 +1090,7 @@
                    "image_value": {
                     "alt": "Dash stands beside a stack of blocks bearing the Dart and Genkit logos and the version number 1.0.",
                     "height": 314,
-                    "url": "https://pbs.twimg.com/card_img/2113360711678308352/XyB4m6-U?format=jpg&name=600x314",
+                    "url": "https://pbs.twimg.com/card_img/2118435069274550272/6dnf7y6C?format=jpg&name=600x314",
                     "width": 600
                    },
                    "type": "IMAGE"
@@ -1189,7 +1216,7 @@
                    "image_value": {
                     "alt": "Dash stands beside a stack of blocks bearing the Dart and Genkit logos and the version number 1.0.",
                     "height": 768,
-                    "url": "https://pbs.twimg.com/card_img/2113360711678308352/XyB4m6-U?format=png&name=2048x2048_2_exp",
+                    "url": "https://pbs.twimg.com/card_img/2118435069274550272/6dnf7y6C?format=png&name=2048x2048_2_exp",
                     "width": 1376
                    },
                    "type": "IMAGE"
@@ -1201,7 +1228,7 @@
                    "image_value": {
                     "alt": "Dash stands beside a stack of blocks bearing the Dart and Genkit logos and the version number 1.0.",
                     "height": 314,
-                    "url": "https://pbs.twimg.com/card_img/2113360711678308352/XyB4m6-U?format=jpg&name=600x314",
+                    "url": "https://pbs.twimg.com/card_img/2118435069274550272/6dnf7y6C?format=jpg&name=600x314",
                     "width": 600
                    },
                    "type": "IMAGE"
@@ -1263,7 +1290,7 @@
                    "image_value": {
                     "alt": "Dash stands beside a stack of blocks bearing the Dart and Genkit logos and the version number 1.0.",
                     "height": 768,
-                    "url": "https://pbs.twimg.com/card_img/2113360711678308352/XyB4m6-U?format=png&name=2048x2048_2_exp",
+                    "url": "https://pbs.twimg.com/card_img/2118435069274550272/6dnf7y6C?format=png&name=2048x2048_2_exp",
                     "width": 1376
                    },
                    "type": "IMAGE"
@@ -1283,7 +1310,7 @@
                    "image_value": {
                     "alt": "Dash stands beside a stack of blocks bearing the Dart and Genkit logos and the version number 1.0.",
                     "height": 768,
-                    "url": "https://pbs.twimg.com/card_img/2113360711678308352/XyB4m6-U?format=jpg&name=orig",
+                    "url": "https://pbs.twimg.com/card_img/2118435069274550272/6dnf7y6C?format=jpg&name=orig",
                     "width": 1376
                    },
                    "type": "IMAGE"
@@ -1308,9 +1335,22 @@
                   "result": {
                    "__typename": "User",
                    "action_counts": {
-                    "favorites_count": 3220
+                    "favorites_count": 3222
                    },
-                   "affiliates_highlighted_label": {},
+                   "affiliates_highlighted_label": {
+                    "label": {
+                     "badge": {
+                      "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                     },
+                     "description": "Google Cloud",
+                     "url": {
+                      "url": "https://twitter.com/googlecloud",
+                      "urlType": "DeepLink"
+                     },
+                     "userLabelDisplayType": "Badge",
+                     "userLabelType": "BusinessLabel"
+                    }
+                   },
                    "avatar": {
                     "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                    },
@@ -1325,7 +1365,7 @@
                    "follow_request_sent": false,
                    "has_graduated_access": true,
                    "id": "VXNlcjo0MjA3MzAzMTY=",
-                   "is_blue_verified": false,
+                   "is_blue_verified": true,
                    "location": {
                     "location": ""
                    },
@@ -1373,7 +1413,7 @@
                     "translator_type": "none"
                    },
                    "relationship_counts": {
-                    "followers": 278003,
+                    "followers": 278116,
                     "following": 61
                    },
                    "relationship_perspectives": {
@@ -1389,8 +1429,8 @@
                    "super_followed_by": false,
                    "super_following": false,
                    "tweet_counts": {
-                    "media_tweets": 1988,
-                    "tweets": 3938
+                    "media_tweets": 1995,
+                    "tweets": 3953
                    },
                    "verification": {
                     "verified": false,
@@ -1411,9 +1451,22 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3220
+                  "favorites_count": 3222
                  },
-                 "affiliates_highlighted_label": {},
+                 "affiliates_highlighted_label": {
+                  "label": {
+                   "badge": {
+                    "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                   },
+                   "description": "Google Cloud",
+                   "url": {
+                    "url": "https://twitter.com/googlecloud",
+                    "urlType": "DeepLink"
+                   },
+                   "userLabelDisplayType": "Badge",
+                   "userLabelType": "BusinessLabel"
+                  }
+                 },
                  "avatar": {
                   "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                  },
@@ -1428,7 +1481,7 @@
                  "follow_request_sent": false,
                  "has_graduated_access": true,
                  "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
+                 "is_blue_verified": true,
                  "location": {
                   "location": ""
                  },
@@ -1476,7 +1529,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 278003,
+                  "followers": 278116,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -1492,8 +1545,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1988,
-                  "tweets": 3938
+                  "media_tweets": 1995,
+                  "tweets": 3953
                  },
                  "verification": {
                   "verified": false,
@@ -1522,7 +1575,7 @@
               },
               "is_translatable": false,
               "legacy": {
-               "bookmark_count": 45,
+               "bookmark_count": 44,
                "bookmarked": false,
                "conversation_id_str": "2109745396499300471",
                "created_at": "Mon Oct 12 20:37:54 +0000 2026",
@@ -1543,7 +1596,7 @@
                  }
                 ]
                },
-               "favorite_count": 237,
+               "favorite_count": 238,
                "favorited": false,
                "full_text": "Announcing the stable 1.0 release of Genkit Dart, an open-source framework for building Gemini-powered features and agentic workflows with Dart and Flutter  → https://t.co/0BvZqx7wHJ",
                "id_str": "2109745396499300471",
@@ -1570,30 +1623,6 @@
                  "legacy": {
                   "binding_values": [
                    {
-                    "key": "photo_image_full_size_large",
-                    "value": {
-                     "image_value": {
-                      "alt": "Dash stands beside a stack of blocks bearing the Dart and Genkit logos and the version number 1.0.",
-                      "height": 419,
-                      "url": "https://pbs.twimg.com/card_img/2113360711678308352/XyB4m6-U?format=jpg&name=800x419",
-                      "width": 800
-                     },
-                     "type": "IMAGE"
-                    }
-                   },
-                   {
-                    "key": "thumbnail_image",
-                    "value": {
-                     "image_value": {
-                      "alt": "Dash stands beside a stack of blocks bearing the Dart and Genkit logos and the version number 1.0.",
-                      "height": 150,
-                      "url": "https://pbs.twimg.com/card_img/2113360711678308352/XyB4m6-U?format=jpg&name=280x150",
-                      "width": 269
-                     },
-                     "type": "IMAGE"
-                    }
-                   },
-                   {
                     "key": "description",
                     "value": {
                      "string_value": "Announcing the stable 1.0 release of Genkit Dart, an open-source framework for building AI-powered features and agentic workflows with Dart and Flutter.",
@@ -1608,42 +1637,6 @@
                     }
                    },
                    {
-                    "key": "thumbnail_image_large",
-                    "value": {
-                     "image_value": {
-                      "alt": "Dash stands beside a stack of blocks bearing the Dart and Genkit logos and the version number 1.0.",
-                      "height": 320,
-                      "url": "https://pbs.twimg.com/card_img/2113360711678308352/XyB4m6-U?format=jpg&name=800x320_1",
-                      "width": 573
-                     },
-                     "type": "IMAGE"
-                    }
-                   },
-                   {
-                    "key": "summary_photo_image_small",
-                    "value": {
-                     "image_value": {
-                      "alt": "Dash stands beside a stack of blocks bearing the Dart and Genkit logos and the version number 1.0.",
-                      "height": 202,
-                      "url": "https://pbs.twimg.com/card_img/2113360711678308352/XyB4m6-U?format=jpg&name=386x202",
-                      "width": 386
-                     },
-                     "type": "IMAGE"
-                    }
-                   },
-                   {
-                    "key": "thumbnail_image_original",
-                    "value": {
-                     "image_value": {
-                      "alt": "Dash stands beside a stack of blocks bearing the Dart and Genkit logos and the version number 1.0.",
-                      "height": 768,
-                      "url": "https://pbs.twimg.com/card_img/2113360711678308352/XyB4m6-U?format=jpg&name=orig",
-                      "width": 1376
-                     },
-                     "type": "IMAGE"
-                    }
-                   },
-                   {
                     "key": "site",
                     "value": {
                      "scribe_key": "publisher_id",
@@ -1652,66 +1645,6 @@
                       "id_str": "420730316",
                       "path": []
                      }
-                    }
-                   },
-                   {
-                    "key": "photo_image_full_size_small",
-                    "value": {
-                     "image_value": {
-                      "alt": "Dash stands beside a stack of blocks bearing the Dart and Genkit logos and the version number 1.0.",
-                      "height": 202,
-                      "url": "https://pbs.twimg.com/card_img/2113360711678308352/XyB4m6-U?format=jpg&name=386x202",
-                      "width": 386
-                     },
-                     "type": "IMAGE"
-                    }
-                   },
-                   {
-                    "key": "summary_photo_image_large",
-                    "value": {
-                     "image_value": {
-                      "alt": "Dash stands beside a stack of blocks bearing the Dart and Genkit logos and the version number 1.0.",
-                      "height": 419,
-                      "url": "https://pbs.twimg.com/card_img/2113360711678308352/XyB4m6-U?format=jpg&name=800x419",
-                      "width": 800
-                     },
-                     "type": "IMAGE"
-                    }
-                   },
-                   {
-                    "key": "thumbnail_image_small",
-                    "value": {
-                     "image_value": {
-                      "alt": "Dash stands beside a stack of blocks bearing the Dart and Genkit logos and the version number 1.0.",
-                      "height": 80,
-                      "url": "https://pbs.twimg.com/card_img/2113360711678308352/XyB4m6-U?format=jpg&name=144x144",
-                      "width": 144
-                     },
-                     "type": "IMAGE"
-                    }
-                   },
-                   {
-                    "key": "thumbnail_image_x_large",
-                    "value": {
-                     "image_value": {
-                      "alt": "Dash stands beside a stack of blocks bearing the Dart and Genkit logos and the version number 1.0.",
-                      "height": 768,
-                      "url": "https://pbs.twimg.com/card_img/2113360711678308352/XyB4m6-U?format=png&name=2048x2048_2_exp",
-                      "width": 1376
-                     },
-                     "type": "IMAGE"
-                    }
-                   },
-                   {
-                    "key": "photo_image_full_size_original",
-                    "value": {
-                     "image_value": {
-                      "alt": "Dash stands beside a stack of blocks bearing the Dart and Genkit logos and the version number 1.0.",
-                      "height": 768,
-                      "url": "https://pbs.twimg.com/card_img/2113360711678308352/XyB4m6-U?format=jpg&name=orig",
-                      "width": 1376
-                     },
-                     "type": "IMAGE"
                     }
                    },
                    {
@@ -1730,72 +1663,10 @@
                     }
                    },
                    {
-                    "key": "photo_image_full_size",
-                    "value": {
-                     "image_value": {
-                      "alt": "Dash stands beside a stack of blocks bearing the Dart and Genkit logos and the version number 1.0.",
-                      "height": 314,
-                      "url": "https://pbs.twimg.com/card_img/2113360711678308352/XyB4m6-U?format=jpg&name=600x314",
-                      "width": 600
-                     },
-                     "type": "IMAGE"
-                    }
-                   },
-                   {
                     "key": "summary_photo_image_alt_text",
                     "value": {
                      "string_value": "Dash stands beside a stack of blocks bearing the Dart and Genkit logos and the version number 1.0.",
                      "type": "STRING"
-                    }
-                   },
-                   {
-                    "key": "thumbnail_image_color",
-                    "value": {
-                     "image_color_value": {
-                      "palette": [
-                       {
-                        "percentage": 78.84,
-                        "rgb": {
-                         "blue": 251,
-                         "green": 241,
-                         "red": 215
-                        }
-                       },
-                       {
-                        "percentage": 8.38,
-                        "rgb": {
-                         "blue": 187,
-                         "green": 173,
-                         "red": 49
-                        }
-                       },
-                       {
-                        "percentage": 4.2,
-                        "rgb": {
-                         "blue": 178,
-                         "green": 122,
-                         "red": 42
-                        }
-                       },
-                       {
-                        "percentage": 1.67,
-                        "rgb": {
-                         "blue": 160,
-                         "green": 76,
-                         "red": 12
-                        }
-                       },
-                       {
-                        "percentage": 1.03,
-                        "rgb": {
-                         "blue": 201,
-                         "green": 209,
-                         "red": 95
-                        }
-                       }
-                      ]
-                     },
-                     "type": "IMAGE_COLOR"
                     }
                    },
                    {
@@ -1806,159 +1677,11 @@
                     }
                    },
                    {
-                    "key": "summary_photo_image_color",
-                    "value": {
-                     "image_color_value": {
-                      "palette": [
-                       {
-                        "percentage": 78.84,
-                        "rgb": {
-                         "blue": 251,
-                         "green": 241,
-                         "red": 215
-                        }
-                       },
-                       {
-                        "percentage": 8.38,
-                        "rgb": {
-                         "blue": 187,
-                         "green": 173,
-                         "red": 49
-                        }
-                       },
-                       {
-                        "percentage": 4.2,
-                        "rgb": {
-                         "blue": 178,
-                         "green": 122,
-                         "red": 42
-                        }
-                       },
-                       {
-                        "percentage": 1.67,
-                        "rgb": {
-                         "blue": 160,
-                         "green": 76,
-                         "red": 12
-                        }
-                       },
-                       {
-                        "percentage": 1.03,
-                        "rgb": {
-                         "blue": 201,
-                         "green": 209,
-                         "red": 95
-                        }
-                       }
-                      ]
-                     },
-                     "type": "IMAGE_COLOR"
-                    }
-                   },
-                   {
-                    "key": "summary_photo_image_x_large",
-                    "value": {
-                     "image_value": {
-                      "alt": "Dash stands beside a stack of blocks bearing the Dart and Genkit logos and the version number 1.0.",
-                      "height": 768,
-                      "url": "https://pbs.twimg.com/card_img/2113360711678308352/XyB4m6-U?format=png&name=2048x2048_2_exp",
-                      "width": 1376
-                     },
-                     "type": "IMAGE"
-                    }
-                   },
-                   {
-                    "key": "summary_photo_image",
-                    "value": {
-                     "image_value": {
-                      "alt": "Dash stands beside a stack of blocks bearing the Dart and Genkit logos and the version number 1.0.",
-                      "height": 314,
-                      "url": "https://pbs.twimg.com/card_img/2113360711678308352/XyB4m6-U?format=jpg&name=600x314",
-                      "width": 600
-                     },
-                     "type": "IMAGE"
-                    }
-                   },
-                   {
-                    "key": "photo_image_full_size_color",
-                    "value": {
-                     "image_color_value": {
-                      "palette": [
-                       {
-                        "percentage": 78.84,
-                        "rgb": {
-                         "blue": 251,
-                         "green": 241,
-                         "red": 215
-                        }
-                       },
-                       {
-                        "percentage": 8.38,
-                        "rgb": {
-                         "blue": 187,
-                         "green": 173,
-                         "red": 49
-                        }
-                       },
-                       {
-                        "percentage": 4.2,
-                        "rgb": {
-                         "blue": 178,
-                         "green": 122,
-                         "red": 42
-                        }
-                       },
-                       {
-                        "percentage": 1.67,
-                        "rgb": {
-                         "blue": 160,
-                         "green": 76,
-                         "red": 12
-                        }
-                       },
-                       {
-                        "percentage": 1.03,
-                        "rgb": {
-                         "blue": 201,
-                         "green": 209,
-                         "red": 95
-                        }
-                       }
-                      ]
-                     },
-                     "type": "IMAGE_COLOR"
-                    }
-                   },
-                   {
-                    "key": "photo_image_full_size_x_large",
-                    "value": {
-                     "image_value": {
-                      "alt": "Dash stands beside a stack of blocks bearing the Dart and Genkit logos and the version number 1.0.",
-                      "height": 768,
-                      "url": "https://pbs.twimg.com/card_img/2113360711678308352/XyB4m6-U?format=png&name=2048x2048_2_exp",
-                      "width": 1376
-                     },
-                     "type": "IMAGE"
-                    }
-                   },
-                   {
                     "key": "card_url",
                     "value": {
                      "scribe_key": "card_url",
                      "string_value": "https://t.co/FyPJjpYA4W",
                      "type": "STRING"
-                    }
-                   },
-                   {
-                    "key": "summary_photo_image_original",
-                    "value": {
-                     "image_value": {
-                      "alt": "Dash stands beside a stack of blocks bearing the Dart and Genkit logos and the version number 1.0.",
-                      "height": 768,
-                      "url": "https://pbs.twimg.com/card_img/2113360711678308352/XyB4m6-U?format=jpg&name=orig",
-                      "width": 1376
-                     },
-                     "type": "IMAGE"
                     }
                    }
                   ],
@@ -1980,9 +1703,22 @@
                     "result": {
                      "__typename": "User",
                      "action_counts": {
-                      "favorites_count": 3220
+                      "favorites_count": 3222
                      },
-                     "affiliates_highlighted_label": {},
+                     "affiliates_highlighted_label": {
+                      "label": {
+                       "badge": {
+                        "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                       },
+                       "description": "Google Cloud",
+                       "url": {
+                        "url": "https://twitter.com/googlecloud",
+                        "urlType": "DeepLink"
+                       },
+                       "userLabelDisplayType": "Badge",
+                       "userLabelType": "BusinessLabel"
+                      }
+                     },
                      "avatar": {
                       "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                      },
@@ -1997,7 +1733,7 @@
                      "follow_request_sent": false,
                      "has_graduated_access": true,
                      "id": "VXNlcjo0MjA3MzAzMTY=",
-                     "is_blue_verified": false,
+                     "is_blue_verified": true,
                      "location": {
                       "location": ""
                      },
@@ -2045,7 +1781,7 @@
                       "translator_type": "none"
                      },
                      "relationship_counts": {
-                      "followers": 278003,
+                      "followers": 278116,
                       "following": 61
                      },
                      "relationship_perspectives": {
@@ -2061,8 +1797,8 @@
                      "super_followed_by": false,
                      "super_following": false,
                      "tweet_counts": {
-                      "media_tweets": 1988,
-                      "tweets": 3938
+                      "media_tweets": 1995,
+                      "tweets": 3953
                      },
                      "verification": {
                       "verified": false,
@@ -2082,7 +1818,7 @@
                   "result": {
                    "__typename": "User",
                    "action_counts": {
-                    "favorites_count": 168
+                    "favorites_count": 173
                    },
                    "affiliates_highlighted_label": {
                     "label": {
@@ -2160,7 +1896,7 @@
                     "translator_type": "none"
                    },
                    "relationship_counts": {
-                    "followers": 1338,
+                    "followers": 1357,
                     "following": 21
                    },
                    "relationship_perspectives": {
@@ -2177,7 +1913,7 @@
                    "super_following": false,
                    "tweet_counts": {
                     "media_tweets": 27,
-                    "tweets": 234
+                    "tweets": 241
                    },
                    "verification": {
                     "verified": false
@@ -2202,7 +1938,7 @@
                 },
                 "is_translatable": false,
                 "legacy": {
-                 "bookmark_count": 79,
+                 "bookmark_count": 80,
                  "bookmarked": false,
                  "conversation_id_str": "2108305381738877289",
                  "created_at": "Thu Oct 08 21:15:48 +0000 2026",
@@ -2211,7 +1947,7 @@
                   272
                  ],
                  "entities": {},
-                 "favorite_count": 177,
+                 "favorite_count": 181,
                  "favorited": false,
                  "full_text": "Genkit Dart 1.0 is here! 🚀\n\nBuild production-ready, full-stack agentic apps with Dart and Flutter:\n\n• One API for Gemini, Claude, OpenAI &amp; more\n• Strongly-typed structured outputs in Dart\n• Built-in tool calling, streaming &amp; workflows\n\nRead the announcement blog 👇",
                  "id_str": "2108305381738877289",
@@ -2252,7 +1988,7 @@
                 "rest_id": "2108305381738877289",
                 "unmention_data": {},
                 "views": {
-                 "count": "22975",
+                 "count": "23280",
                  "state": "EnabledWithCount"
                 }
                }
@@ -2260,7 +1996,7 @@
               "rest_id": "2109745396499300471",
               "unmention_data": {},
               "views": {
-               "count": "19761",
+               "count": "19898",
                "state": "EnabledWithCount"
               }
              }
@@ -2268,7 +2004,7 @@
            }
           },
           "entryId": "tweet-2109745396499300471",
-          "sortIndex": "2114919132691431422"
+          "sortIndex": "2119542822762708972"
          },
          {
           "content": {
@@ -2277,7 +2013,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC+VV0vZeUQ9wKAAUBEWzGKsbkVwgABgAAAAEKAAcYbw5uGNj0mgoACAAAAaF7W/7bAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACZeBwH3I74HsKAAUBEWzGKsbkVwgABgAAAAEKAAfr0EC9M55WHQoACAAAAaG9EOJ1AAAAAAA="
              }
             },
             "element": "tweet"
@@ -2306,7 +2042,7 @@
                   "value": {
                    "image_value": {
                     "height": 419,
-                    "url": "https://pbs.twimg.com/card_img/2112611295082041344/w0CZZ-hz?format=jpg&name=800x419",
+                    "url": "https://pbs.twimg.com/card_img/2117686891868778496/Ps_IcTJC?format=jpg&name=800x419",
                     "width": 800
                    },
                    "type": "IMAGE"
@@ -2317,7 +2053,7 @@
                   "value": {
                    "image_value": {
                     "height": 150,
-                    "url": "https://pbs.twimg.com/card_img/2112611295082041344/w0CZZ-hz?format=jpg&name=280x150",
+                    "url": "https://pbs.twimg.com/card_img/2117686891868778496/Ps_IcTJC?format=jpg&name=280x150",
                     "width": 267
                    },
                    "type": "IMAGE"
@@ -2342,7 +2078,7 @@
                   "value": {
                    "image_value": {
                     "height": 320,
-                    "url": "https://pbs.twimg.com/card_img/2112611295082041344/w0CZZ-hz?format=jpg&name=800x320_1",
+                    "url": "https://pbs.twimg.com/card_img/2117686891868778496/Ps_IcTJC?format=jpg&name=800x320_1",
                     "width": 569
                    },
                    "type": "IMAGE"
@@ -2353,7 +2089,7 @@
                   "value": {
                    "image_value": {
                     "height": 202,
-                    "url": "https://pbs.twimg.com/card_img/2112611295082041344/w0CZZ-hz?format=jpg&name=386x202",
+                    "url": "https://pbs.twimg.com/card_img/2117686891868778496/Ps_IcTJC?format=jpg&name=386x202",
                     "width": 386
                    },
                    "type": "IMAGE"
@@ -2364,7 +2100,7 @@
                   "value": {
                    "image_value": {
                     "height": 1080,
-                    "url": "https://pbs.twimg.com/card_img/2112611295082041344/w0CZZ-hz?format=jpg&name=orig",
+                    "url": "https://pbs.twimg.com/card_img/2117686891868778496/Ps_IcTJC?format=jpg&name=orig",
                     "width": 1920
                    },
                    "type": "IMAGE"
@@ -2386,7 +2122,7 @@
                   "value": {
                    "image_value": {
                     "height": 202,
-                    "url": "https://pbs.twimg.com/card_img/2112611295082041344/w0CZZ-hz?format=jpg&name=386x202",
+                    "url": "https://pbs.twimg.com/card_img/2117686891868778496/Ps_IcTJC?format=jpg&name=386x202",
                     "width": 386
                    },
                    "type": "IMAGE"
@@ -2397,7 +2133,7 @@
                   "value": {
                    "image_value": {
                     "height": 419,
-                    "url": "https://pbs.twimg.com/card_img/2112611295082041344/w0CZZ-hz?format=jpg&name=800x419",
+                    "url": "https://pbs.twimg.com/card_img/2117686891868778496/Ps_IcTJC?format=jpg&name=800x419",
                     "width": 800
                    },
                    "type": "IMAGE"
@@ -2408,7 +2144,7 @@
                   "value": {
                    "image_value": {
                     "height": 81,
-                    "url": "https://pbs.twimg.com/card_img/2112611295082041344/w0CZZ-hz?format=jpg&name=144x144",
+                    "url": "https://pbs.twimg.com/card_img/2117686891868778496/Ps_IcTJC?format=jpg&name=144x144",
                     "width": 144
                    },
                    "type": "IMAGE"
@@ -2419,7 +2155,7 @@
                   "value": {
                    "image_value": {
                     "height": 1080,
-                    "url": "https://pbs.twimg.com/card_img/2112611295082041344/w0CZZ-hz?format=png&name=2048x2048_2_exp",
+                    "url": "https://pbs.twimg.com/card_img/2117686891868778496/Ps_IcTJC?format=png&name=2048x2048_2_exp",
                     "width": 1920
                    },
                    "type": "IMAGE"
@@ -2430,7 +2166,7 @@
                   "value": {
                    "image_value": {
                     "height": 1080,
-                    "url": "https://pbs.twimg.com/card_img/2112611295082041344/w0CZZ-hz?format=jpg&name=orig",
+                    "url": "https://pbs.twimg.com/card_img/2117686891868778496/Ps_IcTJC?format=jpg&name=orig",
                     "width": 1920
                    },
                    "type": "IMAGE"
@@ -2449,7 +2185,7 @@
                   "value": {
                    "image_value": {
                     "height": 314,
-                    "url": "https://pbs.twimg.com/card_img/2112611295082041344/w0CZZ-hz?format=jpg&name=600x314",
+                    "url": "https://pbs.twimg.com/card_img/2117686891868778496/Ps_IcTJC?format=jpg&name=600x314",
                     "width": 600
                    },
                    "type": "IMAGE"
@@ -2567,7 +2303,7 @@
                   "value": {
                    "image_value": {
                     "height": 1080,
-                    "url": "https://pbs.twimg.com/card_img/2112611295082041344/w0CZZ-hz?format=png&name=2048x2048_2_exp",
+                    "url": "https://pbs.twimg.com/card_img/2117686891868778496/Ps_IcTJC?format=png&name=2048x2048_2_exp",
                     "width": 1920
                    },
                    "type": "IMAGE"
@@ -2578,7 +2314,7 @@
                   "value": {
                    "image_value": {
                     "height": 314,
-                    "url": "https://pbs.twimg.com/card_img/2112611295082041344/w0CZZ-hz?format=jpg&name=600x314",
+                    "url": "https://pbs.twimg.com/card_img/2117686891868778496/Ps_IcTJC?format=jpg&name=600x314",
                     "width": 600
                    },
                    "type": "IMAGE"
@@ -2639,7 +2375,7 @@
                   "value": {
                    "image_value": {
                     "height": 1080,
-                    "url": "https://pbs.twimg.com/card_img/2112611295082041344/w0CZZ-hz?format=png&name=2048x2048_2_exp",
+                    "url": "https://pbs.twimg.com/card_img/2117686891868778496/Ps_IcTJC?format=png&name=2048x2048_2_exp",
                     "width": 1920
                    },
                    "type": "IMAGE"
@@ -2658,7 +2394,7 @@
                   "value": {
                    "image_value": {
                     "height": 1080,
-                    "url": "https://pbs.twimg.com/card_img/2112611295082041344/w0CZZ-hz?format=jpg&name=orig",
+                    "url": "https://pbs.twimg.com/card_img/2117686891868778496/Ps_IcTJC?format=jpg&name=orig",
                     "width": 1920
                    },
                    "type": "IMAGE"
@@ -2744,7 +2480,7 @@
                     "translator_type": "none"
                    },
                    "relationship_counts": {
-                    "followers": 87500,
+                    "followers": 87459,
                     "following": 48
                    },
                    "relationship_perspectives": {
@@ -2842,7 +2578,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 87500,
+                  "followers": 87459,
                   "following": 48
                  },
                  "relationship_perspectives": {
@@ -2887,7 +2623,7 @@
               },
               "is_translatable": false,
               "legacy": {
-               "bookmark_count": 27,
+               "bookmark_count": 28,
                "bookmarked": false,
                "conversation_id_str": "2102460713331728565",
                "created_at": "Tue Sep 22 18:11:10 +0000 2026",
@@ -2908,7 +2644,7 @@
                  }
                 ]
                },
-               "favorite_count": 129,
+               "favorite_count": 128,
                "favorited": false,
                "full_text": "Google Summer of Code results are in! ☀️🎉\n\nSee what our 5 contributors built for Dart &amp; Flutter—from WebSocket debugging and native memory inspection in DevTools, to C++ support in FFIgen:\n\nhttps://t.co/wmVz6Dn14r",
                "id_str": "2102460713331728565",
@@ -2918,14 +2654,14 @@
                "possibly_sensitive_editable": true,
                "quote_count": 0,
                "reply_count": 7,
-               "retweet_count": 13,
+               "retweet_count": 12,
                "retweeted": false,
                "user_id_str": "376585411"
               },
               "rest_id": "2102460713331728565",
               "unmention_data": {},
               "views": {
-               "count": "6976",
+               "count": "7178",
                "state": "EnabledWithCount"
               }
              }
@@ -2933,7 +2669,7 @@
            }
           },
           "entryId": "tweet-2102460713331728565",
-          "sortIndex": "2114919132691431421"
+          "sortIndex": "2119542822762708962"
          },
          {
           "content": {
@@ -2942,7 +2678,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC+VV0vZeUQ9wKAAUBEWzGKsbkVwgABgAAAAEKAAcYbw5uGNj0mgoACAAAAaF7W/7bAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACZeBwH3I74HsKAAUBEWzGKsbkVwgABgAAAAEKAAfr0EC9M55WHQoACAAAAaG9EOJ1AAAAAAA="
              }
             },
             "element": "tweet"
@@ -2969,9 +2705,22 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3220
+                  "favorites_count": 3222
                  },
-                 "affiliates_highlighted_label": {},
+                 "affiliates_highlighted_label": {
+                  "label": {
+                   "badge": {
+                    "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                   },
+                   "description": "Google Cloud",
+                   "url": {
+                    "url": "https://twitter.com/googlecloud",
+                    "urlType": "DeepLink"
+                   },
+                   "userLabelDisplayType": "Badge",
+                   "userLabelType": "BusinessLabel"
+                  }
+                 },
                  "avatar": {
                   "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                  },
@@ -2986,7 +2735,7 @@
                  "follow_request_sent": false,
                  "has_graduated_access": true,
                  "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
+                 "is_blue_verified": true,
                  "location": {
                   "location": ""
                  },
@@ -3034,7 +2783,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 278003,
+                  "followers": 278116,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -3050,8 +2799,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1988,
-                  "tweets": 3938
+                  "media_tweets": 1995,
+                  "tweets": 3953
                  },
                  "verification": {
                   "verified": false,
@@ -3293,7 +3042,7 @@
                  }
                 ]
                },
-               "favorite_count": 147,
+               "favorite_count": 146,
                "favorited": false,
                "full_text": "Tired of using external tools to manage AI agent skills? Meet the Skills CLI 🌟\n\nNow you can discover, install, and manage reusable AI \"skills\" directly from your Dart and Flutter dependencies using a single native package manager command.\n\nDetails → https://t.co/KtabaBgZFD https://t.co/tZlVTHKhu0",
                "id_str": "2097731900466938325",
@@ -3310,7 +3059,7 @@
               "rest_id": "2097731900466938325",
               "unmention_data": {},
               "views": {
-               "count": "13813",
+               "count": "13840",
                "state": "EnabledWithCount"
               }
              }
@@ -3318,7 +3067,7 @@
            }
           },
           "entryId": "tweet-2097731900466938325",
-          "sortIndex": "2114919132691431420"
+          "sortIndex": "2119542822762708952"
          },
          {
           "content": {
@@ -3327,7 +3076,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC+VV0vZeUQ9wKAAUBEWzGKsbkVwgABgAAAAEKAAcYbw5uGNj0mgoACAAAAaF7W/7bAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACZeBwH3I74HsKAAUBEWzGKsbkVwgABgAAAAEKAAfr0EC9M55WHQoACAAAAaG9EOJ1AAAAAAA="
              }
             },
             "element": "tweet"
@@ -3356,7 +3105,7 @@
                   "value": {
                    "image_value": {
                     "height": 419,
-                    "url": "https://pbs.twimg.com/card_img/2112955858695151616/c7tu3whK?format=jpg&name=800x419",
+                    "url": "https://pbs.twimg.com/card_img/2118030266992345088/TOt5Z3nd?format=jpg&name=800x419",
                     "width": 800
                    },
                    "type": "IMAGE"
@@ -3367,7 +3116,7 @@
                   "value": {
                    "image_value": {
                     "height": 150,
-                    "url": "https://pbs.twimg.com/card_img/2112955858695151616/c7tu3whK?format=jpg&name=280x150",
+                    "url": "https://pbs.twimg.com/card_img/2118030266992345088/TOt5Z3nd?format=jpg&name=280x150",
                     "width": 267
                    },
                    "type": "IMAGE"
@@ -3392,7 +3141,7 @@
                   "value": {
                    "image_value": {
                     "height": 320,
-                    "url": "https://pbs.twimg.com/card_img/2112955858695151616/c7tu3whK?format=jpg&name=800x320_1",
+                    "url": "https://pbs.twimg.com/card_img/2118030266992345088/TOt5Z3nd?format=jpg&name=800x320_1",
                     "width": 569
                    },
                    "type": "IMAGE"
@@ -3403,7 +3152,7 @@
                   "value": {
                    "image_value": {
                     "height": 202,
-                    "url": "https://pbs.twimg.com/card_img/2112955858695151616/c7tu3whK?format=jpg&name=386x202",
+                    "url": "https://pbs.twimg.com/card_img/2118030266992345088/TOt5Z3nd?format=jpg&name=386x202",
                     "width": 386
                    },
                    "type": "IMAGE"
@@ -3414,7 +3163,7 @@
                   "value": {
                    "image_value": {
                     "height": 1080,
-                    "url": "https://pbs.twimg.com/card_img/2112955858695151616/c7tu3whK?format=jpg&name=orig",
+                    "url": "https://pbs.twimg.com/card_img/2118030266992345088/TOt5Z3nd?format=jpg&name=orig",
                     "width": 1920
                    },
                    "type": "IMAGE"
@@ -3436,7 +3185,7 @@
                   "value": {
                    "image_value": {
                     "height": 202,
-                    "url": "https://pbs.twimg.com/card_img/2112955858695151616/c7tu3whK?format=jpg&name=386x202",
+                    "url": "https://pbs.twimg.com/card_img/2118030266992345088/TOt5Z3nd?format=jpg&name=386x202",
                     "width": 386
                    },
                    "type": "IMAGE"
@@ -3447,7 +3196,7 @@
                   "value": {
                    "image_value": {
                     "height": 419,
-                    "url": "https://pbs.twimg.com/card_img/2112955858695151616/c7tu3whK?format=jpg&name=800x419",
+                    "url": "https://pbs.twimg.com/card_img/2118030266992345088/TOt5Z3nd?format=jpg&name=800x419",
                     "width": 800
                    },
                    "type": "IMAGE"
@@ -3458,7 +3207,7 @@
                   "value": {
                    "image_value": {
                     "height": 81,
-                    "url": "https://pbs.twimg.com/card_img/2112955858695151616/c7tu3whK?format=jpg&name=144x144",
+                    "url": "https://pbs.twimg.com/card_img/2118030266992345088/TOt5Z3nd?format=jpg&name=144x144",
                     "width": 144
                    },
                    "type": "IMAGE"
@@ -3469,7 +3218,7 @@
                   "value": {
                    "image_value": {
                     "height": 1080,
-                    "url": "https://pbs.twimg.com/card_img/2112955858695151616/c7tu3whK?format=png&name=2048x2048_2_exp",
+                    "url": "https://pbs.twimg.com/card_img/2118030266992345088/TOt5Z3nd?format=png&name=2048x2048_2_exp",
                     "width": 1920
                    },
                    "type": "IMAGE"
@@ -3480,7 +3229,7 @@
                   "value": {
                    "image_value": {
                     "height": 1080,
-                    "url": "https://pbs.twimg.com/card_img/2112955858695151616/c7tu3whK?format=jpg&name=orig",
+                    "url": "https://pbs.twimg.com/card_img/2118030266992345088/TOt5Z3nd?format=jpg&name=orig",
                     "width": 1920
                    },
                    "type": "IMAGE"
@@ -3499,7 +3248,7 @@
                   "value": {
                    "image_value": {
                     "height": 314,
-                    "url": "https://pbs.twimg.com/card_img/2112955858695151616/c7tu3whK?format=jpg&name=600x314",
+                    "url": "https://pbs.twimg.com/card_img/2118030266992345088/TOt5Z3nd?format=jpg&name=600x314",
                     "width": 600
                    },
                    "type": "IMAGE"
@@ -3617,7 +3366,7 @@
                   "value": {
                    "image_value": {
                     "height": 1080,
-                    "url": "https://pbs.twimg.com/card_img/2112955858695151616/c7tu3whK?format=png&name=2048x2048_2_exp",
+                    "url": "https://pbs.twimg.com/card_img/2118030266992345088/TOt5Z3nd?format=png&name=2048x2048_2_exp",
                     "width": 1920
                    },
                    "type": "IMAGE"
@@ -3628,7 +3377,7 @@
                   "value": {
                    "image_value": {
                     "height": 314,
-                    "url": "https://pbs.twimg.com/card_img/2112955858695151616/c7tu3whK?format=jpg&name=600x314",
+                    "url": "https://pbs.twimg.com/card_img/2118030266992345088/TOt5Z3nd?format=jpg&name=600x314",
                     "width": 600
                    },
                    "type": "IMAGE"
@@ -3689,7 +3438,7 @@
                   "value": {
                    "image_value": {
                     "height": 1080,
-                    "url": "https://pbs.twimg.com/card_img/2112955858695151616/c7tu3whK?format=png&name=2048x2048_2_exp",
+                    "url": "https://pbs.twimg.com/card_img/2118030266992345088/TOt5Z3nd?format=png&name=2048x2048_2_exp",
                     "width": 1920
                    },
                    "type": "IMAGE"
@@ -3708,7 +3457,7 @@
                   "value": {
                    "image_value": {
                     "height": 1080,
-                    "url": "https://pbs.twimg.com/card_img/2112955858695151616/c7tu3whK?format=jpg&name=orig",
+                    "url": "https://pbs.twimg.com/card_img/2118030266992345088/TOt5Z3nd?format=jpg&name=orig",
                     "width": 1920
                    },
                    "type": "IMAGE"
@@ -3794,7 +3543,7 @@
                     "translator_type": "none"
                    },
                    "relationship_counts": {
-                    "followers": 87500,
+                    "followers": 87459,
                     "following": 48
                    },
                    "relationship_perspectives": {
@@ -3892,7 +3641,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 87500,
+                  "followers": 87459,
                   "following": 48
                  },
                  "relationship_perspectives": {
@@ -3958,7 +3707,7 @@
                  }
                 ]
                },
-               "favorite_count": 350,
+               "favorite_count": 349,
                "favorited": false,
                "full_text": "Announcing the skills CLI 1.0! 🎯\n\nPackage authors can now ship official AI agent instructions directly inside their packages. \n\nDiscover skills from your dependencies: \n👉 dart run skills@ get\n\n🔗 https://t.co/7eNJZxYa7j",
                "id_str": "2097453629372527100",
@@ -3975,7 +3724,7 @@
               "rest_id": "2097453629372527100",
               "unmention_data": {},
               "views": {
-               "count": "22467",
+               "count": "22670",
                "state": "EnabledWithCount"
               }
              }
@@ -3983,7 +3732,7 @@
            }
           },
           "entryId": "tweet-2097453629372527100",
-          "sortIndex": "2114919132691431419"
+          "sortIndex": "2119542822762708942"
          },
          {
           "content": {
@@ -3992,7 +3741,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC+VV0vZeUQ9wKAAUBEWzGKsbkVwgABgAAAAEKAAcYbw5uGNj0mgoACAAAAaF7W/7bAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACZeBwH3I74HsKAAUBEWzGKsbkVwgABgAAAAEKAAfr0EC9M55WHQoACAAAAaG9EOJ1AAAAAAA="
              }
             },
             "element": "tweet"
@@ -4021,7 +3770,7 @@
                   "value": {
                    "image_value": {
                     "height": 419,
-                    "url": "https://pbs.twimg.com/card_img/2113665098267217921/TYFkg31I?format=jpg&name=800x419",
+                    "url": "https://pbs.twimg.com/card_img/2118740360633475072/AxGFvp0F?format=jpg&name=800x419",
                     "width": 800
                    },
                    "type": "IMAGE"
@@ -4032,7 +3781,7 @@
                   "value": {
                    "image_value": {
                     "height": 150,
-                    "url": "https://pbs.twimg.com/card_img/2113665098267217921/TYFkg31I?format=jpg&name=280x150",
+                    "url": "https://pbs.twimg.com/card_img/2118740360633475072/AxGFvp0F?format=jpg&name=280x150",
                     "width": 267
                    },
                    "type": "IMAGE"
@@ -4057,7 +3806,7 @@
                   "value": {
                    "image_value": {
                     "height": 320,
-                    "url": "https://pbs.twimg.com/card_img/2113665098267217921/TYFkg31I?format=jpg&name=800x320_1",
+                    "url": "https://pbs.twimg.com/card_img/2118740360633475072/AxGFvp0F?format=jpg&name=800x320_1",
                     "width": 569
                    },
                    "type": "IMAGE"
@@ -4068,7 +3817,7 @@
                   "value": {
                    "image_value": {
                     "height": 202,
-                    "url": "https://pbs.twimg.com/card_img/2113665098267217921/TYFkg31I?format=jpg&name=386x202",
+                    "url": "https://pbs.twimg.com/card_img/2118740360633475072/AxGFvp0F?format=jpg&name=386x202",
                     "width": 386
                    },
                    "type": "IMAGE"
@@ -4079,7 +3828,7 @@
                   "value": {
                    "image_value": {
                     "height": 1080,
-                    "url": "https://pbs.twimg.com/card_img/2113665098267217921/TYFkg31I?format=jpg&name=orig",
+                    "url": "https://pbs.twimg.com/card_img/2118740360633475072/AxGFvp0F?format=jpg&name=orig",
                     "width": 1920
                    },
                    "type": "IMAGE"
@@ -4101,7 +3850,7 @@
                   "value": {
                    "image_value": {
                     "height": 202,
-                    "url": "https://pbs.twimg.com/card_img/2113665098267217921/TYFkg31I?format=jpg&name=386x202",
+                    "url": "https://pbs.twimg.com/card_img/2118740360633475072/AxGFvp0F?format=jpg&name=386x202",
                     "width": 386
                    },
                    "type": "IMAGE"
@@ -4112,7 +3861,7 @@
                   "value": {
                    "image_value": {
                     "height": 419,
-                    "url": "https://pbs.twimg.com/card_img/2113665098267217921/TYFkg31I?format=jpg&name=800x419",
+                    "url": "https://pbs.twimg.com/card_img/2118740360633475072/AxGFvp0F?format=jpg&name=800x419",
                     "width": 800
                    },
                    "type": "IMAGE"
@@ -4123,7 +3872,7 @@
                   "value": {
                    "image_value": {
                     "height": 81,
-                    "url": "https://pbs.twimg.com/card_img/2113665098267217921/TYFkg31I?format=jpg&name=144x144",
+                    "url": "https://pbs.twimg.com/card_img/2118740360633475072/AxGFvp0F?format=jpg&name=144x144",
                     "width": 144
                    },
                    "type": "IMAGE"
@@ -4134,7 +3883,7 @@
                   "value": {
                    "image_value": {
                     "height": 1080,
-                    "url": "https://pbs.twimg.com/card_img/2113665098267217921/TYFkg31I?format=png&name=2048x2048_2_exp",
+                    "url": "https://pbs.twimg.com/card_img/2118740360633475072/AxGFvp0F?format=png&name=2048x2048_2_exp",
                     "width": 1920
                    },
                    "type": "IMAGE"
@@ -4145,7 +3894,7 @@
                   "value": {
                    "image_value": {
                     "height": 1080,
-                    "url": "https://pbs.twimg.com/card_img/2113665098267217921/TYFkg31I?format=jpg&name=orig",
+                    "url": "https://pbs.twimg.com/card_img/2118740360633475072/AxGFvp0F?format=jpg&name=orig",
                     "width": 1920
                    },
                    "type": "IMAGE"
@@ -4164,7 +3913,7 @@
                   "value": {
                    "image_value": {
                     "height": 314,
-                    "url": "https://pbs.twimg.com/card_img/2113665098267217921/TYFkg31I?format=jpg&name=600x314",
+                    "url": "https://pbs.twimg.com/card_img/2118740360633475072/AxGFvp0F?format=jpg&name=600x314",
                     "width": 600
                    },
                    "type": "IMAGE"
@@ -4282,7 +4031,7 @@
                   "value": {
                    "image_value": {
                     "height": 1080,
-                    "url": "https://pbs.twimg.com/card_img/2113665098267217921/TYFkg31I?format=png&name=2048x2048_2_exp",
+                    "url": "https://pbs.twimg.com/card_img/2118740360633475072/AxGFvp0F?format=png&name=2048x2048_2_exp",
                     "width": 1920
                    },
                    "type": "IMAGE"
@@ -4293,7 +4042,7 @@
                   "value": {
                    "image_value": {
                     "height": 314,
-                    "url": "https://pbs.twimg.com/card_img/2113665098267217921/TYFkg31I?format=jpg&name=600x314",
+                    "url": "https://pbs.twimg.com/card_img/2118740360633475072/AxGFvp0F?format=jpg&name=600x314",
                     "width": 600
                    },
                    "type": "IMAGE"
@@ -4354,7 +4103,7 @@
                   "value": {
                    "image_value": {
                     "height": 1080,
-                    "url": "https://pbs.twimg.com/card_img/2113665098267217921/TYFkg31I?format=png&name=2048x2048_2_exp",
+                    "url": "https://pbs.twimg.com/card_img/2118740360633475072/AxGFvp0F?format=png&name=2048x2048_2_exp",
                     "width": 1920
                    },
                    "type": "IMAGE"
@@ -4373,7 +4122,7 @@
                   "value": {
                    "image_value": {
                     "height": 1080,
-                    "url": "https://pbs.twimg.com/card_img/2113665098267217921/TYFkg31I?format=jpg&name=orig",
+                    "url": "https://pbs.twimg.com/card_img/2118740360633475072/AxGFvp0F?format=jpg&name=orig",
                     "width": 1920
                    },
                    "type": "IMAGE"
@@ -4459,7 +4208,7 @@
                     "translator_type": "none"
                    },
                    "relationship_counts": {
-                    "followers": 87500,
+                    "followers": 87459,
                     "following": 48
                    },
                    "relationship_perspectives": {
@@ -4557,7 +4306,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 87500,
+                  "followers": 87459,
                   "following": 48
                  },
                  "relationship_perspectives": {
@@ -4602,7 +4351,7 @@
               },
               "is_translatable": false,
               "legacy": {
-               "bookmark_count": 63,
+               "bookmark_count": 62,
                "bookmarked": false,
                "conversation_id_str": "2090855886566936881",
                "created_at": "Fri Aug 21 17:37:44 +0000 2026",
@@ -4634,7 +4383,7 @@
                  }
                 ]
                },
-               "favorite_count": 216,
+               "favorite_count": 214,
                "favorited": false,
                "full_text": "If you love programming language design, don't miss this new blog post by Bob Nystrom (@munificentbob)!\n\nHe breaks down the journey of adding primary constructors to Dart 3.13, exploring syntactic sugar, and avoiding syntactic cliffs. 💙🎯\n\n📖 https://t.co/nISbklhCt0",
                "id_str": "2090855886566936881",
@@ -4651,7 +4400,7 @@
               "rest_id": "2090855886566936881",
               "unmention_data": {},
               "views": {
-               "count": "18301",
+               "count": "18379",
                "state": "EnabledWithCount"
               }
              }
@@ -4659,7 +4408,7 @@
            }
           },
           "entryId": "tweet-2090855886566936881",
-          "sortIndex": "2114919132691431418"
+          "sortIndex": "2119542822762708932"
          },
          {
           "content": {
@@ -4668,7 +4417,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC+VV0vZeUQ9wKAAUBEWzGKsbkVwgABgAAAAEKAAcYbw5uGNj0mgoACAAAAaF7W/7bAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACZeBwH3I74HsKAAUBEWzGKsbkVwgABgAAAAEKAAfr0EC9M55WHQoACAAAAaG9EOJ1AAAAAAA="
              }
             },
             "element": "tweet"
@@ -4701,7 +4450,7 @@
                   "value": {
                    "image_value": {
                     "height": 419,
-                    "url": "https://pbs.twimg.com/card_img/2113031152554430464/ksFyQx77?format=jpg&name=800x419",
+                    "url": "https://pbs.twimg.com/card_img/2118110098664923136/oWTfR15W?format=jpg&name=800x419",
                     "width": 800
                    },
                    "type": "IMAGE"
@@ -4712,7 +4461,7 @@
                   "value": {
                    "image_value": {
                     "height": 150,
-                    "url": "https://pbs.twimg.com/card_img/2113031152554430464/ksFyQx77?format=jpg&name=280x150",
+                    "url": "https://pbs.twimg.com/card_img/2118110098664923136/oWTfR15W?format=jpg&name=280x150",
                     "width": 267
                    },
                    "type": "IMAGE"
@@ -4737,7 +4486,7 @@
                   "value": {
                    "image_value": {
                     "height": 320,
-                    "url": "https://pbs.twimg.com/card_img/2113031152554430464/ksFyQx77?format=jpg&name=800x320_1",
+                    "url": "https://pbs.twimg.com/card_img/2118110098664923136/oWTfR15W?format=jpg&name=800x320_1",
                     "width": 569
                    },
                    "type": "IMAGE"
@@ -4748,7 +4497,7 @@
                   "value": {
                    "image_value": {
                     "height": 202,
-                    "url": "https://pbs.twimg.com/card_img/2113031152554430464/ksFyQx77?format=jpg&name=386x202",
+                    "url": "https://pbs.twimg.com/card_img/2118110098664923136/oWTfR15W?format=jpg&name=386x202",
                     "width": 386
                    },
                    "type": "IMAGE"
@@ -4759,7 +4508,7 @@
                   "value": {
                    "image_value": {
                     "height": 1080,
-                    "url": "https://pbs.twimg.com/card_img/2113031152554430464/ksFyQx77?format=jpg&name=orig",
+                    "url": "https://pbs.twimg.com/card_img/2118110098664923136/oWTfR15W?format=jpg&name=orig",
                     "width": 1920
                    },
                    "type": "IMAGE"
@@ -4781,7 +4530,7 @@
                   "value": {
                    "image_value": {
                     "height": 202,
-                    "url": "https://pbs.twimg.com/card_img/2113031152554430464/ksFyQx77?format=jpg&name=386x202",
+                    "url": "https://pbs.twimg.com/card_img/2118110098664923136/oWTfR15W?format=jpg&name=386x202",
                     "width": 386
                    },
                    "type": "IMAGE"
@@ -4792,7 +4541,7 @@
                   "value": {
                    "image_value": {
                     "height": 419,
-                    "url": "https://pbs.twimg.com/card_img/2113031152554430464/ksFyQx77?format=jpg&name=800x419",
+                    "url": "https://pbs.twimg.com/card_img/2118110098664923136/oWTfR15W?format=jpg&name=800x419",
                     "width": 800
                    },
                    "type": "IMAGE"
@@ -4803,7 +4552,7 @@
                   "value": {
                    "image_value": {
                     "height": 81,
-                    "url": "https://pbs.twimg.com/card_img/2113031152554430464/ksFyQx77?format=jpg&name=144x144",
+                    "url": "https://pbs.twimg.com/card_img/2118110098664923136/oWTfR15W?format=jpg&name=144x144",
                     "width": 144
                    },
                    "type": "IMAGE"
@@ -4814,7 +4563,7 @@
                   "value": {
                    "image_value": {
                     "height": 1080,
-                    "url": "https://pbs.twimg.com/card_img/2113031152554430464/ksFyQx77?format=png&name=2048x2048_2_exp",
+                    "url": "https://pbs.twimg.com/card_img/2118110098664923136/oWTfR15W?format=png&name=2048x2048_2_exp",
                     "width": 1920
                    },
                    "type": "IMAGE"
@@ -4825,7 +4574,7 @@
                   "value": {
                    "image_value": {
                     "height": 1080,
-                    "url": "https://pbs.twimg.com/card_img/2113031152554430464/ksFyQx77?format=jpg&name=orig",
+                    "url": "https://pbs.twimg.com/card_img/2118110098664923136/oWTfR15W?format=jpg&name=orig",
                     "width": 1920
                    },
                    "type": "IMAGE"
@@ -4844,7 +4593,7 @@
                   "value": {
                    "image_value": {
                     "height": 314,
-                    "url": "https://pbs.twimg.com/card_img/2113031152554430464/ksFyQx77?format=jpg&name=600x314",
+                    "url": "https://pbs.twimg.com/card_img/2118110098664923136/oWTfR15W?format=jpg&name=600x314",
                     "width": 600
                    },
                    "type": "IMAGE"
@@ -4962,7 +4711,7 @@
                   "value": {
                    "image_value": {
                     "height": 1080,
-                    "url": "https://pbs.twimg.com/card_img/2113031152554430464/ksFyQx77?format=png&name=2048x2048_2_exp",
+                    "url": "https://pbs.twimg.com/card_img/2118110098664923136/oWTfR15W?format=png&name=2048x2048_2_exp",
                     "width": 1920
                    },
                    "type": "IMAGE"
@@ -4973,7 +4722,7 @@
                   "value": {
                    "image_value": {
                     "height": 314,
-                    "url": "https://pbs.twimg.com/card_img/2113031152554430464/ksFyQx77?format=jpg&name=600x314",
+                    "url": "https://pbs.twimg.com/card_img/2118110098664923136/oWTfR15W?format=jpg&name=600x314",
                     "width": 600
                    },
                    "type": "IMAGE"
@@ -5034,7 +4783,7 @@
                   "value": {
                    "image_value": {
                     "height": 1080,
-                    "url": "https://pbs.twimg.com/card_img/2113031152554430464/ksFyQx77?format=png&name=2048x2048_2_exp",
+                    "url": "https://pbs.twimg.com/card_img/2118110098664923136/oWTfR15W?format=png&name=2048x2048_2_exp",
                     "width": 1920
                    },
                    "type": "IMAGE"
@@ -5053,7 +4802,7 @@
                   "value": {
                    "image_value": {
                     "height": 1080,
-                    "url": "https://pbs.twimg.com/card_img/2113031152554430464/ksFyQx77?format=jpg&name=orig",
+                    "url": "https://pbs.twimg.com/card_img/2118110098664923136/oWTfR15W?format=jpg&name=orig",
                     "width": 1920
                    },
                    "type": "IMAGE"
@@ -5139,7 +4888,7 @@
                     "translator_type": "none"
                    },
                    "relationship_counts": {
-                    "followers": 87500,
+                    "followers": 87459,
                     "following": 48
                    },
                    "relationship_perspectives": {
@@ -5237,7 +4986,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 87500,
+                  "followers": 87459,
                   "following": 48
                  },
                  "relationship_perspectives": {
@@ -5313,14 +5062,14 @@
                "possibly_sensitive_editable": true,
                "quote_count": 7,
                "reply_count": 13,
-               "retweet_count": 54,
+               "retweet_count": 53,
                "retweeted": false,
                "user_id_str": "376585411"
               },
               "rest_id": "2087643264807731364",
               "unmention_data": {},
               "views": {
-               "count": "22189",
+               "count": "22308",
                "state": "EnabledWithCount"
               }
              }
@@ -5328,7 +5077,7 @@
            }
           },
           "entryId": "tweet-2087643264807731364",
-          "sortIndex": "2114919132691431417"
+          "sortIndex": "2119542822762708922"
          },
          {
           "content": {
@@ -5337,7 +5086,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC+VV0vZeUQ9wKAAUBEWzGKsbkVwgABgAAAAEKAAcYbw5uGNj0mgoACAAAAaF7W/7bAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACZeBwH3I74HsKAAUBEWzGKsbkVwgABgAAAAEKAAfr0EC9M55WHQoACAAAAaG9EOJ1AAAAAAA="
              }
             },
             "element": "tweet"
@@ -5366,7 +5115,7 @@
                   "value": {
                    "image_value": {
                     "height": 144,
-                    "url": "https://pbs.twimg.com/card_img/2112805101391720448/17IhHGIN?format=jpg&name=144x144_2",
+                    "url": "https://pbs.twimg.com/card_img/2118018407849156608/Z9MQIHIn?format=jpg&name=144x144_2",
                     "width": 144
                    },
                    "type": "IMAGE"
@@ -5391,7 +5140,7 @@
                   "value": {
                    "image_value": {
                     "height": 420,
-                    "url": "https://pbs.twimg.com/card_img/2112805101391720448/17IhHGIN?format=jpg&name=420x420_2",
+                    "url": "https://pbs.twimg.com/card_img/2118018407849156608/Z9MQIHIn?format=jpg&name=420x420_2",
                     "width": 420
                    },
                    "type": "IMAGE"
@@ -5402,7 +5151,7 @@
                   "value": {
                    "image_value": {
                     "height": 1488,
-                    "url": "https://pbs.twimg.com/card_img/2112805101391720448/17IhHGIN?format=jpg&name=orig",
+                    "url": "https://pbs.twimg.com/card_img/2118018407849156608/Z9MQIHIn?format=jpg&name=orig",
                     "width": 2650
                    },
                    "type": "IMAGE"
@@ -5424,7 +5173,7 @@
                   "value": {
                    "image_value": {
                     "height": 100,
-                    "url": "https://pbs.twimg.com/card_img/2112805101391720448/17IhHGIN?format=jpg&name=100x100_2",
+                    "url": "https://pbs.twimg.com/card_img/2118018407849156608/Z9MQIHIn?format=jpg&name=100x100_2",
                     "width": 100
                    },
                    "type": "IMAGE"
@@ -5435,7 +5184,7 @@
                   "value": {
                    "image_value": {
                     "height": 1150,
-                    "url": "https://pbs.twimg.com/card_img/2112805101391720448/17IhHGIN?format=png&name=2048x2048_2_exp",
+                    "url": "https://pbs.twimg.com/card_img/2118018407849156608/Z9MQIHIn?format=png&name=2048x2048_2_exp",
                     "width": 2048
                    },
                    "type": "IMAGE"
@@ -5578,7 +5327,7 @@
                     "translator_type": "none"
                    },
                    "relationship_counts": {
-                    "followers": 87500,
+                    "followers": 87459,
                     "following": 48
                    },
                    "relationship_perspectives": {
@@ -5676,7 +5425,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 87500,
+                  "followers": 87459,
                   "following": 48
                  },
                  "relationship_perspectives": {
@@ -5742,7 +5491,7 @@
                  }
                 ]
                },
-               "favorite_count": 201,
+               "favorite_count": 200,
                "favorited": false,
                "full_text": "We've updated our blog home! 🏡\nThe official Dart blog has fully transitioned to https://t.co/eUTmFbCEeu.",
                "id_str": "2080744009014915403",
@@ -5752,14 +5501,14 @@
                "possibly_sensitive_editable": true,
                "quote_count": 2,
                "reply_count": 7,
-               "retweet_count": 22,
+               "retweet_count": 21,
                "retweeted": false,
                "user_id_str": "376585411"
               },
               "rest_id": "2080744009014915403",
               "unmention_data": {},
               "views": {
-               "count": "20327",
+               "count": "20356",
                "state": "EnabledWithCount"
               }
              }
@@ -5767,7 +5516,7 @@
            }
           },
           "entryId": "tweet-2080744009014915403",
-          "sortIndex": "2114919132691431416"
+          "sortIndex": "2119542822762708912"
          },
          {
           "content": {
@@ -5776,7 +5525,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC+VV0vZeUQ9wKAAUBEWzGKsbkVwgABgAAAAEKAAcYbw5uGNj0mgoACAAAAaF7W/7bAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACZeBwH3I74HsKAAUBEWzGKsbkVwgABgAAAAEKAAfr0EC9M55WHQoACAAAAaG9EOJ1AAAAAAA="
              }
             },
             "element": "tweet"
@@ -5803,9 +5552,22 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3220
+                  "favorites_count": 3222
                  },
-                 "affiliates_highlighted_label": {},
+                 "affiliates_highlighted_label": {
+                  "label": {
+                   "badge": {
+                    "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                   },
+                   "description": "Google Cloud",
+                   "url": {
+                    "url": "https://twitter.com/googlecloud",
+                    "urlType": "DeepLink"
+                   },
+                   "userLabelDisplayType": "Badge",
+                   "userLabelType": "BusinessLabel"
+                  }
+                 },
                  "avatar": {
                   "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                  },
@@ -5820,7 +5582,7 @@
                  "follow_request_sent": false,
                  "has_graduated_access": true,
                  "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
+                 "is_blue_verified": true,
                  "location": {
                   "location": ""
                  },
@@ -5868,7 +5630,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 278003,
+                  "followers": 278116,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -5884,8 +5646,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1988,
-                  "tweets": 3938
+                  "media_tweets": 1995,
+                  "tweets": 3953
                  },
                  "verification": {
                   "verified": false,
@@ -6296,7 +6058,7 @@
               "rest_id": "2067276090666791254",
               "unmention_data": {},
               "views": {
-               "count": "7129",
+               "count": "7132",
                "state": "EnabledWithCount"
               }
              }
@@ -6304,7 +6066,7 @@
            }
           },
           "entryId": "tweet-2067276090666791254",
-          "sortIndex": "2114919132691431415"
+          "sortIndex": "2119542822762708902"
          },
          {
           "content": {
@@ -6313,7 +6075,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC+VV0vZeUQ9wKAAUBEWzGKsbkVwgABgAAAAEKAAcYbw5uGNj0mgoACAAAAaF7W/7bAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACZeBwH3I74HsKAAUBEWzGKsbkVwgABgAAAAEKAAfr0EC9M55WHQoACAAAAaG9EOJ1AAAAAAA="
              }
             },
             "element": "tweet"
@@ -6344,9 +6106,22 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3220
+                  "favorites_count": 3222
                  },
-                 "affiliates_highlighted_label": {},
+                 "affiliates_highlighted_label": {
+                  "label": {
+                   "badge": {
+                    "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                   },
+                   "description": "Google Cloud",
+                   "url": {
+                    "url": "https://twitter.com/googlecloud",
+                    "urlType": "DeepLink"
+                   },
+                   "userLabelDisplayType": "Badge",
+                   "userLabelType": "BusinessLabel"
+                  }
+                 },
                  "avatar": {
                   "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                  },
@@ -6361,7 +6136,7 @@
                  "follow_request_sent": false,
                  "has_graduated_access": true,
                  "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
+                 "is_blue_verified": true,
                  "location": {
                   "location": ""
                  },
@@ -6409,7 +6184,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 278003,
+                  "followers": 278116,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -6425,8 +6200,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1988,
-                  "tweets": 3938
+                  "media_tweets": 1995,
+                  "tweets": 3953
                  },
                  "verification": {
                   "verified": false,
@@ -6752,7 +6527,7 @@
               "rest_id": "2066581506915541098",
               "unmention_data": {},
               "views": {
-               "count": "8996",
+               "count": "8997",
                "state": "EnabledWithCount"
               }
              }
@@ -6760,7 +6535,7 @@
            }
           },
           "entryId": "tweet-2066581506915541098",
-          "sortIndex": "2114919132691431414"
+          "sortIndex": "2119542822762708892"
          },
          {
           "content": {
@@ -6769,7 +6544,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC+VV0vZeUQ9wKAAUBEWzGKsbkVwgABgAAAAEKAAcYbw5uGNj0mgoACAAAAaF7W/7bAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACZeBwH3I74HsKAAUBEWzGKsbkVwgABgAAAAEKAAfr0EC9M55WHQoACAAAAaG9EOJ1AAAAAAA="
              }
             },
             "element": "tweet"
@@ -6921,7 +6696,7 @@
                     "translator_type": "none"
                    },
                    "relationship_counts": {
-                    "followers": 87500,
+                    "followers": 87459,
                     "following": 48
                    },
                    "relationship_perspectives": {
@@ -7019,7 +6794,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 87500,
+                  "followers": 87459,
                   "following": 48
                  },
                  "relationship_perspectives": {
@@ -7109,9 +6884,10 @@
                "user_id_str": "376585411"
               },
               "rest_id": "2057161935477436420",
+              "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
               "unmention_data": {},
               "views": {
-               "count": "14981",
+               "count": "15003",
                "state": "EnabledWithCount"
               }
              }
@@ -7119,7 +6895,7 @@
            }
           },
           "entryId": "tweet-2057161935477436420",
-          "sortIndex": "2114919132691431413"
+          "sortIndex": "2119542822762708882"
          },
          {
           "content": {
@@ -7128,7 +6904,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC+VV0vZeUQ9wKAAUBEWzGKsbkVwgABgAAAAEKAAcYbw5uGNj0mgoACAAAAaF7W/7bAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACZeBwH3I74HsKAAUBEWzGKsbkVwgABgAAAAEKAAfr0EC9M55WHQoACAAAAaG9EOJ1AAAAAAA="
              }
             },
             "element": "tweet"
@@ -7157,7 +6933,7 @@
                   "value": {
                    "image_value": {
                     "height": 144,
-                    "url": "https://pbs.twimg.com/card_img/2112805101391720448/17IhHGIN?format=jpg&name=144x144_2",
+                    "url": "https://pbs.twimg.com/card_img/2118018407849156608/Z9MQIHIn?format=jpg&name=144x144_2",
                     "width": 144
                    },
                    "type": "IMAGE"
@@ -7182,7 +6958,7 @@
                   "value": {
                    "image_value": {
                     "height": 420,
-                    "url": "https://pbs.twimg.com/card_img/2112805101391720448/17IhHGIN?format=jpg&name=420x420_2",
+                    "url": "https://pbs.twimg.com/card_img/2118018407849156608/Z9MQIHIn?format=jpg&name=420x420_2",
                     "width": 420
                    },
                    "type": "IMAGE"
@@ -7193,7 +6969,7 @@
                   "value": {
                    "image_value": {
                     "height": 1488,
-                    "url": "https://pbs.twimg.com/card_img/2112805101391720448/17IhHGIN?format=jpg&name=orig",
+                    "url": "https://pbs.twimg.com/card_img/2118018407849156608/Z9MQIHIn?format=jpg&name=orig",
                     "width": 2650
                    },
                    "type": "IMAGE"
@@ -7215,7 +6991,7 @@
                   "value": {
                    "image_value": {
                     "height": 100,
-                    "url": "https://pbs.twimg.com/card_img/2112805101391720448/17IhHGIN?format=jpg&name=100x100_2",
+                    "url": "https://pbs.twimg.com/card_img/2118018407849156608/Z9MQIHIn?format=jpg&name=100x100_2",
                     "width": 100
                    },
                    "type": "IMAGE"
@@ -7226,7 +7002,7 @@
                   "value": {
                    "image_value": {
                     "height": 1150,
-                    "url": "https://pbs.twimg.com/card_img/2112805101391720448/17IhHGIN?format=png&name=2048x2048_2_exp",
+                    "url": "https://pbs.twimg.com/card_img/2118018407849156608/Z9MQIHIn?format=png&name=2048x2048_2_exp",
                     "width": 2048
                    },
                    "type": "IMAGE"
@@ -7369,7 +7145,7 @@
                     "translator_type": "none"
                    },
                    "relationship_counts": {
-                    "followers": 87500,
+                    "followers": 87459,
                     "following": 48
                    },
                    "relationship_perspectives": {
@@ -7406,9 +7182,22 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3220
+                  "favorites_count": 3222
                  },
-                 "affiliates_highlighted_label": {},
+                 "affiliates_highlighted_label": {
+                  "label": {
+                   "badge": {
+                    "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                   },
+                   "description": "Google Cloud",
+                   "url": {
+                    "url": "https://twitter.com/googlecloud",
+                    "urlType": "DeepLink"
+                   },
+                   "userLabelDisplayType": "Badge",
+                   "userLabelType": "BusinessLabel"
+                  }
+                 },
                  "avatar": {
                   "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                  },
@@ -7423,7 +7212,7 @@
                  "follow_request_sent": false,
                  "has_graduated_access": true,
                  "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
+                 "is_blue_verified": true,
                  "location": {
                   "location": ""
                  },
@@ -7471,7 +7260,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 278003,
+                  "followers": 278116,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -7487,8 +7276,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1988,
-                  "tweets": 3938
+                  "media_tweets": 1995,
+                  "tweets": 3953
                  },
                  "verification": {
                   "verified": false,
@@ -7538,7 +7327,7 @@
                  }
                 ]
                },
-               "favorite_count": 451,
+               "favorite_count": 450,
                "favorited": false,
                "full_text": "The Dart Blog has moved away from Medium! 🏠 You can view the new blog home here: https://t.co/qWG83xfHd8",
                "id_str": "2054615487883989169",
@@ -7555,7 +7344,7 @@
               "rest_id": "2054615487883989169",
               "unmention_data": {},
               "views": {
-               "count": "47267",
+               "count": "47289",
                "state": "EnabledWithCount"
               }
              }
@@ -7563,7 +7352,7 @@
            }
           },
           "entryId": "tweet-2054615487883989169",
-          "sortIndex": "2114919132691431412"
+          "sortIndex": "2119542822762708872"
          },
          {
           "content": {
@@ -7572,7 +7361,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC+VV0vZeUQ9wKAAUBEWzGKsbkVwgABgAAAAEKAAcYbw5uGNj0mgoACAAAAaF7W/7bAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACZeBwH3I74HsKAAUBEWzGKsbkVwgABgAAAAEKAAfr0EC9M55WHQoACAAAAaG9EOJ1AAAAAAA="
              }
             },
             "element": "tweet"
@@ -7599,9 +7388,22 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3220
+                  "favorites_count": 3222
                  },
-                 "affiliates_highlighted_label": {},
+                 "affiliates_highlighted_label": {
+                  "label": {
+                   "badge": {
+                    "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                   },
+                   "description": "Google Cloud",
+                   "url": {
+                    "url": "https://twitter.com/googlecloud",
+                    "urlType": "DeepLink"
+                   },
+                   "userLabelDisplayType": "Badge",
+                   "userLabelType": "BusinessLabel"
+                  }
+                 },
                  "avatar": {
                   "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                  },
@@ -7616,7 +7418,7 @@
                  "follow_request_sent": false,
                  "has_graduated_access": true,
                  "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
+                 "is_blue_verified": true,
                  "location": {
                   "location": ""
                  },
@@ -7664,7 +7466,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 278003,
+                  "followers": 278116,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -7680,8 +7482,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1988,
-                  "tweets": 3938
+                  "media_tweets": 1995,
+                  "tweets": 3953
                  },
                  "verification": {
                   "verified": false,
@@ -7710,7 +7512,7 @@
               },
               "is_translatable": false,
               "legacy": {
-               "bookmark_count": 212,
+               "bookmark_count": 210,
                "bookmarked": false,
                "conversation_id_str": "2052108690883293199",
                "created_at": "Wed May 06 19:30:12 +0000 2026",
@@ -7859,7 +7661,7 @@
                  }
                 ]
                },
-               "favorite_count": 411,
+               "favorite_count": 406,
                "favorited": false,
                "full_text": "Introducing Agent Skills for Flutter and Dart to give your AI tools domain-specific expertise 📓\n\nThese initial core Skills are designed to handle the most common Flutter development hurdles. Learn how to start using them in your workflow → https://t.co/NL0tXBedl6 https://t.co/eGHstLR4KY",
                "id_str": "2052108690883293199",
@@ -7869,14 +7671,14 @@
                "possibly_sensitive_editable": true,
                "quote_count": 12,
                "reply_count": 8,
-               "retweet_count": 77,
+               "retweet_count": 76,
                "retweeted": false,
                "user_id_str": "420730316"
               },
               "rest_id": "2052108690883293199",
               "unmention_data": {},
               "views": {
-               "count": "42729",
+               "count": "42779",
                "state": "EnabledWithCount"
               }
              }
@@ -7884,7 +7686,7 @@
            }
           },
           "entryId": "tweet-2052108690883293199",
-          "sortIndex": "2114919132691431411"
+          "sortIndex": "2119542822762708862"
          },
          {
           "content": {
@@ -7893,7 +7695,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC+VV0vZeUQ9wKAAUBEWzGKsbkVwgABgAAAAEKAAcYbw5uGNj0mgoACAAAAaF7W/7bAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACZeBwH3I74HsKAAUBEWzGKsbkVwgABgAAAAEKAAfr0EC9M55WHQoACAAAAaG9EOJ1AAAAAAA="
              }
             },
             "element": "tweet"
@@ -7920,9 +7722,22 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3220
+                  "favorites_count": 3222
                  },
-                 "affiliates_highlighted_label": {},
+                 "affiliates_highlighted_label": {
+                  "label": {
+                   "badge": {
+                    "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                   },
+                   "description": "Google Cloud",
+                   "url": {
+                    "url": "https://twitter.com/googlecloud",
+                    "urlType": "DeepLink"
+                   },
+                   "userLabelDisplayType": "Badge",
+                   "userLabelType": "BusinessLabel"
+                  }
+                 },
                  "avatar": {
                   "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                  },
@@ -7937,7 +7752,7 @@
                  "follow_request_sent": false,
                  "has_graduated_access": true,
                  "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
+                 "is_blue_verified": true,
                  "location": {
                   "location": ""
                  },
@@ -7985,7 +7800,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 278003,
+                  "followers": 278116,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -8001,8 +7816,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1988,
-                  "tweets": 3938
+                  "media_tweets": 1995,
+                  "tweets": 3953
                  },
                  "verification": {
                   "verified": false,
@@ -8300,7 +8115,7 @@
                  }
                 ]
                },
-               "favorite_count": 160,
+               "favorite_count": 161,
                "favorited": false,
                "full_text": "Flutter developers can now write backend logic in the same language, and with the same tooling, as their frontend 🎉 \n\nFollow along as we build a complete serverless application live, using full-stack Dart across client and cloud environments → https://t.co/Y5aep4TdaB https://t.co/E2tYc2h2QX",
                "id_str": "2051368891549417708",
@@ -8317,7 +8132,7 @@
               "rest_id": "2051368891549417708",
               "unmention_data": {},
               "views": {
-               "count": "12243",
+               "count": "12244",
                "state": "EnabledWithCount"
               }
              }
@@ -8325,7 +8140,7 @@
            }
           },
           "entryId": "tweet-2051368891549417708",
-          "sortIndex": "2114919132691431410"
+          "sortIndex": "2119542822762708852"
          },
          {
           "content": {
@@ -8334,7 +8149,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC+VV0vZeUQ9wKAAUBEWzGKsbkVwgABgAAAAEKAAcYbw5uGNj0mgoACAAAAaF7W/7bAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACZeBwH3I74HsKAAUBEWzGKsbkVwgABgAAAAEKAAfr0EC9M55WHQoACAAAAaG9EOJ1AAAAAAA="
              }
             },
             "element": "tweet"
@@ -8361,9 +8176,22 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3220
+                  "favorites_count": 3222
                  },
-                 "affiliates_highlighted_label": {},
+                 "affiliates_highlighted_label": {
+                  "label": {
+                   "badge": {
+                    "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                   },
+                   "description": "Google Cloud",
+                   "url": {
+                    "url": "https://twitter.com/googlecloud",
+                    "urlType": "DeepLink"
+                   },
+                   "userLabelDisplayType": "Badge",
+                   "userLabelType": "BusinessLabel"
+                  }
+                 },
                  "avatar": {
                   "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                  },
@@ -8378,7 +8206,7 @@
                  "follow_request_sent": false,
                  "has_graduated_access": true,
                  "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
+                 "is_blue_verified": true,
                  "location": {
                   "location": ""
                  },
@@ -8426,7 +8254,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 278003,
+                  "followers": 278116,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -8442,8 +8270,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1988,
-                  "tweets": 3938
+                  "media_tweets": 1995,
+                  "tweets": 3953
                  },
                  "verification": {
                   "verified": false,
@@ -8789,7 +8617,7 @@
                  }
                 ]
                },
-               "favorite_count": 136,
+               "favorite_count": 135,
                "favorited": false,
                "full_text": "Another Cloud Next is in the books! 📘 In case you missed it, here's a recap of announcements, highlights, and experiences from the Flutter and Dart team →.https://t.co/9GNjPxPKs6 https://t.co/DnK1jqWjzm",
                "id_str": "2048847152026182111",
@@ -8804,10 +8632,9 @@
                "user_id_str": "420730316"
               },
               "rest_id": "2048847152026182111",
-              "source": "<a href=\"https://prod8.sprinklr.com/\" rel=\"nofollow\">Sprinklr Care</a>",
               "unmention_data": {},
               "views": {
-               "count": "14489",
+               "count": "14491",
                "state": "EnabledWithCount"
               }
              }
@@ -8815,7 +8642,7 @@
            }
           },
           "entryId": "tweet-2048847152026182111",
-          "sortIndex": "2114919132691431409"
+          "sortIndex": "2119542822762708842"
          },
          {
           "content": {
@@ -8824,7 +8651,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC+VV0vZeUQ9wKAAUBEWzGKsbkVwgABgAAAAEKAAcYbw5uGNj0mgoACAAAAaF7W/7bAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACZeBwH3I74HsKAAUBEWzGKsbkVwgABgAAAAEKAAfr0EC9M55WHQoACAAAAaG9EOJ1AAAAAAA="
              }
             },
             "element": "tweet"
@@ -8853,7 +8680,7 @@
                   "value": {
                    "image_value": {
                     "height": 144,
-                    "url": "https://pbs.twimg.com/card_img/2112710361166036992/-3JwAVtr?format=png&name=144x144_2",
+                    "url": "https://pbs.twimg.com/card_img/2117792149462818819/8OgXRF4M?format=png&name=144x144_2",
                     "width": 144
                    },
                    "type": "IMAGE"
@@ -8878,7 +8705,7 @@
                   "value": {
                    "image_value": {
                     "height": 320,
-                    "url": "https://pbs.twimg.com/card_img/2112710361166036992/-3JwAVtr?format=png&name=420x420_2",
+                    "url": "https://pbs.twimg.com/card_img/2117792149462818819/8OgXRF4M?format=png&name=420x420_2",
                     "width": 320
                    },
                    "type": "IMAGE"
@@ -8889,7 +8716,7 @@
                   "value": {
                    "image_value": {
                     "height": 320,
-                    "url": "https://pbs.twimg.com/card_img/2112710361166036992/-3JwAVtr?format=png&name=orig",
+                    "url": "https://pbs.twimg.com/card_img/2117792149462818819/8OgXRF4M?format=png&name=orig",
                     "width": 320
                    },
                    "type": "IMAGE"
@@ -8911,7 +8738,7 @@
                   "value": {
                    "image_value": {
                     "height": 100,
-                    "url": "https://pbs.twimg.com/card_img/2112710361166036992/-3JwAVtr?format=png&name=100x100_2",
+                    "url": "https://pbs.twimg.com/card_img/2117792149462818819/8OgXRF4M?format=png&name=100x100_2",
                     "width": 100
                    },
                    "type": "IMAGE"
@@ -8922,7 +8749,7 @@
                   "value": {
                    "image_value": {
                     "height": 320,
-                    "url": "https://pbs.twimg.com/card_img/2112710361166036992/-3JwAVtr?format=png&name=2048x2048_2_exp",
+                    "url": "https://pbs.twimg.com/card_img/2117792149462818819/8OgXRF4M?format=png&name=2048x2048_2_exp",
                     "width": 320
                    },
                    "type": "IMAGE"
@@ -8996,9 +8823,22 @@
                   "result": {
                    "__typename": "User",
                    "action_counts": {
-                    "favorites_count": 3220
+                    "favorites_count": 3222
                    },
-                   "affiliates_highlighted_label": {},
+                   "affiliates_highlighted_label": {
+                    "label": {
+                     "badge": {
+                      "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                     },
+                     "description": "Google Cloud",
+                     "url": {
+                      "url": "https://twitter.com/googlecloud",
+                      "urlType": "DeepLink"
+                     },
+                     "userLabelDisplayType": "Badge",
+                     "userLabelType": "BusinessLabel"
+                    }
+                   },
                    "avatar": {
                     "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                    },
@@ -9013,7 +8853,7 @@
                    "follow_request_sent": false,
                    "has_graduated_access": true,
                    "id": "VXNlcjo0MjA3MzAzMTY=",
-                   "is_blue_verified": false,
+                   "is_blue_verified": true,
                    "location": {
                     "location": ""
                    },
@@ -9061,7 +8901,7 @@
                     "translator_type": "none"
                    },
                    "relationship_counts": {
-                    "followers": 278003,
+                    "followers": 278116,
                     "following": 61
                    },
                    "relationship_perspectives": {
@@ -9077,8 +8917,8 @@
                    "super_followed_by": false,
                    "super_following": false,
                    "tweet_counts": {
-                    "media_tweets": 1988,
-                    "tweets": 3938
+                    "media_tweets": 1995,
+                    "tweets": 3953
                    },
                    "verification": {
                     "verified": false,
@@ -9099,9 +8939,22 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3220
+                  "favorites_count": 3222
                  },
-                 "affiliates_highlighted_label": {},
+                 "affiliates_highlighted_label": {
+                  "label": {
+                   "badge": {
+                    "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                   },
+                   "description": "Google Cloud",
+                   "url": {
+                    "url": "https://twitter.com/googlecloud",
+                    "urlType": "DeepLink"
+                   },
+                   "userLabelDisplayType": "Badge",
+                   "userLabelType": "BusinessLabel"
+                  }
+                 },
                  "avatar": {
                   "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                  },
@@ -9116,7 +8969,7 @@
                  "follow_request_sent": false,
                  "has_graduated_access": true,
                  "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
+                 "is_blue_verified": true,
                  "location": {
                   "location": ""
                  },
@@ -9164,7 +9017,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 278003,
+                  "followers": 278116,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -9180,8 +9033,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1988,
-                  "tweets": 3938
+                  "media_tweets": 1995,
+                  "tweets": 3953
                  },
                  "verification": {
                   "verified": false,
@@ -9246,9 +9099,10 @@
                "user_id_str": "420730316"
               },
               "rest_id": "2037577151076045185",
+              "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
               "unmention_data": {},
               "views": {
-               "count": "7865",
+               "count": "7866",
                "state": "EnabledWithCount"
               }
              }
@@ -9256,7 +9110,7 @@
            }
           },
           "entryId": "tweet-2037577151076045185",
-          "sortIndex": "2114919132691431408"
+          "sortIndex": "2119542822762708832"
          },
          {
           "content": {
@@ -9265,7 +9119,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC+VV0vZeUQ9wKAAUBEWzGKsbkVwgABgAAAAEKAAcYbw5uGNj0mgoACAAAAaF7W/7bAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACZeBwH3I74HsKAAUBEWzGKsbkVwgABgAAAAEKAAfr0EC9M55WHQoACAAAAaG9EOJ1AAAAAAA="
              }
             },
             "element": "tweet"
@@ -9298,7 +9152,7 @@
                   "value": {
                    "image_value": {
                     "height": 419,
-                    "url": "https://pbs.twimg.com/card_img/2113455409889472512/PQTLd1M0?format=jpg&name=800x419",
+                    "url": "https://pbs.twimg.com/card_img/2118533801198424064/mOPlAD5U?format=jpg&name=800x419",
                     "width": 800
                    },
                    "type": "IMAGE"
@@ -9307,7 +9161,7 @@
                  {
                   "key": "app_star_rating",
                   "value": {
-                   "string_value": "4.82355",
+                   "string_value": "4.82345",
                    "type": "STRING"
                   }
                  },
@@ -9316,7 +9170,7 @@
                   "value": {
                    "image_value": {
                     "height": 150,
-                    "url": "https://pbs.twimg.com/card_img/2113455409889472512/PQTLd1M0?format=jpg&name=280x150",
+                    "url": "https://pbs.twimg.com/card_img/2118533801198424064/mOPlAD5U?format=jpg&name=280x150",
                     "width": 267
                    },
                    "type": "IMAGE"
@@ -9348,7 +9202,7 @@
                   "value": {
                    "image_value": {
                     "height": 320,
-                    "url": "https://pbs.twimg.com/card_img/2113455409889472512/PQTLd1M0?format=jpg&name=800x320_1",
+                    "url": "https://pbs.twimg.com/card_img/2118533801198424064/mOPlAD5U?format=jpg&name=800x320_1",
                     "width": 569
                    },
                    "type": "IMAGE"
@@ -9359,7 +9213,7 @@
                   "value": {
                    "image_value": {
                     "height": 202,
-                    "url": "https://pbs.twimg.com/card_img/2113455409889472512/PQTLd1M0?format=jpg&name=386x202",
+                    "url": "https://pbs.twimg.com/card_img/2118533801198424064/mOPlAD5U?format=jpg&name=386x202",
                     "width": 386
                    },
                    "type": "IMAGE"
@@ -9370,7 +9224,7 @@
                   "value": {
                    "image_value": {
                     "height": 675,
-                    "url": "https://pbs.twimg.com/card_img/2113455409889472512/PQTLd1M0?format=jpg&name=orig",
+                    "url": "https://pbs.twimg.com/card_img/2118533801198424064/mOPlAD5U?format=jpg&name=orig",
                     "width": 1200
                    },
                    "type": "IMAGE"
@@ -9392,7 +9246,7 @@
                   "value": {
                    "image_value": {
                     "height": 202,
-                    "url": "https://pbs.twimg.com/card_img/2113455409889472512/PQTLd1M0?format=jpg&name=386x202",
+                    "url": "https://pbs.twimg.com/card_img/2118533801198424064/mOPlAD5U?format=jpg&name=386x202",
                     "width": 386
                    },
                    "type": "IMAGE"
@@ -9403,7 +9257,7 @@
                   "value": {
                    "image_value": {
                     "height": 419,
-                    "url": "https://pbs.twimg.com/card_img/2113455409889472512/PQTLd1M0?format=jpg&name=800x419",
+                    "url": "https://pbs.twimg.com/card_img/2118533801198424064/mOPlAD5U?format=jpg&name=800x419",
                     "width": 800
                    },
                    "type": "IMAGE"
@@ -9414,7 +9268,7 @@
                   "value": {
                    "image_value": {
                     "height": 81,
-                    "url": "https://pbs.twimg.com/card_img/2113455409889472512/PQTLd1M0?format=jpg&name=144x144",
+                    "url": "https://pbs.twimg.com/card_img/2118533801198424064/mOPlAD5U?format=jpg&name=144x144",
                     "width": 144
                    },
                    "type": "IMAGE"
@@ -9423,7 +9277,7 @@
                  {
                   "key": "app_num_ratings",
                   "value": {
-                   "string_value": "157,426",
+                   "string_value": "157,544",
                    "type": "STRING"
                   }
                  },
@@ -9439,7 +9293,7 @@
                   "value": {
                    "image_value": {
                     "height": 675,
-                    "url": "https://pbs.twimg.com/card_img/2113455409889472512/PQTLd1M0?format=png&name=2048x2048_2_exp",
+                    "url": "https://pbs.twimg.com/card_img/2118533801198424064/mOPlAD5U?format=png&name=2048x2048_2_exp",
                     "width": 1200
                    },
                    "type": "IMAGE"
@@ -9450,7 +9304,7 @@
                   "value": {
                    "image_value": {
                     "height": 675,
-                    "url": "https://pbs.twimg.com/card_img/2113455409889472512/PQTLd1M0?format=jpg&name=orig",
+                    "url": "https://pbs.twimg.com/card_img/2118533801198424064/mOPlAD5U?format=jpg&name=orig",
                     "width": 1200
                    },
                    "type": "IMAGE"
@@ -9469,7 +9323,7 @@
                   "value": {
                    "image_value": {
                     "height": 314,
-                    "url": "https://pbs.twimg.com/card_img/2113455409889472512/PQTLd1M0?format=jpg&name=600x314",
+                    "url": "https://pbs.twimg.com/card_img/2118533801198424064/mOPlAD5U?format=jpg&name=600x314",
                     "width": 600
                    },
                    "type": "IMAGE"
@@ -9601,7 +9455,7 @@
                   "value": {
                    "image_value": {
                     "height": 675,
-                    "url": "https://pbs.twimg.com/card_img/2113455409889472512/PQTLd1M0?format=png&name=2048x2048_2_exp",
+                    "url": "https://pbs.twimg.com/card_img/2118533801198424064/mOPlAD5U?format=png&name=2048x2048_2_exp",
                     "width": 1200
                    },
                    "type": "IMAGE"
@@ -9612,7 +9466,7 @@
                   "value": {
                    "image_value": {
                     "height": 314,
-                    "url": "https://pbs.twimg.com/card_img/2113455409889472512/PQTLd1M0?format=jpg&name=600x314",
+                    "url": "https://pbs.twimg.com/card_img/2118533801198424064/mOPlAD5U?format=jpg&name=600x314",
                     "width": 600
                    },
                    "type": "IMAGE"
@@ -9673,7 +9527,7 @@
                   "value": {
                    "image_value": {
                     "height": 675,
-                    "url": "https://pbs.twimg.com/card_img/2113455409889472512/PQTLd1M0?format=png&name=2048x2048_2_exp",
+                    "url": "https://pbs.twimg.com/card_img/2118533801198424064/mOPlAD5U?format=png&name=2048x2048_2_exp",
                     "width": 1200
                    },
                    "type": "IMAGE"
@@ -9692,7 +9546,7 @@
                   "value": {
                    "image_value": {
                     "height": 675,
-                    "url": "https://pbs.twimg.com/card_img/2113455409889472512/PQTLd1M0?format=jpg&name=orig",
+                    "url": "https://pbs.twimg.com/card_img/2118533801198424064/mOPlAD5U?format=jpg&name=orig",
                     "width": 1200
                    },
                    "type": "IMAGE"
@@ -9778,7 +9632,7 @@
                     "translator_type": "none"
                    },
                    "relationship_counts": {
-                    "followers": 87500,
+                    "followers": 87459,
                     "following": 48
                    },
                    "relationship_perspectives": {
@@ -9876,7 +9730,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 87500,
+                  "followers": 87459,
                   "following": 48
                  },
                  "relationship_perspectives": {
@@ -9966,10 +9820,9 @@
                "user_id_str": "376585411"
               },
               "rest_id": "2029627658196373965",
-              "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
               "unmention_data": {},
               "views": {
-               "count": "16558",
+               "count": "16566",
                "state": "EnabledWithCount"
               }
              }
@@ -9977,7 +9830,7 @@
            }
           },
           "entryId": "tweet-2029627658196373965",
-          "sortIndex": "2114919132691431407"
+          "sortIndex": "2119542822762708822"
          },
          {
           "content": {
@@ -9986,7 +9839,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC+VV0vZeUQ9wKAAUBEWzGKsbkVwgABgAAAAEKAAcYbw5uGNj0mgoACAAAAaF7W/7bAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACZeBwH3I74HsKAAUBEWzGKsbkVwgABgAAAAEKAAfr0EC9M55WHQoACAAAAaG9EOJ1AAAAAAA="
              }
             },
             "element": "tweet"
@@ -10017,9 +9870,22 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3220
+                  "favorites_count": 3222
                  },
-                 "affiliates_highlighted_label": {},
+                 "affiliates_highlighted_label": {
+                  "label": {
+                   "badge": {
+                    "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                   },
+                   "description": "Google Cloud",
+                   "url": {
+                    "url": "https://twitter.com/googlecloud",
+                    "urlType": "DeepLink"
+                   },
+                   "userLabelDisplayType": "Badge",
+                   "userLabelType": "BusinessLabel"
+                  }
+                 },
                  "avatar": {
                   "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                  },
@@ -10034,7 +9900,7 @@
                  "follow_request_sent": false,
                  "has_graduated_access": true,
                  "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
+                 "is_blue_verified": true,
                  "location": {
                   "location": ""
                  },
@@ -10082,7 +9948,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 278003,
+                  "followers": 278116,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -10098,8 +9964,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1988,
-                  "tweets": 3938
+                  "media_tweets": 1995,
+                  "tweets": 3953
                  },
                  "verification": {
                   "verified": false,
@@ -10654,7 +10520,7 @@
               "rest_id": "2029255553113800932",
               "unmention_data": {},
               "views": {
-               "count": "33283",
+               "count": "33286",
                "state": "EnabledWithCount"
               }
              }
@@ -10662,7 +10528,7 @@
            }
           },
           "entryId": "tweet-2029255553113800932",
-          "sortIndex": "2114919132691431406"
+          "sortIndex": "2119542822762708812"
          },
          {
           "content": {
@@ -10671,7 +10537,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC+VV0vZeUQ9wKAAUBEWzGKsbkVwgABgAAAAEKAAcYbw5uGNj0mgoACAAAAaF7W/7bAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACZeBwH3I74HsKAAUBEWzGKsbkVwgABgAAAAEKAAfr0EC9M55WHQoACAAAAaG9EOJ1AAAAAAA="
              }
             },
             "element": "tweet"
@@ -10766,7 +10632,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 87500,
+                  "followers": 87459,
                   "following": 48
                  },
                  "relationship_perspectives": {
@@ -10811,7 +10677,7 @@
               },
               "is_translatable": false,
               "legacy": {
-               "bookmark_count": 40,
+               "bookmark_count": 39,
                "bookmarked": false,
                "conversation_id_str": "2021668222702170235",
                "created_at": "Wed Feb 11 19:30:39 +0000 2026",
@@ -10832,7 +10698,7 @@
                  }
                 ]
                },
-               "favorite_count": 497,
+               "favorite_count": 496,
                "favorited": false,
                "full_text": "Dart 3.11 is officially here! 🎯\n\nThis release slashes development friction with faster Analyzer Plugins (saving ~10s on startup!) and helps you reclaim disk space with the new dart pub cache gc command.\n\nGet the full breakdown of what’s new → https://t.co/yZqcA0TKBN",
                "id_str": "2021668222702170235",
@@ -10849,7 +10715,7 @@
               "rest_id": "2021668222702170235",
               "unmention_data": {},
               "views": {
-               "count": "35323",
+               "count": "35375",
                "state": "EnabledWithCount"
               }
              }
@@ -10857,14 +10723,14 @@
            }
           },
           "entryId": "tweet-2021668222702170235",
-          "sortIndex": "2114919132691431405"
+          "sortIndex": "2119542822762708802"
          },
          {
           "content": {
            "__typename": "TimelineTimelineCursor",
            "cursorType": "Top",
            "entryType": "TimelineTimelineCursor",
-           "value": "DAADDAABCgABHUrxMjiW8IgKAAIcDmiJi9uwewAIAAIAAAABCAADAAAAAAgABAAAAAAKAAUdWbO-8MAnEAoABh1Zs77wv9jwCwAHAAAA8EVtUEM2d0FBQWZRL2dHSk4wdkdwL0FBQUFCUWRIS1FNbVZaQjFSMEVObG5iVzFFeEhDbGRMSkhXUU9RY1J1MmZsRmNSZ1IxSVhBU1RWa0FESFVyeE1qaVc4SWdjS3ErYUNScFJ6Unh1OTZFbmwySGZIT0JKcHVYYk1Vc2RMWERoSkZvZ3RSMUhVa0tjMjBCM0hIcU4rMWlYTUE4Y3JmanVheGVnYWh5TWdlR0psbkFFSExCd3BzemFNVlljK014OUVKb0FwQjBicHZhUG1uSDhISU4xNW9GWFVMRWNkKzBqWkJjQTdCd09hSW1MMjdCNwAA"
+           "value": "DAADDAABCgABHUrxMjiW8IgKAAIcDmiJi9uwewAIAAIAAAABCAADAAAAAAgABAAAAAAKAAUdaiD3rQAnEAoABh1qIPes_9jwCwAHAAAA8EVtUEM2d0FBQWZRL2dHSk4wdkdwL0FBQUFCUWRIS1FNbVZaQjFSMEVObG5iVzFFeEhDbGRMSkhXUU9RY1J1MmZsRmNSZ1IxSVhBU1RWa0FESFVyeE1qaVc4SWdjS3ErYUNScFJ6Unh1OTZFbmwySGZIT0JKcHVYYk1Vc2RMWERoSkZvZ3RSMUhVa0tjMjBCM0hIcU4rMWlYTUE4Y3JmanVheGVnYWh5TWdlR0psbkFFSExCd3BzemFNVlljK014OUVKb0FwQjBicHZhUG1uSDhISU4xNW9GWFVMRWNkKzBqWkJjQTdCd09hSW1MMjdCNwAA"
           },
           "entryId": "cursor-top-9223372036854775807",
           "sortIndex": "9223372036854775807"
@@ -10874,7 +10740,7 @@
            "__typename": "TimelineTimelineCursor",
            "cursorType": "Bottom",
            "entryType": "TimelineTimelineCursor",
-           "value": "DAADDAABCgABHUrxMjiW8IgKAAIcDmiJi9uwewAIAAIAAAACCAADAAAAAAgABAAAAAAKAAUdWbO-8MAnEAoABh1Zs77wv9jwCwAHAAAA8EVtUEM2d0FBQWZRL2dHSk4wdkdwL0FBQUFCUWRIS1FNbVZaQjFSMEVObG5iVzFFeEhDbGRMSkhXUU9RY1J1MmZsRmNSZ1IxSVhBU1RWa0FESFVyeE1qaVc4SWdjS3ErYUNScFJ6Unh1OTZFbmwySGZIT0JKcHVYYk1Vc2RMWERoSkZvZ3RSMUhVa0tjMjBCM0hIcU4rMWlYTUE4Y3JmanVheGVnYWh5TWdlR0psbkFFSExCd3BzemFNVlljK014OUVKb0FwQjBicHZhUG1uSDhISU4xNW9GWFVMRWNkKzBqWkJjQTdCd09hSW1MMjdCNwAA"
+           "value": "DAADDAABCgABHUrxMjiW8IgKAAIcDmiJi9uwewAIAAIAAAACCAADAAAAAAgABAAAAAAKAAUdaiD3rQAnEAoABh1qIPes_9jwCwAHAAAA8EVtUEM2d0FBQWZRL2dHSk4wdkdwL0FBQUFCUWRIS1FNbVZaQjFSMEVObG5iVzFFeEhDbGRMSkhXUU9RY1J1MmZsRmNSZ1IxSVhBU1RWa0FESFVyeE1qaVc4SWdjS3ErYUNScFJ6Unh1OTZFbmwySGZIT0JKcHVYYk1Vc2RMWERoSkZvZ3RSMUhVa0tjMjBCM0hIcU4rMWlYTUE4Y3JmanVheGVnYWh5TWdlR0psbkFFSExCd3BzemFNVlljK014OUVKb0FwQjBicHZhUG1uSDhISU4xNW9GWFVMRWNkKzBqWkJjQTdCd09hSW1MMjdCNwAA"
           },
           "entryId": "cursor-bottom-0",
           "sortIndex": "0"

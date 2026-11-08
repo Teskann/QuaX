@@ -3,7 +3,7 @@
  "sourceUrl": "https://x.com/elonmusk/status/2098507671083036843",
  "operation": "TweetResultByRestId",
  "host": "x.com",
- "queryId": "a-Xpq8PjX9K6U5cmc1f05A",
+ "queryId": "U8lc5aomF5krJzZ9vJ9wxg",
  "features": {
   "creator_subscriptions_tweet_preview_api_enabled": true,
   "premium_content_api_read_enabled": false,
@@ -14,6 +14,7 @@
   "rweb_cashtags_composer_attachment_enabled": true,
   "responsive_web_jetfuel_frame": true,
   "rweb_sports_post_context_enabled": true,
+  "x_elections_post_context_enabled": true,
   "responsive_web_grok_share_attachment_enabled": true,
   "responsive_web_grok_annotations_enabled": true,
   "articles_preview_enabled": true,
@@ -27,7 +28,7 @@
   "content_disclosure_ai_generated_indicator_enabled": true,
   "responsive_web_grok_show_grok_translated_post": true,
   "responsive_web_grok_analysis_button_from_backend": true,
-  "post_ctas_fetch_enabled": false,
+  "post_ctas_fetch_enabled": true,
   "rweb_cashtags_enabled": true,
   "freedom_of_speech_not_reach_fetch_enabled": true,
   "standardized_nudges_misinfo": true,
@@ -63,8 +64,8 @@
  "headers": {
   "x-rate-limit-limit": "500",
   "content-type": "application/json",
-  "x-rate-limit-remaining": "465",
-  "x-rate-limit-reset": "1793070215"
+  "x-rate-limit-reset": "1794172356",
+  "x-rate-limit-remaining": "465"
  },
  "body": {
   "data": {
@@ -113,7 +114,7 @@
        "result": {
         "__typename": "User",
         "action_counts": {
-         "favorites_count": 255553
+         "favorites_count": 257641
         },
         "affiliates_highlighted_label": {
          "label": {
@@ -156,7 +157,7 @@
         "parody_commentary_fan_label": "None",
         "pinned_items": {
          "tweet_ids_str": [
-          "2112931457786081428"
+          "2118732082843435305"
          ]
         },
         "possibly_sensitive": false,
@@ -194,8 +195,8 @@
          "translator_type": "none"
         },
         "relationship_counts": {
-         "followers": 241534650,
-         "following": 1421
+         "followers": 241396092,
+         "following": 1420
         },
         "relationship_perspectives": {
          "blocked_by": false,
@@ -210,8 +211,8 @@
         "super_followed_by": false,
         "super_following": false,
         "tweet_counts": {
-         "media_tweets": 4748,
-         "tweets": 110991
+         "media_tweets": 4766,
+         "tweets": 111819
         },
         "verification": {
          "verified": false
@@ -268,7 +269,7 @@
      "has_birdwatch_notes": false,
      "is_translatable": false,
      "legacy": {
-      "bookmark_count": 209,
+      "bookmark_count": 208,
       "bookmarked": false,
       "conversation_id_str": "2098431955243061341",
       "created_at": "Fri Sep 11 20:23:11 +0000 2026",
@@ -300,7 +301,7 @@
         }
        ]
       },
-      "favorite_count": 14015,
+      "favorite_count": 13965,
       "favorited": false,
       "full_text": "@greg_price11 Troubling \nhttps://t.co/CH5rknAUC4",
       "id_str": "2098507671083036843",
@@ -312,15 +313,15 @@
       "possibly_sensitive": false,
       "possibly_sensitive_editable": true,
       "quote_count": 50,
-      "reply_count": 752,
-      "retweet_count": 1120,
+      "reply_count": 748,
+      "retweet_count": 1112,
       "retweeted": false,
       "user_id_str": "44196397"
      },
      "rest_id": "2098507671083036843",
      "unmention_data": {},
      "views": {
-      "count": "398458",
+      "count": "398585",
       "state": "EnabledWithCount"
      }
     }

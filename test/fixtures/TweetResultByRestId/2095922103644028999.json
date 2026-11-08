@@ -3,7 +3,7 @@
  "sourceUrl": "https://x.com/quax_tests/status/2095922103644028999",
  "operation": "TweetResultByRestId",
  "host": "x.com",
- "queryId": "a-Xpq8PjX9K6U5cmc1f05A",
+ "queryId": "U8lc5aomF5krJzZ9vJ9wxg",
  "features": {
   "creator_subscriptions_tweet_preview_api_enabled": true,
   "premium_content_api_read_enabled": false,
@@ -14,6 +14,7 @@
   "rweb_cashtags_composer_attachment_enabled": true,
   "responsive_web_jetfuel_frame": true,
   "rweb_sports_post_context_enabled": true,
+  "x_elections_post_context_enabled": true,
   "responsive_web_grok_share_attachment_enabled": true,
   "responsive_web_grok_annotations_enabled": true,
   "articles_preview_enabled": true,
@@ -27,7 +28,7 @@
   "content_disclosure_ai_generated_indicator_enabled": true,
   "responsive_web_grok_show_grok_translated_post": true,
   "responsive_web_grok_analysis_button_from_backend": true,
-  "post_ctas_fetch_enabled": false,
+  "post_ctas_fetch_enabled": true,
   "rweb_cashtags_enabled": true,
   "freedom_of_speech_not_reach_fetch_enabled": true,
   "standardized_nudges_misinfo": true,
@@ -63,8 +64,8 @@
  "headers": {
   "x-rate-limit-limit": "500",
   "content-type": "application/json",
-  "x-rate-limit-remaining": "492",
-  "x-rate-limit-reset": "1793074174"
+  "x-rate-limit-reset": "1794172356",
+  "x-rate-limit-remaining": "496"
  },
  "body": {
   "data": {
@@ -92,7 +93,7 @@
          "screen_name": "quax_tests"
         },
         "follow_request_sent": false,
-        "has_graduated_access": false,
+        "has_graduated_access": true,
         "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
         "is_blue_verified": false,
         "location": {
@@ -224,7 +225,7 @@
      "rest_id": "2095922103644028999",
      "unmention_data": {},
      "views": {
-      "count": "26",
+      "count": "29",
       "state": "EnabledWithCount"
      }
     }

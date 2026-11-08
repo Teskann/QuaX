@@ -1,0 +1,999 @@
+{
+ "scenario": "Search, Latest tab: X hides the test accounts from Latest, so this comes back empty",
+ "sourceUrl": "https://x.com/search?q=from%3Aquax_tests&src=typed_query&f=live",
+ "operation": "SearchTimeline",
+ "host": "x.com",
+ "queryId": "vLHjqbDv7TPFMBkIIO1nOA",
+ "features": {
+  "rweb_video_screen_enabled": false,
+  "rweb_cashtags_enabled": true,
+  "profile_label_improvements_pcf_label_in_post_enabled": true,
+  "responsive_web_profile_redirect_enabled": true,
+  "rweb_tipjar_consumption_enabled": false,
+  "verified_phone_label_enabled": false,
+  "creator_subscriptions_tweet_preview_api_enabled": true,
+  "responsive_web_graphql_timeline_navigation_enabled": true,
+  "premium_content_api_read_enabled": false,
+  "communities_web_enable_tweet_community_results_fetch": true,
+  "c9s_tweet_anatomy_moderator_badge_enabled": true,
+  "responsive_web_grok_analyze_button_fetch_trends_enabled": false,
+  "responsive_web_grok_analyze_post_followups_enabled": true,
+  "rweb_cashtags_composer_attachment_enabled": true,
+  "responsive_web_jetfuel_frame": true,
+  "rweb_sports_post_context_enabled": true,
+  "x_elections_post_context_enabled": true,
+  "responsive_web_grok_share_attachment_enabled": true,
+  "responsive_web_grok_annotations_enabled": true,
+  "articles_preview_enabled": true,
+  "responsive_web_edit_tweet_api_enabled": true,
+  "rweb_conversational_replies_downvote_enabled": false,
+  "graphql_is_translatable_rweb_tweet_is_translatable_enabled": true,
+  "view_counts_everywhere_api_enabled": true,
+  "longform_notetweets_consumption_enabled": true,
+  "responsive_web_twitter_article_tweet_consumption_enabled": true,
+  "content_disclosure_indicator_enabled": true,
+  "content_disclosure_ai_generated_indicator_enabled": true,
+  "responsive_web_grok_show_grok_translated_post": true,
+  "responsive_web_grok_analysis_button_from_backend": true,
+  "post_ctas_fetch_enabled": true,
+  "freedom_of_speech_not_reach_fetch_enabled": true,
+  "standardized_nudges_misinfo": true,
+  "tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled": true,
+  "longform_notetweets_rich_text_read_enabled": true,
+  "longform_notetweets_inline_media_enabled": false,
+  "responsive_web_nested_quote_preview_enabled": true,
+  "responsive_web_grok_image_annotation_enabled": true,
+  "responsive_web_grok_imagine_annotation_enabled": true,
+  "responsive_web_made_on_x_label_enabled": false,
+  "responsive_web_grok_community_note_auto_translation_is_enabled": true,
+  "responsive_web_enhance_cards_enabled": false
+ },
+ "fieldToggles": null,
+ "variables": {
+  "rawQuery": "from:quax_tests",
+  "count": 20,
+  "cursor": "DAADDAABCgABHUYdPqWXUPgKAAIdFi_IWlehJgAIAAIAAAACCAADAAAAAAgABAAAAAEKAAUdah1hqYAnEAoABh1qHWGpf7HgCwAHAAAByEVtUEM2d0FBQWZRL2dHSk4wdkdwL0FBQUFDZ2RGak5MWjFad0toMFdOWmIwMTBETEhSWTF4ZW1Xd1hjZEZqTE5sbFpoT2gwV01OckcxN0QySFJZeS9kYlhJSlVkRmpWZE9kYXhqeDBXTWJvMVZ1RnNIUll3ZkV3VzhKQWRGak5ncU5jQmVoMFdNSHE4RjVHK0hSWXdlMW5YZ1FVZEZqRFpBMWVSV2gxR0c1ZzIxcEhjSFJZMlVFUlhvWGNkRmpCN3ZwZlJqQjBXTU5uYkZ4RlRIVVlkUHFXWFVQZ2RSaHZxVTlzaDhoMUZ2a2wrMmpFYkhSWXk4YWtXb1BZZEZqWU1jSmVBUngwV015dkRWaUFTSFJZd2ZLd1hNRlFkRmpRckpwWmcreDBXTmZQZFZ2Qk5IUlkwSHE2V0lTRWRGak03akZid2RoMFdNdzE2MTdFOEhSWXlYVzlXd0FNZEZsRWFpSmJoVngwV01OczZWd0IrSFJZdnlGcFhvU1lkRmpEWmJ4ZkJJaDBXTkdZWVZpRTNIUlkwTm9xWHNBTWRGalJDU1ZlUnFSMFdORlRDbDFBUkhSWTBFTmtXTU44ZEZqTVpxeGNnNXc9PQAA",
+  "querySource": "typed_query",
+  "product": "Latest",
+  "withGrokTranslatedBio": false,
+  "withQuickPromoteEligibilityTweetFields": false
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "50",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "38",
+  "x-rate-limit-reset": "1794173301"
+ },
+ "body": {
+  "data": {
+   "search_by_raw_query": {
+    "search_timeline": {
+     "timeline": {
+      "instructions": [
+       {
+        "entries": [
+         {
+          "content": {
+           "__typename": "TimelineTimelineItem",
+           "clientEventInfo": {
+            "component": "latest_nightowl_recency",
+            "details": {
+             "timelinesDetails": {
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACjVzxypoqGxoLAAMAAAAPZnJvbTpxdWF4X3Rlc3RzCgAFJR7FGJYsxAYIAAYAAAABCgAHCHtE3g54LusKAAgAAAGhvQKi4QAAAAAA"
+             }
+            },
+            "element": "tweet"
+           },
+           "entryType": "TimelineTimelineItem",
+           "itemContent": {
+            "__typename": "TimelineTweet",
+            "itemType": "TimelineTweet",
+            "tweetDisplayType": "Tweet",
+            "tweet_results": {
+             "result": {
+              "__typename": "Tweet",
+              "cashtag_attachments": [],
+              "core": {
+               "user_results": {
+                "result": {
+                 "__typename": "User",
+                 "action_counts": {
+                  "favorites_count": 0
+                 },
+                 "affiliates_highlighted_label": {},
+                 "avatar": {
+                  "image_url": "https://pbs.twimg.com/profile_images/2095923817080295424/YjqaAMdO_normal.jpg"
+                 },
+                 "banner": {
+                  "image_url": "https://pbs.twimg.com/profile_banners/2095909295913103360/1788542164"
+                 },
+                 "core": {
+                  "created_at": "Fri Sep 04 16:19:42 +0000 2026",
+                  "name": "QuaX Tests",
+                  "screen_name": "quax_tests"
+                 },
+                 "follow_request_sent": false,
+                 "has_graduated_access": true,
+                 "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
+                 "is_blue_verified": false,
+                 "location": {
+                  "location": "India"
+                 },
+                 "media_permissions": {
+                  "can_media_tag": true
+                 },
+                 "notifications_settings": {
+                  "notifications_enabled": false
+                 },
+                 "parody_commentary_fan_label": "None",
+                 "pinned_items": {},
+                 "possibly_sensitive": false,
+                 "privacy": {
+                  "protected": false
+                 },
+                 "profile_bio": {
+                  "description": "🧪 Throwaway account · QuaX parsing fixtures 🇫🇷\n  Nothing real, every post is a test case.\n  https://t.co/XbzZfYVJIK · https://t.co/Akx2T6uckh\n  Ping @jack",
+                  "entities": {
+                   "description": {
+                    "urls": [
+                     {
+                      "display_url": "github.com/Teskann/QuaX",
+                      "expanded_url": "http://github.com/Teskann/QuaX",
+                      "indices": [
+                       92,
+                       115
+                      ],
+                      "url": "https://t.co/XbzZfYVJIK"
+                     },
+                     {
+                      "display_url": "flutter.dev",
+                      "expanded_url": "https://flutter.dev",
+                      "indices": [
+                       118,
+                       141
+                      ],
+                      "url": "https://t.co/Akx2T6uckh"
+                     }
+                    ]
+                   }
+                  }
+                 },
+                 "profile_description_language": "en",
+                 "profile_image_shape": "Circle",
+                 "profile_metadata": {
+                  "profile_interstitial_type": ""
+                 },
+                 "profile_translation": {
+                  "translator_type": "none"
+                 },
+                 "relationship_counts": {
+                  "followers": 0,
+                  "following": 0
+                 },
+                 "relationship_perspectives": {
+                  "blocked_by": false,
+                  "blocking": false,
+                  "followed_by": false,
+                  "following": false,
+                  "live_following": false,
+                  "muting": false
+                 },
+                 "rest_id": "2095909295913103360",
+                 "super_follow_eligible": false,
+                 "super_followed_by": false,
+                 "super_following": false,
+                 "tweet_counts": {
+                  "media_tweets": 17,
+                  "tweets": 45
+                 },
+                 "verification": {
+                  "verified": false
+                 },
+                 "website": {
+                  "url": ""
+                 }
+                }
+               }
+              },
+              "edit_control": {
+               "edit_tweet_ids": [
+                "2095915139694248014"
+               ],
+               "editable_until_msecs": "1788543684000",
+               "edits_remaining": "5",
+               "is_edit_eligible": false
+              },
+              "grok_analysis_button": true,
+              "grok_annotations": {},
+              "grok_translated_post_with_availability": {
+               "is_available": false
+              },
+              "is_translatable": false,
+              "legacy": {
+               "bookmark_count": 0,
+               "bookmarked": false,
+               "conversation_id_str": "2095915139694248014",
+               "created_at": "Fri Sep 04 16:41:24 +0000 2026",
+               "display_text_range": [
+                0,
+                21
+               ],
+               "entities": {},
+               "favorite_count": 0,
+               "favorited": false,
+               "full_text": "I'm starting a thread",
+               "id_str": "2095915139694248014",
+               "is_quote_status": false,
+               "lang": "en",
+               "quote_count": 0,
+               "reply_count": 1,
+               "retweet_count": 1,
+               "retweeted": false,
+               "user_id_str": "2095909295913103360"
+              },
+              "rest_id": "2095915139694248014",
+              "unmention_data": {},
+              "views": {
+               "count": "31",
+               "state": "EnabledWithCount"
+              }
+             }
+            }
+           }
+          },
+          "entryId": "tweet-2095915139694248014",
+          "sortIndex": "2119538879923991008"
+         },
+         {
+          "content": {
+           "__typename": "TimelineTimelineItem",
+           "clientEventInfo": {
+            "component": "latest_nightowl_recency",
+            "details": {
+             "timelinesDetails": {
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACjVzxypoqGxoLAAMAAAAPZnJvbTpxdWF4X3Rlc3RzCgAFJR7FGJYsxAYIAAYAAAABCgAHCHtE3g54LusKAAgAAAGhvQKi4QAAAAAA"
+             }
+            },
+            "element": "tweet"
+           },
+           "entryType": "TimelineTimelineItem",
+           "itemContent": {
+            "__typename": "TimelineTweet",
+            "itemType": "TimelineTweet",
+            "tweetDisplayType": "Tweet",
+            "tweet_results": {
+             "result": {
+              "__typename": "Tweet",
+              "cashtag_attachments": [],
+              "core": {
+               "user_results": {
+                "result": {
+                 "__typename": "User",
+                 "action_counts": {
+                  "favorites_count": 0
+                 },
+                 "affiliates_highlighted_label": {},
+                 "avatar": {
+                  "image_url": "https://pbs.twimg.com/profile_images/2095923817080295424/YjqaAMdO_normal.jpg"
+                 },
+                 "banner": {
+                  "image_url": "https://pbs.twimg.com/profile_banners/2095909295913103360/1788542164"
+                 },
+                 "core": {
+                  "created_at": "Fri Sep 04 16:19:42 +0000 2026",
+                  "name": "QuaX Tests",
+                  "screen_name": "quax_tests"
+                 },
+                 "follow_request_sent": false,
+                 "has_graduated_access": true,
+                 "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
+                 "is_blue_verified": false,
+                 "location": {
+                  "location": "India"
+                 },
+                 "media_permissions": {
+                  "can_media_tag": true
+                 },
+                 "notifications_settings": {
+                  "notifications_enabled": false
+                 },
+                 "parody_commentary_fan_label": "None",
+                 "pinned_items": {},
+                 "possibly_sensitive": false,
+                 "privacy": {
+                  "protected": false
+                 },
+                 "profile_bio": {
+                  "description": "🧪 Throwaway account · QuaX parsing fixtures 🇫🇷\n  Nothing real, every post is a test case.\n  https://t.co/XbzZfYVJIK · https://t.co/Akx2T6uckh\n  Ping @jack",
+                  "entities": {
+                   "description": {
+                    "urls": [
+                     {
+                      "display_url": "github.com/Teskann/QuaX",
+                      "expanded_url": "http://github.com/Teskann/QuaX",
+                      "indices": [
+                       92,
+                       115
+                      ],
+                      "url": "https://t.co/XbzZfYVJIK"
+                     },
+                     {
+                      "display_url": "flutter.dev",
+                      "expanded_url": "https://flutter.dev",
+                      "indices": [
+                       118,
+                       141
+                      ],
+                      "url": "https://t.co/Akx2T6uckh"
+                     }
+                    ]
+                   }
+                  }
+                 },
+                 "profile_description_language": "en",
+                 "profile_image_shape": "Circle",
+                 "profile_metadata": {
+                  "profile_interstitial_type": ""
+                 },
+                 "profile_translation": {
+                  "translator_type": "none"
+                 },
+                 "relationship_counts": {
+                  "followers": 0,
+                  "following": 0
+                 },
+                 "relationship_perspectives": {
+                  "blocked_by": false,
+                  "blocking": false,
+                  "followed_by": false,
+                  "following": false,
+                  "live_following": false,
+                  "muting": false
+                 },
+                 "rest_id": "2095909295913103360",
+                 "super_follow_eligible": false,
+                 "super_followed_by": false,
+                 "super_following": false,
+                 "tweet_counts": {
+                  "media_tweets": 17,
+                  "tweets": 45
+                 },
+                 "verification": {
+                  "verified": false
+                 },
+                 "website": {
+                  "url": ""
+                 }
+                }
+               }
+              },
+              "edit_control": {
+               "edit_tweet_ids": [
+                "2095914730011382213"
+               ],
+               "editable_until_msecs": "1788543586000",
+               "edits_remaining": "5",
+               "is_edit_eligible": true
+              },
+              "grok_analysis_button": true,
+              "grok_annotations": {},
+              "grok_translated_post_with_availability": {
+               "is_available": false
+              },
+              "is_translatable": false,
+              "legacy": {
+               "bookmark_count": 0,
+               "bookmarked": false,
+               "conversation_id_str": "2095914730011382213",
+               "created_at": "Fri Sep 04 16:39:46 +0000 2026",
+               "display_text_range": [
+                0,
+                34
+               ],
+               "entities": {},
+               "favorite_count": 0,
+               "favorited": false,
+               "full_text": "This is a tweet\n\non several\n\nlines",
+               "id_str": "2095914730011382213",
+               "is_quote_status": false,
+               "lang": "en",
+               "quote_count": 0,
+               "reply_count": 0,
+               "retweet_count": 1,
+               "retweeted": false,
+               "user_id_str": "2095909295913103360"
+              },
+              "rest_id": "2095914730011382213",
+              "unmention_data": {},
+              "views": {
+               "count": "57",
+               "state": "EnabledWithCount"
+              }
+             }
+            }
+           }
+          },
+          "entryId": "tweet-2095914730011382213",
+          "sortIndex": "2119538879923990998"
+         },
+         {
+          "content": {
+           "__typename": "TimelineTimelineItem",
+           "clientEventInfo": {
+            "component": "latest_nightowl_recency",
+            "details": {
+             "timelinesDetails": {
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACjVzxypoqGxoLAAMAAAAPZnJvbTpxdWF4X3Rlc3RzCgAFJR7FGJYsxAYIAAYAAAABCgAHCHtE3g54LusKAAgAAAGhvQKi4QAAAAAA"
+             }
+            },
+            "element": "tweet"
+           },
+           "entryType": "TimelineTimelineItem",
+           "itemContent": {
+            "__typename": "TimelineTweet",
+            "itemType": "TimelineTweet",
+            "tweetDisplayType": "Tweet",
+            "tweet_results": {
+             "result": {
+              "__typename": "Tweet",
+              "cashtag_attachments": [],
+              "core": {
+               "user_results": {
+                "result": {
+                 "__typename": "User",
+                 "action_counts": {
+                  "favorites_count": 0
+                 },
+                 "affiliates_highlighted_label": {},
+                 "avatar": {
+                  "image_url": "https://pbs.twimg.com/profile_images/2095923817080295424/YjqaAMdO_normal.jpg"
+                 },
+                 "banner": {
+                  "image_url": "https://pbs.twimg.com/profile_banners/2095909295913103360/1788542164"
+                 },
+                 "core": {
+                  "created_at": "Fri Sep 04 16:19:42 +0000 2026",
+                  "name": "QuaX Tests",
+                  "screen_name": "quax_tests"
+                 },
+                 "follow_request_sent": false,
+                 "has_graduated_access": true,
+                 "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
+                 "is_blue_verified": false,
+                 "location": {
+                  "location": "India"
+                 },
+                 "media_permissions": {
+                  "can_media_tag": true
+                 },
+                 "notifications_settings": {
+                  "notifications_enabled": false
+                 },
+                 "parody_commentary_fan_label": "None",
+                 "pinned_items": {},
+                 "possibly_sensitive": false,
+                 "privacy": {
+                  "protected": false
+                 },
+                 "profile_bio": {
+                  "description": "🧪 Throwaway account · QuaX parsing fixtures 🇫🇷\n  Nothing real, every post is a test case.\n  https://t.co/XbzZfYVJIK · https://t.co/Akx2T6uckh\n  Ping @jack",
+                  "entities": {
+                   "description": {
+                    "urls": [
+                     {
+                      "display_url": "github.com/Teskann/QuaX",
+                      "expanded_url": "http://github.com/Teskann/QuaX",
+                      "indices": [
+                       92,
+                       115
+                      ],
+                      "url": "https://t.co/XbzZfYVJIK"
+                     },
+                     {
+                      "display_url": "flutter.dev",
+                      "expanded_url": "https://flutter.dev",
+                      "indices": [
+                       118,
+                       141
+                      ],
+                      "url": "https://t.co/Akx2T6uckh"
+                     }
+                    ]
+                   }
+                  }
+                 },
+                 "profile_description_language": "en",
+                 "profile_image_shape": "Circle",
+                 "profile_metadata": {
+                  "profile_interstitial_type": ""
+                 },
+                 "profile_translation": {
+                  "translator_type": "none"
+                 },
+                 "relationship_counts": {
+                  "followers": 0,
+                  "following": 0
+                 },
+                 "relationship_perspectives": {
+                  "blocked_by": false,
+                  "blocking": false,
+                  "followed_by": false,
+                  "following": false,
+                  "live_following": false,
+                  "muting": false
+                 },
+                 "rest_id": "2095909295913103360",
+                 "super_follow_eligible": false,
+                 "super_followed_by": false,
+                 "super_following": false,
+                 "tweet_counts": {
+                  "media_tweets": 17,
+                  "tweets": 45
+                 },
+                 "verification": {
+                  "verified": false
+                 },
+                 "website": {
+                  "url": ""
+                 }
+                }
+               }
+              },
+              "edit_control": {
+               "edit_tweet_ids": [
+                "2095914582808117532"
+               ],
+               "editable_until_msecs": "1788543551000",
+               "edits_remaining": "5",
+               "is_edit_eligible": true
+              },
+              "grok_analysis_button": true,
+              "grok_annotations": {},
+              "grok_translated_post_with_availability": {
+               "is_available": false
+              },
+              "is_translatable": false,
+              "legacy": {
+               "bookmark_count": 0,
+               "bookmarked": false,
+               "conversation_id_str": "2095914582808117532",
+               "created_at": "Fri Sep 04 16:39:11 +0000 2026",
+               "display_text_range": [
+                0,
+                66
+               ],
+               "entities": {
+                "urls": [
+                 {
+                  "display_url": "github.com",
+                  "expanded_url": "https://github.com/",
+                  "indices": [
+                   28,
+                   51
+                  ],
+                  "url": "https://t.co/3r47gTnokY"
+                 }
+                ]
+               },
+               "favorite_count": 0,
+               "favorited": false,
+               "full_text": "This is a tweet with a link https://t.co/3r47gTnokY in its content",
+               "id_str": "2095914582808117532",
+               "is_quote_status": false,
+               "lang": "en",
+               "possibly_sensitive": false,
+               "possibly_sensitive_editable": true,
+               "quote_count": 0,
+               "reply_count": 0,
+               "retweet_count": 1,
+               "retweeted": false,
+               "user_id_str": "2095909295913103360"
+              },
+              "rest_id": "2095914582808117532",
+              "unmention_data": {},
+              "views": {
+               "count": "78",
+               "state": "EnabledWithCount"
+              }
+             }
+            }
+           }
+          },
+          "entryId": "tweet-2095914582808117532",
+          "sortIndex": "2119538879923990988"
+         },
+         {
+          "content": {
+           "__typename": "TimelineTimelineItem",
+           "clientEventInfo": {
+            "component": "latest_nightowl_recency",
+            "details": {
+             "timelinesDetails": {
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACjVzxypoqGxoLAAMAAAAPZnJvbTpxdWF4X3Rlc3RzCgAFJR7FGJYsxAYIAAYAAAABCgAHCHtE3g54LusKAAgAAAGhvQKi4QAAAAAA"
+             }
+            },
+            "element": "tweet"
+           },
+           "entryType": "TimelineTimelineItem",
+           "itemContent": {
+            "__typename": "TimelineTweet",
+            "itemType": "TimelineTweet",
+            "tweetDisplayType": "Tweet",
+            "tweet_results": {
+             "result": {
+              "__typename": "Tweet",
+              "cashtag_attachments": [],
+              "core": {
+               "user_results": {
+                "result": {
+                 "__typename": "User",
+                 "action_counts": {
+                  "favorites_count": 0
+                 },
+                 "affiliates_highlighted_label": {},
+                 "avatar": {
+                  "image_url": "https://pbs.twimg.com/profile_images/2095923817080295424/YjqaAMdO_normal.jpg"
+                 },
+                 "banner": {
+                  "image_url": "https://pbs.twimg.com/profile_banners/2095909295913103360/1788542164"
+                 },
+                 "core": {
+                  "created_at": "Fri Sep 04 16:19:42 +0000 2026",
+                  "name": "QuaX Tests",
+                  "screen_name": "quax_tests"
+                 },
+                 "follow_request_sent": false,
+                 "has_graduated_access": true,
+                 "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
+                 "is_blue_verified": false,
+                 "location": {
+                  "location": "India"
+                 },
+                 "media_permissions": {
+                  "can_media_tag": true
+                 },
+                 "notifications_settings": {
+                  "notifications_enabled": false
+                 },
+                 "parody_commentary_fan_label": "None",
+                 "pinned_items": {},
+                 "possibly_sensitive": false,
+                 "privacy": {
+                  "protected": false
+                 },
+                 "profile_bio": {
+                  "description": "🧪 Throwaway account · QuaX parsing fixtures 🇫🇷\n  Nothing real, every post is a test case.\n  https://t.co/XbzZfYVJIK · https://t.co/Akx2T6uckh\n  Ping @jack",
+                  "entities": {
+                   "description": {
+                    "urls": [
+                     {
+                      "display_url": "github.com/Teskann/QuaX",
+                      "expanded_url": "http://github.com/Teskann/QuaX",
+                      "indices": [
+                       92,
+                       115
+                      ],
+                      "url": "https://t.co/XbzZfYVJIK"
+                     },
+                     {
+                      "display_url": "flutter.dev",
+                      "expanded_url": "https://flutter.dev",
+                      "indices": [
+                       118,
+                       141
+                      ],
+                      "url": "https://t.co/Akx2T6uckh"
+                     }
+                    ]
+                   }
+                  }
+                 },
+                 "profile_description_language": "en",
+                 "profile_image_shape": "Circle",
+                 "profile_metadata": {
+                  "profile_interstitial_type": ""
+                 },
+                 "profile_translation": {
+                  "translator_type": "none"
+                 },
+                 "relationship_counts": {
+                  "followers": 0,
+                  "following": 0
+                 },
+                 "relationship_perspectives": {
+                  "blocked_by": false,
+                  "blocking": false,
+                  "followed_by": false,
+                  "following": false,
+                  "live_following": false,
+                  "muting": false
+                 },
+                 "rest_id": "2095909295913103360",
+                 "super_follow_eligible": false,
+                 "super_followed_by": false,
+                 "super_following": false,
+                 "tweet_counts": {
+                  "media_tweets": 17,
+                  "tweets": 45
+                 },
+                 "verification": {
+                  "verified": false
+                 },
+                 "website": {
+                  "url": ""
+                 }
+                }
+               }
+              },
+              "edit_control": {
+               "edit_tweet_ids": [
+                "2095914386225344607"
+               ],
+               "editable_until_msecs": "1788543504000",
+               "edits_remaining": "5",
+               "is_edit_eligible": true
+              },
+              "grok_analysis_button": true,
+              "grok_annotations": {},
+              "grok_translated_post_with_availability": {
+               "is_available": false
+              },
+              "is_translatable": false,
+              "legacy": {
+               "bookmark_count": 0,
+               "bookmarked": false,
+               "conversation_id_str": "2095914386225344607",
+               "created_at": "Fri Sep 04 16:38:24 +0000 2026",
+               "display_text_range": [
+                0,
+                44
+               ],
+               "entities": {
+                "user_mentions": [
+                 {
+                  "id_str": "2095914123905118211",
+                  "indices": [
+                   31,
+                   44
+                  ],
+                  "name": "Moluyts",
+                  "screen_name": "quax_tests_2"
+                 }
+                ]
+               },
+               "favorite_count": 0,
+               "favorited": false,
+               "full_text": "This is a tweet with a mention @quax_tests_2",
+               "id_str": "2095914386225344607",
+               "is_quote_status": false,
+               "lang": "en",
+               "quote_count": 0,
+               "reply_count": 0,
+               "retweet_count": 1,
+               "retweeted": false,
+               "user_id_str": "2095909295913103360"
+              },
+              "rest_id": "2095914386225344607",
+              "unmention_data": {},
+              "views": {
+               "count": "78",
+               "state": "EnabledWithCount"
+              }
+             }
+            }
+           }
+          },
+          "entryId": "tweet-2095914386225344607",
+          "sortIndex": "2119538879923990978"
+         },
+         {
+          "content": {
+           "__typename": "TimelineTimelineItem",
+           "clientEventInfo": {
+            "component": "latest_nightowl_recency",
+            "details": {
+             "timelinesDetails": {
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACjVzxypoqGxoLAAMAAAAPZnJvbTpxdWF4X3Rlc3RzCgAFJR7FGJYsxAYIAAYAAAABCgAHCHtE3g54LusKAAgAAAGhvQKi4QAAAAAA"
+             }
+            },
+            "element": "tweet"
+           },
+           "entryType": "TimelineTimelineItem",
+           "itemContent": {
+            "__typename": "TimelineTweet",
+            "itemType": "TimelineTweet",
+            "tweetDisplayType": "Tweet",
+            "tweet_results": {
+             "result": {
+              "__typename": "Tweet",
+              "cashtag_attachments": [],
+              "core": {
+               "user_results": {
+                "result": {
+                 "__typename": "User",
+                 "action_counts": {
+                  "favorites_count": 0
+                 },
+                 "affiliates_highlighted_label": {},
+                 "avatar": {
+                  "image_url": "https://pbs.twimg.com/profile_images/2095923817080295424/YjqaAMdO_normal.jpg"
+                 },
+                 "banner": {
+                  "image_url": "https://pbs.twimg.com/profile_banners/2095909295913103360/1788542164"
+                 },
+                 "core": {
+                  "created_at": "Fri Sep 04 16:19:42 +0000 2026",
+                  "name": "QuaX Tests",
+                  "screen_name": "quax_tests"
+                 },
+                 "follow_request_sent": false,
+                 "has_graduated_access": true,
+                 "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
+                 "is_blue_verified": false,
+                 "location": {
+                  "location": "India"
+                 },
+                 "media_permissions": {
+                  "can_media_tag": true
+                 },
+                 "notifications_settings": {
+                  "notifications_enabled": false
+                 },
+                 "parody_commentary_fan_label": "None",
+                 "pinned_items": {},
+                 "possibly_sensitive": false,
+                 "privacy": {
+                  "protected": false
+                 },
+                 "profile_bio": {
+                  "description": "🧪 Throwaway account · QuaX parsing fixtures 🇫🇷\n  Nothing real, every post is a test case.\n  https://t.co/XbzZfYVJIK · https://t.co/Akx2T6uckh\n  Ping @jack",
+                  "entities": {
+                   "description": {
+                    "urls": [
+                     {
+                      "display_url": "github.com/Teskann/QuaX",
+                      "expanded_url": "http://github.com/Teskann/QuaX",
+                      "indices": [
+                       92,
+                       115
+                      ],
+                      "url": "https://t.co/XbzZfYVJIK"
+                     },
+                     {
+                      "display_url": "flutter.dev",
+                      "expanded_url": "https://flutter.dev",
+                      "indices": [
+                       118,
+                       141
+                      ],
+                      "url": "https://t.co/Akx2T6uckh"
+                     }
+                    ]
+                   }
+                  }
+                 },
+                 "profile_description_language": "en",
+                 "profile_image_shape": "Circle",
+                 "profile_metadata": {
+                  "profile_interstitial_type": ""
+                 },
+                 "profile_translation": {
+                  "translator_type": "none"
+                 },
+                 "relationship_counts": {
+                  "followers": 0,
+                  "following": 0
+                 },
+                 "relationship_perspectives": {
+                  "blocked_by": false,
+                  "blocking": false,
+                  "followed_by": false,
+                  "following": false,
+                  "live_following": false,
+                  "muting": false
+                 },
+                 "rest_id": "2095909295913103360",
+                 "super_follow_eligible": false,
+                 "super_followed_by": false,
+                 "super_following": false,
+                 "tweet_counts": {
+                  "media_tweets": 17,
+                  "tweets": 45
+                 },
+                 "verification": {
+                  "verified": false
+                 },
+                 "website": {
+                  "url": ""
+                 }
+                }
+               }
+              },
+              "edit_control": {
+               "edit_tweet_ids": [
+                "2095912922601975848"
+               ],
+               "editable_until_msecs": "1788543155000",
+               "edits_remaining": "5",
+               "is_edit_eligible": true
+              },
+              "grok_analysis_button": true,
+              "grok_annotations": {},
+              "grok_translated_post_with_availability": {
+               "is_available": false
+              },
+              "is_translatable": false,
+              "legacy": {
+               "bookmark_count": 0,
+               "bookmarked": false,
+               "conversation_id_str": "2095912922601975848",
+               "created_at": "Fri Sep 04 16:32:35 +0000 2026",
+               "display_text_range": [
+                0,
+                22
+               ],
+               "entities": {},
+               "favorite_count": 0,
+               "favorited": false,
+               "full_text": "This is a simple tweet",
+               "id_str": "2095912922601975848",
+               "is_quote_status": false,
+               "lang": "en",
+               "quote_count": 1,
+               "reply_count": 0,
+               "retweet_count": 1,
+               "retweeted": false,
+               "user_id_str": "2095909295913103360"
+              },
+              "rest_id": "2095912922601975848",
+              "unmention_data": {},
+              "views": {
+               "count": "135",
+               "state": "EnabledWithCount"
+              }
+             }
+            }
+           }
+          },
+          "entryId": "tweet-2095912922601975848",
+          "sortIndex": "2119538879923990968"
+         }
+        ],
+        "type": "TimelineAddEntries"
+       },
+       {
+        "entry": {
+         "content": {
+          "__typename": "TimelineTimelineCursor",
+          "cursorType": "Top",
+          "entryType": "TimelineTimelineCursor",
+          "value": "DAADDAABCgABHUYdPqWXUPgKAAIdFi2yz9dwKAAIAAIAAAABCAADAAAAAAgABAAAAAIKAAUdah1hqYAnEAoABh1qHWGpf4rQCwAHAAAB_EVtUEM2d0FBQWZRL2dHSk4wdkdwL0FBQUFDMGRGak5MWjFad0toMFdOWmIwMTBETEhSWTF4ZW1Xd1hjZEZqTE5sbFpoT2gwV01OckcxN0QySFJZdkI1YVhzRjhkRmpMOTF0Y2dsUjBXTlYwNTFyR1BIUll4dWpWVzRXd2RGakI4VEJid2tCMFdMelZiMXNFY0hSWXpZS2pYQVhvZEZqQjZ2QmVSdmgwV01IdFoxNEVGSFJZdzJRTlhrVm9kUmh1WU50YVIzQjBXTmxCRVY2RjNIUll0c3MvWGNDZ2RGakI3dnBmUmpCMFdNTm5iRnhGVEhVWWRQcVdYVVBnZFJodnFVOXNoOGgxRnZrbCsyakViSFJZeThha1dvUFlkRmpZTWNKZUFSeDBXTXl2RFZpQVNIUll3Zkt3WE1GUWRGalFySnBaZyt4MFdOZlBkVnZCTkhSWTBIcTZXSVNFZEZqTTdqRmJ3ZGgwV013MTYxN0U4SFJZeVhXOVd3QU1kRmxFYWlKYmhWeDBXTU5zNlZ3QitIUll2eUZwWG9TWWRGakRaYnhmQkloMFdMN2NFMXNCT0hSWTBaaGhXSVRjZEZqUTJpcGV3QXgwV0wxZWgxbEhGSFJZMFFrbFhrYWtkRmpSVXdwZFFFUjBXTkJEWkZqRGZIUll6R2FzWElPYz0AAA"
+         },
+         "entryId": "cursor-top-9223372036854775807",
+         "sortIndex": "9223372036854775807"
+        },
+        "entry_id_to_replace": "cursor-top-9223372036854775807",
+        "type": "TimelineReplaceEntry"
+       },
+       {
+        "entry": {
+         "content": {
+          "__typename": "TimelineTimelineCursor",
+          "cursorType": "Bottom",
+          "entryType": "TimelineTimelineCursor",
+          "value": "DAADDAABCgABHUYdPqWXUPgKAAIdFi2yz9dwKAAIAAIAAAACCAADAAAAAAgABAAAAAIKAAUdah1hqYAnEAoABh1qHWGpf4rQCwAHAAAB_EVtUEM2d0FBQWZRL2dHSk4wdkdwL0FBQUFDMGRGak5MWjFad0toMFdOWmIwMTBETEhSWTF4ZW1Xd1hjZEZqTE5sbFpoT2gwV01OckcxN0QySFJZdkI1YVhzRjhkRmpMOTF0Y2dsUjBXTlYwNTFyR1BIUll4dWpWVzRXd2RGakI4VEJid2tCMFdMelZiMXNFY0hSWXpZS2pYQVhvZEZqQjZ2QmVSdmgwV01IdFoxNEVGSFJZdzJRTlhrVm9kUmh1WU50YVIzQjBXTmxCRVY2RjNIUll0c3MvWGNDZ2RGakI3dnBmUmpCMFdNTm5iRnhGVEhVWWRQcVdYVVBnZFJodnFVOXNoOGgxRnZrbCsyakViSFJZeThha1dvUFlkRmpZTWNKZUFSeDBXTXl2RFZpQVNIUll3Zkt3WE1GUWRGalFySnBaZyt4MFdOZlBkVnZCTkhSWTBIcTZXSVNFZEZqTTdqRmJ3ZGgwV013MTYxN0U4SFJZeVhXOVd3QU1kRmxFYWlKYmhWeDBXTU5zNlZ3QitIUll2eUZwWG9TWWRGakRaYnhmQkloMFdMN2NFMXNCT0hSWTBaaGhXSVRjZEZqUTJpcGV3QXgwV0wxZWgxbEhGSFJZMFFrbFhrYWtkRmpSVXdwZFFFUjBXTkJEWkZqRGZIUll6R2FzWElPYz0AAA"
+         },
+         "entryId": "cursor-bottom-0",
+         "sortIndex": "0"
+        },
+        "entry_id_to_replace": "cursor-bottom-0",
+        "type": "TimelineReplaceEntry"
+       }
+      ]
+     }
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,39 @@
+{
+ "scenario": "Posts sharing X Spaces, live, ended with or without a recording, and scheduled, each Space loaded with AudioSpaceById",
+ "sourceUrl": "https://x.com/search?q=x.com%2Fi%2Fspaces&src=typed_query",
+ "unstable": true,
+ "operation": "FollowHostButtonQuery",
+ "host": "x.com",
+ "queryId": "bpY370mwoHjimSkkcTSk4A",
+ "features": null,
+ "fieldToggles": null,
+ "variables": {
+  "restId": "1987623822909165568"
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "500",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "496",
+  "x-rate-limit-reset": "1794174392"
+ },
+ "body": {
+  "data": {
+   "user": {
+    "id": "VXNlclJlc3VsdHM6MTk4NzYyMzgyMjkwOTE2NTU2OA==",
+    "result": {
+     "__typename": "User",
+     "core": {
+      "name": "Ms. BANKE (H.R.H) 🇨🇦 ☎️",
+      "screen_name": "Bankemaestro"
+     },
+     "id": "VXNlcjoxOTg3NjIzODIyOTA5MTY1NTY4",
+     "relationship_perspectives": {
+      "following": false
+     },
+     "rest_id": "1987623822909165568"
+    }
+   }
+  }
+ }
+}

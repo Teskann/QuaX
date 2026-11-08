@@ -4,7 +4,7 @@
  "unstable": true,
  "operation": "SearchTimeline",
  "host": "x.com",
- "queryId": "f7SuGIm11eLbQs7c0K9X9w",
+ "queryId": "vLHjqbDv7TPFMBkIIO1nOA",
  "features": {
   "rweb_video_screen_enabled": false,
   "rweb_cashtags_enabled": true,
@@ -22,6 +22,7 @@
   "rweb_cashtags_composer_attachment_enabled": true,
   "responsive_web_jetfuel_frame": true,
   "rweb_sports_post_context_enabled": true,
+  "x_elections_post_context_enabled": true,
   "responsive_web_grok_share_attachment_enabled": true,
   "responsive_web_grok_annotations_enabled": true,
   "articles_preview_enabled": true,
@@ -35,7 +36,7 @@
   "content_disclosure_ai_generated_indicator_enabled": true,
   "responsive_web_grok_show_grok_translated_post": true,
   "responsive_web_grok_analysis_button_from_backend": true,
-  "post_ctas_fetch_enabled": false,
+  "post_ctas_fetch_enabled": true,
   "freedom_of_speech_not_reach_fetch_enabled": true,
   "standardized_nudges_misinfo": true,
   "tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled": true,
@@ -52,7 +53,7 @@
  "variables": {
   "rawQuery": "from:FlutterDev since:2025-01-01 until:2025-07-01",
   "count": 20,
-  "cursor": "DAADDAABCgABGuyYV6RXUAkKAAIa1Wu5cBdh-wAIAAIAAAACCAADAAAAAAgABAAAAAAKAAUdWbKkM0AnEAoABh1ZsqQzP9jwCwAHAAAA8EVtUEM2d0FBQWZRL2dHSk4wdkdwL0FBQUFCUWE0a1RDTEJleDNocmlSTUU2VndEQkd0dnBhQ1ZXNFZZYTI4NW1zSmVCenhyazdJaXZsOEdZR3V0QkJRV1dBTEVhNTQ2ektaWXdqaHJWYTdsd0YySDdHdU8rYVh3WFFXd2EycjFRYVJZUWNocmVtQTJiMTNHUEd1T0hlbmZYa0l3YTVNbFB1SmF3TWhybUJJMC9sM0ZmR3V5WVY2UlhVQWthNjNDSUt4ZGhNUnJlWVRNNkYyQWRHdHFMT0RoV1VYc2EyK2xua0pkUWxSclpWam9DMXBBTQAA",
+  "cursor": "DAADDAABCgABGuyYV6RXUAkKAAIa1Wu5cBdh-wAIAAIAAAACCAADAAAAAAgABAAAAAAKAAUdaiC80IAnEAoABh1qILzQf9jwCwAHAAAA8EVtUEM2d0FBQWZRL2dHSk4wdkdwL0FBQUFCUWE0a1RDTEJleDNocmlSTUU2VndEQkd0dnBhQ1ZXNFZZYTI4NW1zSmVCenhyazdJaXZsOEdZR3V0QkJRV1dBTEVhNTQ2ektaWXdqaHJWYTdsd0YySDdHdU8rYVh3WFFXd2EycjFRYVJZUWNocmVtQTJiMTNHUEd1T0hlbmZYa0l3YTVNbFB1SmF3TWhybUJJMC9sM0ZmR3V5WVY2UlhVQWthNjNDSUt4ZGhNUnJlWVRNNkYyQWRHdHFMT0RoV1VYc2EyK2xua0pkUWxSclpWam9DMXBBTQAA",
   "querySource": "typed_query",
   "product": "Latest",
   "withGrokTranslatedBio": false,
@@ -62,8 +63,8 @@
  "headers": {
   "x-rate-limit-limit": "50",
   "content-type": "application/json",
-  "x-rate-limit-remaining": "3",
-  "x-rate-limit-reset": "1793070934"
+  "x-rate-limit-remaining": "48",
+  "x-rate-limit-reset": "1794174202"
  },
  "body": {
   "data": {
@@ -80,7 +81,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC0H6+D8DWXcYKAAUfhiHCm1USqQgABgAAAAEKAAe7Van5r8v2/QoACAAAAaF7V5zBAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACBQr1CYWp7WgKAAUfhiHCm1USqQgABgAAAAEKAAdgqeAZb/2t8woACAAAAaG9EAD2AAAAAAA="
              }
             },
             "element": "tweet"
@@ -99,9 +100,22 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3220
+                  "favorites_count": 3222
                  },
-                 "affiliates_highlighted_label": {},
+                 "affiliates_highlighted_label": {
+                  "label": {
+                   "badge": {
+                    "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                   },
+                   "description": "Google Cloud",
+                   "url": {
+                    "url": "https://twitter.com/googlecloud",
+                    "urlType": "DeepLink"
+                   },
+                   "userLabelDisplayType": "Badge",
+                   "userLabelType": "BusinessLabel"
+                  }
+                 },
                  "avatar": {
                   "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                  },
@@ -116,7 +130,7 @@
                  "follow_request_sent": false,
                  "has_graduated_access": true,
                  "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
+                 "is_blue_verified": true,
                  "location": {
                   "location": ""
                  },
@@ -164,7 +178,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 278003,
+                  "followers": 278114,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -180,8 +194,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1988,
-                  "tweets": 3938
+                  "media_tweets": 1995,
+                  "tweets": 3953
                  },
                  "verification": {
                   "verified": false,
@@ -244,7 +258,7 @@
            }
           },
           "entryId": "tweet-1933222785561530504",
-          "sortIndex": "2114917918331361520"
+          "sortIndex": "2119542569955219696"
          },
          {
           "content": {
@@ -253,7 +267,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC0H6+D8DWXcYKAAUfhiHCm1USqQgABgAAAAEKAAe7Van5r8v2/QoACAAAAaF7V5zBAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACBQr1CYWp7WgKAAUfhiHCm1USqQgABgAAAAEKAAdgqeAZb/2t8woACAAAAaG9EAD2AAAAAAA="
              }
             },
             "element": "tweet"
@@ -272,9 +286,22 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3220
+                  "favorites_count": 3222
                  },
-                 "affiliates_highlighted_label": {},
+                 "affiliates_highlighted_label": {
+                  "label": {
+                   "badge": {
+                    "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                   },
+                   "description": "Google Cloud",
+                   "url": {
+                    "url": "https://twitter.com/googlecloud",
+                    "urlType": "DeepLink"
+                   },
+                   "userLabelDisplayType": "Badge",
+                   "userLabelType": "BusinessLabel"
+                  }
+                 },
                  "avatar": {
                   "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                  },
@@ -289,7 +316,7 @@
                  "follow_request_sent": false,
                  "has_graduated_access": true,
                  "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
+                 "is_blue_verified": true,
                  "location": {
                   "location": ""
                  },
@@ -337,7 +364,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 278003,
+                  "followers": 278114,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -353,8 +380,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1988,
-                  "tweets": 3938
+                  "media_tweets": 1995,
+                  "tweets": 3953
                  },
                  "verification": {
                   "verified": false,
@@ -417,7 +444,7 @@
            }
           },
           "entryId": "tweet-1933222783229592007",
-          "sortIndex": "2114917918331361519"
+          "sortIndex": "2119542569955219686"
          },
          {
           "content": {
@@ -426,7 +453,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC0H6+D8DWXcYKAAUfhiHCm1USqQgABgAAAAEKAAe7Van5r8v2/QoACAAAAaF7V5zBAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACBQr1CYWp7WgKAAUfhiHCm1USqQgABgAAAAEKAAdgqeAZb/2t8woACAAAAaG9EAD2AAAAAAA="
              }
             },
             "element": "tweet"
@@ -445,9 +472,22 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3220
+                  "favorites_count": 3222
                  },
-                 "affiliates_highlighted_label": {},
+                 "affiliates_highlighted_label": {
+                  "label": {
+                   "badge": {
+                    "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                   },
+                   "description": "Google Cloud",
+                   "url": {
+                    "url": "https://twitter.com/googlecloud",
+                    "urlType": "DeepLink"
+                   },
+                   "userLabelDisplayType": "Badge",
+                   "userLabelType": "BusinessLabel"
+                  }
+                 },
                  "avatar": {
                   "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                  },
@@ -462,7 +502,7 @@
                  "follow_request_sent": false,
                  "has_graduated_access": true,
                  "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
+                 "is_blue_verified": true,
                  "location": {
                   "location": ""
                  },
@@ -510,7 +550,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 278003,
+                  "followers": 278114,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -526,8 +566,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1988,
-                  "tweets": 3938
+                  "media_tweets": 1995,
+                  "tweets": 3953
                  },
                  "verification": {
                   "verified": false,
@@ -590,7 +630,7 @@
            }
           },
           "entryId": "tweet-1933222781048537515",
-          "sortIndex": "2114917918331361518"
+          "sortIndex": "2119542569955219676"
          },
          {
           "content": {
@@ -599,7 +639,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC0H6+D8DWXcYKAAUfhiHCm1USqQgABgAAAAEKAAe7Van5r8v2/QoACAAAAaF7V5zBAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACBQr1CYWp7WgKAAUfhiHCm1USqQgABgAAAAEKAAdgqeAZb/2t8woACAAAAaG9EAD2AAAAAAA="
              }
             },
             "element": "tweet"
@@ -618,9 +658,22 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3220
+                  "favorites_count": 3222
                  },
-                 "affiliates_highlighted_label": {},
+                 "affiliates_highlighted_label": {
+                  "label": {
+                   "badge": {
+                    "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                   },
+                   "description": "Google Cloud",
+                   "url": {
+                    "url": "https://twitter.com/googlecloud",
+                    "urlType": "DeepLink"
+                   },
+                   "userLabelDisplayType": "Badge",
+                   "userLabelType": "BusinessLabel"
+                  }
+                 },
                  "avatar": {
                   "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                  },
@@ -635,7 +688,7 @@
                  "follow_request_sent": false,
                  "has_graduated_access": true,
                  "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
+                 "is_blue_verified": true,
                  "location": {
                   "location": ""
                  },
@@ -683,7 +736,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 278003,
+                  "followers": 278114,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -699,8 +752,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1988,
-                  "tweets": 3938
+                  "media_tweets": 1995,
+                  "tweets": 3953
                  },
                  "verification": {
                   "verified": false,
@@ -763,7 +816,7 @@
            }
           },
           "entryId": "tweet-1933222779060461656",
-          "sortIndex": "2114917918331361517"
+          "sortIndex": "2119542569955219666"
          },
          {
           "content": {
@@ -772,7 +825,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC0H6+D8DWXcYKAAUfhiHCm1USqQgABgAAAAEKAAe7Van5r8v2/QoACAAAAaF7V5zBAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACBQr1CYWp7WgKAAUfhiHCm1USqQgABgAAAAEKAAdgqeAZb/2t8woACAAAAaG9EAD2AAAAAAA="
              }
             },
             "element": "tweet"
@@ -791,9 +844,22 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3220
+                  "favorites_count": 3222
                  },
-                 "affiliates_highlighted_label": {},
+                 "affiliates_highlighted_label": {
+                  "label": {
+                   "badge": {
+                    "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                   },
+                   "description": "Google Cloud",
+                   "url": {
+                    "url": "https://twitter.com/googlecloud",
+                    "urlType": "DeepLink"
+                   },
+                   "userLabelDisplayType": "Badge",
+                   "userLabelType": "BusinessLabel"
+                  }
+                 },
                  "avatar": {
                   "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                  },
@@ -808,7 +874,7 @@
                  "follow_request_sent": false,
                  "has_graduated_access": true,
                  "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
+                 "is_blue_verified": true,
                  "location": {
                   "location": ""
                  },
@@ -856,7 +922,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 278003,
+                  "followers": 278114,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -872,8 +938,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1988,
-                  "tweets": 3938
+                  "media_tweets": 1995,
+                  "tweets": 3953
                  },
                  "verification": {
                   "verified": false,
@@ -936,7 +1002,7 @@
            }
           },
           "entryId": "tweet-1933222776640356474",
-          "sortIndex": "2114917918331361516"
+          "sortIndex": "2119542569955219656"
          },
          {
           "content": {
@@ -945,7 +1011,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC0H6+D8DWXcYKAAUfhiHCm1USqQgABgAAAAEKAAe7Van5r8v2/QoACAAAAaF7V5zBAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACBQr1CYWp7WgKAAUfhiHCm1USqQgABgAAAAEKAAdgqeAZb/2t8woACAAAAaG9EAD2AAAAAAA="
              }
             },
             "element": "tweet"
@@ -964,9 +1030,22 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3220
+                  "favorites_count": 3222
                  },
-                 "affiliates_highlighted_label": {},
+                 "affiliates_highlighted_label": {
+                  "label": {
+                   "badge": {
+                    "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                   },
+                   "description": "Google Cloud",
+                   "url": {
+                    "url": "https://twitter.com/googlecloud",
+                    "urlType": "DeepLink"
+                   },
+                   "userLabelDisplayType": "Badge",
+                   "userLabelType": "BusinessLabel"
+                  }
+                 },
                  "avatar": {
                   "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                  },
@@ -981,7 +1060,7 @@
                  "follow_request_sent": false,
                  "has_graduated_access": true,
                  "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
+                 "is_blue_verified": true,
                  "location": {
                   "location": ""
                  },
@@ -1029,7 +1108,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 278003,
+                  "followers": 278114,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -1045,8 +1124,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1988,
-                  "tweets": 3938
+                  "media_tweets": 1995,
+                  "tweets": 3953
                  },
                  "verification": {
                   "verified": false,
@@ -1106,7 +1185,7 @@
            }
           },
           "entryId": "tweet-1933222773255553430",
-          "sortIndex": "2114917918331361515"
+          "sortIndex": "2119542569955219646"
          },
          {
           "content": {
@@ -1115,7 +1194,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC0H6+D8DWXcYKAAUfhiHCm1USqQgABgAAAAEKAAe7Van5r8v2/QoACAAAAaF7V5zBAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACBQr1CYWp7WgKAAUfhiHCm1USqQgABgAAAAEKAAdgqeAZb/2t8woACAAAAaG9EAD2AAAAAAA="
              }
             },
             "element": "tweet"
@@ -1143,7 +1222,7 @@
                   "value": {
                    "image_value": {
                     "height": 320,
-                    "url": "https://pbs.twimg.com/card_img/2114612631000748032/uLjNcGPV?format=jpg&name=800x320_1",
+                    "url": "https://pbs.twimg.com/card_img/2117184413997940736/dxX19qQ0?format=jpg&name=800x320_1",
                     "width": 569
                    },
                    "type": "IMAGE"
@@ -1154,7 +1233,7 @@
                   "value": {
                    "image_value": {
                     "height": 158,
-                    "url": "https://pbs.twimg.com/card_img/2114612631000748032/uLjNcGPV?format=jpg&name=280x280",
+                    "url": "https://pbs.twimg.com/card_img/2117184413997940736/dxX19qQ0?format=jpg&name=280x280",
                     "width": 280
                    },
                    "type": "IMAGE"
@@ -1163,7 +1242,7 @@
                  {
                   "key": "app_star_rating",
                   "value": {
-                   "string_value": "4.6649",
+                   "string_value": "4.66408",
                    "type": "STRING"
                   }
                  },
@@ -1211,7 +1290,7 @@
                   "value": {
                    "image_value": {
                     "height": 720,
-                    "url": "https://pbs.twimg.com/card_img/2114612631000748032/uLjNcGPV?format=jpg&name=orig",
+                    "url": "https://pbs.twimg.com/card_img/2117184413997940736/dxX19qQ0?format=jpg&name=orig",
                     "width": 1280
                    },
                    "type": "IMAGE"
@@ -1220,7 +1299,7 @@
                  {
                   "key": "app_num_ratings",
                   "value": {
-                   "string_value": "49,594,506",
+                   "string_value": "49,783,727",
                    "type": "STRING"
                   }
                  },
@@ -1258,7 +1337,7 @@
                   "value": {
                    "image_value": {
                     "height": 81,
-                    "url": "https://pbs.twimg.com/card_img/2114612631000748032/uLjNcGPV?format=jpg&name=144x144",
+                    "url": "https://pbs.twimg.com/card_img/2117184413997940736/dxX19qQ0?format=jpg&name=144x144",
                     "width": 144
                    },
                    "type": "IMAGE"
@@ -1341,7 +1420,7 @@
                   "value": {
                    "image_value": {
                     "height": 720,
-                    "url": "https://pbs.twimg.com/card_img/2114612631000748032/uLjNcGPV?format=png&name=2048x2048_2_exp",
+                    "url": "https://pbs.twimg.com/card_img/2117184413997940736/dxX19qQ0?format=png&name=2048x2048_2_exp",
                     "width": 1280
                    },
                    "type": "IMAGE"
@@ -1366,7 +1445,7 @@
                   "result": {
                    "__typename": "User",
                    "action_counts": {
-                    "favorites_count": 6018
+                    "favorites_count": 6017
                    },
                    "affiliates_highlighted_label": {},
                    "avatar": {
@@ -1431,8 +1510,8 @@
                     "translator_type": "regular"
                    },
                    "relationship_counts": {
-                    "followers": 68762539,
-                    "following": 1141
+                    "followers": 68727393,
+                    "following": 1139
                    },
                    "relationship_perspectives": {
                     "blocked_by": false,
@@ -1447,8 +1526,8 @@
                    "super_followed_by": false,
                    "super_following": false,
                    "tweet_counts": {
-                    "media_tweets": 16208,
-                    "tweets": 61620
+                    "media_tweets": 16210,
+                    "tweets": 61663
                    },
                    "verification": {
                     "verified": false,
@@ -1469,9 +1548,22 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3220
+                  "favorites_count": 3222
                  },
-                 "affiliates_highlighted_label": {},
+                 "affiliates_highlighted_label": {
+                  "label": {
+                   "badge": {
+                    "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                   },
+                   "description": "Google Cloud",
+                   "url": {
+                    "url": "https://twitter.com/googlecloud",
+                    "urlType": "DeepLink"
+                   },
+                   "userLabelDisplayType": "Badge",
+                   "userLabelType": "BusinessLabel"
+                  }
+                 },
                  "avatar": {
                   "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                  },
@@ -1486,7 +1578,7 @@
                  "follow_request_sent": false,
                  "has_graduated_access": true,
                  "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
+                 "is_blue_verified": true,
                  "location": {
                   "location": ""
                  },
@@ -1534,7 +1626,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 278003,
+                  "followers": 278114,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -1550,8 +1642,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1988,
-                  "tweets": 3938
+                  "media_tweets": 1995,
+                  "tweets": 3953
                  },
                  "verification": {
                   "verified": false,
@@ -1626,7 +1718,7 @@
               "source": "<a href=\"https://prod8.sprinklr.com/\" rel=\"nofollow\">Sprinklr Care</a>",
               "unmention_data": {},
               "views": {
-               "count": "13422",
+               "count": "13424",
                "state": "EnabledWithCount"
               }
              }
@@ -1634,7 +1726,7 @@
            }
           },
           "entryId": "tweet-1933185022640394320",
-          "sortIndex": "2114917918331361514"
+          "sortIndex": "2119542569955219636"
          },
          {
           "content": {
@@ -1643,7 +1735,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC0H6+D8DWXcYKAAUfhiHCm1USqQgABgAAAAEKAAe7Van5r8v2/QoACAAAAaF7V5zBAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACBQr1CYWp7WgKAAUfhiHCm1USqQgABgAAAAEKAAdgqeAZb/2t8woACAAAAaG9EAD2AAAAAAA="
              }
             },
             "element": "tweet"
@@ -1662,9 +1754,22 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3220
+                  "favorites_count": 3222
                  },
-                 "affiliates_highlighted_label": {},
+                 "affiliates_highlighted_label": {
+                  "label": {
+                   "badge": {
+                    "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                   },
+                   "description": "Google Cloud",
+                   "url": {
+                    "url": "https://twitter.com/googlecloud",
+                    "urlType": "DeepLink"
+                   },
+                   "userLabelDisplayType": "Badge",
+                   "userLabelType": "BusinessLabel"
+                  }
+                 },
                  "avatar": {
                   "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                  },
@@ -1679,7 +1784,7 @@
                  "follow_request_sent": false,
                  "has_graduated_access": true,
                  "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
+                 "is_blue_verified": true,
                  "location": {
                   "location": ""
                  },
@@ -1727,7 +1832,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 278003,
+                  "followers": 278114,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -1743,8 +1848,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1988,
-                  "tweets": 3938
+                  "media_tweets": 1995,
+                  "tweets": 3953
                  },
                  "verification": {
                   "verified": false,
@@ -1989,7 +2094,7 @@
            }
           },
           "entryId": "tweet-1932860453132075311",
-          "sortIndex": "2114917918331361513"
+          "sortIndex": "2119542569955219626"
          },
          {
           "content": {
@@ -1998,7 +2103,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC0H6+D8DWXcYKAAUfhiHCm1USqQgABgAAAAEKAAe7Van5r8v2/QoACAAAAaF7V5zBAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACBQr1CYWp7WgKAAUfhiHCm1USqQgABgAAAAEKAAdgqeAZb/2t8woACAAAAaG9EAD2AAAAAAA="
              }
             },
             "element": "tweet"
@@ -2017,9 +2122,22 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3220
+                  "favorites_count": 3222
                  },
-                 "affiliates_highlighted_label": {},
+                 "affiliates_highlighted_label": {
+                  "label": {
+                   "badge": {
+                    "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                   },
+                   "description": "Google Cloud",
+                   "url": {
+                    "url": "https://twitter.com/googlecloud",
+                    "urlType": "DeepLink"
+                   },
+                   "userLabelDisplayType": "Badge",
+                   "userLabelType": "BusinessLabel"
+                  }
+                 },
                  "avatar": {
                   "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                  },
@@ -2034,7 +2152,7 @@
                  "follow_request_sent": false,
                  "has_graduated_access": true,
                  "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
+                 "is_blue_verified": true,
                  "location": {
                   "location": ""
                  },
@@ -2082,7 +2200,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 278003,
+                  "followers": 278114,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -2098,8 +2216,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1988,
-                  "tweets": 3938
+                  "media_tweets": 1995,
+                  "tweets": 3953
                  },
                  "verification": {
                   "verified": false,
@@ -2359,7 +2477,7 @@
                  }
                 ]
                },
-               "favorite_count": 132,
+               "favorite_count": 133,
                "favorited": false,
                "full_text": "New in https://t.co/sTPwVxcSgK: Trending Packages 📦📈\n\nTrending Packages shows packages that have a significant recent uptick in usage. This can be used for discovering new packages that might be of interest.\n\nMore updates from #GoogleIO → https://t.co/AceCsh16Yx https://t.co/Qj2vez29yE",
                "id_str": "1932467796094455894",
@@ -2374,9 +2492,10 @@
                "user_id_str": "420730316"
               },
               "rest_id": "1932467796094455894",
+              "source": "<a href=\"https://prod8.sprinklr.com/\" rel=\"nofollow\">Sprinklr Care</a>",
               "unmention_data": {},
               "views": {
-               "count": "10787",
+               "count": "10788",
                "state": "EnabledWithCount"
               }
              }
@@ -2384,7 +2503,7 @@
            }
           },
           "entryId": "tweet-1932467796094455894",
-          "sortIndex": "2114917918331361512"
+          "sortIndex": "2119542569955219616"
          },
          {
           "content": {
@@ -2393,7 +2512,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC0H6+D8DWXcYKAAUfhiHCm1USqQgABgAAAAEKAAe7Van5r8v2/QoACAAAAaF7V5zBAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgACBQr1CYWp7WgKAAUfhiHCm1USqQgABgAAAAEKAAdgqeAZb/2t8woACAAAAaG9EAD2AAAAAAA="
              }
             },
             "element": "tweet"
@@ -2412,9 +2531,22 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3220
+                  "favorites_count": 3222
                  },
-                 "affiliates_highlighted_label": {},
+                 "affiliates_highlighted_label": {
+                  "label": {
+                   "badge": {
+                    "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                   },
+                   "description": "Google Cloud",
+                   "url": {
+                    "url": "https://twitter.com/googlecloud",
+                    "urlType": "DeepLink"
+                   },
+                   "userLabelDisplayType": "Badge",
+                   "userLabelType": "BusinessLabel"
+                  }
+                 },
                  "avatar": {
                   "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                  },
@@ -2429,7 +2561,7 @@
                  "follow_request_sent": false,
                  "has_graduated_access": true,
                  "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
+                 "is_blue_verified": true,
                  "location": {
                   "location": ""
                  },
@@ -2477,7 +2609,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 278003,
+                  "followers": 278114,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -2493,8 +2625,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1988,
-                  "tweets": 3938
+                  "media_tweets": 1995,
+                  "tweets": 3953
                  },
                  "verification": {
                   "verified": false,
@@ -2622,7 +2754,7 @@
                      "translator_type": "none"
                     },
                     "relationship_counts": {
-                     "followers": 87500,
+                     "followers": 87457,
                      "following": 48
                     },
                     "relationship_perspectives": {
@@ -2673,7 +2805,7 @@
                    58
                   ],
                   "entities": {},
-                  "favorite_count": 494,
+                  "favorite_count": 492,
                   "favorited": false,
                   "full_text": "Introducing Dart 3.8! Here's everything you need to know ↓",
                   "id_str": "1932170414840741898",
@@ -2686,10 +2818,9 @@
                   "user_id_str": "376585411"
                  },
                  "rest_id": "1932170414840741898",
-                 "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
                  "unmention_data": {},
                  "views": {
-                  "count": "44865",
+                  "count": "44866",
                   "state": "EnabledWithCount"
                  }
                 }
@@ -2708,7 +2839,7 @@
            }
           },
           "entryId": "tweet-1932176333498699976",
-          "sortIndex": "2114917918331361511"
+          "sortIndex": "2119542569955219606"
          },
          {
           "content": {
@@ -2717,7 +2848,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC0H6+D8DWXcYKAAUfhiHCm1USqQgABgAAAAEKAAe7Van5r8v2/QoACAAAAaF7V5zBAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACBQr1CYWp7WgKAAUfhiHCm1USqQgABgAAAAEKAAdgqeAZb/2t8woACAAAAaG9EAD2AAAAAAA="
              }
             },
             "element": "tweet"
@@ -2738,7 +2869,7 @@
                   "value": {
                    "image_value": {
                     "height": 419,
-                    "url": "https://pbs.twimg.com/card_img/2113663598363131904/B37AWTor?format=jpg&name=800x419",
+                    "url": "https://pbs.twimg.com/card_img/2116292928121253888/PEElw50E?format=jpg&name=800x419",
                     "width": 800
                    },
                    "type": "IMAGE"
@@ -2749,7 +2880,7 @@
                   "value": {
                    "image_value": {
                     "height": 185,
-                    "url": "https://pbs.twimg.com/card_img/2113663598363131904/B37AWTor?format=jpg&name=400x400",
+                    "url": "https://pbs.twimg.com/card_img/2116292928121253888/PEElw50E?format=jpg&name=400x400",
                     "width": 400
                    },
                    "type": "IMAGE"
@@ -2774,7 +2905,7 @@
                   "value": {
                    "image_value": {
                     "height": 320,
-                    "url": "https://pbs.twimg.com/card_img/2113663598363131904/B37AWTor?format=jpg&name=800x320_1",
+                    "url": "https://pbs.twimg.com/card_img/2116292928121253888/PEElw50E?format=jpg&name=800x320_1",
                     "width": 693
                    },
                    "type": "IMAGE"
@@ -2785,7 +2916,7 @@
                   "value": {
                    "image_value": {
                     "height": 202,
-                    "url": "https://pbs.twimg.com/card_img/2113663598363131904/B37AWTor?format=jpg&name=386x202",
+                    "url": "https://pbs.twimg.com/card_img/2116292928121253888/PEElw50E?format=jpg&name=386x202",
                     "width": 386
                    },
                    "type": "IMAGE"
@@ -2796,7 +2927,7 @@
                   "value": {
                    "image_value": {
                     "height": 640,
-                    "url": "https://pbs.twimg.com/card_img/2113663598363131904/B37AWTor?format=jpg&name=orig",
+                    "url": "https://pbs.twimg.com/card_img/2116292928121253888/PEElw50E?format=jpg&name=orig",
                     "width": 1386
                    },
                    "type": "IMAGE"
@@ -2818,7 +2949,7 @@
                   "value": {
                    "image_value": {
                     "height": 202,
-                    "url": "https://pbs.twimg.com/card_img/2113663598363131904/B37AWTor?format=jpg&name=386x202",
+                    "url": "https://pbs.twimg.com/card_img/2116292928121253888/PEElw50E?format=jpg&name=386x202",
                     "width": 386
                    },
                    "type": "IMAGE"
@@ -2829,7 +2960,7 @@
                   "value": {
                    "image_value": {
                     "height": 419,
-                    "url": "https://pbs.twimg.com/card_img/2113663598363131904/B37AWTor?format=jpg&name=800x419",
+                    "url": "https://pbs.twimg.com/card_img/2116292928121253888/PEElw50E?format=jpg&name=800x419",
                     "width": 800
                    },
                    "type": "IMAGE"
@@ -2840,7 +2971,7 @@
                   "value": {
                    "image_value": {
                     "height": 66,
-                    "url": "https://pbs.twimg.com/card_img/2113663598363131904/B37AWTor?format=jpg&name=144x144",
+                    "url": "https://pbs.twimg.com/card_img/2116292928121253888/PEElw50E?format=jpg&name=144x144",
                     "width": 144
                    },
                    "type": "IMAGE"
@@ -2851,7 +2982,7 @@
                   "value": {
                    "image_value": {
                     "height": 640,
-                    "url": "https://pbs.twimg.com/card_img/2113663598363131904/B37AWTor?format=png&name=2048x2048_2_exp",
+                    "url": "https://pbs.twimg.com/card_img/2116292928121253888/PEElw50E?format=png&name=2048x2048_2_exp",
                     "width": 1386
                    },
                    "type": "IMAGE"
@@ -2862,7 +2993,7 @@
                   "value": {
                    "image_value": {
                     "height": 640,
-                    "url": "https://pbs.twimg.com/card_img/2113663598363131904/B37AWTor?format=jpg&name=orig",
+                    "url": "https://pbs.twimg.com/card_img/2116292928121253888/PEElw50E?format=jpg&name=orig",
                     "width": 1386
                    },
                    "type": "IMAGE"
@@ -2888,7 +3019,7 @@
                   "value": {
                    "image_value": {
                     "height": 314,
-                    "url": "https://pbs.twimg.com/card_img/2113663598363131904/B37AWTor?format=jpg&name=600x314",
+                    "url": "https://pbs.twimg.com/card_img/2116292928121253888/PEElw50E?format=jpg&name=600x314",
                     "width": 600
                    },
                    "type": "IMAGE"
@@ -2997,7 +3128,7 @@
                   "value": {
                    "image_value": {
                     "height": 640,
-                    "url": "https://pbs.twimg.com/card_img/2113663598363131904/B37AWTor?format=png&name=2048x2048_2_exp",
+                    "url": "https://pbs.twimg.com/card_img/2116292928121253888/PEElw50E?format=png&name=2048x2048_2_exp",
                     "width": 1386
                    },
                    "type": "IMAGE"
@@ -3008,7 +3139,7 @@
                   "value": {
                    "image_value": {
                     "height": 314,
-                    "url": "https://pbs.twimg.com/card_img/2113663598363131904/B37AWTor?format=jpg&name=600x314",
+                    "url": "https://pbs.twimg.com/card_img/2116292928121253888/PEElw50E?format=jpg&name=600x314",
                     "width": 600
                    },
                    "type": "IMAGE"
@@ -3061,7 +3192,7 @@
                   "value": {
                    "image_value": {
                     "height": 640,
-                    "url": "https://pbs.twimg.com/card_img/2113663598363131904/B37AWTor?format=png&name=2048x2048_2_exp",
+                    "url": "https://pbs.twimg.com/card_img/2116292928121253888/PEElw50E?format=png&name=2048x2048_2_exp",
                     "width": 1386
                    },
                    "type": "IMAGE"
@@ -3080,7 +3211,7 @@
                   "value": {
                    "image_value": {
                     "height": 640,
-                    "url": "https://pbs.twimg.com/card_img/2113663598363131904/B37AWTor?format=jpg&name=orig",
+                    "url": "https://pbs.twimg.com/card_img/2116292928121253888/PEElw50E?format=jpg&name=orig",
                     "width": 1386
                    },
                    "type": "IMAGE"
@@ -3105,7 +3236,7 @@
                   "result": {
                    "__typename": "User",
                    "action_counts": {
-                    "favorites_count": 9034
+                    "favorites_count": 9115
                    },
                    "affiliates_highlighted_label": {},
                    "avatar": {
@@ -3135,7 +3266,7 @@
                    "parody_commentary_fan_label": "None",
                    "pinned_items": {
                     "tweet_ids_str": [
-                     "2107896916595884177"
+                     "2115480207469560109"
                     ]
                    },
                    "possibly_sensitive": false,
@@ -3170,8 +3301,8 @@
                     "translator_type": "none"
                    },
                    "relationship_counts": {
-                    "followers": 2727090,
-                    "following": 334
+                    "followers": 2737729,
+                    "following": 335
                    },
                    "relationship_perspectives": {
                     "blocked_by": false,
@@ -3186,8 +3317,8 @@
                    "super_followed_by": false,
                    "super_following": false,
                    "tweet_counts": {
-                    "media_tweets": 3161,
-                    "tweets": 11007
+                    "media_tweets": 3191,
+                    "tweets": 11066
                    },
                    "verification": {
                     "verified": false,
@@ -3208,9 +3339,22 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3220
+                  "favorites_count": 3222
                  },
-                 "affiliates_highlighted_label": {},
+                 "affiliates_highlighted_label": {
+                  "label": {
+                   "badge": {
+                    "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                   },
+                   "description": "Google Cloud",
+                   "url": {
+                    "url": "https://twitter.com/googlecloud",
+                    "urlType": "DeepLink"
+                   },
+                   "userLabelDisplayType": "Badge",
+                   "userLabelType": "BusinessLabel"
+                  }
+                 },
                  "avatar": {
                   "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                  },
@@ -3225,7 +3369,7 @@
                  "follow_request_sent": false,
                  "has_graduated_access": true,
                  "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
+                 "is_blue_verified": true,
                  "location": {
                   "location": ""
                  },
@@ -3273,7 +3417,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 278003,
+                  "followers": 278114,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -3289,8 +3433,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1988,
-                  "tweets": 3938
+                  "media_tweets": 1995,
+                  "tweets": 3953
                  },
                  "verification": {
                   "verified": false,
@@ -3367,7 +3511,7 @@
            }
           },
           "entryId": "tweet-1932105419016564779",
-          "sortIndex": "2114917918331361510"
+          "sortIndex": "2119542569955219596"
          },
          {
           "content": {
@@ -3376,7 +3520,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC0H6+D8DWXcYKAAUfhiHCm1USqQgABgAAAAEKAAe7Van5r8v2/QoACAAAAaF7V5zBAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACBQr1CYWp7WgKAAUfhiHCm1USqQgABgAAAAEKAAdgqeAZb/2t8woACAAAAaG9EAD2AAAAAAA="
              }
             },
             "element": "tweet"
@@ -3395,9 +3539,22 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3220
+                  "favorites_count": 3222
                  },
-                 "affiliates_highlighted_label": {},
+                 "affiliates_highlighted_label": {
+                  "label": {
+                   "badge": {
+                    "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                   },
+                   "description": "Google Cloud",
+                   "url": {
+                    "url": "https://twitter.com/googlecloud",
+                    "urlType": "DeepLink"
+                   },
+                   "userLabelDisplayType": "Badge",
+                   "userLabelType": "BusinessLabel"
+                  }
+                 },
                  "avatar": {
                   "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                  },
@@ -3412,7 +3569,7 @@
                  "follow_request_sent": false,
                  "has_graduated_access": true,
                  "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
+                 "is_blue_verified": true,
                  "location": {
                   "location": ""
                  },
@@ -3460,7 +3617,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 278003,
+                  "followers": 278114,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -3476,8 +3633,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1988,
-                  "tweets": 3938
+                  "media_tweets": 1995,
+                  "tweets": 3953
                  },
                  "verification": {
                   "verified": false,
@@ -3540,7 +3697,7 @@
            }
           },
           "entryId": "tweet-1932105416441254384",
-          "sortIndex": "2114917918331361509"
+          "sortIndex": "2119542569955219586"
          },
          {
           "content": {
@@ -3549,7 +3706,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC0H6+D8DWXcYKAAUfhiHCm1USqQgABgAAAAEKAAe7Van5r8v2/QoACAAAAaF7V5zBAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACBQr1CYWp7WgKAAUfhiHCm1USqQgABgAAAAEKAAdgqeAZb/2t8woACAAAAaG9EAD2AAAAAAA="
              }
             },
             "element": "tweet"
@@ -3568,9 +3725,22 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3220
+                  "favorites_count": 3222
                  },
-                 "affiliates_highlighted_label": {},
+                 "affiliates_highlighted_label": {
+                  "label": {
+                   "badge": {
+                    "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                   },
+                   "description": "Google Cloud",
+                   "url": {
+                    "url": "https://twitter.com/googlecloud",
+                    "urlType": "DeepLink"
+                   },
+                   "userLabelDisplayType": "Badge",
+                   "userLabelType": "BusinessLabel"
+                  }
+                 },
                  "avatar": {
                   "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                  },
@@ -3585,7 +3755,7 @@
                  "follow_request_sent": false,
                  "has_graduated_access": true,
                  "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
+                 "is_blue_verified": true,
                  "location": {
                   "location": ""
                  },
@@ -3633,7 +3803,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 278003,
+                  "followers": 278114,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -3649,8 +3819,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1988,
-                  "tweets": 3938
+                  "media_tweets": 1995,
+                  "tweets": 3953
                  },
                  "verification": {
                   "verified": false,
@@ -3713,7 +3883,7 @@
            }
           },
           "entryId": "tweet-1932105414289535196",
-          "sortIndex": "2114917918331361508"
+          "sortIndex": "2119542569955219576"
          },
          {
           "content": {
@@ -3722,7 +3892,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC0H6+D8DWXcYKAAUfhiHCm1USqQgABgAAAAEKAAe7Van5r8v2/QoACAAAAaF7V5zBAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACBQr1CYWp7WgKAAUfhiHCm1USqQgABgAAAAEKAAdgqeAZb/2t8woACAAAAaG9EAD2AAAAAAA="
              }
             },
             "element": "tweet"
@@ -3741,9 +3911,22 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3220
+                  "favorites_count": 3222
                  },
-                 "affiliates_highlighted_label": {},
+                 "affiliates_highlighted_label": {
+                  "label": {
+                   "badge": {
+                    "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                   },
+                   "description": "Google Cloud",
+                   "url": {
+                    "url": "https://twitter.com/googlecloud",
+                    "urlType": "DeepLink"
+                   },
+                   "userLabelDisplayType": "Badge",
+                   "userLabelType": "BusinessLabel"
+                  }
+                 },
                  "avatar": {
                   "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                  },
@@ -3758,7 +3941,7 @@
                  "follow_request_sent": false,
                  "has_graduated_access": true,
                  "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
+                 "is_blue_verified": true,
                  "location": {
                   "location": ""
                  },
@@ -3806,7 +3989,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 278003,
+                  "followers": 278114,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -3822,8 +4005,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1988,
-                  "tweets": 3938
+                  "media_tweets": 1995,
+                  "tweets": 3953
                  },
                  "verification": {
                   "verified": false,
@@ -3886,7 +4069,7 @@
            }
           },
           "entryId": "tweet-1932105411965915140",
-          "sortIndex": "2114917918331361507"
+          "sortIndex": "2119542569955219566"
          },
          {
           "content": {
@@ -3895,7 +4078,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC0H6+D8DWXcYKAAUfhiHCm1USqQgABgAAAAEKAAe7Van5r8v2/QoACAAAAaF7V5zBAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACBQr1CYWp7WgKAAUfhiHCm1USqQgABgAAAAEKAAdgqeAZb/2t8woACAAAAaG9EAD2AAAAAAA="
              }
             },
             "element": "tweet"
@@ -3914,9 +4097,22 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3220
+                  "favorites_count": 3222
                  },
-                 "affiliates_highlighted_label": {},
+                 "affiliates_highlighted_label": {
+                  "label": {
+                   "badge": {
+                    "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                   },
+                   "description": "Google Cloud",
+                   "url": {
+                    "url": "https://twitter.com/googlecloud",
+                    "urlType": "DeepLink"
+                   },
+                   "userLabelDisplayType": "Badge",
+                   "userLabelType": "BusinessLabel"
+                  }
+                 },
                  "avatar": {
                   "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                  },
@@ -3931,7 +4127,7 @@
                  "follow_request_sent": false,
                  "has_graduated_access": true,
                  "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
+                 "is_blue_verified": true,
                  "location": {
                   "location": ""
                  },
@@ -3979,7 +4175,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 278003,
+                  "followers": 278114,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -3995,8 +4191,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1988,
-                  "tweets": 3938
+                  "media_tweets": 1995,
+                  "tweets": 3953
                  },
                  "verification": {
                   "verified": false,
@@ -4032,7 +4228,7 @@
                 83
                ],
                "entities": {},
-               "favorite_count": 396,
+               "favorite_count": 397,
                "favorited": false,
                "full_text": "🔥 New version of Flutter just dropped. Flutter 3.32.2 contains the following fixes:",
                "id_str": "1932105408664985743",
@@ -4055,7 +4251,7 @@
            }
           },
           "entryId": "tweet-1932105408664985743",
-          "sortIndex": "2114917918331361506"
+          "sortIndex": "2119542569955219556"
          },
          {
           "content": {
@@ -4064,7 +4260,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC0H6+D8DWXcYKAAUfhiHCm1USqQgABgAAAAEKAAe7Van5r8v2/QoACAAAAaF7V5zBAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACBQr1CYWp7WgKAAUfhiHCm1USqQgABgAAAAEKAAdgqeAZb/2t8woACAAAAaG9EAD2AAAAAAA="
              }
             },
             "element": "tweet"
@@ -4085,7 +4281,7 @@
                   "value": {
                    "image_value": {
                     "height": 419,
-                    "url": "https://pbs.twimg.com/card_img/2113222329111093248/Wb8oea_c?format=jpg&name=800x419",
+                    "url": "https://pbs.twimg.com/card_img/2118305585686863872/M1khnCgx?format=jpg&name=800x419",
                     "width": 800
                    },
                    "type": "IMAGE"
@@ -4096,7 +4292,7 @@
                   "value": {
                    "image_value": {
                     "height": 150,
-                    "url": "https://pbs.twimg.com/card_img/2113222329111093248/Wb8oea_c?format=jpg&name=280x150",
+                    "url": "https://pbs.twimg.com/card_img/2118305585686863872/M1khnCgx?format=jpg&name=280x150",
                     "width": 266
                    },
                    "type": "IMAGE"
@@ -4121,7 +4317,7 @@
                   "value": {
                    "image_value": {
                     "height": 320,
-                    "url": "https://pbs.twimg.com/card_img/2113222329111093248/Wb8oea_c?format=jpg&name=800x320_1",
+                    "url": "https://pbs.twimg.com/card_img/2118305585686863872/M1khnCgx?format=jpg&name=800x320_1",
                     "width": 568
                    },
                    "type": "IMAGE"
@@ -4132,7 +4328,7 @@
                   "value": {
                    "image_value": {
                     "height": 202,
-                    "url": "https://pbs.twimg.com/card_img/2113222329111093248/Wb8oea_c?format=jpg&name=386x202",
+                    "url": "https://pbs.twimg.com/card_img/2118305585686863872/M1khnCgx?format=jpg&name=386x202",
                     "width": 386
                    },
                    "type": "IMAGE"
@@ -4143,7 +4339,7 @@
                   "value": {
                    "image_value": {
                     "height": 1604,
-                    "url": "https://pbs.twimg.com/card_img/2113222329111093248/Wb8oea_c?format=jpg&name=orig",
+                    "url": "https://pbs.twimg.com/card_img/2118305585686863872/M1khnCgx?format=jpg&name=orig",
                     "width": 2848
                    },
                    "type": "IMAGE"
@@ -4165,7 +4361,7 @@
                   "value": {
                    "image_value": {
                     "height": 202,
-                    "url": "https://pbs.twimg.com/card_img/2113222329111093248/Wb8oea_c?format=jpg&name=386x202",
+                    "url": "https://pbs.twimg.com/card_img/2118305585686863872/M1khnCgx?format=jpg&name=386x202",
                     "width": 386
                    },
                    "type": "IMAGE"
@@ -4176,7 +4372,7 @@
                   "value": {
                    "image_value": {
                     "height": 419,
-                    "url": "https://pbs.twimg.com/card_img/2113222329111093248/Wb8oea_c?format=jpg&name=800x419",
+                    "url": "https://pbs.twimg.com/card_img/2118305585686863872/M1khnCgx?format=jpg&name=800x419",
                     "width": 800
                    },
                    "type": "IMAGE"
@@ -4187,7 +4383,7 @@
                   "value": {
                    "image_value": {
                     "height": 81,
-                    "url": "https://pbs.twimg.com/card_img/2113222329111093248/Wb8oea_c?format=jpg&name=144x144",
+                    "url": "https://pbs.twimg.com/card_img/2118305585686863872/M1khnCgx?format=jpg&name=144x144",
                     "width": 144
                    },
                    "type": "IMAGE"
@@ -4198,7 +4394,7 @@
                   "value": {
                    "image_value": {
                     "height": 1153,
-                    "url": "https://pbs.twimg.com/card_img/2113222329111093248/Wb8oea_c?format=png&name=2048x2048_2_exp",
+                    "url": "https://pbs.twimg.com/card_img/2118305585686863872/M1khnCgx?format=png&name=2048x2048_2_exp",
                     "width": 2048
                    },
                    "type": "IMAGE"
@@ -4209,7 +4405,7 @@
                   "value": {
                    "image_value": {
                     "height": 1604,
-                    "url": "https://pbs.twimg.com/card_img/2113222329111093248/Wb8oea_c?format=jpg&name=orig",
+                    "url": "https://pbs.twimg.com/card_img/2118305585686863872/M1khnCgx?format=jpg&name=orig",
                     "width": 2848
                    },
                    "type": "IMAGE"
@@ -4228,7 +4424,7 @@
                   "value": {
                    "image_value": {
                     "height": 314,
-                    "url": "https://pbs.twimg.com/card_img/2113222329111093248/Wb8oea_c?format=jpg&name=600x314",
+                    "url": "https://pbs.twimg.com/card_img/2118305585686863872/M1khnCgx?format=jpg&name=600x314",
                     "width": 600
                    },
                    "type": "IMAGE"
@@ -4346,7 +4542,7 @@
                   "value": {
                    "image_value": {
                     "height": 1153,
-                    "url": "https://pbs.twimg.com/card_img/2113222329111093248/Wb8oea_c?format=png&name=2048x2048_2_exp",
+                    "url": "https://pbs.twimg.com/card_img/2118305585686863872/M1khnCgx?format=png&name=2048x2048_2_exp",
                     "width": 2048
                    },
                    "type": "IMAGE"
@@ -4357,7 +4553,7 @@
                   "value": {
                    "image_value": {
                     "height": 314,
-                    "url": "https://pbs.twimg.com/card_img/2113222329111093248/Wb8oea_c?format=jpg&name=600x314",
+                    "url": "https://pbs.twimg.com/card_img/2118305585686863872/M1khnCgx?format=jpg&name=600x314",
                     "width": 600
                    },
                    "type": "IMAGE"
@@ -4418,7 +4614,7 @@
                   "value": {
                    "image_value": {
                     "height": 1153,
-                    "url": "https://pbs.twimg.com/card_img/2113222329111093248/Wb8oea_c?format=png&name=2048x2048_2_exp",
+                    "url": "https://pbs.twimg.com/card_img/2118305585686863872/M1khnCgx?format=png&name=2048x2048_2_exp",
                     "width": 2048
                    },
                    "type": "IMAGE"
@@ -4437,7 +4633,7 @@
                   "value": {
                    "image_value": {
                     "height": 1604,
-                    "url": "https://pbs.twimg.com/card_img/2113222329111093248/Wb8oea_c?format=jpg&name=orig",
+                    "url": "https://pbs.twimg.com/card_img/2118305585686863872/M1khnCgx?format=jpg&name=orig",
                     "width": 2848
                    },
                    "type": "IMAGE"
@@ -4462,9 +4658,22 @@
                   "result": {
                    "__typename": "User",
                    "action_counts": {
-                    "favorites_count": 3220
+                    "favorites_count": 3222
                    },
-                   "affiliates_highlighted_label": {},
+                   "affiliates_highlighted_label": {
+                    "label": {
+                     "badge": {
+                      "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                     },
+                     "description": "Google Cloud",
+                     "url": {
+                      "url": "https://twitter.com/googlecloud",
+                      "urlType": "DeepLink"
+                     },
+                     "userLabelDisplayType": "Badge",
+                     "userLabelType": "BusinessLabel"
+                    }
+                   },
                    "avatar": {
                     "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                    },
@@ -4479,7 +4688,7 @@
                    "follow_request_sent": false,
                    "has_graduated_access": true,
                    "id": "VXNlcjo0MjA3MzAzMTY=",
-                   "is_blue_verified": false,
+                   "is_blue_verified": true,
                    "location": {
                     "location": ""
                    },
@@ -4527,7 +4736,7 @@
                     "translator_type": "none"
                    },
                    "relationship_counts": {
-                    "followers": 278003,
+                    "followers": 278114,
                     "following": 61
                    },
                    "relationship_perspectives": {
@@ -4543,8 +4752,8 @@
                    "super_followed_by": false,
                    "super_following": false,
                    "tweet_counts": {
-                    "media_tweets": 1988,
-                    "tweets": 3938
+                    "media_tweets": 1995,
+                    "tweets": 3953
                    },
                    "verification": {
                     "verified": false,
@@ -4565,9 +4774,22 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3220
+                  "favorites_count": 3222
                  },
-                 "affiliates_highlighted_label": {},
+                 "affiliates_highlighted_label": {
+                  "label": {
+                   "badge": {
+                    "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                   },
+                   "description": "Google Cloud",
+                   "url": {
+                    "url": "https://twitter.com/googlecloud",
+                    "urlType": "DeepLink"
+                   },
+                   "userLabelDisplayType": "Badge",
+                   "userLabelType": "BusinessLabel"
+                  }
+                 },
                  "avatar": {
                   "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                  },
@@ -4582,7 +4804,7 @@
                  "follow_request_sent": false,
                  "has_graduated_access": true,
                  "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
+                 "is_blue_verified": true,
                  "location": {
                   "location": ""
                  },
@@ -4630,7 +4852,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 278003,
+                  "followers": 278114,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -4646,8 +4868,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1988,
-                  "tweets": 3938
+                  "media_tweets": 1995,
+                  "tweets": 3953
                  },
                  "verification": {
                   "verified": false,
@@ -4724,7 +4946,7 @@
            }
           },
           "entryId": "tweet-1931025801996083483",
-          "sortIndex": "2114917918331361505"
+          "sortIndex": "2119542569955219546"
          },
          {
           "content": {
@@ -4733,7 +4955,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC0H6+D8DWXcYKAAUfhiHCm1USqQgABgAAAAEKAAe7Van5r8v2/QoACAAAAaF7V5zBAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACBQr1CYWp7WgKAAUfhiHCm1USqQgABgAAAAEKAAdgqeAZb/2t8woACAAAAaG9EAD2AAAAAAA="
              }
             },
             "element": "tweet"
@@ -4752,9 +4974,22 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3220
+                  "favorites_count": 3222
                  },
-                 "affiliates_highlighted_label": {},
+                 "affiliates_highlighted_label": {
+                  "label": {
+                   "badge": {
+                    "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                   },
+                   "description": "Google Cloud",
+                   "url": {
+                    "url": "https://twitter.com/googlecloud",
+                    "urlType": "DeepLink"
+                   },
+                   "userLabelDisplayType": "Badge",
+                   "userLabelType": "BusinessLabel"
+                  }
+                 },
                  "avatar": {
                   "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                  },
@@ -4769,7 +5004,7 @@
                  "follow_request_sent": false,
                  "has_graduated_access": true,
                  "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
+                 "is_blue_verified": true,
                  "location": {
                   "location": ""
                  },
@@ -4817,7 +5052,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 278003,
+                  "followers": 278114,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -4833,8 +5068,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1988,
-                  "tweets": 3938
+                  "media_tweets": 1995,
+                  "tweets": 3953
                  },
                  "verification": {
                   "verified": false,
@@ -5065,7 +5300,7 @@
                  }
                 ]
                },
-               "favorite_count": 330,
+               "favorite_count": 329,
                "favorited": false,
                "full_text": "Introducing the new Property Editor tool ✏\n\nYou can easily edit widget properties and read documentation with this tool, accessible from the Flutter Property Editor sidebar panel (VS Code) or tool window (Android Studio / IntelliJ). https://t.co/qC4s1CNAiz",
                "id_str": "1931025799026516483",
@@ -5082,7 +5317,7 @@
               "rest_id": "1931025799026516483",
               "unmention_data": {},
               "views": {
-               "count": "14158",
+               "count": "14160",
                "state": "EnabledWithCount"
               }
              }
@@ -5090,7 +5325,7 @@
            }
           },
           "entryId": "tweet-1931025799026516483",
-          "sortIndex": "2114917918331361504"
+          "sortIndex": "2119542569955219536"
          },
          {
           "content": {
@@ -5099,7 +5334,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC0H6+D8DWXcYKAAUfhiHCm1USqQgABgAAAAEKAAe7Van5r8v2/QoACAAAAaF7V5zBAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACBQr1CYWp7WgKAAUfhiHCm1USqQgABgAAAAEKAAdgqeAZb/2t8woACAAAAaG9EAD2AAAAAAA="
              }
             },
             "element": "tweet"
@@ -5121,9 +5356,22 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3220
+                  "favorites_count": 3222
                  },
-                 "affiliates_highlighted_label": {},
+                 "affiliates_highlighted_label": {
+                  "label": {
+                   "badge": {
+                    "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                   },
+                   "description": "Google Cloud",
+                   "url": {
+                    "url": "https://twitter.com/googlecloud",
+                    "urlType": "DeepLink"
+                   },
+                   "userLabelDisplayType": "Badge",
+                   "userLabelType": "BusinessLabel"
+                  }
+                 },
                  "avatar": {
                   "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                  },
@@ -5138,7 +5386,7 @@
                  "follow_request_sent": false,
                  "has_graduated_access": true,
                  "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
+                 "is_blue_verified": true,
                  "location": {
                   "location": ""
                  },
@@ -5186,7 +5434,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 278003,
+                  "followers": 278114,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -5202,8 +5450,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1988,
-                  "tweets": 3938
+                  "media_tweets": 1995,
+                  "tweets": 3953
                  },
                  "verification": {
                   "verified": false,
@@ -5291,7 +5539,7 @@
            }
           },
           "entryId": "tweet-1930731358344585401",
-          "sortIndex": "2114917918331361503"
+          "sortIndex": "2119542569955219526"
          },
          {
           "content": {
@@ -5300,7 +5548,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC0H6+D8DWXcYKAAUfhiHCm1USqQgABgAAAAEKAAe7Van5r8v2/QoACAAAAaF7V5zBAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACBQr1CYWp7WgKAAUfhiHCm1USqQgABgAAAAEKAAdgqeAZb/2t8woACAAAAaG9EAD2AAAAAAA="
              }
             },
             "element": "tweet"
@@ -5319,9 +5567,22 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3220
+                  "favorites_count": 3222
                  },
-                 "affiliates_highlighted_label": {},
+                 "affiliates_highlighted_label": {
+                  "label": {
+                   "badge": {
+                    "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                   },
+                   "description": "Google Cloud",
+                   "url": {
+                    "url": "https://twitter.com/googlecloud",
+                    "urlType": "DeepLink"
+                   },
+                   "userLabelDisplayType": "Badge",
+                   "userLabelType": "BusinessLabel"
+                  }
+                 },
                  "avatar": {
                   "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                  },
@@ -5336,7 +5597,7 @@
                  "follow_request_sent": false,
                  "has_graduated_access": true,
                  "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
+                 "is_blue_verified": true,
                  "location": {
                   "location": ""
                  },
@@ -5384,7 +5645,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 278003,
+                  "followers": 278114,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -5400,8 +5661,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1988,
-                  "tweets": 3938
+                  "media_tweets": 1995,
+                  "tweets": 3953
                  },
                  "verification": {
                   "verified": false,
@@ -5449,7 +5710,7 @@
                  }
                 ]
                },
-               "favorite_count": 79,
+               "favorite_count": 78,
                "favorited": false,
                "full_text": "Join members of the Flutter team June 9-12 at the One More Thing conference to learn how Flutter and @Firebase can help you build amazing AI-powered apps.\n\nWe hope to see you at our booth and talk, \"Ship AI-powered iOS apps with Firebase and Flutter.\"",
                "id_str": "1930731354863395165",
@@ -5464,7 +5725,7 @@
               "rest_id": "1930731354863395165",
               "unmention_data": {},
               "views": {
-               "count": "7367",
+               "count": "7368",
                "state": "EnabledWithCount"
               }
              }
@@ -5472,7 +5733,7 @@
            }
           },
           "entryId": "tweet-1930731354863395165",
-          "sortIndex": "2114917918331361502"
+          "sortIndex": "2119542569955219516"
          },
          {
           "content": {
@@ -5481,7 +5742,7 @@
             "component": "latest_nightowl_recency",
             "details": {
              "timelinesDetails": {
-              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEAAAAAAAAwAAgoAAQAAAAAAAABBCgAC0H6+D8DWXcYKAAUfhiHCm1USqQgABgAAAAEKAAe7Van5r8v2/QoACAAAAaF7V5zBAAAAAAA="
+              "controllerData": "DAACDAAFDAABDAABDAABCgABAAAAAEACAAAAAAwAAgoAAQAAAAAAAABBCgACBQr1CYWp7WgKAAUfhiHCm1USqQgABgAAAAEKAAdgqeAZb/2t8woACAAAAaG9EAD2AAAAAAA="
              }
             },
             "element": "tweet"
@@ -5500,9 +5761,22 @@
                 "result": {
                  "__typename": "User",
                  "action_counts": {
-                  "favorites_count": 3220
+                  "favorites_count": 3222
                  },
-                 "affiliates_highlighted_label": {},
+                 "affiliates_highlighted_label": {
+                  "label": {
+                   "badge": {
+                    "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+                   },
+                   "description": "Google Cloud",
+                   "url": {
+                    "url": "https://twitter.com/googlecloud",
+                    "urlType": "DeepLink"
+                   },
+                   "userLabelDisplayType": "Badge",
+                   "userLabelType": "BusinessLabel"
+                  }
+                 },
                  "avatar": {
                   "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
                  },
@@ -5517,7 +5791,7 @@
                  "follow_request_sent": false,
                  "has_graduated_access": true,
                  "id": "VXNlcjo0MjA3MzAzMTY=",
-                 "is_blue_verified": false,
+                 "is_blue_verified": true,
                  "location": {
                   "location": ""
                  },
@@ -5565,7 +5839,7 @@
                   "translator_type": "none"
                  },
                  "relationship_counts": {
-                  "followers": 278003,
+                  "followers": 278114,
                   "following": 61
                  },
                  "relationship_perspectives": {
@@ -5581,8 +5855,8 @@
                  "super_followed_by": false,
                  "super_following": false,
                  "tweet_counts": {
-                  "media_tweets": 1988,
-                  "tweets": 3938
+                  "media_tweets": 1995,
+                  "tweets": 3953
                  },
                  "verification": {
                   "verified": false,
@@ -5822,7 +6096,7 @@
               "source": "<a href=\"https://prod8.sprinklr.com/\" rel=\"nofollow\">Sprinklr Care</a>",
               "unmention_data": {},
               "views": {
-               "count": "7495",
+               "count": "7496",
                "state": "EnabledWithCount"
               }
              }
@@ -5830,7 +6104,7 @@
            }
           },
           "entryId": "tweet-1930686054060691888",
-          "sortIndex": "2114917918331361501"
+          "sortIndex": "2119542569955219506"
          }
         ],
         "type": "TimelineAddEntries"
@@ -5841,7 +6115,7 @@
           "__typename": "TimelineTimelineCursor",
           "cursorType": "Top",
           "entryType": "TimelineTimelineCursor",
-          "value": "DAADDAABCgABGuyYV6RXUAkKAAIayyy8qRaRsAAIAAIAAAABCAADAAAAAAgABAAAAAEKAAUdWbKkM0AnEAoABh1ZsqQzP7HgCwAHAAAByEVtUEM2d0FBQWZRL2dHSk4wdkdwL0FBQUFDZ2E0a1RDTEJleDNoclFlQ05obTFESUd0UXY0UElYZ2NjYTIrbG9KVmJoVmhyUU42S3MxcEFFR3R2T1pyQ1hnYzhhekdHN3N4Y2lBeHJyUVFVRmxnQ3hHdWVPc3ltV01JNGExQy9oZlJZUWlCclZhN2x3RjJIN0dzdFY4Qk5YWVYwYTJyMVFhUllRY2hyUU42UlJGdkFyR3VUSlQ3aVdzRElhNWdTTlA1ZHhYeHJzbUZla1YxQUpHdXR3aUNzWFlURWF6R0c4WkJjaEd4clVMOTlwVjhCNkd0dnBaNUNYVUpVYTFDL2YrWmVnV0JyUU42TzNsdEh3R3RsV09nTFdrQXdhMUMvZ2NCZEJxeHJpUk1FNlZ3REJHdEEzb2VnV1lJOGEwWUU0emhlUVZockxMTHlwRnBHd0d1VHNpSytYd1pnYTQ3NXBmQmRCYkJyTFZmRGkxaUM1R3VPSGVuZlhrSXdhMUEySkg1WVFVQnJlbUEyYjEzR1BHdDVoTXpvWFlCMGEyb3M0T0ZaUmV4clFONk0zVmpEY0d0UXYzcCtYd1pZYTB1WlhaVmFCTHc9PQAA"
+          "value": "DAADDAABCgABGuyYV6RXUAkKAAIayyy8qRaRsAAIAAIAAAABCAADAAAAAAgABAAAAAEKAAUdaiC80IAnEAoABh1qILzQf7HgCwAHAAAByEVtUEM2d0FBQWZRL2dHSk4wdkdwL0FBQUFDZ2E0a1RDTEJleDNoclFlQ05obTFESUd0UXY0UElYZ2NjYTIrbG9KVmJoVmhyUU42S3MxcEFFR3R2T1pyQ1hnYzhhekdHN3N4Y2lBeHJyUVFVRmxnQ3hHdWVPc3ltV01JNGExQy9oZlJZUWlCclZhN2x3RjJIN0dzdFY4Qk5YWVYwYTJyMVFhUllRY2hyUU42UlJGdkFyR3VUSlQ3aVdzRElhNjNDSUt4ZGhNUnJzbUZla1YxQUpHdVlFalQrWGNWOGF6R0c4WkJjaEd4clVMOTlwVjhCNkd0dnBaNUNYVUpVYTFDL2YrWmVnV0JyUU42TzNsdEh3R3RsV09nTFdrQXdhMUMvZ2NCZEJxeHJpUk1FNlZ3REJHdEEzb2VnV1lJOGEwWUU0emhlUVZockxMTHlwRnBHd0d1VHNpSytYd1pnYTQ3NXBmQmRCYkJyTFZmRGkxaUM1R3VPSGVuZlhrSXdhMUEySkg1WVFVQnJlbUEyYjEzR1BHdDVoTXpvWFlCMGEyb3M0T0ZaUmV4clFONk0zVmpEY0d0UXYzcCtYd1pZYTB1WlhaVmFCTHc9PQAA"
          },
          "entryId": "cursor-top-9223372036854775807",
          "sortIndex": "9223372036854775807"
@@ -5855,7 +6129,7 @@
           "__typename": "TimelineTimelineCursor",
           "cursorType": "Bottom",
           "entryType": "TimelineTimelineCursor",
-          "value": "DAADDAABCgABGuyYV6RXUAkKAAIayyy8qRaRsAAIAAIAAAACCAADAAAAAAgABAAAAAEKAAUdWbKkM0AnEAoABh1ZsqQzP7HgCwAHAAAByEVtUEM2d0FBQWZRL2dHSk4wdkdwL0FBQUFDZ2E0a1RDTEJleDNoclFlQ05obTFESUd0UXY0UElYZ2NjYTIrbG9KVmJoVmhyUU42S3MxcEFFR3R2T1pyQ1hnYzhhekdHN3N4Y2lBeHJyUVFVRmxnQ3hHdWVPc3ltV01JNGExQy9oZlJZUWlCclZhN2x3RjJIN0dzdFY4Qk5YWVYwYTJyMVFhUllRY2hyUU42UlJGdkFyR3VUSlQ3aVdzRElhNWdTTlA1ZHhYeHJzbUZla1YxQUpHdXR3aUNzWFlURWF6R0c4WkJjaEd4clVMOTlwVjhCNkd0dnBaNUNYVUpVYTFDL2YrWmVnV0JyUU42TzNsdEh3R3RsV09nTFdrQXdhMUMvZ2NCZEJxeHJpUk1FNlZ3REJHdEEzb2VnV1lJOGEwWUU0emhlUVZockxMTHlwRnBHd0d1VHNpSytYd1pnYTQ3NXBmQmRCYkJyTFZmRGkxaUM1R3VPSGVuZlhrSXdhMUEySkg1WVFVQnJlbUEyYjEzR1BHdDVoTXpvWFlCMGEyb3M0T0ZaUmV4clFONk0zVmpEY0d0UXYzcCtYd1pZYTB1WlhaVmFCTHc9PQAA"
+          "value": "DAADDAABCgABGuyYV6RXUAkKAAIayyy8qRaRsAAIAAIAAAACCAADAAAAAAgABAAAAAEKAAUdaiC80IAnEAoABh1qILzQf7HgCwAHAAAByEVtUEM2d0FBQWZRL2dHSk4wdkdwL0FBQUFDZ2E0a1RDTEJleDNoclFlQ05obTFESUd0UXY0UElYZ2NjYTIrbG9KVmJoVmhyUU42S3MxcEFFR3R2T1pyQ1hnYzhhekdHN3N4Y2lBeHJyUVFVRmxnQ3hHdWVPc3ltV01JNGExQy9oZlJZUWlCclZhN2x3RjJIN0dzdFY4Qk5YWVYwYTJyMVFhUllRY2hyUU42UlJGdkFyR3VUSlQ3aVdzRElhNjNDSUt4ZGhNUnJzbUZla1YxQUpHdVlFalQrWGNWOGF6R0c4WkJjaEd4clVMOTlwVjhCNkd0dnBaNUNYVUpVYTFDL2YrWmVnV0JyUU42TzNsdEh3R3RsV09nTFdrQXdhMUMvZ2NCZEJxeHJpUk1FNlZ3REJHdEEzb2VnV1lJOGEwWUU0emhlUVZockxMTHlwRnBHd0d1VHNpSytYd1pnYTQ3NXBmQmRCYkJyTFZmRGkxaUM1R3VPSGVuZlhrSXdhMUEySkg1WVFVQnJlbUEyYjEzR1BHdDVoTXpvWFlCMGEyb3M0T0ZaUmV4clFONk0zVmpEY0d0UXYzcCtYd1pZYTB1WlhaVmFCTHc9PQAA"
          },
          "entryId": "cursor-bottom-0",
          "sortIndex": "0"

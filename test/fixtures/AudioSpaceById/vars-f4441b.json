@@ -1,0 +1,1661 @@
+{
+ "scenario": "Posts sharing X Spaces, live, ended with or without a recording, and scheduled, each Space loaded with AudioSpaceById",
+ "sourceUrl": "https://x.com/search?q=x.com%2Fi%2Fspaces&src=typed_query",
+ "unstable": true,
+ "operation": "AudioSpaceById",
+ "host": "x.com",
+ "queryId": "zm3JmUpYWDXIUsf_33-ZrA",
+ "features": {
+  "spaces_2022_h2_spaces_communities": true,
+  "spaces_2022_h2_clipping": true,
+  "creator_subscriptions_tweet_preview_api_enabled": true,
+  "profile_label_improvements_pcf_label_in_post_enabled": true,
+  "responsive_web_profile_redirect_enabled": true,
+  "rweb_tipjar_consumption_enabled": false,
+  "verified_phone_label_enabled": false,
+  "premium_content_api_read_enabled": false,
+  "communities_web_enable_tweet_community_results_fetch": true,
+  "c9s_tweet_anatomy_moderator_badge_enabled": true,
+  "responsive_web_grok_analyze_button_fetch_trends_enabled": false,
+  "responsive_web_grok_analyze_post_followups_enabled": true,
+  "rweb_cashtags_composer_attachment_enabled": true,
+  "responsive_web_jetfuel_frame": true,
+  "rweb_sports_post_context_enabled": true,
+  "x_elections_post_context_enabled": true,
+  "responsive_web_grok_share_attachment_enabled": true,
+  "responsive_web_grok_annotations_enabled": true,
+  "articles_preview_enabled": true,
+  "responsive_web_edit_tweet_api_enabled": true,
+  "rweb_conversational_replies_downvote_enabled": false,
+  "graphql_is_translatable_rweb_tweet_is_translatable_enabled": true,
+  "view_counts_everywhere_api_enabled": true,
+  "longform_notetweets_consumption_enabled": true,
+  "responsive_web_twitter_article_tweet_consumption_enabled": true,
+  "content_disclosure_indicator_enabled": true,
+  "content_disclosure_ai_generated_indicator_enabled": true,
+  "responsive_web_grok_show_grok_translated_post": true,
+  "responsive_web_grok_analysis_button_from_backend": true,
+  "post_ctas_fetch_enabled": true,
+  "rweb_cashtags_enabled": true,
+  "freedom_of_speech_not_reach_fetch_enabled": true,
+  "standardized_nudges_misinfo": true,
+  "tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled": true,
+  "longform_notetweets_rich_text_read_enabled": true,
+  "longform_notetweets_inline_media_enabled": false,
+  "responsive_web_nested_quote_preview_enabled": true,
+  "responsive_web_grok_image_annotation_enabled": true,
+  "responsive_web_grok_imagine_annotation_enabled": true,
+  "responsive_web_made_on_x_label_enabled": false,
+  "responsive_web_graphql_timeline_navigation_enabled": true,
+  "responsive_web_grok_community_note_auto_translation_is_enabled": true
+ },
+ "fieldToggles": null,
+ "variables": {
+  "id": "1BlLKjRVWzrRgA",
+  "isMetatagsQuery": false,
+  "withReplays": true,
+  "withListeners": true
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "500",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "466",
+  "x-rate-limit-reset": "1794174389"
+ },
+ "body": {
+  "data": {
+   "audioSpace": {
+    "is_subscribed": false,
+    "metadata": {
+     "conversation_controls": 0,
+     "created_at": 1794162938400,
+     "creator_results": {
+      "result": {
+       "__typename": "User",
+       "action_counts": {
+        "favorites_count": 15768
+       },
+       "affiliates_highlighted_label": {},
+       "avatar": {
+        "image_url": "https://pbs.twimg.com/profile_images/2112933205850365952/zT2naqn5_normal.jpg"
+       },
+       "banner": {
+        "image_url": "https://pbs.twimg.com/profile_banners/812205611337322496/1787966259"
+       },
+       "core": {
+        "created_at": "Fri Dec 23 07:58:02 +0000 2016",
+        "name": "حملة عتق رقبة سلطان حلل",
+        "screen_name": "saifhalol11"
+       },
+       "follow_request_sent": false,
+       "has_graduated_access": true,
+       "id": "VXNlcjo4MTIyMDU2MTEzMzczMjI0OTY=",
+       "is_blue_verified": true,
+       "location": {
+        "location": "جازان, المملكة العربية السعودي"
+       },
+       "media_permissions": {
+        "can_media_tag": false
+       },
+       "notifications_settings": {
+        "notifications_enabled": false
+       },
+       "parody_commentary_fan_label": "None",
+       "pinned_items": {
+        "tweet_ids_str": [
+         "2116305310411297267"
+        ]
+       },
+       "possibly_sensitive": false,
+       "privacy": {
+        "protected": false
+       },
+       "profile_bio": {
+        "description": "#عتق_رقبة_سلطان_حلل\n\nرُبَّ مساهمةٍ صغيرة، يكتب الله بها فرجًا عظيمًا…\nورُبَّ سهمٍ يسير يكون سببًا في عتق رقبة، وإحياء أمل، وإدخال سرورٍ على قلبٍ ينتظر الفرج. 🤍",
+        "entities": {
+         "description": {}
+        }
+       },
+       "profile_description_language": "ar",
+       "profile_image_shape": "Circle",
+       "profile_metadata": {
+        "profile_interstitial_type": ""
+       },
+       "profile_translation": {
+        "translator_type": "none"
+       },
+       "relationship_counts": {
+        "followers": 1272,
+        "following": 5807
+       },
+       "relationship_perspectives": {
+        "blocked_by": false,
+        "blocking": false,
+        "followed_by": false,
+        "following": false,
+        "live_following": false,
+        "muting": false
+       },
+       "rest_id": "812205611337322496",
+       "super_follow_eligible": false,
+       "super_followed_by": false,
+       "super_following": false,
+       "tweet_counts": {
+        "media_tweets": 682,
+        "tweets": 1727
+       },
+       "verification": {
+        "verified": false
+       },
+       "website": {
+        "url": ""
+       }
+      }
+     },
+     "disallow_join": false,
+     "is_employee_only": false,
+     "is_locked": false,
+     "is_muted": false,
+     "is_space_available_for_clipping": false,
+     "is_space_available_for_replay": false,
+     "max_admin_capacity": 3,
+     "max_guest_sessions": 10,
+     "media_key": "28_2119499099657351168",
+     "mentioned_users": [
+      {
+       "rest_id": "1311392903143600128"
+      },
+      {
+       "rest_id": "1840455026335973376"
+      },
+      {
+       "rest_id": "804636013909934080"
+      },
+      {
+       "rest_id": "898596691"
+      },
+      {
+       "rest_id": "2016857175004442624"
+      },
+      {
+       "rest_id": "1650627103702806532"
+      },
+      {
+       "rest_id": "1039937275256360963"
+      },
+      {
+       "rest_id": "785670619853709313"
+      },
+      {
+       "rest_id": "1612532660013768728"
+      },
+      {
+       "rest_id": "1840500026667143168"
+      }
+     ],
+     "narrow_cast_space_type": 0,
+     "no_incognito": false,
+     "rest_id": "1BlLKjRVWzrRgA",
+     "started_at": 1794162942599,
+     "state": "Running",
+     "title": "#عتق_رقبة_سلطان_حلل 4,679,000(م1)3280 م/190",
+     "total_live_listeners": 258,
+     "total_replay_watched": 0,
+     "tweet_results": {
+      "result": {
+       "__typename": "Tweet",
+       "card": {
+        "legacy": {
+         "binding_values": [
+          {
+           "key": "tweet_id",
+           "value": {
+            "string_value": "2119499119891026032",
+            "type": "STRING"
+           }
+          },
+          {
+           "key": "narrow_cast_space_type",
+           "value": {
+            "string_value": "0",
+            "type": "STRING"
+           }
+          },
+          {
+           "key": "id",
+           "value": {
+            "string_value": "1BlLKjRVWzrRgA",
+            "type": "STRING"
+           }
+          },
+          {
+           "key": "card_url",
+           "value": {
+            "scribe_key": "card_url",
+            "string_value": "https://t.co/WZo1cXLkID",
+            "type": "STRING"
+           }
+          }
+         ],
+         "card_platform": {
+          "platform": {
+           "audience": {
+            "name": "production"
+           },
+           "device": {
+            "name": "Swift",
+            "version": "12"
+           }
+          }
+         },
+         "name": "3691233323:audiospace",
+         "url": "https://t.co/WZo1cXLkID",
+         "user_refs_results": []
+        },
+        "rest_id": "https://t.co/WZo1cXLkID"
+       },
+       "cashtag_attachments": [],
+       "core": {
+        "user_results": {
+         "result": {
+          "__typename": "User",
+          "action_counts": {
+           "favorites_count": 15768
+          },
+          "affiliates_highlighted_label": {},
+          "avatar": {
+           "image_url": "https://pbs.twimg.com/profile_images/2112933205850365952/zT2naqn5_normal.jpg"
+          },
+          "banner": {
+           "image_url": "https://pbs.twimg.com/profile_banners/812205611337322496/1787966259"
+          },
+          "core": {
+           "created_at": "Fri Dec 23 07:58:02 +0000 2016",
+           "name": "حملة عتق رقبة سلطان حلل",
+           "screen_name": "saifhalol11"
+          },
+          "follow_request_sent": false,
+          "has_graduated_access": true,
+          "id": "VXNlcjo4MTIyMDU2MTEzMzczMjI0OTY=",
+          "is_blue_verified": true,
+          "location": {
+           "location": "جازان, المملكة العربية السعودي"
+          },
+          "media_permissions": {
+           "can_media_tag": false
+          },
+          "notifications_settings": {
+           "notifications_enabled": false
+          },
+          "parody_commentary_fan_label": "None",
+          "pinned_items": {
+           "tweet_ids_str": [
+            "2116305310411297267"
+           ]
+          },
+          "possibly_sensitive": false,
+          "privacy": {
+           "protected": false
+          },
+          "profile_bio": {
+           "description": "#عتق_رقبة_سلطان_حلل\n\nرُبَّ مساهمةٍ صغيرة، يكتب الله بها فرجًا عظيمًا…\nورُبَّ سهمٍ يسير يكون سببًا في عتق رقبة، وإحياء أمل، وإدخال سرورٍ على قلبٍ ينتظر الفرج. 🤍",
+           "entities": {
+            "description": {}
+           }
+          },
+          "profile_description_language": "ar",
+          "profile_image_shape": "Circle",
+          "profile_metadata": {
+           "profile_interstitial_type": ""
+          },
+          "profile_translation": {
+           "translator_type": "none"
+          },
+          "relationship_counts": {
+           "followers": 1272,
+           "following": 5807
+          },
+          "relationship_perspectives": {
+           "blocked_by": false,
+           "blocking": false,
+           "followed_by": false,
+           "following": false,
+           "live_following": false,
+           "muting": false
+          },
+          "rest_id": "812205611337322496",
+          "super_follow_eligible": false,
+          "super_followed_by": false,
+          "super_following": false,
+          "tweet_counts": {
+           "media_tweets": 682,
+           "tweets": 1727
+          },
+          "verification": {
+           "verified": false
+          },
+          "website": {
+           "url": ""
+          }
+         }
+        }
+       },
+       "edit_control": {
+        "edit_tweet_ids": [
+         "2119499119891026032"
+        ],
+        "editable_until_msecs": "1794166543000",
+        "edits_remaining": "5",
+        "is_edit_eligible": false
+       },
+       "grok_analysis_button": true,
+       "grok_annotations": {
+        "is_image_editable_by_grok": false
+       },
+       "grok_translated_post_with_availability": {
+        "is_available": false
+       },
+       "is_translatable": false,
+       "legacy": {
+        "bookmark_count": 2,
+        "bookmarked": false,
+        "conversation_id_str": "2119499119891026032",
+        "created_at": "Sun Nov 08 18:35:43 +0000 2026",
+        "display_text_range": [
+         0,
+         23
+        ],
+        "entities": {
+         "urls": [
+          {
+           "display_url": "x.com/i/spaces/1BlLK…",
+           "expanded_url": "https://x.com/i/spaces/1BlLKjRVWzrRgA",
+           "indices": [
+            0,
+            23
+           ],
+           "url": "https://t.co/WZo1cXLkID"
+          }
+         ]
+        },
+        "favorite_count": 25,
+        "favorited": false,
+        "full_text": "https://t.co/WZo1cXLkID",
+        "id_str": "2119499119891026032",
+        "is_quote_status": false,
+        "lang": "zxx",
+        "possibly_sensitive": false,
+        "possibly_sensitive_editable": true,
+        "quote_count": 25,
+        "reply_count": 65,
+        "retweet_count": 40,
+        "retweeted": false,
+        "user_id_str": "812205611337322496"
+       },
+       "rest_id": "2119499119891026032",
+       "unmention_data": {},
+       "views": {
+        "count": "2756",
+        "state": "EnabledWithCount"
+       }
+      }
+     },
+     "updated_at": 1794173486092
+    },
+    "participants": {
+     "admins": [
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2112933205850365952/zT2naqn5_normal.jpg",
+       "display_name": "حملة عتق رقبة سلطان حلل",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": true,
+       "periscope_user_id": "tw-812205611337322496",
+       "start": 1794172957289,
+       "twitter_screen_name": "saifhalol11",
+       "user_results": {
+        "rest_id": "812205611337322496",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2091265444627824640/EEjj5qMO_normal.jpg",
+       "display_name": "ابونايف جابر المسعود",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1256339283931267081",
+       "start": 1794165373595,
+       "twitter_screen_name": "BO_NAIF68",
+       "user_results": {
+        "rest_id": "1256339283931267081",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1905455750098333696/yAmSM2Mq_normal.jpg",
+       "display_name": "ابو جهاد",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1840500026667143168",
+       "start": 1794169705687,
+       "twitter_screen_name": "Yahya5874054",
+       "user_results": {
+        "rest_id": "1840500026667143168",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      }
+     ],
+     "listeners": [
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2100164246763900928/T0CI530A_normal.jpg",
+       "display_name": "بنت محمد القحطاني 1389🩷",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": true,
+       "periscope_user_id": "tw-2002394979327750149",
+       "start": 1794170904000,
+       "twitter_screen_name": "qmf0074",
+       "user_results": {
+        "rest_id": "2002394979327750149",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2118515919802568704/RDoESfSM_normal.jpg",
+       "display_name": "أطلال",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": true,
+       "periscope_user_id": "tw-1967151740374929408",
+       "start": 1794173130000,
+       "twitter_screen_name": "Atlal_98",
+       "user_results": {
+        "rest_id": "1967151740374929408",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2044901822020628480/rm87eqkT_normal.jpg",
+       "display_name": "زهور الريف",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "tw-1705292635122847744",
+       "start": 1794173484000,
+       "twitter_screen_name": "rjyljn617594",
+       "user_results": {
+        "rest_id": "1705292635122847744",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2081678041290305536/dAxICbl8_normal.jpg",
+       "display_name": "🔥الياقوت…",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "tw-766552582617608192",
+       "start": 1794170025000,
+       "twitter_screen_name": "albda1397",
+       "user_results": {
+        "rest_id": "766552582617608192",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1732685151371448320/NpWZU5NS_normal.jpg",
+       "display_name": "الهدى 🇰🇼",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "tw-1245648034941173761",
+       "start": 1794172771000,
+       "twitter_screen_name": "omeass1",
+       "user_results": {
+        "rest_id": "1245648034941173761",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2119373679012315136/DXC-TdIB_normal.jpg",
+       "display_name": "سمو العتيبي . 🪷🪽",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "tw-2063297400710549504",
+       "start": 1794170569000,
+       "twitter_screen_name": "3FTk39",
+       "user_results": {
+        "rest_id": "2063297400710549504",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2017995698071875584/MPWgzXO5_normal.jpg",
+       "display_name": "sehem",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "tw-2015019089140310016",
+       "start": 1794173315000,
+       "twitter_screen_name": "seham_7a",
+       "user_results": {
+        "rest_id": "2015019089140310016",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2118428930818342912/kCHferWb_normal.jpg",
+       "display_name": "الحربي",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "tw-1441012223548301317",
+       "start": 1794173446000,
+       "twitter_screen_name": "iizh17",
+       "user_results": {
+        "rest_id": "1441012223548301317",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      }
+     ],
+     "speakers": [
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1606249919915982849/R29bLKwN_normal.jpg",
+       "display_name": "أيمن الحياني",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-1039937275256360963",
+       "start": 1794170747148,
+       "twitter_screen_name": "ASDFG665555",
+       "user_results": {
+        "rest_id": "1039937275256360963",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1976432811306254336/ucHk9McI_normal.jpg",
+       "display_name": "ام شذى",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": true,
+       "periscope_user_id": "tw-1612532660013768728",
+       "start": 1794170417850,
+       "twitter_screen_name": "Umm_shatha",
+       "user_results": {
+        "rest_id": "1612532660013768728",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2011253469005357056/azuJCBzS_normal.jpg",
+       "display_name": "سعد مبارك الديحاني 🇰🇼",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-1859324817033527297",
+       "start": 1794170003568,
+       "twitter_screen_name": "xzyxfvcsf8",
+       "user_results": {
+        "rest_id": "1859324817033527297",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1970884243644456960/0tI8cQyv_normal.jpg",
+       "display_name": "أبو مطر Mohammad",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1631192327543828481",
+       "start": 1794164181256,
+       "twitter_screen_name": "Man_1444",
+       "user_results": {
+        "rest_id": "1631192327543828481",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2116607171299299328/C_WLorbf_normal.jpg",
+       "display_name": "يا٠مختار السوقn J",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1650627103702806532",
+       "start": 1794163062227,
+       "twitter_screen_name": "QnnJ835500",
+       "user_results": {
+        "rest_id": "1650627103702806532",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2047385339946319872/hGDaNLha_normal.jpg",
+       "display_name": "زهرة البستان",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1840455026335973376",
+       "start": 1794173181867,
+       "twitter_screen_name": "lysmly1788201",
+       "user_results": {
+        "rest_id": "1840455026335973376",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2119104060473192448/K6rrOPCz_normal.jpg",
+       "display_name": "ابو سماح/عتق رقية عويد العنزي",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-2358482764",
+       "start": 1794170218542,
+       "twitter_screen_name": "aabboooddii",
+       "user_results": {
+        "rest_id": "2358482764",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2119169308416745472/WJtSON8W_normal.jpg",
+       "display_name": "الفتى الذهبي",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-785670619853709313",
+       "start": 1794173007067,
+       "twitter_screen_name": "Saifhalol4",
+       "user_results": {
+        "rest_id": "785670619853709313",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      }
+     ],
+     "total": 23
+    },
+    "sharings": {
+     "items": [
+      {
+       "created_at_ms": 1794163427279,
+       "shared_item": {
+        "__typename": "AudioSpaceSharedTweet",
+        "tweet_results": {
+         "result": {
+          "__typename": "Tweet",
+          "cashtag_attachments": [],
+          "core": {
+           "user_results": {
+            "result": {
+             "__typename": "User",
+             "action_counts": {
+              "favorites_count": 15768
+             },
+             "affiliates_highlighted_label": {},
+             "avatar": {
+              "image_url": "https://pbs.twimg.com/profile_images/2112933205850365952/zT2naqn5_normal.jpg"
+             },
+             "banner": {
+              "image_url": "https://pbs.twimg.com/profile_banners/812205611337322496/1787966259"
+             },
+             "core": {
+              "created_at": "Fri Dec 23 07:58:02 +0000 2016",
+              "name": "حملة عتق رقبة سلطان حلل",
+              "screen_name": "saifhalol11"
+             },
+             "follow_request_sent": false,
+             "has_graduated_access": true,
+             "id": "VXNlcjo4MTIyMDU2MTEzMzczMjI0OTY=",
+             "is_blue_verified": true,
+             "location": {
+              "location": "جازان, المملكة العربية السعودي"
+             },
+             "media_permissions": {
+              "can_media_tag": false
+             },
+             "notifications_settings": {
+              "notifications_enabled": false
+             },
+             "parody_commentary_fan_label": "None",
+             "pinned_items": {
+              "tweet_ids_str": [
+               "2116305310411297267"
+              ]
+             },
+             "possibly_sensitive": false,
+             "privacy": {
+              "protected": false
+             },
+             "profile_bio": {
+              "description": "#عتق_رقبة_سلطان_حلل\n\nرُبَّ مساهمةٍ صغيرة، يكتب الله بها فرجًا عظيمًا…\nورُبَّ سهمٍ يسير يكون سببًا في عتق رقبة، وإحياء أمل، وإدخال سرورٍ على قلبٍ ينتظر الفرج. 🤍",
+              "entities": {
+               "description": {}
+              }
+             },
+             "profile_description_language": "ar",
+             "profile_image_shape": "Circle",
+             "profile_metadata": {
+              "profile_interstitial_type": ""
+             },
+             "profile_translation": {
+              "translator_type": "none"
+             },
+             "relationship_counts": {
+              "followers": 1272,
+              "following": 5807
+             },
+             "relationship_perspectives": {
+              "blocked_by": false,
+              "blocking": false,
+              "followed_by": false,
+              "following": false,
+              "live_following": false,
+              "muting": false
+             },
+             "rest_id": "812205611337322496",
+             "super_follow_eligible": false,
+             "super_followed_by": false,
+             "super_following": false,
+             "tweet_counts": {
+              "media_tweets": 682,
+              "tweets": 1727
+             },
+             "verification": {
+              "verified": false
+             },
+             "website": {
+              "url": ""
+             }
+            }
+           }
+          },
+          "edit_control": {
+           "edit_tweet_ids": [
+            "2116236276588486767"
+           ],
+           "editable_until_msecs": "1793388620000",
+           "edits_remaining": "5",
+           "is_edit_eligible": true
+          },
+          "grok_analysis_button": true,
+          "grok_annotations": {
+           "is_image_editable_by_grok": false
+          },
+          "grok_translated_post_with_availability": {
+           "data": {
+            "associated_data": {},
+            "destination_language": "en",
+            "entities": {
+             "hashtags": [],
+             "symbols": [],
+             "urls": [],
+             "user_mentions": []
+            },
+            "preview_translation": "Eight years with Sultan behind bars, and eight years with his mother waiting for the moment when her eyes will finally behold her son in her embrace.. 💔\n\nSultan has memorized the entire Holy Quran, along with the Ten Recitations, and this is a mother who has grown old in years,",
+            "source_language": "ar",
+            "translation": "Eight years with Sultan behind bars, and eight years with his mother waiting for the moment when her eyes will finally behold her son in her embrace.. 💔\n\nSultan has memorized the entire Holy Quran, along with the Ten Recitations, and this is a mother who has grown old in years, yet her heart remains suspended on God's relief and the return of her son.\n\nO people of goodness, imagine the joy of a mother hearing the news of her son's return after all this waiting.. Imagine her tears as she holds him to her chest after years of deprivation.\n\n💰 Amount of the blood money: 5,000,000 riyals\n⏳ Time remaining in the deadline: approximately 3 months and 20 days\n\nContribute what you can, share, and guide the people of goodness to it, for the one who guides to good is like its doer.\n\n🏦 Official Bank Account Details\n\n🏛️ Jazan Region Emirate\nDonations: Blood money for Muhammad Jaber (may God have mercy on him)\n\nAccount Number:\n119000010006089878899\n\nIBAN:\nSA2180000119608019878899\n\nO Allah, decree for Sultan among Your servants one who will be the cause of his release, and return him to his mother in the most beautiful way, and make her joy at his return near, O Lord of the Worlds."
+           },
+           "is_available": true
+          },
+          "is_translatable": true,
+          "legacy": {
+           "bookmark_count": 6,
+           "bookmarked": false,
+           "conversation_id_str": "2116236276588486767",
+           "created_at": "Fri Oct 30 18:30:20 +0000 2026",
+           "display_text_range": [
+            0,
+            279
+           ],
+           "entities": {
+            "media": [
+             {
+              "display_url": "pic.x.com/pI1h6IME9y",
+              "expanded_url": "https://x.com/saifhalol11/status/2116236276588486767/photo/1",
+              "ext_media_availability": {
+               "status": "Available"
+              },
+              "features": {
+               "large": {
+                "faces": []
+               },
+               "medium": {
+                "faces": []
+               },
+               "orig": {
+                "faces": []
+               },
+               "small": {
+                "faces": []
+               }
+              },
+              "id_str": "2116236260561809408",
+              "indices": [
+               280,
+               303
+              ],
+              "media_key": "3_2116236260561809408",
+              "media_results": {
+               "result": {
+                "media_key": "3_2116236260561809408"
+               }
+              },
+              "media_url_https": "https://pbs.twimg.com/media/HV5hqquWcAAhfzW.jpg",
+              "original_info": {
+               "focus_rects": [
+                {
+                 "h": 655,
+                 "w": 1170,
+                 "x": 0,
+                 "y": 1360
+                },
+                {
+                 "h": 1170,
+                 "w": 1170,
+                 "x": 0,
+                 "y": 878
+                },
+                {
+                 "h": 1334,
+                 "w": 1170,
+                 "x": 0,
+                 "y": 714
+                },
+                {
+                 "h": 2048,
+                 "w": 1024,
+                 "x": 0,
+                 "y": 0
+                },
+                {
+                 "h": 2048,
+                 "w": 1170,
+                 "x": 0,
+                 "y": 0
+                }
+               ],
+               "height": 2048,
+               "width": 1170
+              },
+              "sizes": {
+               "large": {
+                "h": 2048,
+                "resize": "fit",
+                "w": 1170
+               },
+               "medium": {
+                "h": 1200,
+                "resize": "fit",
+                "w": 686
+               },
+               "small": {
+                "h": 680,
+                "resize": "fit",
+                "w": 388
+               },
+               "thumb": {
+                "h": 150,
+                "resize": "crop",
+                "w": 150
+               }
+              },
+              "type": "photo",
+              "url": "https://t.co/pI1h6IME9y"
+             }
+            ]
+           },
+           "extended_entities": {
+            "media": [
+             {
+              "display_url": "pic.x.com/pI1h6IME9y",
+              "expanded_url": "https://x.com/saifhalol11/status/2116236276588486767/photo/1",
+              "ext_media_availability": {
+               "status": "Available"
+              },
+              "features": {
+               "large": {
+                "faces": []
+               },
+               "medium": {
+                "faces": []
+               },
+               "orig": {
+                "faces": []
+               },
+               "small": {
+                "faces": []
+               }
+              },
+              "id_str": "2116236260561809408",
+              "indices": [
+               280,
+               303
+              ],
+              "media_key": "3_2116236260561809408",
+              "media_results": {
+               "result": {
+                "media_key": "3_2116236260561809408"
+               }
+              },
+              "media_url_https": "https://pbs.twimg.com/media/HV5hqquWcAAhfzW.jpg",
+              "original_info": {
+               "focus_rects": [
+                {
+                 "h": 655,
+                 "w": 1170,
+                 "x": 0,
+                 "y": 1360
+                },
+                {
+                 "h": 1170,
+                 "w": 1170,
+                 "x": 0,
+                 "y": 878
+                },
+                {
+                 "h": 1334,
+                 "w": 1170,
+                 "x": 0,
+                 "y": 714
+                },
+                {
+                 "h": 2048,
+                 "w": 1024,
+                 "x": 0,
+                 "y": 0
+                },
+                {
+                 "h": 2048,
+                 "w": 1170,
+                 "x": 0,
+                 "y": 0
+                }
+               ],
+               "height": 2048,
+               "width": 1170
+              },
+              "sizes": {
+               "large": {
+                "h": 2048,
+                "resize": "fit",
+                "w": 1170
+               },
+               "medium": {
+                "h": 1200,
+                "resize": "fit",
+                "w": 686
+               },
+               "small": {
+                "h": 680,
+                "resize": "fit",
+                "w": 388
+               },
+               "thumb": {
+                "h": 150,
+                "resize": "crop",
+                "w": 150
+               }
+              },
+              "type": "photo",
+              "url": "https://t.co/pI1h6IME9y"
+             }
+            ]
+           },
+           "favorite_count": 29,
+           "favorited": false,
+           "full_text": "ثمانية أعوام وسلطان خلف القضبان، وثمانية أعوام وأمّه تنتظر اللحظة التي تقرّ فيها عينها برؤية ولدها بين أحضانها.. 💔\n\nسلطان حافظٌ لكتاب الله الكريم كاملًا، وبالقراءات العشر، وهذه أمٌّ كبرت سنّها، وما زال قلبها معلّقًا بفرج الله وعودة ابنها.\n\nيا أهل الخير، تخيّلوا فرحة أمّ تسمع خبر https://t.co/pI1h6IME9y",
+           "id_str": "2116236276588486767",
+           "is_quote_status": false,
+           "lang": "ar",
+           "possibly_sensitive": false,
+           "possibly_sensitive_editable": true,
+           "quote_count": 9,
+           "reply_count": 12,
+           "retweet_count": 46,
+           "retweeted": false,
+           "user_id_str": "812205611337322496"
+          },
+          "note_tweet": {
+           "is_expandable": true,
+           "note_tweet_results": {
+            "result": {
+             "entity_set": {
+              "hashtags": [],
+              "smarttags": [],
+              "symbols": [],
+              "urls": [],
+              "user_mentions": []
+             },
+             "id": "Tm90ZVR3ZWV0OjIxMTYyMzYyNzY0Nzk1MDQzODU=",
+             "text": "ثمانية أعوام وسلطان خلف القضبان، وثمانية أعوام وأمّه تنتظر اللحظة التي تقرّ فيها عينها برؤية ولدها بين أحضانها.. 💔\n\nسلطان حافظٌ لكتاب الله الكريم كاملًا، وبالقراءات العشر، وهذه أمٌّ كبرت سنّها، وما زال قلبها معلّقًا بفرج الله وعودة ابنها.\n\nيا أهل الخير، تخيّلوا فرحة أمّ تسمع خبر عودة ولدها بعد كل هذا الانتظار.. تخيّلوا دموعها وهي تضمه إلى صدرها بعد سنوات من الحرمان.\n\n💰 مبلغ الدية: 5,000,000 ريال\n⏳ المتبقي من المهلة: قرابة 3 أشهر و20 يومً\n\nساهم بما تستطيع، وانشر، ودلّ أهل الخير، فالدال على الخير كفاعله.\n\n🏦 بيانات الحساب البنكي الرسمي\n\n🏛️ إمارة منطقة جازان\nالتبرعات: دية محمد جابر (رحمه الله)\n\nرقم الحساب:\n119000010006089878899\n\nالآيبان:\nSA2180000119608019878899\n\nاللهم سخّر لسلطان من عبادك من يكون سببًا في فرجه، وردّه إلى أمّه ردًا جميلًا، واجعل فرحتها بعودته قريبة يا رب العالمين."
+            }
+           }
+          },
+          "rest_id": "2116236276588486767",
+          "unmention_data": {},
+          "views": {
+           "count": "2578",
+           "state": "EnabledWithCount"
+          }
+         }
+        }
+       },
+       "sharing_id": "2119501150147805629",
+       "updated_at_ms": 1794163427278,
+       "user_results": {
+        "result": {
+         "__typename": "User",
+         "action_counts": {
+          "favorites_count": 15768
+         },
+         "affiliates_highlighted_label": {},
+         "avatar": {
+          "image_url": "https://pbs.twimg.com/profile_images/2112933205850365952/zT2naqn5_normal.jpg"
+         },
+         "banner": {
+          "image_url": "https://pbs.twimg.com/profile_banners/812205611337322496/1787966259"
+         },
+         "core": {
+          "created_at": "Fri Dec 23 07:58:02 +0000 2016",
+          "name": "حملة عتق رقبة سلطان حلل",
+          "screen_name": "saifhalol11"
+         },
+         "follow_request_sent": false,
+         "has_graduated_access": true,
+         "id": "VXNlcjo4MTIyMDU2MTEzMzczMjI0OTY=",
+         "is_blue_verified": true,
+         "location": {
+          "location": "جازان, المملكة العربية السعودي"
+         },
+         "media_permissions": {
+          "can_media_tag": false
+         },
+         "notifications_settings": {
+          "notifications_enabled": false
+         },
+         "parody_commentary_fan_label": "None",
+         "pinned_items": {
+          "tweet_ids_str": [
+           "2116305310411297267"
+          ]
+         },
+         "possibly_sensitive": false,
+         "privacy": {
+          "protected": false
+         },
+         "profile_bio": {
+          "description": "#عتق_رقبة_سلطان_حلل\n\nرُبَّ مساهمةٍ صغيرة، يكتب الله بها فرجًا عظيمًا…\nورُبَّ سهمٍ يسير يكون سببًا في عتق رقبة، وإحياء أمل، وإدخال سرورٍ على قلبٍ ينتظر الفرج. 🤍",
+          "entities": {
+           "description": {}
+          }
+         },
+         "profile_description_language": "ar",
+         "profile_image_shape": "Circle",
+         "profile_metadata": {
+          "profile_interstitial_type": ""
+         },
+         "profile_translation": {
+          "translator_type": "none"
+         },
+         "relationship_counts": {
+          "followers": 1272,
+          "following": 5807
+         },
+         "relationship_perspectives": {
+          "blocked_by": false,
+          "blocking": false,
+          "followed_by": false,
+          "following": false,
+          "live_following": false,
+          "muting": false
+         },
+         "rest_id": "812205611337322496",
+         "super_follow_eligible": false,
+         "super_followed_by": false,
+         "super_following": false,
+         "tweet_counts": {
+          "media_tweets": 682,
+          "tweets": 1727
+         },
+         "verification": {
+          "verified": false
+         },
+         "website": {
+          "url": ""
+         }
+        }
+       }
+      },
+      {
+       "created_at_ms": 1794163433035,
+       "shared_item": {
+        "__typename": "AudioSpaceSharedTweet",
+        "tweet_results": {
+         "result": {
+          "__typename": "Tweet",
+          "cashtag_attachments": [],
+          "core": {
+           "user_results": {
+            "result": {
+             "__typename": "User",
+             "action_counts": {
+              "favorites_count": 15768
+             },
+             "affiliates_highlighted_label": {},
+             "avatar": {
+              "image_url": "https://pbs.twimg.com/profile_images/2112933205850365952/zT2naqn5_normal.jpg"
+             },
+             "banner": {
+              "image_url": "https://pbs.twimg.com/profile_banners/812205611337322496/1787966259"
+             },
+             "core": {
+              "created_at": "Fri Dec 23 07:58:02 +0000 2016",
+              "name": "حملة عتق رقبة سلطان حلل",
+              "screen_name": "saifhalol11"
+             },
+             "follow_request_sent": false,
+             "has_graduated_access": true,
+             "id": "VXNlcjo4MTIyMDU2MTEzMzczMjI0OTY=",
+             "is_blue_verified": true,
+             "location": {
+              "location": "جازان, المملكة العربية السعودي"
+             },
+             "media_permissions": {
+              "can_media_tag": false
+             },
+             "notifications_settings": {
+              "notifications_enabled": false
+             },
+             "parody_commentary_fan_label": "None",
+             "pinned_items": {
+              "tweet_ids_str": [
+               "2116305310411297267"
+              ]
+             },
+             "possibly_sensitive": false,
+             "privacy": {
+              "protected": false
+             },
+             "profile_bio": {
+              "description": "#عتق_رقبة_سلطان_حلل\n\nرُبَّ مساهمةٍ صغيرة، يكتب الله بها فرجًا عظيمًا…\nورُبَّ سهمٍ يسير يكون سببًا في عتق رقبة، وإحياء أمل، وإدخال سرورٍ على قلبٍ ينتظر الفرج. 🤍",
+              "entities": {
+               "description": {}
+              }
+             },
+             "profile_description_language": "ar",
+             "profile_image_shape": "Circle",
+             "profile_metadata": {
+              "profile_interstitial_type": ""
+             },
+             "profile_translation": {
+              "translator_type": "none"
+             },
+             "relationship_counts": {
+              "followers": 1272,
+              "following": 5807
+             },
+             "relationship_perspectives": {
+              "blocked_by": false,
+              "blocking": false,
+              "followed_by": false,
+              "following": false,
+              "live_following": false,
+              "muting": false
+             },
+             "rest_id": "812205611337322496",
+             "super_follow_eligible": false,
+             "super_followed_by": false,
+             "super_following": false,
+             "tweet_counts": {
+              "media_tweets": 682,
+              "tweets": 1727
+             },
+             "verification": {
+              "verified": false
+             },
+             "website": {
+              "url": ""
+             }
+            }
+           }
+          },
+          "edit_control": {
+           "edit_tweet_ids": [
+            "2115929675864445172"
+           ],
+           "editable_until_msecs": "1793315521000",
+           "edits_remaining": "5",
+           "is_edit_eligible": true
+          },
+          "grok_analysis_button": true,
+          "grok_annotations": {
+           "is_image_editable_by_grok": true
+          },
+          "grok_translated_post_with_availability": {
+           "is_available": false
+          },
+          "is_translatable": false,
+          "legacy": {
+           "bookmark_count": 0,
+           "bookmarked": false,
+           "conversation_id_str": "2115929675864445172",
+           "created_at": "Thu Oct 29 22:12:01 +0000 2026",
+           "display_text_range": [
+            0,
+            0
+           ],
+           "entities": {
+            "media": [
+             {
+              "allow_download_status": {
+               "allow_download": true
+              },
+              "display_url": "pic.x.com/kPeFcCOcgD",
+              "expanded_url": "https://x.com/saifhalol11/status/2115929675864445172/photo/1",
+              "ext_media_availability": {
+               "status": "Available"
+              },
+              "features": {
+               "large": {
+                "faces": []
+               },
+               "medium": {
+                "faces": []
+               },
+               "orig": {
+                "faces": []
+               },
+               "small": {
+                "faces": []
+               }
+              },
+              "id_str": "2115929666645045249",
+              "indices": [
+               0,
+               23
+              ],
+              "media_key": "3_2115929666645045249",
+              "media_results": {
+               "result": {
+                "media_key": "3_2115929666645045249"
+               }
+              },
+              "media_url_https": "https://pbs.twimg.com/media/HV1K0jYWsAEiDca.jpg",
+              "original_info": {
+               "focus_rects": [
+                {
+                 "h": 458,
+                 "w": 818,
+                 "x": 0,
+                 "y": 566
+                },
+                {
+                 "h": 818,
+                 "w": 818,
+                 "x": 0,
+                 "y": 206
+                },
+                {
+                 "h": 933,
+                 "w": 818,
+                 "x": 0,
+                 "y": 91
+                },
+                {
+                 "h": 1024,
+                 "w": 512,
+                 "x": 153,
+                 "y": 0
+                },
+                {
+                 "h": 1024,
+                 "w": 818,
+                 "x": 0,
+                 "y": 0
+                }
+               ],
+               "height": 1024,
+               "width": 818
+              },
+              "sizes": {
+               "large": {
+                "h": 1024,
+                "resize": "fit",
+                "w": 818
+               },
+               "medium": {
+                "h": 1024,
+                "resize": "fit",
+                "w": 818
+               },
+               "small": {
+                "h": 680,
+                "resize": "fit",
+                "w": 543
+               },
+               "thumb": {
+                "h": 150,
+                "resize": "crop",
+                "w": 150
+               }
+              },
+              "type": "photo",
+              "url": "https://t.co/kPeFcCOcgD"
+             }
+            ]
+           },
+           "extended_entities": {
+            "media": [
+             {
+              "allow_download_status": {
+               "allow_download": true
+              },
+              "display_url": "pic.x.com/kPeFcCOcgD",
+              "expanded_url": "https://x.com/saifhalol11/status/2115929675864445172/photo/1",
+              "ext_media_availability": {
+               "status": "Available"
+              },
+              "features": {
+               "large": {
+                "faces": []
+               },
+               "medium": {
+                "faces": []
+               },
+               "orig": {
+                "faces": []
+               },
+               "small": {
+                "faces": []
+               }
+              },
+              "id_str": "2115929666645045249",
+              "indices": [
+               0,
+               23
+              ],
+              "media_key": "3_2115929666645045249",
+              "media_results": {
+               "result": {
+                "media_key": "3_2115929666645045249"
+               }
+              },
+              "media_url_https": "https://pbs.twimg.com/media/HV1K0jYWsAEiDca.jpg",
+              "original_info": {
+               "focus_rects": [
+                {
+                 "h": 458,
+                 "w": 818,
+                 "x": 0,
+                 "y": 566
+                },
+                {
+                 "h": 818,
+                 "w": 818,
+                 "x": 0,
+                 "y": 206
+                },
+                {
+                 "h": 933,
+                 "w": 818,
+                 "x": 0,
+                 "y": 91
+                },
+                {
+                 "h": 1024,
+                 "w": 512,
+                 "x": 153,
+                 "y": 0
+                },
+                {
+                 "h": 1024,
+                 "w": 818,
+                 "x": 0,
+                 "y": 0
+                }
+               ],
+               "height": 1024,
+               "width": 818
+              },
+              "sizes": {
+               "large": {
+                "h": 1024,
+                "resize": "fit",
+                "w": 818
+               },
+               "medium": {
+                "h": 1024,
+                "resize": "fit",
+                "w": 818
+               },
+               "small": {
+                "h": 680,
+                "resize": "fit",
+                "w": 543
+               },
+               "thumb": {
+                "h": 150,
+                "resize": "crop",
+                "w": 150
+               }
+              },
+              "type": "photo",
+              "url": "https://t.co/kPeFcCOcgD"
+             }
+            ]
+           },
+           "favorite_count": 17,
+           "favorited": false,
+           "full_text": "https://t.co/kPeFcCOcgD",
+           "id_str": "2115929675864445172",
+           "is_quote_status": false,
+           "lang": "zxx",
+           "possibly_sensitive": false,
+           "possibly_sensitive_editable": true,
+           "quote_count": 2,
+           "reply_count": 4,
+           "retweet_count": 19,
+           "retweeted": false,
+           "user_id_str": "812205611337322496"
+          },
+          "rest_id": "2115929675864445172",
+          "unmention_data": {},
+          "views": {
+           "count": "736",
+           "state": "EnabledWithCount"
+          }
+         }
+        }
+       },
+       "sharing_id": "2119501174290162139",
+       "updated_at_ms": 1794163433035,
+       "user_results": {
+        "result": {
+         "__typename": "User",
+         "action_counts": {
+          "favorites_count": 15768
+         },
+         "affiliates_highlighted_label": {},
+         "avatar": {
+          "image_url": "https://pbs.twimg.com/profile_images/2112933205850365952/zT2naqn5_normal.jpg"
+         },
+         "banner": {
+          "image_url": "https://pbs.twimg.com/profile_banners/812205611337322496/1787966259"
+         },
+         "core": {
+          "created_at": "Fri Dec 23 07:58:02 +0000 2016",
+          "name": "حملة عتق رقبة سلطان حلل",
+          "screen_name": "saifhalol11"
+         },
+         "follow_request_sent": false,
+         "has_graduated_access": true,
+         "id": "VXNlcjo4MTIyMDU2MTEzMzczMjI0OTY=",
+         "is_blue_verified": true,
+         "location": {
+          "location": "جازان, المملكة العربية السعودي"
+         },
+         "media_permissions": {
+          "can_media_tag": false
+         },
+         "notifications_settings": {
+          "notifications_enabled": false
+         },
+         "parody_commentary_fan_label": "None",
+         "pinned_items": {
+          "tweet_ids_str": [
+           "2116305310411297267"
+          ]
+         },
+         "possibly_sensitive": false,
+         "privacy": {
+          "protected": false
+         },
+         "profile_bio": {
+          "description": "#عتق_رقبة_سلطان_حلل\n\nرُبَّ مساهمةٍ صغيرة، يكتب الله بها فرجًا عظيمًا…\nورُبَّ سهمٍ يسير يكون سببًا في عتق رقبة، وإحياء أمل، وإدخال سرورٍ على قلبٍ ينتظر الفرج. 🤍",
+          "entities": {
+           "description": {}
+          }
+         },
+         "profile_description_language": "ar",
+         "profile_image_shape": "Circle",
+         "profile_metadata": {
+          "profile_interstitial_type": ""
+         },
+         "profile_translation": {
+          "translator_type": "none"
+         },
+         "relationship_counts": {
+          "followers": 1272,
+          "following": 5807
+         },
+         "relationship_perspectives": {
+          "blocked_by": false,
+          "blocking": false,
+          "followed_by": false,
+          "following": false,
+          "live_following": false,
+          "muting": false
+         },
+         "rest_id": "812205611337322496",
+         "super_follow_eligible": false,
+         "super_followed_by": false,
+         "super_following": false,
+         "tweet_counts": {
+          "media_tweets": 682,
+          "tweets": 1727
+         },
+         "verification": {
+          "verified": false
+         },
+         "website": {
+          "url": ""
+         }
+        }
+       }
+      }
+     ],
+     "slice_info": {}
+    }
+   }
+  }
+ }
+}

@@ -3,7 +3,7 @@
  "sourceUrl": "https://x.com/quax_tests",
  "operation": "ViewerBadgeCounts",
  "host": "x.com",
- "queryId": "q4Npr1-FYRWyXsRzPckwEA",
+ "queryId": "I7FbT7Bfw_If9nT5q6PUQQ",
  "features": null,
  "fieldToggles": null,
  "variables": {},
@@ -11,8 +11,8 @@
  "headers": {
   "x-rate-limit-limit": "50",
   "content-type": "application/json",
-  "x-rate-limit-remaining": "30",
-  "x-rate-limit-reset": "1793073832"
+  "x-rate-limit-reset": "1794172222",
+  "x-rate-limit-remaining": "48"
  },
  "body": {
   "data": {
@@ -22,6 +22,8 @@
       "__typename": "User",
       "badge_counts": {
        "dm_unread_count": 0,
+       "grok_bot_primary_unread_count": 0,
+       "grok_bot_unread_conversations": 0,
        "is_from_urt": true,
        "ntab_unread_count": 0,
        "total_unread_count": 0,

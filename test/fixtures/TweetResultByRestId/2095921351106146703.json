@@ -3,7 +3,7 @@
  "sourceUrl": "https://x.com/quax_tests/status/2095921351106146703",
  "operation": "TweetResultByRestId",
  "host": "x.com",
- "queryId": "a-Xpq8PjX9K6U5cmc1f05A",
+ "queryId": "U8lc5aomF5krJzZ9vJ9wxg",
  "features": {
   "creator_subscriptions_tweet_preview_api_enabled": true,
   "premium_content_api_read_enabled": false,
@@ -14,6 +14,7 @@
   "rweb_cashtags_composer_attachment_enabled": true,
   "responsive_web_jetfuel_frame": true,
   "rweb_sports_post_context_enabled": true,
+  "x_elections_post_context_enabled": true,
   "responsive_web_grok_share_attachment_enabled": true,
   "responsive_web_grok_annotations_enabled": true,
   "articles_preview_enabled": true,
@@ -27,7 +28,7 @@
   "content_disclosure_ai_generated_indicator_enabled": true,
   "responsive_web_grok_show_grok_translated_post": true,
   "responsive_web_grok_analysis_button_from_backend": true,
-  "post_ctas_fetch_enabled": false,
+  "post_ctas_fetch_enabled": true,
   "rweb_cashtags_enabled": true,
   "freedom_of_speech_not_reach_fetch_enabled": true,
   "standardized_nudges_misinfo": true,
@@ -63,8 +64,8 @@
  "headers": {
   "x-rate-limit-limit": "500",
   "content-type": "application/json",
-  "x-rate-limit-remaining": "494",
-  "x-rate-limit-reset": "1793074174"
+  "x-rate-limit-remaining": "498",
+  "x-rate-limit-reset": "1794172356"
  },
  "body": {
   "data": {
@@ -79,7 +80,7 @@
          "value": {
           "image_value": {
            "height": 144,
-           "url": "https://pbs.twimg.com/card_img/2114750048747560960/3JDVNA-F?format=png&name=144x144_2",
+           "url": "https://pbs.twimg.com/card_img/2116751204005072896/a8wr6VR3?format=png&name=144x144_2",
            "width": 144
           },
           "type": "IMAGE"
@@ -104,7 +105,7 @@
          "value": {
           "image_value": {
            "height": 420,
-           "url": "https://pbs.twimg.com/card_img/2114750048747560960/3JDVNA-F?format=png&name=420x420_2",
+           "url": "https://pbs.twimg.com/card_img/2116751204005072896/a8wr6VR3?format=png&name=420x420_2",
            "width": 420
           },
           "type": "IMAGE"
@@ -115,7 +116,7 @@
          "value": {
           "image_value": {
            "height": 461,
-           "url": "https://pbs.twimg.com/card_img/2114750048747560960/3JDVNA-F?format=png&name=orig",
+           "url": "https://pbs.twimg.com/card_img/2116751204005072896/a8wr6VR3?format=png&name=orig",
            "width": 937
           },
           "type": "IMAGE"
@@ -137,7 +138,7 @@
          "value": {
           "image_value": {
            "height": 100,
-           "url": "https://pbs.twimg.com/card_img/2114750048747560960/3JDVNA-F?format=png&name=100x100_2",
+           "url": "https://pbs.twimg.com/card_img/2116751204005072896/a8wr6VR3?format=png&name=100x100_2",
            "width": 100
           },
           "type": "IMAGE"
@@ -148,7 +149,7 @@
          "value": {
           "image_value": {
            "height": 461,
-           "url": "https://pbs.twimg.com/card_img/2114750048747560960/3JDVNA-F?format=png&name=2048x2048_2_exp",
+           "url": "https://pbs.twimg.com/card_img/2116751204005072896/a8wr6VR3?format=png&name=2048x2048_2_exp",
            "width": 937
           },
           "type": "IMAGE"
@@ -238,9 +239,22 @@
          "result": {
           "__typename": "User",
           "action_counts": {
-           "favorites_count": 3220
+           "favorites_count": 3222
           },
-          "affiliates_highlighted_label": {},
+          "affiliates_highlighted_label": {
+           "label": {
+            "badge": {
+             "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+            },
+            "description": "Google Cloud",
+            "url": {
+             "url": "https://twitter.com/googlecloud",
+             "urlType": "DeepLink"
+            },
+            "userLabelDisplayType": "Badge",
+            "userLabelType": "BusinessLabel"
+           }
+          },
           "avatar": {
            "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
           },
@@ -255,7 +269,7 @@
           "follow_request_sent": false,
           "has_graduated_access": true,
           "id": "VXNlcjo0MjA3MzAzMTY=",
-          "is_blue_verified": false,
+          "is_blue_verified": true,
           "location": {
            "location": ""
           },
@@ -303,7 +317,7 @@
            "translator_type": "none"
           },
           "relationship_counts": {
-           "followers": 278004,
+           "followers": 278115,
            "following": 61
           },
           "relationship_perspectives": {
@@ -319,8 +333,8 @@
           "super_followed_by": false,
           "super_following": false,
           "tweet_counts": {
-           "media_tweets": 1988,
-           "tweets": 3938
+           "media_tweets": 1995,
+           "tweets": 3953
           },
           "verification": {
            "verified": false,
@@ -356,7 +370,7 @@
          "screen_name": "quax_tests"
         },
         "follow_request_sent": false,
-        "has_graduated_access": false,
+        "has_graduated_access": true,
         "id": "VXNlcjoyMDk1OTA5Mjk1OTEzMTAzMzYw",
         "is_blue_verified": false,
         "location": {
@@ -512,7 +526,7 @@
      "rest_id": "2095921351106146703",
      "unmention_data": {},
      "views": {
-      "count": "24",
+      "count": "27",
       "state": "EnabledWithCount"
      }
     }
