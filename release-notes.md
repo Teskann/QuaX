@@ -1,8 +1,11 @@
-## QuaX v4.21.1
+## QuaX v4.22.0
 
-What's new in QuaX v4.21.1:
-  - Mentions, hashtags and links take the theme color right after a restart or a theme change (fixed #335) <sup>[[view modified code]](https://github.com/teskann/quax/commit/038635b5bd55bcf0e0f33289d73040e126258678)</sup>
-  - Fixed "couldn't find the sign module importer" errors because of changes on X side. Implemented a more robust solution that should avoid recurring failures (Fixed #348) <sup>[[view modified code]](https://github.com/teskann/quax/commit/6bfe9d857f6323ddb075287c36b848247eb19f99)</sup>
+What's new in QuaX v4.22.0:
+  - Publish the SHA-256 checksum of each APK in releases (fixed #353) <sup>[[view modified code]](https://github.com/teskann/quax/commit/d27c7b0c904a1dab769dae7d827599f2fcb9b1ce)</sup>
+  - Overhauled the subscriptions page and the group editor (fixed #72, fixed #282) <sup>[[view modified code]](https://github.com/teskann/quax/commit/765ebde32e814994abf4e5208059c10b52304deb)</sup>
+  - Improved X requests capture capabilities to fasten the development (by @quax-bot) <sup>[[view modified code]](https://github.com/teskann/quax/commit/a66631ac0b8e996b853423e879997cf62f142a8f)</sup>
+  - Updated API calls to match X website version <sup>[[view modified code]](https://github.com/teskann/quax/commit/2206e863b7bcfebe7648f3d6d64653be68c068b9)</sup>
+  - Communities can be followed and put in groups (fixed #359) <sup>[[view modified code]](https://github.com/teskann/quax/commit/b7504072a9fed8aeed315a1c448a43c9d9ef17bd)</sup>
 
 
 ---
