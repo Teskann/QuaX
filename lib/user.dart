@@ -7,10 +7,9 @@ import 'package:flutter_triple/flutter_triple.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/database/entities.dart';
 import 'package:quax/generated/l10n.dart';
-import 'package:quax/group/group_model.dart';
+import 'package:quax/subscriptions/add_to_groups_sheet.dart';
 import 'package:quax/profile/profile.dart';
 import 'package:quax/subscriptions/users_model.dart';
-import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:provider/provider.dart';
 
 Widget _createUserAvatar(String? uri, double size) {
@@ -100,52 +99,6 @@ class UserTile extends StatelessWidget {
   }
 }
 
-class FollowButtonSelectGroupDialog extends StatefulWidget {
-  final Subscription user;
-  final bool followed;
-  final List<String> groupsForUser;
-
-  const FollowButtonSelectGroupDialog(
-      {super.key, required this.user, required this.followed, required this.groupsForUser});
-
-  @override
-  State<FollowButtonSelectGroupDialog> createState() => _FollowButtonSelectGroupDialogState();
-}
-
-class _FollowButtonSelectGroupDialogState extends State<FollowButtonSelectGroupDialog> {
-  @override
-  Widget build(BuildContext context) {
-    var groupModel = context.read<GroupsModel>();
-    var subscriptionsModel = context.read<SubscriptionsModel>();
-
-    var color = Theme.of(context).brightness == Brightness.dark ? Colors.white70 : Colors.black54;
-
-    return MultiSelectDialog(
-      title: Text(L10n.of(context).select),
-      searchHint: L10n.of(context).search,
-      confirmText: Text(L10n.of(context).ok),
-      cancelText: Text(L10n.of(context).cancel),
-      searchIcon: Icon(Icons.search, color: color),
-      closeSearchIcon: Icon(Icons.close, color: color),
-      itemsTextStyle: Theme.of(context).textTheme.bodyLarge,
-      selectedColor: Theme.of(context).colorScheme.secondary,
-      unselectedColor: color,
-      selectedItemsTextStyle: Theme.of(context).textTheme.bodyLarge,
-      items: groupModel.state.map((e) => MultiSelectItem(e.id, e.name)).toList(),
-      initialValue: widget.groupsForUser,
-      onConfirm: (List<String> memberships) async {
-        // If we're not currently following the user, follow them first
-        if (widget.followed == false) {
-          await subscriptionsModel.toggleSubscribe(widget.user, widget.followed);
-        }
-
-        // Then add them to all the selected groups
-        await groupModel.saveUserGroupMembership(widget.user.id, memberships);
-      },
-    );
-  }
-}
-
 class FollowButton extends StatelessWidget {
   final Subscription user;
   final Color? color;
@@ -173,7 +126,7 @@ class FollowButton extends StatelessWidget {
             PopupMenuItem(value: 'toggle_subscribe', child: Text(text)),
             PopupMenuItem(
               value: 'add_to_group',
-              child: Text(L10n.of(context).add_to_group),
+              child: Text(L10n.of(context).add_to_groups),
             ),
             if (followed)
               PopupMenuItem(
@@ -184,23 +137,16 @@ class FollowButton extends StatelessWidget {
           onSelected: (value) async {
             switch (value) {
               case 'add_to_group':
-                var groups = await context.read<GroupsModel>().listGroupsForUser(user.id);
-                if (context.mounted) {
-                  showDialog(
-                      context: context,
-                      builder: (_) => FollowButtonSelectGroupDialog(
-                            user: user,
-                            followed: followed,
-                            groupsForUser: groups,
-                          ));
+                if (!followed) {
+                  await model.subscribe(user);
                 }
-                break;
+                if (context.mounted) {
+                  await showGroupsSheet(context, [user], onDone: () {});
+                }
               case 'toggle_subscribe':
-                await model.toggleSubscribe(user, followed);
-                break;
+                await (followed ? model.unsubscribe([user]) : model.subscribe(user));
               case 'toggle_in_main_feed':
-                await model.toggleInFeed(user, inFeed);
-                break;
+                await model.setShownInMainFeed([user], shown: !inFeed);
             }
           },
         );

@@ -3,8 +3,12 @@ import 'package:material_ui/material_ui.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/home/home_screen.dart';
 import 'package:pref/pref.dart';
+import 'package:provider/provider.dart';
+import 'package:quax/ui/back_interceptors.dart';
 
 import '../ui/pump_app.dart';
+
+final _backInterceptors = BackInterceptors();
 
 Future<Map<int, FocusNode>> pumpNavigation(WidgetTester tester, List<NavigationPage> pages) async {
   var focusNodes = <int, FocusNode>{};
@@ -22,6 +26,7 @@ Future<Map<int, FocusNode>> pumpNavigation(WidgetTester tester, List<NavigationP
       ),
     ),
     prefs: {optionShowNavigationLabels: true},
+    aboveApp: (app) => Provider.value(value: _backInterceptors, child: app),
   );
   return focusNodes;
 }
@@ -53,5 +58,16 @@ void main() {
     final focusNodes = await pumpNavigation(tester, [feed, subscriptions]);
 
     expect(focusNodes.keys, [0, 1], reason: 'A removed tab should not keep a focus node');
+  });
+
+  testWidgets('Should give the back button to the tab on screen', (tester) async {
+    await pumpNavigation(tester, [feed, subscriptions]);
+    expect(_backInterceptors.shownPage, feed.id, reason: 'The first tab shows at start');
+
+    await tester.tap(find.text('Subscriptions'));
+    await tester.pumpAndSettle();
+
+    expect(_backInterceptors.shownPage, subscriptions.id,
+        reason: 'A search left open in the subscriptions tab should close on back once that tab shows');
   });
 }

@@ -42,6 +42,8 @@ import 'package:quax/subscriptions/users_model.dart';
 import 'package:quax/trends/trends_model.dart';
 import 'package:quax/tweet/_video.dart';
 import 'package:quax/ui/discord_popup.dart';
+import 'package:quax/ui/back_interceptors.dart';
+import 'package:quax/ui/confirm.dart';
 import 'package:quax/ui/errors.dart';
 import 'package:logging/logging.dart';
 import 'package:pref/pref.dart';
@@ -235,14 +237,10 @@ Future<void> main() async {
     optionShouldCheckForUpdates: true,
     optionOpenLinksInEmbeddedBrowser: false,
     optionDiscordPopupDismissed: false,
-    optionSubscriptionGroupsOrderByAscending: true,
     optionDisableWarningsForUnrelatedPostsInFeed: false,
     optionKeepFeedOffset: false,
     alwaysShowFullTweetContents: false,
-    optionSubscriptionGroupsOrderByField: 'name',
-    optionSubscriptionOrderByAscending: true,
-    optionSubscriptionOrderByField: 'name',
-    optionSubscriptionOrderCustom: '',
+    ...subscriptionPrefDefaults,
     optionThemeMode: 'system',
     optionThemeColor: 'accent',
     optionThemeTrueBlack: false,
@@ -279,7 +277,9 @@ Future<void> main() async {
 
     var importDataModel = ImportDataModel();
 
-    var groupsModel = GroupsModel(prefService);
+    var groupsModel = GroupsModel();
+    var groupMembershipsModel = GroupMembershipsModel(groupsModel);
+    // The memberships reload with the groups
     await groupsModel.reloadGroups();
 
     var homeModel = HomeModel(prefService, groupsModel);
@@ -303,6 +303,8 @@ Future<void> main() async {
         child: MultiProvider(
           providers: [
             Provider(create: (context) => groupsModel),
+            Provider(create: (context) => groupMembershipsModel),
+            Provider(create: (context) => BackInterceptors()),
             Provider(create: (context) => releaseNotesModel),
             Provider(create: (context) => VideoControllerPool(maxSize: videoPlayerBudget)),
             Provider(create: (context) => homeModel),
@@ -653,39 +655,7 @@ class _DefaultPageState extends State<DefaultPage> {
           prefix: (l10n) => l10n.unable_to_run_the_database_migrations);
     }
 
-    return PopScope(
-        canPop: false,
-        onPopInvokedWithResult: (didPop, result) async {
-          if (didPop) return;
-          var prefService = PrefService.of(context);
-          if (!prefService.get(optionConfirmClose)) {
-            SystemNavigator.pop();
-            return;
-          }
-
-          final confirmed = await showDialog<bool>(
-            context: context,
-            builder: (c) => AlertDialog(
-              title: Text(L10n.current.are_you_sure),
-              content: Text(L10n.current.confirm_close_fritter),
-              actions: [
-                TextButton(
-                  child: Text(L10n.current.no),
-                  onPressed: () => Navigator.pop(c, false),
-                ),
-                TextButton(
-                  child: Text(L10n.current.yes),
-                  onPressed: () => Navigator.pop(c, true),
-                ),
-              ],
-            ),
-          );
-
-          if (confirmed == true && context.mounted) {
-            SystemNavigator.pop();
-          }
-        },
-        child: const HomeScreen());
+    return const BackInterceptorsScope(onBackNotUsed: _closeApp, child: HomeScreen());
   }
 
   @override
@@ -714,5 +684,17 @@ class NoAnimationPageTransitionsBuilder extends PageTransitionsBuilder {
   ) {
     // No animation, simply return the child
     return child;
+  }
+}
+
+Future<void> _closeApp(BuildContext context) async {
+  final confirmed = !PrefService.of(context).get(optionConfirmClose) ||
+      await confirm(context,
+          title: L10n.current.are_you_sure,
+          content: L10n.current.confirm_close_fritter,
+          cancelLabel: L10n.current.no,
+          confirmLabel: L10n.current.yes);
+  if (confirmed && context.mounted) {
+    SystemNavigator.pop();
   }
 }

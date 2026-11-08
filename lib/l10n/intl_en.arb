@@ -19,8 +19,7 @@
   "@add_location": {
     "description": "Accessibility label of the button that adds a location to the trends tabs"
   },
-  "add_to_group": "Add to group",
-  "@add_to_group": {},
+  "add_to_groups": "Add to groups",
   "all": "All",
   "@all": {},
   "all_the_great_software_used_by_fritter": "All the great software used by QuaX",
@@ -71,6 +70,16 @@
   "@clickToShowMore": {},
   "close": "Close",
   "@close": {},
+  "color": "Color",
+  "@color": {},
+  "color_and_icon": "Color and icon",
+  "@color_and_icon": {
+    "description": "Tooltip of the button that opens the choice of a group's color and icon"
+  },
+  "color_number": "Color {index}",
+  "@color_number": {
+    "description": "Screen reader label of a color swatch in the group editor"
+  },
   "community": "Community",
   "@community": {},
   "community_about": "About",
@@ -107,6 +116,10 @@
   "@create": {},
   "create_new_folder": "Create new folder",
   "@create_new_folder": {},
+  "custom_order": "Custom",
+  "@custom_order": {
+    "description": "Sort option: the order the user chose by dragging the subscriptions"
+  },
   "customize_action_bar": "Customize action bar",
   "@customize_action_bar": {},
   "dark": "Dark",
@@ -117,10 +130,10 @@
   "@data_exported_to_fileName": {},
   "data_imported_successfully": "Data imported successfully",
   "@data_imported_successfully": {},
-  "date_created": "Date Created",
-  "@date_created": {},
   "date_subscribed": "Date Subscribed",
   "@date_subscribed": {},
+  "default_color": "Default color",
+  "@default_color": {},
   "default_feed_tab": "Default feed tab",
   "@default_feed_tab": {},
   "default_feed_tab_description": "Which tab is shown in the main feed",
@@ -151,6 +164,14 @@
   "@disable_warnings_for_unrelated_posts_in_feed_description": {},
   "disabled": "Disabled",
   "@disabled": {},
+  "discard": "Discard",
+  "@discard": {
+    "description": "Button of the dialog asking to discard the changes of a group: close without saving"
+  },
+  "discard_changes": "Discard changes?",
+  "@discard_changes": {},
+  "discard_changes_description": "The group will stay as it was.",
+  "@discard_changes_description": {},
   "discord_popup_dont_show_again": "Don't show this again",
   "@discord_popup_dont_show_again": {},
   "discord_popup_join": "Join",
@@ -161,6 +182,10 @@
   "@discord_popup_title": {},
   "dismiss": "Dismiss",
   "@dismiss": {},
+  "done": "Done",
+  "@done": {
+    "description": "Button closing the sheet of groups"
+  },
   "download": "Download",
   "@download": {},
   "download_handling": "Download handling",
@@ -179,6 +204,8 @@
   "@downloading_media": {},
   "edit_folder": "Edit folder",
   "@edit_folder": {},
+  "edit_group": "Edit group",
+  "@edit_group": {},
   "ended_timeago_format_endsAt_allowFromNow_true": "Ended {timeagoFormat}",
   "@ended_timeago_format_endsAt_allowFromNow_true": {},
   "ends_timeago_format_endsAt_allowFromNow_true": "Ends {timeagoFormat}",
@@ -258,6 +285,10 @@
   "@folder_name": {},
   "folder_post_count": "{count, plural, one{1 post} other{{count} posts}}",
   "@folder_post_count": {},
+  "followed": "Followed",
+  "@followed": {
+    "description": "Title of the list of everything the user follows (accounts, saved searches), on the subscriptions page"
+  },
   "followers": "Followers",
   "@followers": {},
   "following": "Following",
@@ -278,10 +309,16 @@
   "@groups": {},
   "help_make_fritter_even_better": "Help make QuaX even better",
   "@help_make_fritter_even_better": {},
+  "hidden_from_main_feed": "Hidden from the main feed",
+  "@hidden_from_main_feed": {
+    "description": "Shown under a followed account whose posts are hidden from the main feed"
+  },
   "hide": "Hide",
   "@hide": {},
   "hide_from_main_feed": "Hide from main feed",
   "@hide_from_main_feed": {},
+  "hide_groups": "Hide groups",
+  "@hide_groups": {},
   "hide_release_notes": "Hide the release notes",
   "@hide_release_notes": {
     "description": "Accessibility label of the button that hides the release notes post"
@@ -290,6 +327,12 @@
   "@hide_sensitive_tweets": {},
   "home": "Home",
   "@home": {},
+  "icon": "Icon",
+  "@icon": {},
+  "icon_number": "Icon {index}",
+  "@icon_number": {
+    "description": "Screen reader label of an icon choice in the group editor"
+  },
   "image": "Image",
   "@image": {
     "description": "Accessibility label of an image that opens in full screen when tapped"
@@ -333,6 +376,10 @@
   },
   "imported_snapshot_data_users_so_far": "{snapshotData} users imported so far",
   "@imported_snapshot_data_users_so_far": {},
+  "in_the_group": "In the group",
+  "@in_the_group": {
+    "description": "Section title in the group editor: subscriptions already in the group when it was opened"
+  },
   "include_accounts_in_groups": "Include accounts in groups",
   "@include_accounts_in_groups": {},
   "include_replies": "Include replies",
@@ -343,10 +390,26 @@
   "@join_our_discord": {},
   "joined": "Joined {date}",
   "@joined": {},
+  "keep_editing": "Keep editing",
+  "@keep_editing": {
+    "description": "Button of the dialog asking to discard the changes of a group: go back to the editor"
+  },
   "keep_feed_position": "Keep the feed position",
   "@keep_feed_position": {},
   "keep_feed_position_description": "Feeds reopen where you left them, without loading new posts. Pull down to load them.",
   "@keep_feed_position_description": {},
+  "kind_accounts": "Accounts",
+  "@kind_accounts": {
+    "description": "Filter chip: show only the followed accounts"
+  },
+  "kind_searches": "Searches",
+  "@kind_searches": {
+    "description": "Filter chip: show only the saved searches"
+  },
+  "label_with_count": "{label} {count}",
+  "@label_with_count": {
+    "description": "Filter chip: a kind of subscription and how many there are, e.g. Accounts 8"
+  },
   "language": "Language",
   "@language": {},
   "language_subtitle": "Requires a restart",
@@ -403,16 +466,38 @@
   "@missing_page": {},
   "more": "More",
   "@more": {},
+  "more_colors": "More colors",
+  "@more_colors": {
+    "description": "Tooltip of the button that shows every color a group can take"
+  },
   "more_info": "More info",
   "@more_info": {},
   "more_options": "More options",
   "@more_options": {},
+  "move_down": "Move down",
+  "@move_down": {
+    "description": "Screen reader action on a subscription in the custom order: move it one row down"
+  },
+  "move_up": "Move up",
+  "@move_up": {
+    "description": "Screen reader action on a subscription in the custom order: move it one row up"
+  },
   "mute": "Mute",
   "@mute": {},
   "mute_video_description": "Whether videos should be muted by default",
   "@mute_video_description": {},
   "mute_videos": "Mute videos",
   "@mute_videos": {},
+  "n_accounts": "{count, plural, one{1 account} other{{count} accounts}}",
+  "@n_accounts": {},
+  "n_searches": "{count, plural, one{1 search} other{{count} searches}}",
+  "@n_searches": {},
+  "n_selected": "{count, plural, one{1 selected} other{{count} selected}}",
+  "@n_selected": {
+    "description": "Title of the top bar while subscriptions are selected"
+  },
+  "n_subscriptions_removed": "{count, plural, one{1 subscription removed} other{{count} subscriptions removed}}",
+  "@n_subscriptions_removed": {},
   "name": "Name",
   "@name": {},
   "new_badge": "New",
@@ -429,10 +514,16 @@
   "@no_account_available_title": {},
   "no_liked_posts_yet": "You haven't liked any posts yet!",
   "@no_liked_posts_yet": {},
+  "no_members_yet": "No members yet",
+  "@no_members_yet": {},
   "no_results": "No results",
   "@no_results": {},
   "no_results_for": "No results for:",
   "@no_results_for": {},
+  "no_saved_searches": "You have no saved searches.",
+  "@no_saved_searches": {},
+  "no_subscription_matches": "None of your subscriptions match “{query}”.",
+  "@no_subscription_matches": {},
   "no_subscriptions_try_searching_or_importing_some": "No subscriptions. Try searching or importing some!",
   "@no_subscriptions_try_searching_or_importing_some": {},
   "not_found_message": "𝕏 sometimes answers this way even in normal use. Try again in a moment.",
@@ -521,16 +612,22 @@
   "@option_open_links_in_embedded_browser_description": {},
   "option_open_links_in_embedded_browser_label": "Open links in the app",
   "@option_open_links_in_embedded_browser_label": {},
+  "other_subscriptions": "Other subscriptions",
+  "@other_subscriptions": {
+    "description": "Section title in the group editor: subscriptions that were not in the group"
+  },
   "page_not_found": "X says the page does not exist, but that may not be true",
   "@page_not_found": {},
+  "part_of_selection_in_group": "{count} of {total} already in it",
+  "@part_of_selection_in_group": {
+    "description": "Under a group in the sheet: how many selected subscriptions are already members"
+  },
   "pause": "Pause",
   "@pause": {
     "description": "Accessibility label of the button that pauses a video (verb)"
   },
   "photos": "Photos",
   "@photos": {},
-  "pick_a_color": "Pick a color!",
-  "@pick_a_color": {},
   "pick_an_icon": "Pick an icon!",
   "@pick_an_icon": {},
   "pinned_tweet": "Pinned post",
@@ -740,6 +837,8 @@
   "@search_filters_until": {},
   "search_filters_words": "Words",
   "@search_filters_words": {},
+  "search_on_x": "Search “{query}” on X",
+  "@search_on_x": {},
   "search_rejected_message": "𝕏 doesn't accept some combinations of words and filters. Try again with another search.",
   "@search_rejected_message": {
     "description": "Body of the card titled search_rejected_title: the search itself is at fault, not QuaX"
@@ -760,8 +859,26 @@
   "@search_term": {},
   "search_web_archive": "Search Web Archive",
   "@search_web_archive": {},
+  "search_your_subscriptions": "Search your subscriptions",
+  "@search_your_subscriptions": {},
+  "section_with_count": "{label} · {count}",
+  "@section_with_count": {
+    "description": "Title of a section of a list followed by how many items it holds",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "select": "Select",
   "@select": {},
+  "select_subscription": "Select {name}",
+  "@select_subscription": {
+    "description": "Screen reader label of the avatar of a subscription, which selects it"
+  },
   "send": "Send",
   "@send": {},
   "session_rejected_message": "Check that the account still works on x.com, then log in again.",
@@ -801,6 +918,8 @@
   "@should_check_for_updates_label": {},
   "show": "Show",
   "@show": {},
+  "show_groups": "Show groups",
+  "@show_groups": {},
   "show_in_main_feed": "Show in main feed",
   "@show_in_main_feed": {},
   "show_navigation_labels": "Show navigation labels?",
@@ -818,6 +937,10 @@
   "sort_by": "Sort by",
   "@sort_by": {
     "description": "Accessibility label of the menu choosing how a list is sorted"
+  },
+  "sort_by_value": "Sort by: {value}",
+  "@sort_by_value": {
+    "description": "Screen reader label of the sort button, e.g. Sort by: Name"
   },
   "space_back_10_seconds": "Back 10 seconds",
   "@space_back_10_seconds": {},
@@ -904,8 +1027,6 @@
   "@thumbnail": {},
   "timed_out": "Timed out",
   "@timed_out": {},
-  "toggle_all": "Toggle All",
-  "@toggle_all": {},
   "translate": "Translate",
   "@translate": {},
   "trending": "Trending",
@@ -974,6 +1095,8 @@
   "@unable_to_run_the_database_migrations": {},
   "unable_to_save_the_media_twitter_returned_a_status_of_response_statusCode": "Unable to save the media. X returned a status of {responseStatusCode}",
   "@unable_to_save_the_media_twitter_returned_a_status_of_response_statusCode": {},
+  "undo": "Undo",
+  "@undo": {},
   "unfiled": "Unfiled",
   "@unfiled": {},
   "unknown": "Unknown",
@@ -1038,6 +1161,10 @@
   "@whether_to_hide_tweets_marked_as_sensitive": {},
   "which_tab_is_shown_when_the_app_opens": "Which tab is shown when the app opens",
   "@which_tab_is_shown_when_the_app_opens": {},
+  "whole_selection_in_group": "The whole selection is in it",
+  "@whole_selection_in_group": {
+    "description": "Under a group in the sheet: every selected subscription is already a member"
+  },
   "x_returned_an_error": "𝕏 returned an error",
   "@x_returned_an_error": {
     "description": "Title of the error card shown when 𝕏 answered an error instead of what QuaX asked for. The technical message of 𝕏 is shown below it, with a button to report the bug"
@@ -1049,5 +1176,6 @@
   "you_have_not_saved_any_tweets_yet": "You haven't saved any posts yet!",
   "@you_have_not_saved_any_tweets_yet": {},
   "you_must_have_at_least_2_home_screen_pages": "You must have at least 2 home screen pages",
-  "@you_must_have_at_least_2_home_screen_pages": {}
+  "@you_must_have_at_least_2_home_screen_pages": {},
+  "@add_to_groups": {}
 }

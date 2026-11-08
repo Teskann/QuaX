@@ -26,7 +26,7 @@ const String tableAccounts = 'accounts';
 
 const String tableInstalledVersion = 'installed_version';
 
-const int databaseVersion = 30;
+const int databaseVersion = 31;
 
 class Repository {
   static final log = Logger('Repository');
@@ -291,6 +291,19 @@ class Repository {
         SqlMigration('DROP TABLE ${tableFeedGroupChunk}_old'),
         SqlMigration('DROP TABLE IF EXISTS $tableFeedGroupCursor'),
         SqlMigration('ALTER TABLE $tableSubscriptionGroup ADD COLUMN feed_position VARCHAR DEFAULT NULL'),
+      ],
+      31: [
+        // A group member is a kind of subscription and its id, as ids of different kinds may be equal
+        SqlMigration('ALTER TABLE $tableSubscriptionGroupMember RENAME TO ${tableSubscriptionGroupMember}_old'),
+        SqlMigration(
+            'CREATE TABLE $tableSubscriptionGroupMember (group_id VARCHAR, profile_id VARCHAR, kind VARCHAR NOT NULL DEFAULT \'user\', CONSTRAINT pk_$tableSubscriptionGroupMember PRIMARY KEY (group_id, kind, profile_id))'),
+        SqlMigration(
+            "INSERT INTO $tableSubscriptionGroupMember (group_id, profile_id, kind) SELECT group_id, profile_id, 'user' FROM ${tableSubscriptionGroupMember}_old WHERE profile_id IN (SELECT id FROM $tableSubscription) OR profile_id NOT IN (SELECT id FROM $tableSearchSubscription)"),
+        SqlMigration(
+            "INSERT INTO $tableSubscriptionGroupMember (group_id, profile_id, kind) SELECT group_id, profile_id, 'search' FROM ${tableSubscriptionGroupMember}_old WHERE profile_id IN (SELECT id FROM $tableSearchSubscription)"),
+        SqlMigration('DROP TABLE ${tableSubscriptionGroupMember}_old'),
+        // Search members have always been stored with the others: this table stayed empty
+        SqlMigration('DROP TABLE IF EXISTS $tableSearchSubscriptionGroupMember'),
       ],
     });
   }

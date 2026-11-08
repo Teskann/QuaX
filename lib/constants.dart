@@ -45,11 +45,19 @@ const optionKeepFeedOffset = 'keep_feed_offset';
 
 const alwaysShowFullTweetContents = 'always_show_full_tweet_contents';
 
-const optionSubscriptionGroupsOrderByAscending = 'subscription_groups.order_by.ascending';
-const optionSubscriptionGroupsOrderByField = 'subscription_groups.order_by.field';
 const optionSubscriptionOrderByAscending = 'subscription.order_by.ascending';
 const optionSubscriptionOrderCustom = 'subscription.order_by.custom';
+const optionSubscriptionOrderCustomKeys = 'subscription.order_by.custom_keys';
+const optionSubscriptionGroupsCollapsed = 'subscription_groups.collapsed';
 const optionSubscriptionOrderByField = 'subscription.order_by.field';
+
+const subscriptionPrefDefaults = <String, Object>{
+  optionSubscriptionOrderByAscending: true,
+  optionSubscriptionOrderByField: 'name',
+  optionSubscriptionOrderCustom: '',
+  optionSubscriptionOrderCustomKeys: '[]',
+  optionSubscriptionGroupsCollapsed: false,
+};
 const optionDefaultProfileTab = 'subscription.default_tab';
 
 const optionThemeMode = 'theme.mode';

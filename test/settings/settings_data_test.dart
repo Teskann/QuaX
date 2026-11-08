@@ -32,7 +32,7 @@ void main() {
               numberOfMembers: 1,
               createdAt: DateTime(2026, 9, 4, 9))
         ],
-        subscriptionGroupMembers: [SubscriptionGroupMember(group: 'g1', profile: '1')],
+        subscriptionGroupMembers: [SubscriptionGroupMember(group: 'g1', profile: '1', kind: 'user')],
         tweets: [SavedTweet(id: 't1', user: 'dogs', content: '{}', folderId: 'f1')],
         savedTweetFolders: [
           SavedTweetFolder(id: 'f1', name: 'Reading', position: 2, createdAt: DateTime(2026, 9, 4, 9))
@@ -106,6 +106,18 @@ void main() {
               'still import instead of throwing');
     });
 
+    test('Should keep the saved searches of the groups of a backup made before members had a kind', () {
+      final members = membersWithKinds([
+        SubscriptionGroupMember(group: 'g1', profile: '42', kind: ''),
+        SubscriptionGroupMember(group: 'g1', profile: 'flutter', kind: ''),
+      ], [
+        SearchSubscription(id: 'flutter', createdAt: DateTime(2026))
+      ]);
+
+      expect(members.map((m) => (m.profile, m.kind)), [('42', 'user'), ('flutter', 'search')],
+          reason: 'A member with the id of a saved search of the backup is that search, the others are accounts');
+    });
+
     test('Should leave the group member count out of the backup', () {
       final exported = full().toJson();
       final groups = exported['subscriptionGroups'] as List;
@@ -131,7 +143,7 @@ void main() {
       final restored = SettingsData.fromJson(jsonDecode(jsonEncode(backup)));
 
       await prefs.fromMap(restored.settings!);
-      final home = HomeModel(prefs, GroupsModel(prefs)..update(restored.subscriptionGroups!));
+      final home = HomeModel(prefs, GroupsModel()..update(restored.subscriptionGroups!));
       await home.loadPages();
 
       expect(home.state.where((page) => page.selected).map((page) => page.id), ['group-g1', 'feed', 'saved'],

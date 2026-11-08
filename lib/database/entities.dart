@@ -88,7 +88,7 @@ class SavedTweetFolder with ToMappable {
   }
 }
 
-abstract class Subscription with ToMappable {
+sealed class Subscription with ToMappable {
   final String id;
   final String screenName;
   final String name;
@@ -288,30 +288,23 @@ class SubscriptionGroupGet {
       : subscriptions;
 }
 
-class SubscriptionGroupEdit {
-  final String? id;
-  String name;
-  String icon;
-  Color? color;
-  Set<String> members;
-
-  SubscriptionGroupEdit(
-      {required this.id, required this.name, required this.icon, required this.color, required this.members});
-}
-
 class SubscriptionGroupMember with ToMappable {
   final String group;
   final String profile;
 
-  SubscriptionGroupMember({required this.group, required this.profile});
+  /// The name of the kind of subscription, empty in the backups of older versions.
+  final String kind;
 
-  factory SubscriptionGroupMember.fromMap(Map<String, Object?> json) {
-    return SubscriptionGroupMember(group: json['group_id'] as String, profile: json['profile_id'] as String);
-  }
+  SubscriptionGroupMember({required this.group, required this.profile, required this.kind});
+
+  factory SubscriptionGroupMember.fromMap(Map<String, Object?> json) => SubscriptionGroupMember(
+      group: json['group_id'] as String, profile: json['profile_id'] as String, kind: json['kind'] as String? ?? '');
+
+  SubscriptionGroupMember withKind(String kind) => SubscriptionGroupMember(group: group, profile: profile, kind: kind);
 
   @override
   Map<String, dynamic> toMap() {
-    return {'group_id': group, 'profile_id': profile};
+    return {'group_id': group, 'profile_id': profile, 'kind': kind};
   }
 }
 

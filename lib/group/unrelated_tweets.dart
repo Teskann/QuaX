@@ -2,7 +2,12 @@ import 'package:quax/client/client.dart';
 import 'package:quax/database/entities.dart';
 
 bool feedContainsUnrelatedTweets(TweetStatus tweets, List<Subscription> subscriptions) {
-  if (subscriptions.any((subscription) => subscription is SearchSubscription)) {
+  // A saved search brings tweets of any author
+  final followsOnlyAuthors = subscriptions.every((subscription) => switch (subscription) {
+        UserSubscription() => true,
+        SearchSubscription() => false,
+      });
+  if (!followsOnlyAuthors) {
     return false;
   }
   final ids = subscriptions.map((subscription) => subscription.id).toSet();
