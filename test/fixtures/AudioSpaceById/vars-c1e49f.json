@@ -1,0 +1,2331 @@
+{
+ "scenario": "Posts sharing X Spaces, live, ended with or without a recording, and scheduled, each Space loaded with AudioSpaceById",
+ "sourceUrl": "https://x.com/search?q=x.com%2Fi%2Fspaces&src=typed_query",
+ "unstable": true,
+ "operation": "AudioSpaceById",
+ "host": "x.com",
+ "queryId": "zm3JmUpYWDXIUsf_33-ZrA",
+ "features": {
+  "spaces_2022_h2_spaces_communities": true,
+  "spaces_2022_h2_clipping": true,
+  "creator_subscriptions_tweet_preview_api_enabled": true,
+  "profile_label_improvements_pcf_label_in_post_enabled": true,
+  "responsive_web_profile_redirect_enabled": true,
+  "rweb_tipjar_consumption_enabled": false,
+  "verified_phone_label_enabled": false,
+  "premium_content_api_read_enabled": false,
+  "communities_web_enable_tweet_community_results_fetch": true,
+  "c9s_tweet_anatomy_moderator_badge_enabled": true,
+  "responsive_web_grok_analyze_button_fetch_trends_enabled": false,
+  "responsive_web_grok_analyze_post_followups_enabled": true,
+  "rweb_cashtags_composer_attachment_enabled": true,
+  "responsive_web_jetfuel_frame": true,
+  "rweb_sports_post_context_enabled": true,
+  "x_elections_post_context_enabled": true,
+  "responsive_web_grok_share_attachment_enabled": true,
+  "responsive_web_grok_annotations_enabled": true,
+  "articles_preview_enabled": true,
+  "responsive_web_edit_tweet_api_enabled": true,
+  "rweb_conversational_replies_downvote_enabled": false,
+  "graphql_is_translatable_rweb_tweet_is_translatable_enabled": true,
+  "view_counts_everywhere_api_enabled": true,
+  "longform_notetweets_consumption_enabled": true,
+  "responsive_web_twitter_article_tweet_consumption_enabled": true,
+  "content_disclosure_indicator_enabled": true,
+  "content_disclosure_ai_generated_indicator_enabled": true,
+  "responsive_web_grok_show_grok_translated_post": true,
+  "responsive_web_grok_analysis_button_from_backend": true,
+  "post_ctas_fetch_enabled": true,
+  "rweb_cashtags_enabled": true,
+  "freedom_of_speech_not_reach_fetch_enabled": true,
+  "standardized_nudges_misinfo": true,
+  "tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled": true,
+  "longform_notetweets_rich_text_read_enabled": true,
+  "longform_notetweets_inline_media_enabled": false,
+  "responsive_web_nested_quote_preview_enabled": true,
+  "responsive_web_grok_image_annotation_enabled": true,
+  "responsive_web_grok_imagine_annotation_enabled": true,
+  "responsive_web_made_on_x_label_enabled": false,
+  "responsive_web_graphql_timeline_navigation_enabled": true,
+  "responsive_web_grok_community_note_auto_translation_is_enabled": true
+ },
+ "fieldToggles": null,
+ "variables": {
+  "id": "1NgmRoRZNZaYbb",
+  "isMetatagsQuery": false,
+  "withReplays": true,
+  "withListeners": true
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "500",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "478",
+  "x-rate-limit-reset": "1794174389"
+ },
+ "body": {
+  "data": {
+   "audioSpace": {
+    "is_subscribed": false,
+    "metadata": {
+     "content_type": "visual_audio",
+     "conversation_controls": 0,
+     "created_at": 1794162986602,
+     "creator_results": {
+      "result": {
+       "__typename": "User",
+       "action_counts": {
+        "favorites_count": 23456
+       },
+       "affiliates_highlighted_label": {},
+       "avatar": {
+        "image_url": "https://pbs.twimg.com/profile_images/2115586400552673280/JyAxHGho_normal.jpg"
+       },
+       "banner": {
+        "image_url": "https://pbs.twimg.com/profile_banners/1446370181828259867/1739910907"
+       },
+       "core": {
+        "created_at": "Fri Oct 08 07:01:48 +0000 2021",
+        "name": "SilentWolfPk🐺🇬🇪🇵🇰",
+        "screen_name": "SilenWolfPk"
+       },
+       "follow_request_sent": false,
+       "has_graduated_access": true,
+       "id": "VXNlcjoxNDQ2MzcwMTgxODI4MjU5ODY3",
+       "is_blue_verified": false,
+       "location": {
+        "location": "Living on the edge 🔥"
+       },
+       "media_permissions": {
+        "can_media_tag": false
+       },
+       "notifications_settings": {
+        "notifications_enabled": false
+       },
+       "parody_commentary_fan_label": "None",
+       "pinned_items": {
+        "tweet_ids_str": [
+         "1892605404317675974"
+        ]
+       },
+       "possibly_sensitive": false,
+       "privacy": {
+        "protected": false
+       },
+       "profile_bio": {
+        "description": "The best things come from living outside of your comfort zone! Pakistan Zindabad 🇵🇰 #XHost 💚 #FreeImranKhan #FreePalestine",
+        "entities": {
+         "description": {},
+         "url": {
+          "urls": [
+           {
+            "display_url": "tiktok.com/@silentwolfpk?…",
+            "expanded_url": "https://www.tiktok.com/@silentwolfpk?_t=ZG-8sCxTaigYrJ&_r=1",
+            "indices": [
+             0,
+             23
+            ],
+            "url": "https://t.co/mfjYqDnF4f"
+           }
+          ]
+         }
+        }
+       },
+       "profile_description_language": "en",
+       "profile_image_shape": "Circle",
+       "profile_metadata": {
+        "profile_interstitial_type": ""
+       },
+       "profile_translation": {
+        "translator_type": "none"
+       },
+       "relationship_counts": {
+        "followers": 7352,
+        "following": 966
+       },
+       "relationship_perspectives": {
+        "blocked_by": false,
+        "blocking": false,
+        "followed_by": false,
+        "following": false,
+        "live_following": false,
+        "muting": false
+       },
+       "rest_id": "1446370181828259867",
+       "super_follow_eligible": false,
+       "super_followed_by": false,
+       "super_following": false,
+       "tweet_counts": {
+        "media_tweets": 2321,
+        "tweets": 11441
+       },
+       "verification": {
+        "verified": false
+       },
+       "website": {
+        "url": "https://t.co/mfjYqDnF4f"
+       }
+      }
+     },
+     "disallow_join": false,
+     "is_employee_only": false,
+     "is_locked": false,
+     "is_muted": true,
+     "is_space_available_for_clipping": false,
+     "is_space_available_for_replay": false,
+     "max_admin_capacity": 3,
+     "max_guest_sessions": 10,
+     "media_key": "28_2119499301831204864",
+     "mentioned_users": [
+      {
+       "rest_id": "38753890"
+      },
+      {
+       "rest_id": "2119206806098530304"
+      },
+      {
+       "rest_id": "162700666"
+      },
+      {
+       "rest_id": "135887498"
+      },
+      {
+       "rest_id": "1837610163832082434"
+      },
+      {
+       "rest_id": "1561472607920218113"
+      },
+      {
+       "rest_id": "1330472299108200448"
+      },
+      {
+       "rest_id": "1679564121988268033"
+      }
+     ],
+     "narrow_cast_space_type": 0,
+     "no_incognito": false,
+     "rest_id": "1NgmRoRZNZaYbb",
+     "started_at": 1794162990193,
+     "state": "Running",
+     "title": "Current Affairs ",
+     "total_live_listeners": 381,
+     "total_replay_watched": 0,
+     "tweet_results": {
+      "result": {
+       "__typename": "Tweet",
+       "card": {
+        "legacy": {
+         "binding_values": [
+          {
+           "key": "tweet_id",
+           "value": {
+            "string_value": "2119499320336482516",
+            "type": "STRING"
+           }
+          },
+          {
+           "key": "narrow_cast_space_type",
+           "value": {
+            "string_value": "0",
+            "type": "STRING"
+           }
+          },
+          {
+           "key": "id",
+           "value": {
+            "string_value": "1NgmRoRZNZaYbb",
+            "type": "STRING"
+           }
+          },
+          {
+           "key": "card_url",
+           "value": {
+            "scribe_key": "card_url",
+            "string_value": "https://t.co/ASgv92YFah",
+            "type": "STRING"
+           }
+          }
+         ],
+         "card_platform": {
+          "platform": {
+           "audience": {
+            "name": "production"
+           },
+           "device": {
+            "name": "Swift",
+            "version": "12"
+           }
+          }
+         },
+         "name": "3691233323:audiospace",
+         "url": "https://t.co/ASgv92YFah",
+         "user_refs_results": []
+        },
+        "rest_id": "https://t.co/ASgv92YFah"
+       },
+       "cashtag_attachments": [],
+       "core": {
+        "user_results": {
+         "result": {
+          "__typename": "User",
+          "action_counts": {
+           "favorites_count": 23456
+          },
+          "affiliates_highlighted_label": {},
+          "avatar": {
+           "image_url": "https://pbs.twimg.com/profile_images/2115586400552673280/JyAxHGho_normal.jpg"
+          },
+          "banner": {
+           "image_url": "https://pbs.twimg.com/profile_banners/1446370181828259867/1739910907"
+          },
+          "core": {
+           "created_at": "Fri Oct 08 07:01:48 +0000 2021",
+           "name": "SilentWolfPk🐺🇬🇪🇵🇰",
+           "screen_name": "SilenWolfPk"
+          },
+          "follow_request_sent": false,
+          "has_graduated_access": true,
+          "id": "VXNlcjoxNDQ2MzcwMTgxODI4MjU5ODY3",
+          "is_blue_verified": false,
+          "location": {
+           "location": "Living on the edge 🔥"
+          },
+          "media_permissions": {
+           "can_media_tag": false
+          },
+          "notifications_settings": {
+           "notifications_enabled": false
+          },
+          "parody_commentary_fan_label": "None",
+          "pinned_items": {
+           "tweet_ids_str": [
+            "1892605404317675974"
+           ]
+          },
+          "possibly_sensitive": false,
+          "privacy": {
+           "protected": false
+          },
+          "profile_bio": {
+           "description": "The best things come from living outside of your comfort zone! Pakistan Zindabad 🇵🇰 #XHost 💚 #FreeImranKhan #FreePalestine",
+           "entities": {
+            "description": {},
+            "url": {
+             "urls": [
+              {
+               "display_url": "tiktok.com/@silentwolfpk?…",
+               "expanded_url": "https://www.tiktok.com/@silentwolfpk?_t=ZG-8sCxTaigYrJ&_r=1",
+               "indices": [
+                0,
+                23
+               ],
+               "url": "https://t.co/mfjYqDnF4f"
+              }
+             ]
+            }
+           }
+          },
+          "profile_description_language": "en",
+          "profile_image_shape": "Circle",
+          "profile_metadata": {
+           "profile_interstitial_type": ""
+          },
+          "profile_translation": {
+           "translator_type": "none"
+          },
+          "relationship_counts": {
+           "followers": 7352,
+           "following": 966
+          },
+          "relationship_perspectives": {
+           "blocked_by": false,
+           "blocking": false,
+           "followed_by": false,
+           "following": false,
+           "live_following": false,
+           "muting": false
+          },
+          "rest_id": "1446370181828259867",
+          "super_follow_eligible": false,
+          "super_followed_by": false,
+          "super_following": false,
+          "tweet_counts": {
+           "media_tweets": 2321,
+           "tweets": 11441
+          },
+          "verification": {
+           "verified": false
+          },
+          "website": {
+           "url": "https://t.co/mfjYqDnF4f"
+          }
+         }
+        }
+       },
+       "edit_control": {
+        "edit_tweet_ids": [
+         "2119499320336482516"
+        ],
+        "editable_until_msecs": "1794166591000",
+        "edits_remaining": "5",
+        "is_edit_eligible": false
+       },
+       "grok_analysis_button": true,
+       "grok_annotations": {
+        "is_image_editable_by_grok": false
+       },
+       "grok_translated_post_with_availability": {
+        "is_available": false
+       },
+       "is_translatable": false,
+       "legacy": {
+        "bookmark_count": 0,
+        "bookmarked": false,
+        "conversation_id_str": "2119499320336482516",
+        "created_at": "Sun Nov 08 18:36:31 +0000 2026",
+        "display_text_range": [
+         0,
+         23
+        ],
+        "entities": {
+         "urls": [
+          {
+           "display_url": "x.com/i/spaces/1NgmR…",
+           "expanded_url": "https://x.com/i/spaces/1NgmRoRZNZaYbb",
+           "indices": [
+            0,
+            23
+           ],
+           "url": "https://t.co/ASgv92YFah"
+          }
+         ]
+        },
+        "favorite_count": 3,
+        "favorited": false,
+        "full_text": "https://t.co/ASgv92YFah",
+        "id_str": "2119499320336482516",
+        "is_quote_status": false,
+        "lang": "zxx",
+        "possibly_sensitive": false,
+        "possibly_sensitive_editable": true,
+        "quote_count": 0,
+        "reply_count": 5,
+        "retweet_count": 2,
+        "retweeted": false,
+        "user_id_str": "1446370181828259867"
+       },
+       "rest_id": "2119499320336482516",
+       "unmention_data": {},
+       "views": {
+        "count": "345",
+        "state": "EnabledWithCount"
+       },
+       "voiceInfo": {}
+      }
+     },
+     "updated_at": 1794173492330
+    },
+    "participants": {
+     "admins": [
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2115586400552673280/JyAxHGho_normal.jpg",
+       "display_name": "SilentWolfPk🐺🇬🇪🇵🇰",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "tw-1446370181828259867",
+       "start": 1794173333913,
+       "twitter_screen_name": "SilenWolfPk",
+       "user_results": {
+        "rest_id": "1446370181828259867",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2112651325733474304/PEPqfHWd_normal.jpg",
+       "display_name": "Marryam⚜️",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1514612628336746511",
+       "start": 1794169417064,
+       "twitter_screen_name": "KarmaProMaxx",
+       "user_results": {
+        "rest_id": "1514612628336746511",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2117562971677167616/OKNiWKjq_normal.jpg",
+       "display_name": "MRK",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-595402888",
+       "start": 1794172127310,
+       "twitter_screen_name": "hiba_tu",
+       "user_results": {
+        "rest_id": "595402888",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      }
+     ],
+     "listeners": [
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2088124247264870400/4IO1b1BB_normal.jpg",
+       "display_name": "Hashmat Deen Mohammad",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": true,
+       "periscope_user_id": "tw-162700666",
+       "start": 1794171850000,
+       "twitter_screen_name": "ChHashmatDeen",
+       "user_results": {
+        "rest_id": "162700666",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1588242163800109056/DjtKCS6l_normal.jpg",
+       "display_name": "Usman Rana",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": true,
+       "periscope_user_id": "tw-2545530928",
+       "start": 1794173032000,
+       "twitter_screen_name": "DamnCare00",
+       "user_results": {
+        "rest_id": "2545530928",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2114950991942451200/goJSsE_1_normal.jpg",
+       "display_name": "Neelam khan ⱽᴼᴵᴷ",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": true,
+       "periscope_user_id": "tw-1530851731025928198",
+       "start": 1794173059000,
+       "twitter_screen_name": "Neelam_804",
+       "user_results": {
+        "rest_id": "1530851731025928198",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1928551794466033664/wwfBCEWQ_normal.jpg",
+       "display_name": "Naeem Gondal",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": true,
+       "periscope_user_id": "tw-2758640872",
+       "start": 1794173196000,
+       "twitter_screen_name": "NaeemGondal01",
+       "user_results": {
+        "rest_id": "2758640872",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1861139599751278592/M4EHCiIM_normal.jpg",
+       "display_name": "Kayani",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": true,
+       "periscope_user_id": "tw-1613243524345913360",
+       "start": 1794173412000,
+       "twitter_screen_name": "Kayani2026",
+       "user_results": {
+        "rest_id": "1613243524345913360",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2032137215568932864/fyR9bxuQ_normal.jpg",
+       "display_name": "Ammar",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": true,
+       "periscope_user_id": "tw-570329951",
+       "start": 1794172445000,
+       "twitter_screen_name": "ammar_mian",
+       "user_results": {
+        "rest_id": "570329951",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1687780145141301248/tpQg5t3v_normal.jpg",
+       "display_name": "Babar",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "tw-1667233023358812160",
+       "start": 1794166037000,
+       "twitter_screen_name": "cocomo136296",
+       "user_results": {
+        "rest_id": "1667233023358812160",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1973351262096691200/usfgA6VF_normal.jpg",
+       "display_name": "Hadia Tarar",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "tw-1662754254145069057",
+       "start": 1794172856000,
+       "twitter_screen_name": "hadiazafar33",
+       "user_results": {
+        "rest_id": "1662754254145069057",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2022754140888391680/uFZjQs5h_normal.jpg",
+       "display_name": "Farrukh",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "tw-1748572049658822656",
+       "start": 1794170917000,
+       "twitter_screen_name": "PTISentinel",
+       "user_results": {
+        "rest_id": "1748572049658822656",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1876261735230820352/zPfd2OD6_normal.jpg",
+       "display_name": "Re𝕏_Mafia",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "tw-1612370609018900481",
+       "start": 1794170474000,
+       "twitter_screen_name": "IK_mafia",
+       "user_results": {
+        "rest_id": "1612370609018900481",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2116095063419744256/SBJnU2et_normal.jpg",
+       "display_name": "Niram Sin",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "tw-1837610163832082434",
+       "start": 1794173280000,
+       "twitter_screen_name": "ZeeshanRao7649",
+       "user_results": {
+        "rest_id": "1837610163832082434",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1256059935122690049/cozKA-zc_normal.jpg",
+       "display_name": "poosmassa",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "tw-4108576995",
+       "start": 1794173120000,
+       "twitter_screen_name": "uchoudhry88",
+       "user_results": {
+        "rest_id": "4108576995",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1953219771471654913/nU0xpDLu_normal.jpg",
+       "display_name": "عبداللہ",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "tw-1339166992876638208",
+       "start": 1794173171000,
+       "twitter_screen_name": "aasbinabid",
+       "user_results": {
+        "rest_id": "1339166992876638208",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2075349783238365184/BeoK1Jih_normal.jpg",
+       "display_name": "Release IK❤️",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "tw-1573993759473385474",
+       "start": 1794172547000,
+       "twitter_screen_name": "ReleaseIKhan804",
+       "user_results": {
+        "rest_id": "1573993759473385474",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      }
+     ],
+     "speakers": [
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1636837090460594176/vv73_H-P_normal.jpg",
+       "display_name": "Rukshi",
+       "is_muted_by_admin": true,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-1561472607920218113",
+       "start": 1794173203537,
+       "twitter_screen_name": "rukshi29450849",
+       "user_results": {
+        "rest_id": "1561472607920218113",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2068694784613482496/Ntiz6gx3_normal.jpg",
+       "display_name": "Nadeem Rajput",
+       "is_muted_by_admin": true,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-1583090055366705153",
+       "start": 1794165687967,
+       "twitter_screen_name": "NadeemAhmedRaj9",
+       "user_results": {
+        "rest_id": "1583090055366705153",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2100029469482467328/5JWnGb0J_normal.jpg",
+       "display_name": "Don Tin Tin aka CreamDaddy Turram Ghadar Sartre",
+       "is_muted_by_admin": true,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-135887498",
+       "start": 1794172064938,
+       "twitter_screen_name": "tintinfad",
+       "user_results": {
+        "rest_id": "135887498",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2112061765521637376/iUjTarka_normal.jpg",
+       "display_name": "Muyassar Amin",
+       "is_muted_by_admin": true,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1330472299108200448",
+       "start": 1794173447148,
+       "twitter_screen_name": "AminMuyassar",
+       "user_results": {
+        "rest_id": "1330472299108200448",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2025134935091412994/od3hQzRV_normal.jpg",
+       "display_name": "Bunty Butt",
+       "is_muted_by_admin": true,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1324671514051051520",
+       "start": 1794168427703,
+       "twitter_screen_name": "Buntybutt4",
+       "user_results": {
+        "rest_id": "1324671514051051520",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2100298472708812800/oFf4AXIU_normal.jpg",
+       "display_name": "Mhr Javed",
+       "is_muted_by_admin": true,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1951366892565696512",
+       "start": 1794169608371,
+       "twitter_screen_name": "muhammadja42516",
+       "user_results": {
+        "rest_id": "1951366892565696512",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2119210050908549121/QlcETPeK_normal.jpg",
+       "display_name": "#ملنگ_قبیلہ افیشل اکاؤنٹ ٹویٹر۔",
+       "is_muted_by_admin": true,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "tw-2119206806098530304",
+       "start": 1794172320654,
+       "twitter_screen_name": "Malangfxrl",
+       "user_results": {
+        "rest_id": "2119206806098530304",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      }
+     ],
+     "total": 42
+    },
+    "sharings": {
+     "items": [
+      {
+       "created_at_ms": 1794165555693,
+       "shared_item": {
+        "__typename": "AudioSpaceSharedTweet",
+        "tweet_results": {
+         "result": {
+          "__typename": "Tweet",
+          "card": {
+           "rest_id": "https://t.co/WsFi4AUp5f"
+          },
+          "cashtag_attachments": [],
+          "core": {
+           "user_results": {
+            "result": {
+             "__typename": "User",
+             "action_counts": {
+              "favorites_count": 61126
+             },
+             "affiliates_highlighted_label": {},
+             "avatar": {
+              "image_url": "https://pbs.twimg.com/profile_images/2100029469482467328/5JWnGb0J_normal.jpg"
+             },
+             "banner": {
+              "image_url": "https://pbs.twimg.com/profile_banners/135887498/1781161034"
+             },
+             "core": {
+              "created_at": "Thu Apr 22 13:37:32 +0000 2010",
+              "name": "Don Tin Tin aka CreamDaddy Turram Ghadar Sartre",
+              "screen_name": "tintinfad"
+             },
+             "follow_request_sent": false,
+             "has_graduated_access": true,
+             "id": "VXNlcjoxMzU4ODc0OTg=",
+             "is_blue_verified": false,
+             "location": {
+              "location": ""
+             },
+             "media_permissions": {
+              "can_media_tag": true
+             },
+             "notifications_settings": {
+              "notifications_enabled": false
+             },
+             "parody_commentary_fan_label": "None",
+             "pinned_items": {
+              "tweet_ids_str": [
+               "1663027690297851904"
+              ]
+             },
+             "possibly_sensitive": false,
+             "privacy": {
+              "protected": false
+             },
+             "profile_bio": {
+              "description": "Highway to the anger zone. Imran Khan still wins. And I am still the 2nd greatest man alive whose name is so nice, you say it twice.",
+              "entities": {
+               "description": {}
+              }
+             },
+             "profile_description_language": "en",
+             "profile_image_shape": "Circle",
+             "profile_metadata": {
+              "profile_interstitial_type": ""
+             },
+             "profile_translation": {
+              "translator_type": "none"
+             },
+             "relationship_counts": {
+              "followers": 3431,
+              "following": 2683
+             },
+             "relationship_perspectives": {
+              "blocked_by": false,
+              "blocking": false,
+              "followed_by": false,
+              "following": false,
+              "live_following": false,
+              "muting": false
+             },
+             "rest_id": "135887498",
+             "super_follow_eligible": false,
+             "super_followed_by": false,
+             "super_following": false,
+             "tweet_counts": {
+              "media_tweets": 3967,
+              "tweets": 281922
+             },
+             "verification": {
+              "verified": false
+             },
+             "website": {
+              "url": ""
+             }
+            }
+           }
+          },
+          "edit_control": {
+           "edit_tweet_ids": [
+            "2119475447402745873"
+           ],
+           "editable_until_msecs": "1794160899000",
+           "edits_remaining": "5",
+           "is_edit_eligible": false
+          },
+          "grok_analysis_button": true,
+          "grok_annotations": {},
+          "grok_translated_post_with_availability": {
+           "data": {
+            "associated_data": {},
+            "destination_language": "en",
+            "entities": {
+             "hashtags": [],
+             "symbols": [],
+             "urls": [],
+             "user_mentions": []
+            },
+            "preview_translation": "One more point.\nIn this video, Salman Safdar’s name was mentioned alongside all those lawyers who have already been discredited, like Ali Zafar and others.\nThe impression was subtly given that Salman Safdar is a tout too.\n\nWhat is being protected about Salman Raja? He disowned",
+            "source_language": "ur",
+            "translation": "One more point.\nIn this video, Salman Safdar’s name was mentioned alongside all those lawyers who have already been discredited, like Ali Zafar and others.\nThe impression was subtly given that Salman Safdar is a tout too.\n\nWhat is being protected about Salman Raja? He disowned them, after all."
+           },
+           "is_available": true
+          },
+          "is_translatable": true,
+          "legacy": {
+           "bookmark_count": 0,
+           "bookmarked": false,
+           "conversation_id_str": "2119464431721841009",
+           "created_at": "Sun Nov 08 17:01:39 +0000 2026",
+           "display_text_range": [
+            28,
+            303
+           ],
+           "entities": {
+            "media": [
+             {
+              "additional_media_info": {
+               "monetizable": false
+              },
+              "allow_download_status": {
+               "allow_download": true
+              },
+              "display_url": "pic.x.com/WsFi4AUp5f",
+              "expanded_url": "https://x.com/Ahmed_SaeedPTI/status/2119334962348646627/video/1",
+              "ext_media_availability": {
+               "status": "Available"
+              },
+              "id_str": "2119334812351614976",
+              "indices": [
+               280,
+               303
+              ],
+              "media_key": "13_2119334812351614976",
+              "media_results": {
+               "result": {
+                "media_key": "13_2119334812351614976"
+               }
+              },
+              "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2119334812351614976/img/z0VsM__nXSWelZii.jpg",
+              "original_info": {
+               "focus_rects": [],
+               "height": 692,
+               "width": 1280
+              },
+              "sizes": {
+               "large": {
+                "h": 692,
+                "resize": "fit",
+                "w": 1280
+               },
+               "medium": {
+                "h": 649,
+                "resize": "fit",
+                "w": 1200
+               },
+               "small": {
+                "h": 368,
+                "resize": "fit",
+                "w": 680
+               },
+               "thumb": {
+                "h": 150,
+                "resize": "crop",
+                "w": 150
+               }
+              },
+              "source_status_id_str": "2119334962348646627",
+              "source_user_id_str": "2927831185",
+              "source_user_results": {
+               "result": {
+                "__typename": "User",
+                "action_counts": {
+                 "favorites_count": 3217
+                },
+                "affiliates_highlighted_label": {},
+                "avatar": {
+                 "image_url": "https://pbs.twimg.com/profile_images/2103180688405184512/321Ed4gK_normal.jpg"
+                },
+                "banner": {
+                 "image_url": "https://pbs.twimg.com/profile_banners/2927831185/1725787755"
+                },
+                "core": {
+                 "created_at": "Fri Dec 12 20:40:44 +0000 2014",
+                 "name": "Ahmed Saeed",
+                 "screen_name": "Ahmed_SaeedPTI"
+                },
+                "follow_request_sent": false,
+                "has_graduated_access": true,
+                "id": "VXNlcjoyOTI3ODMxMTg1",
+                "is_blue_verified": true,
+                "location": {
+                 "location": "Pakistan"
+                },
+                "media_permissions": {
+                 "can_media_tag": false
+                },
+                "notifications_settings": {
+                 "notifications_enabled": false
+                },
+                "parody_commentary_fan_label": "None",
+                "pinned_items": {},
+                "possibly_sensitive": false,
+                "privacy": {
+                 "protected": false
+                },
+                "profile_bio": {
+                 "description": "I can't change the Direction of the Wind, but I can adjust my Sails to always reach my Destination.",
+                 "entities": {
+                  "description": {}
+                 }
+                },
+                "profile_description_language": "en",
+                "profile_image_shape": "Circle",
+                "profile_metadata": {
+                 "profile_interstitial_type": ""
+                },
+                "profile_translation": {
+                 "translator_type": "none"
+                },
+                "relationship_counts": {
+                 "followers": 45488,
+                 "following": 19372
+                },
+                "relationship_perspectives": {
+                 "blocked_by": false,
+                 "blocking": false,
+                 "followed_by": false,
+                 "following": false,
+                 "live_following": false,
+                 "muting": false
+                },
+                "rest_id": "2927831185",
+                "super_follow_eligible": false,
+                "super_followed_by": false,
+                "super_following": false,
+                "tweet_counts": {
+                 "media_tweets": 7194,
+                 "tweets": 9914
+                },
+                "verification": {
+                 "verified": false
+                },
+                "website": {
+                 "url": ""
+                }
+               }
+              },
+              "type": "video",
+              "url": "https://t.co/WsFi4AUp5f",
+              "video_info": {
+               "aspect_ratio": [
+                320,
+                173
+               ],
+               "duration_millis": 142175,
+               "variants": [
+                {
+                 "content_type": "application/x-mpegURL",
+                 "url": "https://video.twimg.com/amplify_video/2119334812351614976/pl/pWkKaFAJROQLLaG1.m3u8?tag=29&v=892"
+                },
+                {
+                 "bitrate": 256000,
+                 "content_type": "video/mp4",
+                 "url": "https://video.twimg.com/amplify_video/2119334812351614976/vid/avc1/498x270/ggYvOImrEcZ3RQ3_.mp4?tag=29"
+                },
+                {
+                 "bitrate": 832000,
+                 "content_type": "video/mp4",
+                 "url": "https://video.twimg.com/amplify_video/2119334812351614976/vid/avc1/664x360/ufAqGjBNWgvSLgau.mp4?tag=29"
+                },
+                {
+                 "bitrate": 2176000,
+                 "content_type": "video/mp4",
+                 "url": "https://video.twimg.com/amplify_video/2119334812351614976/vid/avc1/1280x692/Qquncai4jkMUZ41c.mp4?tag=29"
+                }
+               ]
+              }
+             }
+            ],
+            "user_mentions": [
+             {
+              "id_str": "1514612628336746511",
+              "indices": [
+               0,
+               13
+              ],
+              "name": "Marryam⚜️",
+              "screen_name": "KarmaProMaxx"
+             },
+             {
+              "id_str": "93287033",
+              "indices": [
+               14,
+               27
+              ],
+              "name": "Jibran Ilyas",
+              "screen_name": "agentjay2009"
+             }
+            ]
+           },
+           "extended_entities": {
+            "media": [
+             {
+              "additional_media_info": {
+               "monetizable": false
+              },
+              "allow_download_status": {
+               "allow_download": true
+              },
+              "display_url": "pic.x.com/WsFi4AUp5f",
+              "expanded_url": "https://x.com/Ahmed_SaeedPTI/status/2119334962348646627/video/1",
+              "ext_media_availability": {
+               "status": "Available"
+              },
+              "id_str": "2119334812351614976",
+              "indices": [
+               280,
+               303
+              ],
+              "media_key": "13_2119334812351614976",
+              "media_results": {
+               "result": {
+                "media_key": "13_2119334812351614976"
+               }
+              },
+              "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2119334812351614976/img/z0VsM__nXSWelZii.jpg",
+              "original_info": {
+               "focus_rects": [],
+               "height": 692,
+               "width": 1280
+              },
+              "sizes": {
+               "large": {
+                "h": 692,
+                "resize": "fit",
+                "w": 1280
+               },
+               "medium": {
+                "h": 649,
+                "resize": "fit",
+                "w": 1200
+               },
+               "small": {
+                "h": 368,
+                "resize": "fit",
+                "w": 680
+               },
+               "thumb": {
+                "h": 150,
+                "resize": "crop",
+                "w": 150
+               }
+              },
+              "source_status_id_str": "2119334962348646627",
+              "source_user_id_str": "2927831185",
+              "source_user_results": {
+               "result": {
+                "__typename": "User",
+                "action_counts": {
+                 "favorites_count": 3217
+                },
+                "affiliates_highlighted_label": {},
+                "avatar": {
+                 "image_url": "https://pbs.twimg.com/profile_images/2103180688405184512/321Ed4gK_normal.jpg"
+                },
+                "banner": {
+                 "image_url": "https://pbs.twimg.com/profile_banners/2927831185/1725787755"
+                },
+                "core": {
+                 "created_at": "Fri Dec 12 20:40:44 +0000 2014",
+                 "name": "Ahmed Saeed",
+                 "screen_name": "Ahmed_SaeedPTI"
+                },
+                "follow_request_sent": false,
+                "has_graduated_access": true,
+                "id": "VXNlcjoyOTI3ODMxMTg1",
+                "is_blue_verified": true,
+                "location": {
+                 "location": "Pakistan"
+                },
+                "media_permissions": {
+                 "can_media_tag": false
+                },
+                "notifications_settings": {
+                 "notifications_enabled": false
+                },
+                "parody_commentary_fan_label": "None",
+                "pinned_items": {},
+                "possibly_sensitive": false,
+                "privacy": {
+                 "protected": false
+                },
+                "profile_bio": {
+                 "description": "I can't change the Direction of the Wind, but I can adjust my Sails to always reach my Destination.",
+                 "entities": {
+                  "description": {}
+                 }
+                },
+                "profile_description_language": "en",
+                "profile_image_shape": "Circle",
+                "profile_metadata": {
+                 "profile_interstitial_type": ""
+                },
+                "profile_translation": {
+                 "translator_type": "none"
+                },
+                "relationship_counts": {
+                 "followers": 45488,
+                 "following": 19372
+                },
+                "relationship_perspectives": {
+                 "blocked_by": false,
+                 "blocking": false,
+                 "followed_by": false,
+                 "following": false,
+                 "live_following": false,
+                 "muting": false
+                },
+                "rest_id": "2927831185",
+                "super_follow_eligible": false,
+                "super_followed_by": false,
+                "super_following": false,
+                "tweet_counts": {
+                 "media_tweets": 7194,
+                 "tweets": 9914
+                },
+                "verification": {
+                 "verified": false
+                },
+                "website": {
+                 "url": ""
+                }
+               }
+              },
+              "type": "video",
+              "url": "https://t.co/WsFi4AUp5f",
+              "video_info": {
+               "aspect_ratio": [
+                320,
+                173
+               ],
+               "duration_millis": 142175,
+               "variants": [
+                {
+                 "content_type": "application/x-mpegURL",
+                 "url": "https://video.twimg.com/amplify_video/2119334812351614976/pl/pWkKaFAJROQLLaG1.m3u8?tag=29&v=892"
+                },
+                {
+                 "bitrate": 256000,
+                 "content_type": "video/mp4",
+                 "url": "https://video.twimg.com/amplify_video/2119334812351614976/vid/avc1/498x270/ggYvOImrEcZ3RQ3_.mp4?tag=29"
+                },
+                {
+                 "bitrate": 832000,
+                 "content_type": "video/mp4",
+                 "url": "https://video.twimg.com/amplify_video/2119334812351614976/vid/avc1/664x360/ufAqGjBNWgvSLgau.mp4?tag=29"
+                },
+                {
+                 "bitrate": 2176000,
+                 "content_type": "video/mp4",
+                 "url": "https://video.twimg.com/amplify_video/2119334812351614976/vid/avc1/1280x692/Qquncai4jkMUZ41c.mp4?tag=29"
+                }
+               ]
+              }
+             }
+            ]
+           },
+           "favorite_count": 5,
+           "favorited": false,
+           "full_text": "@KarmaProMaxx @agentjay2009 ایک اور پوینٹ۔ \nاس وڈیو میں سب ان وکیلوں کے ساتھ سلمان صفدر کا نام لیا گیا باریکی سے جن کو الریڈی بدنام کردیا گیا ہے۔ جیسے علی ظفر وغیرہ۔ \nباریکی سے امپریشن دیا گیا کے سلمان صفدر بھی ٹاوٹ ہے۔\n\nسلمان راجہ کو کیا بچایا جا رہا؟ اس نے تو ان کو disown کیا\n\nhttps://t.co/WsFi4AUp5f",
+           "id_str": "2119475447402745873",
+           "in_reply_to_screen_name": "KarmaProMaxx",
+           "in_reply_to_status_id_str": "2119464431721841009",
+           "in_reply_to_user_id_str": "1514612628336746511",
+           "is_quote_status": false,
+           "lang": "ur",
+           "possibly_sensitive": false,
+           "possibly_sensitive_editable": true,
+           "quote_count": 0,
+           "reply_count": 2,
+           "retweet_count": 3,
+           "retweeted": false,
+           "user_id_str": "135887498"
+          },
+          "rest_id": "2119475447402745873",
+          "unmention_data": {},
+          "views": {
+           "count": "358",
+           "state": "EnabledWithCount"
+          }
+         }
+        }
+       },
+       "sharing_id": "2119510077363081663",
+       "updated_at_ms": 1794165555693,
+       "user_results": {
+        "result": {
+         "__typename": "User",
+         "action_counts": {
+          "favorites_count": 75052
+         },
+         "affiliates_highlighted_label": {},
+         "avatar": {
+          "image_url": "https://pbs.twimg.com/profile_images/2112651325733474304/PEPqfHWd_normal.jpg"
+         },
+         "banner": {
+          "image_url": "https://pbs.twimg.com/profile_banners/1514612628336746511/1780362794"
+         },
+         "core": {
+          "created_at": "Thu Apr 14 14:33:32 +0000 2022",
+          "name": "Marryam⚜️",
+          "screen_name": "KarmaProMaxx"
+         },
+         "follow_request_sent": false,
+         "has_graduated_access": true,
+         "id": "VXNlcjoxNTE0NjEyNjI4MzM2NzQ2NTEx",
+         "is_blue_verified": false,
+         "location": {
+          "location": "Wales, United Kingdom"
+         },
+         "media_permissions": {
+          "can_media_tag": false
+         },
+         "notifications_settings": {
+          "notifications_enabled": false
+         },
+         "parody_commentary_fan_label": "None",
+         "pinned_items": {
+          "tweet_ids_str": [
+           "2118058357760442419"
+          ]
+         },
+         "possibly_sensitive": false,
+         "privacy": {
+          "protected": false
+         },
+         "profile_bio": {
+          "description": "Standing on the right side of the history! Proud Imranist since over a decade ✌️Critical Analyst and propaganda buster🔥 بہت بدتمیز ! اصل کے ٹکر والے لوگ",
+          "entities": {
+           "description": {}
+          }
+         },
+         "profile_image_shape": "Circle",
+         "profile_metadata": {
+          "profile_interstitial_type": ""
+         },
+         "profile_translation": {
+          "translator_type": "none"
+         },
+         "relationship_counts": {
+          "followers": 5053,
+          "following": 78
+         },
+         "relationship_perspectives": {
+          "blocked_by": false,
+          "blocking": false,
+          "followed_by": false,
+          "following": false,
+          "live_following": false,
+          "muting": false
+         },
+         "rest_id": "1514612628336746511",
+         "super_follow_eligible": false,
+         "super_followed_by": false,
+         "super_following": false,
+         "tweet_counts": {
+          "media_tweets": 976,
+          "tweets": 42536
+         },
+         "verification": {
+          "verified": false
+         },
+         "website": {
+          "url": ""
+         }
+        }
+       }
+      },
+      {
+       "created_at_ms": 1794171306891,
+       "shared_item": {
+        "__typename": "AudioSpaceSharedTweet",
+        "tweet_results": {
+         "result": {
+          "__typename": "Tweet",
+          "cashtag_attachments": [],
+          "core": {
+           "user_results": {
+            "result": {
+             "__typename": "User",
+             "action_counts": {
+              "favorites_count": 997
+             },
+             "affiliates_highlighted_label": {},
+             "avatar": {
+              "image_url": "https://pbs.twimg.com/profile_images/2116234287637028864/jjH2Lv_b_normal.jpg"
+             },
+             "banner": {
+              "image_url": "https://pbs.twimg.com/profile_banners/2945460368/1787865914"
+             },
+             "core": {
+              "created_at": "Sat Dec 27 20:28:03 +0000 2014",
+              "name": "Zia Khan",
+              "screen_name": "zziakhann"
+             },
+             "follow_request_sent": false,
+             "has_graduated_access": true,
+             "id": "VXNlcjoyOTQ1NDYwMzY4",
+             "is_blue_verified": false,
+             "location": {
+              "location": "Islamabad, Pakistan"
+             },
+             "media_permissions": {
+              "can_media_tag": true
+             },
+             "notifications_settings": {
+              "notifications_enabled": false
+             },
+             "parody_commentary_fan_label": "None",
+             "pinned_items": {
+              "tweet_ids_str": [
+               "2115864277571752161"
+              ]
+             },
+             "possibly_sensitive": false,
+             "privacy": {
+              "protected": false
+             },
+             "profile_bio": {
+              "description": "Attorney at law",
+              "entities": {
+               "description": {},
+               "url": {
+                "urls": [
+                 {
+                  "display_url": "facebook.com/WeAreAllKhanPt…",
+                  "expanded_url": "https://www.facebook.com/WeAreAllKhanPti?mibextid=ZbWKwL",
+                  "indices": [
+                   0,
+                   23
+                  ],
+                  "url": "https://t.co/wBqypQVsTK"
+                 }
+                ]
+               }
+              }
+             },
+             "profile_image_shape": "Circle",
+             "profile_metadata": {
+              "profile_interstitial_type": ""
+             },
+             "profile_translation": {
+              "translator_type": "none"
+             },
+             "relationship_counts": {
+              "followers": 227,
+              "following": 345
+             },
+             "relationship_perspectives": {
+              "blocked_by": false,
+              "blocking": false,
+              "followed_by": false,
+              "following": false,
+              "live_following": false,
+              "muting": false
+             },
+             "rest_id": "2945460368",
+             "super_follow_eligible": false,
+             "super_followed_by": false,
+             "super_following": false,
+             "tweet_counts": {
+              "media_tweets": 215,
+              "tweets": 1018
+             },
+             "verification": {
+              "verified": false
+             },
+             "website": {
+              "url": "https://t.co/wBqypQVsTK"
+             }
+            }
+           }
+          },
+          "edit_control": {
+           "edit_tweet_ids": [
+            "2119534081998483559"
+           ],
+           "editable_until_msecs": "1794174878000",
+           "edits_remaining": "5",
+           "is_edit_eligible": false
+          },
+          "grok_analysis_button": true,
+          "grok_annotations": {},
+          "grok_translated_post_with_availability": {
+           "is_available": false
+          },
+          "is_translatable": true,
+          "legacy": {
+           "bookmark_count": 0,
+           "bookmarked": false,
+           "conversation_id_str": "2119499320336482516",
+           "created_at": "Sun Nov 08 20:54:38 +0000 2026",
+           "display_text_range": [
+            13,
+            223
+           ],
+           "entities": {
+            "user_mentions": [
+             {
+              "id_str": "1446370181828259867",
+              "indices": [
+               0,
+               12
+              ],
+              "name": "SilentWolfPk🐺🇬🇪🇵🇰",
+              "screen_name": "SilenWolfPk"
+             }
+            ]
+           },
+           "favorite_count": 3,
+           "favorited": false,
+           "full_text": "@SilenWolfPk پمز ٹیم نے اڈیالہ جیل میں عمران خان اور بشریٰ بی بی کا معائنہ کیا، مگر اہلِ خانہ کو کچھ نہیں بتایا گیا۔\n\nمیڈیکل رپورٹس اہلِ خانہ اور شوکت خانم کے ڈاکٹروں کو دی جائیں، اور ذاتی ڈاکٹروں تک رسائی یقینی بنائی جائے۔",
+           "id_str": "2119534081998483559",
+           "in_reply_to_screen_name": "SilenWolfPk",
+           "in_reply_to_status_id_str": "2119499320336482516",
+           "in_reply_to_user_id_str": "1446370181828259867",
+           "is_quote_status": false,
+           "lang": "ur",
+           "quote_count": 0,
+           "reply_count": 0,
+           "retweet_count": 2,
+           "retweeted": false,
+           "user_id_str": "2945460368"
+          },
+          "rest_id": "2119534081998483559",
+          "unmention_data": {},
+          "views": {
+           "count": "59",
+           "state": "EnabledWithCount"
+          }
+         }
+        }
+       },
+       "sharing_id": "2119534199636131884",
+       "updated_at_ms": 1794171306891,
+       "user_results": {
+        "result": {
+         "__typename": "User",
+         "action_counts": {
+          "favorites_count": 23456
+         },
+         "affiliates_highlighted_label": {},
+         "avatar": {
+          "image_url": "https://pbs.twimg.com/profile_images/2115586400552673280/JyAxHGho_normal.jpg"
+         },
+         "banner": {
+          "image_url": "https://pbs.twimg.com/profile_banners/1446370181828259867/1739910907"
+         },
+         "core": {
+          "created_at": "Fri Oct 08 07:01:48 +0000 2021",
+          "name": "SilentWolfPk🐺🇬🇪🇵🇰",
+          "screen_name": "SilenWolfPk"
+         },
+         "follow_request_sent": false,
+         "has_graduated_access": true,
+         "id": "VXNlcjoxNDQ2MzcwMTgxODI4MjU5ODY3",
+         "is_blue_verified": false,
+         "location": {
+          "location": "Living on the edge 🔥"
+         },
+         "media_permissions": {
+          "can_media_tag": false
+         },
+         "notifications_settings": {
+          "notifications_enabled": false
+         },
+         "parody_commentary_fan_label": "None",
+         "pinned_items": {
+          "tweet_ids_str": [
+           "1892605404317675974"
+          ]
+         },
+         "possibly_sensitive": false,
+         "privacy": {
+          "protected": false
+         },
+         "profile_bio": {
+          "description": "The best things come from living outside of your comfort zone! Pakistan Zindabad 🇵🇰 #XHost 💚 #FreeImranKhan #FreePalestine",
+          "entities": {
+           "description": {},
+           "url": {
+            "urls": [
+             {
+              "display_url": "tiktok.com/@silentwolfpk?…",
+              "expanded_url": "https://www.tiktok.com/@silentwolfpk?_t=ZG-8sCxTaigYrJ&_r=1",
+              "indices": [
+               0,
+               23
+              ],
+              "url": "https://t.co/mfjYqDnF4f"
+             }
+            ]
+           }
+          }
+         },
+         "profile_description_language": "en",
+         "profile_image_shape": "Circle",
+         "profile_metadata": {
+          "profile_interstitial_type": ""
+         },
+         "profile_translation": {
+          "translator_type": "none"
+         },
+         "relationship_counts": {
+          "followers": 7352,
+          "following": 966
+         },
+         "relationship_perspectives": {
+          "blocked_by": false,
+          "blocking": false,
+          "followed_by": false,
+          "following": false,
+          "live_following": false,
+          "muting": false
+         },
+         "rest_id": "1446370181828259867",
+         "super_follow_eligible": false,
+         "super_followed_by": false,
+         "super_following": false,
+         "tweet_counts": {
+          "media_tweets": 2321,
+          "tweets": 11441
+         },
+         "verification": {
+          "verified": false
+         },
+         "website": {
+          "url": "https://t.co/mfjYqDnF4f"
+         }
+        }
+       }
+      },
+      {
+       "created_at_ms": 1794172852931,
+       "shared_item": {
+        "__typename": "AudioSpaceSharedTweet",
+        "tweet_results": {
+         "result": {
+          "__typename": "Tweet",
+          "cashtag_attachments": [],
+          "core": {
+           "user_results": {
+            "result": {
+             "__typename": "User",
+             "action_counts": {
+              "favorites_count": 75052
+             },
+             "affiliates_highlighted_label": {},
+             "avatar": {
+              "image_url": "https://pbs.twimg.com/profile_images/2112651325733474304/PEPqfHWd_normal.jpg"
+             },
+             "banner": {
+              "image_url": "https://pbs.twimg.com/profile_banners/1514612628336746511/1780362794"
+             },
+             "core": {
+              "created_at": "Thu Apr 14 14:33:32 +0000 2022",
+              "name": "Marryam⚜️",
+              "screen_name": "KarmaProMaxx"
+             },
+             "follow_request_sent": false,
+             "has_graduated_access": true,
+             "id": "VXNlcjoxNTE0NjEyNjI4MzM2NzQ2NTEx",
+             "is_blue_verified": false,
+             "location": {
+              "location": "Wales, United Kingdom"
+             },
+             "media_permissions": {
+              "can_media_tag": false
+             },
+             "notifications_settings": {
+              "notifications_enabled": false
+             },
+             "parody_commentary_fan_label": "None",
+             "pinned_items": {
+              "tweet_ids_str": [
+               "2118058357760442419"
+              ]
+             },
+             "possibly_sensitive": false,
+             "privacy": {
+              "protected": false
+             },
+             "profile_bio": {
+              "description": "Standing on the right side of the history! Proud Imranist since over a decade ✌️Critical Analyst and propaganda buster🔥 بہت بدتمیز ! اصل کے ٹکر والے لوگ",
+              "entities": {
+               "description": {}
+              }
+             },
+             "profile_image_shape": "Circle",
+             "profile_metadata": {
+              "profile_interstitial_type": ""
+             },
+             "profile_translation": {
+              "translator_type": "none"
+             },
+             "relationship_counts": {
+              "followers": 5053,
+              "following": 78
+             },
+             "relationship_perspectives": {
+              "blocked_by": false,
+              "blocking": false,
+              "followed_by": false,
+              "following": false,
+              "live_following": false,
+              "muting": false
+             },
+             "rest_id": "1514612628336746511",
+             "super_follow_eligible": false,
+             "super_followed_by": false,
+             "super_following": false,
+             "tweet_counts": {
+              "media_tweets": 976,
+              "tweets": 42536
+             },
+             "verification": {
+              "verified": false
+             },
+             "website": {
+              "url": ""
+             }
+            }
+           }
+          },
+          "edit_control": {
+           "edit_tweet_ids": [
+            "2118409727231345023"
+           ],
+           "editable_until_msecs": "1793906811000",
+           "edits_remaining": "5",
+           "is_edit_eligible": true
+          },
+          "grok_analysis_button": true,
+          "grok_annotations": {
+           "is_image_editable_by_grok": false
+          },
+          "grok_translated_post_with_availability": {
+           "data": {
+            "associated_data": {},
+            "destination_language": "en",
+            "entities": {
+             "hashtags": [],
+             "symbols": [],
+             "urls": [],
+             "user_mentions": []
+            },
+            "preview_translation": "She is saying \"they\" want to keep them inside\n\nGuess what's being talked about—Khan's health, his wife and sisters—to divert attention and put it on Mashal\n\nThese conspiratorial, lying, cunning, hate-and-envy-filled importers are actually Khan's real enemies, whose true colors",
+            "source_language": "ur",
+            "translation": "She is saying \"they\" want to keep them inside\n\nGuess what's being talked about—Khan's health, his wife and sisters—to divert attention and put it on Mashal\n\nThese conspiratorial, lying, cunning, hate-and-envy-filled importers are actually Khan's real enemies, whose true colors are coming to light, play this clip\n\nTheir gang is also present in the comments 🤣"
+           },
+           "is_available": true
+          },
+          "is_translatable": true,
+          "legacy": {
+           "bookmark_count": 1,
+           "bookmarked": false,
+           "conversation_id_str": "2118409727231345023",
+           "created_at": "Thu Nov 05 18:26:51 +0000 2026",
+           "display_text_range": [
+            0,
+            277
+           ],
+           "entities": {},
+           "favorite_count": 24,
+           "favorited": false,
+           "full_text": "وہ کہہ رہی \"وہ\" انکو اندر رکھنا چاہتے\n\nاندازہ لگائیں جو خان کی صحت،انکی بیوی وبہنوں کے بارے بات ہو رہی اس سے دھیان ہٹاکرمشعال پہ ڈال رہے\n\n یہ سازشی،جھوٹے،مکار،نفرت وجلن والےوارداتیے ہی دراصل خان کےدشمن ہیں جن کی چول سامنے نظر آ رہی یہ کلپ لگا کے\n\nکمینٹس میں انکا ٹولہ بھی حاظر🤣",
+           "id_str": "2118409727231345023",
+           "is_quote_status": true,
+           "lang": "ur",
+           "quote_count": 3,
+           "quoted_status_id_str": "2118393834321158529",
+           "quoted_status_permalink": {
+            "display": "x.com/ammar_mian/sta…",
+            "expanded": "https://twitter.com/ammar_mian/status/2118393834321158529",
+            "url": "https://t.co/uhm1XaB8XV"
+           },
+           "reply_count": 9,
+           "retweet_count": 8,
+           "retweeted": false,
+           "user_id_str": "1514612628336746511"
+          },
+          "quoted_status_result": {
+           "result": {
+            "__typename": "Tweet",
+            "core": {
+             "user_results": {
+              "result": {
+               "__typename": "User",
+               "action_counts": {
+                "favorites_count": 51399
+               },
+               "affiliates_highlighted_label": {},
+               "avatar": {
+                "image_url": "https://pbs.twimg.com/profile_images/2032137215568932864/fyR9bxuQ_normal.jpg"
+               },
+               "banner": {
+                "image_url": "https://pbs.twimg.com/profile_banners/570329951/1658331032"
+               },
+               "core": {
+                "created_at": "Thu May 03 22:18:20 +0000 2012",
+                "name": "Ammar",
+                "screen_name": "ammar_mian"
+               },
+               "follow_request_sent": false,
+               "has_graduated_access": true,
+               "id": "VXNlcjo1NzAzMjk5NTE=",
+               "is_blue_verified": true,
+               "location": {
+                "location": "London, England"
+               },
+               "media_permissions": {
+                "can_media_tag": true
+               },
+               "notifications_settings": {
+                "notifications_enabled": false
+               },
+               "parody_commentary_fan_label": "None",
+               "pinned_items": {
+                "tweet_ids_str": [
+                 "1527764945269563393"
+                ]
+               },
+               "possibly_sensitive": false,
+               "privacy": {
+                "protected": false
+               },
+               "profile_bio": {
+                "description": "US Financial Markets -  Equities/Futures/Index.\nOptions are the true risk premia not the underlying. \n''Supporter of Imran Khan and his vision for Pakistan”",
+                "entities": {
+                 "description": {}
+                }
+               },
+               "profile_description_language": "en",
+               "profile_image_shape": "Circle",
+               "profile_metadata": {
+                "profile_interstitial_type": ""
+               },
+               "profile_translation": {
+                "translator_type": "none"
+               },
+               "relationship_counts": {
+                "followers": 1688,
+                "following": 339
+               },
+               "relationship_perspectives": {
+                "blocked_by": false,
+                "blocking": false,
+                "followed_by": false,
+                "following": false,
+                "live_following": false,
+                "muting": false
+               },
+               "rest_id": "570329951",
+               "super_follow_eligible": false,
+               "super_followed_by": false,
+               "super_following": false,
+               "tweet_counts": {
+                "media_tweets": 871,
+                "tweets": 9438
+               },
+               "verification": {
+                "verified": false
+               },
+               "website": {
+                "url": ""
+               }
+              }
+             }
+            },
+            "edit_control": {
+             "edit_tweet_ids": [
+              "2118393834321158529"
+             ],
+             "editable_until_msecs": "1793903022000",
+             "edits_remaining": "5",
+             "is_edit_eligible": true
+            },
+            "grok_analysis_button": true,
+            "grok_translated_post_with_availability": {
+             "data": {
+              "associated_data": {},
+              "destination_language": "en",
+              "entities": {
+               "hashtags": [],
+               "symbols": [],
+               "urls": [],
+               "user_mentions": []
+              },
+              "source_language": "ur",
+              "translation": "We want to keep them in jail - Mishal Yousafzai"
+             },
+             "is_available": true
+            },
+            "is_translatable": true,
+            "legacy": {
+             "bookmark_count": 12,
+             "bookmarked": false,
+             "conversation_id_str": "2118393834321158529",
+             "created_at": "Thu Nov 05 17:23:42 +0000 2026",
+             "display_text_range": [
+              0,
+              50
+             ],
+             "entities": {
+              "media": [
+               {
+                "additional_media_info": {
+                 "monetizable": false
+                },
+                "allow_download_status": {
+                 "allow_download": true
+                },
+                "display_url": "pic.x.com/1eLH1BIWZc",
+                "expanded_url": "https://x.com/ammar_mian/status/2118393834321158529/video/1",
+                "ext_media_availability": {
+                 "status": "Available"
+                },
+                "id_str": "2118393674493022208",
+                "indices": [
+                 51,
+                 74
+                ],
+                "media_key": "13_2118393674493022208",
+                "media_results": {
+                 "result": {
+                  "media_key": "13_2118393674493022208"
+                 }
+                },
+                "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2118393674493022208/img/2EsLcqx7-YXyG_W4.jpg",
+                "original_info": {
+                 "focus_rects": [],
+                 "height": 2778,
+                 "width": 1284
+                },
+                "sizes": {
+                 "large": {
+                  "h": 2048,
+                  "resize": "fit",
+                  "w": 947
+                 },
+                 "medium": {
+                  "h": 1200,
+                  "resize": "fit",
+                  "w": 555
+                 },
+                 "small": {
+                  "h": 680,
+                  "resize": "fit",
+                  "w": 314
+                 },
+                 "thumb": {
+                  "h": 150,
+                  "resize": "crop",
+                  "w": 150
+                 }
+                },
+                "type": "video",
+                "url": "https://t.co/1eLH1BIWZc",
+                "video_info": {
+                 "aspect_ratio": [
+                  214,
+                  463
+                 ],
+                 "duration_millis": 31003,
+                 "variants": [
+                  {
+                   "content_type": "application/x-mpegURL",
+                   "url": "https://video.twimg.com/amplify_video/2118393674493022208/pl/zRmD9v4x3Lhv079h.m3u8?tag=29&v=65a"
+                  },
+                  {
+                   "bitrate": 632000,
+                   "content_type": "video/mp4",
+                   "url": "https://video.twimg.com/amplify_video/2118393674493022208/vid/avc1/320x692/hBUDpJAPcRD9glV0.mp4?tag=29"
+                  },
+                  {
+                   "bitrate": 950000,
+                   "content_type": "video/mp4",
+                   "url": "https://video.twimg.com/amplify_video/2118393674493022208/vid/avc1/480x1038/9x3QuJga0Vxdk62B.mp4?tag=29"
+                  },
+                  {
+                   "bitrate": 2176000,
+                   "content_type": "video/mp4",
+                   "url": "https://video.twimg.com/amplify_video/2118393674493022208/vid/avc1/720x1556/gaLdG2_xr72xCE3O.mp4?tag=29"
+                  },
+                  {
+                   "bitrate": 10368000,
+                   "content_type": "video/mp4",
+                   "url": "https://video.twimg.com/amplify_video/2118393674493022208/vid/avc1/1284x2778/dA4xSbEJGlMU3LiR.mp4?tag=29"
+                  }
+                 ]
+                }
+               }
+              ]
+             },
+             "extended_entities": {
+              "media": [
+               {
+                "additional_media_info": {
+                 "monetizable": false
+                },
+                "allow_download_status": {
+                 "allow_download": true
+                },
+                "display_url": "pic.x.com/1eLH1BIWZc",
+                "expanded_url": "https://x.com/ammar_mian/status/2118393834321158529/video/1",
+                "ext_media_availability": {
+                 "status": "Available"
+                },
+                "id_str": "2118393674493022208",
+                "indices": [
+                 51,
+                 74
+                ],
+                "media_key": "13_2118393674493022208",
+                "media_results": {
+                 "result": {
+                  "media_key": "13_2118393674493022208"
+                 }
+                },
+                "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2118393674493022208/img/2EsLcqx7-YXyG_W4.jpg",
+                "original_info": {
+                 "focus_rects": [],
+                 "height": 2778,
+                 "width": 1284
+                },
+                "sizes": {
+                 "large": {
+                  "h": 2048,
+                  "resize": "fit",
+                  "w": 947
+                 },
+                 "medium": {
+                  "h": 1200,
+                  "resize": "fit",
+                  "w": 555
+                 },
+                 "small": {
+                  "h": 680,
+                  "resize": "fit",
+                  "w": 314
+                 },
+                 "thumb": {
+                  "h": 150,
+                  "resize": "crop",
+                  "w": 150
+                 }
+                },
+                "type": "video",
+                "url": "https://t.co/1eLH1BIWZc",
+                "video_info": {
+                 "aspect_ratio": [
+                  214,
+                  463
+                 ],
+                 "duration_millis": 31003,
+                 "variants": [
+                  {
+                   "content_type": "application/x-mpegURL",
+                   "url": "https://video.twimg.com/amplify_video/2118393674493022208/pl/zRmD9v4x3Lhv079h.m3u8?tag=29&v=65a"
+                  },
+                  {
+                   "bitrate": 632000,
+                   "content_type": "video/mp4",
+                   "url": "https://video.twimg.com/amplify_video/2118393674493022208/vid/avc1/320x692/hBUDpJAPcRD9glV0.mp4?tag=29"
+                  },
+                  {
+                   "bitrate": 950000,
+                   "content_type": "video/mp4",
+                   "url": "https://video.twimg.com/amplify_video/2118393674493022208/vid/avc1/480x1038/9x3QuJga0Vxdk62B.mp4?tag=29"
+                  },
+                  {
+                   "bitrate": 2176000,
+                   "content_type": "video/mp4",
+                   "url": "https://video.twimg.com/amplify_video/2118393674493022208/vid/avc1/720x1556/gaLdG2_xr72xCE3O.mp4?tag=29"
+                  },
+                  {
+                   "bitrate": 10368000,
+                   "content_type": "video/mp4",
+                   "url": "https://video.twimg.com/amplify_video/2118393674493022208/vid/avc1/1284x2778/dA4xSbEJGlMU3LiR.mp4?tag=29"
+                  }
+                 ]
+                }
+               }
+              ]
+             },
+             "favorite_count": 50,
+             "favorited": false,
+             "full_text": "ہم ان کو جیل میں ہی رکھنا چاہتے ہیں- مشال یوسف زئی https://t.co/1eLH1BIWZc",
+             "id_str": "2118393834321158529",
+             "is_quote_status": false,
+             "lang": "ur",
+             "possibly_sensitive": false,
+             "possibly_sensitive_editable": true,
+             "quote_count": 4,
+             "reply_count": 14,
+             "retweet_count": 28,
+             "retweeted": false,
+             "user_id_str": "570329951"
+            },
+            "rest_id": "2118393834321158529",
+            "unmention_data": {},
+            "views": {
+             "count": "6336",
+             "state": "EnabledWithCount"
+            }
+           }
+          },
+          "rest_id": "2118409727231345023",
+          "unmention_data": {},
+          "views": {
+           "count": "1352",
+           "state": "EnabledWithCount"
+          }
+         }
+        }
+       },
+       "sharing_id": "2119540684197626174",
+       "updated_at_ms": 1794172852931,
+       "user_results": {
+        "result": {
+         "__typename": "User",
+         "action_counts": {
+          "favorites_count": 75052
+         },
+         "affiliates_highlighted_label": {},
+         "avatar": {
+          "image_url": "https://pbs.twimg.com/profile_images/2112651325733474304/PEPqfHWd_normal.jpg"
+         },
+         "banner": {
+          "image_url": "https://pbs.twimg.com/profile_banners/1514612628336746511/1780362794"
+         },
+         "core": {
+          "created_at": "Thu Apr 14 14:33:32 +0000 2022",
+          "name": "Marryam⚜️",
+          "screen_name": "KarmaProMaxx"
+         },
+         "follow_request_sent": false,
+         "has_graduated_access": true,
+         "id": "VXNlcjoxNTE0NjEyNjI4MzM2NzQ2NTEx",
+         "is_blue_verified": false,
+         "location": {
+          "location": "Wales, United Kingdom"
+         },
+         "media_permissions": {
+          "can_media_tag": false
+         },
+         "notifications_settings": {
+          "notifications_enabled": false
+         },
+         "parody_commentary_fan_label": "None",
+         "pinned_items": {
+          "tweet_ids_str": [
+           "2118058357760442419"
+          ]
+         },
+         "possibly_sensitive": false,
+         "privacy": {
+          "protected": false
+         },
+         "profile_bio": {
+          "description": "Standing on the right side of the history! Proud Imranist since over a decade ✌️Critical Analyst and propaganda buster🔥 بہت بدتمیز ! اصل کے ٹکر والے لوگ",
+          "entities": {
+           "description": {}
+          }
+         },
+         "profile_image_shape": "Circle",
+         "profile_metadata": {
+          "profile_interstitial_type": ""
+         },
+         "profile_translation": {
+          "translator_type": "none"
+         },
+         "relationship_counts": {
+          "followers": 5053,
+          "following": 78
+         },
+         "relationship_perspectives": {
+          "blocked_by": false,
+          "blocking": false,
+          "followed_by": false,
+          "following": false,
+          "live_following": false,
+          "muting": false
+         },
+         "rest_id": "1514612628336746511",
+         "super_follow_eligible": false,
+         "super_followed_by": false,
+         "super_following": false,
+         "tweet_counts": {
+          "media_tweets": 976,
+          "tweets": 42536
+         },
+         "verification": {
+          "verified": false
+         },
+         "website": {
+          "url": ""
+         }
+        }
+       }
+      }
+     ],
+     "slice_info": {}
+    }
+   }
+  }
+ }
+}

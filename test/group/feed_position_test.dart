@@ -15,6 +15,7 @@ import 'package:quax/tweet/tweet.dart';
 import '../fixture_client.dart';
 import '../fixtures.dart';
 import '../ui/fake_images.dart';
+import '../subscriptions/fixtures.dart' show useTallScreen;
 import 'open_feed.dart';
 
 final _stored = Twitter.parseSearchTimeline(
@@ -63,6 +64,8 @@ void main() {
   });
 
   testWidgets('Should remember the highest tweet whose top is on the screen once scrolled', (tester) async {
+    // Keeps the first two tweets on the screen, however tall their media
+    useTallScreen(tester);
     await _storeFeed(tester);
     await openFeed(tester, FixtureTwitterClient({}), keepPosition: true);
 

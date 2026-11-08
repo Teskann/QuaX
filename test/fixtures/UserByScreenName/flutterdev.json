@@ -31,8 +31,8 @@
  "headers": {
   "x-rate-limit-limit": "150",
   "content-type": "application/json",
-  "x-rate-limit-remaining": "148",
-  "x-rate-limit-reset": "1793073696"
+  "x-rate-limit-reset": "1794173124",
+  "x-rate-limit-remaining": "145"
  },
  "body": {
   "data": {
@@ -40,9 +40,22 @@
     "result": {
      "__typename": "User",
      "action_counts": {
-      "favorites_count": 3220
+      "favorites_count": 3222
      },
-     "affiliates_highlighted_label": {},
+     "affiliates_highlighted_label": {
+      "label": {
+       "badge": {
+        "url": "https://pbs.twimg.com/profile_images/2047008530478346240/2ZoDIjwe_bigger.jpg"
+       },
+       "description": "Google Cloud",
+       "url": {
+        "url": "https://twitter.com/googlecloud",
+        "urlType": "DeepLink"
+       },
+       "userLabelDisplayType": "Badge",
+       "userLabelType": "BusinessLabel"
+      }
+     },
      "avatar": {
       "image_url": "https://pbs.twimg.com/profile_images/1187814172307800064/MhnwJbxw_normal.jpg"
      },
@@ -63,11 +76,11 @@
      "has_graduated_access": true,
      "has_hidden_subscriptions_on_profile": false,
      "highlights_info": {
-      "can_highlight_tweets": false,
+      "can_highlight_tweets": true,
       "highlighted_tweets": "0"
      },
      "id": "VXNlcjo0MjA3MzAzMTY=",
-     "is_blue_verified": false,
+     "is_blue_verified": true,
      "is_profile_translatable": false,
      "legacy_extended_profile": {},
      "location": {
@@ -118,7 +131,7 @@
       "translator_type": "none"
      },
      "relationship_counts": {
-      "followers": 278003,
+      "followers": 278116,
       "following": 61
      },
      "relationship_perspectives": {
@@ -134,8 +147,8 @@
      "super_followed_by": false,
      "super_following": false,
      "tweet_counts": {
-      "media_tweets": 1988,
-      "tweets": 3938
+      "media_tweets": 1995,
+      "tweets": 3953
      },
      "user_seed_tweet_count": 0,
      "verification": {
@@ -148,15 +161,23 @@
        "description": {
         "entities": [
          {
-          "from_index": 69,
+          "from_index": 53,
+          "ref": {
+           "url": "https://twitter.com/googlecloud",
+           "url_type": "ExternalUrl"
+          },
+          "to_index": 65
+         },
+         {
+          "from_index": 72,
           "ref": {
            "url": "https://help.twitter.com/en/rules-and-policies/profile-labels",
            "url_type": "ExternalUrl"
           },
-          "to_index": 79
+          "to_index": 82
          }
         ],
-        "text": "This account is verified because it's an official organization on X. Learn more"
+        "text": "This account is Premium because it's an affiliate of @googlecloud on X. Learn more"
        },
        "verified_since_msec": "1506330987532"
       }

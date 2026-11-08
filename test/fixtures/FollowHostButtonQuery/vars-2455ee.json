@@ -1,0 +1,39 @@
+{
+ "scenario": "Posts sharing X Spaces, live, ended with or without a recording, and scheduled, each Space loaded with AudioSpaceById",
+ "sourceUrl": "https://x.com/search?q=x.com%2Fi%2Fspaces&src=typed_query",
+ "unstable": true,
+ "operation": "FollowHostButtonQuery",
+ "host": "x.com",
+ "queryId": "bpY370mwoHjimSkkcTSk4A",
+ "features": null,
+ "fieldToggles": null,
+ "variables": {
+  "restId": "2041256060657291264"
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "500",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "494",
+  "x-rate-limit-reset": "1794174392"
+ },
+ "body": {
+  "data": {
+   "user": {
+    "id": "VXNlclJlc3VsdHM6MjA0MTI1NjA2MDY1NzI5MTI2NA==",
+    "result": {
+     "__typename": "User",
+     "core": {
+      "name": "SUPPORTING SMALL ACCOUNTS",
+      "screen_name": "SSA__OFFICIAL"
+     },
+     "id": "VXNlcjoyMDQxMjU2MDYwNjU3MjkxMjY0",
+     "relationship_perspectives": {
+      "following": false
+     },
+     "rest_id": "2041256060657291264"
+    }
+   }
+  }
+ }
+}

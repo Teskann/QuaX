@@ -1,0 +1,39 @@
+{
+ "scenario": "Posts sharing X Spaces, live, ended with or without a recording, and scheduled, each Space loaded with AudioSpaceById",
+ "sourceUrl": "https://x.com/search?q=x.com%2Fi%2Fspaces&src=typed_query",
+ "unstable": true,
+ "operation": "FollowHostButtonQuery",
+ "host": "x.com",
+ "queryId": "bpY370mwoHjimSkkcTSk4A",
+ "features": null,
+ "fieldToggles": null,
+ "variables": {
+  "restId": "2077688534794735617"
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "500",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "497",
+  "x-rate-limit-reset": "1794174392"
+ },
+ "body": {
+  "data": {
+   "user": {
+    "id": "VXNlclJlc3VsdHM6MjA3NzY4ODUzNDc5NDczNTYxNw==",
+    "result": {
+     "__typename": "User",
+     "core": {
+      "name": "Osama Novara",
+      "screen_name": "osama_novara"
+     },
+     "id": "VXNlcjoyMDc3Njg4NTM0Nzk0NzM1NjE3",
+     "relationship_perspectives": {
+      "following": false
+     },
+     "rest_id": "2077688534794735617"
+    }
+   }
+  }
+ }
+}

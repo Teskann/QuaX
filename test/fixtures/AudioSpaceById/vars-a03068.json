@@ -1,0 +1,2762 @@
+{
+ "scenario": "Posts sharing X Spaces, live, ended with or without a recording, and scheduled, each Space loaded with AudioSpaceById",
+ "sourceUrl": "https://x.com/search?q=x.com%2Fi%2Fspaces&src=typed_query",
+ "unstable": true,
+ "operation": "AudioSpaceById",
+ "host": "x.com",
+ "queryId": "zm3JmUpYWDXIUsf_33-ZrA",
+ "features": {
+  "spaces_2022_h2_spaces_communities": true,
+  "spaces_2022_h2_clipping": true,
+  "creator_subscriptions_tweet_preview_api_enabled": true,
+  "profile_label_improvements_pcf_label_in_post_enabled": true,
+  "responsive_web_profile_redirect_enabled": true,
+  "rweb_tipjar_consumption_enabled": false,
+  "verified_phone_label_enabled": false,
+  "premium_content_api_read_enabled": false,
+  "communities_web_enable_tweet_community_results_fetch": true,
+  "c9s_tweet_anatomy_moderator_badge_enabled": true,
+  "responsive_web_grok_analyze_button_fetch_trends_enabled": false,
+  "responsive_web_grok_analyze_post_followups_enabled": true,
+  "rweb_cashtags_composer_attachment_enabled": true,
+  "responsive_web_jetfuel_frame": true,
+  "rweb_sports_post_context_enabled": true,
+  "x_elections_post_context_enabled": true,
+  "responsive_web_grok_share_attachment_enabled": true,
+  "responsive_web_grok_annotations_enabled": true,
+  "articles_preview_enabled": true,
+  "responsive_web_edit_tweet_api_enabled": true,
+  "rweb_conversational_replies_downvote_enabled": false,
+  "graphql_is_translatable_rweb_tweet_is_translatable_enabled": true,
+  "view_counts_everywhere_api_enabled": true,
+  "longform_notetweets_consumption_enabled": true,
+  "responsive_web_twitter_article_tweet_consumption_enabled": true,
+  "content_disclosure_indicator_enabled": true,
+  "content_disclosure_ai_generated_indicator_enabled": true,
+  "responsive_web_grok_show_grok_translated_post": true,
+  "responsive_web_grok_analysis_button_from_backend": true,
+  "post_ctas_fetch_enabled": true,
+  "rweb_cashtags_enabled": true,
+  "freedom_of_speech_not_reach_fetch_enabled": true,
+  "standardized_nudges_misinfo": true,
+  "tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled": true,
+  "longform_notetweets_rich_text_read_enabled": true,
+  "longform_notetweets_inline_media_enabled": false,
+  "responsive_web_nested_quote_preview_enabled": true,
+  "responsive_web_grok_image_annotation_enabled": true,
+  "responsive_web_grok_imagine_annotation_enabled": true,
+  "responsive_web_made_on_x_label_enabled": false,
+  "responsive_web_graphql_timeline_navigation_enabled": true,
+  "responsive_web_grok_community_note_auto_translation_is_enabled": true
+ },
+ "fieldToggles": null,
+ "variables": {
+  "id": "1BlLBgMbBakmeX",
+  "isMetatagsQuery": false,
+  "withReplays": true,
+  "withListeners": true
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "500",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "474",
+  "x-rate-limit-reset": "1794174389"
+ },
+ "body": {
+  "data": {
+   "audioSpace": {
+    "is_subscribed": false,
+    "metadata": {
+     "conversation_controls": 0,
+     "created_at": 1794078463241,
+     "creator_results": {
+      "result": {
+       "__typename": "User",
+       "action_counts": {
+        "favorites_count": 2384
+       },
+       "affiliates_highlighted_label": {},
+       "avatar": {
+        "image_url": "https://pbs.twimg.com/profile_images/2110799913143382016/5e69ng5V_normal.jpg"
+       },
+       "banner": {
+        "image_url": "https://pbs.twimg.com/profile_banners/2077688534794735617/1792088543"
+       },
+       "core": {
+        "created_at": "Thu Jul 16 09:42:49 +0000 2026",
+        "name": "Osama Novara",
+        "screen_name": "osama_novara"
+       },
+       "follow_request_sent": false,
+       "has_graduated_access": true,
+       "id": "VXNlcjoyMDc3Njg4NTM0Nzk0NzM1NjE3",
+       "is_blue_verified": true,
+       "location": {
+        "location": ""
+       },
+       "media_permissions": {
+        "can_media_tag": true
+       },
+       "notifications_settings": {
+        "notifications_enabled": false
+       },
+       "parody_commentary_fan_label": "None",
+       "pinned_items": {},
+       "possibly_sensitive": false,
+       "privacy": {
+        "protected": false
+       },
+       "profile_bio": {
+        "description": "",
+        "entities": {
+         "description": {}
+        }
+       },
+       "profile_image_shape": "Circle",
+       "profile_metadata": {
+        "profile_interstitial_type": ""
+       },
+       "profile_translation": {
+        "translator_type": "none"
+       },
+       "relationship_counts": {
+        "followers": 4905,
+        "following": 2324
+       },
+       "relationship_perspectives": {
+        "blocked_by": false,
+        "blocking": false,
+        "followed_by": false,
+        "following": false,
+        "live_following": false,
+        "muting": false
+       },
+       "rest_id": "2077688534794735617",
+       "super_follow_eligible": false,
+       "super_followed_by": false,
+       "super_following": false,
+       "tweet_counts": {
+        "media_tweets": 70,
+        "tweets": 2149
+       },
+       "verification": {
+        "verified": false
+       },
+       "website": {
+        "url": ""
+       }
+      }
+     },
+     "disallow_join": false,
+     "ended_at": "1794164917008",
+     "is_employee_only": false,
+     "is_locked": false,
+     "is_muted": false,
+     "is_space_available_for_clipping": false,
+     "is_space_available_for_replay": false,
+     "max_admin_capacity": 3,
+     "max_guest_sessions": 10,
+     "media_key": "28_2119144785160048640",
+     "narrow_cast_space_type": 0,
+     "no_incognito": false,
+     "rest_id": "1BlLBgMbBakmeX",
+     "started_at": 1794078467322,
+     "state": "Ended",
+     "title": "254 🇰🇪Gain space// @DukeofKendubay @Eddiemutisya @Libbigai",
+     "total_live_listeners": 17140,
+     "total_replay_watched": 0,
+     "tweet_results": {
+      "result": {
+       "__typename": "Tweet",
+       "card": {
+        "legacy": {
+         "binding_values": [
+          {
+           "key": "tweet_id",
+           "value": {
+            "string_value": "2119144804978229488",
+            "type": "STRING"
+           }
+          },
+          {
+           "key": "narrow_cast_space_type",
+           "value": {
+            "string_value": "0",
+            "type": "STRING"
+           }
+          },
+          {
+           "key": "id",
+           "value": {
+            "string_value": "1BlLBgMbBakmeX",
+            "type": "STRING"
+           }
+          },
+          {
+           "key": "card_url",
+           "value": {
+            "scribe_key": "card_url",
+            "string_value": "https://t.co/6DZuAT74Bx",
+            "type": "STRING"
+           }
+          }
+         ],
+         "card_platform": {
+          "platform": {
+           "audience": {
+            "name": "production"
+           },
+           "device": {
+            "name": "Swift",
+            "version": "12"
+           }
+          }
+         },
+         "name": "3691233323:audiospace",
+         "url": "https://t.co/6DZuAT74Bx",
+         "user_refs_results": []
+        },
+        "rest_id": "https://t.co/6DZuAT74Bx"
+       },
+       "cashtag_attachments": [],
+       "core": {
+        "user_results": {
+         "result": {
+          "__typename": "User",
+          "action_counts": {
+           "favorites_count": 2384
+          },
+          "affiliates_highlighted_label": {},
+          "avatar": {
+           "image_url": "https://pbs.twimg.com/profile_images/2110799913143382016/5e69ng5V_normal.jpg"
+          },
+          "banner": {
+           "image_url": "https://pbs.twimg.com/profile_banners/2077688534794735617/1792088543"
+          },
+          "core": {
+           "created_at": "Thu Jul 16 09:42:49 +0000 2026",
+           "name": "Osama Novara",
+           "screen_name": "osama_novara"
+          },
+          "follow_request_sent": false,
+          "has_graduated_access": true,
+          "id": "VXNlcjoyMDc3Njg4NTM0Nzk0NzM1NjE3",
+          "is_blue_verified": true,
+          "location": {
+           "location": ""
+          },
+          "media_permissions": {
+           "can_media_tag": true
+          },
+          "notifications_settings": {
+           "notifications_enabled": false
+          },
+          "parody_commentary_fan_label": "None",
+          "pinned_items": {},
+          "possibly_sensitive": false,
+          "privacy": {
+           "protected": false
+          },
+          "profile_bio": {
+           "description": "",
+           "entities": {
+            "description": {}
+           }
+          },
+          "profile_image_shape": "Circle",
+          "profile_metadata": {
+           "profile_interstitial_type": ""
+          },
+          "profile_translation": {
+           "translator_type": "none"
+          },
+          "relationship_counts": {
+           "followers": 4905,
+           "following": 2324
+          },
+          "relationship_perspectives": {
+           "blocked_by": false,
+           "blocking": false,
+           "followed_by": false,
+           "following": false,
+           "live_following": false,
+           "muting": false
+          },
+          "rest_id": "2077688534794735617",
+          "super_follow_eligible": false,
+          "super_followed_by": false,
+          "super_following": false,
+          "tweet_counts": {
+           "media_tweets": 70,
+           "tweets": 2149
+          },
+          "verification": {
+           "verified": false
+          },
+          "website": {
+           "url": ""
+          }
+         }
+        }
+       },
+       "edit_control": {
+        "edit_tweet_ids": [
+         "2119144804978229488"
+        ],
+        "editable_until_msecs": "1794082067000",
+        "edits_remaining": "5",
+        "is_edit_eligible": true
+       },
+       "grok_analysis_button": true,
+       "grok_annotations": {
+        "is_image_editable_by_grok": false
+       },
+       "grok_translated_post_with_availability": {
+        "is_available": false
+       },
+       "is_translatable": false,
+       "legacy": {
+        "bookmark_count": 105,
+        "bookmarked": false,
+        "conversation_id_str": "2119144804978229488",
+        "created_at": "Sat Nov 07 19:07:47 +0000 2026",
+        "display_text_range": [
+         0,
+         23
+        ],
+        "entities": {
+         "urls": [
+          {
+           "display_url": "x.com/i/spaces/1BlLB…",
+           "expanded_url": "https://x.com/i/spaces/1BlLBgMbBakmeX",
+           "indices": [
+            0,
+            23
+           ],
+           "url": "https://t.co/6DZuAT74Bx"
+          }
+         ]
+        },
+        "favorite_count": 627,
+        "favorited": false,
+        "full_text": "https://t.co/6DZuAT74Bx",
+        "id_str": "2119144804978229488",
+        "is_quote_status": false,
+        "lang": "zxx",
+        "possibly_sensitive": false,
+        "possibly_sensitive_editable": true,
+        "quote_count": 134,
+        "reply_count": 1566,
+        "retweet_count": 492,
+        "retweeted": false,
+        "user_id_str": "2077688534794735617"
+       },
+       "rest_id": "2119144804978229488",
+       "unmention_data": {},
+       "views": {
+        "count": "19036",
+        "state": "EnabledWithCount"
+       }
+      }
+     },
+     "updated_at": 1794164917008
+    },
+    "participants": {
+     "admins": [
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2110799913143382016/5e69ng5V_normal.jpg",
+       "display_name": "Osama Novara",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": true,
+       "periscope_user_id": "tw-2077688534794735617",
+       "twitter_screen_name": "osama_novara",
+       "user_results": {
+        "rest_id": "2077688534794735617",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1972365711621115904/VGwMzFEn_normal.jpg",
+       "display_name": "humble bae 💧💕",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-1786059605874823168",
+       "start": 1794159870245,
+       "twitter_screen_name": "_wifey_01",
+       "user_results": {
+        "rest_id": "1786059605874823168",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1783508666588508160/PqfwHmib_normal.jpg",
+       "display_name": "Afro Finest 🇰🇪🇿🇦",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-1758067243051597824",
+       "start": 1794155380534,
+       "twitter_screen_name": "afrofinest254",
+       "user_results": {
+        "rest_id": "1758067243051597824",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      }
+     ],
+     "listeners": [],
+     "speakers": [
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2088864369811881984/E90GG0Ox_normal.jpg",
+       "display_name": "Bhavesh Gujrati",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-1466329751547645953",
+       "start": 1794146916400,
+       "twitter_screen_name": "Bhaveshlivelife",
+       "user_results": {
+        "rest_id": "1466329751547645953",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1970837118298513408/c-ni7Aj__normal.jpg",
+       "display_name": "MWALIMU🙏🇹🇿",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-1649485042329047043",
+       "start": 1794154007601,
+       "twitter_screen_name": "dictatorbin",
+       "user_results": {
+        "rest_id": "1649485042329047043",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2064746591940972544/MB-lngp1_normal.jpg",
+       "display_name": "I_am_axhokaa",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-1969343029308805122",
+       "start": 1794163460032,
+       "twitter_screen_name": "I_am_axhokaa",
+       "user_results": {
+        "rest_id": "1969343029308805122",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1859314502379995136/B9eCHKUf_normal.jpg",
+       "display_name": "🇺🇬Muhumuza Dan Tindimwebwa",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-1838215225310367744",
+       "start": 1794155904275,
+       "twitter_screen_name": "DanMuhum",
+       "user_results": {
+        "rest_id": "1838215225310367744",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1931811988562182144/z-bV6cdJ_normal.jpg",
+       "display_name": "Kimath!.",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-1869300861643771904",
+       "start": 1794160445815,
+       "twitter_screen_name": "Kimathi_One",
+       "user_results": {
+        "rest_id": "1869300861643771904",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1729486119811588096/wvg5h8Ai_normal.jpg",
+       "display_name": "Vicky Junior Mukulima",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-199180046",
+       "start": 1794146886258,
+       "twitter_screen_name": "Vickyjr",
+       "user_results": {
+        "rest_id": "199180046",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2118696411885649920/RvQwzuXl_normal.jpg",
+       "display_name": "Libby Gai",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-3242696217",
+       "start": 1794146253216,
+       "twitter_screen_name": "LibbiGai",
+       "user_results": {
+        "rest_id": "3242696217",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1980313711702106112/A5URCr0e_normal.jpg",
+       "display_name": "008 Chairman",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-4565849537",
+       "start": 1794160353395,
+       "twitter_screen_name": "Alihasndayib",
+       "user_results": {
+        "rest_id": "4565849537",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2102853851686522880/sj4IcUE4_normal.jpg",
+       "display_name": "NASIR 👑",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-368821718",
+       "start": 1794144522771,
+       "twitter_screen_name": "LongLiveNaseer",
+       "user_results": {
+        "rest_id": "368821718",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2067221712752492544/fRGLDs66_normal.jpg",
+       "display_name": "KWAGMAYA",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": true,
+       "periscope_user_id": "tw-1153331686479990784",
+       "start": 1794164655936,
+       "twitter_screen_name": "kwagmaya01",
+       "user_results": {
+        "rest_id": "1153331686479990784",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1934972074356838401/NUS_3S8-_normal.jpg",
+       "display_name": "𝐒𝐨𝐧 𝐨𝐟 𝐀𝐟𝐫𝐢𝐜𝐚🥀🙏",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-1245062609373745157",
+       "start": 1794145107445,
+       "twitter_screen_name": "DixonB94864072",
+       "user_results": {
+        "rest_id": "1245062609373745157",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2053133916224012291/0crMaN_d_normal.jpg",
+       "display_name": "San Spyce",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-1817549141096144896",
+       "start": 1794142783930,
+       "twitter_screen_name": "SanSpyce",
+       "user_results": {
+        "rest_id": "1817549141096144896",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2080024023950393344/oZg_vrQ-_normal.jpg",
+       "display_name": "Abdullahi Maalim",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-958625112680488960",
+       "start": 1794142779307,
+       "twitter_screen_name": "ahmirguy",
+       "user_results": {
+        "rest_id": "958625112680488960",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2018805074235895808/lOX9syGl_normal.jpg",
+       "display_name": "ZACK™️💎",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-1580649235699171330",
+       "start": 1794163468284,
+       "twitter_screen_name": "_7zackiee",
+       "user_results": {
+        "rest_id": "1580649235699171330",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2118006092496019456/hlGeOPoG_normal.jpg",
+       "display_name": "Maiso 🇰🇪",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-2038638298361483264",
+       "start": 1794158595688,
+       "twitter_screen_name": "MaisoKenya",
+       "user_results": {
+        "rest_id": "2038638298361483264",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2109721527461568512/BfQd3GIJ_normal.jpg",
+       "display_name": "CJ😶‍🌫️🍀",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-2049235340175499264",
+       "start": 1794161745943,
+       "twitter_screen_name": "CChijioke95800",
+       "user_results": {
+        "rest_id": "2049235340175499264",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2085644856320262144/Gs6xLAUa_normal.jpg",
+       "display_name": "Bityum 💫💎",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-2084671556714713089",
+       "start": 1794147489769,
+       "twitter_screen_name": "bishamsabsalom5",
+       "user_results": {
+        "rest_id": "2084671556714713089",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2089289814679932928/JatzA5pL_normal.jpg",
+       "display_name": "Bush boy",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-1998094907299500032",
+       "start": 1794146671035,
+       "twitter_screen_name": "Domurray99",
+       "user_results": {
+        "rest_id": "1998094907299500032",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2022352822809907200/KpLd7Bzn_normal.jpg",
+       "display_name": "Comrade Wa kabarack 🙆",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-2014011378042888200",
+       "start": 1794142778838,
+       "twitter_screen_name": "AmosSalau8404",
+       "user_results": {
+        "rest_id": "2014011378042888200",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2093028474713731072/Kf8E0c2R_normal.jpg",
+       "display_name": "YUSUF 🌙👳",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-1700148134792265728",
+       "start": 1794145110446,
+       "twitter_screen_name": "ybomolaja",
+       "user_results": {
+        "rest_id": "1700148134792265728",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2090904666657763328/ssGUDKGv_normal.jpg",
+       "display_name": "Eddie B",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-2090885104998477824",
+       "start": 1794143067822,
+       "twitter_screen_name": "IamEddieB26",
+       "user_results": {
+        "rest_id": "2090885104998477824",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2119396732073136128/jlk5z3dB_normal.jpg",
+       "display_name": "kibet 💲💲",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-1640413389653438464",
+       "start": 1794140297645,
+       "twitter_screen_name": "kibet_222jr",
+       "user_results": {
+        "rest_id": "1640413389653438464",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2030890374655598592/1ya4aEgw_normal.jpg",
+       "display_name": "LORD LUGARD II",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-1522728209137213441",
+       "start": 1794160448625,
+       "twitter_screen_name": "AaneeEdison",
+       "user_results": {
+        "rest_id": "1522728209137213441",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2036084838399156224/ziho2llT_normal.jpg",
+       "display_name": "Safire",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-1819713702439895041",
+       "start": 1794151466218,
+       "twitter_screen_name": "ms_safire",
+       "user_results": {
+        "rest_id": "1819713702439895041",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1825557401224859648/g7bcmoNU_normal.jpg",
+       "display_name": "Lomenen Jr",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-1867183362",
+       "start": 1794142775720,
+       "twitter_screen_name": "KLomenenE",
+       "user_results": {
+        "rest_id": "1867183362",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2114151920654774272/khqqSW3n_normal.jpg",
+       "display_name": "Brian Oketch",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-397498433",
+       "start": 1794134599115,
+       "twitter_screen_name": "Dukeofkendubay",
+       "user_results": {
+        "rest_id": "397498433",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2028569296633319424/IKXTB4sc_normal.jpg",
+       "display_name": "Insider ◽",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-1861432773879185408",
+       "start": 1794153434311,
+       "twitter_screen_name": "Insider_OG",
+       "user_results": {
+        "rest_id": "1861432773879185408",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2100492436497649664/4EoAe3nr_normal.jpg",
+       "display_name": "S.P⚔️╾━╤デ╦︻",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-1903910622645137408",
+       "start": 1794163199197,
+       "twitter_screen_name": "Piusxlolll",
+       "user_results": {
+        "rest_id": "1903910622645137408",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2085332032947691520/3Ws1rbAI_normal.jpg",
+       "display_name": "𝑾𝒊𝒏𝒏𝒊𝒆 𝒐𝒇 𝒕𝒉𝒆 𝑴𝒐𝒔𝒕 𝑯𝒊𝒈𝒉 🎀",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-1519045995941797890",
+       "start": 1794153439108,
+       "twitter_screen_name": "official_winy",
+       "user_results": {
+        "rest_id": "1519045995941797890",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2075141270821863424/Lg44MSAO_normal.jpg",
+       "display_name": "Mowee",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-2021996632590458880",
+       "start": 1794155050699,
+       "twitter_screen_name": "Mowee4543",
+       "user_results": {
+        "rest_id": "2021996632590458880",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2053045362282098691/ztwFP4r5_normal.jpg",
+       "display_name": "ël pablò",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-2053043695851536386",
+       "start": 1794146913815,
+       "twitter_screen_name": "elpablo254",
+       "user_results": {
+        "rest_id": "2053043695851536386",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2014059220254048256/pSXoMCMd_normal.jpg",
+       "display_name": "Ot!s",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-1658068594159230977",
+       "start": 1794153110198,
+       "twitter_screen_name": "Otieno_ke_",
+       "user_results": {
+        "rest_id": "1658068594159230977",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1989693017347731456/jI_TDM36_normal.jpg",
+       "display_name": "Karanja Ng'ethe🦂™️",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-1978064621857804288",
+       "start": 1794153002309,
+       "twitter_screen_name": "MrKaranjaKe",
+       "user_results": {
+        "rest_id": "1978064621857804288",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2062035704964595712/Jz_pdGOW_normal.jpg",
+       "display_name": "Duke of Oyugis 🇩🇪🪖🇰🇪",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-1447150226205257733",
+       "start": 1794144145906,
+       "twitter_screen_name": "AdamsLucky15",
+       "user_results": {
+        "rest_id": "1447150226205257733",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2068802010732769280/ie5WhnJo_normal.jpg",
+       "display_name": "Omorro Vicky",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-1929512545158590465",
+       "start": 1794157919401,
+       "twitter_screen_name": "VOmorro",
+       "user_results": {
+        "rest_id": "1929512545158590465",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2100304502574157824/IZcfL-XA_normal.jpg",
+       "display_name": "Charles Okedi",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-3421578443",
+       "start": 1794146920282,
+       "twitter_screen_name": "charliesoke",
+       "user_results": {
+        "rest_id": "3421578443",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2106814474795597824/RtSBySha_normal.jpg",
+       "display_name": "Corban",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": true,
+       "periscope_user_id": "tw-1716026484802965504",
+       "start": 1794152831441,
+       "twitter_screen_name": "corbanocrypto",
+       "user_results": {
+        "rest_id": "1716026484802965504",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2062571858004783104/bn4bolQr_normal.jpg",
+       "display_name": "makucha",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-2037516986792423424",
+       "start": 1794151604100,
+       "twitter_screen_name": "Derick400BC",
+       "user_results": {
+        "rest_id": "2037516986792423424",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2114444462352982018/mpgpfZNU_normal.jpg",
+       "display_name": "YoSam",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-2049842716347969538",
+       "start": 1794157921769,
+       "twitter_screen_name": "yokojosam",
+       "user_results": {
+        "rest_id": "2049842716347969538",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2094607314644807680/nxC79ZFu_normal.jpg",
+       "display_name": "Unless They Kill God",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-1290566372171436033",
+       "start": 1794145339686,
+       "twitter_screen_name": "1Kairoh",
+       "user_results": {
+        "rest_id": "1290566372171436033",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2100890978835894272/LEB4WFnr_normal.jpg",
+       "display_name": "Patrick Oruma",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-1984519123838386178",
+       "start": 1794155142308,
+       "twitter_screen_name": "patrickoruma",
+       "user_results": {
+        "rest_id": "1984519123838386178",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2111337051823968256/ogcGS17q_normal.jpg",
+       "display_name": "DocAndymovieclips",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-2111336362582405120",
+       "start": 1794163463240,
+       "twitter_screen_name": "DocAndysdzi",
+       "user_results": {
+        "rest_id": "2111336362582405120",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2116236389637586944/Fu3RNlxX_normal.jpg",
+       "display_name": "Zenith Spark 🦋",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-1458817680480239621",
+       "start": 1794155057521,
+       "twitter_screen_name": "ZenithSparks",
+       "user_results": {
+        "rest_id": "1458817680480239621",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2116213579888140288/a37VxE2t_normal.jpg",
+       "display_name": "Kamanda",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-2116132333556224000",
+       "start": 1794160426374,
+       "twitter_screen_name": "Kamandaa999",
+       "user_results": {
+        "rest_id": "2116132333556224000",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2117206815075164161/xTSIqYp8_normal.jpg",
+       "display_name": "mziza",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": true,
+       "periscope_user_id": "tw-2094743306693435393",
+       "start": 1794154111742,
+       "twitter_screen_name": "Munene_56",
+       "user_results": {
+        "rest_id": "2094743306693435393",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1995504343156436992/Jx34NatE_normal.jpg",
+       "display_name": "Ja Kamagambo🇰🇪",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-924245753744232450",
+       "start": 1794144333982,
+       "twitter_screen_name": "JaredoumaA",
+       "user_results": {
+        "rest_id": "924245753744232450",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2051568503094644740/sBx2zmqG_normal.jpg",
+       "display_name": "Fundi Wa Thermos",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1640802566756880410",
+       "start": 1794143064172,
+       "twitter_screen_name": "ogachiomareKE",
+       "user_results": {
+        "rest_id": "1640802566756880410",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2007312293705469952/zptoe8Or_normal.jpg",
+       "display_name": "Mbåppê wä bõñgø 🇹🇿",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1705079369637519360",
+       "start": 1794148752611,
+       "twitter_screen_name": "ibrahimmmoto",
+       "user_results": {
+        "rest_id": "1705079369637519360",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2097340786182361088/bkkY5CTB_normal.jpg",
+       "display_name": "Su-crée",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1602721208927141888",
+       "start": 1794145103579,
+       "twitter_screen_name": "Sue_cree_",
+       "user_results": {
+        "rest_id": "1602721208927141888",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1774466433277218816/FgpdRxEi_normal.jpg",
+       "display_name": "Paul farmer",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1760611120916672512",
+       "start": 1794164555522,
+       "twitter_screen_name": "hakpaul1",
+       "user_results": {
+        "rest_id": "1760611120916672512",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1973738796945485824/NyaeQQO__normal.jpg",
+       "display_name": "SëNN👽",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1695106771881271299",
+       "start": 1794148940767,
+       "twitter_screen_name": "senn03",
+       "user_results": {
+        "rest_id": "1695106771881271299",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2110384727634903041/ikQ7Dqwx_normal.jpg",
+       "display_name": "lynne254 🌹🌺🇰🇪",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-2026971178934603776",
+       "start": 1794160296228,
+       "twitter_screen_name": "aderline254_",
+       "user_results": {
+        "rest_id": "2026971178934603776",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2024125231607033856/e9kAd-3K_normal.jpg",
+       "display_name": "Kujibulula🇰🇪👽👣",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-2005047104423800833",
+       "start": 1794161136595,
+       "twitter_screen_name": "kujibulula",
+       "user_results": {
+        "rest_id": "2005047104423800833",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2066121250406125568/qCv4yGNd_normal.jpg",
+       "display_name": "pkem🇰🇪",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1497471183876415491",
+       "start": 1794154003005,
+       "twitter_screen_name": "Pkemoi5n",
+       "user_results": {
+        "rest_id": "1497471183876415491",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2071323100751298560/XmDNW6_u_normal.jpg",
+       "display_name": "Mambet 🇰🇪🇺🇸",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-2067543417609940992",
+       "start": 1794152003540,
+       "twitter_screen_name": "mambethimself",
+       "user_results": {
+        "rest_id": "2067543417609940992",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1966124571532419072/PBdoSTQu_normal.jpg",
+       "display_name": "GOAT™🇰🇪",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1920454310430978048",
+       "start": 1794157231300,
+       "twitter_screen_name": "wantam_5",
+       "user_results": {
+        "rest_id": "1920454310430978048",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2096512612381134848/sizaqRia_normal.jpg",
+       "display_name": "Manuh",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1381305876573741063",
+       "start": 1794162773728,
+       "twitter_screen_name": "Manu_Lemashon",
+       "user_results": {
+        "rest_id": "1381305876573741063",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1996132584334512128/1h7X7Hh6_normal.jpg",
+       "display_name": "shaulantozKE💢",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1989190381058289664",
+       "start": 1794146816095,
+       "twitter_screen_name": "ShaulantozKE",
+       "user_results": {
+        "rest_id": "1989190381058289664",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2107959547876798464/PAPjzHnN_normal.jpg",
+       "display_name": "Ochuka.P. Washington",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-2107492909834465280",
+       "start": 1794146888494,
+       "twitter_screen_name": "PaulOchuka77",
+       "user_results": {
+        "rest_id": "2107492909834465280",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1788245159496265730/HDnbTJeb_normal.jpg",
+       "display_name": "AMARA",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1472975499437748226",
+       "start": 1794155040217,
+       "twitter_screen_name": "TysonAmara1",
+       "user_results": {
+        "rest_id": "1472975499437748226",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2103122373150957568/983hkuKw_normal.jpg",
+       "display_name": "Sir AlieN👽",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-2024392374169067520",
+       "start": 1794162773368,
+       "twitter_screen_name": "Iam__amongU",
+       "user_results": {
+        "rest_id": "2024392374169067520",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1932087265662062592/N3kC_gwm_normal.jpg",
+       "display_name": "Kamagera",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1436791328193585152",
+       "start": 1794151708593,
+       "twitter_screen_name": "Sejoe254",
+       "user_results": {
+        "rest_id": "1436791328193585152",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2105668099500310528/8YHJovCv_normal.jpg",
+       "display_name": "🎀🇯🇲chamsboss 🎀",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-2105154268399386624",
+       "start": 1794159993975,
+       "twitter_screen_name": "chamsboss45",
+       "user_results": {
+        "rest_id": "2105154268399386624",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2117582905669042176/h5JXkqOj_normal.jpg",
+       "display_name": "Micah",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1341395493746860032",
+       "start": 1794151459261,
+       "twitter_screen_name": "Micah_On_X",
+       "user_results": {
+        "rest_id": "1341395493746860032",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2102096525492920320/uoOLC_Oq_normal.jpg",
+       "display_name": "Hyscent",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-2102093189003808768",
+       "start": 1794152520350,
+       "twitter_screen_name": "Hyscent_ch",
+       "user_results": {
+        "rest_id": "2102093189003808768",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2103784240617754624/CJ9DX3SQ_normal.jpg",
+       "display_name": "Felix Ngamia",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1511526314754416640",
+       "start": 1794143066706,
+       "twitter_screen_name": "Felixngamia1",
+       "user_results": {
+        "rest_id": "1511526314754416640",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2075357958829936640/_EwEq37Z_normal.jpg",
+       "display_name": "BL!NKER",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-2074128698563825664",
+       "start": 1794161380689,
+       "twitter_screen_name": "blincuer254",
+       "user_results": {
+        "rest_id": "2074128698563825664",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2065751879439548416/78tw8IME_normal.jpg",
+       "display_name": "Chosen Dina 🇺🇬",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-2065750308106407936",
+       "start": 1794148855686,
+       "twitter_screen_name": "KojokiDina3oh",
+       "user_results": {
+        "rest_id": "2065750308106407936",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2103187246274777088/Fj4TqzNc_normal.jpg",
+       "display_name": "AjoseKaderee✊🏾🇰🇪",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-2068273199272402944",
+       "start": 1794158843786,
+       "twitter_screen_name": "blizzard525",
+       "user_results": {
+        "rest_id": "2068273199272402944",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2119489777854517248/XuGU_Y-O_normal.jpg",
+       "display_name": "KOX-(kitale)",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-2041050756803899392",
+       "start": 1794148789846,
+       "twitter_screen_name": "pinchez_2",
+       "user_results": {
+        "rest_id": "2041050756803899392",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2072580239570436096/bcLDPzof_normal.jpg",
+       "display_name": "Phillipian blood",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1618547645374468096",
+       "start": 1794164635693,
+       "twitter_screen_name": "OderoEmelda",
+       "user_results": {
+        "rest_id": "1618547645374468096",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2113595377785942016/1ltTTWfP_normal.jpg",
+       "display_name": "🇰🇪KENNEDY🇰🇪",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1585018209027166208",
+       "start": 1794157577554,
+       "twitter_screen_name": "Man_nzala",
+       "user_results": {
+        "rest_id": "1585018209027166208",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2111073224532307970/V4HicSg7_normal.jpg",
+       "display_name": "Mr lee",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-2016494847608197120",
+       "start": 1794156237503,
+       "twitter_screen_name": "alee_trds",
+       "user_results": {
+        "rest_id": "2016494847608197120",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2118687150753337344/ioIJCwlZ_normal.jpg",
+       "display_name": "G.K 🇰🇪",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-2065439428214927360",
+       "start": 1794148748482,
+       "twitter_screen_name": "Geo_Kivs",
+       "user_results": {
+        "rest_id": "2065439428214927360",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2116141004990427136/qsJExlEv_normal.jpg",
+       "display_name": "Kekius Maximus",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-902860440761495552",
+       "start": 1794149613616,
+       "twitter_screen_name": "MMasinya",
+       "user_results": {
+        "rest_id": "902860440761495552",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2107022796077383680/I11th3nG_normal.jpg",
+       "display_name": "Internet Madness",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-2107015292287107073",
+       "start": 1794162346520,
+       "twitter_screen_name": "InternetMal9ag",
+       "user_results": {
+        "rest_id": "2107015292287107073",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2045918478238928896/U_UIbQMo_normal.jpg",
+       "display_name": "ADEX ❤️‍🔥💥",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-2028471515625451520",
+       "start": 1794153116039,
+       "twitter_screen_name": "Adex_002",
+       "user_results": {
+        "rest_id": "2028471515625451520",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2096891038439014400/vRZe1fRM_normal.jpg",
+       "display_name": "ตíss cհҽթ",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": false,
+       "periscope_user_id": "tw-2089649999919390720",
+       "start": 1794149630215,
+       "twitter_screen_name": "velchep54",
+       "user_results": {
+        "rest_id": "2089649999919390720",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2117912438024642560/HByz0AKQ_normal.jpg",
+       "display_name": "NOVARA",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-2117909143432396800",
+       "start": 1794150082041,
+       "twitter_screen_name": "osama_254hub",
+       "user_results": {
+        "rest_id": "2117909143432396800",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2117636292456374272/OHfIv8CI_normal.jpg",
+       "display_name": "wuodwalai",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1768169035202539520",
+       "start": 1794145333996,
+       "twitter_screen_name": "Wuodwalai98",
+       "user_results": {
+        "rest_id": "1768169035202539520",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2089405123961274368/u-YhUjED_normal.jpg",
+       "display_name": "Pr|πc£ N¥AKUπD|👑🇰🇪",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1617842436918677506",
+       "start": 1794149613198,
+       "twitter_screen_name": "NyakundiPrince",
+       "user_results": {
+        "rest_id": "1617842436918677506",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2104706992728068096/RQjrjVgW_normal.jpg",
+       "display_name": "mwananchi",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1840032452019957760",
+       "start": 1794144520776,
+       "twitter_screen_name": "elmatadorgirii",
+       "user_results": {
+        "rest_id": "1840032452019957760",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2039217906731622400/OQxGaH2V_normal.jpg",
+       "display_name": "Ruth Njoki",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1995722214344458241",
+       "start": 1794162344689,
+       "twitter_screen_name": "RnjokiKe",
+       "user_results": {
+        "rest_id": "1995722214344458241",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2084206320601759744/cm7-msBP_normal.jpg",
+       "display_name": "Him🐐",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-2084202012745383936",
+       "start": 1794154116675,
+       "twitter_screen_name": "senn004",
+       "user_results": {
+        "rest_id": "2084202012745383936",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2113677282954928128/265S4Yvy_normal.jpg",
+       "display_name": "joja",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-2097744216042455040",
+       "start": 1794149625569,
+       "twitter_screen_name": "jojaw73c",
+       "user_results": {
+        "rest_id": "2097744216042455040",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2096576539815284736/ToBgkpFa_normal.jpg",
+       "display_name": "Mr Ham.",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-2096576105608019970",
+       "start": 1794161372735,
+       "twitter_screen_name": "_ham22",
+       "user_results": {
+        "rest_id": "2096576105608019970",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1938151180107952128/y5LKU-XS_normal.jpg",
+       "display_name": "Hyake",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1772574870611570689",
+       "start": 1794154999460,
+       "twitter_screen_name": "dev_f91",
+       "user_results": {
+        "rest_id": "1772574870611570689",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1269756155/icon12999266513372_normal.jpg",
+       "display_name": "Hide🇰🇪",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-253387734",
+       "start": 1794158839008,
+       "twitter_screen_name": "tiporanje",
+       "user_results": {
+        "rest_id": "253387734",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2066092544098746368/ZagZhGwH_normal.jpg",
+       "display_name": "WEKA MAWE🤡🤡",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1865163662463258624",
+       "start": 1794145102007,
+       "twitter_screen_name": "Nate_badz",
+       "user_results": {
+        "rest_id": "1865163662463258624",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1935576280612618240/i0lxP429_normal.jpg",
+       "display_name": "Ghost_",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1766756670552649728",
+       "start": 1794161387136,
+       "twitter_screen_name": "greatness_27614",
+       "user_results": {
+        "rest_id": "1766756670552649728",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2119427984410996736/DA0WbqDf_normal.jpg",
+       "display_name": "Bill Clinton",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1806308473765765120",
+       "start": 1794155138540,
+       "twitter_screen_name": "bill_clint13044",
+       "user_results": {
+        "rest_id": "1806308473765765120",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2117824282432524289/U5KoyUa4_normal.jpg",
+       "display_name": "𝐁𝐎𝐍𝐃𝐎 𝐃𝐔𝐊𝐄 𝐉𝐀 𝐊𝐀𝐌𝐁𝐀𝐉𝐎☝️",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1152664471581728774",
+       "start": 1794155331932,
+       "twitter_screen_name": "OyooRay",
+       "user_results": {
+        "rest_id": "1152664471581728774",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1915635893639020544/tOn4118T_normal.jpg",
+       "display_name": "Velly",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1894815968993648641",
+       "start": 1794148744380,
+       "twitter_screen_name": "deviana_velly",
+       "user_results": {
+        "rest_id": "1894815968993648641",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2078742021452226560/AkzseJpg_normal.jpg",
+       "display_name": "princess_vee❤️",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-2057731556353916928",
+       "start": 1794149608054,
+       "twitter_screen_name": "vee_ajema",
+       "user_results": {
+        "rest_id": "2057731556353916928",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2119332527450046464/PdgVSPLJ_normal.jpg",
+       "display_name": "Siñlêss bõy𓃵",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-2017942950076911617",
+       "start": 1794162776263,
+       "twitter_screen_name": "Kiplangat_09",
+       "user_results": {
+        "rest_id": "2017942950076911617",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2109009421774807040/2fpTYAOj_normal.jpg",
+       "display_name": "Affidavidi",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-2056666511771627521",
+       "start": 1794150084518,
+       "twitter_screen_name": "affidavidi",
+       "user_results": {
+        "rest_id": "2056666511771627521",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2101254665266491392/z19lW-Vc_normal.jpg",
+       "display_name": "Critical thinker🇱🇷",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-2101253590220177408",
+       "start": 1794150089064,
+       "twitter_screen_name": "Criticalthoh",
+       "user_results": {
+        "rest_id": "2101253590220177408",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2118207455729532928/ud2DOoBV_normal.jpg",
+       "display_name": "Real Kenyan Bwoy",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-2110224020331257856",
+       "start": 1794157183895,
+       "twitter_screen_name": "KijanayaMuthee",
+       "user_results": {
+        "rest_id": "2110224020331257856",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2117253989657878528/F-T1Rwgx_normal.jpg",
+       "display_name": "popular 🤠🤠",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1902848264736546816",
+       "start": 1794148751207,
+       "twitter_screen_name": "samm96161",
+       "user_results": {
+        "rest_id": "1902848264736546816",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2119475192296611840/8HPMAqJr_normal.jpg",
+       "display_name": "THE BOSS",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1640667179157708801",
+       "start": 1794156231289,
+       "twitter_screen_name": "MBoss038",
+       "user_results": {
+        "rest_id": "1640667179157708801",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2111470517194506240/PMUQuUjV_normal.jpg",
+       "display_name": "Anonymous User",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-2111459756422336512",
+       "start": 1794156228974,
+       "twitter_screen_name": "NubianMami",
+       "user_results": {
+        "rest_id": "2111459756422336512",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2119077169867476992/ABYy8P2T_normal.jpg",
+       "display_name": "Grace pleasure",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-2116068197292036096",
+       "start": 1794145521305,
+       "twitter_screen_name": "Gracepleaszlt",
+       "user_results": {
+        "rest_id": "2116068197292036096",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2106794195616743424/hmiLaiR4_normal.jpg",
+       "display_name": "Preciosa",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1755289508570906627",
+       "start": 1794155034664,
+       "twitter_screen_name": "PEseosa58366",
+       "user_results": {
+        "rest_id": "1755289508570906627",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2117657089585614848/RSpwDbeK_normal.jpg",
+       "display_name": "betz🇰🇪",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1513777490422022144",
+       "start": 1794148949811,
+       "twitter_screen_name": "kamare_X254",
+       "user_results": {
+        "rest_id": "1513777490422022144",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2118649760038957056/sUDQoYsr_normal.jpg",
+       "display_name": "Cindyy💕",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1872680159138201600",
+       "start": 1794155002668,
+       "twitter_screen_name": "jitagwonjeri",
+       "user_results": {
+        "rest_id": "1872680159138201600",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2119417032303116288/7mSBWLMU_normal.jpg",
+       "display_name": "Daily trending",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-2115079347270729728",
+       "start": 1794152512846,
+       "twitter_screen_name": "JimiTechEmpire",
+       "user_results": {
+        "rest_id": "2115079347270729728",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2119171558467887104/1UbJ8qSh_normal.jpg",
+       "display_name": "Sennsei",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1907389534146379776",
+       "start": 1794148944178,
+       "twitter_screen_name": "senn_005",
+       "user_results": {
+        "rest_id": "1907389534146379776",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2119407788057083904/9L4b8yzP_normal.jpg",
+       "display_name": "Billionaire 🇰🇪",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1960157288448372736",
+       "start": 1794144246121,
+       "twitter_screen_name": "ShadrackOt74905",
+       "user_results": {
+        "rest_id": "1960157288448372736",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/1163484212357476352/yEC_M3WS_normal.jpg",
+       "display_name": "Caleb Yatich",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1163341675097444352",
+       "start": 1794157915778,
+       "twitter_screen_name": "yatciz",
+       "user_results": {
+        "rest_id": "1163341675097444352",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2065573422424264704/XIPZIypA_normal.jpg",
+       "display_name": "BYK",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1824005062449922048",
+       "start": 1794162515687,
+       "twitter_screen_name": "bykisgr8",
+       "user_results": {
+        "rest_id": "1824005062449922048",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2114039545800835072/SqEmXFfe_normal.jpg",
+       "display_name": "jk",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": true,
+       "is_verified": false,
+       "periscope_user_id": "tw-1761142454118395968",
+       "start": 1794144524048,
+       "twitter_screen_name": "Jkmonie_",
+       "user_results": {
+        "rest_id": "1761142454118395968",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": false,
+         "verification": {}
+        }
+       }
+      }
+     ],
+     "total": 0
+    },
+    "sharings": {
+     "items": [
+      {
+       "created_at_ms": 1794164652741,
+       "shared_item": {
+        "__typename": "AudioSpaceSharedTweet",
+        "tweet_results": {
+         "result": {
+          "__typename": "Tweet",
+          "cashtag_attachments": [],
+          "core": {
+           "user_results": {
+            "result": {
+             "__typename": "User",
+             "action_counts": {
+              "favorites_count": 2384
+             },
+             "affiliates_highlighted_label": {},
+             "avatar": {
+              "image_url": "https://pbs.twimg.com/profile_images/2110799913143382016/5e69ng5V_normal.jpg"
+             },
+             "banner": {
+              "image_url": "https://pbs.twimg.com/profile_banners/2077688534794735617/1792088543"
+             },
+             "core": {
+              "created_at": "Thu Jul 16 09:42:49 +0000 2026",
+              "name": "Osama Novara",
+              "screen_name": "osama_novara"
+             },
+             "follow_request_sent": false,
+             "has_graduated_access": true,
+             "id": "VXNlcjoyMDc3Njg4NTM0Nzk0NzM1NjE3",
+             "is_blue_verified": true,
+             "location": {
+              "location": ""
+             },
+             "media_permissions": {
+              "can_media_tag": true
+             },
+             "notifications_settings": {
+              "notifications_enabled": false
+             },
+             "parody_commentary_fan_label": "None",
+             "pinned_items": {},
+             "possibly_sensitive": false,
+             "privacy": {
+              "protected": false
+             },
+             "profile_bio": {
+              "description": "",
+              "entities": {
+               "description": {}
+              }
+             },
+             "profile_image_shape": "Circle",
+             "profile_metadata": {
+              "profile_interstitial_type": ""
+             },
+             "profile_translation": {
+              "translator_type": "none"
+             },
+             "relationship_counts": {
+              "followers": 4905,
+              "following": 2324
+             },
+             "relationship_perspectives": {
+              "blocked_by": false,
+              "blocking": false,
+              "followed_by": false,
+              "following": false,
+              "live_following": false,
+              "muting": false
+             },
+             "rest_id": "2077688534794735617",
+             "super_follow_eligible": false,
+             "super_followed_by": false,
+             "super_following": false,
+             "tweet_counts": {
+              "media_tweets": 70,
+              "tweets": 2149
+             },
+             "verification": {
+              "verified": false
+             },
+             "website": {
+              "url": ""
+             }
+            }
+           }
+          },
+          "edit_control": {
+           "edit_tweet_ids": [
+            "2119506234688655864"
+           ],
+           "editable_until_msecs": "1794168239000",
+           "edits_remaining": "5",
+           "is_edit_eligible": true
+          },
+          "grok_analysis_button": true,
+          "grok_annotations": {
+           "is_image_editable_by_grok": false
+          },
+          "grok_translated_post_with_availability": {
+           "is_available": false
+          },
+          "is_translatable": false,
+          "legacy": {
+           "bookmark_count": 5,
+           "bookmarked": false,
+           "conversation_id_str": "2119506234688655864",
+           "created_at": "Sun Nov 08 19:03:59 +0000 2026",
+           "display_text_range": [
+            0,
+            31
+           ],
+           "entities": {},
+           "favorite_count": 85,
+           "favorited": false,
+           "full_text": "We are getting back in a minute",
+           "id_str": "2119506234688655864",
+           "is_quote_status": false,
+           "lang": "en",
+           "quote_count": 1,
+           "reply_count": 30,
+           "retweet_count": 57,
+           "retweeted": false,
+           "user_id_str": "2077688534794735617"
+          },
+          "rest_id": "2119506234688655864",
+          "unmention_data": {},
+          "views": {
+           "count": "960",
+           "state": "EnabledWithCount"
+          }
+         }
+        }
+       },
+       "sharing_id": "2119506290108150025",
+       "updated_at_ms": 1794164652740,
+       "user_results": {
+        "result": {
+         "__typename": "User",
+         "action_counts": {
+          "favorites_count": 2384
+         },
+         "affiliates_highlighted_label": {},
+         "avatar": {
+          "image_url": "https://pbs.twimg.com/profile_images/2110799913143382016/5e69ng5V_normal.jpg"
+         },
+         "banner": {
+          "image_url": "https://pbs.twimg.com/profile_banners/2077688534794735617/1792088543"
+         },
+         "core": {
+          "created_at": "Thu Jul 16 09:42:49 +0000 2026",
+          "name": "Osama Novara",
+          "screen_name": "osama_novara"
+         },
+         "follow_request_sent": false,
+         "has_graduated_access": true,
+         "id": "VXNlcjoyMDc3Njg4NTM0Nzk0NzM1NjE3",
+         "is_blue_verified": true,
+         "location": {
+          "location": ""
+         },
+         "media_permissions": {
+          "can_media_tag": true
+         },
+         "notifications_settings": {
+          "notifications_enabled": false
+         },
+         "parody_commentary_fan_label": "None",
+         "pinned_items": {},
+         "possibly_sensitive": false,
+         "privacy": {
+          "protected": false
+         },
+         "profile_bio": {
+          "description": "",
+          "entities": {
+           "description": {}
+          }
+         },
+         "profile_image_shape": "Circle",
+         "profile_metadata": {
+          "profile_interstitial_type": ""
+         },
+         "profile_translation": {
+          "translator_type": "none"
+         },
+         "relationship_counts": {
+          "followers": 4905,
+          "following": 2324
+         },
+         "relationship_perspectives": {
+          "blocked_by": false,
+          "blocking": false,
+          "followed_by": false,
+          "following": false,
+          "live_following": false,
+          "muting": false
+         },
+         "rest_id": "2077688534794735617",
+         "super_follow_eligible": false,
+         "super_followed_by": false,
+         "super_following": false,
+         "tweet_counts": {
+          "media_tweets": 70,
+          "tweets": 2149
+         },
+         "verification": {
+          "verified": false
+         },
+         "website": {
+          "url": ""
+         }
+        }
+       }
+      }
+     ],
+     "slice_info": {}
+    }
+   }
+  }
+ }
+}

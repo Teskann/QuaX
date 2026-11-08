@@ -1,0 +1,637 @@
+{
+ "scenario": "Posts sharing X Spaces, live, ended with or without a recording, and scheduled, each Space loaded with AudioSpaceById",
+ "sourceUrl": "https://x.com/search?q=x.com%2Fi%2Fspaces&src=typed_query",
+ "unstable": true,
+ "operation": "AudioSpaceById",
+ "host": "x.com",
+ "queryId": "zm3JmUpYWDXIUsf_33-ZrA",
+ "features": {
+  "spaces_2022_h2_spaces_communities": true,
+  "spaces_2022_h2_clipping": true,
+  "creator_subscriptions_tweet_preview_api_enabled": true,
+  "profile_label_improvements_pcf_label_in_post_enabled": true,
+  "responsive_web_profile_redirect_enabled": true,
+  "rweb_tipjar_consumption_enabled": false,
+  "verified_phone_label_enabled": false,
+  "premium_content_api_read_enabled": false,
+  "communities_web_enable_tweet_community_results_fetch": true,
+  "c9s_tweet_anatomy_moderator_badge_enabled": true,
+  "responsive_web_grok_analyze_button_fetch_trends_enabled": false,
+  "responsive_web_grok_analyze_post_followups_enabled": true,
+  "rweb_cashtags_composer_attachment_enabled": true,
+  "responsive_web_jetfuel_frame": true,
+  "rweb_sports_post_context_enabled": true,
+  "x_elections_post_context_enabled": true,
+  "responsive_web_grok_share_attachment_enabled": true,
+  "responsive_web_grok_annotations_enabled": true,
+  "articles_preview_enabled": true,
+  "responsive_web_edit_tweet_api_enabled": true,
+  "rweb_conversational_replies_downvote_enabled": false,
+  "graphql_is_translatable_rweb_tweet_is_translatable_enabled": true,
+  "view_counts_everywhere_api_enabled": true,
+  "longform_notetweets_consumption_enabled": true,
+  "responsive_web_twitter_article_tweet_consumption_enabled": true,
+  "content_disclosure_indicator_enabled": true,
+  "content_disclosure_ai_generated_indicator_enabled": true,
+  "responsive_web_grok_show_grok_translated_post": true,
+  "responsive_web_grok_analysis_button_from_backend": true,
+  "post_ctas_fetch_enabled": true,
+  "rweb_cashtags_enabled": true,
+  "freedom_of_speech_not_reach_fetch_enabled": true,
+  "standardized_nudges_misinfo": true,
+  "tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled": true,
+  "longform_notetweets_rich_text_read_enabled": true,
+  "longform_notetweets_inline_media_enabled": false,
+  "responsive_web_nested_quote_preview_enabled": true,
+  "responsive_web_grok_image_annotation_enabled": true,
+  "responsive_web_grok_imagine_annotation_enabled": true,
+  "responsive_web_made_on_x_label_enabled": false,
+  "responsive_web_graphql_timeline_navigation_enabled": true,
+  "responsive_web_grok_community_note_auto_translation_is_enabled": true
+ },
+ "fieldToggles": null,
+ "variables": {
+  "id": "1brodqmJWdbgjd",
+  "isMetatagsQuery": false,
+  "withReplays": true,
+  "withListeners": true
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "500",
+  "content-type": "application/json",
+  "x-rate-limit-remaining": "459",
+  "x-rate-limit-reset": "1794174389"
+ },
+ "body": {
+  "data": {
+   "audioSpace": {
+    "is_subscribed": false,
+    "metadata": {
+     "conversation_controls": 0,
+     "created_at": 1794164181246,
+     "creator_results": {
+      "result": {
+       "__typename": "User",
+       "action_counts": {
+        "favorites_count": 56959
+       },
+       "affiliates_highlighted_label": {},
+       "avatar": {
+        "image_url": "https://pbs.twimg.com/profile_images/2104301926670098433/MspxCELG_normal.jpg"
+       },
+       "banner": {
+        "image_url": "https://pbs.twimg.com/profile_banners/1432047516758036486/1788037838"
+       },
+       "core": {
+        "created_at": "Sun Aug 29 18:29:12 +0000 2021",
+        "name": "Astro",
+        "screen_name": "Astrozohmbie"
+       },
+       "follow_request_sent": false,
+       "has_graduated_access": true,
+       "id": "VXNlcjoxNDMyMDQ3NTE2NzU4MDM2NDg2",
+       "is_blue_verified": true,
+       "location": {
+        "location": "GIGACHAIN"
+       },
+       "media_permissions": {
+        "can_media_tag": true
+       },
+       "notifications_settings": {
+        "notifications_enabled": false
+       },
+       "parody_commentary_fan_label": "None",
+       "pinned_items": {
+        "tweet_ids_str": [
+         "2118084055241515325"
+        ]
+       },
+       "possibly_sensitive": false,
+       "privacy": {
+        "protected": false
+       },
+       "profile_bio": {
+        "description": "Artist | Crystal Specialist | Butcher | Blockchain Education | Shoot for the Stars💫✨️\n@doginaldogs Historian @Dogwartsdao \nCPO @monkeypoxsol",
+        "entities": {
+         "description": {},
+         "url": {
+          "urls": [
+           {
+            "display_url": "doginaldogs.com",
+            "expanded_url": "http://www.doginaldogs.com",
+            "indices": [
+             0,
+             23
+            ],
+            "url": "https://t.co/uxt8rBZmMp"
+           }
+          ]
+         }
+        }
+       },
+       "profile_description_language": "en",
+       "profile_image_shape": "Circle",
+       "profile_metadata": {
+        "profile_interstitial_type": ""
+       },
+       "profile_translation": {
+        "translator_type": "none"
+       },
+       "relationship_counts": {
+        "followers": 4082,
+        "following": 3070
+       },
+       "relationship_perspectives": {
+        "blocked_by": false,
+        "blocking": false,
+        "followed_by": false,
+        "following": false,
+        "live_following": false,
+        "muting": false
+       },
+       "rest_id": "1432047516758036486",
+       "super_follow_eligible": false,
+       "super_followed_by": false,
+       "super_following": false,
+       "tweet_counts": {
+        "media_tweets": 16480,
+        "tweets": 61081
+       },
+       "verification": {
+        "verified": false
+       },
+       "website": {
+        "url": "https://t.co/uxt8rBZmMp"
+       }
+      }
+     },
+     "disallow_join": false,
+     "is_employee_only": false,
+     "is_locked": false,
+     "is_muted": false,
+     "is_space_available_for_clipping": true,
+     "is_space_available_for_replay": true,
+     "max_admin_capacity": 3,
+     "max_guest_sessions": 10,
+     "media_key": "28_2119504312598450176",
+     "narrow_cast_space_type": 0,
+     "no_incognito": false,
+     "rest_id": "1brodqmJWdbgjd",
+     "scheduled_start": 1794171600000,
+     "started_at": 1794171552421,
+     "state": "Running",
+     "title": "Co-Pilots🐾 RWA Beakdown✨️",
+     "total_live_listeners": 2,
+     "total_replay_watched": 0,
+     "tweet_results": {
+      "result": {
+       "__typename": "Tweet",
+       "card": {
+        "legacy": {
+         "binding_values": [
+          {
+           "key": "tweet_id",
+           "value": {
+            "string_value": "2119535231120130273",
+            "type": "STRING"
+           }
+          },
+          {
+           "key": "narrow_cast_space_type",
+           "value": {
+            "string_value": "0",
+            "type": "STRING"
+           }
+          },
+          {
+           "key": "id",
+           "value": {
+            "string_value": "1brodqmJWdbgjd",
+            "type": "STRING"
+           }
+          },
+          {
+           "key": "card_url",
+           "value": {
+            "scribe_key": "card_url",
+            "string_value": "https://t.co/ufHd5la0CX",
+            "type": "STRING"
+           }
+          }
+         ],
+         "card_platform": {
+          "platform": {
+           "audience": {
+            "name": "production"
+           },
+           "device": {
+            "name": "Swift",
+            "version": "12"
+           }
+          }
+         },
+         "name": "3691233323:audiospace",
+         "url": "https://t.co/ufHd5la0CX",
+         "user_refs_results": []
+        },
+        "rest_id": "https://t.co/ufHd5la0CX"
+       },
+       "cashtag_attachments": [],
+       "core": {
+        "user_results": {
+         "result": {
+          "__typename": "User",
+          "action_counts": {
+           "favorites_count": 56959
+          },
+          "affiliates_highlighted_label": {},
+          "avatar": {
+           "image_url": "https://pbs.twimg.com/profile_images/2104301926670098433/MspxCELG_normal.jpg"
+          },
+          "banner": {
+           "image_url": "https://pbs.twimg.com/profile_banners/1432047516758036486/1788037838"
+          },
+          "core": {
+           "created_at": "Sun Aug 29 18:29:12 +0000 2021",
+           "name": "Astro",
+           "screen_name": "Astrozohmbie"
+          },
+          "follow_request_sent": false,
+          "has_graduated_access": true,
+          "id": "VXNlcjoxNDMyMDQ3NTE2NzU4MDM2NDg2",
+          "is_blue_verified": true,
+          "location": {
+           "location": "GIGACHAIN"
+          },
+          "media_permissions": {
+           "can_media_tag": true
+          },
+          "notifications_settings": {
+           "notifications_enabled": false
+          },
+          "parody_commentary_fan_label": "None",
+          "pinned_items": {
+           "tweet_ids_str": [
+            "2118084055241515325"
+           ]
+          },
+          "possibly_sensitive": false,
+          "privacy": {
+           "protected": false
+          },
+          "profile_bio": {
+           "description": "Artist | Crystal Specialist | Butcher | Blockchain Education | Shoot for the Stars💫✨️\n@doginaldogs Historian @Dogwartsdao \nCPO @monkeypoxsol",
+           "entities": {
+            "description": {},
+            "url": {
+             "urls": [
+              {
+               "display_url": "doginaldogs.com",
+               "expanded_url": "http://www.doginaldogs.com",
+               "indices": [
+                0,
+                23
+               ],
+               "url": "https://t.co/uxt8rBZmMp"
+              }
+             ]
+            }
+           }
+          },
+          "profile_description_language": "en",
+          "profile_image_shape": "Circle",
+          "profile_metadata": {
+           "profile_interstitial_type": ""
+          },
+          "profile_translation": {
+           "translator_type": "none"
+          },
+          "relationship_counts": {
+           "followers": 4082,
+           "following": 3070
+          },
+          "relationship_perspectives": {
+           "blocked_by": false,
+           "blocking": false,
+           "followed_by": false,
+           "following": false,
+           "live_following": false,
+           "muting": false
+          },
+          "rest_id": "1432047516758036486",
+          "super_follow_eligible": false,
+          "super_followed_by": false,
+          "super_following": false,
+          "tweet_counts": {
+           "media_tweets": 16480,
+           "tweets": 61081
+          },
+          "verification": {
+           "verified": false
+          },
+          "website": {
+           "url": "https://t.co/uxt8rBZmMp"
+          }
+         }
+        }
+       },
+       "edit_control": {
+        "edit_tweet_ids": [
+         "2119535231120130273"
+        ],
+        "editable_until_msecs": "1794175152000",
+        "edits_remaining": "5",
+        "is_edit_eligible": false
+       },
+       "grok_analysis_button": true,
+       "grok_annotations": {},
+       "grok_translated_post_with_availability": {
+        "is_available": false
+       },
+       "is_translatable": false,
+       "legacy": {
+        "bookmark_count": 5,
+        "bookmarked": false,
+        "conversation_id_str": "2119535231120130273",
+        "created_at": "Sun Nov 08 20:59:12 +0000 2026",
+        "display_text_range": [
+         0,
+         23
+        ],
+        "entities": {
+         "urls": [
+          {
+           "display_url": "x.com/i/spaces/1brod…",
+           "expanded_url": "https://x.com/i/spaces/1brodqmJWdbgjd",
+           "indices": [
+            0,
+            23
+           ],
+           "url": "https://t.co/ufHd5la0CX"
+          }
+         ]
+        },
+        "favorite_count": 14,
+        "favorited": false,
+        "full_text": "https://t.co/ufHd5la0CX",
+        "id_str": "2119535231120130273",
+        "is_quote_status": false,
+        "lang": "zxx",
+        "possibly_sensitive": false,
+        "possibly_sensitive_editable": true,
+        "quote_count": 1,
+        "reply_count": 19,
+        "retweet_count": 17,
+        "retweeted": false,
+        "user_id_str": "1432047516758036486"
+       },
+       "rest_id": "2119535231120130273",
+       "unmention_data": {},
+       "views": {
+        "count": "189",
+        "state": "EnabledWithCount"
+       }
+      }
+     },
+     "updated_at": 1794173489932
+    },
+    "participants": {
+     "admins": [
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2104301926670098433/MspxCELG_normal.jpg",
+       "display_name": "Astro",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": true,
+       "periscope_user_id": "tw-1432047516758036486",
+       "start": 1794171552422,
+       "twitter_screen_name": "Astrozohmbie",
+       "user_results": {
+        "rest_id": "1432047516758036486",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      }
+     ],
+     "listeners": [
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2118154001342427136/KRk6wpxd_normal.jpg",
+       "display_name": "Switch",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": true,
+       "periscope_user_id": "tw-821100025233162243",
+       "start": 1794172599000,
+       "twitter_screen_name": "SwitchMetaX",
+       "user_results": {
+        "rest_id": "821100025233162243",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {
+          "label": {
+           "badge": {
+            "url": "https://pbs.twimg.com/profile_images/2104168793295421440/Gykkt543_bigger.jpg"
+           },
+           "description": "Type Media",
+           "url": {
+            "url": "https://twitter.com/typemedia",
+            "urlType": "DeepLink"
+           },
+           "userLabelDisplayType": "Badge",
+           "userLabelType": "BusinessLabel"
+          }
+         },
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2116749165837619200/9x9W49kg_normal.jpg",
+       "display_name": "Luis",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": true,
+       "periscope_user_id": "tw-1180382576",
+       "start": 1794173016000,
+       "twitter_screen_name": "luismeta",
+       "user_results": {
+        "rest_id": "1180382576",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {
+          "label": {
+           "badge": {
+            "url": "https://pbs.twimg.com/profile_images/2104168793295421440/Gykkt543_bigger.jpg"
+           },
+           "description": "Type Media",
+           "url": {
+            "url": "https://twitter.com/typemedia",
+            "urlType": "DeepLink"
+           },
+           "userLabelDisplayType": "Badge",
+           "userLabelType": "BusinessLabel"
+          }
+         },
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2118249795877789696/zrVevOYZ_normal.jpg",
+       "display_name": "Spark",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": true,
+       "periscope_user_id": "tw-1823060375413370880",
+       "start": 1794171896000,
+       "twitter_screen_name": "SparKMetaX",
+       "user_results": {
+        "rest_id": "1823060375413370880",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {
+          "label": {
+           "badge": {
+            "url": "https://pbs.twimg.com/profile_images/2104168793295421440/Gykkt543_bigger.jpg"
+           },
+           "description": "Type Media",
+           "url": {
+            "url": "https://twitter.com/typemedia",
+            "urlType": "DeepLink"
+           },
+           "userLabelDisplayType": "Badge",
+           "userLabelType": "BusinessLabel"
+          }
+         },
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2090467276562608128/afpdotqg_normal.jpg",
+       "display_name": "Key",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": true,
+       "periscope_user_id": "tw-1762923758946299904",
+       "start": 1794171787000,
+       "twitter_screen_name": "KeyMetaX",
+       "user_results": {
+        "rest_id": "1762923758946299904",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2093495851364556800/efTgE1yL_normal.jpg",
+       "display_name": "Gruve",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": true,
+       "periscope_user_id": "tw-1514123234198888449",
+       "start": 1794171668000,
+       "twitter_screen_name": "gruvemeta",
+       "user_results": {
+        "rest_id": "1514123234198888449",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2118230451366080512/khw3UIa4_normal.jpg",
+       "display_name": "Funk",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": true,
+       "periscope_user_id": "tw-1439007477073424387",
+       "start": 1794172381000,
+       "twitter_screen_name": "funkchan",
+       "user_results": {
+        "rest_id": "1439007477073424387",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {
+          "label": {
+           "badge": {
+            "url": "https://pbs.twimg.com/profile_images/2104168793295421440/Gykkt543_bigger.jpg"
+           },
+           "description": "Type Media",
+           "url": {
+            "url": "https://twitter.com/typemedia",
+            "urlType": "DeepLink"
+           },
+           "userLabelDisplayType": "Badge",
+           "userLabelType": "BusinessLabel"
+          }
+         },
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2035557415706415104/SJHApn8T_normal.jpg",
+       "display_name": "Oak",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": true,
+       "periscope_user_id": "tw-1856527398566502400",
+       "start": 1794172656000,
+       "twitter_screen_name": "OakMetaX",
+       "user_results": {
+        "rest_id": "1856527398566502400",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      },
+      {
+       "avatar_url": "https://pbs.twimg.com/profile_images/2118458949078847488/znJcI5L7_normal.jpg",
+       "display_name": "BB",
+       "is_muted_by_admin": false,
+       "is_muted_by_guest": false,
+       "is_verified": true,
+       "periscope_user_id": "tw-2023330704403148800",
+       "start": 1794173268000,
+       "twitter_screen_name": "BBella777",
+       "user_results": {
+        "rest_id": "2023330704403148800",
+        "result": {
+         "__typename": "User",
+         "identity_profile_labels_highlighted_label": {},
+         "is_blue_verified": true,
+         "verification": {}
+        }
+       }
+      }
+     ],
+     "speakers": [],
+     "total": 8
+    },
+    "sharings": {
+     "items": [],
+     "slice_info": {}
+    }
+   }
+  }
+ }
+}

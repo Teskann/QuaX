@@ -199,7 +199,7 @@ class Twitter {
     "longform_notetweets_consumption_enabled": true,
     "longform_notetweets_inline_media_enabled": false,
     "longform_notetweets_rich_text_read_enabled": true,
-    "post_ctas_fetch_enabled": false,
+    "post_ctas_fetch_enabled": true,
     "premium_content_api_read_enabled": false,
     "profile_label_improvements_pcf_label_in_post_enabled": true,
     "responsive_web_edit_tweet_api_enabled": true,
@@ -229,6 +229,7 @@ class Twitter {
     "tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled": true,
     "verified_phone_label_enabled": false,
     "view_counts_everywhere_api_enabled": true,
+    "x_elections_post_context_enabled": true,
   };
 
   static const Map<String, bool> _profileFeatures = {
@@ -324,7 +325,7 @@ class Twitter {
         userId,
         count,
         cursor: cursor,
-        queryId: 'nxiL6UwEf7B1K1JNGPx-Jw',
+        queryId: 'eDqlbOS46zda8jDT8dEQ_Q',
         operation: 'Following',
       );
 
@@ -333,7 +334,7 @@ class Twitter {
         userId,
         count,
         cursor: cursor,
-        queryId: 'KLLQR3852iPAj8J32VMdXQ',
+        queryId: 'Xe3y9_ndZ9-RtWz8zd_wpg',
         operation: 'Followers',
       );
 
@@ -544,7 +545,7 @@ class Twitter {
     defaultParam["variables"] = json.encode(variables);
 
     var response = await _twitterApi.client.get(
-      Uri.https('x.com', '/i/api/graphql/gJoREC4Bspo4kJ0ax9C3sQ/TweetDetail', defaultParam),
+      Uri.https('x.com', '/i/api/graphql/dQDdKtt882nl-Km98FJGSQ/TweetDetail', defaultParam),
     );
 
     return parseTweetDetail(json.decode(response.body) as Map<String, dynamic>);
@@ -581,7 +582,7 @@ class Twitter {
 
   /// What the website sends for a typed search, tab by tab.
   static Uri _searchUri(String query, String product, int count, String? cursor) {
-    return Uri.https('x.com', '/i/api/graphql/f7SuGIm11eLbQs7c0K9X9w/SearchTimeline', {
+    return Uri.https('x.com', '/i/api/graphql/vLHjqbDv7TPFMBkIIO1nOA/SearchTimeline', {
       'variables': jsonEncode({
         "rawQuery": query,
         "count": count,
@@ -642,7 +643,7 @@ class Twitter {
 
   /// The Top posts of a community, the tab the website opens on.
   static Future<TweetStatus> getCommunityTweets(String id, {String? cursor}) async {
-    final uri = Uri.https('x.com', '/i/api/graphql/hCOraernAPut--lAHDdBtw/CommunityTweetsTimeline', {
+    final uri = Uri.https('x.com', '/i/api/graphql/bKYFeT4aNUQDMHx4gyXIoQ/CommunityTweetsTimeline', {
       'variables': jsonEncode({
         'communityId': id,
         'count': 20,
@@ -819,7 +820,7 @@ class Twitter {
     };
 
     var response = await _twitterApi.client.get(
-      Uri.https('x.com', '/i/api/graphql/0toR0MxC06yY3Fc57GXBpA/HomeTimeline', defaultUserTweetsParam),
+      Uri.https('x.com', '/i/api/graphql/KmJCeZ__ef1fNos7tKN_fg/HomeTimeline', defaultUserTweetsParam),
     );
     var result = json.decode(response.body);
     //if this page is not first one on the profile page, dont add pinned tweet
@@ -852,13 +853,13 @@ class Twitter {
   /// The web's Media tab is split in two requests: videos (`media`) and photos.
   static ({String path, Map<String, Object> variables}) _userTimeline(String type, bool includeReplies) {
     return switch (type) {
-      "media" => (path: "/i/api/graphql/kt4pT9MO7MSCJdizksKJkA/UserVideoTimeline", variables: _mediaVariables),
-      "photos" => (path: "/i/api/graphql/kc23mh5ZZHOao1q8hzZ1LQ/UserPhotoTimeline", variables: _mediaVariables),
+      "media" => (path: "/i/api/graphql/1UmMb8X-BFHS98GG6DyRsQ/UserVideoTimeline", variables: _mediaVariables),
+      "photos" => (path: "/i/api/graphql/zk9sfrhiW8gNjQUP-hwung/UserPhotoTimeline", variables: _mediaVariables),
       _ when includeReplies => (
-          path: "/i/api/graphql/MbxTcSWPt8RWRFMwenOtyQ/UserTweetsAndReplies",
+          path: "/i/api/graphql/FmuxExUC21Xn_C2NwtX5sQ/UserTweetsAndReplies",
           variables: {..._postsVariables, "withCommunity": true},
         ),
-      _ => (path: "/i/api/graphql/GMxl7_rXoC4G0o-kiH0oLA/UserOriginalsTimeline", variables: _postsVariables),
+      _ => (path: "/i/api/graphql/ZFKu1DFS63hgrkLzR3Hsdw/UserOriginalsTimeline", variables: _postsVariables),
     };
   }
 
@@ -1209,7 +1210,8 @@ class Twitter {
     "content_disclosure_ai_generated_indicator_enabled": true,
     "responsive_web_grok_show_grok_translated_post": true,
     "responsive_web_grok_analysis_button_from_backend": true,
-    "post_ctas_fetch_enabled": false,
+    "post_ctas_fetch_enabled": true,
+    "x_elections_post_context_enabled": true,
     "rweb_cashtags_enabled": true,
     "freedom_of_speech_not_reach_fetch_enabled": true,
     "standardized_nudges_misinfo": true,
@@ -1225,7 +1227,7 @@ class Twitter {
   };
 
   static Future<Space> getSpace(String id) async {
-    final uri = Uri.https('x.com', '/i/api/graphql/Zi-Z2ucwAJGWcFmtsj4cvw/AudioSpaceById', {
+    final uri = Uri.https('x.com', '/i/api/graphql/zm3JmUpYWDXIUsf_33-ZrA/AudioSpaceById', {
       'variables': jsonEncode({'id': id, 'isMetatagsQuery': false, 'withReplays': true, 'withListeners': true}),
       'features': jsonEncode(_spaceFeatures),
     });

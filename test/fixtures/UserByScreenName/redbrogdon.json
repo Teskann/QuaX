@@ -1,0 +1,165 @@
+{
+ "scenario": "Search filter: posts mentioning an account",
+ "sourceUrl": "https://x.com/search?q=%40FlutterDev&src=typed_query&f=live",
+ "unstable": true,
+ "operation": "UserByScreenName",
+ "host": "x.com",
+ "queryId": "AMIBMjtxEEATh4z8V9GtRg",
+ "features": {
+  "hidden_profile_subscriptions_enabled": true,
+  "profile_label_improvements_pcf_label_in_post_enabled": true,
+  "responsive_web_profile_redirect_enabled": true,
+  "rweb_tipjar_consumption_enabled": false,
+  "verified_phone_label_enabled": false,
+  "subscriptions_verification_info_is_identity_verified_enabled": true,
+  "subscriptions_verification_info_verified_since_enabled": true,
+  "highlights_tweets_tab_ui_enabled": true,
+  "responsive_web_twitter_article_notes_tab_enabled": true,
+  "subscriptions_feature_can_gift_premium": false,
+  "creator_subscriptions_tweet_preview_api_enabled": true,
+  "responsive_web_graphql_timeline_navigation_enabled": true
+ },
+ "fieldToggles": {
+  "withPayments": false,
+  "withAuxiliaryUserLabels": true
+ },
+ "variables": {
+  "screen_name": "redbrogdon",
+  "withGrokTranslatedBio": true
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "150",
+  "content-type": "application/json",
+  "x-rate-limit-reset": "1794174235",
+  "x-rate-limit-remaining": "149"
+ },
+ "body": {
+  "data": {
+   "user": {
+    "result": {
+     "__typename": "User",
+     "action_counts": {
+      "favorites_count": 3659
+     },
+     "affiliates_highlighted_label": {},
+     "avatar": {
+      "image_url": "https://pbs.twimg.com/profile_images/2022349507699363841/fjTBFd2g_normal.jpg"
+     },
+     "banner": {
+      "image_url": "https://pbs.twimg.com/profile_banners/256636737/1444151611"
+     },
+     "business_account": {},
+     "core": {
+      "created_at": "Wed Feb 23 19:15:08 +0000 2011",
+      "name": "Andrew Brogdon",
+      "screen_name": "redbrogdon"
+     },
+     "creator_subscriptions_count": 0,
+     "follow_request_sent": false,
+     "grok_translated_bio_with_availability": {
+      "is_available": false
+     },
+     "has_graduated_access": true,
+     "has_hidden_subscriptions_on_profile": false,
+     "highlights_info": {
+      "can_highlight_tweets": true,
+      "highlighted_tweets": "0"
+     },
+     "id": "VXNlcjoyNTY2MzY3Mzc=",
+     "is_blue_verified": true,
+     "is_profile_translatable": false,
+     "legacy_extended_profile": {},
+     "location": {
+      "location": ""
+     },
+     "media_permissions": {
+      "can_media_tag": true
+     },
+     "notifications_settings": {
+      "notifications_enabled": false
+     },
+     "parody_commentary_fan_label": "None",
+     "pinned_items": {},
+     "possibly_sensitive": false,
+     "privacy": {
+      "protected": false
+     },
+     "profile_bio": {
+      "description": "Staff DevRel Engineer @Google focused on Generative UI and agentic apps. @dart_lang @Flutterdev @GeminiApp",
+      "entities": {
+       "description": {},
+       "url": {
+        "urls": [
+         {
+          "display_url": "redbrogdon.dev",
+          "expanded_url": "https://redbrogdon.dev",
+          "indices": [
+           0,
+           23
+          ],
+          "url": "https://t.co/gcUZ1PB6UZ"
+         }
+        ]
+       }
+      }
+     },
+     "profile_image_shape": "Circle",
+     "profile_metadata": {
+      "profile_interstitial_type": ""
+     },
+     "profile_sort_enabled": true,
+     "profile_translation": {
+      "translator_type": "none"
+     },
+     "relationship_counts": {
+      "followers": 15355,
+      "following": 405
+     },
+     "relationship_perspectives": {
+      "blocked_by": false,
+      "blocking": false,
+      "followed_by": false,
+      "following": false,
+      "live_following": false,
+      "muting": false
+     },
+     "rest_id": "256636737",
+     "super_follow_eligible": false,
+     "super_followed_by": false,
+     "super_following": false,
+     "tweet_counts": {
+      "media_tweets": 29,
+      "tweets": 120
+     },
+     "user_seed_tweet_count": 0,
+     "verification": {
+      "verified": false
+     },
+     "verification_info": {
+      "is_identity_verified": false,
+      "reason": {
+       "description": {
+        "entities": [
+         {
+          "from_index": 25,
+          "ref": {
+           "url": "https://help.twitter.com/managing-your-account/about-twitter-verified-accounts",
+           "url_type": "ExternalUrl"
+          },
+          "to_index": 35
+         }
+        ],
+        "text": "This account is Premium. Learn more"
+       },
+       "verified_since_msec": "1786482775416"
+      }
+     },
+     "website": {
+      "url": "https://t.co/gcUZ1PB6UZ"
+     }
+    }
+   }
+  }
+ }
+}

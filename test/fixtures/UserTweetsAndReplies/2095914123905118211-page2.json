@@ -3,7 +3,7 @@
  "sourceUrl": "https://x.com/quax_tests_2/all",
  "operation": "UserTweetsAndReplies",
  "host": "x.com",
- "queryId": "MbxTcSWPt8RWRFMwenOtyQ",
+ "queryId": "FmuxExUC21Xn_C2NwtX5sQ",
  "features": {
   "rweb_video_screen_enabled": false,
   "rweb_cashtags_enabled": true,
@@ -21,6 +21,7 @@
   "rweb_cashtags_composer_attachment_enabled": true,
   "responsive_web_jetfuel_frame": true,
   "rweb_sports_post_context_enabled": true,
+  "x_elections_post_context_enabled": true,
   "responsive_web_grok_share_attachment_enabled": true,
   "responsive_web_grok_annotations_enabled": true,
   "articles_preview_enabled": true,
@@ -34,7 +35,7 @@
   "content_disclosure_ai_generated_indicator_enabled": true,
   "responsive_web_grok_show_grok_translated_post": true,
   "responsive_web_grok_analysis_button_from_backend": true,
-  "post_ctas_fetch_enabled": false,
+  "post_ctas_fetch_enabled": true,
   "freedom_of_speech_not_reach_fetch_enabled": true,
   "standardized_nudges_misinfo": true,
   "tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled": true,
@@ -54,7 +55,7 @@
  "variables": {
   "userId": "2095914123905118211",
   "count": 20,
-  "cursor": "DAAHCgABHVm--s6__-8LAAIAAAATMjA5NTkxNzYzOTMyMzMwMzk0MwgAAwAAAAIAAA",
+  "cursor": "DAAHCgABHWocpV7__-4LAAIAAAATMjA5NTkxNzYzOTMyMzMwMzk0MwgAAwAAAAIAAA",
   "includePromotedContent": true,
   "withCommunity": true,
   "withQuickPromoteEligibilityTweetFields": true,
@@ -64,8 +65,8 @@
  "headers": {
   "x-rate-limit-limit": "500",
   "content-type": "application/json",
-  "x-rate-limit-remaining": "496",
-  "x-rate-limit-reset": "1793074387"
+  "x-rate-limit-remaining": "498",
+  "x-rate-limit-reset": "1794173129"
  },
  "body": {
   "data": {
@@ -82,20 +83,20 @@
             "__typename": "TimelineTimelineCursor",
             "cursorType": "Top",
             "entryType": "TimelineTimelineCursor",
-            "value": "DAAHCgABHVm--s7AJwALAAIAAAATMjA5NTkxNzYzOTMyMzMwMzk0MwgAAwAAAAEAAA"
+            "value": "DAAHCgABHWocpV8AJv8LAAIAAAATMjA5NTkxNzYzOTMyMzMwMzk0MwgAAwAAAAEAAA"
            },
-           "entryId": "cursor-top-2114931484446949360",
-           "sortIndex": "2114931484446949360"
+           "entryId": "cursor-top-2119538071220256751",
+           "sortIndex": "2119538071220256751"
           },
           {
            "content": {
             "__typename": "TimelineTimelineCursor",
             "cursorType": "Bottom",
             "entryType": "TimelineTimelineCursor",
-            "value": "DAAHCgABHVm--s6__-8LAAIAAAATMjA5NTkxNzYzOTMyMzMwMzk0MwgAAwAAAAIAAA"
+            "value": "DAAHCgABHWocpV7__-4LAAIAAAATMjA5NTkxNzYzOTMyMzMwMzk0MwgAAwAAAAIAAA"
            },
-           "entryId": "cursor-bottom-2114931484446949359",
-           "sortIndex": "2114931484446949359"
+           "entryId": "cursor-bottom-2119538071220256750",
+           "sortIndex": "2119538071220256750"
           }
          ],
          "type": "TimelineAddEntries"
