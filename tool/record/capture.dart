@@ -17,6 +17,7 @@
 // debugging port is refused on Chrome's default profile since version 136, and
 // because that profile holds the session and must stay out of git.
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -91,15 +92,23 @@ const _afterScroll = Duration(milliseconds: 2500);
 const _bodyTimeout = Duration(seconds: 10);
 const _drainTimeout = Duration(seconds: 10);
 
+/// A page can stop answering for good, as the all views of quax_tests do after a scroll: past this, Chrome is
+/// started again.
+const _browserTimeout = Duration(seconds: 20);
+
 const _attempts = 3;
 const _retryPause = Duration(seconds: 10);
 const _maxRateLimitWait = Duration(minutes: 20);
 
 class Scenario {
-  Scenario(this.url, this.description, {this.unstable = false});
+  Scenario(this.url, this.description, {this.unstable = false, this.tab});
 
   final String url;
   final String description;
+
+  /// The tab of the page to open once it loaded, counted from 1, for a tab with
+  /// no link of its own, such as the Latest posts of a community.
+  final int? tab;
 
   /// What X answers changes from one capture to the next (someone else's
   /// timeline, a search, the home timeline): tests may only check its shape.
@@ -119,17 +128,32 @@ Future<void> main(List<String> args) async {
   }
 
   final attach = args.contains('--attach');
-  final chrome = attach ? null : await startChrome(profile: _profileDir, port: _port);
-  final browser = await _connect(attach);
-  final page = (await browser.pages).firstOrNull ?? await browser.newPage();
+  var chrome = attach ? null : await startChrome(profile: _profileDir, port: _port);
+  var browser = await _connect(attach);
+  var page = (await browser.pages).firstOrNull ?? await browser.newPage();
   await _requireLogin(page);
+
+  /// Once a page stops answering, all of Chrome does, new pages included: it starts again on the same profile, so
+  /// still logged in.
+  Future<Page> restart(Page stuck) async {
+    print('  Chrome stopped answering: starting it again');
+    browser.disconnect();
+    chrome?.kill(ProcessSignal.sigkill);
+    await chrome?.exitCode;
+    chrome = await startChrome(profile: _profileDir, port: _port);
+    browser = await _connect(false);
+    return (await browser.pages).firstOrNull ?? await browser.newPage();
+  }
 
   var written = 0;
   for (final (index, scenario) in scenarios.indexed) {
     print('\n[${index + 1}/${scenarios.length}] ${scenario.description}');
     print('         ${scenario.url}');
     final watch = Stopwatch()..start();
-    written += await _capture(page, scenario);
+    // A Chrome started by hand is left alone
+    final capture = await _capture(attach ? (stuck) => _replace(browser, stuck) : restart, page, scenario);
+    written += capture.written;
+    page = capture.page;
     print('         ${(watch.elapsedMilliseconds / 1000).toStringAsFixed(1)} s');
   }
 
@@ -228,27 +252,40 @@ List<Scenario> _readScenarios(Map<String, dynamic> root) =>
     (root['scenarios'] as List<dynamic>)
         .cast<Map<String, dynamic>>()
         .map((entry) => Scenario(entry['url'] as String, entry['description'] as String? ?? '',
-            unstable: entry['unstable'] as bool? ?? false))
+            unstable: entry['unstable'] as bool? ?? false, tab: entry['tab'] as int?))
         .toList();
 
 
-Future<int> _capture(Page page, Scenario scenario) async {
+/// Returns the page the next scenarios go on in: the one [reopen] gives when this one stopped answering.
+Future<({int written, Page page})> _capture(
+    Future<Page> Function(Page stuck) reopen, Page page, Scenario scenario) async {
   for (var attempt = 1;; attempt++) {
     final visit = await _visit(page, scenario);
+    if (visit.stuck) {
+      page = await reopen(page);
+    }
     final problems = [
       if (!visit.loaded) 'the page did not load',
+      if (visit.stuck) 'the page stopped answering',
       ...visit.rejected.map((fixture) => '${fixture['operation']}: ${fixtureProblem(fixture)}'),
     ];
-    if (problems.isEmpty) return _write(visit.captured);
+    if (problems.isEmpty) return (written: _write(visit.captured), page: page);
     final pause = _pauseBeforeRetry(visit.rejected);
     if (attempt == _attempts || pause == null) {
       print('  gave up after $attempt attempt(s): ${problems.toSet().join('; ')}');
       _failures++;
-      return _write(visit.captured);
+      return (written: _write(visit.captured), page: page);
     }
     print('  attempt $attempt failed, retrying in ${pause.inSeconds} s');
     await Future.delayed(pause);
   }
+}
+
+/// Closing the page ends its renderer, so the new page does not share the stuck one.
+Future<Page> _replace(Browser browser, Page stuck) async {
+  print('  the page stopped answering: going on in a new one');
+  await stuck.close().timeout(_browserTimeout, onTimeout: () {});
+  return browser.newPage().timeout(_browserTimeout);
 }
 
 Duration? _pauseBeforeRetry(List<Map<String, dynamic>> rejected) {
@@ -265,11 +302,12 @@ Duration? _pauseBeforeRetry(List<Map<String, dynamic>> rejected) {
 
 /// Loads one scenario, scrolls down like a reader while the list keeps growing,
 /// and keeps every sound GraphQL response seen along the way.
-Future<({Map<String, Map<String, dynamic>> captured, List<Map<String, dynamic>> rejected, bool loaded})> _visit(
-    Page page, Scenario scenario) async {
+Future<({Map<String, Map<String, dynamic>> captured, List<Map<String, dynamic>> rejected, bool loaded, bool stuck})>
+    _visit(Page page, Scenario scenario) async {
   final captured = <String, Map<String, dynamic>>{};
   final rejected = <Map<String, dynamic>>[];
   var loaded = true;
+  var stuck = false;
   final pending = <Future<void>>[];
   DateTime? lastSeen;
   var nextPages = 0;
@@ -303,25 +341,56 @@ Future<({Map<String, Map<String, dynamic>> captured, List<Map<String, dynamic>> 
   }
 
   await _settle(() => lastSeen);
-  for (var scroll = 0; scroll < _maxScrolls; scroll++) {
-    final before = nextPages;
-    print('  v scroll');
-    try {
-      final size = await page.evaluate<Map<String, dynamic>>(
-          '() => ({width: innerWidth, height: innerHeight, page: document.documentElement.scrollHeight})');
-      await page.mouse.move(Point(size['width'] / 2, size['height'] / 2));
-      await page.mouse.wheel(deltaY: size['page']);
-    } on Exception catch (error) {
-      print('  could not scroll: $error');
-      break; // navigated away or closed; whatever landed is still worth keeping
+  final tab = scenario.tab;
+  try {
+    if (tab != null) {
+      await _openTab(page, tab).timeout(_browserTimeout);
+      await _settle(() => lastSeen, since: DateTime.now());
     }
-    await _settle(() => lastSeen, since: DateTime.now(), quiet: _afterScroll);
-    if (nextPages == before) break; // the end of the list, or a page without one
+    for (var scroll = 0; scroll < _maxScrolls; scroll++) {
+      final before = nextPages;
+      print('  v scroll');
+      if (!await _scroll(page).timeout(_browserTimeout)) break;
+      await _settle(() => lastSeen, since: DateTime.now(), quiet: _afterScroll);
+      if (nextPages == before) break; // the end of the list, or a page without one
+    }
+  } on TimeoutException {
+    stuck = true;
   }
 
   await Future.wait(pending).timeout(_drainTimeout, onTimeout: () => <void>[]);
   await subscription.cancel();
-  return (captured: captured, rejected: rejected, loaded: loaded);
+  return (captured: captured, rejected: rejected, loaded: loaded, stuck: stuck);
+}
+
+/// Scrolls to the bottom of the page. False when the page is gone: navigated away or closed.
+Future<bool> _scroll(Page page) async {
+  try {
+    final size = await page.evaluate<Map<String, dynamic>>(
+        '() => ({width: innerWidth, height: innerHeight, page: document.documentElement.scrollHeight})');
+    await page.mouse.move(Point(size['width'] / 2, size['height'] / 2));
+    await page.mouse.wheel(deltaY: size['page']);
+    return true;
+  } on Exception catch (error) {
+    print('  could not scroll: $error');
+    return false;
+  }
+}
+
+/// Clicks the [tab]th tab of the page, counted from 1. A dialog x.com shows on a
+/// first visit, such as the welcome to Communities, would catch the click, so it
+/// is closed first.
+Future<void> _openTab(Page page, int tab) async {
+  print('  > tab $tab');
+  try {
+    await page.keyboard.press(Key.escape);
+    final clicked = await page.evaluate<bool>(
+        '(index) => { const tab = document.querySelectorAll(\'[role="tab"]\')[index]; tab?.click(); return !!tab; }',
+        args: [tab - 1]);
+    if (!clicked) print('  no tab $tab on the page');
+  } on Exception catch (error) {
+    print('  could not open tab $tab: $error');
+  }
 }
 
 /// Deletes the fixtures [isOurs] that this run did not produce: all of them on a
