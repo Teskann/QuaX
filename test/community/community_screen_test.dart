@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
 import 'package:material_ui/material_ui.dart';
@@ -11,18 +10,19 @@ import 'package:quax/constants.dart';
 import 'package:quax/tweet/_media.dart';
 import 'package:quax/tweet/tweet.dart';
 import 'package:quax/ui/errors.dart';
+import 'package:quax/ui/header_banner.dart';
 
 import '../fixture_client.dart';
 import '../fixtures.dart';
 import '../tweet/pump_tweets.dart';
 import '../ui/fake_images.dart';
+import '../ui/share_mock.dart';
+import '../pump_route.dart';
 import 'pump_community.dart';
 
 final _shareButton = find.descendant(of: find.byType(CommunityHeader), matching: find.byIcon(Icons.share));
 
 void main() {
-  const shareChannel = MethodChannel('dev.fluttercommunity.plus/share');
-
   setUpAll(() => HttpOverrides.global = FakeImageHttpOverrides());
 
   testWidgets('Should show the name, the member count and the banner of the community', (tester) async {
@@ -34,7 +34,7 @@ void main() {
     final members = NumberFormat.compact(locale: 'en').format(community.memberCount);
     expect(find.textContaining('$members Members', findRichText: true), findsOneWidget,
         reason: 'The header shows how many members the community has');
-    expect(find.byType(CommunityBanner), findsOneWidget, reason: 'The recorded community has a banner');
+    expect(find.byType(HeaderBanner), findsOneWidget, reason: 'The recorded community has a banner');
   });
 
   testWidgets('Should wait for the community before asking for its posts', (tester) async {
@@ -141,7 +141,7 @@ void main() {
   testWidgets('Should open the banner in full screen when tapped', (tester) async {
     final pushed = await openCommunity(tester);
 
-    await tester.tap(find.byType(CommunityBanner));
+    await tester.tap(find.byType(HeaderBanner));
     await pumpTransition(tester);
 
     expect(pushed, hasLength(1), reason: 'Tapping the banner should open one screen');
@@ -149,21 +149,8 @@ void main() {
   });
 
   group('Sharing', () {
-    final shared = <String?>[];
-
-    setUp(() {
-      shared.clear();
-      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(
-          shareChannel, (call) async {
-        shared.add((call.arguments as Map)['text'] as String?);
-        return 'dev.fluttercommunity.plus/share/success';
-      });
-    });
-
-    tearDown(() => TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
-        .setMockMethodCallHandler(shareChannel, null));
-
     testWidgets('Should share the x.com link of the community', (tester) async {
+      final shared = recordShares();
       await openCommunity(tester);
       await tester.tap(_shareButton);
       await tester.pump();
@@ -173,6 +160,7 @@ void main() {
     });
 
     testWidgets('Should share the link on the site chosen in the settings', (tester) async {
+      final shared = recordShares();
       await openCommunity(tester, prefs: {optionShareBaseUrl: 'https://fxtwitter.com'});
       await tester.tap(_shareButton);
       await tester.pump();

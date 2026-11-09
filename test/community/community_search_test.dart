@@ -3,44 +3,33 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:quax/client/client.dart';
+import 'package:quax/community/community.dart';
 import 'package:quax/community/community_screen.dart';
-import 'package:quax/community/community_search_results.dart';
 import 'package:quax/community/community_tile.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/search/search.dart';
 import 'package:quax/search/search_filters_button.dart';
+import 'package:quax/ui/paged_results.dart';
 
 import '../fixtures.dart';
 import '../mock_x_client.dart';
+import '../pump_route.dart';
 import '../ui/fake_images.dart';
-import 'pump_community.dart';
 
 /// The recorded pages of the search, in the order the cursors chain them.
-List<Fixture> _pagesInOrder() {
-  final pages = fixturesOf('CommunitiesSearchQuery');
-  final chain = <Fixture>[];
-  String? cursor;
-  while (true) {
-    final next = pages.where((page) => page.variables['cursor'] == cursor).firstOrNull;
-    if (next == null) return chain;
-    chain.add(next);
-    cursor = next.body['data']['communities_search_slice']['slice_info']['next_cursor'];
-  }
-}
+List<Fixture> _pagesInOrder() => chainPages(
+  fixturesOf('CommunitiesSearchQuery'),
+  (page) => page.body['data']['communities_search_slice']['slice_info']['next_cursor'],
+);
 
 String get _recordedQuery => _pagesInOrder().first.variables['query'];
 
 Future<List<Route<dynamic>>> _search(WidgetTester tester, String query,
         {MockXClient? client, SearchTab tab = SearchTab.communities}) =>
-    pumpRoute(
-      tester,
-      const ResultsScreen(),
-      RouteSettings(name: routeSearch, arguments: SearchArguments(tab, query: query)),
-      client: client,
-    );
+    pumpSearch(tester, query, tab, client: client);
 
 List<String> _answered(MockXClient client) =>
-    client.answers.map((answer) => answer.fixture).nonNulls.where((file) => file.contains('CommunitiesSearchQuery')).toList();
+    answeredFixtures(client, _pagesInOrder().map((page) => page.path).toSet());
 
 void main() {
   setUpAll(() => HttpOverrides.global = FakeImageHttpOverrides());
@@ -61,7 +50,7 @@ void main() {
     await _search(tester, _recordedQuery, client: client);
     final pages = _pagesInOrder();
 
-    await scrollDownUntil(tester, find.byType(CommunitySearchResults), () => _answered(client).length == pages.length);
+    await scrollDownUntil(tester, find.byType(PagedResults<Community>), () => _answered(client).length == pages.length);
 
     expect(pages.length, greaterThan(1), reason: 'The capture should hold several pages for this test to mean much');
     expect(_answered(client), pages.map((page) => page.path),
@@ -96,6 +85,6 @@ void main() {
     await pumpTransition(tester);
 
     expect(find.byType(SearchFiltersButton), findsNothing,
-        reason: 'The filters would change nothing to the communities found');
+        reason: 'The filters would not change the communities found');
   });
 }

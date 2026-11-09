@@ -45,6 +45,8 @@ Future<void> Function(String? cursor)? _appPages(RecordedRequest recorded) {
     'Followers' => (cursor) => Twitter.followersList(userId!, 20, cursor: cursor),
     'SearchTimeline' when variables['product'] == 'People' =>
       (cursor) => Twitter.searchUsers(variables['rawQuery'], cursor: cursor),
+    'SearchTimeline' when variables['product'] == 'Lists' =>
+      (cursor) => Twitter.searchLists(variables['rawQuery'], cursor: cursor),
     'SearchTimeline' => (cursor) =>
         Twitter.searchTweets(variables['rawQuery'], product: variables['product'], cursor: cursor),
     'HomeTimeline' => (cursor) => Twitter.getTimelineTweets('home',
@@ -58,6 +60,10 @@ Future<void> Function(String? cursor)? _appPages(RecordedRequest recorded) {
         cursor: cursor,
         ranking: CommunityRanking.values.firstWhere((r) => r.rankingMode == variables['rankingMode'])),
     'CommunitiesSearchQuery' => (cursor) => Twitter.searchCommunities(variables['query'], cursor: cursor),
+    'ListByRestId' => (_) => Twitter.getList(variables['listId']),
+    'ListLatestTweetsTimeline' => (cursor) => Twitter.getListTweets(variables['listId'], cursor: cursor),
+    'ListMembers' => (cursor) => Twitter.getListMembers(variables['listId'], cursor: cursor),
+    'ListSubscribers' => (cursor) => Twitter.getListFollowers(variables['listId'], cursor: cursor),
     'AudioSpaceById' => (_) => Twitter.getSpace(variables['id']),
     'membersSliceTimeline_Query' => (cursor) => Twitter.getCommunityMembers(variables['communityId'], cursor: cursor),
     'UserVideoTimeline' => (cursor) => timeline('media', cursor),

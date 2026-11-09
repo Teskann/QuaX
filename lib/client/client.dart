@@ -13,6 +13,7 @@ import 'package:quax/client/client_regular_account.dart';
 import 'package:quax/client/client_unauthenticated.dart';
 import 'package:quax/client/rate_limit_tracker.dart';
 import 'package:quax/community/community.dart';
+import 'package:quax/lists/x_list.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/database/entities.dart';
 import 'package:quax/generated/l10n.dart';
@@ -487,15 +488,16 @@ class Twitter {
         // TODO: Use as the "next page" cursor
       }
 
-      final conversation = RegExp(r'^profile-(originals-)?conversation-').firstMatch(entryId);
+      // The threads of a profile, and those of a list: a post of a member with the posts around it
+      final conversation = RegExp(r'^(profile-(originals-)?|list-)conversation-').firstMatch(entryId);
       if (conversation != null) {
         List<TweetWithCard> tweets = [];
 
         // TODO: This is missing tombstone support
-        for (var item in entry['content']['items']) {
+        for (var item in _objects(entry['content']?['items'])) {
           var itemType = item['item']?['itemContent']?['itemType'];
           if (itemType == 'TimelineTweet') {
-            final result = item['item']['itemContent']['tweet_results']?['result'];
+            final result = item['item']?['itemContent']?['tweet_results']?['result'];
             if (result != null) {
               tweets.add(TweetWithCard.fromGraphqlJson(result));
             }
@@ -670,17 +672,18 @@ class Twitter {
     final slice = body['data']?['communityResults']?['result']?['members_slice'];
     final items = slice?['items_results'];
     return (
-      items: (items is List ? items : const [])
-          .map((item) => item is Map ? item['result'] : null)
-          .whereType<Map<String, dynamic>>()
-          // A member is opened from the handle and shown with the name
-          .where((user) => user['rest_id'] != null && user['core']?['screen_name'] != null)
-          .where((user) => user['core']?['name'] != null)
-          .map(UserWithExtra.fromNonLegacyJson)
-          .toList(growable: false),
+      items: _shownUsers((items is List ? items : const []).map((item) => item is Map ? item['result'] : null)),
       nextCursor: slice?['slice_info']?['next_cursor'] as String?,
     );
   }
+
+  /// Keeps the users that can be shown. A user needs a handle to be opened and a name to be shown.
+  static List<UserWithExtra> _shownUsers(Iterable<dynamic> results) => results
+      .whereType<Map<String, dynamic>>()
+      .where((user) => user['rest_id'] != null && user['core']?['screen_name'] != null)
+      .where((user) => user['core']?['name'] != null)
+      .map(UserWithExtra.fromNonLegacyJson)
+      .toList(growable: false);
 
   static Future<CursorPage<String, Community>> searchCommunities(String query, {String? cursor}) async {
     final uri = Uri.https('x.com', '/i/api/graphql/HKgnJbw10TZW41Na4ToaSw/CommunitiesSearchQuery', {
@@ -709,6 +712,117 @@ class Twitter {
     }
     return createUnconversationedChainsGraphql(timeline, 'tweet', [], true);
   }
+
+  static const Map<String, bool> _listFeatures = {
+    "profile_label_improvements_pcf_label_in_post_enabled": true,
+    "responsive_web_graphql_timeline_navigation_enabled": true,
+    "responsive_web_profile_redirect_enabled": true,
+    "rweb_tipjar_consumption_enabled": false,
+    "verified_phone_label_enabled": false,
+  };
+
+  static Future<XList> getList(String id) async {
+    final uri = Uri.https('x.com', '/i/api/graphql/T-YE5ZY0cd0UVtWu8AP04Q/ListByRestId', {
+      'variables': jsonEncode({'listId': id}),
+      'features': jsonEncode(_listFeatures),
+    });
+    final response = await _twitterApi.client.get(uri);
+    return XList.fromGraphql(jsonDecode(response.body) as Map<String, dynamic>) ?? (throw NotFoundException());
+  }
+
+  /// The latest posts of the members of a list.
+  static Future<TweetStatus> getListTweets(String id, {String? cursor}) async {
+    final response = await _twitterApi.client.get(_listTimelineUri('UMc_lPEeKz_WiKSY8ZT7yw/ListLatestTweetsTimeline', id, cursor));
+    return parseListTweets(jsonDecode(response.body) as Map<String, dynamic>);
+  }
+
+  static Future<CursorPage<String, UserWithExtra>> getListMembers(String id, {String? cursor}) async {
+    final response = await _twitterApi.client.get(_listTimelineUri('vgA6FHTOKJQ1rJ7iiHc0xw/ListMembers', id, cursor));
+    return parseListMembers(jsonDecode(response.body) as Map<String, dynamic>);
+  }
+
+  static Future<CursorPage<String, UserWithExtra>> getListFollowers(String id, {String? cursor}) async {
+    final response =
+        await _twitterApi.client.get(_listTimelineUri('QSCka9VX6mjOARoPtihe0Q/ListSubscribers', id, cursor));
+    return parseListFollowers(jsonDecode(response.body) as Map<String, dynamic>);
+  }
+
+  static Uri _listTimelineUri(String path, String id, String? cursor) =>
+      Uri.https('x.com', '/i/api/graphql/$path', {
+        'variables': jsonEncode({'listId': id, 'count': 20, 'cursor': ?cursor}),
+        'features': jsonEncode(_timelineFeatures),
+      });
+
+  static TweetStatus parseListTweets(Map<String, dynamic> body) {
+    final instructions = _objects(body['data']?['list']?['tweets_timeline']?['timeline']?['instructions']).toList();
+    final entries = _addedEntries(instructions);
+    return TweetStatus(
+      chains: createTweets(entries),
+      cursorBottom: _nextCursor(instructions),
+      cursorTop: null,
+    );
+  }
+
+  static CursorPage<String, UserWithExtra> parseListMembers(Map<String, dynamic> body) =>
+      _parseListUsers(body['data']?['list']?['members_timeline']);
+
+  static CursorPage<String, UserWithExtra> parseListFollowers(Map<String, dynamic> body) =>
+      _parseListUsers(body['data']?['list']?['subscribers_timeline']);
+
+  /// Reads a page of the members or of the followers of a list.
+  static CursorPage<String, UserWithExtra> _parseListUsers(dynamic timeline) {
+    final instructions = _objects(timeline?['timeline']?['instructions']).toList();
+    return (
+      items: _shownUsers(
+        _addedEntries(instructions).map((entry) => entry['content']?['itemContent']?['user_results']?['result']),
+      ),
+      nextCursor: _nextCursor(instructions),
+    );
+  }
+
+  static Future<CursorPage<String, XList>> searchLists(String query, {String? cursor}) async {
+    final response = await _twitterApi.client.get(_searchUri(query, 'Lists', 20, cursor));
+    return parseListsSearch(jsonDecode(response.body) as Map<String, dynamic>);
+  }
+
+  /// Reads the Lists tab of a search. The first page puts the lists in a module. The next pages add theirs to it.
+  static CursorPage<String, XList> parseListsSearch(Map<String, dynamic> body) {
+    final instructions =
+        _objects(body['data']?['search_by_raw_query']?['search_timeline']?['timeline']?['instructions']).toList();
+    return (
+      items: _moduleItems(instructions)
+          .map((item) => XList.fromResult(item['item']?['itemContent']?['list']))
+          .nonNulls
+          .toList(growable: false),
+      nextCursor: _nextCursor(instructions),
+    );
+  }
+
+  /// The items in the modules of a page, and the items the page adds to the modules of an earlier page.
+  static List<Map<String, dynamic>> _moduleItems(List<Map<String, dynamic>> instructions) => [
+    ..._addedEntries(instructions).expand((entry) => _objects(entry['content']?['items'])),
+    ...instructions
+        .where((instruction) => instruction['type'] == 'TimelineAddToModule')
+        .expand((instruction) => _objects(instruction['moduleItems'])),
+  ];
+
+  static List<Map<String, dynamic>> _addedEntries(dynamic instructions) => _objects(instructions)
+      .where((instruction) => instruction['type'] == 'TimelineAddEntries')
+      .expand((instruction) => _objects(instruction['entries']))
+      .toList();
+
+  /// The cursor of the next page, or null when the page is the last.
+  static String? _nextCursor(List<Map<String, dynamic>> instructions) =>
+      _endsAtBottom(instructions) ? null : _bottomCursor(_addedEntries(instructions));
+
+  /// Finds the Bottom cursor. Unlike getCursor, it does not fail when some entries have another shape.
+  static String? _bottomCursor(List<Map<String, dynamic>> entries) => entries
+      .map((entry) => entry['content'])
+      .whereType<Map<String, dynamic>>()
+      .firstWhereOrNull((content) => content['cursorType'] == 'Bottom')?['value'] as String?;
+
+  static Iterable<Map<String, dynamic>> _objects(dynamic list) =>
+      (list is List ? list : const []).whereType<Map<String, dynamic>>();
 
   static TweetStatus _createChainsFromGridModule(Map<String, dynamic> timeline) {
     var instructions = List.from(timeline['timeline']?['instructions'] ?? []);

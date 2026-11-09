@@ -10,7 +10,7 @@ import 'package:quax/space/space_model.dart';
 import 'package:quax/space/space_screen.dart';
 import 'package:quax/tweet/_card.dart';
 
-import '../community/pump_community.dart';
+import '../pump_route.dart';
 import '../fixtures.dart';
 import '../ui/fake_images.dart';
 import 'recorded_spaces.dart';

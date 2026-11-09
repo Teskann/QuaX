@@ -8,7 +8,7 @@ import 'package:quax/space/space_player.dart';
 import 'package:quax/space/space_screen.dart';
 import 'package:quax/ui/errors.dart';
 
-import '../community/pump_community.dart';
+import '../pump_route.dart';
 import '../ui/fake_images.dart';
 import 'recorded_spaces.dart';
 

@@ -4,6 +4,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:quax/catcher/exceptions.dart';
 import 'package:quax/client/client.dart';
 import 'package:quax/community/community.dart';
+import 'package:quax/lists/x_list.dart';
 import 'package:quax/profile/media_grid/media_grid_items/media_grid_item.dart';
 import 'package:quax/search/search_filters.dart';
 import 'package:quax/tweet/paginated_tweet_list.dart';
@@ -98,6 +99,10 @@ Object _typedSearchError(XApiError error) => error.isRejectedSearch ? RejectedSe
 class SearchCommunitiesPagination extends SearchPagination<Community> {
   SearchCommunitiesPagination({super.initialQuery})
       : super((query, cursor) => Twitter.searchCommunities(query, cursor: cursor));
+}
+
+class SearchListsPagination extends SearchPagination<XList> {
+  SearchListsPagination({super.initialQuery}) : super((query, cursor) => Twitter.searchLists(query, cursor: cursor));
 }
 
 class SearchUsersModel extends Store<List<UserWithExtra>> {

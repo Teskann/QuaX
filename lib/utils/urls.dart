@@ -151,6 +151,20 @@ CommunityUriInfo? _parseAsCommunityLink(List<String> parts) {
   return CommunityUriInfo(parts[2], about: parts.length > 3 && parts[3] == "about");
 }
 
+class ListUriInfo extends UriParseResult {
+  final String id;
+  final bool members;
+
+  ListUriInfo(this.id, {this.members = false});
+}
+
+// https://x.com/i/lists/1273859202318864390, and its /members page
+ListUriInfo? _parseAsListLink(List<String> parts) {
+  if (parts.length < 3 || parts[0] != "i" || parts[1] != "lists") return null;
+  if (int.tryParse(parts[2]) == null) return null;
+  return ListUriInfo(parts[2], members: parts.length > 3 && parts[3] == "members");
+}
+
 class SpaceUriInfo extends UriParseResult {
   final String id;
 
@@ -184,5 +198,5 @@ Future<UriParseResult> parseUri(Uri link) async {
   if (postInfo != null) {
     return postInfo;
   }
-  return _parseAsCommunityLink(parts) ?? _parseAsSpaceLink(parts) ?? UnknownResult();
+  return _parseAsCommunityLink(parts) ?? _parseAsListLink(parts) ?? _parseAsSpaceLink(parts) ?? UnknownResult();
 }
