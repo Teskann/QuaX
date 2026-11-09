@@ -1462,8 +1462,11 @@ class TweetWithCard extends Tweet {
       result = _withPreviewAsLegacy(result['tweet']);
     } else if (result['tweet'] != null) {
       result = result['tweet']!;
-    } else if (result['legacy']?['retweeted_status_result']?['result'] != null) {
-      retweetedStatus = TweetWithCard.fromGraphqlJson(result['legacy']['retweeted_status_result']['result']!);
+    }
+    // X wraps some reposts too, so the reposted post is read after unwrapping
+    final reposted = result['legacy']?['retweeted_status_result']?['result'];
+    if (reposted is Map<String, dynamic>) {
+      retweetedStatus = TweetWithCard.fromGraphqlJson(reposted);
     }
 
     if (result['quoted_status_result'] != null && result['quoted_status_result']['result'] != null) {
