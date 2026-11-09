@@ -4,6 +4,7 @@ import 'package:quax/community/community_screen.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/database/entities.dart';
 import 'package:quax/generated/l10n.dart';
+import 'package:quax/lists/x_list_screen.dart';
 import 'package:quax/profile/profile.dart';
 import 'package:quax/search/search.dart';
 import 'package:quax/subscriptions/subscription_filters.dart';
@@ -15,28 +16,41 @@ extension SubscriptionKindDisplay on SubscriptionKind {
     SubscriptionKind.user => Icons.person,
     SubscriptionKind.search => Icons.saved_search,
     SubscriptionKind.community => Icons.groups,
+    SubscriptionKind.list => Icons.list_alt,
   };
 
   String label(L10n l10n) => switch (this) {
     SubscriptionKind.user => l10n.kind_accounts,
     SubscriptionKind.search => l10n.kind_searches,
     SubscriptionKind.community => l10n.kind_communities,
+    SubscriptionKind.list => l10n.kind_lists,
   };
 
   String count(L10n l10n, int count) => switch (this) {
     SubscriptionKind.user => l10n.n_accounts(count),
     SubscriptionKind.search => l10n.n_searches(count),
     SubscriptionKind.community => l10n.n_communities(count),
+    SubscriptionKind.list => l10n.n_lists(count),
   };
 
   IconData get followIcon => switch (this) {
     SubscriptionKind.user || SubscriptionKind.search => Icons.person_add,
     SubscriptionKind.community => Icons.group_add,
+    SubscriptionKind.list => Icons.playlist_add,
   };
 
   IconData get unfollowIcon => switch (this) {
     SubscriptionKind.user || SubscriptionKind.search => Icons.person_remove,
     SubscriptionKind.community => Icons.group_remove,
+    SubscriptionKind.list => Icons.playlist_remove,
+  };
+
+  /// Shown on the subscriptions page when none of this kind is followed.
+  String emptyMessage(L10n l10n) => switch (this) {
+    SubscriptionKind.user => l10n.no_subscriptions_try_searching_or_importing_some,
+    SubscriptionKind.search => l10n.no_saved_searches,
+    SubscriptionKind.community => l10n.no_followed_communities,
+    SubscriptionKind.list => l10n.no_followed_lists,
   };
 
   /// The search tab that finds this kind.
@@ -44,6 +58,7 @@ extension SubscriptionKindDisplay on SubscriptionKind {
     SubscriptionKind.user => SearchTab.people,
     SubscriptionKind.search => SearchTab.top,
     SubscriptionKind.community => SearchTab.communities,
+    SubscriptionKind.list => SearchTab.lists,
   };
 }
 
@@ -63,6 +78,7 @@ void openSubscription(BuildContext context, Subscription subscription) => switch
     routeCommunity,
     arguments: CommunityScreenArguments(subscription.id),
   ),
+  ListSubscription() => Navigator.pushNamed(context, routeList, arguments: XListScreenArguments(subscription.id)),
 };
 
 /// The size of the picture of a subscription in lists.
@@ -90,7 +106,7 @@ class SubscriptionAvatar extends StatelessWidget {
         size: subscriptionAvatarSize,
       ),
       SearchSubscription() => _kindAvatar(colors, SubscriptionKind.search, null),
-      CommunitySubscription(:final bannerUrl) => _kindAvatar(colors, SubscriptionKind.community, bannerUrl),
+      BannerSubscription(:final bannerUrl) => _kindAvatar(colors, SubscriptionKind.of(subscription), bannerUrl),
     };
   }
 
@@ -109,6 +125,7 @@ String subscriptionHandle(L10n l10n, Subscription subscription) => switch (subsc
   UserSubscription() => '@${subscription.screenName}',
   SearchSubscription() => l10n.search_term,
   CommunitySubscription() => l10n.community,
+  ListSubscription() => l10n.x_list,
 };
 
 /// "3 accounts · 1 search"

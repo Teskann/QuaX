@@ -25,6 +25,9 @@ SearchSubscription savedSearch(String query) => SearchSubscription(id: query, cr
 CommunitySubscription followedCommunity(String name) =>
     CommunitySubscription(id: 'community-$name', name: name, bannerUrl: null, createdAt: DateTime(2026));
 
+ListSubscription followedList(String name) =>
+    ListSubscription(id: 'list-$name', name: name, bannerUrl: null, createdAt: DateTime(2026));
+
 SubscriptionRef refOf(Subscription subscription) => SubscriptionRef.of(subscription);
 
 Future<void> follow(List<Subscription> subscriptions) async {

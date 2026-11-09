@@ -242,22 +242,21 @@ class _SubscriptionsBody extends StatelessWidget {
       );
     }
     return switch (page.kind) {
-      SubscriptionKind.search => _searchToFollow(context, SubscriptionKind.search, l10n.no_saved_searches),
-      SubscriptionKind.community => _searchToFollow(context, SubscriptionKind.community, l10n.no_followed_communities),
       SubscriptionKind.user || null => EmptySubscriptions(
         icon: Icons.inbox_outlined,
-        message: l10n.no_subscriptions_try_searching_or_importing_some,
+        message: SubscriptionKind.user.emptyMessage(l10n),
         actionIcon: Icons.input,
         actionLabel: l10n.import_subscriptions,
         onAction: () => openImport(context),
       ),
+      final kind => _searchToFollow(context, kind),
     };
   }
 
   /// Asks to search X for something to follow.
-  Widget _searchToFollow(BuildContext context, SubscriptionKind kind, String message) => EmptySubscriptions(
+  Widget _searchToFollow(BuildContext context, SubscriptionKind kind) => EmptySubscriptions(
     icon: kind.icon,
-    message: message,
+    message: kind.emptyMessage(L10n.of(context)),
     actionIcon: Icons.search,
     actionLabel: L10n.of(context).search,
     onAction: () =>

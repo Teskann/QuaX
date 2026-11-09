@@ -12,10 +12,19 @@ String _feedSearchQuery(
 
   return [
     if (subscriptionsQuery.isNotEmpty) '($subscriptionsQuery)',
-    if (!includeReplies) '-filter:replies',
-    includeRetweets ? 'include:nativeretweets' : '-filter:retweets',
+    ..._filterTerms(includeReplies: includeReplies, includeRetweets: includeRetweets),
   ].join(' ');
 }
+
+/// The terms that keep or leave out the replies and reposts, as the feed asks.
+List<String> _filterTerms({required bool includeReplies, required bool includeRetweets}) => [
+  if (!includeReplies) '-filter:replies',
+  includeRetweets ? 'include:nativeretweets' : '-filter:retweets',
+];
+
+/// The search of the posts of a list, with the filters of the feed.
+String buildListSearchQuery(String listId, {required bool includeReplies, required bool includeRetweets}) =>
+    ['list:$listId', ..._filterTerms(includeReplies: includeReplies, includeRetweets: includeRetweets)].join(' ');
 
 /// Builds the X search query used to load one chunk of a feed or group.
 String buildFeedSearchQuery(

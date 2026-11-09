@@ -193,4 +193,17 @@ void main() {
       expect(pack([]), isEmpty, reason: 'An empty group has nothing to search for, so it should ask X nothing');
     });
   });
+
+  group('buildListSearchQuery()', () {
+    test('Should search a list alone, with the filters of the group', () {
+      expect(buildListSearchQuery('123', includeReplies: false, includeRetweets: false),
+          'list:123 -filter:replies -filter:retweets',
+          reason: 'The list should be searched alone, followed by the filters of the group');
+    });
+
+    test('Should ask X for the reposts of a list when the group shows them', () {
+      expect(buildListSearchQuery('123', includeReplies: true, includeRetweets: true), 'list:123 include:nativeretweets',
+          reason: 'Without it, the latest posts of a search leave the reposts out');
+    });
+  });
 }

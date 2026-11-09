@@ -15,6 +15,7 @@ void main() {
         subscriptions: [
           SearchSubscription(id: '#flutter', createdAt: DateTime(2026, 9, 4, 9)),
           CommunitySubscription(id: 'c1', name: 'Flutter', bannerUrl: null, createdAt: DateTime(2026, 9, 4, 9)),
+          ListSubscription(id: 'l1', name: 'Dart', bannerUrl: null, createdAt: DateTime(2026, 9, 4, 9)),
           UserSubscription(
               id: '1',
               screenName: 'dogs',
@@ -65,6 +66,8 @@ void main() {
           onlyRow(restored.subscriptions?.whereType<CommunitySubscription>().toList(), 'community subscription').name,
           'Flutter',
           reason: 'The followed communities should come back, with the name the subscriptions page shows');
+      expect(onlyRow(restored.subscriptions?.whereType<ListSubscription>().toList(), 'list subscription').name, 'Dart',
+          reason: 'The followed lists should come back, with the name the subscriptions page shows');
       final subscription = onlyRow(restored.subscriptions?.whereType<UserSubscription>().toList(), 'user subscription');
       expect(subscription.screenName, 'dogs',
           reason: 'The feed searches with this name, so it should survive. Without it the account '

@@ -3,6 +3,7 @@ import 'package:quax/group/group_model.dart';
 import 'package:quax/user.dart';
 import 'package:intl/intl.dart';
 import 'package:quax/community/community.dart';
+import 'package:quax/lists/x_list.dart';
 
 final DateFormat sqliteDateFormat = DateFormat('yyyy-MM-dd HH:mm:ss', 'en_US');
 
@@ -124,23 +125,24 @@ sealed class SearchableSubscription extends Subscription {
   String get searchTerm;
 }
 
-class CommunitySubscription extends Subscription {
+/// A subscription stored and shown with a name and a banner, such as a community.
+sealed class BannerSubscription extends Subscription {
   final String? bannerUrl;
 
-  CommunitySubscription({required super.id, required super.name, required this.bannerUrl, required super.createdAt})
+  BannerSubscription({required super.id, required super.name, required this.bannerUrl, required super.createdAt})
       : super(screenName: name, verified: false, profileImageUrlHttps: bannerUrl, inFeed: true);
 
-  factory CommunitySubscription.fromCommunity(Community community) => CommunitySubscription(
-      id: community.id, name: community.name, bannerUrl: community.bannerUrl, createdAt: DateTime.now());
+  BannerSubscription.fromMap(Map<String, Object?> map)
+      : this(
+            id: map['id'] as String,
+            name: map['name'] as String,
+            bannerUrl: map['banner_url'] as String?,
+            createdAt: DateTime.parse(map['created_at'] as String));
 
-  factory CommunitySubscription.fromMap(Map<String, Object?> map) => CommunitySubscription(
-      id: map['id'] as String,
-      name: map['name'] as String,
-      bannerUrl: map['banner_url'] as String?,
-      createdAt: DateTime.parse(map['created_at'] as String));
-
+  // Two kinds of subscription can have the same id
   @override
-  bool operator ==(Object other) => identical(this, other) || other is CommunitySubscription && id == other.id;
+  bool operator ==(Object other) =>
+      identical(this, other) || other is BannerSubscription && runtimeType == other.runtimeType && id == other.id;
 
   @override
   int get hashCode => id.hashCode;
@@ -148,6 +150,24 @@ class CommunitySubscription extends Subscription {
   @override
   Map<String, dynamic> toMap() =>
       {'id': id, 'name': name, 'banner_url': bannerUrl, 'created_at': sqliteDateFormat.format(createdAt)};
+}
+
+class CommunitySubscription extends BannerSubscription {
+  CommunitySubscription({required super.id, required super.name, required super.bannerUrl, required super.createdAt});
+
+  factory CommunitySubscription.fromCommunity(Community community) => CommunitySubscription(
+      id: community.id, name: community.name, bannerUrl: community.bannerUrl, createdAt: DateTime.now());
+
+  CommunitySubscription.fromMap(super.map) : super.fromMap();
+}
+
+class ListSubscription extends BannerSubscription {
+  ListSubscription({required super.id, required super.name, required super.bannerUrl, required super.createdAt});
+
+  factory ListSubscription.fromList(XList list) =>
+      ListSubscription(id: list.id, name: list.name, bannerUrl: list.bannerUrl, createdAt: DateTime.now());
+
+  ListSubscription.fromMap(super.map) : super.fromMap();
 }
 
 class SearchSubscription extends SearchableSubscription {
