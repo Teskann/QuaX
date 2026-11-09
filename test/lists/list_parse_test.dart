@@ -21,6 +21,16 @@ List<String> _threadPostIds(Fixture page) => _instructions(page, 'tweets_timelin
     .map((item) => item['item']['itemContent']['tweet_results']['result']['rest_id'] as String)
     .toList();
 
+/// The ids of the reposts that X wraps in a TweetWithVisibilityResults in [page].
+List<String> _wrappedRepostIds(Fixture page) => _instructions(page, 'tweets_timeline')
+    .expand((instruction) => (instruction['entries'] as List? ?? const []).cast<Map<String, dynamic>>())
+    .map((entry) => entry['content']?['itemContent']?['tweet_results']?['result'])
+    .where((result) => result?['__typename'] == 'TweetWithVisibilityResults')
+    .map((result) => result['tweet'])
+    .where((tweet) => tweet?['legacy']?['retweeted_status_result']?['result'] != null)
+    .map((tweet) => tweet['rest_id'] as String)
+    .toList();
+
 Fixture _firstPage(Iterable<Fixture> pages) => pages.firstWhere((page) => page.variables['cursor'] == null);
 
 void main() {
@@ -95,6 +105,22 @@ void main() {
         shown,
         containsAll(threads),
         reason: 'X sends threads apart from the other posts. The website shows them, so QuaX should too',
+      );
+    });
+
+    test('Should read a repost as a repost when X wraps it with its reply limits', () {
+      final page = _firstPage(listPages('ListLatestTweetsTimeline'));
+      final wrapped = _wrappedRepostIds(page);
+      final reposts = Twitter.parseListTweets(page.body).chains
+          .expand((chain) => chain.tweets)
+          .where((tweet) => tweet.retweetedStatus != null)
+          .map((tweet) => tweet.idStr);
+
+      expect(wrapped, isNotEmpty, reason: 'The capture should hold such reposts for this test to mean much');
+      expect(
+        reposts,
+        containsAll(wrapped),
+        reason: 'A wrapped repost should show the reposted post',
       );
     });
 
