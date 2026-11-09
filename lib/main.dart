@@ -14,6 +14,7 @@ import 'package:quax/database/repository.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/ui/locale_fallback.dart';
 import 'package:quax/community/community_screen.dart';
+import 'package:quax/lists/x_list_screen.dart';
 import 'package:quax/space/space_screen.dart';
 import 'package:quax/tweet/tweet_actions.dart';
 import 'package:quax/tweet/video_controller_pool.dart';
@@ -507,6 +508,7 @@ class _FritterAppState extends State<FritterApp> {
                         ? const DefaultPage()
                         : const OnboardingWizard(),
                     routeCommunity: (context) => const CommunityScreen(),
+                    routeList: (context) => const XListScreen(),
                     routeSpace: (context) => const SpaceScreen(),
                     routeGroup: (context) => const GroupScreen(),
                     routeProfile: (context) => const ProfileScreen(),
@@ -590,6 +592,9 @@ class _DefaultPageState extends State<DefaultPage> {
         return;
       case CommunityUriInfo(id: final id, about: final about):
         Navigator.pushNamed(context, routeCommunity, arguments: CommunityScreenArguments(id, showAbout: about));
+        return;
+      case ListUriInfo(id: final id, members: final members):
+        Navigator.pushNamed(context, routeList, arguments: XListScreenArguments(id, showMembers: members));
         return;
       case SpaceUriInfo(id: final id):
         openSpace(context, id);

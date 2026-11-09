@@ -1,0 +1,316 @@
+{
+ "scenario": "Members of a list, over several pages",
+ "sourceUrl": "https://x.com/i/lists/1273859202318864390/members",
+ "unstable": true,
+ "operation": "ListMembers",
+ "host": "x.com",
+ "queryId": "vgA6FHTOKJQ1rJ7iiHc0xw",
+ "features": {
+  "rweb_video_screen_enabled": false,
+  "rweb_cashtags_enabled": true,
+  "profile_label_improvements_pcf_label_in_post_enabled": true,
+  "responsive_web_profile_redirect_enabled": true,
+  "rweb_tipjar_consumption_enabled": false,
+  "verified_phone_label_enabled": false,
+  "creator_subscriptions_tweet_preview_api_enabled": true,
+  "responsive_web_graphql_timeline_navigation_enabled": true,
+  "premium_content_api_read_enabled": false,
+  "communities_web_enable_tweet_community_results_fetch": true,
+  "c9s_tweet_anatomy_moderator_badge_enabled": true,
+  "responsive_web_grok_analyze_button_fetch_trends_enabled": false,
+  "responsive_web_grok_analyze_post_followups_enabled": true,
+  "rweb_cashtags_composer_attachment_enabled": true,
+  "responsive_web_jetfuel_frame": true,
+  "rweb_sports_post_context_enabled": true,
+  "x_elections_post_context_enabled": true,
+  "responsive_web_grok_share_attachment_enabled": true,
+  "responsive_web_grok_annotations_enabled": true,
+  "articles_preview_enabled": true,
+  "responsive_web_edit_tweet_api_enabled": true,
+  "rweb_conversational_replies_downvote_enabled": false,
+  "graphql_is_translatable_rweb_tweet_is_translatable_enabled": true,
+  "view_counts_everywhere_api_enabled": true,
+  "longform_notetweets_consumption_enabled": true,
+  "responsive_web_twitter_article_tweet_consumption_enabled": true,
+  "content_disclosure_indicator_enabled": true,
+  "content_disclosure_ai_generated_indicator_enabled": true,
+  "responsive_web_grok_show_grok_translated_post": true,
+  "responsive_web_grok_analysis_button_from_backend": true,
+  "post_ctas_fetch_enabled": true,
+  "freedom_of_speech_not_reach_fetch_enabled": true,
+  "standardized_nudges_misinfo": true,
+  "tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled": true,
+  "longform_notetweets_rich_text_read_enabled": true,
+  "longform_notetweets_inline_media_enabled": false,
+  "responsive_web_nested_quote_preview_enabled": true,
+  "responsive_web_grok_image_annotation_enabled": true,
+  "responsive_web_grok_imagine_annotation_enabled": true,
+  "responsive_web_made_on_x_label_enabled": false,
+  "responsive_web_grok_community_note_auto_translation_is_enabled": true,
+  "responsive_web_enhance_cards_enabled": false
+ },
+ "fieldToggles": null,
+ "variables": {
+  "listId": "1273859202318864390",
+  "count": 20,
+  "cursor": "4611686018449655282|2119679746068447188"
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "500",
+  "content-type": "application/json",
+  "x-rate-limit-reset": "1794206907",
+  "x-rate-limit-remaining": "497"
+ },
+ "body": {
+  "data": {
+   "list": {
+    "members_timeline": {
+     "timeline": {
+      "instructions": [
+       {
+        "direction": "Bottom",
+        "type": "TimelineTerminateTimeline"
+       },
+       {
+        "entries": [
+         {
+          "content": {
+           "__typename": "TimelineTimelineItem",
+           "clientEventInfo": {
+            "component": "MembersSgs",
+            "element": "user"
+           },
+           "entryType": "TimelineTimelineItem",
+           "itemContent": {
+            "__typename": "TimelineUser",
+            "itemType": "TimelineUser",
+            "userDisplayType": "User",
+            "user_results": {
+             "result": {
+              "__typename": "User",
+              "action_counts": {
+               "favorites_count": 3437
+              },
+              "affiliates_highlighted_label": {},
+              "avatar": {
+               "image_url": "https://pbs.twimg.com/profile_images/1425115522706776065/Gm719oBc_normal.jpg"
+              },
+              "banner": {
+               "image_url": "https://pbs.twimg.com/profile_banners/5633712/1703180605"
+              },
+              "core": {
+               "created_at": "Sun Apr 29 15:24:59 +0000 2007",
+               "name": "Tim Sneath",
+               "screen_name": "timsneath"
+              },
+              "follow_request_sent": false,
+              "has_graduated_access": true,
+              "id": "VXNlcjo1NjMzNzEy",
+              "is_blue_verified": true,
+              "location": {
+               "location": ""
+              },
+              "media_permissions": {
+               "can_media_tag": true
+              },
+              "notifications_settings": {
+               "notifications_enabled": false
+              },
+              "parody_commentary_fan_label": "None",
+              "pinned_items": {},
+              "possibly_sensitive": false,
+              "privacy": {
+               "protected": false
+              },
+              "professional": {
+               "category": [],
+               "professional_type": "Creator",
+               "rest_id": "1457747892597186561"
+              },
+              "profile_bio": {
+               "description": "Developer tools and frameworks at Apple. I aspire to build delightful products, and to make others smile.",
+               "entities": {
+                "description": {}
+               }
+              },
+              "profile_description_language": "en",
+              "profile_image_shape": "Circle",
+              "profile_metadata": {
+               "profile_interstitial_type": ""
+              },
+              "profile_translation": {
+               "translator_type": "none"
+              },
+              "relationship_counts": {
+               "followers": 46003,
+               "following": 99
+              },
+              "relationship_perspectives": {
+               "blocked_by": false,
+               "blocking": false,
+               "followed_by": false,
+               "following": false,
+               "live_following": false,
+               "muting": false
+              },
+              "rest_id": "5633712",
+              "super_follow_eligible": false,
+              "super_followed_by": false,
+              "super_following": false,
+              "tweet_counts": {
+               "media_tweets": 890,
+               "tweets": 7455
+              },
+              "verification": {
+               "verified": false
+              },
+              "website": {
+               "url": ""
+              }
+             }
+            }
+           }
+          },
+          "entryId": "user-5633712",
+          "sortIndex": "2119679746068447188"
+         },
+         {
+          "content": {
+           "__typename": "TimelineTimelineItem",
+           "clientEventInfo": {
+            "component": "MembersSgs",
+            "element": "user"
+           },
+           "entryType": "TimelineTimelineItem",
+           "itemContent": {
+            "__typename": "TimelineUser",
+            "itemType": "TimelineUser",
+            "userDisplayType": "User",
+            "user_results": {
+             "result": {
+              "__typename": "User",
+              "action_counts": {
+               "favorites_count": 2424
+              },
+              "affiliates_highlighted_label": {},
+              "avatar": {
+               "image_url": "https://pbs.twimg.com/profile_images/947228834121658368/z3AHPKHY_normal.jpg"
+              },
+              "banner": {
+               "image_url": ""
+              },
+              "core": {
+               "created_at": "Sat Jan 27 00:57:05 +0000 2007",
+               "name": "Eric Seidel",
+               "screen_name": "_eseidel"
+              },
+              "follow_request_sent": false,
+              "has_graduated_access": true,
+              "id": "VXNlcjo3MTE5MTM=",
+              "is_blue_verified": false,
+              "location": {
+               "location": "Menlo Park, CA"
+              },
+              "media_permissions": {
+               "can_media_tag": true
+              },
+              "notifications_settings": {
+               "notifications_enabled": false
+              },
+              "parody_commentary_fan_label": "None",
+              "pinned_items": {},
+              "possibly_sensitive": false,
+              "privacy": {
+               "protected": false
+              },
+              "profile_bio": {
+               "description": "Leading @shorebirddev. 🚀 Founded @flutterdev, former Eng. Dir @google, previously @googlechrome, @webkit. @ycombinator S06.",
+               "entities": {
+                "description": {},
+                "url": {
+                 "urls": [
+                  {
+                   "display_url": "eseidel.com",
+                   "expanded_url": "http://eseidel.com",
+                   "indices": [
+                    0,
+                    23
+                   ],
+                   "url": "https://t.co/WM9nGFjTg3"
+                  }
+                 ]
+                }
+               }
+              },
+              "profile_description_language": "en",
+              "profile_image_shape": "Circle",
+              "profile_metadata": {
+               "profile_interstitial_type": ""
+              },
+              "profile_translation": {
+               "translator_type": "none"
+              },
+              "relationship_counts": {
+               "followers": 19463,
+               "following": 297
+              },
+              "relationship_perspectives": {
+               "blocked_by": false,
+               "blocking": false,
+               "followed_by": false,
+               "following": false,
+               "live_following": false,
+               "muting": false
+              },
+              "rest_id": "711913",
+              "super_follow_eligible": false,
+              "super_followed_by": false,
+              "super_following": false,
+              "tweet_counts": {
+               "media_tweets": 178,
+               "tweets": 5078
+              },
+              "verification": {
+               "verified": false
+              },
+              "website": {
+               "url": "https://t.co/WM9nGFjTg3"
+              }
+             }
+            }
+           }
+          },
+          "entryId": "user-711913",
+          "sortIndex": "2119679746068447187"
+         },
+         {
+          "content": {
+           "__typename": "TimelineTimelineCursor",
+           "cursorType": "Bottom",
+           "entryType": "TimelineTimelineCursor",
+           "value": "0|2119679746068447184"
+          },
+          "entryId": "cursor-bottom-2119679746068447186",
+          "sortIndex": "2119679746068447186"
+         },
+         {
+          "content": {
+           "__typename": "TimelineTimelineCursor",
+           "cursorType": "Top",
+           "entryType": "TimelineTimelineCursor",
+           "value": "-1|2119679746068447189"
+          },
+          "entryId": "cursor-top-2119679746068447189",
+          "sortIndex": "2119679746068447189"
+         }
+        ],
+        "type": "TimelineAddEntries"
+       }
+      ]
+     }
+    }
+   }
+  }
+ }
+}

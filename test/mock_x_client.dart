@@ -30,3 +30,7 @@ class MockXClient extends AbstractTwitterClient {
           {List<MultipartFile>? files, Map<String, String>? headers, Duration? timeout}) =>
       throw UnsupportedError('The mock only answers GET requests');
 }
+
+/// The recorded files the mock answered with, in order, among [files].
+List<String> answeredFixtures(MockXClient client, Set<String> files) =>
+    client.answers.map((answer) => answer.fixture).nonNulls.where(files.contains).toList();

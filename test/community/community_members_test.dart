@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:quax/client/client.dart';
 import 'package:quax/community/_header.dart';
-import 'package:quax/community/community_members_screen.dart';
+import 'package:quax/ui/users_screen.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/profile/profile.dart';
 import 'package:quax/ui/errors.dart';
@@ -14,22 +14,14 @@ import '../fixture_client.dart';
 import '../fixtures.dart';
 import '../tweet/pump_tweets.dart';
 import '../ui/fake_images.dart';
+import '../pump_route.dart';
 import 'pump_community.dart';
 
 /// The recorded pages of members, in the order the cursors chain them.
-List<Fixture> _pagesInOrder() {
-  final pages = fixturesOf('membersSliceTimeline_Query');
-  String? cursorOf(Fixture page) =>
-      page.body['data']['communityResults']['result']['members_slice']['slice_info']['next_cursor'];
-  final chain = <Fixture>[];
-  String? cursor;
-  while (true) {
-    final next = pages.where((page) => page.variables['cursor'] == cursor).firstOrNull;
-    if (next == null) return chain;
-    chain.add(next);
-    cursor = cursorOf(next);
-  }
-}
+List<Fixture> _pagesInOrder() => chainPages(
+  fixturesOf('membersSliceTimeline_Query'),
+  (page) => page.body['data']['communityResults']['result']['members_slice']['slice_info']['next_cursor'],
+);
 
 Future<List<Route<dynamic>>> _openMembers(WidgetTester tester, {FixtureTwitterClient? client}) async {
   final pushed = await openCommunity(tester, client: client);
@@ -46,7 +38,7 @@ void main() {
     await _openMembers(tester);
     final firstPage = Twitter.parseCommunityMembers(_pagesInOrder().first.body).items;
 
-    expect(find.byType(CommunityMembersScreen), findsOneWidget, reason: 'The member count opens the members');
+    expect(find.byType(UsersScreen), findsOneWidget, reason: 'The member count opens the members');
     expect(find.text('Members of ${community.name}'), findsOneWidget, reason: 'The title names the community');
     final tiles = tester.widgetList<UserTile>(find.byType(UserTile)).map((tile) => tile.user.screenName).toList();
     expect(tiles, isNotEmpty, reason: 'The first page of members should be listed');
@@ -65,7 +57,7 @@ void main() {
         .map((answer) => answer.fixture)
         .toList();
 
-    await scrollDownUntil(tester, find.byType(CommunityMembersScreen), () => answered().length == pages.length);
+    await scrollDownUntil(tester, find.byType(UsersScreen), () => answered().length == pages.length);
 
     expect(pages.length, greaterThan(1), reason: 'The capture should hold several pages for this test to mean much');
     expect(answered(), pages.map((page) => page.path),

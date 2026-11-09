@@ -147,6 +147,28 @@ void main() {
       });
     });
 
+    group('list links', () {
+      test('Should read the id of a list link', () async {
+        final list = parsedAs<ListUriInfo>(
+            await parse('https://x.com/i/lists/1273859202318864390'), '/i/lists/<id> is the address of a list');
+
+        expect(list.id, '1273859202318864390', reason: 'The list screen loads the list from this id');
+        expect(list.members, isFalse, reason: 'A plain list link opens on its posts');
+      });
+
+      test('Should open the members of a /members link', () async {
+        final list = parsedAs<ListUriInfo>(
+            await parse('https://x.com/i/lists/1273859202318864390/members'), 'A /members link is still a list link');
+
+        expect(list.members, isTrue, reason: 'On X, /members shows the accounts of the list');
+      });
+
+      test('Should not read a list link without an id', () async {
+        expect(await parse('https://x.com/i/lists/create'), isA<UnknownResult>(),
+            reason: '/i/lists/create makes a new list. There is no list to open, so the browser should open it');
+      });
+    });
+
     group('space links', () {
       test('Should read the id of a space link, and of its /peek page', () async {
         for (final url in ['https://x.com/i/spaces/1nxeLMgMZVEJX', 'https://x.com/i/spaces/1nxeLMgMZVEJX/peek']) {

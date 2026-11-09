@@ -78,3 +78,16 @@ Fixture answering(Fixture recorded, Map<String, dynamic> body) => Fixture(record
       'variables': recorded.variables,
       'body': body,
     });
+
+/// The recorded [pages], in the order their cursors chain them: the first page is the one asked without a cursor.
+List<Fixture> chainPages(Iterable<Fixture> pages, String? Function(Fixture page) nextCursor) {
+  final chain = <Fixture>[];
+  String? cursor;
+  do {
+    final next = pages.where((page) => page.variables['cursor'] == cursor).firstOrNull;
+    if (next == null) return chain;
+    chain.add(next);
+    cursor = nextCursor(next);
+  } while (cursor != null);
+  return chain;
+}

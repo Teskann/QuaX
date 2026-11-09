@@ -1,0 +1,261 @@
+{
+ "scenario": "List page: header with banner, owner and counts, then its latest posts",
+ "sourceUrl": "https://x.com/i/lists/1273859202318864390",
+ "unstable": true,
+ "operation": "ListByRestId",
+ "host": "x.com",
+ "queryId": "T-YE5ZY0cd0UVtWu8AP04Q",
+ "features": {
+  "profile_label_improvements_pcf_label_in_post_enabled": true,
+  "responsive_web_profile_redirect_enabled": true,
+  "rweb_tipjar_consumption_enabled": false,
+  "verified_phone_label_enabled": false,
+  "responsive_web_graphql_timeline_navigation_enabled": true
+ },
+ "fieldToggles": null,
+ "variables": {
+  "listId": "1273859202318864390"
+ },
+ "status": 200,
+ "headers": {
+  "x-rate-limit-limit": "500",
+  "content-type": "application/json",
+  "x-rate-limit-reset": "1794206742",
+  "x-rate-limit-remaining": "499"
+ },
+ "body": {
+  "data": {
+   "list": {
+    "created_at": 1592546675000,
+    "custom_banner_media": {
+     "media_info": {
+      "original_img_height": 499,
+      "original_img_url": "https://pbs.twimg.com/list_banner_img/1273860844133085186/igM3qMI3?format=jpg&name=orig",
+      "original_img_width": 1499,
+      "salient_rect": {
+       "height": 1,
+       "left": 401,
+       "top": 249,
+       "width": 1
+      }
+     }
+    },
+    "custom_banner_media_results": {
+     "result": {
+      "__typename": "ApiMedia",
+      "id": "QXBpTWVkaWE6DAAICgABEa2psEPU8AIAAA==",
+      "media_id": "1273860844133085186",
+      "media_info": {
+       "__typename": "ApiImage",
+       "color_info": {
+        "palette": [
+         {
+          "percentage": 52.49,
+          "rgb": {
+           "blue": 255,
+           "green": 255,
+           "red": 255
+          }
+         },
+         {
+          "percentage": 19.26,
+          "rgb": {
+           "blue": 51,
+           "green": 51,
+           "red": 51
+          }
+         },
+         {
+          "percentage": 16.93,
+          "rgb": {
+           "blue": 168,
+           "green": 133,
+           "red": 47
+          }
+         },
+         {
+          "percentage": 2.63,
+          "rgb": {
+           "blue": 247,
+           "green": 221,
+           "red": 138
+          }
+         },
+         {
+          "percentage": 1.4,
+          "rgb": {
+           "blue": 155,
+           "green": 136,
+           "red": 84
+          }
+         }
+        ]
+       },
+       "original_img_height": 499,
+       "original_img_url": "https://pbs.twimg.com/list_banner_img/1273860844133085186/igM3qMI3?format=jpg&name=orig",
+       "original_img_width": 1499,
+       "salient_rect": {
+        "height": 1,
+        "left": 401,
+        "top": 249,
+        "width": 1
+       }
+      },
+      "media_key": "32_1273860844133085186"
+     }
+    },
+    "default_banner_media": {
+     "media_info": {
+      "original_img_height": 375,
+      "original_img_url": "https://pbs.twimg.com/media/GkIPUqRX0AAGDxg.png",
+      "original_img_width": 1125,
+      "salient_rect": {
+       "height": 1,
+       "left": 562,
+       "top": 187,
+       "width": 1
+      }
+     }
+    },
+    "default_banner_media_results": {},
+    "description": "Stay up to date in flutter world.",
+    "facepile_urls": [
+     "https://pbs.twimg.com/profile_images/1638535193912049665/lvoLpndt_mini.jpg",
+     "https://pbs.twimg.com/profile_images/2110132738887942144/TEObxYcp_mini.jpg",
+     "https://pbs.twimg.com/profile_images/1727506224831242240/Sahghmm2_mini.jpg"
+    ],
+    "followers_context": "4.9K followers including @RiversCuomo",
+    "following": false,
+    "id": "TGlzdDoxMjczODU5MjAyMzE4ODY0Mzkw",
+    "id_str": "1273859202318864390",
+    "is_member": false,
+    "member_count": 42,
+    "members_context": "42 members",
+    "mode": "Public",
+    "muting": false,
+    "name": "Flutter updates",
+    "pinning": false,
+    "subscriber_count": 4921,
+    "user_results": {
+     "result": {
+      "__typename": "User",
+      "action_counts": {
+       "favorites_count": 472
+      },
+      "affiliates_highlighted_label": {},
+      "avatar": {
+       "image_url": "https://pbs.twimg.com/profile_images/2032418621268635648/aGGi7mbh_normal.jpg"
+      },
+      "banner": {
+       "image_url": "https://pbs.twimg.com/profile_banners/470988695/1773401336"
+      },
+      "core": {
+       "created_at": "Sun Jan 22 11:13:58 +0000 2012",
+       "name": "Pinkesh Darji",
+       "screen_name": "PinkeshDarji"
+      },
+      "follow_request_sent": false,
+      "has_graduated_access": true,
+      "id": "VXNlcjo0NzA5ODg2OTU=",
+      "is_blue_verified": false,
+      "location": {
+       "location": "Ahmadabad City, India"
+      },
+      "media_permissions": {
+       "can_media_tag": true
+      },
+      "notifications_settings": {
+       "notifications_enabled": false
+      },
+      "parody_commentary_fan_label": "None",
+      "pinned_items": {
+       "tweet_ids_str": [
+        "1430892148803588097"
+       ]
+      },
+      "possibly_sensitive": false,
+      "privacy": {
+       "protected": false
+      },
+      "professional": {
+       "category": [
+        {
+         "icon_name": "IconBriefcaseStroke",
+         "id": 962,
+         "name": "Mobile Application"
+        }
+       ],
+       "professional_type": "Creator",
+       "rest_id": "1469659502345474055"
+      },
+      "profile_bio": {
+       "description": "AI Product Documentation @DreamflowApp @flutterflow | AI Creative Director | AI Automation Systems (DM to collaborate)",
+       "entities": {
+        "description": {}
+       }
+      },
+      "profile_image_shape": "Circle",
+      "profile_metadata": {
+       "profile_interstitial_type": ""
+      },
+      "profile_translation": {
+       "translator_type": "none"
+      },
+      "relationship_counts": {
+       "followers": 314,
+       "following": 442
+      },
+      "relationship_perspectives": {
+       "blocked_by": false,
+       "blocking": false,
+       "followed_by": false,
+       "following": false,
+       "live_following": false,
+       "muting": false
+      },
+      "rest_id": "470988695",
+      "super_follow_eligible": false,
+      "super_followed_by": false,
+      "super_following": false,
+      "tweet_counts": {
+       "media_tweets": 75,
+       "tweets": 691
+      },
+      "verification": {
+       "verified": false
+      },
+      "website": {
+       "url": ""
+      }
+     }
+    }
+   }
+  },
+  "errors": [
+   {
+    "code": 214,
+    "extensions": {
+     "code": 214,
+     "kind": "Validation",
+     "name": "BadRequestError",
+     "source": "Client"
+    },
+    "kind": "Validation",
+    "locations": [
+     {
+      "column": 3,
+      "line": 65
+     }
+    ],
+    "message": "BadRequest: com.twitter.strato.serialization.DecodeException",
+    "name": "BadRequestError",
+    "path": [
+     "list",
+     "default_banner_media_results",
+     "result"
+    ],
+    "source": "Client"
+   }
+  ]
+ }
+}

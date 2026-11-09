@@ -1,36 +1,36 @@
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:quax/community/community.dart';
-import 'package:quax/community/community_tile.dart';
 import 'package:quax/generated/l10n.dart';
-import 'package:quax/search/search_model.dart';
 import 'package:quax/ui/errors.dart';
 import 'package:quax/utils/paging.dart';
 
-class CommunitySearchResults extends StatelessWidget {
-  final SearchCommunitiesPagination model;
+/// A list that loads its items page by page, with an error card when a page fails.
+class PagedResults<T> extends StatelessWidget {
+  final PagingController<int, T> controller;
+  final Widget Function(BuildContext context, T item) itemBuilder;
+  final ErrorPrefix errorPrefix;
 
-  const CommunitySearchResults({super.key, required this.model});
+  const PagedResults({super.key, required this.controller, required this.itemBuilder, required this.errorPrefix});
 
   @override
   Widget build(BuildContext context) {
-    return PagingListener<int, Community>(
-      controller: model.pagingController,
-      builder: (context, state, fetchNextPage) => PagedListView<int, Community>(
+    return PagingListener<int, T>(
+      controller: controller,
+      builder: (context, state, fetchNextPage) => PagedListView<int, T>(
         state: state,
         fetchNextPage: fetchNextPage,
         builderDelegate: PagedChildBuilderDelegate(
-          itemBuilder: (context, community, index) => CommunityTile(community: community),
+          itemBuilder: (context, item, index) => itemBuilder(context, item),
           firstPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(
             error: pagingErrorOf(state)?.error,
             stackTrace: pagingErrorOf(state)?.stackTrace,
-            prefix: (l10n) => l10n.unable_to_load_the_search_results,
+            prefix: errorPrefix,
             onRetry: fetchNextPage,
           ),
           newPageErrorIndicatorBuilder: (context) => ErrorCard(
             error: pagingErrorOf(state)?.error,
             stackTrace: pagingErrorOf(state)?.stackTrace,
-            prefix: (l10n) => l10n.unable_to_load_the_search_results,
+            prefix: errorPrefix,
             onRetry: fetchNextPage,
           ),
           noItemsFoundIndicatorBuilder: (context) => Center(child: Text(L10n.of(context).no_results)),

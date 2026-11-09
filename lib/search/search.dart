@@ -2,10 +2,13 @@ import 'dart:async';
 
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_triple/flutter_triple.dart';
-import 'package:quax/community/community_search_results.dart';
+import 'package:quax/community/community.dart';
+import 'package:quax/community/community_tile.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/database/entities.dart';
 import 'package:quax/generated/l10n.dart';
+import 'package:quax/lists/x_list.dart';
+import 'package:quax/lists/x_list_tile.dart';
 import 'package:quax/profile/profile.dart';
 import 'package:quax/search/search_filter_chips.dart';
 import 'package:quax/search/search_filter_labels.dart';
@@ -18,6 +21,7 @@ import 'package:quax/search/search_query.dart';
 import 'package:quax/tweet/_video.dart';
 import 'package:quax/tweet/paginated_tweet_list.dart';
 import 'package:quax/ui/errors.dart';
+import 'package:quax/ui/paged_results.dart';
 import 'package:quax/user.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
@@ -29,6 +33,8 @@ enum SearchTab {
   media(filterable: true),
   // X ignores the filters when it searches accounts
   people(filterable: false),
+  // X only searches lists by their name and description
+  lists(filterable: false),
   // X only searches communities by their name and description
   communities(filterable: false);
 
@@ -85,6 +91,7 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
   late final SearchTweetsPagination _latestTweets;
   late final SearchMediaPagination _mediaResults;
   late final SearchCommunitiesPagination _communities;
+  late final SearchListsPagination _lists;
   late final SearchUsersModel _searchUsersModel;
   late final SearchFiltersModel _filters;
 
@@ -105,6 +112,7 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
     _latestTweets = SearchTweetsPagination(product: 'Latest', initialQuery: initialQuery);
     _mediaResults = SearchMediaPagination(initialQuery: initialQuery);
     _communities = SearchCommunitiesPagination(initialQuery: opened.text);
+    _lists = SearchListsPagination(initialQuery: opened.text);
     _searchUsersModel = SearchUsersModel();
 
     _queryController.text = opened.text;
@@ -131,6 +139,7 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
     _latestTweets.dispose();
     _mediaResults.dispose();
     _communities.dispose();
+    _lists.dispose();
     _filters.destroy();
     super.dispose();
   }
@@ -158,6 +167,7 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
     _mediaResults.updateQuery(query);
     final words = SearchQuery.parse(_queryController.text, _appLanguage).text;
     _communities.updateQuery(words);
+    _lists.updateQuery(words);
     _searchUsersModel.searchUsers(words, context);
   }
 
@@ -225,6 +235,7 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
       SearchTab.latest => (Icons.access_time_outlined, l10n.search_tab_latest),
       SearchTab.media => (Icons.image, l10n.media),
       SearchTab.people => (Icons.person_search, l10n.search_tab_people),
+      SearchTab.lists => (Icons.list_alt, l10n.search_tab_lists),
       SearchTab.communities => (Icons.groups, l10n.search_tab_communities),
     };
     return Tab(icon: Icon(icon, semanticLabel: label));
@@ -244,7 +255,16 @@ class _ResultsScreenState extends State<_ResultsScreen> with SingleTickerProvide
         SearchTab.latest => _tweets(_latestTweets),
         SearchTab.media => SearchMediaGrid(model: _mediaResults),
         SearchTab.people => _UserSearchResultList(store: _searchUsersModel, onRetry: _dispatchQuery),
-        SearchTab.communities => CommunitySearchResults(model: _communities),
+        SearchTab.lists => PagedResults<XList>(
+          controller: _lists.pagingController,
+          itemBuilder: (context, list) => XListTile(list: list),
+          errorPrefix: (l10n) => l10n.unable_to_load_the_search_results,
+        ),
+        SearchTab.communities => PagedResults<Community>(
+          controller: _communities.pagingController,
+          itemBuilder: (context, community) => CommunityTile(community: community),
+          errorPrefix: (l10n) => l10n.unable_to_load_the_search_results,
+        ),
       };
 
   @override

@@ -11,6 +11,7 @@ import 'package:quax/subscriptions/users_model.dart';
 import '../group/open_feed.dart';
 import '../subscriptions/fixtures.dart';
 import '../ui/fake_images.dart';
+import '../pump_route.dart';
 import 'pump_community.dart';
 
 Finder _inHeader(IconData icon) => find.descendant(of: find.byType(CommunityHeader), matching: find.byIcon(icon));
