@@ -18,6 +18,7 @@ const String tableSavedTweetFolder = 'saved_tweet_folder';
 const String tableLikedTweet = 'liked_tweet';
 const String tableSearchSubscription = 'search_subscription';
 const String tableCommunitySubscription = 'community_subscription';
+const String tableListSubscription = 'list_subscription';
 const String tableSearchSubscriptionGroupMember = 'search_subscription_group_member';
 const String tableSubscription = 'subscription';
 const String tableSubscriptionGroup = 'subscription_group';
@@ -27,7 +28,7 @@ const String tableAccounts = 'accounts';
 
 const String tableInstalledVersion = 'installed_version';
 
-const int databaseVersion = 32;
+const int databaseVersion = 33;
 
 class Repository {
   static final log = Logger('Repository');
@@ -310,6 +311,11 @@ class Repository {
         SqlMigration(
             'CREATE TABLE $tableCommunitySubscription (id VARCHAR PRIMARY KEY, name VARCHAR NOT NULL, banner_url VARCHAR, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)',
             reverseSql: 'DROP TABLE $tableCommunitySubscription'),
+      ],
+      33: [
+        SqlMigration(
+            'CREATE TABLE $tableListSubscription (id VARCHAR PRIMARY KEY, name VARCHAR NOT NULL, banner_url VARCHAR, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)',
+            reverseSql: 'DROP TABLE $tableListSubscription'),
       ],
     });
   }

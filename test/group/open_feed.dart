@@ -24,7 +24,7 @@ final flutterDev = UserSubscription(
     createdAt: DateTime(2024),
     inFeed: true);
 
-final flutterDevChunk = SearchFeedChunk([flutterDev], includeReplies: true, includeRetweets: true);
+final flutterDevChunk = SharedSearchFeedChunk([flutterDev], includeReplies: true, includeRetweets: true);
 
 /// Opens the main feed, made of [flutterDevChunk], with videos turned off.
 Future<void> openFeed(WidgetTester tester, AbstractTwitterClient client,

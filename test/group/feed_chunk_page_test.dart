@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:quax/client/client.dart';
+import 'package:quax/database/entities.dart';
 import 'package:quax/database/repository.dart';
 import 'package:quax/group/feed_chunk.dart';
 import 'package:quax/group/feed_cache.dart';
@@ -10,6 +11,7 @@ import 'package:sqflite/sqflite.dart';
 
 import '../fixture_client.dart';
 import '../fixtures.dart';
+import '../lists/pump_list.dart';
 import '../subscriptions/fixtures.dart';
 import 'open_feed.dart';
 
@@ -84,19 +86,25 @@ void main() {
     expect(page.cursor, stored.single['cursor_bottom'], reason: 'The next page should follow the fresh first page');
   });
 
+  /// Loads a page of [chunk], answered with the recorded [page] of [operation]. Gives the requests sent.
+  Future<List<Uri>> loadTimeline(FeedChunk chunk, String operation, String page, {required bool firstPage}) async {
+    final sent = <Uri>[];
+    Twitter.client = FixtureTwitterClient({operation: fixture(operation, page, unstable: true)}, requestedUris: sent);
+    await loadChunkPage(repository, chunk, firstPage: firstPage);
+    return sent;
+  }
+
+  Map<String, dynamic> variablesOf(Uri uri) => jsonDecode(uri.queryParameters['variables']!);
+
   group('A community', () {
     final communityChunk = CommunityFeedChunk(followedCommunity('Flutter'));
 
-    Future<List<Uri>> load({required bool firstPage}) async {
-      final sent = <Uri>[];
-      Twitter.client = FixtureTwitterClient({
-        'CommunityTweetsTimeline': fixture('CommunityTweetsTimeline', 'vars-a65415', unstable: true),
-      }, requestedUris: sent);
-      await loadChunkPage(repository, communityChunk, firstPage: firstPage);
-      return sent;
-    }
-
-    Map<String, dynamic> variablesOf(Uri uri) => jsonDecode(uri.queryParameters['variables']!);
+    Future<List<Uri>> load({required bool firstPage}) => loadTimeline(
+      communityChunk,
+      'CommunityTweetsTimeline',
+      'vars-a65415',
+      firstPage: firstPage,
+    );
 
     test('Should load the latest posts of a community rather than search it', () async {
       final sent = await load(firstPage: true);
@@ -135,6 +143,34 @@ void main() {
         reason: 'The next page comes from the community too',
       );
       expect(variablesOf(sent.single)['cursor'], stored, reason: 'The next page starts where the stored one ended');
+    });
+  });
+
+  group('A list', () {
+    final listChunk = ListFeedChunk(
+      ListSubscription.fromList(recordedList),
+      includeReplies: false,
+      includeRetweets: false,
+    );
+
+    test('Should store the posts X finds for a list in its chunk', () async {
+      final sent = await loadTimeline(
+        listChunk,
+        'SearchTimeline',
+        'list-$recordedListId-filter-replies-filter-retweets',
+        firstPage: true,
+      );
+
+      expect(
+        variablesOf(sent.single)['rawQuery'],
+        listChunk.query,
+        reason: 'The chunk should search the list with the filters of the group',
+      );
+      expect(
+        await readStoredChains(repository, listChunk.hash),
+        isNotEmpty,
+        reason: 'The posts of the list should fill the chunk',
+      );
     });
   });
 }

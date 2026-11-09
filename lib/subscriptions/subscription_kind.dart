@@ -1,7 +1,7 @@
 import 'package:quax/database/entities.dart';
 import 'package:quax/database/repository.dart';
 
-/// What a subscription follows: an account, a saved search or a community.
+/// What a subscription follows: an account, a saved search, a community or a list.
 enum SubscriptionKind {
   user(tableSubscription, 'subscriptions', UserSubscription.fromMap, canHideFromMainFeed: true),
   search(tableSearchSubscription, 'searchSubscriptions', SearchSubscription.fromMap, canHideFromMainFeed: false),
@@ -10,7 +10,8 @@ enum SubscriptionKind {
     'communitySubscriptions',
     CommunitySubscription.fromMap,
     canHideFromMainFeed: false,
-  );
+  ),
+  list(tableListSubscription, 'listSubscriptions', ListSubscription.fromMap, canHideFromMainFeed: false);
 
   const SubscriptionKind(this.table, this.backupKey, this.fromRow, {required this.canHideFromMainFeed});
 
@@ -30,6 +31,7 @@ enum SubscriptionKind {
     UserSubscription() => user,
     SearchSubscription() => search,
     CommunitySubscription() => community,
+    ListSubscription() => list,
   };
 
   /// The kind stored under [name], such as in the group members table.

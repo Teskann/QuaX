@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:quax/client/client.dart';
 import 'package:quax/constants.dart';
+import 'package:quax/database/entities.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/lists/x_list.dart';
 import 'package:quax/lists/x_list_model.dart';
@@ -35,6 +36,7 @@ class XListHeader extends StatelessWidget {
               Expanded(
                 child: Text(list.name, style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold)),
               ),
+              FollowButton(subscription: ListSubscription.fromList(list), color: theme.colorScheme.primary),
               ShareLinkButton(path: '/i/lists/${list.id}'),
             ],
           ),

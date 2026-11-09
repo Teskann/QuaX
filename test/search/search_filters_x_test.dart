@@ -114,6 +114,23 @@ void main() {
     });
   });
 
+  test('Should find no replies and no reposts in a list for -filter:replies and -filter:retweets', () {
+    _expectEvery(
+      'list:1273859202318864390 -filter:replies -filter:retweets',
+      'neither a reply nor a repost',
+      (tweet) => tweet.inReplyToStatusIdStr == null && tweet.retweetedStatus == null,
+    );
+  });
+
+  test('Should find the replies and reposts of a list for include:nativeretweets', () {
+    final found = _found('list:1273859202318864390 include:nativeretweets');
+
+    expect(found.where((tweet) => tweet.retweetedStatus != null), isNotEmpty,
+        reason: 'A group that shows reposts should get the reposts of the list members');
+    expect(found.where((tweet) => tweet.inReplyToStatusIdStr != null), isNotEmpty,
+        reason: 'A group that shows replies should get the replies of the list members');
+  });
+
   test('Should only find replies to the account for to:', () {
     _expectEvery(
       'to:FlutterDev',

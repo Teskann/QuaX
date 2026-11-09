@@ -24,13 +24,18 @@ Iterable<Fixture> listSearchPages() =>
     fixturesOf('SearchTimeline').where((page) => page.variables['product'] == 'Lists');
 
 /// Opens the recorded list as the app does.
-Future<List<Route<dynamic>>> openList(WidgetTester tester, {AbstractTwitterClient? client, bool showMembers = false}) =>
-    pumpRoute(
-      tester,
-      const XListScreen(),
-      RouteSettings(
-        name: routeList,
-        arguments: XListScreenArguments(recordedListId, showMembers: showMembers),
-      ),
-      client: client,
-    );
+Future<List<Route<dynamic>>> openList(
+  WidgetTester tester, {
+  AbstractTwitterClient? client,
+  bool showMembers = false,
+  Map<String, dynamic> prefs = const {},
+}) => pumpRoute(
+  tester,
+  const XListScreen(),
+  RouteSettings(
+    name: routeList,
+    arguments: XListScreenArguments(recordedListId, showMembers: showMembers),
+  ),
+  client: client,
+  prefs: prefs,
+);

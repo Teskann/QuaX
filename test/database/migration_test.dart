@@ -137,4 +137,16 @@ void main() {
       expect(rows.single['created_at'], isNotNull, reason: 'The date a community is followed sorts the subscriptions');
     });
   });
+
+  group('Version 33', () {
+    test('Should store the followed lists', () async {
+      final database = await databaseAt(32);
+
+      await migrate(database, 32, 33);
+      await database.insert(tableListSubscription, {'id': 'l1', 'name': 'Flutter'});
+
+      final rows = await database.query(tableListSubscription);
+      expect(rows.single['created_at'], isNotNull, reason: 'The date a list is followed sorts the subscriptions');
+    });
+  });
 }

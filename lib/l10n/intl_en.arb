@@ -414,6 +414,10 @@
   "@kind_communities": {
     "description": "Filter chip: show only the followed communities"
   },
+  "kind_lists": "Lists",
+  "@kind_lists": {
+    "description": "Filter chip: show only the followed lists"
+  },
   "kind_searches": "Searches",
   "@kind_searches": {
     "description": "Filter chip: show only the saved searches"
@@ -537,6 +541,14 @@
       }
     }
   },
+  "n_lists": "{count, plural, one{{count} list} other{{count} lists}}",
+  "@n_lists": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "n_searches": "{count, plural, one{1 search} other{{count} searches}}",
   "@n_searches": {},
   "n_selected": "{count, plural, one{1 selected} other{{count} selected}}",
@@ -561,6 +573,10 @@
   "@no_account_available_title": {},
   "no_followed_communities": "You follow no communities.",
   "@no_followed_communities": {},
+  "no_followed_lists": "You follow no lists.",
+  "@no_followed_lists": {
+    "description": "Subscriptions page, when the Lists filter has nothing to show"
+  },
   "no_liked_posts_yet": "You haven't liked any posts yet!",
   "@no_liked_posts_yet": {},
   "no_members_yet": "No members yet",
@@ -1225,6 +1241,10 @@
   "whole_selection_in_group": "The whole selection is in it",
   "@whole_selection_in_group": {
     "description": "Under a group in the sheet: every selected subscription is already a member"
+  },
+  "x_list": "List",
+  "@x_list": {
+    "description": "Noun. Under the name of a followed list in the subscriptions, where an account shows its @name"
   },
   "x_returned_an_error": "𝕏 returned an error",
   "@x_returned_an_error": {

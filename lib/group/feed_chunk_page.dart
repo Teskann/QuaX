@@ -57,13 +57,15 @@ Future<ChunkPage> loadChunkPage(Database repository, FeedChunk chunk, {required 
 }
 
 Future<TweetStatus> _loadPage(FeedChunk chunk, String? cursor) => switch (chunk) {
-      SearchFeedChunk() => Twitter.searchTweets(chunk.query, cursor: cursor),
+      SearchFeedChunk(:final query) => Twitter.searchTweets(query, cursor: cursor),
       CommunityFeedChunk(:final community) =>
         Twitter.getCommunityTweets(community.id, cursor: cursor, ranking: CommunityRanking.latest),
     };
 
 bool _containsUnrelatedTweets(FeedChunk chunk, TweetStatus page) => switch (chunk) {
-      SearchFeedChunk(:final subscriptions) => feedContainsUnrelatedTweets(page, subscriptions),
+      SharedSearchFeedChunk(:final subscriptions) => feedContainsUnrelatedTweets(page, subscriptions),
       // Anyone in the community can post there
       CommunityFeedChunk() => false,
+      // A list shows its members, who need not be followed in the group
+      ListFeedChunk() => false,
     };

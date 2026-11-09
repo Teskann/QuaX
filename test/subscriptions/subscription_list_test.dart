@@ -252,38 +252,45 @@ void main() {
     expect(_groupTile('Work'), findsNothing, reason: 'A group without any match should hide');
   });
 
-  testWidgets('Should list the followed communities under their own filter', (tester) async {
-    await tester.runAsync(() => follow([account('alice'), followedCommunity('Flutter devs')]));
-    await _openPage(tester, 'alice');
+  for (final (subscription, kind, filter, handle) in [
+    (followedCommunity('Flutter devs'), 'community', 'Communities 1', 'Community'),
+    (followedList('Dart folks'), 'list', 'Lists 1', 'List'),
+  ]) {
+    final name = subscription.name;
 
-    await tester.tap(find.text('Communities 1'));
-    await tester.pumpAndSettle();
+    testWidgets('Should list the followed ${kind}s under their own filter', (tester) async {
+      await tester.runAsync(() => follow([account('alice'), subscription]));
+      await _openPage(tester, 'alice');
 
-    expect(_row('alice'), findsNothing, reason: 'Only the communities should be listed');
-    expect(
-      find.descendant(of: _row('Flutter devs'), matching: find.text('Community')),
-      findsOneWidget,
-      reason: 'The row should say it is a community, where an account shows its @name',
-    );
-  });
+      await tester.tap(find.text(filter));
+      await tester.pumpAndSettle();
 
-  testWidgets('Should put a followed community in a group', (tester) async {
-    final groupId = await tester.runAsync(() async {
-      await follow([followedCommunity('Flutter devs')]);
-      return createGroup('Tech', []);
+      expect(_row('alice'), findsNothing, reason: 'Only the ${kind}s should be listed');
+      expect(
+        find.descendant(of: _row(name), matching: find.text(handle)),
+        findsOneWidget,
+        reason: 'The row should say it is a $kind, where an account shows its @name',
+      );
     });
-    await _openPage(tester, 'Flutter devs');
-    await _addToGroups(tester, ['Flutter devs']);
-    final choice = find.widgetWithText(CheckboxListTile, 'Tech');
 
-    await tester.tap(choice);
-    await pumpUntil(tester, () => tester.widget<CheckboxListTile>(choice).value == true,
-        reason: 'the group should get ticked');
+    testWidgets('Should put a followed $kind in a group', (tester) async {
+      final groupId = await tester.runAsync(() async {
+        await follow([subscription]);
+        return createGroup('Tech', []);
+      });
+      await _openPage(tester, name);
+      await _addToGroups(tester, [name]);
+      final choice = find.widgetWithText(CheckboxListTile, 'Tech');
 
-    expect(await membersOf(tester, groupId!), {
-      refOf(followedCommunity('Flutter devs')),
-    }, reason: 'The community should be a member of the group, so that its posts show in the group feed');
-  });
+      await tester.tap(choice);
+      await pumpUntil(tester, () => tester.widget<CheckboxListTile>(choice).value == true,
+          reason: 'the group should get ticked');
+
+      expect(await membersOf(tester, groupId!), {
+        refOf(subscription),
+      }, reason: 'The $kind should be a member of the group, so that its posts show in the group feed');
+    });
+  }
 }
 
 BuildContext context(WidgetTester tester) => tester.element(find.byType(SubscriptionsScreen));
