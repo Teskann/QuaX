@@ -20,46 +20,27 @@ class Timestamp extends StatefulWidget {
 }
 
 class _TimestampState extends State<Timestamp> {
-  late bool _useRelativeTimestamp;
-
-  String formattedTime = '';
+  late bool _showsAbsolute = widget.absoluteTimestamp;
 
   @override
-  void initState() {
-    super.initState();
-
-    _useRelativeTimestamp = !widget.absoluteTimestamp;
-
-    var timestamp = widget.timestamp;
-    if (timestamp != null) {
-      if (_useRelativeTimestamp) {
-        formattedTime = createRelativeDate(timestamp);
-      } else {
-        formattedTime = absoluteDateFormat.format(timestamp.toLocal());
-      }
+  void didUpdateWidget(Timestamp oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // The list may reuse this widget for another post, which starts on the default format again.
+    if (oldWidget.timestamp != widget.timestamp || oldWidget.absoluteTimestamp != widget.absoluteTimestamp) {
+      _showsAbsolute = widget.absoluteTimestamp;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    var timestamp = widget.timestamp;
+    final timestamp = widget.timestamp;
     if (timestamp == null) {
       return Container();
     }
 
     return GestureDetector(
-      child: Text(formattedTime),
-      onTap: () {
-        setState(() {
-          if (_useRelativeTimestamp) {
-            formattedTime = createRelativeDate(timestamp);
-          } else {
-            formattedTime = absoluteDateFormat.format(timestamp.toLocal());
-          }
-
-          _useRelativeTimestamp = !_useRelativeTimestamp;
-        });
-      },
+      child: Text(_showsAbsolute ? absoluteDateFormat.format(timestamp.toLocal()) : createRelativeDate(timestamp)),
+      onTap: () => setState(() => _showsAbsolute = !_showsAbsolute),
     );
   }
 }
