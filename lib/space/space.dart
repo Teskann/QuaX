@@ -50,6 +50,8 @@ class Space {
 
   bool get canPlay => mediaKey != null && (state == SpaceState.live || (state == SpaceState.ended && hasRecording));
 
+  bool get canDownload => canPlay && state == SpaceState.ended;
+
   Duration? get duration {
     final start = startedAt;
     final end = endedAt;

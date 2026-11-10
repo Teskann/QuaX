@@ -53,7 +53,7 @@ class SpaceScreen extends StatelessWidget {
               ),
             ),
             onState: (_, space) => Scaffold(
-              appBar: _SpaceAppBar(id: args.id),
+              appBar: _SpaceAppBar(id: args.id, space: space),
               body: _SpaceDetails(space: space, autoplay: args.autoplay),
             ),
           );
@@ -65,8 +65,9 @@ class SpaceScreen extends StatelessWidget {
 
 class _SpaceAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String id;
+  final Space? space;
 
-  const _SpaceAppBar({required this.id});
+  const _SpaceAppBar({required this.id, this.space});
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -75,8 +76,10 @@ class _SpaceAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final l10n = L10n.of(context);
     final link = '${shareBaseUrlOf(PrefService.of(context))}/i/spaces/$id';
+    final space = this.space;
     return AppBar(
       actions: [
+        if (space != null && space.canDownload) _DownloadButton(space: space),
         IconButton(
           icon: Icon(Icons.open_in_browser, semanticLabel: l10n.open_in_browser),
           onPressed: () => openInDefaultBrowser('https://x.com/i/spaces/$id'),
@@ -87,6 +90,49 @@ class _SpaceAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ],
     );
+  }
+}
+
+class _DownloadButton extends StatelessWidget {
+  final Space space;
+
+  const _DownloadButton({required this.space});
+
+  @override
+  Widget build(BuildContext context) {
+    final model = SpaceDownloadModel.of(space);
+    return ScopedBuilder<SpaceDownloadModel, DownloadProgress>(
+      store: model,
+      onState: (context, progress) => !progress.isRunning
+          ? IconButton(
+              icon: Icon(Icons.download, semanticLabel: L10n.of(context).download),
+              onPressed: () => _download(context, model),
+            )
+          : Padding(
+              padding: const EdgeInsets.all(12),
+              child: SizedBox.square(
+                dimension: 24,
+                child: CircularProgressIndicator(
+                  value: progress.fraction,
+                  strokeWidth: 3,
+                  semanticsLabel: L10n.of(context).downloading_media,
+                ),
+              ),
+            ),
+    );
+  }
+
+  Future<void> _download(BuildContext context, SpaceDownloadModel model) async {
+    // Read now. The page may be closed when the download ends.
+    final messenger = ScaffoldMessenger.of(context);
+    final l10n = L10n.of(context);
+    try {
+      if (await model.downloadAndSave(PrefService.of(context, listen: false))) {
+        messenger.showSnackBar(SnackBar(content: Text(l10n.successfully_saved_the_media)));
+      }
+    } on Object catch (error) {
+      messenger.showSnackBar(SnackBar(content: Text('🙊 $error')));
+    }
   }
 }
 
