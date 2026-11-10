@@ -4,8 +4,10 @@ import 'package:flutter/gestures.dart';
 import 'package:material_ui/material_ui.dart';
 
 import 'package:quax/constants.dart';
+import 'package:quax/generated/l10n.dart';
 import 'package:quax/profile/profile.dart';
 import 'package:quax/search/search.dart';
+import 'package:quax/utils/clipboard.dart';
 import 'package:quax/utils/urls.dart';
 import 'package:quax/utils/iterables.dart';
 import 'package:quax/utils/_entities.dart';
@@ -220,10 +222,18 @@ List<Entity> _parseEntities(BuildContext context, dynamic newEntities, {String? 
         return;
       }
       await openUri(context, uri);
-    }));
+    }, _copyLink(context, url.expandedUrl ?? url.url)));
   }
 
   entities.sort((a, b) => a.getEntityStart().compareTo(b.getEntityStart()));
 
   return entities;
 }
+
+/// Copies [link], with the feedback of a long press. Null when there is no link to copy.
+VoidCallback? _copyLink(BuildContext context, String? link) => link == null
+    ? null
+    : () {
+        Feedback.forLongPress(context);
+        copyToClipboard(context, link, L10n.of(context).link_copied);
+      };
