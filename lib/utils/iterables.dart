@@ -24,6 +24,14 @@ extension Iterables<E> on Iterable<E> {
   }
 
   Iterable<E> sorted(int Function(E a, E b) compare) => [...this]..sort(compare);
+
+  /// Splits the items into lists of [size] items. The last list can be shorter. [size] must be 1 or more.
+  List<List<E>> slices(int size) {
+    if (size < 1) throw RangeError.range(size, 1, null, 'size');
+    final items = toList();
+    final count = (items.length / size).ceil();
+    return List.generate(count, (index) => items.skip(index * size).take(size).toList());
+  }
 }
 
 extension MapWithIndex<T> on List<T> {

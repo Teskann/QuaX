@@ -86,4 +86,23 @@ void main() {
           reason: 'The first item should be at 0 and not at 1, and the order should not change');
     });
   });
+
+  group('slices()', () {
+    test('Should split the items in order, with a shorter last list', () {
+      expect([1, 2, 3, 4, 5].slices(2), [
+        [1, 2],
+        [3, 4],
+        [5],
+      ], reason: 'No item is lost, and the order stays');
+    });
+
+    test('Should give no list for no items', () {
+      expect(<int>[].slices(2), isEmpty, reason: 'There is nothing to split');
+    });
+
+    test('Should refuse a size of 0', () {
+      expect(() => [1, 2].slices(0), throwsRangeError, reason: 'Lists of 0 items would never end');
+      expect(() => <int>[].slices(0), throwsRangeError, reason: 'A size of 0 is wrong, even with no items');
+    });
+  });
 }

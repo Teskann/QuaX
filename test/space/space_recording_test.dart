@@ -1,6 +1,12 @@
+import 'dart:async';
+import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:fake_async/fake_async.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/testing.dart';
+import 'package:quax/catcher/exceptions.dart' as quax;
 import 'package:quax/space/space_recording.dart';
 
 import 'recorded_spaces.dart';
@@ -93,6 +99,104 @@ void main() {
         recordingFileName(space),
         '${space.hosts.first.screenName}-${space.id}.aac',
         reason: 'Like other downloads, the name starts with the author',
+      );
+    });
+  });
+
+  group('downloadRecording()', () {
+    /// Downloads with a fake clock, so timeouts and retries take no time.
+    (List<int>, List<double>) downloadWithFakeClock(http.Client client) => fakeAsync((clock) {
+      final writtenAudio = <int>[];
+      final progress = <double>[];
+      final sinkTarget = StreamController<List<int>>()..stream.listen(writtenAudio.addAll);
+      Object? error;
+      downloadRecording(
+        client,
+        _playlistUri,
+        IOSink(sinkTarget),
+        onProgress: progress.add,
+      ).catchError((e) => error = e);
+      clock.elapse(const Duration(minutes: 5));
+      if (error != null) throw error!;
+      return (writtenAudio, progress);
+    });
+
+    /// Sends the playlist. Each chunk gets [answer], or its audio if [answer] gives null.
+    MockClient recordingServer({Future<http.Response>? Function(String chunkName)? answer}) =>
+        MockClient((request) async {
+          final name = request.url.pathSegments.last;
+          if (name.endsWith('.m3u8')) return http.Response(_playlistStart, 200);
+          return await answer?.call(name) ?? http.Response.bytes(_chunk(name.contains('_0_') ? 0 : 1), 200);
+        });
+
+    const joinedAudio = [..._adtsFrame, 0, ..._adtsFrame, 1];
+
+    test('Should join the audio of the chunks, in order', () {
+      final (audio, progress) = downloadWithFakeClock(recordingServer());
+
+      expect(audio, joinedAudio, reason: 'The file is the audio of each chunk, one after the other');
+      expect(progress.last, 1, reason: 'The progress ends at 1');
+    });
+
+    test('Should download again a chunk whose connection dropped', () {
+      final failedOnce = <String>{};
+      final client = recordingServer(
+        answer: (chunkName) =>
+            failedOnce.add(chunkName) ? Future.error(http.ClientException('Connection closed')) : null,
+      );
+
+      expect(
+        downloadWithFakeClock(client).$1,
+        joinedAudio,
+        reason: 'One dropped connection should not fail the download',
+      );
+    });
+
+    test('Should download again a chunk whose request got stuck', () {
+      final stuckOnce = <String>{};
+      final client = recordingServer(
+        answer: (chunkName) => stuckOnce.add(chunkName) ? Completer<http.Response>().future : null,
+      );
+
+      expect(downloadWithFakeClock(client).$1, joinedAudio, reason: 'A request with no answer must not block');
+    });
+
+    test('Should download again a chunk when the server failed', () {
+      final failedOnce = <String>{};
+      final client = recordingServer(
+        answer: (chunkName) => failedOnce.add(chunkName) ? Future.value(http.Response('', 503)) : null,
+      );
+
+      expect(downloadWithFakeClock(client).$1, joinedAudio, reason: 'A server error (5xx) often goes away');
+    });
+
+    test('Should fail when a chunk is refused', () {
+      final client = recordingServer(answer: (_) => Future.value(http.Response('', 403)));
+
+      expect(
+        () => downloadWithFakeClock(client),
+        throwsA(isA<quax.HttpException>()),
+        reason: 'A recording with a missing part must not be saved',
+      );
+    });
+
+    test('Should fail when a chunk still fails after the last attempt', () {
+      final client = recordingServer(answer: (_) => Future.error(http.ClientException('Connection closed')));
+
+      expect(
+        () => downloadWithFakeClock(client),
+        throwsA(isA<http.ClientException>()),
+        reason: 'The download must stop at some point',
+      );
+    });
+
+    test('Should fail when the playlist has no chunk', () {
+      final client = MockClient((_) async => http.Response('#EXTM3U\n#EXT-X-ENDLIST\n', 200));
+
+      expect(
+        () => downloadWithFakeClock(client),
+        throwsA(isA<quax.NotFoundException>()),
+        reason: 'An empty file should not be saved as the recording',
       );
     });
   });
