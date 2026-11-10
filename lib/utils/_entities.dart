@@ -1,6 +1,7 @@
 import 'package:dart_twitter_api/twitter_api.dart';
 import 'package:flutter/gestures.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:quax/utils/link_gesture_recognizer.dart';
 
 abstract class Entity {
   List<int>? indices;
@@ -55,17 +56,19 @@ class UserMentionEntity extends Entity {
 class UrlEntity extends Entity {
   final Url url;
   final Function onTap;
+  final VoidCallback? onLongPress;
 
-  UrlEntity(this.url, this.onTap) : super(url.indices);
+  UrlEntity(this.url, this.onTap, this.onLongPress) : super(url.indices);
 
   @override
   InlineSpan getContent() {
     return TextSpan(
         text: url.displayUrl,
-        recognizer: TapGestureRecognizer()
+        recognizer: LinkGestureRecognizer()
           ..onTap = () {
             onTap();
-          });
+          }
+          ..onLongPress = onLongPress);
   }
 }
 
