@@ -1,11 +1,12 @@
-## QuaX v4.22.0
+## QuaX v4.23.0
 
-What's new in QuaX v4.22.0:
-  - Publish the SHA-256 checksum of each APK in releases (fixed #353) <sup>[[view modified code]](https://github.com/teskann/quax/commit/d27c7b0c904a1dab769dae7d827599f2fcb9b1ce)</sup>
-  - Overhauled the subscriptions page and the group editor (fixed #72, fixed #282) <sup>[[view modified code]](https://github.com/teskann/quax/commit/765ebde32e814994abf4e5208059c10b52304deb)</sup>
-  - Improved X requests capture capabilities to fasten the development (by @quax-bot) <sup>[[view modified code]](https://github.com/teskann/quax/commit/a66631ac0b8e996b853423e879997cf62f142a8f)</sup>
-  - Updated API calls to match X website version <sup>[[view modified code]](https://github.com/teskann/quax/commit/2206e863b7bcfebe7648f3d6d64653be68c068b9)</sup>
-  - Communities can be followed and put in groups (fixed #359) <sup>[[view modified code]](https://github.com/teskann/quax/commit/b7504072a9fed8aeed315a1c448a43c9d9ef17bd)</sup>
+What's new in QuaX v4.23.0:
+  - Posts show their own time after a feed refresh (fixed #368) <sup>[[view modified code]](https://github.com/teskann/quax/commit/b48d4160a94c364f506e13a042b470c8ef6b42a1)</sup>
+  - Added support for X lists (fixed #360) <sup>[[view modified code]](https://github.com/teskann/quax/commit/2d5030315eb9dc36840155f8d66abef7cd76e2d5)</sup>
+  - Fixed some reposts shown as normal posts <sup>[[view modified code]](https://github.com/teskann/quax/commit/8863c71c82908573be865efebef8cbfbebd8ba64)</sup>
+  - You can now subscribe to a list (fixed #372) <sup>[[view modified code]](https://github.com/teskann/quax/commit/4a8604f75149bdd80fdee0fa580594a1594ae846)</sup>
+  - Long press on a link copies it (fixed #376) <sup>[[view modified code]](https://github.com/teskann/quax/commit/c02b451f96c5a3896533057314b91911763bf649)</sup>
+  - Recorded spaces can now be downloaded <sup>[[view modified code]](https://github.com/teskann/quax/commit/bb5d1f063f0aeedf266ef773a2d3f7d9fb98ede6)</sup>
 
 
 ---
