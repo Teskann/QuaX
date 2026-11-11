@@ -24,37 +24,41 @@ Future<void> downloadUriToPickedFile(BuildContext context, Uri uri, String fileN
       return;
     }
 
-    final downloadType = prefs.get(optionDownloadType);
-    final downloadPath = prefs.get(optionDownloadPath);
-
-    // If the user wants to pick a file every time a download happens
-    if (downloadType == optionDownloadTypeAsk || downloadPath == '') {
-      var fileInfo =
-          await FlutterFileDialog.saveFile(params: SaveFileDialogParams(fileName: sanitizedFilename, data: response));
-      if (fileInfo == null) {
-        return;
-      }
-
+    if (await saveToDownloads(prefs, sanitizedFilename, bytes: response)) {
       onSuccess();
-      return;
     }
-
-    // Finally, save to the user-defined directory
-    var savedFile = p.join(downloadPath, sanitizedFilename);
-    await File(savedFile).writeAsBytes(response);
-
-    // Notify Android's media scanner so the file appears in the gallery
-    const platform = MethodChannel('browser_resolver');
-    try {
-      await platform.invokeMethod('scanMediaFile', {'path': savedFile});
-    } catch (_) {}
-
-    onSuccess();
   } catch (e) {
     if (context.mounted) {
       showSnackBar(context, icon: '🙊', message: e.toString());
     }
   }
+}
+
+/// Saves [bytes], or the file at [sourcePath], where the user keeps downloads. False if the user cancelled.
+Future<bool> saveToDownloads(BasePrefService prefs, String fileName, {Uint8List? bytes, String? sourcePath}) async {
+  final downloadType = prefs.get(optionDownloadType);
+  final downloadPath = prefs.get(optionDownloadPath);
+
+  if (downloadType == optionDownloadTypeAsk || downloadPath == '') {
+    final savedPath = await FlutterFileDialog.saveFile(
+      params: SaveFileDialogParams(fileName: fileName, data: bytes, sourceFilePath: sourcePath),
+    );
+    return savedPath != null;
+  }
+
+  final savedFile = p.join(downloadPath, fileName);
+  if (bytes != null) {
+    await File(savedFile).writeAsBytes(bytes);
+  } else {
+    await File(sourcePath!).copy(savedFile);
+  }
+
+  // Notify Android's media scanner so the file appears in the gallery
+  const platform = MethodChannel('browser_resolver');
+  try {
+    await platform.invokeMethod('scanMediaFile', {'path': savedFile});
+  } catch (_) {}
+  return true;
 }
 
 class UnableToSaveMedia {
