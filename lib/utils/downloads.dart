@@ -36,17 +36,26 @@ Future<void> downloadUriToPickedFile(BuildContext context, Uri uri, String fileN
 
 /// Saves [bytes], or the file at [sourcePath], where the user keeps downloads. False if the user cancelled.
 Future<bool> saveToDownloads(BasePrefService prefs, String fileName, {Uint8List? bytes, String? sourcePath}) async {
-  final downloadType = prefs.get(optionDownloadType);
-  final downloadPath = prefs.get(optionDownloadPath);
-
-  if (downloadType == optionDownloadTypeAsk || downloadPath == '') {
+  final downloadPath = _downloadDirectory(prefs);
+  if (downloadPath == null) {
     final savedPath = await FlutterFileDialog.saveFile(
       params: SaveFileDialogParams(fileName: fileName, data: bytes, sourceFilePath: sourcePath),
     );
     return savedPath != null;
   }
 
-  final savedFile = p.join(downloadPath, fileName);
+  await _saveToDirectory(downloadPath, fileName, bytes: bytes, sourcePath: sourcePath);
+  return true;
+}
+
+/// The folder chosen in the settings, or null when the user wants to be asked.
+String? _downloadDirectory(BasePrefService prefs) {
+  final downloadPath = prefs.get<String>(optionDownloadPath) ?? '';
+  return prefs.get(optionDownloadType) == optionDownloadTypeAsk || downloadPath == '' ? null : downloadPath;
+}
+
+Future<void> _saveToDirectory(String directory, String fileName, {Uint8List? bytes, String? sourcePath}) async {
+  final savedFile = p.join(directory, fileName);
   if (bytes != null) {
     await File(savedFile).writeAsBytes(bytes);
   } else {
@@ -58,7 +67,61 @@ Future<bool> saveToDownloads(BasePrefService prefs, String fileName, {Uint8List?
   try {
     await platform.invokeMethod('scanMediaFile', {'path': savedFile});
   } catch (_) {}
-  return true;
+}
+
+class MediaDownload {
+  final Uri uri;
+  final String fileName;
+
+  const MediaDownload(this.uri, this.fileName);
+}
+
+typedef SaveDownload = Future<void> Function(String fileName, http.Response response);
+
+/// Where a batch of downloads goes: the folder chosen in the settings, else a folder picked once for the whole
+/// batch. Null if the user cancelled.
+Future<SaveDownload?> pickBatchDestination(BasePrefService prefs) async {
+  final downloadPath = _downloadDirectory(prefs);
+  if (downloadPath != null) {
+    return (fileName, response) => _saveToDirectory(downloadPath, fileName, bytes: response.bodyBytes);
+  }
+
+  final directory = await FlutterFileDialog.pickDirectory();
+  if (directory == null) {
+    return null;
+  }
+  return (fileName, response) => FlutterFileDialog.saveFileToDirectory(
+        directory: directory,
+        data: response.bodyBytes,
+        fileName: fileName,
+        mimeType: response.headers['content-type'],
+      );
+}
+
+/// Downloads [downloads] one after the other, so a post of 20 media does not flood X. Gives how many were saved.
+Future<int> downloadAll(Iterable<MediaDownload> downloads, SaveDownload save, {http.Client? client}) async {
+  final httpClient = client ?? http.Client();
+  try {
+    return await downloads.fold<Future<int>>(
+      Future.value(0),
+      (saved, download) async => await saved + await _downloadOne(httpClient, download, save),
+    );
+  } finally {
+    if (client == null) httpClient.close();
+  }
+}
+
+Future<int> _downloadOne(http.Client client, MediaDownload download, SaveDownload save) async {
+  try {
+    final response = await client.get(download.uri);
+    if (response.statusCode != 200) {
+      return 0;
+    }
+    await save(download.fileName, response);
+    return 1;
+  } catch (_) {
+    return 0;
+  }
 }
 
 class UnableToSaveMedia {

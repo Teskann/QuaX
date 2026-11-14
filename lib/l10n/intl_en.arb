@@ -187,6 +187,10 @@
   },
   "download": "Download",
   "@download": {},
+  "download_all": "Download all",
+  "@download_all": {
+    "description": "Verb: downloads every photo, video and GIF of a post at once. Button and menu label"
+  },
   "download_handling": "Download handling",
   "@download_handling": {},
   "download_handling_description": "How downloading should work",
@@ -199,6 +203,8 @@
   "@download_media_no_url": {},
   "download_path": "Download path",
   "@download_path": {},
+  "downloading_all_media": "Downloading all media...",
+  "@downloading_all_media": {},
   "downloading_media": "Downloading media...",
   "@downloading_media": {},
   "edit_folder": "Edit folder",
@@ -802,6 +808,18 @@
   "@save_to_folder": {},
   "saved": "Saved",
   "@saved": {},
+  "saved_media_count": "Saved {saved} of {total} media",
+  "@saved_media_count": {
+    "description": "Shown once a bulk download of the media of a post ends",
+    "placeholders": {
+      "saved": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "saved_to_folder": "Saved to {name}",
   "@saved_to_folder": {},
   "saved_tweet_too_large": "This saved post could not be displayed, as it's too big to load. Please report it to the developers.",

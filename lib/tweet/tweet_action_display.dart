@@ -13,6 +13,7 @@ IconData tweetActionIcon(TweetAction action) => switch (action) {
   TweetAction.copyLink => Icons.link,
   TweetAction.copyText => Icons.content_copy,
   TweetAction.download => Icons.download,
+  TweetAction.downloadAll => Icons.download_for_offline_outlined,
   TweetAction.more => Icons.more_vert,
 };
 
@@ -27,5 +28,6 @@ String tweetActionLabel(BuildContext context, TweetAction action) => switch (act
   TweetAction.copyLink => L10n.of(context).copy_post_link,
   TweetAction.copyText => L10n.of(context).copy_post_text,
   TweetAction.download => L10n.of(context).download,
+  TweetAction.downloadAll => L10n.of(context).download_all,
   TweetAction.more => L10n.of(context).more,
 };
