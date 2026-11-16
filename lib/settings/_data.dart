@@ -11,6 +11,7 @@ import 'package:quax/group/group_model.dart';
 import 'package:quax/import_data_model.dart';
 import 'package:quax/saved/liked_tweet_model.dart';
 import 'package:quax/saved/saved_tweet_folder_model.dart';
+import 'package:quax/saved/saved_tweet_model.dart';
 import 'package:quax/subscriptions/subscription_filters.dart';
 import 'package:quax/subscriptions/subscription_kind.dart';
 import 'package:quax/subscriptions/users_model.dart';
@@ -100,6 +101,7 @@ Future<void> importFromFile(BuildContext context, File file) async {
   var groupModel = context.read<GroupsModel>();
   var subscriptionsModel = context.read<SubscriptionsModel>();
   var savedTweetFolderModel = context.read<SavedTweetFolderModel>();
+  var savedTweetModel = context.read<SavedTweetModel>();
   var likedTweetModel = context.read<LikedTweetModel>();
   var messenger = ScaffoldMessenger.of(context);
   var l10n = L10n.of(context);
@@ -155,6 +157,7 @@ Future<void> importFromFile(BuildContext context, File file) async {
   await groupModel.reloadGroups();
   await subscriptionsModel.reloadSubscriptions();
   await savedTweetFolderModel.listFolders();
+  await savedTweetModel.listSavedTweets();
   await likedTweetModel.listLikedTweets();
 
   if (messenger.mounted) {

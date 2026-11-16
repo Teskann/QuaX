@@ -4,7 +4,7 @@ import 'package:quax/database/entities.dart';
 import 'package:quax/group/group_model.dart' show defaultGroupIcon;
 
 void main() {
-  final tweet = SavedTweet(id: '1', user: 'dogs', content: '{}', folderId: 'reading');
+  final tweet = SavedTweet(id: '1', user: 'dogs', content: '{}', folderId: 'reading', savedAt: DateTime.utc(2026, 9, 4, 13, 37, 5));
 
   group('SavedTweet.fromMap()', () {
     test('Should keep every field written by toMap', () {
@@ -21,6 +21,9 @@ void main() {
               'shows, so it should come back byte for byte');
       expect(restored.folderId, tweet.folderId,
           reason: 'The saved tweets screen groups by folder, so the folder should survive');
+      expect(restored.savedAt, tweet.savedAt,
+          reason: 'Saved posts are listed by the date they were saved, so a backup should keep it. Without it every '
+              'post of a restored backup gets the date of the import');
     });
   });
 
