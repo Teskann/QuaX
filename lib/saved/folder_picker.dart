@@ -1,9 +1,12 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_triple/flutter_triple.dart';
+import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
+import 'package:quax/constants.dart';
 import 'package:quax/database/entities.dart';
 import 'package:quax/generated/l10n.dart';
+import 'package:quax/saved/saved_tab_order.dart';
 import 'package:quax/saved/saved_tweet_folder_model.dart';
 import 'package:quax/saved/saved_tweet_model.dart';
 import 'package:quax/ui/list_sheet.dart';
@@ -78,6 +81,7 @@ class _SaveToFolderSheet extends StatelessWidget {
       store: folderModel,
       onState: (context, folders) {
         var current = savedModel.folderOf(tweetId);
+        var ordered = foldersInTabOrder(folders, PrefService.of(context, listen: false).get(optionSavedTabOrder));
 
         return ListSheet(
           icon: Icons.bookmark_add_outlined,
@@ -93,7 +97,7 @@ class _SaveToFolderSheet extends StatelessWidget {
                 label: L10n.of(context).unfiled,
                 selected: current == null,
                 onTap: () => _file(context, null, L10n.of(context).unfiled)),
-            ...folders.map((f) =>
+            ...ordered.map((f) =>
                 _FolderTile(label: f.name, selected: current == f.id, onTap: () => _file(context, f.id, f.name))),
           ],
         );
