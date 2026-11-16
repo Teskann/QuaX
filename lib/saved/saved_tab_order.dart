@@ -36,3 +36,9 @@ List<String> orderedSavedTabs(List<SavedTweetFolder> folders, String? storedOrde
 
   return order;
 }
+
+/// The [folders] in the order of their tabs on the Saved screen.
+List<SavedTweetFolder> foldersInTabOrder(List<SavedTweetFolder> folders, String? storedOrder) {
+  final byId = {for (final folder in folders) folder.id: folder};
+  return orderedSavedTabs(folders, storedOrder).map((token) => byId[token]).nonNulls.toList();
+}
