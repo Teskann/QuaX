@@ -16,15 +16,21 @@ class SavedTweet with ToMappable {
   final String? user;
   final String? content;
   final String? folderId;
+  final DateTime? savedAt;
 
-  SavedTweet({required this.id, required this.user, required this.content, this.folderId});
+  SavedTweet({required this.id, required this.user, required this.content, this.folderId, this.savedAt});
 
   factory SavedTweet.fromMap(Map<String, Object?> map) {
     return SavedTweet(
         id: map['id'] as String,
         user: map['user_id'] as String?,
         content: map['content'] as String?,
-        folderId: map['folder_id'] as String?);
+        folderId: map['folder_id'] as String?,
+        savedAt: switch (map['saved_at']) {
+          // SQLite's CURRENT_TIMESTAMP is in UTC
+          String savedAt => sqliteDateFormat.tryParseUtc(savedAt),
+          _ => null,
+        });
   }
 
   // `folderId` is nullable and null is meaningful ("unfiled"), so the sentinel lets
@@ -36,12 +42,20 @@ class SavedTweet with ToMappable {
         id: id ?? this.id,
         user: user ?? this.user,
         content: content ?? this.content,
-        folderId: identical(folderId, _unset) ? this.folderId : folderId as String?);
+        folderId: identical(folderId, _unset) ? this.folderId : folderId as String?,
+        savedAt: savedAt);
   }
 
   @override
   Map<String, dynamic> toMap() {
-    return {'id': id, 'content': content, 'user_id': user, 'folder_id': folderId};
+    final savedAt = this.savedAt;
+    return {
+      'id': id,
+      'content': content,
+      'user_id': user,
+      'folder_id': folderId,
+      if (savedAt != null) 'saved_at': sqliteDateFormat.format(savedAt.toUtc()),
+    };
   }
 }
 
