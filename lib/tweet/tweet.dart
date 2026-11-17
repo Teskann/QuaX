@@ -29,7 +29,7 @@ import 'package:quax/article/article.dart';
 import 'package:quax/ui/dates.dart';
 import 'package:quax/ui/errors.dart';
 import 'package:quax/user.dart';
-import 'package:quax/ui/link_style.dart';
+import 'package:quax/utils/pressed_link_model.dart';
 import 'package:quax/utils/rich_text.dart';
 import 'package:quax/utils/clipboard.dart';
 import 'package:quax/utils/urls.dart';
@@ -101,6 +101,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
   List<RichTextPart> _originalParts = [];
   List<RichTextPart> _displayParts = [];
   List<RichTextPart> _translatedParts = [];
+  final _pressedLink = PressedLinkModel();
 
   bool _isInitialized = false;
 
@@ -118,6 +119,12 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
       _mediaIndex = widget.initialMediaIndex;
       _originalParts = _displayParts = _tweetParts();
     }
+  }
+
+  @override
+  void dispose() {
+    _pressedLink.destroy();
+    super.dispose();
   }
 
   @override
@@ -142,7 +149,8 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     var tweetTextFinal = actualTweet.noteText ?? actualTweet.fullText ?? actualTweet.text!;
     var entitiesFinal = actualTweet.noteEntities ?? actualTweet.entities;
 
-    return buildRichText(context, tweetTextFinal, entitiesFinal, cardUrl: actualTweet.card?['url'] as String?);
+    return buildRichText(context, tweetTextFinal, entitiesFinal,
+        cardUrl: actualTweet.card?['url'] as String?, pressedLink: _pressedLink);
   }
 
   Future<void> onClickTranslate(BuildContext context, Locale locale) async {
@@ -163,7 +171,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
     if (res.success) {
       if (!context.mounted) return;
       final List<RichTextPart> translatedParts =
-        buildRichText(context, res.body['result']['text'], res.body['result']['entities']);
+        buildRichText(context, res.body['result']['text'], res.body['result']['entities'], pressedLink: _pressedLink);
 
       // We cache the translated parts in a property in case the user swaps back and forth
       return setState(() {
@@ -641,9 +649,8 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
                     SizedBox(height: 8),
                     AutoDirection(
                         text: tweetText,
-                        child: SelectableText.rich(
-                          TextSpan(children: displayRichText(_displayParts, linkStyle(context))),
-                        )
+                        child: buildHighlightedRichText(
+                            _pressedLink, _displayParts, (spans) => SelectableText.rich(TextSpan(children: spans)))
                     ),
                   ]
               )
@@ -696,10 +703,14 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
           child: AutoDirection(
             text: tweetText,
-            child: ExpandableTweetText(
-              textSpans: displayRichText(_displayParts, linkStyle(context)),
-              onTap: () => !widget.tweetOpened ? onClickOpenTweet(tweet) : null,
-              maxLines: PrefService.of(context).get(alwaysShowFullTweetContents) ? null : 8,
+            child: buildHighlightedRichText(
+              _pressedLink,
+              _displayParts,
+              (spans) => ExpandableTweetText(
+                textSpans: spans,
+                onTap: () => !widget.tweetOpened ? onClickOpenTweet(tweet) : null,
+                maxLines: PrefService.of(context).get(alwaysShowFullTweetContents) ? null : 8,
+              ),
             ),
           ));
     }

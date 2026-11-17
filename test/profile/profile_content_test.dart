@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:extended_image/extended_image.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:pref/pref.dart';
@@ -160,6 +161,22 @@ void main() {
       expect(find.byType(ErrorCard), findsOneWidget,
           reason: 'X answers {"data": {}} without errors, which should still end in an error');
       expect(find.textContaining('User not found'), findsWidgets, reason: 'The error should say the user does not exist');
+    });
+
+    testWidgets('Should copy the website of a profile with a long press on it', (tester) async {
+      String? copied;
+      tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(SystemChannels.platform, (call) async {
+        if (call.method == 'Clipboard.setData') copied = (call.arguments as Map)['text'] as String?;
+        return null;
+      });
+      final profile = fixture('UserByScreenName', 'flutterdev', unstable: true);
+      final website = Twitter.parseProfile(profile.body, 'https://x.com/FlutterDev').user.entities!.url!.urls!.single;
+      await openProfile(tester, 'flutterdev', 'FlutterDev', '420730316', profile: profile, unstable: true);
+
+      await tester.longPress(headerText(find.widgetWithText(InkWell, website.displayUrl!)));
+      await tester.pump();
+
+      expect(copied, website.expandedUrl, reason: 'The full website should be copied, not the shortened one shown');
     });
   });
 
