@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-enum TweetAction { reply, retweet, like, views, bookmark, share, translate, copyLink, copyText, download, more }
+enum TweetAction { reply, retweet, like, views, bookmark, share, translate, copyLink, copyText, download, downloadAll, more }
 
 const legacyTweetActions = [
   TweetAction.reply,

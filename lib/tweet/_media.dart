@@ -11,6 +11,8 @@ import 'package:quax/tweet/_card_frame.dart';
 import 'package:quax/tweet/_photo.dart';
 import 'package:quax/tweet/_video.dart';
 import 'package:quax/tweet/_video_controls.dart';
+import 'package:quax/tweet/tweet_action_display.dart';
+import 'package:quax/tweet/tweet_actions.dart';
 import 'package:quax/ui/errors.dart';
 import 'package:quax/utils/downloads.dart';
 import 'package:path/path.dart' as path;
@@ -268,7 +270,7 @@ String _originalMediaUrl(Media media, {required bool tweetMedia}) =>
     (tweetMedia ? '${media.mediaUrlHttps}:orig' : media.mediaUrlHttps) ?? '';
 
 Future<void> downloadTweetMedia(BuildContext context, Media media, String username, {bool tweetMedia = true}) async {
-  if (media.type == 'animated_gif' || media.type == 'video') {
+  if (_isVideo(media)) {
     var urls = await TweetVideoMetadata.fromMedia(media).streamUrlsBuilder();
     if (context.mounted) {
       await downloadTweetVideo(context, username, urls.downloadUrl);
@@ -276,7 +278,7 @@ Future<void> downloadTweetMedia(BuildContext context, Media media, String userna
     return;
   }
 
-  var fileName = '$username-${path.basename(media.mediaUrlHttps!)}';
+  var fileName = _photoFileName(username, media);
   var uri = Uri.parse(_originalMediaUrl(media, tweetMedia: tweetMedia));
 
   await downloadUriToPickedFile(
@@ -296,6 +298,50 @@ Future<void> downloadTweetMedia(BuildContext context, Media media, String userna
       ));
     },
   );
+}
+
+String _photoFileName(String username, Media media) => '$username-${path.basename(media.mediaUrlHttps!)}';
+
+bool _isVideo(Media media) => media.type == 'animated_gif' || media.type == 'video';
+
+Future<MediaDownload?> _mediaDownload(Media media, String username) async {
+  if (!_isVideo(media)) {
+    return MediaDownload(Uri.parse(_originalMediaUrl(media, tweetMedia: true)), _photoFileName(username, media));
+  }
+
+  final downloadUrl = (await TweetVideoMetadata.fromMedia(media).streamUrlsBuilder()).downloadUrl;
+  if (downloadUrl == null) {
+    return null;
+  }
+  final uri = Uri.parse(downloadUrl);
+  return MediaDownload(uri, videoFileName(username, uri));
+}
+
+Future<List<MediaDownload>> mediaDownloads(List<Media> media, String username) async =>
+    (await Future.wait(media.map((m) => _mediaDownload(m, username)))).nonNulls.toList();
+
+/// Saves every photo, video and GIF of a post into a single folder.
+Future<void> downloadAllTweetMedia(BuildContext context, List<Media> media, String username) async {
+  final messenger = ScaffoldMessenger.of(context);
+  final l10n = L10n.of(context);
+
+  try {
+    final save = await pickBatchDestination(PrefService.of(context, listen: false));
+    if (save == null) {
+      return;
+    }
+
+    messenger.showSnackBar(SnackBar(content: Text(l10n.downloading_all_media)));
+    final downloads = await mediaDownloads(media, username);
+    final saved = await downloadAll(downloads, save);
+
+    messenger.hideCurrentSnackBar(reason: SnackBarClosedReason.hide);
+    messenger.showSnackBar(SnackBar(content: Text(l10n.saved_media_count(saved, media.length))));
+  } catch (e) {
+    if (context.mounted) {
+      showSnackBar(context, icon: '🙊', message: e.toString());
+    }
+  }
 }
 
 class _TweetMediaViewState extends State<TweetMediaView> {
@@ -329,6 +375,15 @@ class _TweetMediaViewState extends State<TweetMediaView> {
             },
             onPressed: () => downloadTweetMedia(context, _media, widget.username, tweetMedia: widget.tweetMedia),
           ),
+          if (widget.tweetMedia && widget.media.length > 1)
+            AsyncButtonBuilder(
+              child: Icon(tweetActionIcon(TweetAction.downloadAll)),
+              builder: (context, child, callback, buttonState) {
+                return IconButton(
+                    onPressed: callback, icon: Semantics(label: L10n.of(context).download_all, child: child));
+              },
+              onPressed: () => downloadAllTweetMedia(context, widget.media, widget.username),
+            ),
           AsyncButtonBuilder(
             showSuccess: false,
             builder: (context, child, callback, buttonState) {

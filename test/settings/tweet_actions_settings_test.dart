@@ -31,7 +31,7 @@ void main() {
   testWidgets('Should badge the new buttons during the first visit only', (tester) async {
     await pumpSettings(tester, legacyTweetActionsConfig);
 
-    expect(find.text('New'), findsNWidgets(4), reason: 'The four buttons added since the legacy bar are new');
+    expect(find.text('New'), findsNWidgets(5), reason: 'The five buttons added since the legacy bar are new');
     expect(
       storedConfig(tester).newActions,
       isEmpty,

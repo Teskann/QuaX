@@ -866,6 +866,8 @@ Future<void> _openQualitySheet(
   await controller.setVolume(volume);
 }
 
+String videoFileName(String username, Uri videoUri) => '$username-${path.basename(videoUri.path)}';
+
 Future<void> downloadTweetVideo(BuildContext context, String username, String? downloadUrl) async {
   if (downloadUrl == null) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -875,7 +877,7 @@ Future<void> downloadTweetVideo(BuildContext context, String username, String? d
   }
 
   final videoUri = Uri.parse(downloadUrl);
-  final fileName = '$username-${path.basename(videoUri.path)}';
+  final fileName = videoFileName(username, videoUri);
 
   await downloadUriToPickedFile(
     context,

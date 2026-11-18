@@ -5,6 +5,7 @@ import 'package:dynamic_color/dynamic_color.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:dart_twitter_api/twitter_api.dart';
 import 'package:quax/client/client.dart';
 import 'package:quax/community/community_screen.dart';
 import 'package:quax/constants.dart';
@@ -321,6 +322,7 @@ class TweetTileState extends State<TweetTile> with SingleTickerProviderStateMixi
         TweetAction.copyLink => () => copyToClipboard(context, data.link, L10n.of(context).link_copied),
         TweetAction.copyText => () => copyToClipboard(context, data.tweetText, L10n.of(context).text_copied),
         TweetAction.download => () => _downloadCurrentMedia(data.tweet),
+        TweetAction.downloadAll => () => downloadAllTweetMedia(context, data.media, data.tweet.user!.screenName!),
       };
 
   /// Opens the community the post was posted in. Hidden in that community, where every post would show it.
@@ -1044,13 +1046,16 @@ class _FooterData {
 
   String get link => '$shareBaseUrl/${tweet.user!.screenName}/status/${tweet.idStr}';
 
-  bool get hasMedia => tweet.extendedEntities?.media?.isNotEmpty ?? false;
+  List<Media> get media => tweet.extendedEntities?.media ?? const [];
+
+  bool get hasMedia => media.isNotEmpty;
 
   bool isAvailable(TweetAction action) => switch (action) {
         TweetAction.retweet => tweet.retweetCount != null && tweet.quoteCount != null,
         TweetAction.views => tweet.viewCount != null,
         TweetAction.translate || TweetAction.copyText => !isArticle,
         TweetAction.download => hasMedia,
+        TweetAction.downloadAll => media.length > 1,
         _ => true,
       };
 

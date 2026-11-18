@@ -14,6 +14,7 @@ void main() {
         TweetAction.copyLink,
         TweetAction.copyText,
         TweetAction.download,
+        TweetAction.downloadAll,
         TweetAction.more,
       ], reason: 'The buttons added with customization, "more" included, should start hidden');
       expect(config.newActions, isEmpty, reason: 'Nothing is new to someone who never had a bar');
@@ -25,6 +26,7 @@ void main() {
         TweetAction.copyLink,
         TweetAction.copyText,
         TweetAction.download,
+        TweetAction.downloadAll,
         TweetAction.more,
       }, reason: 'The buttons added since the legacy bar should be badged');
       expect(config.enabled, legacyTweetActions, reason: 'An upgrade should keep the bar as it was');
