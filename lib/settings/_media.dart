@@ -148,6 +148,8 @@ class DownloadTypeSettingState extends State<DownloadTypeSetting> {
         if (widget.prefs.get(optionDownloadType) == optionDownloadTypeDirectory)
           PrefButton(
             onTap: () async {
+              // Downloads are written with dart:io, which cannot use the content:// URI of pickDirectory().
+              // ignore: deprecated_member_use
               String? directoryPath = await FilePicker.getDirectoryPath();
 
               if (directoryPath == null) {

@@ -26,7 +26,10 @@ class _EnglishFallbackDelegate extends LocalizationsDelegate<dynamic> {
 
 const _flutterDelegates = <LocalizationsDelegate<dynamic>>[
   ...GlobalMaterialLocalizations.delegates,
+  // Dependencies still on flutter/material and flutter/cupertino read these two.
+  // ignore: deprecated_member_use
   flutter_l10n.GlobalMaterialLocalizations.delegate,
+  // ignore: deprecated_member_use
   flutter_l10n.GlobalCupertinoLocalizations.delegate,
 ];
 

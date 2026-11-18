@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+// flutter_iconpicker still reads the legacy material theme.
+// ignore: deprecated_member_use
 import 'package:flutter/material.dart' as fm;
 import 'package:flutter_iconpicker/Models/configuration.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
