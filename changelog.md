@@ -1,3 +1,10 @@
+## QuaX v4.23.1
+
+What's new in QuaX v4.23.1:
+  - The "Save to folder" list now follows the custom order (fixed #394) <sup>[[view modified code]](https://github.com/teskann/quax/commit/c83687ff111f304b964827b867ce6db30e0c9d7e)</sup>
+  - Upgraded Flutter to 3.50.0 and refreshed the dependencies <sup>[[view modified code]](https://github.com/teskann/quax/commit/d09b3dae835877b24581ca2676675470ca207300)</sup>
+  - Added an action button to download all the media of a post at once (fixed #381). It's disabled by default, you can enable it in Settings > Posts > Customize action bar. <sup>[[view modified code]](https://github.com/teskann/quax/commit/0f80cecace5b3a9b808bd97856183548e67f35e3)</sup>
+
 ## QuaX v4.23.0
 
 What's new in QuaX v4.23.0:
