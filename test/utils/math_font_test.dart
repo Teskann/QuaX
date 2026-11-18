@@ -1,8 +1,8 @@
 import 'dart:ui' as ui;
 
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:quax/utils/math_font.dart';
 
 const _boldE = '\u{1D5F2}';

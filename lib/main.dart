@@ -550,6 +550,8 @@ class _FritterAppState extends State<FritterApp> {
                     return MaterialUiCompatibilityBridge(
                       child: SecureContentScope(
                         enabled: _isSecure,
+                        // FLAG_SECURE already hides Recents; this cover would black out the app behind dialogs.
+                        protectInAppSwitcher: false,
                         child: child ?? Container(),
                       ),
                     );
