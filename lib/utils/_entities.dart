@@ -1,7 +1,17 @@
 import 'package:dart_twitter_api/twitter_api.dart';
-import 'package:flutter/gestures.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:quax/utils/link_gesture_recognizer.dart';
+import 'package:quax/utils/pressed_link_model.dart';
+
+/// The span of a link showing [text], highlighted by [pressedLink] while pressed.
+TextSpan linkSpan(String text, Function onTap, PressedLinkModel? pressedLink, {VoidCallback? onLongPress}) =>
+    TextSpan(
+        text: text,
+        recognizer: LinkGestureRecognizer(pressedLink: pressedLink)
+          ..onTap = () {
+            onTap();
+          }
+          ..onLongPress = onLongPress);
 
 abstract class Entity {
   List<int>? indices;
@@ -22,54 +32,35 @@ abstract class Entity {
 class HashtagEntity extends Entity {
   final Hashtag hashtag;
   final Function onTap;
+  final PressedLinkModel? pressedLink;
 
-  HashtagEntity(this.hashtag, this.onTap) : super(hashtag.indices);
+  HashtagEntity(this.hashtag, this.onTap, {this.pressedLink}) : super(hashtag.indices);
 
   @override
-  InlineSpan getContent() {
-    return TextSpan(
-        text: '#${hashtag.text}',
-        recognizer: TapGestureRecognizer()
-          ..onTap = () {
-            onTap();
-          });
-  }
+  InlineSpan getContent() => linkSpan('#${hashtag.text}', onTap, pressedLink);
 }
 
 class UserMentionEntity extends Entity {
   final UserMention mention;
   final Function onTap;
+  final PressedLinkModel? pressedLink;
 
-  UserMentionEntity(this.mention, this.onTap) : super(mention.indices);
+  UserMentionEntity(this.mention, this.onTap, {this.pressedLink}) : super(mention.indices);
 
   @override
-  InlineSpan getContent() {
-    return TextSpan(
-        text: '@${mention.screenName}',
-        recognizer: TapGestureRecognizer()
-          ..onTap = () {
-            onTap();
-          });
-  }
+  InlineSpan getContent() => linkSpan('@${mention.screenName}', onTap, pressedLink);
 }
 
 class UrlEntity extends Entity {
   final Url url;
   final Function onTap;
   final VoidCallback? onLongPress;
+  final PressedLinkModel? pressedLink;
 
-  UrlEntity(this.url, this.onTap, this.onLongPress) : super(url.indices);
+  UrlEntity(this.url, this.onTap, this.onLongPress, {this.pressedLink}) : super(url.indices);
 
   @override
-  InlineSpan getContent() {
-    return TextSpan(
-        text: url.displayUrl,
-        recognizer: LinkGestureRecognizer()
-          ..onTap = () {
-            onTap();
-          }
-          ..onLongPress = onLongPress);
-  }
+  InlineSpan getContent() => linkSpan(url.displayUrl ?? '', onTap, pressedLink, onLongPress: onLongPress);
 }
 
 class HiddenUrlEntity extends Entity {
