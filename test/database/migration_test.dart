@@ -1,6 +1,12 @@
+import 'dart:io';
+
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:quax/client/accounts.dart';
 import 'package:quax/database/repository.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+
+import '../client/fresh_accounts.dart';
 
 void main() {
   setUpAll(sqfliteFfiInit);
@@ -147,6 +153,78 @@ void main() {
 
       final rows = await database.query(tableListSubscription);
       expect(rows.single['created_at'], isNotNull, reason: 'The date a list is followed sorts the subscriptions');
+    });
+  });
+
+  group('Version 34', () {
+    useFreshAccounts();
+
+    Future<bool> hasAccountsTable(Database database) async =>
+        (await database.query('sqlite_master', where: 'name = ?', whereArgs: [tableAccounts])).isNotEmpty;
+
+    Map<String, Object?> row(String id, String? screenName) =>
+        {'id': id, 'auth_header': '{"cookie":"$id"}', 'screen_name': screenName};
+
+    test('Should move the accounts to the secure storage', () async {
+      final database = await databaseAt(33);
+      await database.insert(tableAccounts, row('account', 'me'));
+
+      await migrate(database, 33, 34);
+
+      final account = (await getAccounts()).single;
+      expect(account.authHeader, '{"cookie":"account"}',
+          reason: 'The user should stay logged in after the update, with the session they had');
+      expect(account.screenName, 'me', reason: 'The account list in the settings shows this name');
+      expect(await hasAccountsTable(database), isFalse,
+          reason: 'The sessions should no longer be readable in the database, nor in its backups');
+    });
+
+    test('Should move every account saved before screen names were stored', () async {
+      final database = await databaseAt(33);
+      await database.insert(tableAccounts, row('first', null));
+      await database.insert(tableAccounts, row('second', null));
+
+      await migrate(database, 33, 34);
+
+      expect((await getAccounts()).map((a) => a.id), unorderedEquals(['first', 'second']),
+          reason: 'Accounts without a screen name are different accounts, and none should be lost');
+    });
+
+    group('When the secure storage fails', () {
+      setUpAll(() async {
+        databaseFactory = databaseFactoryFfi;
+        await databaseFactory.setDatabasesPath(Directory.systemTemp.createTempSync('quax-accounts').path);
+      });
+
+      setUp(() async {
+        await databaseFactory.deleteDatabase(databaseName);
+        final database = await openDatabase(databaseName, version: 33, onCreate: plan.call);
+        await database.insert(tableAccounts, row('account', 'me'));
+        await database.close();
+      });
+
+      test('Should keep the accounts in the database', () async {
+        useBrokenSecureStorage();
+
+        await Repository().migrate();
+
+        final database = await openDatabase(databaseName);
+        expect(await hasAccountsTable(database), isTrue,
+            reason: 'The table is the only copy of the sessions left, so dropping it would log the user out');
+      });
+
+      test('Should move the accounts at the next start', () async {
+        useBrokenSecureStorage();
+        await Repository().migrate();
+        FlutterSecureStorage.setMockInitialValues({});
+
+        await Repository().migrate();
+
+        expect((await getAccounts()).single.id, 'account',
+            reason: 'Once the secure storage works again, the sessions should move without the user doing anything');
+        expect(await hasAccountsTable(await openDatabase(databaseName)), isFalse,
+            reason: 'The sessions should leave the database once they are in the secure storage');
+      });
     });
   });
 }

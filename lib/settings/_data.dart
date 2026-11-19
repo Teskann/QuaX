@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
+import 'package:quax/client/accounts.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/database/entities.dart';
 import 'package:quax/database/repository.dart';
@@ -12,12 +13,15 @@ import 'package:quax/import_data_model.dart';
 import 'package:quax/saved/liked_tweet_model.dart';
 import 'package:quax/saved/saved_tweet_folder_model.dart';
 import 'package:quax/saved/saved_tweet_model.dart';
+import 'package:quax/settings/_backup_password_dialogs.dart';
 import 'package:quax/subscriptions/subscription_filters.dart';
 import 'package:quax/subscriptions/subscription_kind.dart';
 import 'package:quax/subscriptions/users_model.dart';
 import 'package:logging/logging.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
+
+final _log = Logger('importFromFile');
 
 // jsonDecode gives back List<dynamic>, which PrefService silently refuses to store
 Map<String, dynamic>? _settingsFromJson(Map<String, dynamic>? settings) =>
@@ -31,7 +35,9 @@ class SettingsData {
   final List<SavedTweet>? tweets;
   final List<SavedTweetFolder>? savedTweetFolders;
   final List<LikedTweet>? likedTweets;
-  final List<Account>? accounts;
+  // Only in backups made before the accounts were encrypted
+  final List<Account>? plainAccounts;
+  final Map<String, dynamic>? encryptedAccounts;
 
   SettingsData(
       {required this.settings,
@@ -41,7 +47,8 @@ class SettingsData {
       required this.tweets,
       required this.savedTweetFolders,
       required this.likedTweets,
-      required this.accounts});
+      required this.plainAccounts,
+      this.encryptedAccounts});
 
   factory SettingsData.fromJson(Map<String, dynamic> json) {
     return SettingsData(
@@ -60,7 +67,9 @@ class SettingsData {
         likedTweets: json['likedTweets'] != null
             ? List.from(json['likedTweets']).map((e) => LikedTweet.fromMap(e)).toList()
             : null,
-        accounts: json['accounts'] != null ? List.from(json['accounts']).map((e) => Account.fromMap(e)).toList() : null);
+        plainAccounts:
+            json['accounts'] != null ? List.from(json['accounts']).map((e) => Account.fromMap(e)).toList() : null,
+        encryptedAccounts: json['encryptedAccounts']);
   }
 
   Map<String, dynamic> toJson() {
@@ -73,7 +82,8 @@ class SettingsData {
       'tweets': tweets?.map((e) => e.toMap()).toList(),
       'savedTweetFolders': savedTweetFolders?.map((e) => e.toMap()).toList(),
       'likedTweets': likedTweets?.map((e) => e.toMap()).toList(),
-      'accounts': accounts?.map((e) => e.toMap()).toList()
+      'accounts': plainAccounts?.map((e) => e.toMap()).toList(),
+      'encryptedAccounts': encryptedAccounts
     };
   }
 
@@ -108,6 +118,9 @@ Future<void> importFromFile(BuildContext context, File file) async {
   var prefs = PrefService.of(context);
 
   var data = SettingsData.fromJson(content);
+
+  // The restored settings may open the home page, whose first requests need the accounts
+  await _restoreAccounts(context, data);
 
   var settings = data.settings;
   if (settings != null) {
@@ -148,11 +161,6 @@ Future<void> importFromFile(BuildContext context, File file) async {
     dataToImport[tableLikedTweet] = likedTweets;
   }
 
-  var accounts = data.accounts;
-  if(accounts != null) {
-    dataToImport[tableAccounts] = accounts;
-  }
-
   await importModel.importData(dataToImport);
   await groupModel.reloadGroups();
   await subscriptionsModel.reloadSubscriptions();
@@ -162,6 +170,20 @@ Future<void> importFromFile(BuildContext context, File file) async {
 
   if (messenger.mounted) {
     messenger.showSnackBar(SnackBar(content: Text(l10n.data_imported_successfully)));
+  }
+}
+
+Future<void> _restoreAccounts(BuildContext context, SettingsData data) async {
+  final encrypted = data.encryptedAccounts;
+  final accounts =
+      encrypted == null ? data.plainAccounts : await askPasswordAndDecryptAccounts(context, encrypted);
+  try {
+    for (final account in accounts ?? <Account>[]) {
+      await saveAccount(account);
+    }
+  } catch (e, stackTrace) {
+    // The rest of the backup still restores: the user logs in again
+    _log.severe('Could not restore the accounts', e, stackTrace);
   }
 }
 

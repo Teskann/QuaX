@@ -1,13 +1,31 @@
 import 'dart:convert';
 
+import 'package:crypto/crypto.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:logging/logging.dart';
 import 'package:quax/client/account_selector.dart';
 import 'package:quax/database/entities.dart';
-import 'package:quax/database/repository.dart';
 
-Future<List<Account>> getAccounts() async {
-  var database = await Repository.readOnly();
-  var query = await database.query(tableAccounts);
-  return List.from(query).map((e) => Account.fromMap(e)).toList();
+final _log = Logger('accounts');
+
+const _accountKeyPrefix = 'account/';
+const _secureStorage = FlutterSecureStorage();
+
+// Every request to X picks an account, and reading the secure storage goes through Android each time
+Future<List<Account>>? _accounts;
+
+Future<List<Account>> getAccounts() => _accounts ??= _readAccounts().onError((error, stackTrace) {
+      _accounts = null;
+      return Future.error(error!, stackTrace);
+    });
+
+Future<List<Account>> _readAccounts() async {
+  final entries = await _secureStorage.readAll();
+  return entries.entries
+      .where((entry) => entry.key.startsWith(_accountKeyPrefix))
+      .map((entry) => Account.fromMap(jsonDecode(entry.value)))
+      .toList();
 }
 
 /// Decoded auth header for a random account, or null if there is none.
@@ -24,9 +42,41 @@ Future<Map<dynamic, dynamic>?> pickAuthHeader() async {
 /// Saves [account] in place of any account saved before under the same screen name, so logging in again with an
 /// account leaves a single, fresh session for it.
 Future<void> saveAccount(Account account) async {
-  final database = await Repository.writable();
-  await database.transaction((transaction) async {
-    await transaction.delete(tableAccounts, where: 'lower(screen_name) = lower(?)', whereArgs: [account.screenName]);
-    await transaction.insert(tableAccounts, account.toMap());
-  });
+  final screenName = account.screenName?.toLowerCase();
+  final sameScreenName =
+      (await getAccounts()).where((saved) => screenName != null && saved.screenName?.toLowerCase() == screenName);
+  for (final saved in sameScreenName) {
+    await _secureStorage.delete(key: _accountKey(saved.id));
+  }
+  await _writeAccount(account);
+  _accounts = null;
 }
+
+/// Whether every account of [accounts] could be written to the secure storage and read back.
+Future<bool> copyAccountsToSecureStorage(List<Account> accounts) async {
+  try {
+    for (final account in accounts) {
+      await _writeAccount(account);
+    }
+    _accounts = null;
+    final stored = (await getAccounts()).map((account) => account.id).toSet();
+    return accounts.every((account) => stored.contains(account.id));
+  } catch (e, stackTrace) {
+    _log.severe('Could not copy the accounts to the secure storage', e, stackTrace);
+    return false;
+  }
+}
+
+Future<void> deleteAccount(String id) async {
+  await _secureStorage.delete(key: _accountKey(id));
+  _accounts = null;
+}
+
+Future<void> _writeAccount(Account account) =>
+    _secureStorage.write(key: _accountKey(account.id), value: jsonEncode(account.toMap()));
+
+// The id of an account is its CSRF token, and the secure storage leaves the names of its keys readable
+String _accountKey(String id) => '$_accountKeyPrefix${sha256.convert(utf8.encode(id))}';
+
+@visibleForTesting
+void forgetCachedAccounts() => _accounts = null;

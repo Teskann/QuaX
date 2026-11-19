@@ -1,5 +1,4 @@
 import 'package:material_ui/material_ui.dart';
-import 'package:quax/client/client_regular_account.dart';
 import 'package:quax/client/login_webview.dart';
 import 'package:quax/database/entities.dart';
 import 'package:quax/generated/l10n.dart';
@@ -18,7 +17,6 @@ class SettingsAccountFragment extends StatefulWidget {
 class _SettingsAccountFragment extends State<SettingsAccountFragment> {
   @override
   Widget build(BuildContext context) {
-    var model = XRegularAccount();
     return Scaffold(
       appBar: AppBar(
         title: Text(L10n.current.account),
@@ -41,7 +39,7 @@ class _SettingsAccountFragment extends State<SettingsAccountFragment> {
                     return Dismissible(
                         key: widget.key!,
                         onDismissed: (DismissDirection direction) async {
-                          await model.deleteAccount(data[index].id.toString());
+                          await deleteAccount(data[index].id);
                           setState(() {});
                         },
                         child: Card(
