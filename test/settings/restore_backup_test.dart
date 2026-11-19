@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
+import 'package:quax/client/accounts.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/database/entities.dart';
 import 'package:quax/group/group_model.dart';
@@ -15,11 +16,15 @@ import 'package:quax/saved/saved_tweet_model.dart';
 import 'package:quax/settings/_data.dart';
 import 'package:quax/subscriptions/users_model.dart';
 
+import '../client/fresh_accounts.dart';
 import '../group/open_feed.dart';
 import '../ui/pump_app.dart';
 
 File backupFile(
-        {Map<String, dynamic>? settings, List<Subscription>? subscriptions, List<SavedTweet>? tweets}) =>
+        {Map<String, dynamic>? settings,
+        List<Subscription>? subscriptions,
+        List<SavedTweet>? tweets,
+        List<Account>? accounts}) =>
     File('${Directory.systemTemp.createTempSync('quax-backup').path}/backup.json')
       ..writeAsStringSync(
         jsonEncode(
@@ -31,7 +36,7 @@ File backupFile(
             tweets: tweets,
             savedTweetFolders: null,
             likedTweets: null,
-            accounts: null,
+            accounts: accounts,
           ).toJson(),
         ),
       );
@@ -65,6 +70,7 @@ Future<void> pumpRestorer(WidgetTester tester, Widget body,
 
 void main() {
   useFreshDatabase();
+  useFreshAccounts();
 
   testWidgets('Should show the restored subscriptions in the restored order, even when restoring closes the page '
       'that started it', (tester) async {
@@ -117,5 +123,35 @@ void main() {
             'saved and not by when its backup was imported');
     expect(savedTweets.state.first.savedAt, DateTime.utc(2026, 3, 1, 10),
         reason: 'A post found in both backups should keep the date it was first saved');
+  });
+
+  testWidgets('Should save the accounts before the restored settings open the home page', (tester) async {
+    final account = Account(id: 'a1', authHeader: '{"Cookie":"auth_token=secret"}', screenName: 'me');
+    final backup = backupFile(settings: {optionOnboardingDone: true}, accounts: [account]);
+    await pumpRestorer(tester, const Text('onboarding'));
+    final context = tester.element(find.text('onboarding'));
+    Future<List<Account>>? accountsWhenHomeOpens;
+    PrefService.of(context, listen: false)
+        .addKeyListener(optionOnboardingDone, () => accountsWhenHomeOpens ??= getAccounts());
+
+    await tester.runAsync(() => importFromFile(context, backup));
+
+    expect(accountsWhenHomeOpens, isNotNull, reason: 'The backup should mark the onboarding as done');
+    final accounts = await tester.runAsync(() => accountsWhenHomeOpens!);
+    expect(accounts!.map((a) => a.id), ['a1'],
+        reason: 'The restored settings open the home page when the backup is imported from the onboarding. Its first '
+            'requests must already use the accounts of the backup, as X answers 404 to most of them without one');
+  });
+
+  testWidgets('Should log in the accounts of a backup', (tester) async {
+    final account = Account(id: 'a1', authHeader: '{"Cookie":"auth_token=secret"}', screenName: 'me');
+    final backup = backupFile(accounts: [account]);
+    await pumpRestorer(tester, const Text('settings'));
+
+    await tester.runAsync(() => importFromFile(tester.element(find.text('settings')), backup));
+
+    final accounts = await tester.runAsync(getAccounts);
+    expect(accounts!.single.authHeader, account.authHeader,
+        reason: 'Restoring a backup on a new device should not make the user log in again');
   });
 }
