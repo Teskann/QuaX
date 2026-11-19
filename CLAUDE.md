@@ -106,6 +106,8 @@ A search is a `SearchQuery`: the words left in the bar plus `SearchFilters`, wri
 
 Accounts hold the session cookies, so they are not in SQLite: `accounts.dart` is their single access point, and keeps them in `flutter_secure_storage`, encrypted by a key the Android Keystore holds. Their keys are named after a hash of the account id, which is the CSRF token. It caches them in memory, as every request to X reads them. The old `accounts` table is dropped only once every account is in the secure storage and read back; until then, `migrate()` tries again at each start. Android backups leave the secure storage out (`res/xml/*_rules.xml`, named after the files of flutter_secure_storage 11): its key never leaves the device, so after a restore the user logs in again.
 
+Exported backups hold the accounts under `encryptedAccounts` (`settings/encrypted_accounts.dart`): Argon2id derives a key from a password the user picks, and AES-256-GCM encrypts them. The file states its Argon2id settings, so they can change without breaking older backups, and the import caps them, as anyone can hand over a backup. Backups made before hold them in clear under `accounts`.
+
 ### Navigation
 
 Routes are defined as constants in `constants.dart` (`routeHome`, `routeProfile`, etc.) and registered in `main.dart`. Deep links from x.com URLs are parsed in `utils/urls.dart` into sealed `ProfileUriInfo` / `PostUriInfo` / `CommunityUriInfo` / `ListUriInfo` classes, then navigated in `main.dart`.
