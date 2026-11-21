@@ -1,3 +1,4 @@
+import 'package:quax/client/chrome.dart';
 import 'package:quax/client/x_client_transaction_id/client_transaction.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/utils/success_cache.dart';
@@ -12,7 +13,7 @@ class TwitterHeaders {
     'pragma': 'no-cache',
     'priority': 'u=1, i',
     'referer': 'https://x.com/',
-    'user-agent': userAgentHeader['user-agent']!,
+    ...chromeHeaders,
     'x-twitter-active-user': 'yes',
     'x-twitter-client-language': 'en',
   };

@@ -78,6 +78,8 @@ final text = result["data"]["text"] as String;
 
 To run the app without an X account (automated QA), use the mock of X described in `tool/mock_x/README.md`. It answers only requests identical to the recorded fixtures, so a request change in `client.dart` needs a fresh capture.
 
+Every request to x.com, api.x.com and t.co must send `chromeHeaders` (`lib/client/chrome.dart`), so that X sees the Chrome on Android that logged in: spread them into any new request. The login webview uses the same user agent and brands. Media from X's CDN does not send them yet. `tool/update_chrome.py` sets `chromeFullVersion` at each release; to bump it by hand, change only that line.
+
 When requests fail because of the `x-client-transaction-id` header (e.g. `Couldn't find the sign module`), follow `docs/fix-client-transaction-id.md`.
 
 **Account selection strategy.** `_QuackerTwitterClient.fetch()` in `client.dart` asks `AccountSelector` (`account_selector.dart`, a pure/testable policy) for an account with credits left, then retries on another account on a 429. Only rate limits count: any other error is surfaced without trying another account.

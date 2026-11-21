@@ -73,11 +73,14 @@ jobs:
           pip install -r requirements.txt
           ./generate-release-notes.sh $VERSION
 
+      - name: Update the Chrome version QuaX imitates
+        run: python3 tool/update_chrome.py
+
       - name: Commit and tag
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add pubspec.yaml changelog.md release-notes.md assets/release_notes.json
+          git add pubspec.yaml changelog.md release-notes.md assets/release_notes.json lib/client/chrome.dart
           git commit -m "Bumped to version $VERSION"
           git tag "v$VERSION"
           git push origin HEAD:master

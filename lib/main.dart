@@ -62,8 +62,7 @@ Future<void> checkForUpdates(BuildContext context) async {
 
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   final client = HttpClient();
-  client.userAgent =
-      "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Mobile Safari/537.36";
+  client.userAgent = 'QuaX/${packageInfo.version}';
 
   final request = await client.getUrl(Uri.parse("https://api.github.com/repos/teskann/quax/releases/latest"));
   final response = await request.close();
