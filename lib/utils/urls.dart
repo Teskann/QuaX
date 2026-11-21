@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:pref/pref.dart';
+import 'package:quax/client/chrome.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/profile/profile.dart' show profileTabs;
 import 'package:url_launcher/url_launcher_string.dart';
@@ -128,7 +129,8 @@ Uri waybackSearchUri(String screenName, String id) =>
 
 Future<String?> _resolveShortUrl(Uri shortUrl) async {
   final request = http.Request('GET', shortUrl)
-    ..followRedirects = false;
+    ..followRedirects = false
+    ..headers.addAll(chromeHeaders);
 
   final response = await request.send();
   if (response.isRedirect || response.statusCode == 301 || response.statusCode == 302) {

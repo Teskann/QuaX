@@ -60,6 +60,7 @@ object WebViewPopups {
             settings.domStorageEnabled = true
             settings.javaScriptCanOpenWindowsAutomatically = true
             settings.userAgentString = opener.settings.userAgentString
+            WebViewUserAgentMetadata.copy(from = opener, to = this)
             webViewClient = WebViewClient()
             CookieManager.getInstance().setAcceptThirdPartyCookies(this, true)
         }

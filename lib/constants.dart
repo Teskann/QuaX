@@ -91,15 +91,6 @@ const optionUserTrendsLocations = 'trends.locations';
 
 const optionNonConfirmationBiasMode = 'other.improve_non_confirmation_bias';
 
-
-final Map<String, String> userAgentHeader = {
-  'user-agent':
-      "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Mobile Safari/537.3",
-  "Pragma": "no-cache",
-  "Cache-Control": "no-cache"
-  // "If-Modified-Since": "Sat, 1 Jan 2000 00:00:00 GMT",
-};
-
 const String bearerToken =
     "Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA";
 

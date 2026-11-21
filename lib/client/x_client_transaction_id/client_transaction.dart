@@ -7,6 +7,7 @@ import 'package:html/dom.dart' as html_dom;
 import 'package:html/parser.dart' as html_parser;
 import 'package:http/http.dart' as http;
 import 'package:quax/catcher/exceptions.dart';
+import 'package:quax/client/chrome.dart';
 
 import 'client_transaction_id_exception.dart';
 import 'constants.dart';
@@ -15,14 +16,13 @@ import 'interpolate.dart';
 import 'rotation.dart';
 import 'utils.dart';
 
-const _browserHeaders = {
-  'Accept-Language': 'en-US,en;q=0.9',
-  'Cache-Control': 'no-cache',
-  'Referer': 'https://x.com',
-  'User-Agent':
-      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36',
-  'X-Twitter-Active-User': 'yes',
-  'X-Twitter-Client-Language': 'en',
+final _homePageHeaders = {
+  'accept-language': 'en-US,en;q=0.9',
+  'cache-control': 'no-cache',
+  'referer': 'https://x.com',
+  ...chromeHeaders,
+  'x-twitter-active-user': 'yes',
+  'x-twitter-client-language': 'en',
 };
 
 typedef TextFetcher = Future<String> Function(Uri uri);
@@ -147,7 +147,7 @@ class ClientTransaction {
   /// An error page (e.g. a 503) is not a change in how X signs requests, so it
   /// must not end up as a [ClientTransactionIdException].
   static Future<String> _fetchText(Uri uri) async {
-    final response = await http.get(uri, headers: _browserHeaders);
+    final response = await http.get(uri, headers: _homePageHeaders);
     if (response.statusCode < 200 || response.statusCode >= 300) throw HttpException(response);
     return response.body;
   }
