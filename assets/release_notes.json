@@ -1,5 +1,16 @@
 [
   {
+    "version": "4.24.0",
+    "notes": [
+      "Moved the Flutter update routine out of the repository",
+      "Restoring backups keeps the order saved posts were saved in (fixed #409)",
+      "Bug reports for errors returned by X now include every detail X gave about them, for better context",
+      "Attempted to reduce the risk of your account being suspended for using it with QuaX (#422)",
+      "Authentication cookies are now stored encrypted, with a key that never leaves the device",
+      "Exported accounts are now encrypted with a password chosen by the user"
+    ]
+  },
+  {
     "version": "4.23.1",
     "notes": [
       "The \"Save to folder\" list now follows the custom order (fixed #394)",

@@ -1,10 +1,17 @@
-## QuaX v4.23.1
+## QuaX v4.24.0
 
-What's new in QuaX v4.23.1:
-  - The "Save to folder" list now follows the custom order (fixed #394) <sup>[[view modified code]](https://github.com/teskann/quax/commit/c83687ff111f304b964827b867ce6db30e0c9d7e)</sup>
-  - Upgraded Flutter to 3.50.0 and refreshed the dependencies <sup>[[view modified code]](https://github.com/teskann/quax/commit/d09b3dae835877b24581ca2676675470ca207300)</sup>
-  - Added an action button to download all the media of a post at once (fixed #381). It's disabled by default, you can enable it in Settings > Posts > Customize action bar. <sup>[[view modified code]](https://github.com/teskann/quax/commit/0f80cecace5b3a9b808bd97856183548e67f35e3)</sup>
+What's new in QuaX v4.24.0:
+  - Moved the Flutter update routine out of the repository <sup>[[view modified code]](https://github.com/teskann/quax/commit/81bde3684637d36b483c968173bea48bc9abea1c)</sup>
+  - Restoring backups keeps the order saved posts were saved in (fixed #409) <sup>[[view modified code]](https://github.com/teskann/quax/commit/f60d7fdff64e35fdfc8e9bc2209784d4026b2d52)</sup>
+  - Bug reports for errors returned by X now include every detail X gave about them, for better context <sup>[[view modified code]](https://github.com/teskann/quax/commit/6762aac9f7eafa78cb83aa85290b3507c6e09c87)</sup>
+  - Attempted to reduce the risk of your account being suspended for using it with QuaX (#422) <sup>[[view modified code]](https://github.com/teskann/quax/commit/689db2c9c2b8c332e3c533dfa1e5490d91c6ad5b)</sup>
+  - Authentication cookies are now stored encrypted, with a key that never leaves the device <sup>[[view modified code]](https://github.com/teskann/quax/commit/a5f3f5adae4681bb3d67aee226e30669fdc0f973)</sup>
+  - Exported accounts are now encrypted with a password chosen by the user <sup>[[view modified code]](https://github.com/teskann/quax/commit/1015ead14345dc8025623b6a284ad8f5c7b09330)</sup>
 
+
+---
+
+⚠️ Several users got their X account suspended after using it with QuaX. This update should reduce the likelihood of being spotted, but it's not guaranteed. It's highly recommended to use QuaX with a dummy account to avoid having your real account suspended.
 
 ---
 
