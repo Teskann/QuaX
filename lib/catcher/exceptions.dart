@@ -79,8 +79,9 @@ class XApiError implements Exception {
   final String message;
   final String? kind;
   final List<String> path;
+  final List<Map<String, dynamic>> errors;
 
-  XApiError(this.message, {this.kind, this.path = const []});
+  XApiError(this.message, {this.kind, this.path = const [], this.errors = const []});
 
   /// The errors of [body], or null when X listed none.
   static XApiError? fromBody(Map<String, dynamic> body) {
@@ -92,6 +93,7 @@ class XApiError implements Exception {
       errors.map((e) => e['message'] as String? ?? '').join('\n'),
       kind: errors.first['kind'] as String?,
       path: List<String>.from((errors.first['path'] as List? ?? const []).whereType<String>()),
+      errors: errors,
     );
   }
 

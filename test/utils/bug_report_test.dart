@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:quax/catcher/exceptions.dart';
 import 'package:quax/client/x_client_transaction_id/client_transaction_id_exception.dart';
 import 'package:quax/utils/bug_report.dart';
 
@@ -102,5 +103,45 @@ void main() {
       isNot(contains(clientTransactionIdReportMarker)),
       reason: 'A marker on unrelated reports would start the fix routine for nothing',
     );
+  });
+
+  test('Should carry every detail X gave about its errors when X returned an error', () {
+    final error = XApiError('Dependency: Unspecified', errors: [
+      {
+        'message': 'Dependency: Unspecified',
+        'code': 64,
+        'extensions': {'name': 'DependencyError', 'source': 'Server'},
+      },
+    ]);
+    final body = bugReportUri('Unable to load the tweets', error, null, version: '4.13.4').queryParameters['body']!;
+    expect(body, contains('Errors listed by X:\n```\n[{"message":"Dependency: Unspecified","code":64,'),
+        reason: 'The code of X tells a server failure from a wrong request, the message alone does not');
+    expect(body, contains('"extensions":{"name":"DependencyError","source":"Server"}'),
+        reason: 'The extensions name the part of X that failed');
+  });
+
+  test('Should keep a truncated copy of the errors of X when they are too long for a URL', () {
+    final longTrace = List.filled(5000, 'x').join();
+    final error = XApiError('Dependency: Unspecified', errors: [
+      {'message': 'Dependency: Unspecified', 'trace': longTrace},
+    ]);
+    final uri = bugReportUri('Unable to load the tweets', error, fakeStackTrace(1000), version: '4.13.4');
+    expect(uri.toString().length, lessThanOrEqualTo(bugReportMaxUrlLength),
+        reason: 'GitHub refuses URLs that are too long, which would make reporting impossible');
+    expect(uri.queryParameters['body'], contains('Errors listed by X:\n```\n[{"message":"Dependency: Unspecified"'),
+        reason: 'The start of the errors of X still tells what failed');
+  });
+
+  test('Should drop the errors of X when even a truncated copy does not fit in a URL', () {
+    // Quotes are escaped by JSON then by the URL, so they take much more room once encoded
+    final quotes = List.filled(2000, '"').join();
+    final error = XApiError(quotes, errors: [
+      {'message': quotes},
+    ]);
+    final uri = bugReportUri('Unable to load the tweets', error, null, version: '4.13.4');
+    expect(uri.toString().length, lessThanOrEqualTo(bugReportMaxUrlLength),
+        reason: 'Reporting should stay possible, even without the errors of X');
+    expect(uri.queryParameters['body'], isNot(contains('Errors listed by X:')),
+        reason: 'The errors of X are the last thing dropped to fit in a URL');
   });
 }

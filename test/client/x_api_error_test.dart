@@ -33,6 +33,12 @@ void main() {
   });
 
   group('XApiError', () {
+    test('Should keep every error X listed, with all their fields', () {
+      final body = fixture('SearchTimeline', 'min-faves-10000', unstable: true).body;
+      expect(XApiError.fromBody(body)?.errors, body['errors'],
+          reason: 'Bug reports need every field X gave, not only the message');
+    });
+
     test('Should tell a search X refused to run from any other error of X', () {
       final refused = XApiError('', kind: 'Validation', path: ['search_by_raw_query', 'search_timeline']);
       final otherValidation = XApiError('', kind: 'Validation', path: ['user', 'result']);
