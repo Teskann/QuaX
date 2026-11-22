@@ -13,6 +13,7 @@ import 'package:quax/import_data_model.dart';
 import 'package:quax/saved/liked_tweet_model.dart';
 import 'package:quax/saved/saved_tweet_folder_model.dart';
 import 'package:quax/saved/saved_tweet_model.dart';
+import 'package:quax/settings/_backup_password_dialogs.dart';
 import 'package:quax/subscriptions/subscription_filters.dart';
 import 'package:quax/subscriptions/subscription_kind.dart';
 import 'package:quax/subscriptions/users_model.dart';
@@ -34,7 +35,9 @@ class SettingsData {
   final List<SavedTweet>? tweets;
   final List<SavedTweetFolder>? savedTweetFolders;
   final List<LikedTweet>? likedTweets;
-  final List<Account>? accounts;
+  // Only in backups made before the accounts were encrypted
+  final List<Account>? plainAccounts;
+  final Map<String, dynamic>? encryptedAccounts;
 
   SettingsData(
       {required this.settings,
@@ -44,7 +47,8 @@ class SettingsData {
       required this.tweets,
       required this.savedTweetFolders,
       required this.likedTweets,
-      required this.accounts});
+      required this.plainAccounts,
+      this.encryptedAccounts});
 
   factory SettingsData.fromJson(Map<String, dynamic> json) {
     return SettingsData(
@@ -63,7 +67,9 @@ class SettingsData {
         likedTweets: json['likedTweets'] != null
             ? List.from(json['likedTweets']).map((e) => LikedTweet.fromMap(e)).toList()
             : null,
-        accounts: json['accounts'] != null ? List.from(json['accounts']).map((e) => Account.fromMap(e)).toList() : null);
+        plainAccounts:
+            json['accounts'] != null ? List.from(json['accounts']).map((e) => Account.fromMap(e)).toList() : null,
+        encryptedAccounts: json['encryptedAccounts']);
   }
 
   Map<String, dynamic> toJson() {
@@ -76,7 +82,8 @@ class SettingsData {
       'tweets': tweets?.map((e) => e.toMap()).toList(),
       'savedTweetFolders': savedTweetFolders?.map((e) => e.toMap()).toList(),
       'likedTweets': likedTweets?.map((e) => e.toMap()).toList(),
-      'accounts': accounts?.map((e) => e.toMap()).toList()
+      'accounts': plainAccounts?.map((e) => e.toMap()).toList(),
+      'encryptedAccounts': encryptedAccounts
     };
   }
 
@@ -113,7 +120,7 @@ Future<void> importFromFile(BuildContext context, File file) async {
   var data = SettingsData.fromJson(content);
 
   // The restored settings may open the home page, whose first requests need the accounts
-  await _restoreAccounts(data.accounts ?? []);
+  await _restoreAccounts(context, data);
 
   var settings = data.settings;
   if (settings != null) {
@@ -166,9 +173,12 @@ Future<void> importFromFile(BuildContext context, File file) async {
   }
 }
 
-Future<void> _restoreAccounts(List<Account> accounts) async {
+Future<void> _restoreAccounts(BuildContext context, SettingsData data) async {
+  final encrypted = data.encryptedAccounts;
+  final accounts =
+      encrypted == null ? data.plainAccounts : await askPasswordAndDecryptAccounts(context, encrypted);
   try {
-    for (final account in accounts) {
+    for (final account in accounts ?? <Account>[]) {
       await saveAccount(account);
     }
   } catch (e, stackTrace) {
