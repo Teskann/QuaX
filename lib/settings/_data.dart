@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
+import 'package:quax/client/accounts.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/database/entities.dart';
 import 'package:quax/database/repository.dart';
@@ -18,6 +19,8 @@ import 'package:quax/subscriptions/users_model.dart';
 import 'package:logging/logging.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
+
+final _log = Logger('importFromFile');
 
 // jsonDecode gives back List<dynamic>, which PrefService silently refuses to store
 Map<String, dynamic>? _settingsFromJson(Map<String, dynamic>? settings) =>
@@ -109,6 +112,9 @@ Future<void> importFromFile(BuildContext context, File file) async {
 
   var data = SettingsData.fromJson(content);
 
+  // The restored settings may open the home page, whose first requests need the accounts
+  await _restoreAccounts(data.accounts ?? []);
+
   var settings = data.settings;
   if (settings != null) {
     await prefs.fromMap(settings);
@@ -148,11 +154,6 @@ Future<void> importFromFile(BuildContext context, File file) async {
     dataToImport[tableLikedTweet] = likedTweets;
   }
 
-  var accounts = data.accounts;
-  if(accounts != null) {
-    dataToImport[tableAccounts] = accounts;
-  }
-
   await importModel.importData(dataToImport);
   await groupModel.reloadGroups();
   await subscriptionsModel.reloadSubscriptions();
@@ -162,6 +163,17 @@ Future<void> importFromFile(BuildContext context, File file) async {
 
   if (messenger.mounted) {
     messenger.showSnackBar(SnackBar(content: Text(l10n.data_imported_successfully)));
+  }
+}
+
+Future<void> _restoreAccounts(List<Account> accounts) async {
+  try {
+    for (final account in accounts) {
+      await saveAccount(account);
+    }
+  } catch (e, stackTrace) {
+    // The rest of the backup still restores: the user logs in again
+    _log.severe('Could not restore the accounts', e, stackTrace);
   }
 }
 

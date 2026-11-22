@@ -5,7 +5,6 @@ import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
 import 'package:quax/client/login_webview.dart';
 import 'package:quax/client/accounts.dart';
-import 'package:quax/client/client_regular_account.dart';
 import 'package:quax/constants.dart';
 import 'package:quax/database/entities.dart';
 import 'package:quax/group/group_model.dart';
@@ -41,7 +40,7 @@ class OnboardingActions {
     accounts: getAccounts,
     logIn: (context) => Navigator.push<Account>(
         context, MaterialPageRoute(builder: (_) => const TwitterLoginWebview(guided: true))),
-    logOut: (account) => XRegularAccount().deleteAccount(account.id),
+    logOut: (account) => deleteAccount(account.id),
     joinDiscord: (context) => openUri(context, discordInviteUrl),
     importer: (context) => SubscriptionImporter(
         context.read<ImportDataModel>(), context.read<GroupsModel>(), context.read<SubscriptionsModel>()),
