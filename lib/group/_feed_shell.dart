@@ -65,14 +65,15 @@ class _GroupFeedShellState extends State<GroupFeedShell> with AutomaticKeepAlive
     }
   }
 
-  // Triggered when subscriptions or group memberships change. Refresh the group
-  // state and bump the counter to remount the body on its new chunks.
+  // Triggered when subscriptions or group memberships change.
+  // Why: remounting the body drops the cached PagingController, so it only runs
+  // on the visible feed.
   void _onReload() {
     if (!mounted) return;
-    setState(() {
-      _groupModel.loadGroup();
-      _refreshCounter++;
-    });
+    _groupModel.refreshGroup();
+    if (ModalRoute.of(context)?.isCurrent ?? true) {
+      setState(() => _refreshCounter++);
+    }
   }
 
   @override

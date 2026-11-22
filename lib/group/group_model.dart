@@ -71,6 +71,8 @@ Future<SubscriptionGroupGet> _readMainFeed(Database database, Map<String, Object
 }
 
 class GroupModel extends Store<SubscriptionGroupGet> {
+  static final log = Logger('GroupModel');
+
   final String id;
 
   GroupModel(this.id)
@@ -84,6 +86,16 @@ class GroupModel extends Store<SubscriptionGroupGet> {
 
   Future<void> loadGroup() async {
     await execute(() async => readSubscriptionGroup(await Repository.readOnly(), id));
+  }
+
+  // Reloads the group's subscription list without flipping the store into its
+  // loading state, so the feed body is not replaced by a loading view.
+  Future<void> refreshGroup() async {
+    try {
+      update(await readSubscriptionGroup(await Repository.readOnly(), id));
+    } catch (e, stackTrace) {
+      log.warning('Failed to refresh the group $id', e, stackTrace);
+    }
   }
 
   Future<void> toggleSubscriptionGroupIncludeReplies(bool value) =>
