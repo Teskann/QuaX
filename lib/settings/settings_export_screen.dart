@@ -3,12 +3,11 @@ import 'dart:typed_data';
 
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
-import 'package:quax/client/accounts.dart';
-import 'package:quax/database/entities.dart';
 import 'package:quax/group/group_model.dart';
 import 'package:quax/saved/liked_tweet_model.dart';
 import 'package:quax/saved/saved_tweet_folder_model.dart';
 import 'package:quax/saved/saved_tweet_model.dart';
+import 'package:quax/settings/_backup_password_dialogs.dart';
 import 'package:quax/settings/_data.dart';
 import 'package:quax/subscriptions/users_model.dart';
 import 'package:intl/intl.dart';
@@ -122,6 +121,11 @@ class _SettingsExportScreenState extends State<SettingsExportScreen> {
                 var savedTweetModel = context.read<SavedTweetModel>();
                 var prefs = PrefService.of(context);
 
+                final accounts = _exportAccounts ? await encryptAccountsToExport(context) : (encrypted: null);
+                if (accounts == null) {
+                  return;
+                }
+
                 await groupModel.reloadGroups();
 
                 await subscriptionsModel.reloadSubscriptions();
@@ -131,8 +135,6 @@ class _SettingsExportScreenState extends State<SettingsExportScreen> {
                 await savedTweetFolderModel.listFolders();
 
                 await likedTweetModel.listLikedTweets();
-
-                List<Account>? accounts = _exportAccounts ? await getAccounts() : null;
 
                 // TODO: Check exporting
                 var settings = _exportSettings ? prefs.toMap() : null;
@@ -158,7 +160,8 @@ class _SettingsExportScreenState extends State<SettingsExportScreen> {
                     tweets: tweets,
                     savedTweetFolders: savedTweetFolders,
                     likedTweets: likedTweets,
-                    accounts: accounts);
+                    plainAccounts: null,
+                    encryptedAccounts: accounts.encrypted);
 
                 var exportData = jsonEncode(data.toJson());
 

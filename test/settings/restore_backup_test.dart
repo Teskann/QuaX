@@ -14,17 +14,20 @@ import 'package:quax/saved/liked_tweet_model.dart';
 import 'package:quax/saved/saved_tweet_folder_model.dart';
 import 'package:quax/saved/saved_tweet_model.dart';
 import 'package:quax/settings/_data.dart';
+import 'package:quax/settings/encrypted_accounts.dart';
 import 'package:quax/subscriptions/users_model.dart';
 
 import '../client/fresh_accounts.dart';
 import '../group/open_feed.dart';
+import '../subscriptions/fixtures.dart' show pumpUntilFound, pumpUntilGone;
 import '../ui/pump_app.dart';
 
 File backupFile(
         {Map<String, dynamic>? settings,
         List<Subscription>? subscriptions,
         List<SavedTweet>? tweets,
-        List<Account>? accounts}) =>
+        List<Account>? plainAccounts,
+        Map<String, dynamic>? encryptedAccounts}) =>
     File('${Directory.systemTemp.createTempSync('quax-backup').path}/backup.json')
       ..writeAsStringSync(
         jsonEncode(
@@ -36,7 +39,8 @@ File backupFile(
             tweets: tweets,
             savedTweetFolders: null,
             likedTweets: null,
-            accounts: accounts,
+            plainAccounts: plainAccounts,
+            encryptedAccounts: encryptedAccounts,
           ).toJson(),
         ),
       );
@@ -125,9 +129,82 @@ void main() {
         reason: 'A post found in both backups should keep the date it was first saved');
   });
 
+  group('A backup with encrypted accounts', () {
+    final account = Account(id: 'a1', authHeader: '{"Cookie":"auth_token=secret"}', screenName: 'me');
+    late SubscriptionsModel subscriptions;
+    late Future<void> restoring;
+
+    /// Starts restoring a backup of [encryptedAccounts], and waits for the password dialog.
+    Future<void> startRestoringBackup(WidgetTester tester, Map<String, dynamic> encryptedAccounts) async {
+      final backup = backupFile(subscriptions: [flutterDev], encryptedAccounts: encryptedAccounts);
+      await pumpRestorer(tester, const Text('settings'), onModels: (model, _) => subscriptions = model);
+      await tester.runAsync(() async {
+        restoring = importFromFile(tester.element(find.text('settings')), backup);
+      });
+      await pumpUntilFound(tester, find.text('Encrypted accounts'));
+    }
+
+    /// Starts restoring a backup of [account] encrypted with "correct horse", and waits for the password dialog.
+    Future<void> startRestoring(WidgetTester tester) async {
+      final encrypted = await tester.runAsync(() => encryptAccounts([account], 'correct horse'));
+      await startRestoringBackup(tester, encrypted!.toJson());
+    }
+
+    Future<void> submitPassword(WidgetTester tester, String password) async {
+      await tester.enterText(find.byType(TextField), password);
+      await tester.tap(find.text('Import'));
+      await tester.pump();
+    }
+
+    testWidgets('Should restore the accounts once the right password is entered', (tester) async {
+      await startRestoring(tester);
+
+      await submitPassword(tester, 'wrong horse');
+      await pumpUntilFound(tester, find.text('Wrong password'));
+      await submitPassword(tester, 'correct horse');
+      await pumpUntilGone(tester, find.text('Encrypted accounts'));
+      await tester.runAsync(() => restoring);
+
+      final accounts = await tester.runAsync(getAccounts);
+      expect(accounts!.single.authHeader, account.authHeader,
+          reason: 'After a wrong password, the right one should still log the user in on the new device');
+    });
+
+    testWidgets('Should restore the rest of the backup when the accounts are skipped', (tester) async {
+      await startRestoring(tester);
+
+      await tester.tap(find.text('Skip accounts'));
+      await tester.pump();
+      await tester.runAsync(() => restoring);
+
+      expect(await tester.runAsync(getAccounts), isEmpty,
+          reason: 'A user who lost the password should not be stuck: the accounts are left out');
+      expect(subscriptions.state.map((s) => s.id), [flutterDev.id],
+          reason: 'Skipping the accounts should still restore everything else in the backup');
+    });
+
+    testWidgets('Should let the user skip the accounts of a backup that asks for too much memory', (tester) async {
+      final encrypted = await tester.runAsync(() => encryptAccounts([account], 'correct horse'));
+      final json = encrypted!.toJson();
+      await startRestoringBackup(tester, {
+        ...json,
+        'kdf': {...json['kdf'], 'memory': 1 << 30}
+      });
+
+      await submitPassword(tester, 'correct horse');
+      await pumpUntilFound(tester, find.text('The accounts of this backup cannot be read'));
+      await tester.tap(find.text('Skip accounts'));
+      await tester.pump();
+      await tester.runAsync(() => restoring);
+
+      expect(subscriptions.state.map((s) => s.id), [flutterDev.id],
+          reason: 'A backup anyone could have edited must neither freeze the app nor stop the rest from restoring');
+    });
+  });
+
   testWidgets('Should save the accounts before the restored settings open the home page', (tester) async {
     final account = Account(id: 'a1', authHeader: '{"Cookie":"auth_token=secret"}', screenName: 'me');
-    final backup = backupFile(settings: {optionOnboardingDone: true}, accounts: [account]);
+    final backup = backupFile(settings: {optionOnboardingDone: true}, plainAccounts: [account]);
     await pumpRestorer(tester, const Text('onboarding'));
     final context = tester.element(find.text('onboarding'));
     Future<List<Account>>? accountsWhenHomeOpens;
@@ -143,15 +220,15 @@ void main() {
             'requests must already use the accounts of the backup, as X answers 404 to most of them without one');
   });
 
-  testWidgets('Should log in the accounts of a backup', (tester) async {
+  testWidgets('Should restore the accounts of a backup made before they were encrypted', (tester) async {
     final account = Account(id: 'a1', authHeader: '{"Cookie":"auth_token=secret"}', screenName: 'me');
-    final backup = backupFile(accounts: [account]);
+    final backup = backupFile(plainAccounts: [account]);
     await pumpRestorer(tester, const Text('settings'));
 
     await tester.runAsync(() => importFromFile(tester.element(find.text('settings')), backup));
 
     final accounts = await tester.runAsync(getAccounts);
     expect(accounts!.single.authHeader, account.authHeader,
-        reason: 'Restoring a backup on a new device should not make the user log in again');
+        reason: 'Older backups hold the accounts unencrypted, and should still log the user in without a password');
   });
 }

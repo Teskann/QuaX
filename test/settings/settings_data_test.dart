@@ -40,7 +40,8 @@ void main() {
           SavedTweetFolder(id: 'f1', name: 'Reading', position: 2, createdAt: DateTime(2026, 9, 4, 9))
         ],
         likedTweets: [LikedTweet(id: 'l1', user: 'dogs', content: '{}')],
-        accounts: [Account(id: 'a1', authHeader: '{}', screenName: 'me')],
+        plainAccounts: [Account(id: 'a1', authHeader: '{}', screenName: 'me')],
+        encryptedAccounts: {'version': 1, 'cipherText': 'AAAA'},
       );
 
   T onlyRow<T>(List<T>? rows, String section) {
@@ -90,9 +91,11 @@ void main() {
       expect(onlyRow(restored.likedTweets, 'liked tweet').id, 'l1',
           reason: 'Liked tweets are a separate table from saved tweets and should not be mixed up '
               'with them');
-      expect(onlyRow(restored.accounts, 'account').id, 'a1',
-          reason: 'Keeping the accounts is the main reason to export, so they should survive. '
-              'Without them the user has to log in again on the new device');
+      expect(onlyRow(restored.plainAccounts, 'account').id, 'a1',
+          reason: 'Older backups hold the accounts unencrypted, and the user should not have to log in again '
+              'after restoring one');
+      expect(restored.encryptedAccounts, {'version': 1, 'cipherText': 'AAAA'},
+          reason: 'The import needs every field of the encrypted accounts to decrypt them');
     });
 
     test('Should leave a missing section as null and not as an empty list', () {
@@ -102,9 +105,9 @@ void main() {
           reason: 'The import only writes a table when its section is not null. An empty list and '
               'a missing section should stay different, otherwise importing a partial backup '
               'erases the tables it does not contain');
-      expect(restored.accounts, isNull,
-          reason: 'The same rule should hold for accounts, where erasing the table would log the '
-              'user out');
+      expect(restored.plainAccounts, isNull,
+          reason: 'The same rule should hold for accounts, so a backup without them leaves the accounts '
+              'already logged in alone');
     });
 
     test('Should write the subscriptions under the names older versions read', () {
@@ -117,7 +120,7 @@ void main() {
     test('Should read a backup made by an older build with no accounts section', () {
       final old = full().toJson()..remove('accounts');
 
-      expect(SettingsData.fromJson(jsonDecode(jsonEncode(old))).accounts, isNull,
+      expect(SettingsData.fromJson(jsonDecode(jsonEncode(old))).plainAccounts, isNull,
           reason: 'Backups made before multi account support have no accounts key, and should '
               'still import instead of throwing');
     });
