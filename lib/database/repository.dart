@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:quax/client/accounts.dart';
+import 'package:quax/database/entities.dart';
 import 'package:quax/group/group_model.dart';
 import 'package:logging/logging.dart';
 import 'package:sqflite/sqflite.dart';
@@ -24,11 +26,12 @@ const String tableSubscription = 'subscription';
 const String tableSubscriptionGroup = 'subscription_group';
 const String tableSubscriptionGroupMember = 'subscription_group_member';
 
+// Only the migrations read it: the accounts are in the secure storage since version 34
 const String tableAccounts = 'accounts';
 
 const String tableInstalledVersion = 'installed_version';
 
-const int databaseVersion = 33;
+const int databaseVersion = 34;
 
 class Repository {
   static final log = Logger('Repository');
@@ -317,7 +320,19 @@ class Repository {
             'CREATE TABLE $tableListSubscription (id VARCHAR PRIMARY KEY, name VARCHAR NOT NULL, banner_url VARCHAR, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)',
             reverseSql: 'DROP TABLE $tableListSubscription'),
       ],
+      34: [
+        Migration(Operation(_moveAccountsToSecureStorage)),
+      ],
     });
+  }
+
+  /// Moves the authentication cookies of the accounts to the secure storage, encrypted by a key Android keeps. They
+  /// leave the database even when the secure storage fails, and the user then logs in again.
+  static Future<void> _moveAccountsToSecureStorage(Database db) async {
+    await copyAccountsToSecureStorage((await db.query(tableAccounts)).map(Account.fromMap).toList());
+    // Overwrites the cookies on disk instead of only marking their pages as free
+    await db.execute('PRAGMA secure_delete = ON');
+    await db.execute('DROP TABLE $tableAccounts');
   }
 
   Future<bool> migrate() async {
