@@ -68,6 +68,8 @@ class ListFeedChunk extends SearchFeedChunk {
   int get subscriptionCount => 1;
 }
 
+int subscriptionCountOf(Iterable<FeedChunk> chunks) => chunks.fold(0, (sum, chunk) => sum + chunk.subscriptionCount);
+
 String _sha1(String text) => sha1.convert(text.codeUnits).toString();
 
 /// Splits a feed into chunks. The oldest subscriptions come first, so a new one only changes the last chunk.

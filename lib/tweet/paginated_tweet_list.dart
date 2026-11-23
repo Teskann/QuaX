@@ -111,6 +111,8 @@ class PaginatedTweetList extends StatefulWidget {
   final ErrorPrefix newPageErrorPrefix;
   final String emptyMessage;
 
+  final Widget? header;
+
   /// Reloads the cached tweets from X when the feed opens.
   final bool refreshOnOpen;
 
@@ -129,6 +131,7 @@ class PaginatedTweetList extends StatefulWidget {
     this.refreshOnOpen = false,
     this.initialTopItem,
     this.onTopItemChanged,
+    this.header,
   });
 
   @override
@@ -337,6 +340,7 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
     return CustomScrollView(center: anchor > 0 ? _centerKey : null, slivers: [
       SliverToBoxAdapter(
           child: _errorAbove(widget.feed.refreshError.value ?? widget.feed.partialError.value, _showRefresh)),
+      if (widget.header case final header?) SliverToBoxAdapter(child: header),
       if (widget.feed.containsUnrelatedTweets.value) const SliverToBoxAdapter(child: UnrelatedTweetsWarning()),
       SliverToBoxAdapter(child: _releaseNotes()),
       if (anchor > 0)

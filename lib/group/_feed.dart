@@ -25,13 +25,15 @@ class SubscriptionGroupFeed extends StatefulWidget {
   final List<FeedChunk> chunks;
   final bool includeReplies;
   final bool includeRetweets;
+  final Widget? header;
 
   const SubscriptionGroupFeed(
       {super.key,
       required this.group,
       required this.chunks,
       required this.includeReplies,
-      required this.includeRetweets});
+      required this.includeRetweets,
+      this.header});
 
   @override
   State<SubscriptionGroupFeed> createState() => _SubscriptionGroupFeedState();
@@ -135,7 +137,7 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
     if (rateLimit == null) {
       return errors.firstOrNull;
     }
-    var total = widget.chunks.fold(0, (sum, chunk) => sum + chunk.subscriptionCount);
+    var total = subscriptionCountOf(widget.chunks);
     var failedSubscriptions = widget.chunks.indexed
         .where((chunk) => pages[chunk.$1].failed)
         .fold(0, (sum, chunk) => sum + chunk.$2.subscriptionCount);
@@ -157,6 +159,7 @@ class _SubscriptionGroupFeedState extends State<SubscriptionGroupFeed> {
       body: TweetContextScope(
         child: PaginatedTweetList(
           feed: _feedController,
+          header: widget.header,
           loadPage: _listTweets,
           username: null,
           refreshOnOpen: _openedFromCache && !keepPosition,
