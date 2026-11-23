@@ -6,6 +6,7 @@ import 'package:quax/group/_feed_shell.dart';
 import 'package:quax/group/feed_scroll_controller.dart';
 import 'package:quax/group/group_model.dart';
 import 'package:quax/group/feed_chunk.dart';
+import 'package:quax/group/feed_limit.dart';
 import 'package:quax/ui/errors.dart';
 import 'package:provider/provider.dart';
 
@@ -72,9 +73,11 @@ class SubscriptionGroupScreenContent extends StatelessWidget {
         if (group.id.isEmpty) {
           return const Center(child: CircularProgressIndicator());
         }
+        final feed = limitFeed(feedChunksOf(group), lifted: feedLimitLifted(context));
         return SubscriptionGroupFeed(
           group: group,
-          chunks: feedChunksOf(group),
+          chunks: feed.chunks,
+          header: feed.warning,
           includeReplies: group.includeReplies,
           includeRetweets: group.includeRetweets,
         );
