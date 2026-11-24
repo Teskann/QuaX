@@ -20,14 +20,15 @@ version: 4.24.2+400001065
 
 environment:
   sdk: "3.14.0"
-  flutter: 3.50.0
+  flutter: 3.50.1
 
 dependency_overrides:
   # auto_direction pins intl ^0.17, dart_twitter_api needs ^0.20.
   # auto_direction only calls Bidi.detectRtlDirectionality, which ^0.20 keeps.
   intl: ^0.20.2
   # flutter_iconpicker (codegen only) pins dcli <8, which needs win32 5.
-  # file_picker, share_plus, wakelock_plus and package_info_plus need win32 6.
+  # file_picker, share_plus, wakelock_plus, package_info_plus and
+  # flutter_secure_storage need win32 6.
   dcli: ^10.0.0
 
 dependencies:
@@ -51,7 +52,7 @@ dependencies:
   extended_image: ^10.0.0
   extended_nested_scroll_view: ^6.0.0
   flutter_staggered_grid_view: ^0.7.0
-  infinite_scroll_pagination: ^5.1.1
+  infinite_scroll_pagination: ^6.0.0
   flutter_cache: ^0.1.0
   file_picker: ^13.1.0
   flutter_file_dialog: ^3.0.1

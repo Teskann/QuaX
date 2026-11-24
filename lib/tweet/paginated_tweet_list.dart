@@ -22,7 +22,7 @@ typedef TweetPageLoader = Future<TweetPageResult> Function(String? cursor);
 /// Owns a [CursorPagingController] for cursor-paginated tweet chains, bridging
 /// it onto the app's `(chains, nextCursor)` loaders.
 ///
-/// v5 bakes the fetch callback into the controller at construction, yet several
+/// [PagingController] takes its fetch callback at construction, yet several
 /// feeds create the controller away from the loader. So the loader lives in a
 /// rebindable field that [PaginatedTweetList] sets on mount.
 class TweetFeedController {
@@ -48,9 +48,9 @@ class TweetFeedController {
 
   set loader(TweetPageLoader loader) => _loader = loader;
 
-  bool get hasItems => _paging.items != null;
+  bool get hasFetched => controller.value.hasFetched;
 
-  List<TweetChain> get items => _paging.items ?? const [];
+  List<TweetChain> get items => controller.items;
 
   /// Shows [chains] without loading anything.
   void seed(List<TweetChain> chains, String? nextCursor) => _paging.replaceFirstPage(chains, nextCursor);
@@ -71,8 +71,9 @@ class TweetFeedController {
   /// pull-to-refresh so the existing tweets stay visible under the indicator.
   Future<void> softRefresh() async {
     final hadNextPage = controller.value.hasNextPage;
-    // A next page loaded during the refresh would follow the old first page
-    controller.value = controller.value.copyWith(hasNextPage: false);
+    // A next page loaded during the refresh would follow the old first page.
+    // Before the first page, the spinner only shows while hasNextPage is true.
+    if (hasFetched) controller.value = controller.value.copyWith(hasNextPage: false);
     try {
       final result = await _loader!(null);
       final next = result.nextCursor;
@@ -80,7 +81,7 @@ class TweetFeedController {
       refreshError.value = null;
     } catch (e, stackTrace) {
       controller.value = controller.value.copyWith(hasNextPage: hadNextPage);
-      if (hasItems) {
+      if (hasFetched) {
         refreshError.value = PagingError(e, stackTrace);
       } else {
         _paging.setError(e, stackTrace);
@@ -97,8 +98,8 @@ class TweetFeedController {
 }
 
 /// Shared paginated tweet list used by the For-you feed, the group feed and
-/// the tweet search results. Drives a [TweetFeedController]'s v5 controller
-/// through the standard `PagedListView` shell with error / empty widgets.
+/// the tweet search results. Shows the pages of a [TweetFeedController] in a
+/// `PagedSliverList`, with error and empty widgets.
 ///
 /// The controller's lifecycle (creation, disposal, cross-mount caching) stays
 /// at the call site — this widget only binds the loader.
@@ -160,7 +161,7 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
     widget.feed.refreshError.addListener(_onControllerChanged);
     widget.feed.partialError.addListener(_onControllerChanged);
     widget.feed.containsUnrelatedTweets.addListener(_onControllerChanged);
-    if (widget.refreshOnOpen && widget.feed.hasItems) {
+    if (widget.refreshOnOpen && widget.feed.hasFetched) {
       WidgetsBinding.instance.addPostFrameCallback((_) => _refreshOnOpen());
     }
     _anchor = max(0, widget.feed.items.indexWhere((chain) => chain.id == widget.initialTopItem));
@@ -334,7 +335,7 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
   }
 
   Widget _scrollView(PagingState<int, TweetChain> state, NextPageCallback fetchNextPage) {
-    final items = state.items ?? const [];
+    final items = state.items;
     // The list can shrink before the anchor is reset
     final anchor = _anchor < items.length ? _anchor : 0;
     return CustomScrollView(center: anchor > 0 ? _centerKey : null, slivers: [
@@ -353,7 +354,7 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
         key: _centerKey,
         padding: EdgeInsets.only(top: 4, bottom: MediaQuery.of(context).padding.bottom),
         sliver: _pagedList(
-            anchor == 0 ? state : state.copyWith(pages: [items.sublist(anchor)], keys: [state.keys!.last]),
+            anchor == 0 ? state : state.copyWith(pages: [items.sublist(anchor)], keys: [state.keys.last]),
             fetchNextPage),
       ),
     ]);
@@ -368,15 +369,15 @@ class _PaginatedTweetListState extends State<PaginatedTweetList> {
         builderDelegate: PagedChildBuilderDelegate(
           itemBuilder: (context, chain, index) => _buildChain(context, chain),
           firstPageProgressIndicatorBuilder: (context) => const Center(child: CircularProgressIndicator()),
-          firstPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(
-            error: pagingErrorOf(state)?.error,
-            stackTrace: pagingErrorOf(state)?.stackTrace,
+          firstPageErrorIndicatorBuilder: (context, error) => FullPageErrorWidget(
+            error: pagingErrorOf(error)?.error,
+            stackTrace: pagingErrorOf(error)?.stackTrace,
             prefix: widget.firstPageErrorPrefix,
             onRetry: fetchNextPage,
           ),
-          newPageErrorIndicatorBuilder: (context) => ErrorCard(
-            error: pagingErrorOf(state)?.error,
-            stackTrace: pagingErrorOf(state)?.stackTrace,
+          newPageErrorIndicatorBuilder: (context, error) => ErrorCard(
+            error: pagingErrorOf(error)?.error,
+            stackTrace: pagingErrorOf(error)?.stackTrace,
             prefix: widget.newPageErrorPrefix,
             onRetry: fetchNextPage,
           ),

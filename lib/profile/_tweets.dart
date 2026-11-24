@@ -107,16 +107,16 @@ class _ProfileTweetsState extends State<ProfileTweets> with AutomaticKeepAliveCl
                 return TweetConversation(
                     id: chain.id, tweets: chain.tweets, username: widget.user.screenName!, isPinned: chain.isPinned);
               },
-              firstPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(
-                error: pagingErrorOf(state)?.error,
-                stackTrace: pagingErrorOf(state)?.stackTrace,
+              firstPageErrorIndicatorBuilder: (context, error) => FullPageErrorWidget(
+                error: pagingErrorOf(error)?.error,
+                stackTrace: pagingErrorOf(error)?.stackTrace,
                 prefix: (l10n) => l10n.unable_to_load_the_tweets,
                 screenName: widget.user.screenName,
                 onRetry: fetchNextPage,
               ),
-              newPageErrorIndicatorBuilder: (context) => ErrorCard(
-                error: pagingErrorOf(state)?.error,
-                stackTrace: pagingErrorOf(state)?.stackTrace,
+              newPageErrorIndicatorBuilder: (context, error) => ErrorCard(
+                error: pagingErrorOf(error)?.error,
+                stackTrace: pagingErrorOf(error)?.stackTrace,
                 prefix: (l10n) => l10n.unable_to_load_the_next_page_of_tweets,
                 screenName: widget.user.screenName,
                 onRetry: fetchNextPage,

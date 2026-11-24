@@ -104,13 +104,13 @@ class _StatusScreenState extends State<_StatusScreen> {
 
   bool get _showingPreview {
     final state = _pagingController.value;
-    return widget.initialTweet != null && state.items == null && state.error == null;
+    return widget.initialTweet != null && !state.hasFetched && state.error == null;
   }
 
   void _maybeStartFirstLoad() {
     if (_firstLoadStarted) return;
     final state = _pagingController.value;
-    if (state.items != null || state.error != null) return;
+    if (state.hasFetched || state.error != null) return;
     _firstLoadStarted = true;
     // Deferred: we're called from build() and fetchNextPage() mutates the
     // controller synchronously, which would setState() mid-build via our listener.
@@ -250,15 +250,15 @@ class _StatusScreenState extends State<_StatusScreen> {
                       initialMediaIndex: chain.id == widget.id ? widget.initialMediaIndex : 0),
             );
           },
-          firstPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(
-            error: pagingErrorOf(state)?.error,
-            stackTrace: pagingErrorOf(state)?.stackTrace,
+          firstPageErrorIndicatorBuilder: (context, error) => FullPageErrorWidget(
+            error: pagingErrorOf(error)?.error,
+            stackTrace: pagingErrorOf(error)?.stackTrace,
             prefix: (l10n) => l10n.unable_to_load_the_tweet,
             onRetry: fetchNextPage,
           ),
-          newPageErrorIndicatorBuilder: (context) => ErrorCard(
-            error: pagingErrorOf(state)?.error,
-            stackTrace: pagingErrorOf(state)?.stackTrace,
+          newPageErrorIndicatorBuilder: (context, error) => ErrorCard(
+            error: pagingErrorOf(error)?.error,
+            stackTrace: pagingErrorOf(error)?.stackTrace,
             prefix: (l10n) => l10n.unable_to_load_the_next_page_of_replies,
             onRetry: fetchNextPage,
           ),

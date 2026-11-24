@@ -164,7 +164,7 @@ to benefit from the most recent platform security improvements. You can check
 the required Flutter
 [here](https://github.com/Teskann/QuaX/blob/master/pubspec.yaml#L23) and the
 targeted SDK
-[here](https://github.com/Teskann/QuaX/blob/master/android/app/build.gradle#L63).
+[here](https://github.com/Teskann/QuaX/blob/master/android/app/build.gradle#L62).
 
 QuaX requires
 [very few Android permissions](https://github.com/search?q=repo%3ATeskann%2FQuaX%20android.permission&type=code)

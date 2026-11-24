@@ -75,16 +75,16 @@ class _MediaGridState extends State<MediaGrid> with AutomaticKeepAliveClientMixi
           showNewPageErrorIndicatorAsGridChild: false,
           builderDelegate: PagedChildBuilderDelegate<MediaGridItem>(
             itemBuilder: (context, item, index) => _MediaGridTile(item: item, gifGate: _gifGate),
-            firstPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(
-              error: pagingErrorOf(state)?.error,
-              stackTrace: pagingErrorOf(state)?.stackTrace,
+            firstPageErrorIndicatorBuilder: (context, error) => FullPageErrorWidget(
+              error: pagingErrorOf(error)?.error,
+              stackTrace: pagingErrorOf(error)?.stackTrace,
               prefix: widget.firstPageErrorPrefix,
               screenName: widget.errorScreenName,
               onRetry: fetchNextPage,
             ),
-            newPageErrorIndicatorBuilder: (context) => ErrorCard(
-              error: pagingErrorOf(state)?.error,
-              stackTrace: pagingErrorOf(state)?.stackTrace,
+            newPageErrorIndicatorBuilder: (context, error) => ErrorCard(
+              error: pagingErrorOf(error)?.error,
+              stackTrace: pagingErrorOf(error)?.stackTrace,
               prefix: widget.newPageErrorPrefix,
               screenName: widget.errorScreenName,
               onRetry: fetchNextPage,
