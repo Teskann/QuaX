@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:quax/client/client.dart';
@@ -35,20 +34,10 @@ Future<void> _pumpPost(WidgetTester tester, ValueNotifier<ColorScheme> scheme) a
       settle: false);
 }
 
-/// The tappable parts of [span] with the color each is drawn in, the parents' color passing to their children.
-Iterable<MapEntry<String, Color?>> _tappableColors(InlineSpan span, Color? inherited) {
-  final color = span.style?.color ?? inherited;
-  if (span is! TextSpan) return const [];
-  return [
-    if (span.recognizer is TapGestureRecognizer) MapEntry(span.text ?? '', color),
-    ...?span.children?.expand((child) => _tappableColors(child, color)),
-  ];
-}
-
-Map<String, Color?> _linkColors(WidgetTester tester) {
+List<({String text, TextStyle style})> _links(WidgetTester tester) {
   final text = tester.widget<ExpandableTweetText>(
       find.descendant(of: tweetTile(_postWithEntities), matching: find.byType(ExpandableTweetText)).first);
-  return Map.fromEntries(text.textSpans.expand((span) => _tappableColors(span, null)));
+  return tappableParts(TextSpan(children: text.textSpans));
 }
 
 void main() {
@@ -61,9 +50,9 @@ void main() {
     scheme.value = _scheme(Colors.green);
     await tester.pump();
 
-    expect(_linkColors(tester).keys, ['#QuaXRunes', '@jack', 'flutter.dev'],
+    expect(_links(tester).map((link) => link.text), ['#QuaXRunes', '@jack', 'flutter.dev'],
         reason: 'The hashtag, the mention and the link of the post should be tappable');
-    expect(_linkColors(tester).values, everyElement(scheme.value.primary),
+    expect(_links(tester).map((link) => link.style.color), everyElement(scheme.value.primary),
         reason: 'A post already shown should take the new theme color, as after a restart or a theme change');
   });
 }

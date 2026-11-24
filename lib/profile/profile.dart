@@ -17,7 +17,8 @@ import 'package:quax/tweet/_media.dart';
 import 'package:quax/ui/errors.dart';
 import 'package:quax/user.dart';
 import 'package:quax/utils/urls.dart';
-import 'package:quax/ui/link_style.dart';
+import 'package:quax/utils/clipboard.dart';
+import 'package:quax/utils/pressed_link_model.dart';
 import 'package:quax/utils/rich_text.dart';
 import 'package:intl/intl.dart';
 import 'package:quax/ui/locale_fallback.dart';
@@ -127,6 +128,7 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
   late TabController _tabController;
 
   final _mediaKind = MediaKindModel();
+  final _pressedLink = PressedLinkModel();
   final GlobalKey _mediaTabKey = GlobalKey();
 
   bool _showBackToTopButton = false;
@@ -164,6 +166,7 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
   void dispose() {
     nestedScrollViewKey.currentState?.innerController.removeListener(_listen);
     _mediaKind.destroy();
+    _pressedLink.destroy();
 
     super.dispose();
   }
@@ -303,7 +306,7 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
 
     List<RichTextPart> descParts = [];
     if (user.description != null && user.description!.isNotEmpty) {
-      descParts = buildRichText(context, user.description!, user.entities!.description!);
+      descParts = buildRichText(context, user.description!, user.entities!.description!, pressedLink: _pressedLink);
     }
 
     return Scaffold(
@@ -395,17 +398,19 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
                                       if (user.description != null && user.description!.isNotEmpty)
                                         Container(
                                               margin: const EdgeInsets.only(bottom: 8),
-                                              child: SelectableText.rich(
-                                                  minLines: 1,
-                                                  maxLines: 5,
-                                                  TextSpan(
-                                                      style: TextStyle(
-                                                          height: 1.4,
-                                                          color: theme.brightness == Brightness.dark
-                                                              ? Colors.white
-                                                              : Colors.black),
-                                                      children: displayRichText(descParts, linkStyle(context))
-                                                  ))),
+                                              child: buildHighlightedRichText(
+                                                  _pressedLink,
+                                                  descParts,
+                                                  (spans) => SelectableText.rich(
+                                                      minLines: 1,
+                                                      maxLines: 5,
+                                                      TextSpan(
+                                                          style: TextStyle(
+                                                              height: 1.4,
+                                                              color: theme.brightness == Brightness.dark
+                                                                  ? Colors.white
+                                                                  : Colors.black),
+                                                          children: spans)))),
                                       Padding(
                                             padding: const EdgeInsets.only(bottom: 8.0),
                                             child: Column(
@@ -474,6 +479,8 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> with TickerProvid
                                                                                       .colorScheme
                                                                                       .primary)),
                                                                           onTap: () => openUri(context, expandedUrl),
+                                                                          onLongPress: () => copyToClipboard(
+                                                                              context, expandedUrl, L10n.of(context).link_copied),
                                                                         );
                                                                       }),
                                                                       const SizedBox(

@@ -76,26 +76,26 @@ List<InlineSpan> _textSpans(String id) {
 String visibleText(String id) => TextSpan(children: _textSpans(id)).toPlainText().trimRight();
 
 /// The parts of the tweet [id] that react to a tap: hashtags, mentions and links.
-List<String> links(String id) => _tappable(_textSpans(id));
+List<String> links(String id) => _texts(tappableParts(TextSpan(children: _textSpans(id))));
 
 /// The parts of the community note shown under a tweet that react to a tap.
 List<String> noteLinks() {
   final note = find.byWidgetPredicate((w) => w is TweetTile && w.isBirdwatchQuote);
   final text = find.descendant(of: note, matching: find.byType(SelectableText)).evaluate().first;
-  return _tappable([(text.widget as SelectableText).textSpan!]);
+  return _texts(tappableParts((text.widget as SelectableText).textSpan!));
 }
 
-List<String> _tappable(List<InlineSpan> spans) {
-  final tappable = <String>[];
-  for (final span in spans) {
-    span.visitChildren((child) {
-      if (child is TextSpan && child.recognizer is TapGestureRecognizer) {
-        tappable.add(child.text ?? '');
-      }
-      return true;
-    });
-  }
-  return tappable;
+List<String> _texts(List<({String text, TextStyle style})> parts) => parts.map((part) => part.text).toList();
+
+/// The parts of [span] that react to a tap, in reading order, each with the style it is drawn in: its own merged
+/// into those of its parents, starting from [inherited].
+List<({String text, TextStyle style})> tappableParts(InlineSpan span, [TextStyle inherited = const TextStyle()]) {
+  if (span is! TextSpan) return const [];
+  final style = inherited.merge(span.style);
+  return [
+    if (span.recognizer is TapGestureRecognizer) (text: span.text ?? '', style: style),
+    ...?span.children?.expand((child) => tappableParts(child, style)),
+  ];
 }
 
 /// The media attached to the tweet [id], in the order they are shown.

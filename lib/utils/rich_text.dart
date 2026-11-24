@@ -1,15 +1,18 @@
 import 'package:dart_twitter_api/twitter_api.dart';
 import 'package:html_unescape/html_unescape.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter_triple/flutter_triple.dart';
 import 'package:material_ui/material_ui.dart';
 
 import 'package:quax/constants.dart';
 import 'package:quax/generated/l10n.dart';
 import 'package:quax/profile/profile.dart';
 import 'package:quax/search/search.dart';
+import 'package:quax/ui/link_style.dart';
 import 'package:quax/utils/clipboard.dart';
 import 'package:quax/utils/urls.dart';
 import 'package:quax/utils/iterables.dart';
+import 'package:quax/utils/pressed_link_model.dart';
 import 'package:quax/utils/_entities.dart';
 
 // RichText (not sure if it has an official name) is the way urls, mentions, hashtags... are integrated on
@@ -29,26 +32,43 @@ class RichTextPart {
 }
 
 // The spans to draw, with the links in the color of the theme in use when drawn
-List<InlineSpan> displayRichText(List<RichTextPart> richText, TextStyle linkStyle) {
+List<InlineSpan> displayRichText(List<RichTextPart> richText, TextStyle linkStyle, {GestureRecognizer? pressed}) {
   return richText.map((e) {
     if (e.plainText != null) {
       return TextSpan(text: e.plainText);
     } else {
-      return TextSpan(style: linkStyle, children: [e.entity!]);
+      return TextSpan(style: _isPressed(e, pressed) ? _highlighted(linkStyle) : linkStyle, children: [e.entity!]);
     }
   }).toList();
 }
 
+bool _isPressed(RichTextPart part, GestureRecognizer? pressed) {
+  final entity = part.entity;
+  return pressed != null && entity is TextSpan && identical(entity.recognizer, pressed);
+}
+
+TextStyle _highlighted(TextStyle linkStyle) => linkStyle.copyWith(backgroundColor: linkStyle.color?.withAlpha(50));
+
+/// The widget [builder] makes of the spans of [richText], built again with the link [pressedLink] holds highlighted.
+Widget buildHighlightedRichText(
+        PressedLinkModel pressedLink, List<RichTextPart> richText, Widget Function(List<InlineSpan> spans) builder) =>
+    ScopedBuilder<PressedLinkModel, ({GestureRecognizer? link})>(
+      store: pressedLink,
+      onState: (context, pressed) => builder(displayRichText(richText, linkStyle(context), pressed: pressed.link)),
+    );
+
 // Generate all the tweet entities (mentions, hashtags, etc.) from the tweet text
 // [cardUrl], the link a card was made from, is dropped when the card shows what it leads to, such as a Grok
 // conversation or a space
-List<RichTextPart> buildRichText(BuildContext context, String rawText, Object? rawEntities, {String? cardUrl}) {
+// [pressedLink] learns which link is under the finger of the user
+List<RichTextPart> buildRichText(BuildContext context, String rawText, Object? rawEntities,
+    {String? cardUrl, PressedLinkModel? pressedLink}) {
   Runes runes = Runes(rawText);
   Iterable<int> runesAsIterable = runes.getRange(0, runes.length);
 
   List<Entity> entities = [];
   if (rawEntities != null) {
-    entities = _parseEntities(context, rawEntities, cardUrl: cardUrl);
+    entities = _parseEntities(context, rawEntities, cardUrl: cardUrl, pressedLink: pressedLink);
   }
   List<RichTextPart> richTextParts = [];
 
@@ -58,7 +78,7 @@ List<RichTextPart> buildRichText(BuildContext context, String rawText, Object? r
     int end = part.getEntityEnd();
 
     // Add any text between the last entity's end and the start of this one
-    _handleTextParts(context, _convertRunesToText(runesAsIterable, index, start), richTextParts);
+    _handleTextParts(context, _convertRunesToText(runesAsIterable, index, start), richTextParts, pressedLink);
 
     // Then add the actual entity
     richTextParts.add(RichTextPart(part.getContent(), null));
@@ -68,7 +88,7 @@ List<RichTextPart> buildRichText(BuildContext context, String rawText, Object? r
   }
   // And end by adding any text between the last entity and the end of the text
   var textPart = _convertRunesToText(runesAsIterable, index);
-  _handleTextParts(context, textPart, richTextParts);
+  _handleTextParts(context, textPart, richTextParts, pressedLink);
 
   return _trimEnd(_trimStart(_closeGaps(richTextParts)));
 }
@@ -108,9 +128,10 @@ List<RichTextPart> _trimEnd(List<RichTextPart> parts) {
 }
 
 // In descriptions, the hashtags and mentions are not seen as entities, so we parse them manually
-void _handleTextParts(BuildContext context, String? text, List<RichTextPart> richTextParts) {
+void _handleTextParts(
+    BuildContext context, String? text, List<RichTextPart> richTextParts, PressedLinkModel? pressedLink) {
   if (text == null) return;
-  List parsedText = _parseMentionsAndHashtags(context, text);
+  List parsedText = _parseMentionsAndHashtags(context, text, pressedLink);
   for (var t in parsedText) {
     if (t is String) {
       richTextParts.add(RichTextPart(null, t));
@@ -121,7 +142,7 @@ void _handleTextParts(BuildContext context, String? text, List<RichTextPart> ric
   }
 }
 
-List _parseMentionsAndHashtags(BuildContext context, String content) {
+List _parseMentionsAndHashtags(BuildContext context, String content, PressedLinkModel? pressedLink) {
   List contentWidgets = [];
 
   // Split the string by any mentions or hashtags, and turn those into links
@@ -147,9 +168,7 @@ List _parseMentionsAndHashtags(BuildContext context, String content) {
                 ProfileScreenArguments.fromScreenName(full.substring(1), null));
       };
     }
-    contentWidgets.add(TextSpan(
-        text: full,
-        recognizer: TapGestureRecognizer()..onTap = onTap));
+    contentWidgets.add(linkSpan(full, onTap, pressedLink));
     return type;
   }, onNonMatch: (text) {
     contentWidgets.add(text);
@@ -170,7 +189,8 @@ String? _convertRunesToText(Iterable<int> runes, int start, [int? end]) {
 
 final _shownByItsCard = RegExp(r'^https?://(x|twitter)\.com/i/(grok/share|spaces)/');
 
-List<Entity> _parseEntities(BuildContext context, dynamic newEntities, {String? cardUrl}) {
+List<Entity> _parseEntities(BuildContext context, dynamic newEntities,
+    {String? cardUrl, PressedLinkModel? pressedLink}) {
   List<Entity> entities = [];
   if (newEntities == null) return entities;
 
@@ -195,7 +215,8 @@ List<Entity> _parseEntities(BuildContext context, dynamic newEntities, {String? 
           hashtag,
           () => Navigator.pushNamed(context, routeSearch,
               arguments: SearchArguments(SearchTab.latest,
-                  focusInputOnOpen: false, query: '#${hashtag.text}'))));
+                  focusInputOnOpen: false, query: '#${hashtag.text}')),
+          pressedLink: pressedLink));
     }
 
     for (UserMention mention in newEntities.userMentions ?? []) {
@@ -203,7 +224,8 @@ List<Entity> _parseEntities(BuildContext context, dynamic newEntities, {String? 
           mention,
           () => Navigator.pushNamed(context, routeProfile,
               arguments:
-                  ProfileScreenArguments(mention.idStr, mention.screenName, null))));
+                  ProfileScreenArguments(mention.idStr, mention.screenName, null)),
+          pressedLink: pressedLink));
     }
   }
 
@@ -222,7 +244,7 @@ List<Entity> _parseEntities(BuildContext context, dynamic newEntities, {String? 
         return;
       }
       await openUri(context, uri);
-    }, _copyLink(context, url.expandedUrl ?? url.url)));
+    }, _copyLink(context, url.expandedUrl ?? url.url), pressedLink: pressedLink));
   }
 
   entities.sort((a, b) => a.getEntityStart().compareTo(b.getEntityStart()));
