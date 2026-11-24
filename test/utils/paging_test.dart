@@ -19,9 +19,9 @@ void main() {
         await pumpEventQueue();
 
         expect(seen, [null, 'cursor-1'],
-            reason: 'Version 5 counts pages with numbers, so this class should carry the real API '
-                'cursor between calls. Losing it loads the first page again and again');
-        expect(controller.items, [1, 2],
+            reason: 'PagingController treats a null page key as the end of the list, so this class '
+                'should carry the real API cursor between calls. Losing it loads the first page again and again');
+        expect(controller.pagingController.items, [1, 2],
             reason: 'Pages should be added and not replaced, so scrolling keeps the tweets that '
                 'are already loaded');
       });
@@ -55,9 +55,9 @@ void main() {
         controller.pagingController.fetchNextPage();
         await pumpEventQueue();
 
-        final error = pagingErrorOf(controller.pagingController.value);
+        final error = pagingErrorOf(controller.pagingController.value.error);
         expect(error, isNotNull,
-            reason: 'PagingController version 5 keeps only the error and drops the stack trace, '
+            reason: 'PagingController keeps only the error and drops the stack trace, '
                 'so fetchPage should wrap both itself');
         expect(error!.error, isStateError,
             reason: 'The original error should be kept inside the wrapper, so the error widget '
@@ -79,7 +79,7 @@ void main() {
 
         controller.replaceFirstPage([9, 8], 'refreshed');
 
-        expect(controller.items, [9, 8],
+        expect(controller.pagingController.items, [9, 8],
             reason: 'Pull to refresh should keep the list on screen and only swap its items. '
                 'PagingController.refresh would clear it and show a spinner instead');
         expect(controller.pagingController.value.hasNextPage, isTrue,
@@ -97,9 +97,9 @@ void main() {
         await pumpEventQueue();
         controller.setError(StateError('refresh failed'), StackTrace.current);
 
-        expect(controller.items, [1, 2],
+        expect(controller.pagingController.items, [1, 2],
             reason: 'A refresh that fails should leave the tweets the user is reading in place');
-        expect(pagingErrorOf(controller.pagingController.value), isNotNull,
+        expect(pagingErrorOf(controller.pagingController.value.error), isNotNull,
             reason: 'The error should still be shown, otherwise a failed refresh looks like it '
                 'worked');
       });
@@ -107,10 +107,8 @@ void main() {
   });
 
   group('pagingErrorOf()', () {
-    test('Should return null when the saved error is not a PagingError', () {
-      final state = PagingState<int, int>(error: StateError('raw'));
-
-      expect(pagingErrorOf(state), isNull,
+    test('Should return null when the error is not a PagingError', () {
+      expect(pagingErrorOf(StateError('raw')), isNull,
           reason: 'The paging package can store errors the app never wrapped, so this should give '
               'null and let the error widgets keep working instead of crashing on a cast');
     });

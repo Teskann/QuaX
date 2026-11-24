@@ -20,9 +20,9 @@ void main() {
       await feed.softRefresh();
 
       expect(feed.refreshError.value, isNotNull, reason: 'The error should be shown above the tweets');
-      expect(pagingErrorOf(feed.controller.value), isNull,
+      expect(pagingErrorOf(feed.controller.value.error), isNull,
           reason: 'A paging error would show at the bottom and block loading the next pages');
-      expect(feed.controller.value.items?.map((e) => e.id), ['1'],
+      expect(feed.controller.value.items.map((e) => e.id), ['1'],
           reason: 'A failed refresh should leave the tweets the user is reading in place');
     });
 
@@ -33,9 +33,23 @@ void main() {
 
       await feed.softRefresh();
 
-      expect(pagingErrorOf(feed.controller.value), isNotNull,
+      expect(pagingErrorOf(feed.controller.value.error), isNotNull,
           reason: 'With nothing loaded, the list shows the error in place of the first page');
       expect(feed.refreshError.value, isNull, reason: 'There are no tweets to show the error above');
+    });
+
+    test('Should keep the first-page spinner while refreshing before the first page', () async {
+      final feed = TweetFeedController();
+      addTearDown(feed.dispose);
+      final firstPage = Completer<TweetPageResult>();
+      feed.loader = (cursor) => firstPage.future;
+
+      final refresh = feed.softRefresh();
+
+      expect(feed.controller.value.status, PagingStatus.loadingFirstPage,
+          reason: 'An empty feed message would wrongly say there are no tweets while they load');
+      firstPage.complete((chains: [chain('1')], nextCursor: 'next'));
+      await refresh;
     });
 
     test('Should clear the refresh error once a refresh succeeds', () async {

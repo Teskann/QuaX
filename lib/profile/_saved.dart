@@ -66,16 +66,16 @@ class _ProfileSavedState extends State<ProfileSaved> {
           addAutomaticKeepAlives: false,
           builderDelegate: PagedChildBuilderDelegate(
             itemBuilder: (context, savedTweet, index) => SavedTweetTile(id: savedTweet.id, content: savedTweet.content),
-            firstPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(
-              error: pagingErrorOf(state)?.error,
-              stackTrace: pagingErrorOf(state)?.stackTrace,
+            firstPageErrorIndicatorBuilder: (context, error) => FullPageErrorWidget(
+              error: pagingErrorOf(error)?.error,
+              stackTrace: pagingErrorOf(error)?.stackTrace,
               prefix: (l10n) => l10n.unable_to_load_the_tweets,
               screenName: widget.user.screenName,
               onRetry: fetchNextPage,
             ),
-            newPageErrorIndicatorBuilder: (context) => ErrorCard(
-              error: pagingErrorOf(state)?.error,
-              stackTrace: pagingErrorOf(state)?.stackTrace,
+            newPageErrorIndicatorBuilder: (context, error) => ErrorCard(
+              error: pagingErrorOf(error)?.error,
+              stackTrace: pagingErrorOf(error)?.stackTrace,
               prefix: (l10n) => l10n.unable_to_load_the_next_page_of_tweets,
               screenName: widget.user.screenName,
               onRetry: fetchNextPage,

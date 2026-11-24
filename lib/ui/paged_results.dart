@@ -21,15 +21,15 @@ class PagedResults<T> extends StatelessWidget {
         fetchNextPage: fetchNextPage,
         builderDelegate: PagedChildBuilderDelegate(
           itemBuilder: (context, item, index) => itemBuilder(context, item),
-          firstPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(
-            error: pagingErrorOf(state)?.error,
-            stackTrace: pagingErrorOf(state)?.stackTrace,
+          firstPageErrorIndicatorBuilder: (context, error) => FullPageErrorWidget(
+            error: pagingErrorOf(error)?.error,
+            stackTrace: pagingErrorOf(error)?.stackTrace,
             prefix: errorPrefix,
             onRetry: fetchNextPage,
           ),
-          newPageErrorIndicatorBuilder: (context) => ErrorCard(
-            error: pagingErrorOf(state)?.error,
-            stackTrace: pagingErrorOf(state)?.stackTrace,
+          newPageErrorIndicatorBuilder: (context, error) => ErrorCard(
+            error: pagingErrorOf(error)?.error,
+            stackTrace: pagingErrorOf(error)?.stackTrace,
             prefix: errorPrefix,
             onRetry: fetchNextPage,
           ),

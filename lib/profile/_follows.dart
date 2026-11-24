@@ -67,15 +67,15 @@ class _ProfileFollowsState extends State<ProfileFollows> with AutomaticKeepAlive
             addAutomaticKeepAlives: false,
             builderDelegate: PagedChildBuilderDelegate(
               itemBuilder: (context, user, index) => UserTile(user: UserSubscription.fromUser(user)),
-              firstPageErrorIndicatorBuilder: (context) => FullPageErrorWidget(
-                error: pagingErrorOf(state)?.error,
-                stackTrace: pagingErrorOf(state)?.stackTrace,
+              firstPageErrorIndicatorBuilder: (context, error) => FullPageErrorWidget(
+                error: pagingErrorOf(error)?.error,
+                stackTrace: pagingErrorOf(error)?.stackTrace,
                 prefix: (l10n) => l10n.unable_to_load_the_list_of_follows,
                 onRetry: fetchNextPage,
               ),
-              newPageErrorIndicatorBuilder: (context) => ErrorCard(
-                error: pagingErrorOf(state)?.error,
-                stackTrace: pagingErrorOf(state)?.stackTrace,
+              newPageErrorIndicatorBuilder: (context, error) => ErrorCard(
+                error: pagingErrorOf(error)?.error,
+                stackTrace: pagingErrorOf(error)?.stackTrace,
                 prefix: (l10n) => l10n.unable_to_load_the_next_page_of_follows,
                 onRetry: fetchNextPage,
               ),
