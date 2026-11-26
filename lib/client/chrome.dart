@@ -1,5 +1,5 @@
 // Set by tool/update_chrome.py at each release, which finds this exact line. To bump Chrome by hand, change only it.
-const chromeFullVersion = '157.0.8103.78';
+const chromeFullVersion = '158.0.8127.42';
 
 final _chromeMajorVersion = _majorOf(chromeFullVersion);
 

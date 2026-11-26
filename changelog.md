@@ -1,3 +1,8 @@
+## QuaX v4.24.2
+
+What's new in QuaX v4.24.2:
+  - Fixed requests failing because of a change in how X signs them (Fixed #435) (#438) <sup>[[view modified code]](https://github.com/teskann/quax/commit/f20b11d22eae0f18ae0536a0e34b0032a6bc2bf8)</sup>
+
 ## QuaX v4.24.1
 
 What's new in QuaX v4.24.1:

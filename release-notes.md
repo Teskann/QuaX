@@ -1,7 +1,7 @@
-## QuaX v4.24.1
+## QuaX v4.24.2
 
-What's new in QuaX v4.24.1:
-  - Feeds only load part of their subscriptions for now, to lower the risk of X suspending your account <sup>[[view modified code]](https://github.com/teskann/quax/commit/b1f763c9ed790514bf0f8aebe59c9e668191f0c7)</sup>
+What's new in QuaX v4.24.2:
+  - Fixed requests failing because of a change in how X signs them (Fixed #435) (#438) <sup>[[view modified code]](https://github.com/teskann/quax/commit/f20b11d22eae0f18ae0536a0e34b0032a6bc2bf8)</sup>
 
 
 ---
