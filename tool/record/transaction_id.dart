@@ -19,12 +19,12 @@ const _origin = 'https://quax.test';
 
 
 const _signInPage = '''
-async (html, nowMs, requests) => {
+async (html, nowMs, requests, signModulePath) => {
   const parsed = new DOMParser().parseFromString(html, 'text/html');
   parsed.querySelectorAll('script').forEach((script) => script.remove());
   document.replaceChild(document.adoptNode(parsed.documentElement), document.documentElement);
   Date.now = () => nowMs;
-  const module = await import('/sign.js');
+  const module = await import(signModulePath);
   const sign = await module.default();
   const ids = [];
   for (const [method, path] of requests) ids.push(await sign(path, method));
@@ -60,7 +60,7 @@ Future<void> main() async {
     print('X loads it now, then adapt _signModuleCode.');
     return;
   }
-  await _recordSignedIds(sources.files[_homePage]!, sources.files[signUrl]!);
+  await _recordSignedIds(sources.files[_homePage]!, sources.scripts, Uri.parse(signUrl).pathSegments.last);
 }
 
 /// A real, logged-out Chrome: the app gets the same page, and X refuses a
@@ -98,18 +98,19 @@ Future<_Sources> _recordInChrome() async {
 bool _isSignModule(String url, String text) => url != _homePage && _signModuleCode.hasMatch(text);
 
 /// The files the app may read to reach the sign module: the page, the entry
-/// script, every module the entry script imports, and the sign module.
+/// script, every module the entry script imports, and the sign module with the
+/// modules it imports, which Chrome needs to run it.
 Map<String, String> _onTheWayToSignModule(Map<String, String> files) {
   final entries = files.keys.where(_entryScript.hasMatch).toList();
-  final imports = entries.expand((entry) => _staticImport
-      .allMatches(files[entry]!)
-      .map((match) => Uri.parse(entry).resolve(match.group(1)!).toString()));
-  final signModules = files.keys.where((url) => _isSignModule(url, files[url]!));
+  final signModules = files.keys.where((url) => _isSignModule(url, files[url]!)).toList();
   return {
-    for (final url in {_homePage, ...entries, ...imports, ...signModules})
+    for (final url in {_homePage, ...entries, ..._importsOf(entries, files), ...signModules, ..._importsOf(signModules, files)})
       if (files[url] != null) url: files[url]!,
   };
 }
+
+Iterable<String> _importsOf(Iterable<String> modules, Map<String, String> files) => modules.expand((module) =>
+    _staticImport.allMatches(files[module]!).map((match) => Uri.parse(module).resolve(match.group(1)!).toString()));
 
 /// The sign module is imported lazily, a moment after the page itself.
 Future<void> _waitFor(bool Function() condition) async {
@@ -125,6 +126,11 @@ class _Sources {
   /// URL -> content. The x.com page is stored under the URL the app asks for.
   final Map<String, String> files;
 
+  /// File name -> content of every recorded script.
+  Map<String, String> get scripts => {
+        for (final url in files.keys.where((url) => url != _homePage)) Uri.parse(url).pathSegments.last: files[url]!,
+      };
+
   /// Replaces the files of an earlier recording, except `expected.json`.
   void writeTo(Directory directory) {
     directory
@@ -138,10 +144,10 @@ class _Sources {
   }
 }
 
-Future<void> _recordSignedIds(String homePageHtml, String signFileText) async {
+Future<void> _recordSignedIds(String homePageHtml, Map<String, String> scripts, String signModule) async {
   final nowMs = DateTime.now().millisecondsSinceEpoch;
   print('Signing ${_requests.length} requests in Chrome…');
-  final ids = await _signInChrome(homePageHtml, signFileText, nowMs);
+  final ids = await _signInChrome(homePageHtml, scripts, signModule, nowMs);
   File('${transactionIdFixtures.path}/expected.json').writeAsStringSync(const JsonEncoder.withIndent('  ').convert({
     'nowMs': nowMs,
     'cases': [
@@ -152,19 +158,22 @@ Future<void> _recordSignedIds(String homePageHtml, String signFileText) async {
   print('Written to ${transactionIdFixtures.path}. Now run:\n  fvm flutter test test/client/x_client_transaction_id/');
 }
 
-Future<List<String>> _signInChrome(String html, String signModule, int nowMs) async {
+/// Serves the recorded scripts side by side, as the sign module imports others.
+Future<List<String>> _signInChrome(String html, Map<String, String> scripts, String signModule, int nowMs) async {
   final browser = await puppeteer.launch(executablePath: installedChrome());
   try {
     final page = await browser.newPage();
     await page.setRequestInterception(true);
-    page.onRequest.listen((request) => request.url == '$_origin/sign.js'
-        ? request.respond(contentType: 'text/javascript', body: signModule)
-        : request.respond(contentType: 'text/html', body: ''));
+    page.onRequest.listen((request) {
+      final script = scripts[Uri.parse(request.url).pathSegments.lastOrNull];
+      request.respond(contentType: script == null ? 'text/html' : 'text/javascript', body: script ?? '');
+    });
     await page.goto('$_origin/');
     final ids = await page.evaluate<List<dynamic>>(_signInPage, args: [
       html,
       nowMs,
       [for (final (method, path) in _requests) [method, path]],
+      '/$signModule',
     ]);
     return ids.cast<String>();
   } finally {
